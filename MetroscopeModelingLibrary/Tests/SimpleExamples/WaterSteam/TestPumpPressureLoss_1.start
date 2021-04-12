@@ -1,0 +1,12 @@
+controlValve.C_out.h_vol;63086.1
+controlValve.P_out;1.94252e5
+controlValve.h_in;63086.1
+controlValve.h_out;63086.1
+singularPressureLoss.C_in.h_vol;63365.1
+singularPressureLoss.P_in;4.32387e5
+singularPressureLoss.h_out;63365.1
+sinkWater.h_vol;356079
+sourcesWater.h_vol;63086.1
+staticCentrifugalPump.Q_out;-460.67
+staticCentrifugalPump.Qv;0.46104
+staticCentrifugalPump.h_out;63365.1

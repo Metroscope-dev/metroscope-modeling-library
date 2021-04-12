@@ -1,0 +1,34 @@
+{
+    "simulation_setup": {
+        "start_time" : 0,
+        "stop_time" : 1,
+        "step_size" : 0.1,
+        "tolerance" : 1e-3
+    },
+    "model_outputs": {
+        "Extraction6.x_ext_out": {
+            "simulation_times_to_extract": [1],
+            "interpolation_method": "linear"
+        },
+        "Extraction6.x_main_out": {
+            "simulation_times_to_extract": [1],
+            "interpolation_method": "linear"
+        },
+        "Extraction5.x_ext_out": {
+            "simulation_times_to_extract": [1],
+            "interpolation_method": "linear"
+        },
+        "Extraction5.x_main_out": {
+            "simulation_times_to_extract": [1],
+            "interpolation_method": "linear"
+        },
+        "Extraction4.x_ext_out": {
+            "simulation_times_to_extract": [1],
+            "interpolation_method": "linear"
+        },
+        "Extraction4.x_main_out": {
+            "simulation_times_to_extract": [1],
+            "interpolation_method": "linear"
+        }
+    }
+}

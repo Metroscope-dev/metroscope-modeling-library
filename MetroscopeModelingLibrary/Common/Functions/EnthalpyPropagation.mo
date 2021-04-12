@@ -1,0 +1,4 @@
+within MetroscopeModelingLibrary.Common.Functions;
+function EnthalpyPropagation
+  extends MetroscopeModelingLibrary.Common.Functions.SigmoidEnthalpyPropagation;
+end EnthalpyPropagation;
