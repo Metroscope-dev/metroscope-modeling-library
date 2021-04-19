@@ -33,7 +33,7 @@ equation
   //inlets
   source_hot_SatSteam.h_out = 2.3e6;
   source_hot_SatSteam.P_out = 15e5;
-  //source_hot_mainSt.Q_out = -60;
+  //source_hot_SatSteam.Q_out = -60;
 
   source_cold_coldwater.P_out = 70e5;
   source_cold_coldwater.T_out = 180 + 273.15;
