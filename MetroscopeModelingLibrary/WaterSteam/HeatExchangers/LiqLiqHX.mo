@@ -40,8 +40,8 @@ public
         iconTransformation(extent={{50,-90},{70,-70}})));
 equation
   // Pressure loss
-  deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold, coldSide.eps)/coldSide.rhom;
-  deltaP_hot = Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot,hotSide.eps)/hotSide.rhom;
+  deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold, coldSide.eps)/coldSide.rho_in;
+  deltaP_hot = Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot,hotSide.eps)/hotSide.rho_in;
   deltaP_cold = coldSide.P_out - coldSide.P_in;
   deltaP_hot = hotSide.P_out - hotSide.P_in;
 

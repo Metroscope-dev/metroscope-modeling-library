@@ -19,8 +19,6 @@ model Superheater_PartialCondensation
   Modelica.SIunits.MassFlowRate Q_hot_in(start=50) "Inlet Mass flow rate, hot side";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
-  Modelica.SIunits.Density coldSide_rhom;
-  Modelica.SIunits.Density hotSide_rhom;
   Modelica.SIunits.Temperature T_hot_in "hot fluid temperature in K at inlet";
   Modelica.SIunits.Temperature T_hot_out "hot fluid temperature in K at outlet";
   Modelica.SIunits.Temperature T_cold_in "hot fluid temperature in K at inlet";
@@ -77,15 +75,13 @@ equation
   // For convenience, the whole pressure loss in the component is modelized as only occuring in one zone.
   // The pressure loss coefficient, is however calculated for the whole system, for both sides.
   //in CondVap on cold side
-  coldSide_rhom =(CondVap_cold.rho_in + DesHSupH_cold.rho_out)/2;
-  deltaP_cold = -Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold, CondVap_cold.eps)/coldSide_rhom;
+  deltaP_cold = -Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold, CondVap_cold.eps)/CondVap_cold.rho_in;
   deltaP_cold = CondVap_cold.P_out - CondVap_cold.P_in;
   CondSupH_cold.P_in = CondSupH_cold.P_out;
   DesHSupH_cold.P_in = DesHSupH_cold.P_out;
 
   //in DesHSupH on hot side.
-  hotSide_rhom =(DesHSupH_hot.rho_in + CondVap_hot.rho_out)/2;
-  deltaP_hot = -Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot_in,DesHSupH_hot.eps)/hotSide_rhom;
+  deltaP_hot = -Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot_in,DesHSupH_hot.eps)/DesHSupH_hot.rho_in;
   deltaP_hot = DesHSupH_hot.P_out - DesHSupH_hot.P_in;
   CondSupH_hot.P_in = CondSupH_hot.P_out;
   CondVap_hot.P_in = CondVap_hot.P_out;

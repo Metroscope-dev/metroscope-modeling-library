@@ -25,8 +25,6 @@ model Reheater
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
   Modelica.SIunits.MassFlowRate Q_hot(start=50) "Inlet Mass flow rate";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
-  Modelica.SIunits.Density coldSide_rhom;
-  Modelica.SIunits.Density hotSide_rhom;
   Modelica.SIunits.Temperature T_hot_in "hot fluid temperature in K at inlet";
   Modelica.SIunits.Temperature T_hot_out "hot fluid temperature in deg_C at outlet";
   Modelica.SIunits.Temperature T_cold_in "hot fluid temperature in deg_C at inlet";
@@ -69,10 +67,8 @@ equation
   // Pressure loss
   // For convenience, the whole pressure loss in the component is modelized as only occuring in the deheating part.
   // The pressure loss coefficient, is however calculated for the whole system, for both sides.
-  coldSide_rhom = (purge_cold.rho_in + deheating_cold.rho_out)/2;
-  hotSide_rhom = (deheating_hot.rho_in + purge_hot.rho_out)/2;
-  deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold, deheating_cold.eps)/coldSide_rhom;
-  deltaP_hot = Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot,deheating_hot.eps)/hotSide_rhom;
+  deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold, deheating_cold.eps)/purge_cold.rho_in;
+  deltaP_hot = Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot,deheating_hot.eps)/deheating_hot.rho_in;
   deltaP_cold = deheating_cold.P_in - deheating_cold.P_out;
   deltaP_hot = deheating_hot.P_in - deheating_hot.P_out;
   condensing_hot.P_in = condensing_hot.P_out;
