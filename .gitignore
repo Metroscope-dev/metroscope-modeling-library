@@ -22,3 +22,8 @@
 
 #Pycharm
 .idea/
+
+#Dymola useless files
+*.
+#backup files
+*.bak-*
