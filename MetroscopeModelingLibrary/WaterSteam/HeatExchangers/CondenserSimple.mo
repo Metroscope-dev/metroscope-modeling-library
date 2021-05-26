@@ -57,7 +57,7 @@ equation
   coldSide.Q_in + coldSide.Q_out = 0;
   coldSide.Q_in*coldSide.h_in + coldSide.Q_out*coldSide.h_out = -W;
   deltaP_cold = coldSide.P_in - coldSide.P_out;
-  deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(coldSide.Q_in, coldSide.eps)/coldSide.rhom;
+  deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(coldSide.Q_in, coldSide.eps)/coldSide.rho_in;
   0 = Tsat - coldSide.T_out - (Tsat - coldSide.T_in)*exp(Kth*S*((coldSide.T_in - coldSide.T_out)/W));
   if mass_balance then
     hotSide.Q_in+hotSide.Q_out = 0;
