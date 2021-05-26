@@ -10,6 +10,8 @@
 *.txt
 *.mat
 *.c
+*.
+*.exe
 
 #OpenModelica result files
 *.o
@@ -23,7 +25,9 @@
 #Pycharm
 .idea/
 
-#Dymola useless files
-*.
+
 #backup files
 *.bak-*
+
+#others
+*.csv
