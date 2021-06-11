@@ -1,3 +1,4 @@
+within MetroscopeModelingLibrary.Tests.SimpleExamples.PowerPlant.MetroscopiaNPP;
 model MetroscopiaNPP_reverse_withStartValues
   extends MetroscopiaNPP_reverse(
     ActivePower(start=568.78),
@@ -139,7 +140,6 @@ model MetroscopiaNPP_reverse_withStartValues
     Wdeh(start=0.0),
     Wpurge(start=4352153.0),
     Wtot(start=40978944.0),
-    coldSide_rhom(start=851.43805),
     condensing_cold(
     C_in(
     H(start=909756200.0),
@@ -315,7 +315,6 @@ model MetroscopiaNPP_reverse_withStartValues
     deltaP_cold(start=168200.0),
     deltaP_hot(start=5.5168223),
     hlsat_hot_cond_in(start=1017030.44),
-    hotSide_rhom(start=440.7601),
     hvsat_hot_deh_out(start=2803283.5),
     purge_cold(
     C_in(
@@ -730,7 +729,6 @@ model MetroscopiaNPP_reverse_withStartValues
     W_CondReH(start=96905510.0),
     W_DesHReH(start=-0.0),
     Wtot(start=96905510.0),
-    coldSide_rhom(start=985.1378),
     condensing_cold(
     C_in(
     H(start=114812000.0),
@@ -906,7 +904,6 @@ model MetroscopiaNPP_reverse_withStartValues
     deltaP_cold(start=-226559.52),
     deltaP_hot(start=-5.1453443),
     hlsat_hot(start=640186.6),
-    hotSide_rhom(start=459.04138),
     hvsat_hot(start=2748108.0),
     x_hot_out(start=0.0)),
     LPReheater_Kfr_cold(start=467.19238),
@@ -2361,11 +2358,9 @@ model MetroscopiaNPP_reverse_withStartValues
     W_CondVap(start=12698461.0),
     W_DesHSupH(start=0.0),
     Wtot(start=49661812.0),
-    coldSide_rhom(start=9.401518),
     deltaP_cold(start=-50209.95),
     deltaP_hot(start=-2.0781465),
     hlsat_hot(start=1090139.8),
-    hotSide_rhom(start=408.9623),
     hvsat_cold(start=2797139.5),
     hvsat_hot(start=2800712.5),
     vent(
