@@ -1098,7 +1098,7 @@ model MetroscopiaNPP_direct_withStartValues
     Po_LowPressureReheater(start=20.201246),
     Po_ValveWaterSuctionPump(start=20.558739),
     Po_WaterSuctionPump(start=20.796345),
-    PressureCS(start=3.0),
+    PressureCS_val(start=3.0),
     PressureLoss_Condenser(
     C_in(
     H(start=111787170.0),
@@ -1599,7 +1599,7 @@ model MetroscopiaNPP_direct_withStartValues
     phase(start=0)),
     z1(start=0.0),
     z2(start=15.0)),
-    PressureSG(start=50.0),
+    PressureSG_val(start=50.0),
     PumpControlValve(
     C_in(
     H(start=113469940.0),
@@ -2387,8 +2387,8 @@ model MetroscopiaNPP_direct_withStartValues
     x_hot_out(start=0.0)),
     Tc_HighPressureReheater(start=216.689),
     Tc_LowPressureReheater(start=151.85892),
-    TemperatureCS(start=15.0),
-    ThermalPower(start=1880.0),
+    TemperatureCS_val(start=15.0),
+    ThermalPower_val(start=1880.0),
     Ti_HighPressureReheater(start=208.84236),
     Ti_LowPressureTurbine(start=228.01556),
     Ti_SteamGenerator(start=218.03267),
@@ -2397,7 +2397,7 @@ model MetroscopiaNPP_direct_withStartValues
     To_HighPressureReheater(start=218.03267),
     To_LowPressureReheater(start=72.820595),
     To_Superheater(start=228.01556),
-    VolumeFlowRateCS(start=50.0),
+    VolumeFlowRateCS_val(start=50.0),
     coldSink(
     C_in(
     H(start=4459978000.0),
@@ -2685,7 +2685,7 @@ model MetroscopiaNPP_direct_withStartValues
     Welec(start=568773950.0),
     Wmech(start=-583956860.0),
     eta(start=0.974)),
-    liquidFractionSG(start=0.0),
+    liquidFractionSG_val(start=0.0),
     sinkBlowOff(
     C_in(
     H(start=11545.0205),

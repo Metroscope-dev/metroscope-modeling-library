@@ -3,12 +3,12 @@ model MetroscopiaNPP_direct
   extends
     MetroscopeModelingLibrary.Tests.SimpleExamples.PowerPlant.MetroscopiaNPP.MetroscopiaNPP_topological;
   /* ----- Boundary Conditions ------ */
-  input Real liquidFractionSG(start = 0) "%";
-  input Real PressureSG(start = 50) "bar";
-  input Real PressureCS(start = 3) "bar";
-  input Real TemperatureCS(start = 15) "°C";
-  input Real VolumeFlowRateCS(start = 50) "m3/s";
-  input Real ThermalPower(start = 1880) "MWth";
+  input Real liquidFractionSG_val(start = 0) "%";
+  input Real PressureSG_val(start = 50) "bar";
+  input Real PressureCS_val(start = 3) "bar";
+  input Real TemperatureCS_val(start = 15) "°C";
+  input Real VolumeFlowRateCS_val(start = 50) "m3/s";
+  input Real ThermalPower_val(start = 1880) "MWth";
   // Observables
   output Real ActivePower;
   output Real Qo_SteamDryer;
@@ -45,12 +45,12 @@ model MetroscopiaNPP_direct
 
 equation
   /* ----- Boundary Conditions ------ */
-  steamGenerator.ThermalPower = ThermalPower*1e6;
-  steamGenerator.VaporFraction = 1 -liquidFractionSG/100;
-  steamGenerator.steamSource.P_out = PressureSG*1e5;
-  coldSource.P_out = PressureCS*1e5;
-  coldSource.Qv_out = -VolumeFlowRateCS;
-  coldSource.T_vol = TemperatureCS+273.15;
+  steamGenerator.ThermalPower = ThermalPower_val*1e6;
+  steamGenerator.VaporFraction = 1 -liquidFractionSG_val/100;
+  steamGenerator.steamSource.P_out = PressureSG_val*1e5;
+  coldSource.P_out = PressureCS_val*1e5;
+  coldSource.Qv_out = -VolumeFlowRateCS_val;
+  coldSource.T_vol = TemperatureCS_val+273.15;
   /* ---- Observables ----- */
   ActivePower = generator.Welec/1e6;
   Qo_SteamDryer = steamDryer.liquidSide.Q_in;
