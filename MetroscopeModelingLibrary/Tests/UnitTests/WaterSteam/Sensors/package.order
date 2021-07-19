@@ -2,3 +2,4 @@ TestPressureDifferenceSensor
 TestPressureSensor
 TestTemperatureSensor
 TestMassFlowSensor
+TestSensors_NoEq
