@@ -2,12 +2,12 @@ within MetroscopeModelingLibrary.Common.PressureLosses;
 model PipePressureLoss "Pipe generic pressure loss"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
   Real Kfr(start=10) "Friction pressure loss coefficient";
-  Modelica.SIunits.Position z1(start=0) "Inlet altitude";
-  Modelica.SIunits.Position z2(start=0) "Outlet altitude";
+  Modelica.Units.SI.Position z1(start=0) "Inlet altitude";
+  Modelica.Units.SI.Position z2(start=0) "Outlet altitude";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaPf(start=1e5) "Singular pressure loss";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaPg(start=0.001e5) "Singular pressure loss";
 protected
-  constant Modelica.SIunits.Acceleration g=Modelica.Constants.g_n
+  constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
     "Gravity constant";
 equation
   /* Pressure loss */

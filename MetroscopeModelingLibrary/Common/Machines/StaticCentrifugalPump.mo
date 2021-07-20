@@ -22,18 +22,18 @@ public
     "Constant coef. of the pump efficiency characteristics rh = f(vol_flow) (s.u.)";
   Real rhmin(start=0.20) "Minimum efficiency to avoid zero crossings";
 protected
-  constant Modelica.SIunits.Acceleration g=Modelica.Constants.g_n
+  constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
     "Gravity constant";
 public
   Real rh "Hydraulic efficiency";
-  Modelica.SIunits.Height hn(start=10) "Pump head";
+  Modelica.Units.SI.Height hn(start=10) "Pump head";
   Real R(start=1) "Reduced rotational speed";
-  Modelica.SIunits.MassFlowRate Q(start=500) "Mass flow rate";
-  Modelica.SIunits.VolumeFlowRate Qv(start=0.5) "Volume flow rate";
-  Modelica.SIunits.VolumeFlowRate Qv0(start=0.5) "Volume flow rate";
-  Modelica.SIunits.Power Wh "Hydraulic power";
-  Modelica.SIunits.Power Wm "Mechanical power";
-  Modelica.SIunits.SpecificEnthalpy deltaH
+  Modelica.Units.SI.MassFlowRate Q(start=500) "Mass flow rate";
+  Modelica.Units.SI.VolumeFlowRate Qv(start=0.5) "Volume flow rate";
+  Modelica.Units.SI.VolumeFlowRate Qv0(start=0.5) "Volume flow rate";
+  Modelica.Units.SI.Power Wh "Hydraulic power";
+  Modelica.Units.SI.Power Wm "Mechanical power";
+  Modelica.Units.SI.SpecificEnthalpy deltaH
     "Specific enthalpy variation between the outlet and the inlet";
    MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP "Singular pressure loss";
   Modelica.Blocks.Interfaces.RealInput VRot annotation (Placement(

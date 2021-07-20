@@ -5,19 +5,23 @@ model LiqLiqHX
   replaceable package HotMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
 public
-  Modelica.SIunits.Area S_tot( start=100) "Total exchange area";
+  Modelica.Units.SI.Area S_tot(start=100) "Total exchange area";
   Real Kfr_cold(start=1.e3) "Pressure loss coefficient";
   Real Kfr_hot(start=1.e3) "Pressure loss coefficient";
-  Modelica.SIunits.CoefficientOfHeatTransfer Kth(start = 1000) "heat transfer coefficient";
-  Modelica.SIunits.Power Wth(start=100) "Energy transfer during condensation";
-  Modelica.SIunits.MassFlowRate Q_cold(start=500) "Inlet Mass flow rate";
+  Modelica.Units.SI.CoefficientOfHeatTransfer Kth(start=1000)
+    "heat transfer coefficient";
+  Modelica.Units.SI.Power Wth(start=100) "Energy transfer during condensation";
+  Modelica.Units.SI.MassFlowRate Q_cold(start=500) "Inlet Mass flow rate";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
-  Modelica.SIunits.MassFlowRate Q_hot(start=50) "Inlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_hot(start=50) "Inlet Mass flow rate";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
-  Modelica.SIunits.Temperature T_hot_in "hot fluid temperature in K at inlet";
-  Modelica.SIunits.Temperature T_hot_out "hot fluid temperature in deg_C at outlet";
-  Modelica.SIunits.Temperature T_cold_in "hot fluid temperature in deg_C at inlet";
-  Modelica.SIunits.Temperature T_cold_out "hot fluid temperature in deg_C at outlet";
+  Modelica.Units.SI.Temperature T_hot_in "hot fluid temperature in K at inlet";
+  Modelica.Units.SI.Temperature T_hot_out
+    "hot fluid temperature in deg_C at outlet";
+  Modelica.Units.SI.Temperature T_cold_in
+    "hot fluid temperature in deg_C at inlet";
+  Modelica.Units.SI.Temperature T_cold_out
+    "hot fluid temperature in deg_C at outlet";
   Common.Connectors.FluidInlet C_cold_in( redeclare package Medium =
         ColdMedium)
     annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),

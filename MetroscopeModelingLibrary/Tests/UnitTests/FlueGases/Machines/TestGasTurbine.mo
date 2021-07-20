@@ -21,6 +21,8 @@ model TestGasTurbine
     annotation (Placement(transformation(extent={{-66,70},{-46,90}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-100,70},{-80,90}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Sink sink1
+    annotation (Placement(transformation(extent={{56,90},{64,98}})));
 equation
 
   // Forward causality
@@ -92,6 +94,8 @@ equation
     annotation (Line(points={{-46,80},{-34,80}}, color={63,81,181}));
   connect(source.C_out, moistAirToFlueGases.C_in)
     annotation (Line(points={{-80,80},{-65.8,80}}, color={63,81,181}));
+  connect(flueGasesTurbine.C_power, sink1.u) annotation (Line(points={{47.4,
+          88.6},{46,88.6},{46,94},{56.4,94}}, color={0,0,127}));
     annotation (Placement(transformation(extent={{-16,42},{-4,54}})),
               Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,40},
             {100,100}})),                                        Diagram(

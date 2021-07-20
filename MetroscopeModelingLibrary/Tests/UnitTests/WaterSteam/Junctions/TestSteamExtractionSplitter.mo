@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Junctions;
 model TestSteamExtractionSplitter
   import MetroscopeModelingLibrary;
-  input Modelica.SIunits.AbsolutePressure P_source(start = 2.64e6);
-  input Modelica.SIunits.SpecificEnthalpy h_source(start = 2.65e6);
-  input Modelica.SIunits.MassFlowRate Q(start = 1900);
+  input Modelica.Units.SI.AbsolutePressure P_source(start=2.64e6);
+  input Modelica.Units.SI.SpecificEnthalpy h_source(start=2.65e6);
+  input Modelica.Units.SI.MassFlowRate Q(start=1900);
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source sourcesWater1
     annotation (Placement(transformation(extent={{-80,14},{-60,34}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sinkMainflow

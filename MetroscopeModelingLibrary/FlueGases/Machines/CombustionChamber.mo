@@ -6,10 +6,10 @@ model CombustionChamber
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=1e5), P_out(start=45e5),h_in(start=1e5), h_out(start=1.2e5),redeclare
       package Medium =FlueGasesMedium);
-  Modelica.SIunits.Power Wth(start=850e6);
-  Modelica.SIunits.Power Wfuel(start=800e6);
+  Modelica.Units.SI.Power Wth(start=850e6);
+  Modelica.Units.SI.Power Wfuel(start=800e6);
   Real LHV(start=48130);
-  Modelica.SIunits.MassFlowRate Qfuel(start=-15);
+  Modelica.Units.SI.MassFlowRate Qfuel(start=-15);
   constant Real amC=12.01115 "Carbon atomic mass";
   constant Real amH=1.00797 "Hydrogen atomic mass";
   constant Real amO=15.9994 "Oxygen atomic mass";

@@ -2,13 +2,15 @@ within MetroscopeModelingLibrary.Electrical.Machines;
 model Generator "Eletrical generator"
   Real eta(start = 99.8) "Efficiency (percent)";
 public
-  Modelica.SIunits.Power Welec "Electrical power produced by the generator";
+  Modelica.Units.SI.Power Welec "Electrical power produced by the generator";
+  Modelica.Units.SI.Power Wmech "Electrical power produced by the generator";
 public
-  Connectors.C_power                                          Wmech
+  Connectors.C_power C_power
     annotation (Placement(transformation(extent={{-116,-14},{-84,14}}, rotation=
            0)));
 equation
 
+  Wmech = C_power.W;
   Welec = -Wmech*eta;
   annotation (Diagram(coordinateSystem(extent={{-100,-60},{100,60}}),
                       graphics={

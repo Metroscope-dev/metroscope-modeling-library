@@ -3,11 +3,11 @@ model StodolaTurbine "Stodola Turbine"
   extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel;
 public
   Real Cst(start=1.e7) "Stodola's ellipse coefficient";
-  Modelica.SIunits.Area area_nz(start=1) "Nozzle area";
+  Modelica.Units.SI.Area area_nz(start=1) "Nozzle area";
   Real eta_nz(start=1.0)
     "Nozzle efficency (eta_nz < 1 - turbine with nozzle - eta_nz = 1 - turbine without nozzle)";
   Real eta_is(start=0.8) "Nominal isentropic efficiency";
-  Modelica.SIunits.MassFlowRate Q(start=500) "Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q(start=500) "Mass flow rate";
   Modelica.Blocks.Interfaces.RealInput Wmech annotation (Placement(
         transformation(extent={{0,-142},{40,-102}}), iconTransformation(
         extent={{-20,-20},{20,20}},

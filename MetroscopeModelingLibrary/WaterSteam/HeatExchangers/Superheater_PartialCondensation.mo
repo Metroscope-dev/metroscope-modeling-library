@@ -6,26 +6,38 @@ model Superheater_PartialCondensation
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   Real Kfr_cold(start=1.e3) "Pressure loss coefficient";
   Real Kfr_hot(start=1.e3) "Pressure loss coefficient";
-  Modelica.SIunits.CoefficientOfHeatTransfer Kth(start = 9000) "heat transfer coefficient same in all zone";
-  Modelica.SIunits.Area S_tot( start=100) "Total exchange area";
-  Modelica.SIunits.Power W_CondVap(start=0.5e6) "Energy transfer in CondVap zone";
-  Modelica.SIunits.Power W_CondSupH(start=40e6) "Energy transfer in CondVap zone";
-  Modelica.SIunits.Power W_DesHSupH(start=0.5e6) "Energy transfer in CondVap zone";
-  Modelica.SIunits.Power Wtot(start = 50e6) "Total energy transfered";
-  Modelica.SIunits.SpecificEnthalpy hvsat_cold(start = 2.7e6) "saturated vapor (hot side) specific enthalpy at deheating outlet";
-  Modelica.SIunits.SpecificEnthalpy hvsat_hot(start = 2.7e6) "saturated liquid water (hot side) specific enthalpy at condensing inlet";
-  Modelica.SIunits.SpecificEnthalpy hlsat_hot(start = 1.2e6) "saturated liquid water (hot side) specific enthalpy at condensing inlet";
-  Modelica.SIunits.MassFlowRate Q_cold(start=250) "Inlet Mass flow rate";
-  Modelica.SIunits.MassFlowRate Q_hot_in(start=50) "Inlet Mass flow rate, hot side";
+  Modelica.Units.SI.CoefficientOfHeatTransfer Kth(start=9000)
+    "heat transfer coefficient same in all zone";
+  Modelica.Units.SI.Area S_tot(start=100) "Total exchange area";
+  Modelica.Units.SI.Power W_CondVap(start=0.5e6)
+    "Energy transfer in CondVap zone";
+  Modelica.Units.SI.Power W_CondSupH(start=40e6)
+    "Energy transfer in CondVap zone";
+  Modelica.Units.SI.Power W_DesHSupH(start=0.5e6)
+    "Energy transfer in CondVap zone";
+  Modelica.Units.SI.Power Wtot(start=50e6) "Total energy transfered";
+  Modelica.Units.SI.SpecificEnthalpy hvsat_cold(start=2.7e6)
+    "saturated vapor (hot side) specific enthalpy at deheating outlet";
+  Modelica.Units.SI.SpecificEnthalpy hvsat_hot(start=2.7e6)
+    "saturated liquid water (hot side) specific enthalpy at condensing inlet";
+  Modelica.Units.SI.SpecificEnthalpy hlsat_hot(start=1.2e6)
+    "saturated liquid water (hot side) specific enthalpy at condensing inlet";
+  Modelica.Units.SI.MassFlowRate Q_cold(start=250) "Inlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_hot_in(start=50)
+    "Inlet Mass flow rate, hot side";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
-  Modelica.SIunits.Temperature T_hot_in "hot fluid temperature in K at inlet";
-  Modelica.SIunits.Temperature T_hot_out "hot fluid temperature in K at outlet";
-  Modelica.SIunits.Temperature T_cold_in "hot fluid temperature in K at inlet";
-  Modelica.SIunits.Temperature T_cold_out "hot fluid temperature in K at outlet";
-  Modelica.SIunits.MassFlowRate Q_vent(start=5) "Vent Mass flow rate";
-  Modelica.SIunits.MassFlowRate Q_hot_out(start=45) "outlet Mass flow rate, hot side";
-  Modelica.SIunits.MassFraction x_hot_out "outlet desired steam fraction for the hot side";
+  Modelica.Units.SI.Temperature T_hot_in "hot fluid temperature in K at inlet";
+  Modelica.Units.SI.Temperature T_hot_out
+    "hot fluid temperature in K at outlet";
+  Modelica.Units.SI.Temperature T_cold_in "hot fluid temperature in K at inlet";
+  Modelica.Units.SI.Temperature T_cold_out
+    "hot fluid temperature in K at outlet";
+  Modelica.Units.SI.MassFlowRate Q_vent(start=5) "Vent Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_hot_out(start=45)
+    "outlet Mass flow rate, hot side";
+  Modelica.Units.SI.MassFraction x_hot_out
+    "outlet desired steam fraction for the hot side";
   replaceable Common.Partial.BasicTransportModel vent(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{-10.5,-5.5},{10.5,5.5}},
         rotation=-90,

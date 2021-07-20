@@ -2,19 +2,20 @@ within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model CondenserSimple
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  Modelica.SIunits.CoefficientOfHeatTransfer Kth(start = 100)
+  Modelica.Units.SI.CoefficientOfHeatTransfer Kth(start=100)
     "Global heat transfer coefficient (active if exchanger_type=3)";
-  Modelica.SIunits.Area S(start = 10);
-  Modelica.SIunits.Power W(start=1e8);
-  Modelica.SIunits.MassFlowRate Q_top_up(start=0) "Inlet Mass flow rate";
-  Modelica.SIunits.Temperature Tsat(start = 10+273.15);
-  Modelica.SIunits.AbsolutePressure Psat(start = 0.05e5);
-  Modelica.SIunits.Height WaterHeight(start=2);
+  Modelica.Units.SI.Area S(start=10);
+  Modelica.Units.SI.Power W(start=1e8);
+  Modelica.Units.SI.MassFlowRate Q_top_up(start=0) "Inlet Mass flow rate";
+  Modelica.Units.SI.Temperature Tsat(start=10 + 273.15);
+  Modelica.Units.SI.AbsolutePressure Psat(start=0.05e5);
+  Modelica.Units.SI.Height WaterHeight(start=2);
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold(start=1e5) "Singular pressure loss";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot(start=1e5) "Singular pressure loss";
-  Modelica.SIunits.Density rho_liquid_hot(start=1000);
+  Modelica.Units.SI.Density rho_liquid_hot(start=1000);
   Real Kfr_cold(start=10) "Friction pressure loss coefficient";
-  constant Modelica.SIunits.Acceleration g=Modelica.Constants.g_n "Gravity constant";
+  constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
+    "Gravity constant";
   parameter Boolean mass_balance = true;
   Common.Connectors.FluidInlet C_hot_in( redeclare package Medium =
         WaterSteamMedium)

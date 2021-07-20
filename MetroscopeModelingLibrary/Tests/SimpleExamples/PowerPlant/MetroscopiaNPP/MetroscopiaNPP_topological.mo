@@ -277,14 +277,6 @@ equation
       points={{-16,-98},{-64,-98},{-64,-15.6},{-83.28,-15.6}},
       color={28,108,200},
       thickness=0.5));
-  connect(HighPressureTurbine_1.Wmech, generator.Wmech) annotation (Line(points=
-         {{-8.6,42.6},{8,42.6},{8,126},{376,126}}, color={0,0,0}));
-  connect(HighPressureTurbine_2.Wmech, generator.Wmech) annotation (Line(points=
-         {{69.4,42.6},{90,42.6},{90,126},{376,126}}, color={0,0,0}));
-  connect(LowPressureTurbine_1.Wmech, generator.Wmech) annotation (Line(points=
-          {{229.4,90.6},{242,90.6},{242,126},{376,126}}, color={0,0,0}));
-  connect(LowPressureTurbine_2.Wmech, generator.Wmech) annotation (Line(points=
-          {{301.4,90.6},{324,90.6},{324,126},{376,126}}, color={0,0,0}));
   connect(PressureLoss_SteamExtractionHP1.C_out, HPCondReheater_valve.C_in)
     annotation (Line(
       points={{202,5.8},{200,5.8},{200,-18.1818},{62,-18.1818}},
@@ -300,6 +292,14 @@ equation
       points={{6,-0.2},{4,-0.2},{4,-36},{4,-36}},
       color={238,46,47},
       thickness=0.5));
+  connect(HighPressureTurbine_1.C_power, generator.C_power) annotation (Line(
+        points={{-8.6,42.6},{8,42.6},{8,126},{376,126}}, color={0,0,127}));
+  connect(LowPressureTurbine_2.C_power, generator.C_power) annotation (Line(
+        points={{301.4,90.6},{302,126},{376,126}}, color={0,0,127}));
+  connect(LowPressureTurbine_1.C_power, generator.C_power) annotation (Line(
+        points={{229.4,90.6},{229.4,126},{376,126}}, color={0,0,127}));
+  connect(HighPressureTurbine_2.C_power, generator.C_power) annotation (Line(
+        points={{69.4,42.6},{69.4,126},{376,126}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
             -140},{460,140}})),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{460,

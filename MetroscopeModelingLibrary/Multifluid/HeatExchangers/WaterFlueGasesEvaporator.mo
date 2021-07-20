@@ -4,16 +4,16 @@ model WaterFlueGasesEvaporator
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   replaceable package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
-  Modelica.SIunits.Power W(start=1e8);
-  Modelica.SIunits.AbsolutePressure P(start=1e5);
+  Modelica.Units.SI.Power W(start=1e8);
+  Modelica.Units.SI.AbsolutePressure P(start=1e5);
   Real K_fg(start=1.e3) "Pressure loss coefficient";
-  Modelica.SIunits.CoefficientOfHeatTransfer K(start = 100)
+  Modelica.Units.SI.CoefficientOfHeatTransfer K(start=100)
     "Global heat transfer coefficient (active if exchanger_type=3)";
-  Modelica.SIunits.Area S(start = 10);
+  Modelica.Units.SI.Area S(start=10);
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_fg "Singular pressure loss";
-  Modelica.SIunits.MassFlowRate Q_w(start=100) "Inlet Mass flow rate";
-  Modelica.SIunits.MassFlowRate Q_fg(start=100) "Inlet Mass flow rate";
-  Modelica.SIunits.Temperature Tsat(start = 150+273.15);
+  Modelica.Units.SI.MassFlowRate Q_w(start=100) "Inlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_fg(start=100) "Inlet Mass flow rate";
+  Modelica.Units.SI.Temperature Tsat(start=150 + 273.15);
   replaceable Common.Partial.BasicTransportModel waterLiquidSide(redeclare
       package Medium = WaterSteamMedium) annotation (Placement(transformation(
         extent={{-25,-18},{25,18}},

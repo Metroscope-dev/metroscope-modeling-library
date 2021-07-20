@@ -9,10 +9,11 @@ public
   Real eta_mech(start=1) "";
   Real tau(start=15);
   Real eta_is(start=0.8) "Nominal isentropic efficiency";
-  Modelica.SIunits.MassFlowRate Q(start=500) "Mass flow rate";
-  Modelica.SIunits.SpecificEnthalpy His(start=1e6);
+  Modelica.Units.SI.MassFlowRate Q(start=500) "Mass flow rate";
+  Modelica.Units.SI.SpecificEnthalpy His(start=1e6);
   FlueGasesMedium.ThermodynamicState state_is;
-  Electrical.Connectors.C_power         Wmech annotation (Placement(
+  Modelica.Units.SI.Power Wmech;
+  Electrical.Connectors.C_power         C_power annotation (Placement(
         transformation(extent={{100,70},{140,110}}), iconTransformation(
         extent={{-14,-14},{14,14}},
         rotation=0,
@@ -30,6 +31,7 @@ equation
   /* Fluid specific enthalpy after the expansion */
   h_out-h_in = eta_is*(His-h_in);
   /* Mechanical power produced by the turbine */
+  Wmech = C_power.W;
   Wmech = eta_mech*Q*(h_in - h_out) + Wmech_compressor;
   /*Chemical balance */
   Q_in*Xi_in =- Q_out*Xi_out;

@@ -1,6 +1,10 @@
 within MetroscopeModelingLibrary.Electrical;
 package Connectors
-  connector C_power = flow Modelica.SIunits.Power "'input Real' as connector" annotation (
+  connector C_power
+
+    flow Modelica.Units.SI.Power W;
+
+    annotation (
     defaultComponentName="u",
     Icon(graphics={
       Polygon(
@@ -30,4 +34,6 @@ package Connectors
 Connector with one input signal of type Real.
 </p>
 </html>"));
+
+  end C_power;
 end Connectors;

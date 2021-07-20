@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.PressureLosses;
 model TestSingularPressureLossAndHeatLoss
-  input Modelica.SIunits.AbsolutePressure P_source(start = 2e5);
-  input Modelica.SIunits.Temperature T_source(start = 20+273.15);
-  input Modelica.SIunits.MassFlowRate Q(start=100);
+  input Modelica.Units.SI.AbsolutePressure P_source(start=2e5);
+  input Modelica.Units.SI.Temperature T_source(start=20 + 273.15);
+  input Modelica.Units.SI.MassFlowRate Q(start=100);
   // For reverse causality, add the following inputs :
   //input Modelica.SIunits.AbsolutePressure P_sink(start = 1e5);
   //input Modelica.SIunits.Temperature T_sink(start=18+273.15);

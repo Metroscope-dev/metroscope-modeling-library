@@ -1,22 +1,28 @@
 within MetroscopeModelingLibrary.Common.Functions;
 function PowerHeatExchange
-  input Modelica.SIunits.MassFlowRate Q_hot "Hot mass flow rate at the inlet";
-  input Modelica.SIunits.MassFlowRate Q_cold "Cold mass flow rate at the inlet";
-  input Modelica.SIunits.SpecificHeatCapacity Cp_hot "Hot fluid specific heat capacity";
-  input Modelica.SIunits.SpecificHeatCapacity Cp_cold "Cold fluid specific heat capacity";
-  input Modelica.SIunits.Temperature T_hot_in "Temperature, hot side, at the inlet";
-  input Modelica.SIunits.Temperature T_cold_in "Temperature, cold side, at the inlet";
-  input Modelica.SIunits.CoefficientOfHeatTransfer Kth "Global heat transfer coefficient";
-  input Modelica.SIunits.Area S "External exchange surface";
+  input Modelica.Units.SI.MassFlowRate Q_hot "Hot mass flow rate at the inlet";
+  input Modelica.Units.SI.MassFlowRate Q_cold
+    "Cold mass flow rate at the inlet";
+  input Modelica.Units.SI.SpecificHeatCapacity Cp_hot
+    "Hot fluid specific heat capacity";
+  input Modelica.Units.SI.SpecificHeatCapacity Cp_cold
+    "Cold fluid specific heat capacity";
+  input Modelica.Units.SI.Temperature T_hot_in
+    "Temperature, hot side, at the inlet";
+  input Modelica.Units.SI.Temperature T_cold_in
+    "Temperature, cold side, at the inlet";
+  input Modelica.Units.SI.CoefficientOfHeatTransfer Kth
+    "Global heat transfer coefficient";
+  input Modelica.Units.SI.Area S "External exchange surface";
   input Real HotPhase " = 1 or 0 for one-phase flow, in ]0;1[ for two-phase flow - could be associated to mass fraction";
-  output  Modelica.SIunits.Power Wth "Heat power transfer";
+  output Modelica.Units.SI.Power Wth "Heat power transfer";
 protected
   Real NTU "Number of transfer units";
   Real QCpMIN "Minimum heat capacity for the two fluids";
   Real QCpMAX "Maximum heat capacity for the two fluids";
   Real Cr "Heat capacity ratio";
   Real epsilon "Exchanger efficiency";
-  Modelica.SIunits.Power Wth_max "max possible heat power transfer";
+  Modelica.Units.SI.Power Wth_max "max possible heat power transfer";
 algorithm
   /* Heat exchanger efficiency calculation*/
   /*one phase flow on cold side*/

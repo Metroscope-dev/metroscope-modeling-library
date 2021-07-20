@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Machines;
 model TestStodolaTurbine
-  input Modelica.SIunits.AbsolutePressure P_source(start = 20e5);
-  input Modelica.SIunits.SpecificEnthalpy h_source(start = 2.7718e6);
-  input Modelica.SIunits.MassFlowRate Q(start = 100);
+  input Modelica.Units.SI.AbsolutePressure P_source(start=20e5);
+  input Modelica.Units.SI.SpecificEnthalpy h_source(start=2.7718e6);
+  input Modelica.Units.SI.MassFlowRate Q(start=100);
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
@@ -10,6 +10,8 @@ model TestStodolaTurbine
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine stodolaTurbine
     annotation (Placement(transformation(extent={{-14,-10},{6,10}})));
+  Electrical.BoundaryConditions.Sink sink1
+    annotation (Placement(transformation(extent={{14,10},{22,18}})));
 equation
 
   // Forward causality
@@ -42,6 +44,8 @@ equation
     annotation (Line(points={{6.2,0},{54,0}}, color={238,46,47}));
   connect(source.C_out, stodolaTurbine.C_in)
     annotation (Line(points={{-60,0},{-14,0}}, color={238,46,47}));
+  connect(stodolaTurbine.C_power, sink1.u) annotation (Line(points={{7.4,8.6},{
+          6,8.6},{6,14},{14.4,14}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
             {80,20}})),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
