@@ -20,11 +20,14 @@ public
   Modelica.Units.SI.SpecificEnthalpy His(start=1e6);
   Modelica.Units.SI.Velocity u_out(start=0);
   Medium.ThermodynamicState state_is;
-  Electrical.Connectors.C_power Wmech annotation (Placement(transformation(
+  Modelica.Units.SI.Power Wmech;
+  Electrical.Connectors.C_power C_power annotation (Placement(transformation(
           extent={{100,70},{128,100}}), iconTransformation(
         extent={{-14,-14},{14,14}},
         rotation=0,
         origin={114,86})));
+
+
 equation
   Q_in + Q_out = 0;
   Q = Q_in;
@@ -38,6 +41,7 @@ equation
   u_out = Q/rho_out/area_nz;
   h_out - Hre = (1 - eta_nz)*u_out^2/2;
   /* Mechanical power produced by the turbine */
+  Wmech = C_power.W;
   Wmech = Q*(h_in - h_out);
   /* Vapor fractions */
   x_in = MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_in,h_in);

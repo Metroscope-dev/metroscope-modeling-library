@@ -21,6 +21,8 @@ model TestGasTurbine_LHV
   MetroscopeModelingLibrary.FlueGases.Machines.CombustionChamber_LHV
     combustionChamber_LHV
     annotation (Placement(transformation(extent={{-4,70},{16,90}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Sink sink1
+    annotation (Placement(transformation(extent={{56,90},{64,98}})));
 equation
 
   // Forward causality
@@ -86,6 +88,8 @@ equation
     annotation (Line(points={{-13.8,80},{-4,80}}, color={63,81,181}));
   connect(fuelSingularPressureLoss.C_out, combustionChamber_LHV.C_fuel)
     annotation (Line(points={{-9.8,54},{-2,54},{-2,70},{6,70}}, color={63,81,181}));
+  connect(flueGasesTurbine.C_power, sink1.u) annotation (Line(points={{47.4,
+          88.6},{46,88.6},{46,94},{56.4,94}}, color={0,0,127}));
     annotation (Placement(transformation(extent={{-16,42},{-4,54}})),
               Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,40},
             {100,100}})),                                        Diagram(

@@ -10,6 +10,8 @@ model TestStodolaTurbine
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine stodolaTurbine
     annotation (Placement(transformation(extent={{-14,-10},{6,10}})));
+  Electrical.BoundaryConditions.Sink sink1
+    annotation (Placement(transformation(extent={{14,10},{22,18}})));
 equation
 
   // Forward causality
@@ -42,6 +44,8 @@ equation
     annotation (Line(points={{6.2,0},{54,0}}, color={238,46,47}));
   connect(source.C_out, stodolaTurbine.C_in)
     annotation (Line(points={{-60,0},{-14,0}}, color={238,46,47}));
+  connect(stodolaTurbine.C_power, sink1.u) annotation (Line(points={{7.4,8.6},{
+          6,8.6},{6,14},{14.4,14}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
             {80,20}})),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
