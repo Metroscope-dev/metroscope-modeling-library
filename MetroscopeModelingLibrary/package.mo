@@ -1,6 +1,6 @@
 within ;
 package MetroscopeModelingLibrary
-annotation (uses(Modelica(version="3.2.2")),
+annotation (uses(Modelica(version="4.0.0")),
   experiment(
     __Dymola_NumberOfIntervals=10,
     __Dymola_fixedstepsize=0.1,

@@ -2,8 +2,8 @@ within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Sensors;
 model TestTemperatureSensor
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-70,-50},{-50,-30}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation
-    (Placement(visible=true, transformation(
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (
+     Placement(visible=true, transformation(
         origin={80,-40},
         extent={{-10,-10},{10,10}},
         rotation=0)));

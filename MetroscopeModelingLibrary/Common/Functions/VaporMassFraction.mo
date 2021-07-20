@@ -2,12 +2,12 @@ within MetroscopeModelingLibrary.Common.Functions;
 function VaporMassFraction
     replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialTwoPhaseMedium;
-  input Modelica.SIunits.AbsolutePressure P;
-  input Modelica.SIunits.SpecificEnthalpy h;
+  input Modelica.Units.SI.AbsolutePressure P;
+  input Modelica.Units.SI.SpecificEnthalpy h;
   output Real x;
 protected
-  Modelica.SIunits.SpecificEnthalpy hl;
-  Modelica.SIunits.SpecificEnthalpy hv;
+  Modelica.Units.SI.SpecificEnthalpy hl;
+  Modelica.Units.SI.SpecificEnthalpy hv;
 algorithm
   hv :=Medium.dewEnthalpy(Medium.setSat_p(P));
   hl :=Medium.bubbleEnthalpy(Medium.setSat_p(P));

@@ -2,14 +2,18 @@ within MetroscopeModelingLibrary.WaterSteam.Junctions;
 model SteamExtractionSplitter
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  Modelica.SIunits.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
-  Modelica.SIunits.AbsolutePressure P_in(start=71e5) "Inlet Pressure";
-  Modelica.SIunits.SpecificEnthalpy h_in(start=1e5) "Inlet specific enthalpy";
-  Modelica.SIunits.SpecificEnthalpy hesat(start=2e6) "Enthalpy of saturated water";
-  Modelica.SIunits.SpecificEnthalpy hvsat(start=1e6) "Enthalpy of saturated vapor";
-  Modelica.SIunits.MassFraction x_ext_out(start = 0.8) "Vapor mass fraction at extraction outlet (0 <= x_ext_out <= x_in)";
-  Modelica.SIunits.MassFraction x_in(start = 0.8) "Vapor mass fraction at inlet";
-  Modelica.SIunits.MassFraction x_main_out(start = 0.8) "Vapor mass fraction at main outlet";
+  Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
+  Modelica.Units.SI.AbsolutePressure P_in(start=71e5) "Inlet Pressure";
+  Modelica.Units.SI.SpecificEnthalpy h_in(start=1e5) "Inlet specific enthalpy";
+  Modelica.Units.SI.SpecificEnthalpy hesat(start=2e6)
+    "Enthalpy of saturated water";
+  Modelica.Units.SI.SpecificEnthalpy hvsat(start=1e6)
+    "Enthalpy of saturated vapor";
+  Modelica.Units.SI.MassFraction x_ext_out(start=0.8)
+    "Vapor mass fraction at extraction outlet (0 <= x_ext_out <= x_in)";
+  Modelica.Units.SI.MassFraction x_in(start=0.8) "Vapor mass fraction at inlet";
+  Modelica.Units.SI.MassFraction x_main_out(start=0.8)
+    "Vapor mass fraction at main outlet";
   Real alpha(start = 1) "Extraction paramater";
   replaceable Common.Partial.BasicTransportModel extractedFlow(redeclare
       package Medium = WaterSteamMedium) annotation (Placement(transformation(

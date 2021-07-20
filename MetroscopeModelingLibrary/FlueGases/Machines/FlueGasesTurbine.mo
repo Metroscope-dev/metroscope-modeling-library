@@ -9,8 +9,8 @@ public
   Real eta_mech(start=1) "";
   Real tau(start=15);
   Real eta_is(start=0.8) "Nominal isentropic efficiency";
-  Modelica.SIunits.MassFlowRate Q(start=500) "Mass flow rate";
-  Modelica.SIunits.SpecificEnthalpy His(start=1e6);
+  Modelica.Units.SI.MassFlowRate Q(start=500) "Mass flow rate";
+  Modelica.Units.SI.SpecificEnthalpy His(start=1e6);
   FlueGasesMedium.ThermodynamicState state_is;
   Electrical.Connectors.C_power         Wmech annotation (Placement(
         transformation(extent={{100,70},{140,110}}), iconTransformation(

@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Machines;
 model TestStaticCentrifugalPump
-  input Modelica.SIunits.AbsolutePressure P_source(start = 2e5);
-  input Modelica.SIunits.Temperature T_source(start = 20+273.15);
-  input Modelica.SIunits.MassFlowRate Q(start = 100);
+  input Modelica.Units.SI.AbsolutePressure P_source(start=2e5);
+  input Modelica.Units.SI.Temperature T_source(start=20 + 273.15);
+  input Modelica.Units.SI.MassFlowRate Q(start=100);
   MetroscopeModelingLibrary.WaterSteam.Machines.StaticCentrifugalPump
     staticCentrifugalPump
     annotation (Placement(transformation(extent={{-12,-10},{8,10}})));

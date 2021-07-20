@@ -4,31 +4,42 @@ model Reheater
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   replaceable package HotMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  Modelica.SIunits.Area S_tot( start=1000) "Total exchange area";
+  Modelica.Units.SI.Area S_tot(start=1000) "Total exchange area";
   Real Level( start=0.2) "in [0;1], is an image of the set water level";
   Real Level_0( start=0.2) "same as Level but >0 (min = 1e-3)";
   Real Kfr_cold(start=1.e3) "Pressure loss coefficient";
   Real Kfr_hot(start=1.e3) "Pressure loss coefficient";
-  Modelica.SIunits.CoefficientOfHeatTransfer Kth_cond(start = 2000) "heat transfer coefficient in the condensation zone";
-  Modelica.SIunits.CoefficientOfHeatTransfer Kth_purge(start = 1000) "heat transfer coefficient in the purge zone";
-  Modelica.SIunits.Power Wcond(start=50e6) "Energy transfer during condensation";
-  Modelica.SIunits.Area S_cond(start = 500) "Exchange area in the condensation zone";
-  Modelica.SIunits.Power Wdeh(start=10e6) "Energy transfer during deheating";
-  Modelica.SIunits.Area S_deh(start = 250) "Exchange area in the deheating zone";
-  Modelica.SIunits.CoefficientOfHeatTransfer Kth_deh(start = 1000) "heat transfer coefficient in the deheating zone";
-  Modelica.SIunits.Power Wpurge(start=10e6) "Energy transfer during drain cooling";
-  Modelica.SIunits.Area S_purge(start = 250) "Exchange area in the purge zone";
-  Modelica.SIunits.Power Wtot(start = 70e6) "Total energy transfered";
-  Modelica.SIunits.SpecificEnthalpy hvsat_hot_deh_out( start = 1e6) "saturated vapor (hot side) specific enthalpy at deheating outlet";
-  Modelica.SIunits.SpecificEnthalpy hlsat_hot_cond_in( start = 1e6) "saturated liquid water (hot side) specific enthalpy at condensing inlet";
-  Modelica.SIunits.MassFlowRate Q_cold(start=500) "Inlet Mass flow rate";
+  Modelica.Units.SI.CoefficientOfHeatTransfer Kth_cond(start=2000)
+    "heat transfer coefficient in the condensation zone";
+  Modelica.Units.SI.CoefficientOfHeatTransfer Kth_purge(start=1000)
+    "heat transfer coefficient in the purge zone";
+  Modelica.Units.SI.Power Wcond(start=50e6)
+    "Energy transfer during condensation";
+  Modelica.Units.SI.Area S_cond(start=500)
+    "Exchange area in the condensation zone";
+  Modelica.Units.SI.Power Wdeh(start=10e6) "Energy transfer during deheating";
+  Modelica.Units.SI.Area S_deh(start=250) "Exchange area in the deheating zone";
+  Modelica.Units.SI.CoefficientOfHeatTransfer Kth_deh(start=1000)
+    "heat transfer coefficient in the deheating zone";
+  Modelica.Units.SI.Power Wpurge(start=10e6)
+    "Energy transfer during drain cooling";
+  Modelica.Units.SI.Area S_purge(start=250) "Exchange area in the purge zone";
+  Modelica.Units.SI.Power Wtot(start=70e6) "Total energy transfered";
+  Modelica.Units.SI.SpecificEnthalpy hvsat_hot_deh_out(start=1e6)
+    "saturated vapor (hot side) specific enthalpy at deheating outlet";
+  Modelica.Units.SI.SpecificEnthalpy hlsat_hot_cond_in(start=1e6)
+    "saturated liquid water (hot side) specific enthalpy at condensing inlet";
+  Modelica.Units.SI.MassFlowRate Q_cold(start=500) "Inlet Mass flow rate";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
-  Modelica.SIunits.MassFlowRate Q_hot(start=50) "Inlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_hot(start=50) "Inlet Mass flow rate";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
-  Modelica.SIunits.Temperature T_hot_in "hot fluid temperature in K at inlet";
-  Modelica.SIunits.Temperature T_hot_out "hot fluid temperature in deg_C at outlet";
-  Modelica.SIunits.Temperature T_cold_in "hot fluid temperature in deg_C at inlet";
-  Modelica.SIunits.Temperature T_cold_out "hot fluid temperature in deg_C at outlet";
+  Modelica.Units.SI.Temperature T_hot_in "hot fluid temperature in K at inlet";
+  Modelica.Units.SI.Temperature T_hot_out
+    "hot fluid temperature in deg_C at outlet";
+  Modelica.Units.SI.Temperature T_cold_in
+    "hot fluid temperature in deg_C at inlet";
+  Modelica.Units.SI.Temperature T_cold_out
+    "hot fluid temperature in deg_C at outlet";
   replaceable Common.Partial.BasicTransportModel deheating_hot(C_out(
                                                                h_vol(      start=2500e3)),
                                                                                          redeclare

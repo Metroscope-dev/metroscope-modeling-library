@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Junctions;
 model TestFlashTank
   import MetroscopeModelingLibrary;
-    input Modelica.SIunits.AbsolutePressure P_source(start = 71.2e5);
-  input Modelica.SIunits.SpecificEnthalpy h_source(start = 2.1e6);
-  input Modelica.SIunits.MassFlowRate Q(start = 4000);
+  input Modelica.Units.SI.AbsolutePressure P_source(start=71.2e5);
+  input Modelica.Units.SI.SpecificEnthalpy h_source(start=2.1e6);
+  input Modelica.Units.SI.MassFlowRate Q(start=4000);
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source sourcesWater1
     annotation (Placement(transformation(extent={{-94,14},{-74,34}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink_steam

@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Machines;
 model TestStodolaTurbine
-  input Modelica.SIunits.AbsolutePressure P_source(start = 20e5);
-  input Modelica.SIunits.SpecificEnthalpy h_source(start = 2.7718e6);
-  input Modelica.SIunits.MassFlowRate Q(start = 100);
+  input Modelica.Units.SI.AbsolutePressure P_source(start=20e5);
+  input Modelica.Units.SI.SpecificEnthalpy h_source(start=2.7718e6);
+  input Modelica.Units.SI.MassFlowRate Q(start=100);
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));

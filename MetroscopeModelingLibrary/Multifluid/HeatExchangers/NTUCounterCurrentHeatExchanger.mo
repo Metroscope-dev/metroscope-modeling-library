@@ -1,14 +1,14 @@
 within MetroscopeModelingLibrary.Multifluid.HeatExchangers;
 model NTUCounterCurrentHeatExchanger
   extends MetroscopeModelingLibrary.Multifluid.HeatExchangers.PartialHeatExchanger;
- Modelica.SIunits.CoefficientOfHeatTransfer K(start = 100)
-   "Global heat transfer coefficient (active if exchanger_type=3)";
- Modelica.SIunits.Area S(start = 10);
- Modelica.SIunits.Power Wmax(start=1e8);
- Modelica.SIunits.SpecificHeatCapacity Cp_hot(start=1000)
-   "Flue gas specific heat capacity";
- Modelica.SIunits.SpecificHeatCapacity Cp_cold(start=4200)
-   "Water specific heat capacity";
+  Modelica.Units.SI.CoefficientOfHeatTransfer K(start=100)
+    "Global heat transfer coefficient (active if exchanger_type=3)";
+  Modelica.Units.SI.Area S(start=10);
+  Modelica.Units.SI.Power Wmax(start=1e8);
+  Modelica.Units.SI.SpecificHeatCapacity Cp_hot(start=1000)
+    "Flue gas specific heat capacity";
+  Modelica.Units.SI.SpecificHeatCapacity Cp_cold(start=4200)
+    "Water specific heat capacity";
  Real NTU(start=0.3);
  Real epsilon(start=0.9);
  Real Cmin(start=10000);

@@ -2,14 +2,19 @@ within MetroscopeModelingLibrary.WaterSteam.Junctions;
 model SteamDryer
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  Modelica.SIunits.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
-  Modelica.SIunits.AbsolutePressure P_in(start=71e5) "Inlet Pressure";
-  Modelica.SIunits.SpecificEnthalpy h_in(start=1e5) "Inlet specific enthalpy";
-  Modelica.SIunits.SpecificEnthalpy hesat(start=2e6) "Enthalpy of saturated water";
-  Modelica.SIunits.SpecificEnthalpy hvsat(start=1e6) "Enthalpy of saturated vapor";
-  Modelica.SIunits.MassFraction x_out(start = 0.99) "Vapor mass fraction at outlet (0 < x <= 1 and x > x_in)";
-  Modelica.SIunits.MassFraction x_in(start = 0.8) "Vapor mass fraction at the inlet";
-  Modelica.SIunits.MassFraction x(start = 0.99) "Desired vapor mass fraction at the outlet";
+  Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
+  Modelica.Units.SI.AbsolutePressure P_in(start=71e5) "Inlet Pressure";
+  Modelica.Units.SI.SpecificEnthalpy h_in(start=1e5) "Inlet specific enthalpy";
+  Modelica.Units.SI.SpecificEnthalpy hesat(start=2e6)
+    "Enthalpy of saturated water";
+  Modelica.Units.SI.SpecificEnthalpy hvsat(start=1e6)
+    "Enthalpy of saturated vapor";
+  Modelica.Units.SI.MassFraction x_out(start=0.99)
+    "Vapor mass fraction at outlet (0 < x <= 1 and x > x_in)";
+  Modelica.Units.SI.MassFraction x_in(start=0.8)
+    "Vapor mass fraction at the inlet";
+  Modelica.Units.SI.MassFraction x(start=0.99)
+    "Desired vapor mass fraction at the outlet";
   replaceable Common.Partial.BasicTransportModel liquidSide(redeclare package
       Medium = WaterSteamMedium) annotation (Placement(transformation(
         extent={{19,-8},{-19,8}},

@@ -6,10 +6,10 @@ model PartialHeatExchanger
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
   Real K_friction_cold(start=1.e3) "Pressure loss coefficient";
   Real K_friction_hot(start=1.e3) "Pressure loss coefficient";
-  Modelica.SIunits.Power W(start=1e8);
-  Modelica.SIunits.MassFlowRate Q_cold(start=100) "Inlet Mass flow rate";
+  Modelica.Units.SI.Power W(start=1e8);
+  Modelica.Units.SI.MassFlowRate Q_cold(start=100) "Inlet Mass flow rate";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
-  Modelica.SIunits.MassFlowRate Q_hot(start=100) "Inlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_hot(start=100) "Inlet Mass flow rate";
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
   replaceable Common.Partial.BasicTransportModel coldSide( redeclare package
       Medium =
