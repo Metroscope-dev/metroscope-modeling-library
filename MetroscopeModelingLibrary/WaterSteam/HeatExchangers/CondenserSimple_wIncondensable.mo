@@ -15,11 +15,13 @@ model CondenserSimple_wIncondensable
   Modelica.Units.SI.Density rho_liquid_hot(start=1000);
   Real Kfr_cold(start=10) "Friction pressure loss coefficient";
   Modelica.Units.SI.AbsolutePressure P_incond(start=0) "partial pressure of incondensable gas";
-  Modelica.Units.SI.AbsolutePressure P_offset(start=0e5) "possible necessary constant to make compatible P_incond with the ideal gas law";
-  Real N_incond(start=0) "can be considered as an image of the incondensable quantity present in the condenser";
+
   constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
     "Gravity constant";
   parameter Boolean mass_balance = true;
+  parameter Modelica.Units.SI.AbsolutePressure P_offset(start=0e5) "possible necessary constant to make compatible P_incond with the ideal gas law";
+  parameter Real N_incond(start=0) "can be considered as an image of the incondensable quantity present in the condenser";
+
   Common.Connectors.FluidInlet C_hot_in( redeclare package Medium =
         WaterSteamMedium)
     annotation (Placement(transformation(extent={{-10,92},{10,112}})));
