@@ -19,8 +19,8 @@ model CondenserSimple_wIncondensable
   constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
     "Gravity constant";
   parameter Boolean mass_balance = true;
-  parameter Modelica.Units.SI.AbsolutePressure P_offset(start=0e5) "possible necessary constant to make compatible P_incond with the ideal gas law";
-  parameter Real N_incond(start=0) "can be considered as an image of the incondensable quantity present in the condenser";
+ Modelica.Units.SI.AbsolutePressure P_offset(start=0e5) "possible necessary constant to make compatible P_incond with the ideal gas law";
+  Real N_incond(start=0) "can be considered as an image of the incondensable quantity present in the condenser";
 
   Common.Connectors.FluidInlet C_hot_in( redeclare package Medium =
         WaterSteamMedium)
@@ -54,7 +54,6 @@ equation
   //Energy balance
   hotSide.Q_in*hotSide.h_in + hotSide.Q_out*hotSide.h_out = W;
 
-  //Psat = hotSide.P_in; <- coresponding to condenserSimple
   //introduction of a decoupling between Psat and the pressure in condenser
   //We can assume that in real life there's not only water in condenser, with some incindensable present also
   hotSide.P_in=P_incond+Psat;//In reference to the Dalton's law
