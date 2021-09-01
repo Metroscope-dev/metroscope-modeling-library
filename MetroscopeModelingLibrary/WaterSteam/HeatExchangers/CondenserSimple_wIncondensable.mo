@@ -15,6 +15,10 @@ model CondenserSimple_wIncondensable
   Modelica.Units.SI.Density rho_liquid_hot(start=1000);
   Real Kfr_cold(start=10) "Friction pressure loss coefficient";
   Modelica.Units.SI.AbsolutePressure P_incond(start=0) "partial pressure of incondensable gas";
+  Modelica.Units.SI.AbsolutePressure Ptot(start=0.05e5) "Total pressure inside the condenser, as it is measured";
+  Modelica.Units.SI.Temperature Tcold_in(start=15 + 273.15) "Water temperature at the cold side inlet";
+  Modelica.Units.SI.Temperature Tcold_out(start=25 + 273.15) "Water temperature at the cold side outlet";
+
 
   constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
     "Gravity constant";
@@ -56,6 +60,7 @@ equation
 
   //introduction of a decoupling between Psat and the pressure in condenser
   //We can assume that in real life there's not only water in condenser, with some incindensable present also
+  Ptot=hotSide.P_in;
   hotSide.P_in=P_incond+Psat;//In reference to the Dalton's law
   P_incond=P_offset+N_incond*Tsat;//in reference to the ideal gas law
 
@@ -65,6 +70,8 @@ equation
   deltaP_hot = rho_liquid_hot*g*WaterHeight;
   Tsat = hotSide.T_out;
   /***** COLD SIDE ********/
+   Tcold_in=coldSide.T_in;
+   Tcold_out=coldSide.T_out;
   coldSide.Q_in + coldSide.Q_out = 0;
   coldSide.Q_in*coldSide.h_in + coldSide.Q_out*coldSide.h_out = -W;
   deltaP_cold = coldSide.P_in - coldSide.P_out;
