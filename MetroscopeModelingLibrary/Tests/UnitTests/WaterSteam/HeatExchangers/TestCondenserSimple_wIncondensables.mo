@@ -16,7 +16,7 @@ equation
 
   // Forward causality
   // The outputs are the temperature of the outlet cooling water, and the flow rate needed from the cooling inlet.
-  /*
+
   turbine_outlet.h_out = 1500e3;
   turbine_outlet.Q_out = -150;
   turbine_outlet.P_out = 0.19e5; // You can either give the pressure or temperature, since the water is diphasic.
@@ -32,14 +32,14 @@ equation
   condenser.Kfr_cold = 1;
   condenser.Kth = 50000;
 
-  condenser.C_incond = 0.1 * time;
+  condenser.C_incond = 0.01;
   condenser.P_offset = 0.001e5; //1mbar
-  */
+
 
   // Reverse Causality
   // Determine the Kth of the condenser by giving either the flow rate in the cooling outlet, or the temperature of the outlet cooling water.
   // Determine Kfr_cold by giving the pressure at the cooling outlet.
-
+  /*
   turbine_outlet.h_out = 1500e3;
   turbine_outlet.Q_out = -150;
   turbine_outlet.P_out = 0.19e5; // You can either give the pressure or temperature, since the water is diphasic.
@@ -60,6 +60,7 @@ equation
 
   condenser.S = 100;
   condenser.WaterHeight = 2;
+  */
 
 
 
