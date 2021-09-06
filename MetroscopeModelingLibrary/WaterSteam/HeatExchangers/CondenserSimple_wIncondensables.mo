@@ -15,9 +15,12 @@ model CondenserSimple_wIncondensables
   Modelica.Units.SI.AbsolutePressure P_incond(start=0.001e5);
   Real C_incond "Incondensable molar concentration";
   Modelica.Units.SI.AbsolutePressure P_offset "Offset correction for ideal gaz law";
+  Modelica.Units.SI.MassFlowRate Q_cold(start=4500) "Cold water massflow rate";
+  Modelica.Units.SI.VolumeFlowRate Qv_cold_in(start=4.5) "cold water volumic flow rate at the inlet";
+  Modelica.Units.SI.Temperature T_cold_in "cold water temperature at the condenser inlet";
+  Modelica.Units.SI.Temperature T_cold_out "cold water temperature at the condenser outlet";
   constant Real R=Modelica.Constants.R "ideal gas constant";
-  constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
-    "Gravity constant";
+
   parameter Boolean mass_balance = true;
   Common.Connectors.FluidInlet C_hot_in( redeclare package Medium =
         WaterSteamMedium)
@@ -100,6 +103,11 @@ equation
   coldSide.Q_in*coldSide.h_in + coldSide.Q_out*coldSide.h_out = -W; // Energy balance
   deltaP_cold = coldSide.P_in - coldSide.P_out; // Pressure loss
   deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(coldSide.Q_in, coldSide.eps)/coldSide.rho_in; // Pressure Loss
+
+  Q_cold=coldSide.Q_in;
+  Qv_cold_in=coldSide.Qv_in;
+  T_cold_in=coldSide.T_in;
+  T_cold_out=coldSide.T_out;
 
   // HEAT EXCHANGE
   0 = Tsat - coldSide.T_out - (Tsat - coldSide.T_in)*exp(Kth*S*((coldSide.T_in - coldSide.T_out)/W));
