@@ -8,6 +8,7 @@ model CondenserSimple_wIncondensables
   Modelica.Units.SI.Power W(start=1e8);
   Modelica.Units.SI.MassFlowRate Q_top_up(start=0) "Inlet Mass flow rate";
   Modelica.Units.SI.Temperature Tsat(start=10 + 273.15);
+  Modelica.Units.SI.AbsolutePressure P_hot_in(start=0.051e5) "Steam pressure at the condenser inlet";
   Modelica.Units.SI.AbsolutePressure Psat(start=0.05e5);
   Modelica.Units.SI.Height WaterHeight(start=2);
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold(start=1e5) "Singular pressure loss";
@@ -83,6 +84,7 @@ equation
   incond_out.Q_in + incond_out.Q_out = 0;
   incond_out.Q_in*incond_out.h_in + incond_out.Q_out*incond_out.h_out = 0;
   P_incond = incond_out.P_out - incond_out.P_in; // Dalton law
+  P_hot_in=incond_in.P_in;
 
 
   /***** CONDENSATION *****/

@@ -47,7 +47,7 @@ equation
   cooling_inlet.P_out = 5e5;
   cooling_inlet.T_out = 15+273.15;
 
-  condenser.Psat = 0.185e5; // Give Psat to determine incondensable pressure
+  condenser.Tsat = 58.3+273.15; // Give Tsat to determine incondensable pressure and heat exchange coefficient
   condenser.C_incond = 0; // C_incond is put to 0 during calibration, P_offset = P_incond
   // The coefficient C_incond is then decided by looking at the dependancy of P_incond to Tsat
 
