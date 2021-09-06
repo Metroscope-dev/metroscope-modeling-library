@@ -65,14 +65,15 @@ equation
 
 
   connect(turbine_outlet.C_out, condenser.C_hot_in)
-    annotation (Line(points={{-10,32},{0,32},{0,10.1818}},color={238,46,47}));
-  connect(condenser.C_hot_out, extracted_water.C_in) annotation (Line(points={{0,-10},
-          {0,-30},{10,-30}},         color={238,46,47}));
+    annotation (Line(points={{-10,32},{0,32},{0,10.2222}},color={238,46,47}));
+  connect(condenser.C_hot_out, extracted_water.C_in) annotation (Line(points={{0,
+          -10.6667},{0,-30},{10,-30}},
+                                     color={238,46,47}));
   connect(cooling_inlet.C_out, condenser.C_cold_in)
-    annotation (Line(points={{-30,0},{-20,0},{-20,0.909091},{-10,0.909091}},
+    annotation (Line(points={{-30,0},{-20,0},{-20,4.66667},{-10.2,4.66667}},
                                                color={238,46,47}));
   connect(condenser.C_cold_out, cooling_outlet.C_in)
-    annotation (Line(points={{10,0.909091},{20,0.909091},{20,0},{30,0}},
+    annotation (Line(points={{10,-1.77778},{20,-1.77778},{20,0},{30,0}},
                                             color={238,46,47}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-40},
             {60,40}})),                                          Diagram(
