@@ -120,8 +120,8 @@ equation
 
   /***** WaterHeight *****/
   waterHeightPressureLoss.Kfr = 0;
-  waterHeightPressureLoss.z1 = 0;
-  waterHeightPressureLoss.z2  = WaterHeight;
+  waterHeightPressureLoss.z1 = WaterHeight;
+  waterHeightPressureLoss.z2  = 0;
 
 
   connect(coldSide.C_in, C_cold_in) annotation (Line(points={{20,0},{-40,0},{
