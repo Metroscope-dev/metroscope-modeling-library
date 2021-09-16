@@ -89,6 +89,7 @@ equation
   P_incond = incond_out.P_out - incond_out.P_in; // Dalton law
   P_hot_in=incond_in.P_in;
 
+
   /***** CONDENSATION *****/
 
   // HOT SIDE
@@ -116,10 +117,12 @@ equation
   // HEAT EXCHANGE
   0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*S*((T_cold_in - T_cold_out)/W));
 
+
   /***** WaterHeight *****/
   waterHeightPressureLoss.Kfr = 0;
-  waterHeightPressureLoss.z1 = 0;
-  waterHeightPressureLoss.z2  = WaterHeight;
+  waterHeightPressureLoss.z1 = WaterHeight;
+  waterHeightPressureLoss.z2  = 0;
+
 
   connect(coldSide.C_in, C_cold_in) annotation (Line(points={{20,0},{-40,0},{
           -40,52},{-102,52}},                                                   color={0,0,255}));
