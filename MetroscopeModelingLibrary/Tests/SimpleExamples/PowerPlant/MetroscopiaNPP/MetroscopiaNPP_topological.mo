@@ -64,8 +64,6 @@ model MetroscopiaNPP_topological
         origin={250,56})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LowPressureTurbine_2
     annotation (Placement(transformation(extent={{280,72},{300,92}})));
-  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondenserSimple condenser
-    annotation (Placement(transformation(extent={{322,-18},{360,10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source coldSource
     annotation (Placement(transformation(extent={{294,-12},{310,4}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink coldSink

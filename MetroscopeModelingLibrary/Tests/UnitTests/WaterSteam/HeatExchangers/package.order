@@ -1,7 +1,7 @@
 TestCondReheater
 TestCondReheater_PartialCondensation
 TestReheater
-TestCondenserSimple
 TestSuperheater_PartialCondensation
 TestSuperheater
 TestLiqLiqHX
+TestCondenserSimple
