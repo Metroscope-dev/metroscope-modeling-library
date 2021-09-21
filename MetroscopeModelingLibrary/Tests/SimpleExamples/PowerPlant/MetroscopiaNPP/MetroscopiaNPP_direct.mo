@@ -2,6 +2,11 @@
 model MetroscopiaNPP_direct
   extends
     MetroscopeModelingLibrary.Tests.SimpleExamples.PowerPlant.MetroscopiaNPP.MetroscopiaNPP_topological;
+
+
+  // Option to activate failures
+  parameter Integer mode= 1; // 1 for direct 2 for failure
+
   /* ----- Boundary Conditions ------ */
   input Real liquidFractionSG_val(start = 0) "%";
   input Real PressureSG_val(start = 50) "bar";
@@ -43,7 +48,28 @@ model MetroscopiaNPP_direct
   output Real Pi_FeedWaterPump;
   output Real Pc_Superheater;
 
+  //Failure parameters
+  Real HPR_Fouling_Coef;
+  Real LPR_Fouling_Coef;
+  Real SH_Fouling_Coef;
+  Real Cond_Fouling_Coef;
+  Real HPR_Subcooling_Surface_Change;
+
+
+
 equation
+
+  if mode == 1 then
+
+  HPR_Fouling_Coef=0;
+  LPR_Fouling_Coef=0;
+  SH_Fouling_Coef=0;
+  Cond_Fouling_Coef=0;
+  HPR_Subcooling_Surface_Change=0;
+
+
+  end if;
+
   /* ----- Boundary Conditions ------ */
   steamGenerator.ThermalPower = ThermalPower_val*1e6;
   steamGenerator.VaporFraction = 1 -liquidFractionSG_val/100;
@@ -116,17 +142,17 @@ equation
   LowPressureTurbine_2.eta_is = 0.859751;
   // Heat Exchangers
   HPReheater.S_tot = 100;
-  HPReheater.Level = 0.3;
-  HPReheater.Kth_cond = 25438.4;
-  HPReheater.Kth_purge = 25438.4/3;
+  HPReheater.Level = 0.3+(HPR_Subcooling_Surface_Change*0.003);
+  HPReheater.Kth_cond = 25438.4*(1-HPR_Fouling_Coef);
+  HPReheater.Kth_purge = (25438.4/3)*(1-HPR_Fouling_Coef);
   HPReheater.Kfr_cold = 140;
   HPReheater.Kfr_hot = 1;
   LPReheater.S_tot = 100;
-  LPReheater.Kth = 10178.4;
+  LPReheater.Kth = 10178.4*(1-LPR_Fouling_Coef);
   LPReheater.Kfr_cold = 75;
   LPReheater.Kfr_hot = 1;
   Superheater.S_tot = 100;
-  Superheater.Kth=11319.5;
+  Superheater.Kth=11319.5*(1-SH_Fouling_Coef);
   Superheater.Kfr_cold=1;//113.3;
   Superheater.Kfr_hot=1;
   // Pumps
@@ -151,7 +177,7 @@ equation
   HPpump.b3 = 0.85;
   HPpump.rhmin =0.20;
   // Condenser
-  condenser.Kth = 630645;
+  condenser.Kth = 630645*(1-Cond_Fouling_Coef);
   condenser.Kfr_cold=0.00600135;
   condenser.S = 100;
   condenser.WaterHeight = 0;
