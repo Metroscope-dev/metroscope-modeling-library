@@ -3273,4 +3273,8 @@ model MetroscopiaNPP_faulty_withStartValues
     h(start=500000.0),
     p(start=5778189.0),
     phase(start=0))))));
+  annotation (experiment(
+      __Dymola_NumberOfIntervals=10,
+      __Dymola_fixedstepsize=0.1,
+      __Dymola_Algorithm="Euler"));
 end MetroscopiaNPP_faulty_withStartValues;

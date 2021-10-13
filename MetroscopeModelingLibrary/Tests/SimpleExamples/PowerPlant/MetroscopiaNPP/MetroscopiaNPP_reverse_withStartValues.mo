@@ -3298,4 +3298,9 @@ model MetroscopiaNPP_reverse_withStartValues
     h(start=500000.0),
     p(start=5778200.0),
     phase(start=0))))));
+  annotation (experiment(
+      StopTime=1,
+      __Dymola_NumberOfIntervals=10,
+      __Dymola_fixedstepsize=0.1,
+      __Dymola_Algorithm="Euler"));
 end MetroscopiaNPP_reverse_withStartValues;
