@@ -65,17 +65,17 @@ model MetroscopiaNPP_topological
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LowPressureTurbine_2
     annotation (Placement(transformation(extent={{280,72},{300,92}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source coldSource
-    annotation (Placement(transformation(extent={{294,-12},{310,4}})));
+    annotation (Placement(transformation(extent={{288,-8},{304,8}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink coldSink
     annotation (Placement(transformation(
         extent={{-8,-8},{8,8}},
         rotation=0,
-        origin={380,-4})));
+        origin={380,-8})));
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.PipePressureLoss PressureLoss_Condenser
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
-        origin={342,-44})));
+        origin={344,-50})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StaticCentrifugalPump LPpump
     annotation (Placement(transformation(extent={{330,-86},{310,-66}})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondReheater LPReheater
@@ -124,9 +124,12 @@ model MetroscopiaNPP_topological
         extent={{5,-5},{-5,5}},
         rotation=0,
         origin={57,-15})));
+  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondenserSimple condenser
+    annotation (Placement(transformation(extent={{330,-16},{356,6}})));
 equation
   // Drum equation
   PressureLoss_after_drum.h_in = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(PressureLoss_after_drum.P_in));
+
   connect(steamGenerator.C_steam_out, HPcontrolValve.C_in) annotation (Line(
         points={{-98,18.42},{-98,34},{-52,34},{-52,33.8182}}, color={238,46,47},
       thickness=0.5));
@@ -189,19 +192,8 @@ equation
   connect(SteamExtraction_LP.C_main_out, LowPressureTurbine_2.C_in)
     annotation (Line(points={{260.4,82},{280,82}}, color={238,46,47},
       thickness=0.5));
-  connect(condenser.C_hot_in, LowPressureTurbine_2.C_out) annotation (Line(
-        points={{341,10.28},{341,82},{300.2,82}}, color={238,46,47},
-      thickness=0.5));
-  connect(condenser.C_cold_in, coldSource.C_out)
-    annotation (Line(points={{322,-4},{310,-4}}, color={63,81,181}));
-  connect(condenser.C_cold_out, coldSink.C_in)
-    annotation (Line(points={{360,-4},{372,-4}}, color={63,81,181}));
-  connect(PressureLoss_Condenser.C_in, condenser.C_hot_out) annotation (Line(
-        points={{342,-34},{342,-32.14},{341,-32.14},{341,-18.28}}, color={28,108,
-          200},
-      thickness=0.5));
   connect(LPpump.C_in, PressureLoss_Condenser.C_out) annotation (Line(
-      points={{330,-76},{342,-76},{342,-54.2}},
+      points={{330,-76},{344,-76},{344,-60.2}},
       color={28,108,200},
       thickness=0.5));
   connect(LPReheater.C_hot_in, PressureLoss_DryerCondensats2.C_out) annotation (
@@ -225,10 +217,6 @@ equation
       Line(
       points={{300,-126.182},{246,-126.182},{246,-84},{248,-84}},
       color={28,108,200},
-      thickness=0.5));
-  connect(LPCondReheaterControlValve.C_out, condenser.C_hot_in) annotation (
-      Line(points={{310.1,-126.182},{398,-126.182},{398,10.28},{341,10.28}},
-        color={28,108,200},
       thickness=0.5));
   connect(HPpump.C_in, PressureLoss_after_drum.C_out)
     annotation (Line(points={{76,-76},{95.8,-76}}, color={28,108,200},
@@ -298,6 +286,24 @@ equation
         points={{229.4,90.6},{229.4,126},{376,126}}, color={0,0,127}));
   connect(HighPressureTurbine_2.C_power, generator.C_power) annotation (Line(
         points={{69.4,42.6},{69.4,126},{376,126}}, color={0,0,127}));
+  connect(PressureLoss_Condenser.C_in, condenser.C_hot_out) annotation (Line(
+      points={{344,-40},{343,-16.7333}},
+      color={63,81,181},
+      thickness=0.5));
+  connect(condenser.C_cold_out, coldSink.C_in) annotation (Line(points={{356,-6.95556},
+          {364,-6.95556},{364,-8},{372,-8}}, color={63,81,181}));
+  connect(coldSource.C_out, condenser.C_cold_in) annotation (Line(points={{304,
+          0},{320,0},{320,0.133333},{329.74,0.133333}}, color={63,81,181}));
+  connect(LowPressureTurbine_2.C_out, condenser.C_hot_in) annotation (Line(
+      points={{300.2,82},{342,82},{342,10},{343,10},{343,6.24444}},
+      color={238,46,47},
+      thickness=0.5));
+  connect(LPCondReheaterControlValve.C_out, condenser.C_hot_in) annotation (
+      Line(
+      points={{310.1,-126.182},{396,-126.182},{396,14},{343,14},{343,6.24444}},
+      color={63,81,181},
+      thickness=0.5));
+
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
             -140},{460,140}})),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{460,

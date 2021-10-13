@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.PowerPlant.MetroscopiaNPP;
-model MetroscopiaNPP_direct_withStartValues
-  extends MetroscopiaNPP_direct(
+model MetroscopiaNPP_faulty_withStartValues
+  extends MetroscopiaNPP_faulty(
     ActivePower(start=568.7739),
     HPCondReheaterControlValve(
     C_in(
@@ -3274,8 +3274,7 @@ model MetroscopiaNPP_direct_withStartValues
     p(start=5778189.0),
     phase(start=0))))));
   annotation (experiment(
-      StopTime=1,
       __Dymola_NumberOfIntervals=10,
       __Dymola_fixedstepsize=0.1,
       __Dymola_Algorithm="Euler"));
-end MetroscopiaNPP_direct_withStartValues;
+end MetroscopiaNPP_faulty_withStartValues;

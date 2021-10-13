@@ -236,6 +236,8 @@ equation
   condenser.Kfr_cold=0.00600135;
   condenser.S = 100;
   condenser.WaterHeight = 0;
+  condenser.C_incond = 0;
+  condenser.P_offset = 0;
   // Steam Extractions and dryers
 
 

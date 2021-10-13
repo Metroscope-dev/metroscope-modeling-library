@@ -2659,8 +2659,6 @@ model MetroscopiaNPP_reverse_withStartValues
     p(start=284999.9),
     phase(start=0))),
     deltaP_cold(start=15000.083),
-    deltaP_hot(start=0.0),
-    g(start=9.80665),
     hotSide(
     C_in(
     H(start=1421328900.0),
@@ -2703,8 +2701,7 @@ model MetroscopiaNPP_reverse_withStartValues
     d(start=992.5758),
     h(start=163128.03),
     p(start=6979.82),
-    phase(start=0))),
-    rho_liquid_hot(start=992.5821)),
+    phase(start=0)))),
     condenser_Kth(start=633560.56),
     generator(
     Welec(start=568780000.0),
@@ -3301,4 +3298,9 @@ model MetroscopiaNPP_reverse_withStartValues
     h(start=500000.0),
     p(start=5778200.0),
     phase(start=0))))));
+  annotation (experiment(
+      StopTime=1,
+      __Dymola_NumberOfIntervals=10,
+      __Dymola_fixedstepsize=0.1,
+      __Dymola_Algorithm="Euler"));
 end MetroscopiaNPP_reverse_withStartValues;
