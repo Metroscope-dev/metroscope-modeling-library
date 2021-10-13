@@ -54,6 +54,8 @@ model MetroscopiaNPP_direct
   Real SH_Fouling_Coef;
   Real Cond_Fouling_Coef;
   Real HPR_Subcooling_Surface_Change;
+  Real Cond_incond;
+
 
 
 
@@ -66,7 +68,7 @@ equation
   SH_Fouling_Coef=0;
   Cond_Fouling_Coef=0;
   HPR_Subcooling_Surface_Change=0;
-
+  Cond_incond=0;
 
   end if;
 
@@ -113,8 +115,8 @@ equation
 
 
   /* ---- Parameters ----- */
-  // Valves
   SuperHeaterControlValve.Opening= 1;
+  // Valves
   SuperHeaterControlValve.Cvmax = 1248.76;
   // Regulating Valves
   PumpControlValve.Cvmax = 1e4;
@@ -181,6 +183,8 @@ equation
   condenser.Kfr_cold=0.00600135;
   condenser.S = 100;
   condenser.WaterHeight = 0;
+  condenser.C_incond = Cond_incond;
+  condenser.P_offset = 0;
   // Steam Extractions and dryers
   SteamExtraction_Tank.alpha = 0.95;
   SteamExtraction_HP.alpha = 0.95;

@@ -3,7 +3,6 @@ model MetroscopiaNPP_faulty
   extends MetroscopiaNPP_direct(mode=2);
 
   input Real Failure_FTSH(start=0);
-  input Real Failure_PSSH(start=0);
   input Real Failure_PSHPR(start=0);
   input Real Failure_FTHPR(start=0);
   input Real Failure_PSLPR(start=0);
@@ -22,14 +21,12 @@ model MetroscopiaNPP_faulty
   input Real Failure_SH_Fouling(start=0);
   input Real Failure_Cond_Fouling(start=0);
   input Real Failure_HPR_SSC(start=0);
+  input Real Failure_Condenser_incond(start=0);
 
 
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.PressureCut
     FuiteTub_SuperHeater
     annotation (Placement(transformation(extent={{134,78},{144,94}})));
-  MetroscopeModelingLibrary.WaterSteam.PressureLosses.PressureCut
-    PlaqSep_SuperHeater
-    annotation (Placement(transformation(extent={{134,92},{144,106}})));
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.PressureCut
     PlaqSep_HPReheater annotation (Placement(transformation(
         extent={{-6,-5},{6,5}},
@@ -93,7 +90,6 @@ equation
 
 
   FuiteTub_SuperHeater.Q_in = 1e-3 + Failure_FTSH;
-  PlaqSep_SuperHeater.Q_in = 1e-3 + Failure_PSSH;
   PlaqSep_HPReheater.Q_in = 1e-3 + Failure_PSHPR;
   FuiteTub_HPReheater.Q_in = 1e-3 + Failure_FTHPR;
   PlaqSep_LPReheater.Q_in = 1e-3 + Failure_PSLPR;
@@ -113,17 +109,13 @@ equation
   SH_Fouling_Coef = Failure_SH_Fouling/100;
   Cond_Fouling_Coef = Failure_Cond_Fouling/100;
   HPR_Subcooling_Surface_Change = Failure_HPR_SSC;
+  Cond_incond = Failure_Condenser_incond;
 
 
   connect(FuiteTub_SuperHeater.C_in, SuperHeaterControlValve.C_out) annotation (
      Line(points={{134,86},{94,86},{94,71.8182},{40.1,71.8182}}, color={217,67,180}));
-  connect(PlaqSep_SuperHeater.C_in, SuperHeaterControlValve.C_out) annotation (
-      Line(points={{134,99},{94,99},{94,71.8182},{40.1,71.8182}}, color={217,67,
-          180}));
   connect(FuiteTub_SuperHeater.C_out, LowPressureTurbine_1.C_in) annotation (
       Line(points={{144.1,86},{198,86},{198,82},{208,82}}, color={217,67,180}));
-  connect(PlaqSep_SuperHeater.C_out, PressureLoss_SteamExtractionHP1.C_in)
-    annotation (Line(points={{144.1,99},{202,99},{202,26}}, color={217,67,180}));
   connect(HPpump.C_out, FuiteTub_HPReheater.C_in) annotation (Line(points={{55.8,
           -76},{46,-76},{46,-67},{40,-67}}, color={217,67,180}));
   connect(HPpump.C_out, PlaqSep_HPReheater.C_in) annotation (Line(points={{55.8,
