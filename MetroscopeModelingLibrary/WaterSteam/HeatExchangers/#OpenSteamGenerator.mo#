@@ -19,11 +19,11 @@ public
         origin={0,48})));
   BoundaryConditions.Sink waterSupplySink
     annotation (Placement(transformation(extent={{22,0},{-18,40}})));
-  Common.Connectors.FluidInlet C_water_in(redeclare package Medium = water)
+  Common.Connectors.FluidInlet C_water_in(redeclare package 
     annotation (Placement(transformation(extent={{36,10},{56,30}})));
-  Common.Connectors.FluidOutlet C_steam_out(redeclare package Medium = water)
+  Common.Connectors.FluidOutlet C_steam_out
     annotation (Placement(transformation(extent={{-10,90},{10,112}})));
-  Common.Connectors.FluidOutlet C_drain_out(redeclare package Medium = water)
+  Common.Connectors.FluidOutlet C_drain_out
     annotation (Placement(transformation(extent={{-8,-110},{12,-88}})));
   BoundaryConditions.Source drainSource annotation (Placement(transformation(
         extent={{20,-20},{-20,20}},
