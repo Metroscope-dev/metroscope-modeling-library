@@ -3,3 +3,4 @@ TemperatureSensor
 PressureSensor
 FlowSensor
 DeltaPressureSensor
+HumiditySensor
