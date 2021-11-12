@@ -2,9 +2,16 @@ within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model CondenserSimple
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  Modelica.Units.SI.CoefficientOfHeatTransfer Kth(start=100)
+
+  connector InputReal = input Real;
+  connector InputArea = input Modelica.Units.SI.Area;
+  connector InputAbsolutePressure = input Modelica.Units.SI.AbsolutePressure;
+  connector InputCoefficientOfHeatTransfer = input
+      Modelica.Units.SI.CoefficientOfHeatTransfer;
+
+  InputCoefficientOfHeatTransfer Kth(start=100)
     "Global heat transfer coefficient (active if exchanger_type=3)";
-  Modelica.Units.SI.Area S(start=10);
+  InputArea S(start=10);
   Modelica.Units.SI.Power W(start=1e8);
   Modelica.Units.SI.MassFlowRate Q_top_up(start=0) "Inlet Mass flow rate";
   Modelica.Units.SI.Temperature Tsat(start=10 + 273.15);
@@ -12,10 +19,10 @@ model CondenserSimple
   Modelica.Units.SI.AbsolutePressure Psat(start=0.05e5);
   Modelica.Units.SI.Height WaterHeight(start=2);
   MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold(start=1e5) "Singular pressure loss";
-  Real Kfr_cold(start=10) "Friction pressure loss coefficient";
-  Modelica.Units.SI.AbsolutePressure P_incond(start=0.001e5);
+  InputReal Kfr_cold(start=10) "Friction pressure loss coefficient";
+  InputAbsolutePressure P_incond(start=0.001e5);
   Real C_incond "Incondensable molar concentration";
-  Modelica.Units.SI.AbsolutePressure P_offset "Offset correction for ideal gaz law";
+  InputAbsolutePressure P_offset "Offset correction for ideal gas law";
   Modelica.Units.SI.MassFlowRate Q_cold(start=4500) "Cold water massflow rate";
   Modelica.Units.SI.VolumeFlowRate Qv_cold_in(start=4.5) "cold water volumic flow rate at the inlet";
   Modelica.Units.SI.Temperature T_cold_in "cold water temperature at the condenser inlet";

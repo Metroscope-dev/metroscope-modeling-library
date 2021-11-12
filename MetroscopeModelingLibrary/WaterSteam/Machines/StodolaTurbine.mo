@@ -5,12 +5,15 @@ model StodolaTurbine
     extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=60e5), P_out(start=55e5),h_in(start=2.7e6), h_out(start=2.6e6), redeclare
       package Medium =
         WaterSteamMedium);
-public
-  Real Cst(start=1.e7) "Stodola's ellipse coefficient";
+
+  connector InputReal = input Real;
+  connector InputPerUnit = input Modelica.Units.SI.PerUnit;
+
+  InputReal Cst(start=1.e7) "Stodola's ellipse coefficient";
   Modelica.Units.SI.Area area_nz(start=1) "Nozzle area";
-  Real eta_nz(start=1.0)
+  InputPerUnit eta_nz(start=1.0)
     "Nozzle efficency (eta_nz < 1 - turbine with nozzle - eta_nz = 1 - turbine without nozzle)";
-  Real eta_is(start=0.8) "Nominal isentropic efficiency";
+  InputPerUnit eta_is(start=0.8) "Nominal isentropic efficiency";
   Modelica.Units.SI.MassFlowRate Q(start=500) "Mass flow rate";
   Modelica.Units.SI.MassFraction x_in(start=1);
   Modelica.Units.SI.MassFraction x_out(start=0.9);

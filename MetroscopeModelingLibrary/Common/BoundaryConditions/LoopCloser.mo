@@ -1,9 +1,16 @@
 within MetroscopeModelingLibrary.Common.BoundaryConditions;
 model LoopCloser
-extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel;
+  extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel;
+
+  connector InputAbsolutePressure = input Modelica.Units.SI.AbsolutePressure;
+
+  InputAbsolutePressure P "Fluid pressure";
 equation
   h_out = h_in;
   P_out = P_in;
+  // The extra pressure variable is defined ad hoc with connector input type
+  // since you cannot change the type of the the variables in the base class
+  P = P_in;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

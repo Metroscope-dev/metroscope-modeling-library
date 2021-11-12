@@ -2,16 +2,21 @@ within MetroscopeModelingLibrary.Common.BoundaryConditions;
 model Sink
     replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
+
+  connector InputAbsolutePressure = input Modelica.Units.SI.AbsolutePressure;
+  connector InputSpecificEnthalpy = input Modelica.Units.SI.SpecificEnthalpy;
+  connector InputMassFraction = input Medium.MassFraction;
+
   Modelica.Units.SI.MassFlowRate Q_in(start=500);
   Modelica.Units.SI.VolumeFlowRate Qv_in(start=500);
-  Modelica.Units.SI.AbsolutePressure P_in(start=1e5);
+  InputAbsolutePressure P_in(start=1e5);
   Modelica.Units.SI.Temperature T_in(start=293.15);
   Modelica.Units.SI.Temperature T_vol(start=293.15);
   Modelica.Units.SI.SpecificEnthalpy h_in(start=1e5);
-  Modelica.Units.SI.SpecificEnthalpy h_vol(start=1e5);
+  InputSpecificEnthalpy h_vol(start=1e5);
   Modelica.Units.SI.MassFlowRate Qi_in[Medium.nXi];
-      Medium.MassFraction Xi_vol[Medium.nXi];
-      Medium.MassFraction Xi_in[Medium.nXi];
+  InputMassFraction Xi_vol[Medium.nXi];
+  Medium.MassFraction Xi_in[Medium.nXi];
   PartialBoundaryCondition partialBoundaryCondition(redeclare package                Medium =
         Medium)
     annotation (Placement(transformation(extent={{56,-10},{36,10}})));

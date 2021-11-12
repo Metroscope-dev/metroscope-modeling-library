@@ -1,7 +1,10 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model SingularPressureAndHeatLoss "Singular pressure loss"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
- Real Kfr(start=1.e3) "Friction pressure loss coefficient";
+
+  connector InputReal = input Real;
+
+  InputReal Kfr(start=1.e3) "Friction pressure loss coefficient";
   Modelica.Blocks.Interfaces.RealInput W annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,

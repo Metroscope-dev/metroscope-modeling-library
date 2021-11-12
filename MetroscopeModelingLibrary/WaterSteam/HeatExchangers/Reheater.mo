@@ -4,14 +4,20 @@ model Reheater
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   replaceable package HotMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  Modelica.Units.SI.Area S_tot(start=1000) "Total exchange area";
+
+  connector InputReal = input Real;
+  connector InputArea = input Modelica.Units.SI.Area;
+  connector InputCoefficientOfHeatTransfer = input
+      Modelica.Units.SI.CoefficientOfHeatTransfer;
+
+  InputArea S_tot(start=1000) "Total exchange area";
   Real Level( start=0.2) "in [0;1], is an image of the set water level";
   Real Level_0( start=0.2) "same as Level but >0 (min = 1e-3)";
-  Real Kfr_cold(start=1.e3) "Pressure loss coefficient";
-  Real Kfr_hot(start=1.e3) "Pressure loss coefficient";
-  Modelica.Units.SI.CoefficientOfHeatTransfer Kth_cond(start=2000)
+  InputReal Kfr_cold(start=1.e3) "Pressure loss coefficient";
+  InputReal Kfr_hot(start=1.e3) "Pressure loss coefficient";
+  InputCoefficientOfHeatTransfer Kth_cond(start=2000)
     "heat transfer coefficient in the condensation zone";
-  Modelica.Units.SI.CoefficientOfHeatTransfer Kth_purge(start=1000)
+  InputCoefficientOfHeatTransfer Kth_purge(start=1000)
     "heat transfer coefficient in the purge zone";
   Modelica.Units.SI.Power Wcond(start=50e6)
     "Energy transfer during condensation";
