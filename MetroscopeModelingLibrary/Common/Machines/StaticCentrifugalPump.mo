@@ -36,8 +36,10 @@ public
   Modelica.Units.SI.SpecificEnthalpy deltaH
     "Specific enthalpy variation between the outlet and the inlet";
    MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP "Singular pressure loss";
-  Modelica.Blocks.Interfaces.RealInput VRot annotation (Placement(
-        transformation(extent={{0,-142},{40,-102}}), iconTransformation(
+  MetroscopeModelingLibrary.Common.Connectors.RealOutput VRot annotation (Placement(
+        transformation(extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={0,-120}),                            iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={0,-120})));

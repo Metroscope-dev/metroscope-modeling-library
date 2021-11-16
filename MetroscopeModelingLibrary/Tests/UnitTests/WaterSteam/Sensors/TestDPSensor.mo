@@ -12,7 +12,6 @@ model TestDPSensor
     annotation (Placement(transformation(extent={{-10,12},{10,32}})));
 equation
 
-
   source.Q_out = -1500;
   source.T_out = 273.15 + 20;
   source.P_out = 1e5;
@@ -20,6 +19,7 @@ equation
   sink.h_vol = 1e6;
 
   singularPressureLoss.Kfr = 1;
+
   connect(source.C_out, singularPressureLoss.C_in)
     annotation (Line(points={{-20,0},{-10,0}}, color={63,81,181}));
   connect(sink.C_in, singularPressureLoss.C_out)

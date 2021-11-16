@@ -5,8 +5,10 @@ public
   MetroscopeModelingLibrary.Common.Units.Cv Cvmax(start=8005.42)
     "Maximum CV (active if mode_caract=0)";
   MetroscopeModelingLibrary.Common.Units.Cv Cv(start=100) "Cv";
-  Modelica.Blocks.Interfaces.RealInput Opening annotation (Placement(
-        transformation(extent={{-62,152},{-22,192}}), iconTransformation(
+  MetroscopeModelingLibrary.Common.Connectors.RealOutput Opening annotation (Placement(
+        transformation(extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={0,118}),                              iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,182})));

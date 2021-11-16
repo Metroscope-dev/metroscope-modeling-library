@@ -5,11 +5,13 @@ model TestStaticCentrifugalPump
   input Modelica.Units.SI.MassFlowRate Q(start=100);
   MetroscopeModelingLibrary.WaterSteam.Machines.StaticCentrifugalPump
     staticCentrifugalPump
-    annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
-    annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
+    annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink
-    annotation (Placement(transformation(extent={{54,-10},{74,10}})));
+    annotation (Placement(transformation(extent={{50,-10},{70,10}})));
+  Common.Sensors.RotSpeedSensor rotSpeedSensor
+    annotation (Placement(transformation(extent={{10,-34},{30,-14}})));
 equation
 
   // Forward causality
@@ -50,10 +52,12 @@ equation
 
 
   connect(staticCentrifugalPump.C_out, sink.C_in)
-    annotation (Line(points={{8.2,0},{54,0}}, color={238,46,47}));
+    annotation (Line(points={{10.2,0},{50,0}},color={238,46,47}));
   connect(source.C_out, staticCentrifugalPump.C_in)
-    annotation (Line(points={{-60,0},{-12,0}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
+    annotation (Line(points={{-50,0},{-10,0}}, color={238,46,47}));
+  connect(rotSpeedSensor.VRot_input, staticCentrifugalPump.VRot)
+    annotation (Line(points={{9.2,-24},{0,-24},{0,-12}}, color={0,0,0}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-40},
             {80,20}})),                                          Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
+        coordinateSystem(preserveAspectRatio=false, extent={{-80,-40},{80,20}})));
 end TestStaticCentrifugalPump;
