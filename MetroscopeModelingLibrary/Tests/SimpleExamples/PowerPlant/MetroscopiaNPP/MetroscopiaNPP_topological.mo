@@ -133,6 +133,16 @@ model MetroscopiaNPP_topological
     annotation (Placement(transformation(extent={{-42,-108},{-62,-88}})));
   MetroscopeModelingLibrary.Common.Sensors.OpeningSensor openingSensor
     annotation (Placement(transformation(extent={{46,80},{66,100}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source
+    annotation (Placement(transformation(
+        extent={{-5.5,-4.5},{5.5,4.5}},
+        rotation=270,
+        origin={66.5,-49.5})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source1
+    annotation (Placement(transformation(
+        extent={{-5.5,-4.5},{5.5,4.5}},
+        rotation=270,
+        origin={320.5,-51.5})));
 equation
   // Drum equation
   PressureLoss_after_drum.h_in = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(PressureLoss_after_drum.P_in));
@@ -320,6 +330,10 @@ equation
           181}));
   connect(openingSensor.Op_input, SuperHeaterControlValve.Opening)
     annotation (Line(points={{45.2,90},{35,90},{35,80.0909}}, color={0,0,0}));
+  connect(HPpump.C_power, source.u) annotation (Line(points={{66,-63.8},{66,-55},
+          {66.5,-55}}, color={0,0,127}));
+  connect(LPpump.C_power, source1.u)
+    annotation (Line(points={{320,-63.8},{320.5,-57}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
             -140},{460,140}})),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{460,

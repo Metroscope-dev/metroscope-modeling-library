@@ -41,8 +41,13 @@ public
         rotation=270,
         origin={0,-120}),                            iconTransformation(
         extent={{-20,-20},{20,20}},
-        rotation=90,
+        rotation=270,
         origin={0,-120})));
+  Electrical.Connectors.C_power C_power annotation (Placement(transformation(extent={{
+            -18,118},{22,158}}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={0,122})));
 equation
   deltaH = h_out - h_in;
   deltaP = P_out - P_in;
@@ -66,6 +71,8 @@ equation
   Wm = Q*deltaH/rm;
   /* Hydraulic power */
   Wh = Qv*deltaP/rh;
+
+  C_power.W = Wm;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
