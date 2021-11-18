@@ -10,7 +10,7 @@ model TestStodolaTurbine
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine stodolaTurbine
     annotation (Placement(transformation(extent={{-14,-10},{6,10}})));
-  Electrical.BoundaryConditions.Sink sink1
+  .MetroscopeModelingLibrary.Electrical.BoundaryConditions.Sink sink1
     annotation (Placement(transformation(extent={{14,10},{22,18}})));
 equation
 

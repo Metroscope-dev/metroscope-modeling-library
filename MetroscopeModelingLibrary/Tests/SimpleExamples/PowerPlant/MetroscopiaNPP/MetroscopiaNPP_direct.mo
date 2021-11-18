@@ -59,6 +59,10 @@ model MetroscopiaNPP_direct
 
 
 
+  Electrical.BoundaryConditions.Sink sink
+    annotation (Placement(transformation(extent={{458,116},{480,136}})));
+  Electrical.Sensors.PowerSensor ActivePower_sensor
+    annotation (Placement(transformation(extent={{432,116},{452,136}})));
 equation
 
   if mode == 1 then
@@ -230,6 +234,10 @@ equation
   sinkVent.Q_in = 0.01;
   sinkVent.h_vol = 1.2e6;
   coldSink.h_vol =1e4;
+  connect(ActivePower_sensor.C_in, generator.C_elec)
+    annotation (Line(points={{430.8,126},{424,126}}, color={0,0,127}));
+  connect(ActivePower_sensor.C_out, sink.u)
+    annotation (Line(points={{453.2,126},{458,126}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end MetroscopiaNPP_direct;
