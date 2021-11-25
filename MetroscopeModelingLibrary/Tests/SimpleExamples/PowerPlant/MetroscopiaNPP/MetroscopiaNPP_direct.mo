@@ -238,6 +238,8 @@ equation
     annotation (Line(points={{430.8,126},{424,126}}, color={0,0,127}));
   connect(ActivePower_sensor.C_out, sink.u)
     annotation (Line(points={{453.2,126},{458,126}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
+            -140},{520,160}})),                                  Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{520,
+            160}})));
 end MetroscopiaNPP_direct;
