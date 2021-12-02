@@ -1,7 +1,5 @@
 within MetroscopeModelingLibrary.Common.Sensors;
 model PressureDifferenceSensor
-    replaceable package Medium =
-      MetroscopeModelingLibrary.Common.Medium.PartialMedium;
     extends
     MetroscopeModelingLibrary.Common.Sensors.BaseSensors.BaseDifferenceSensor;
   Common.Connectors.RealOutput DeltaP(final quantity="Pressure",

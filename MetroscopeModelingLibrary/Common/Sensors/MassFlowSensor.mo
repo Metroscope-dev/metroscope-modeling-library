@@ -1,7 +1,5 @@
 within MetroscopeModelingLibrary.Common.Sensors;
 model MassFlowSensor
-    replaceable package Medium =
-      MetroscopeModelingLibrary.Common.Medium.PartialMedium;
           extends
     MetroscopeModelingLibrary.Common.Sensors.BaseSensors.BaseFlowSensor;
   Common.Connectors.RealOutput Q(final quantity="Mass flow",
