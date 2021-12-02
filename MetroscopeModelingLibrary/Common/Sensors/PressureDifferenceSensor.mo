@@ -11,12 +11,7 @@ model PressureDifferenceSensor
             {60,10}}),     iconTransformation(extent={{40,-6},{52,6}})));
 equation
  DeltaP = C_out.P - C_in.P;
-    annotation (defaultComponentName = "pressureDifference",Placement(transformation(extent={{40,-10},{60,10}})),
-              Placement(
-        transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={50,0})),
+    annotation (defaultComponentName = "pressureDifference",
               Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-60},
             {80,60}}), graphics={
         Line(

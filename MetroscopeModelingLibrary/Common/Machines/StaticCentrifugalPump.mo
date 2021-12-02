@@ -77,11 +77,6 @@ equation
         Line(points={{-80,0},{80,0}}),
         Line(points={{80,0},{2,60}}),
         Line(points={{80,0},{0,-60}})}),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
@@ -105,5 +100,5 @@ equation
     Daniel Bouskela</li>
 </ul>
 </html>
-"), DymolaStoredErrors);
+"));
 end StaticCentrifugalPump;

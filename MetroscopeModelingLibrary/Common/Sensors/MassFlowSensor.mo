@@ -13,7 +13,7 @@ equation
   C_in.Q = Q;
   connect(C_out, C_out)
     annotation (Line(points={{30,-40},{30,-40}}, color={238,46,47}));
-    annotation (defaultComponentName = "massFlow",Placement(transformation(extent={{40,30},{60,50}})),
+    annotation (defaultComponentName = "massFlow",
               Icon(coordinateSystem(preserveAspectRatio=false, extent={{-40,-40},
             {60,120}}),graphics={
         Ellipse(

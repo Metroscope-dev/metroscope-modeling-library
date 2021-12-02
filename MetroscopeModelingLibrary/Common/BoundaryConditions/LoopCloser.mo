@@ -12,11 +12,6 @@ equation
           points={{-100,0},{98,0}},
           color={0,0,0},
           thickness=0.5)}),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
@@ -51,5 +46,5 @@ equation
     Metroscope.tech</li>
 </ul>
 </html>
-"), DymolaStoredErrors);
+"));
 end LoopCloser;

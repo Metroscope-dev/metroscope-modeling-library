@@ -15,8 +15,7 @@ public
 equation
   state_in = Medium.setState_phX(C_in.P, C_in.h_vol,C_in.Xi_vol);
   T = Medium.temperature(state_in);
-    annotation (defaultComponentName = "pressure",Placement(transformation(extent={{40,30},{60,50}})),
-                Placement(transformation(extent={{40,30},{60,50}})),
+    annotation (defaultComponentName = "pressure",
               Icon(coordinateSystem(preserveAspectRatio=false, extent={{-40,-40},
             {60,120}}),graphics={
         Line(

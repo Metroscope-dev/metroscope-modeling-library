@@ -2,10 +2,9 @@ within MetroscopeModelingLibrary.FlueGases.Sensors;
 model PressureFlueGases
     replaceable package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
-    extends MetroscopeModelingLibrary.Common.Sensors.PressureSensor(    redeclare
-      package Medium = FlueGasesMedium);
-    annotation (defaultComponentName = "pressure",Placement(transformation(extent={{40,30},{60,50}})),
-                Placement(transformation(extent={{40,30},{60,50}})),
+    extends MetroscopeModelingLibrary.Common.Sensors.PressureSensor(    redeclare package
+              Medium = FlueGasesMedium);
+    annotation (defaultComponentName = "pressure",
     Documentation(info="<html>
 <p><b>V2</b> Creation of the heritage relationship and modification of the component accordingly (23/05/2019)</p>
 <p><b>V1</b> Creation of the component and the single test (07/05/2019)</p>

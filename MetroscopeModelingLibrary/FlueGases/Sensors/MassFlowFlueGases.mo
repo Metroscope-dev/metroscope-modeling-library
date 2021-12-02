@@ -5,7 +5,7 @@ model MassFlowFlueGases
           extends MetroscopeModelingLibrary.Common.Sensors.MassFlowSensor(
                                                       redeclare package Medium =
         FlueGasesMedium);
-    annotation (defaultComponentName = "massFlow",Placement(transformation(extent={{40,30},{60,50}})),
+    annotation (defaultComponentName = "massFlow",
     Documentation(info="<html>
 <p><b>V2</b> Creation of the heritage relationship and modification of the component accordingly (23/05/2019)</p>
 <p><b>V1</b> Creation of the component and the single test (07/05/2019)</p>
