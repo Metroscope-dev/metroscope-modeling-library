@@ -96,8 +96,7 @@ equation
     annotation (Line(points={{-80,80},{-65.8,80}}, color={63,81,181}));
   connect(flueGasesTurbine.C_power, sink1.u) annotation (Line(points={{47.4,
           88.6},{46,88.6},{46,94},{56.4,94}}, color={0,0,127}));
-    annotation (Placement(transformation(extent={{-16,42},{-4,54}})),
-              Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,40},
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,40},
             {100,100}})),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,40},{100,100}})));
 end TestGasTurbine;

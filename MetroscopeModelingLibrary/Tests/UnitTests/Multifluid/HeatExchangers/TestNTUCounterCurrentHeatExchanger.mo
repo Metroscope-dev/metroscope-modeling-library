@@ -44,8 +44,7 @@ equation
     annotation (Line(points={{-20,116},{2,116},{2,90}}, color={238,46,47}));
   connect(nTUCounterCurrentHeatExchanger.C_cold_out, waterSink.C_in)
     annotation (Line(points={{2,70.2},{2,46},{18,46}}, color={238,46,47}));
-    annotation (Placement(transformation(extent={{-16,42},{-4,54}})),
-              Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,20},
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,20},
             {100,140}})),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,20},{100,140}})));
 end TestNTUCounterCurrentHeatExchanger;

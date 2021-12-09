@@ -11,8 +11,7 @@ model PressureSensor
             30},{60,50}}), iconTransformation(extent={{40,34},{52,46}})));
 equation
   C_in.P = P;
-    annotation (defaultComponentName = "pressure",Placement(transformation(extent={{40,30},{60,50}})),
-                Placement(transformation(extent={{40,30},{60,50}})),
+    annotation (defaultComponentName = "pressure",
               Icon(coordinateSystem(preserveAspectRatio=false, extent={{-40,-40},
             {60,120}}),graphics={
         Ellipse(

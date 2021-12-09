@@ -2,8 +2,8 @@ within MetroscopeModelingLibrary.FlueGases.Machines;
 model AirCompressor
    replaceable package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
-    extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=1e5), P_out(start=45e5),h_in(start=1e5), h_out(start=1.2e5), redeclare
-      package Medium =
+    extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=1e5), P_out(start=45e5),h_in(start=1e5), h_out(start=1.2e5), redeclare package
+              Medium =
         FlueGasesMedium);
 public
   Real tau(start=15);
@@ -35,11 +35,6 @@ equation
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2})),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
@@ -95,5 +90,5 @@ equation
     Daniel Bouskela</li>
 </ul>
 </html>
-"), DymolaStoredErrors);
+"));
 end AirCompressor;

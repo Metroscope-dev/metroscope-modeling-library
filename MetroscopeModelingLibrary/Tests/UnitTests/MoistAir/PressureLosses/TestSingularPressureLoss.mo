@@ -40,8 +40,7 @@ equation
     annotation (Line(points={{-56,0},{-12,0}}, color={63,81,181}));
   connect(singularPressureLoss.C_out, sink.C_in)
     annotation (Line(points={{8.2,0},{62,0}},  color={63,81,181}));
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}})),
-              Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
             {80,20}})),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestSingularPressureLoss;
