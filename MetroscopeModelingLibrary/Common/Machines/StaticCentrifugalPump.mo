@@ -3,24 +3,27 @@ model StaticCentrifugalPump "Static centrifugal pump"
   extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel;
   parameter Boolean adiabatic_compression=false
     "true: compression at constant enthalpy - false: compression with varying enthalpy";
-public
+
+  connector InputReal = input Real;
+  connector InputMassFlowRate = input Modelica.Units.SI.MassFlowRate;
+
   MetroscopeModelingLibrary.Common.Units.AngularVelocity_rpm VRotn(start=1400)
     "Nominal rotational speed";
-  Real rm(start=0.85)
+  InputReal rm(start=0.85)
     "Product of the pump mechanical and electrical efficiencies";
-  Real a1(start=-88.67)
+  InputReal a1(start=-88.67)
     "x^2 coef. of the pump characteristics hn = f(vol_flow) (s2/m5)";
-  Real a2(start=0)
+  InputReal a2(start=0)
     "x coef. of the pump characteristics hn = f(vol_flow) (s/m2)";
-  Real a3(start=43.15)
+  InputReal a3(start=43.15)
     "Constant coef. of the pump characteristics hn = f(vol_flow) (m)";
-  Real b1(start=-3.7751)
+  InputReal b1(start=-3.7751)
     "x^2 coef. of the pump efficiency characteristics rh = f(vol_flow) (s2/m6)";
-  Real b2(start=3.61)
+  InputReal b2(start=3.61)
     "x coef. of the pump efficiency characteristics rh = f(vol_flow) (s/m3)";
-  Real b3(start=-0.0075464)
+  InputReal b3(start=-0.0075464)
     "Constant coef. of the pump efficiency characteristics rh = f(vol_flow) (s.u.)";
-  Real rhmin(start=0.20) "Minimum efficiency to avoid zero crossings";
+  InputReal rhmin(start=0.20) "Minimum efficiency to avoid zero crossings";
 protected
   constant Modelica.Units.SI.Acceleration g=Modelica.Constants.g_n
     "Gravity constant";
@@ -28,7 +31,7 @@ public
   Real rh "Hydraulic efficiency";
   Modelica.Units.SI.Height hn(start=10) "Pump head";
   Real R(start=1) "Reduced rotational speed";
-  Modelica.Units.SI.MassFlowRate Q(start=500) "Mass flow rate";
+  InputMassFlowRate Q(start=500) "Mass flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv(start=0.5) "Volume flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv0(start=0.5) "Volume flow rate";
   Modelica.Units.SI.Power Wh "Hydraulic power";

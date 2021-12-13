@@ -2,6 +2,9 @@ within MetroscopeModelingLibrary.WaterSteam.Junctions;
 model SteamExtractionSplitter
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
+
+  connector InputReal = input Real;
+
   Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
   Modelica.Units.SI.AbsolutePressure P_in(start=71e5) "Inlet Pressure";
   Modelica.Units.SI.SpecificEnthalpy h_in(start=1e5) "Inlet specific enthalpy";
@@ -14,7 +17,7 @@ model SteamExtractionSplitter
   Modelica.Units.SI.MassFraction x_in(start=0.8) "Vapor mass fraction at inlet";
   Modelica.Units.SI.MassFraction x_main_out(start=0.8)
     "Vapor mass fraction at main outlet";
-  Real alpha(start = 1) "Extraction paramater";
+  InputReal alpha(start = 1) "Extraction paramater";
   replaceable Common.Partial.BasicTransportModel extractedFlow(redeclare
       package Medium = WaterSteamMedium) annotation (Placement(transformation(
         extent={{19.5,-8.5},{-19.5,8.5}},

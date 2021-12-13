@@ -1,7 +1,9 @@
 within MetroscopeModelingLibrary.Electrical.Machines;
 model Generator "Eletrical generator"
-  Real eta(start = 99.8) "Efficiency (percent)";
-public
+
+  connector InputPerUnit = input Modelica.Units.SI.PerUnit;
+
+  InputPerUnit eta(start = 99.8) "Efficiency (percent)";
   Modelica.Units.SI.Power Welec "Electrical power produced by the generator";
   Modelica.Units.SI.Power Wmech "Electrical power produced by the generator";
 public
