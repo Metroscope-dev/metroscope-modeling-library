@@ -7,13 +7,13 @@ model Source
   connector InputSpecificEnthalpy = input Modelica.Units.SI.SpecificEnthalpy;
   connector InputMassFraction = input Medium.MassFraction;
 
-  Modelica.Units.SI.MassFlowRate Q_out(start=200);
-  Modelica.Units.SI.VolumeFlowRate Qv_out(start=200);
-  InputAbsolutePressure P_out(start=60e5);
+  Modelica.Units.SI.MassFlowRate Q_out(start=500);
+  Modelica.Units.SI.VolumeFlowRate Qv_out(start=500);
+  InputAbsolutePressure P_out(start=1e5);
   Modelica.Units.SI.Temperature T_out(start=293.15);
   Modelica.Units.SI.Temperature T_vol(start=293.15);
-  Modelica.Units.SI.SpecificEnthalpy h_out(start=3.2e6);
-  InputSpecificEnthalpy h_vol(start=3.2e6);
+  Modelica.Units.SI.SpecificEnthalpy h_out(start=1e5);
+  InputSpecificEnthalpy h_vol(start=1e5);
   Modelica.Units.SI.MassFlowRate Qi_out[Medium.nXi];
   InputMassFraction Xi_vol[Medium.nXi];
     Medium.MassFraction Xi_out[Medium.nXi];

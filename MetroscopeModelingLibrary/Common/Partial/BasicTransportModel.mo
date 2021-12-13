@@ -12,11 +12,11 @@ model BasicTransportModel
   Modelica.Units.SI.VolumeFlowRate Qv_in(start=0.1) "inlet volume flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv_out(start=0.1) "outlet volume flow rate";
   Modelica.Units.SI.VolumeFlowRate Qvm(start=0.1) "mean volume flow rate";
-  Modelica.Units.SI.SpecificEnthalpy h_in(start=3.2e6)
+  Modelica.Units.SI.SpecificEnthalpy h_in(start=100000)
     "Inlet specific enthalpy";
-  Modelica.Units.SI.SpecificEnthalpy h_out(start=3.2e6)
+  Modelica.Units.SI.SpecificEnthalpy h_out(start=100000)
     "Outlet specific enthalpy";
-  Modelica.Units.SI.SpecificEnthalpy hm(start=3.2e6)
+  Modelica.Units.SI.SpecificEnthalpy hm(start=100000)
     "Average specific enthalpy";
   Modelica.Units.SI.Density rho_in(start=998) "Fluid density";
   Modelica.Units.SI.Density rho_out(start=998) "Fluid density";
