@@ -3275,7 +3275,6 @@ model MetroscopiaNPP_direct_withStartValues
     phase(start=0))))));
   annotation (experiment(
       StopTime=1,
-      __Dymola_NumberOfIntervals=10,
-      __Dymola_fixedstepsize=0.1,
+      Interval = 1,
       __Dymola_Algorithm="Euler"));
 end MetroscopiaNPP_direct_withStartValues;
