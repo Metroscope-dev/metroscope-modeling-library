@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.PowerPlant.MetroscopiaNPP;
-model MetroscopiaNPP_topological
+partial model MetroscopiaNPP_topological
   import MetroscopeModelingLibrary;
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
