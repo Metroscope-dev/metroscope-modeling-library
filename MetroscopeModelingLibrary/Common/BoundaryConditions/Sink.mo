@@ -7,13 +7,13 @@ model Sink
   connector InputSpecificEnthalpy = input Modelica.Units.SI.SpecificEnthalpy;
   connector InputMassFraction = input Medium.MassFraction;
 
-  Modelica.Units.SI.MassFlowRate Q_in(start=500);
-  Modelica.Units.SI.VolumeFlowRate Qv_in(start=500);
-  InputAbsolutePressure P_in(start=1e5);
+  Modelica.Units.SI.MassFlowRate Q_in(start=200);
+  Modelica.Units.SI.VolumeFlowRate Qv_in(start=200);
+  InputAbsolutePressure P_in(start=60e5);
   Modelica.Units.SI.Temperature T_in(start=293.15);
   Modelica.Units.SI.Temperature T_vol(start=293.15);
-  Modelica.Units.SI.SpecificEnthalpy h_in(start=1e5);
-  InputSpecificEnthalpy h_vol(start=1e5);
+  Modelica.Units.SI.SpecificEnthalpy h_in(start=3.2e6);
+  InputSpecificEnthalpy h_vol(start=3.2e6);
   Modelica.Units.SI.MassFlowRate Qi_in[Medium.nXi];
   InputMassFraction Xi_vol[Medium.nXi];
   Medium.MassFraction Xi_in[Medium.nXi];

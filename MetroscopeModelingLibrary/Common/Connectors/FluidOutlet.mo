@@ -1,6 +1,8 @@
 within MetroscopeModelingLibrary.Common.Connectors;
 connector FluidOutlet
-  extends MetroscopeModelingLibrary.Common.Connectors.FluidPort;
+  extends MetroscopeModelingLibrary.Common.Connectors.FluidPort(
+    Q(start = -200),
+    H(start = -2e8));
   annotation (defaultComponentName="C_out",
   Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},
             {100,100}}),                                       graphics={
