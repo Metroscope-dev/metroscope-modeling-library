@@ -3,12 +3,12 @@ model PartialBoundaryCondition
   replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
 extends MetroscopeModelingLibrary.Common.Constants.Constants;
-  Modelica.Units.SI.MassFlowRate Q(start=500);
-  Modelica.Units.SI.AbsolutePressure P(start=1e5);
+  Modelica.Units.SI.MassFlowRate Q(start=200);
+  Modelica.Units.SI.AbsolutePressure P(start=60e5);
   Modelica.Units.SI.Temperature T(start=293.15);
   Modelica.Units.SI.Temperature T_vol(start=293.15);
-  Modelica.Units.SI.SpecificEnthalpy h(start=1e5);
-  Modelica.Units.SI.SpecificEnthalpy h_vol(start=1e5);
+  Modelica.Units.SI.SpecificEnthalpy h(start=3.2e6);
+  Modelica.Units.SI.SpecificEnthalpy h_vol(start=3.2e6);
   Modelica.Units.SI.MassFlowRate Qi[Medium.nXi];
   Medium.MassFraction Xi_vol[Medium.nXi];
   Medium.MassFraction Xi[Medium.nXi];

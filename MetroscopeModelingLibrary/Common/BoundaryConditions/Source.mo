@@ -2,13 +2,13 @@ within MetroscopeModelingLibrary.Common.BoundaryConditions;
 model Source
   replaceable package Medium =
     MetroscopeModelingLibrary.Common.Medium.PartialMedium;
-  Modelica.Units.SI.MassFlowRate Q_out(start=500);
-  Modelica.Units.SI.VolumeFlowRate Qv_out(start=500);
-  Modelica.Units.SI.AbsolutePressure P_out(start=1e5);
+  Modelica.Units.SI.MassFlowRate Q_out(start=200);
+  Modelica.Units.SI.VolumeFlowRate Qv_out(start=200);
+  Modelica.Units.SI.AbsolutePressure P_out(start=60e5);
   Modelica.Units.SI.Temperature T_out(start=293.15);
   Modelica.Units.SI.Temperature T_vol(start=293.15);
-  Modelica.Units.SI.SpecificEnthalpy h_out(start=1e5);
-  Modelica.Units.SI.SpecificEnthalpy h_vol(start=1e5);
+  Modelica.Units.SI.SpecificEnthalpy h_out(start=3.2e6);
+  Modelica.Units.SI.SpecificEnthalpy h_vol(start=3.2e6);
   Modelica.Units.SI.MassFlowRate Qi_out[Medium.nXi];
     Medium.MassFraction Xi_vol[Medium.nXi];
     Medium.MassFraction Xi_out[Medium.nXi];
