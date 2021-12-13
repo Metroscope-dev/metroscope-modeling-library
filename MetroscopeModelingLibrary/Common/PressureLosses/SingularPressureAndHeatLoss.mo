@@ -46,11 +46,6 @@ equation
           lineColor={0,0,255},
           fillColor={128,255,0},
           fillPattern=FillPattern.Solid)}),
-    Window(
-      x=0.09,
-      y=0.2,
-      width=0.66,
-      height=0.69),
     Documentation(info="<html>
 <h4>Copyright &copy; Metroscope</h4>
 <h4>Metroscope Modeling Library</h4>

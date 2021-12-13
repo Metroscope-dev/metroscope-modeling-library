@@ -19,11 +19,6 @@ equation
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2})),
-    Window(
-      x=0.09,
-      y=0.2,
-      width=0.66,
-      height=0.69),
     Documentation(info="<html>
 <h4>Copyright &copy; Metroscope</h4>
 <h4>Metroscope Modeling Library</h4>

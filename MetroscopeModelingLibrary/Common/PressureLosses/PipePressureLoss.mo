@@ -49,11 +49,6 @@ equation
           fillPattern=FillPattern.Solid,
           textString=
                "K")}),
-    Window(
-      x=0.11,
-      y=0.04,
-      width=0.71,
-      height=0.88),
     Documentation(info="<html>
 <h4>Copyright &copy; Metroscope</h4>
 <h4>Metroscope Modeling Library</h4>
