@@ -1,3 +1,3 @@
 within MetroscopeModelingLibrary;
-package Common
+partial package Common "These models are not meant to be used directly"
 end Common;
