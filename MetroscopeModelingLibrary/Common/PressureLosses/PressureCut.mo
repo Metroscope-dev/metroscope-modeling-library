@@ -1,9 +1,16 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model PressureCut "Pressure Cut"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
+
+  connector InputAbsolutePressure = input Modelica.Units.SI.AbsolutePressure;
+
+  InputAbsolutePressure P "Fluid pressure";
 equation
   Q_in*h_in + Q_out*h_out = 0;
   Q_in*Xi_in =- Q_out*Xi_out;
+  // The extra pressure variable is defined ad hoc with connector input type
+  // since you cannot change the type of the the variables in the base class
+  P = P_in;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

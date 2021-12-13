@@ -2,16 +2,22 @@ within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model OpenSteamGenerator
   replaceable package water =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-public
-  Modelica.Units.SI.Power ThermalPower(start=3000e6)
+
+  connector InputReal = input Real;
+  connector InputPower = input Modelica.Units.SI.Power;
+  connector InputDifferentialPressure = input Modelica.Units.SI.Pressure;
+  connector InputCoefficientOfHeatTransfer = input
+      Modelica.Units.SI.CoefficientOfHeatTransfer;
+
+  InputPower ThermalPower(start=3000e6)
     "Total energy transfered from primary";
-  MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_WaterSteam "Singular pressure loss";
+  InputDifferentialPressure deltaP_WaterSteam "Singular pressure loss";
   Modelica.Units.SI.SpecificEnthalpy hvsat(start=2.7e6)
     "saturated steam at outlet specific enthalpy";
   Modelica.Units.SI.SpecificEnthalpy hlsat(start=1.2e6)
     "saturated liquid water specific enthalpy at purge";
-  Real VaporFraction(start=0.99) "vapor fraction in steam at outlet";
-  Real Q_residu(start=0) "GV mass balance residual";
+  InputReal VaporFraction(start=0.99) "vapor fraction in steam at outlet";
+  InputReal Q_residu(start=0) "GV mass balance residual";
 public
   BoundaryConditions.Source steamSource annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},

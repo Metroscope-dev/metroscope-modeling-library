@@ -3,7 +3,6 @@ model BasicTransportModel
   replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
   extends MetroscopeModelingLibrary.Common.Constants.Constants;
-public
   Modelica.Units.SI.AbsolutePressure P_in(start=1e5) "Inlet Pressure";
   Modelica.Units.SI.AbsolutePressure P_out(start=0.9e5) "Outlet Pressure";
   Modelica.Units.SI.AbsolutePressure Pm(start=1.e5) "Average fluid pressure";

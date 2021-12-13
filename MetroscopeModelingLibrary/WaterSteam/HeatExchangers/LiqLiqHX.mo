@@ -4,11 +4,16 @@ model LiqLiqHX
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   replaceable package HotMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-public
-  Modelica.Units.SI.Area S_tot(start=100) "Total exchange area";
-  Real Kfr_cold(start=1.e3) "Pressure loss coefficient";
-  Real Kfr_hot(start=1.e3) "Pressure loss coefficient";
-  Modelica.Units.SI.CoefficientOfHeatTransfer Kth(start=1000)
+
+  connector InputReal = input Real;
+  connector InputArea = input Modelica.Units.SI.Area;
+  connector InputCoefficientOfHeatTransfer = input
+      Modelica.Units.SI.CoefficientOfHeatTransfer;
+
+  InputArea S_tot(start=100) "Total exchange area";
+  InputReal Kfr_cold(start=1.e3) "Pressure loss coefficient";
+  InputReal Kfr_hot(start=1.e3) "Pressure loss coefficient";
+  InputCoefficientOfHeatTransfer Kth(start=1000)
     "heat transfer coefficient";
   Modelica.Units.SI.Power Wth(start=100) "Energy transfer during condensation";
   Modelica.Units.SI.MassFlowRate Q_cold(start=500) "Inlet Mass flow rate";

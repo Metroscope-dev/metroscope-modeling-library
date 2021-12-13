@@ -2,15 +2,20 @@ within MetroscopeModelingLibrary.Common.BoundaryConditions;
 model PartialBoundaryCondition
   replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
-extends MetroscopeModelingLibrary.Common.Constants.Constants;
+  extends MetroscopeModelingLibrary.Common.Constants.Constants;
+
+  connector InputAbsolutePressure = input Modelica.Units.SI.AbsolutePressure;
+  connector InputSpecificEnthalpy = input Modelica.Units.SI.SpecificEnthalpy;
+  connector InputMassFraction = input Medium.MassFraction;
+
   Modelica.Units.SI.MassFlowRate Q(start=200);
-  Modelica.Units.SI.AbsolutePressure P(start=60e5);
+  InputAbsolutePressure P(start=60e5);
   Modelica.Units.SI.Temperature T(start=293.15);
   Modelica.Units.SI.Temperature T_vol(start=293.15);
   Modelica.Units.SI.SpecificEnthalpy h(start=3.2e6);
-  Modelica.Units.SI.SpecificEnthalpy h_vol(start=3.2e6);
+  InputSpecificEnthalpy h_vol(start=3.2e6);
   Modelica.Units.SI.MassFlowRate Qi[Medium.nXi];
-  Medium.MassFraction Xi_vol[Medium.nXi];
+  InputMassFraction Xi_vol[Medium.nXi];
   Medium.MassFraction Xi[Medium.nXi];
   Medium.ThermodynamicState state;
   Medium.ThermodynamicState state_vol;

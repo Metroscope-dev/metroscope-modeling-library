@@ -1,6 +1,9 @@
 within MetroscopeModelingLibrary.Multifluid.HeatExchangers;
 model NTUCounterCurrentHeatExchanger
-  extends MetroscopeModelingLibrary.Multifluid.HeatExchangers.PartialHeatExchanger;
+  extends PartialHeatExchanger;
+
+  connector InputReal = input Real;
+
   Modelica.Units.SI.CoefficientOfHeatTransfer K(start=100)
     "Global heat transfer coefficient (active if exchanger_type=3)";
   Modelica.Units.SI.Area S(start=10);
@@ -9,10 +12,10 @@ model NTUCounterCurrentHeatExchanger
     "Flue gas specific heat capacity";
   Modelica.Units.SI.SpecificHeatCapacity Cp_cold(start=4200)
     "Water specific heat capacity";
- Real NTU(start=0.3);
- Real epsilon(start=0.9);
- Real Cmin(start=10000);
- Real Cmax(start=42000);
+ InputReal NTU(start=0.3);
+ InputReal epsilon(start=0.9);
+ InputReal Cmin(start=10000);
+ InputReal Cmax(start=42000);
  Real Cr(start=0.2);
  ColdMedium.ThermodynamicState state_cold_median;
   HotMedium.ThermodynamicState state_hot_median;
