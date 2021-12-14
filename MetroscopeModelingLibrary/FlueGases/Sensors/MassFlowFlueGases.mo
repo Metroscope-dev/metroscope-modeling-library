@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.Sensors;
 model MassFlowFlueGases
-    replaceable package FlueGasesMedium =
+    package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
           extends MetroscopeModelingLibrary.Common.Sensors.MassFlowSensor(
                                                       redeclare package Medium =

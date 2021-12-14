@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestCondReheater
   extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink_hot_CondSteam(Q_in(start=60))
     annotation (Placement(transformation(

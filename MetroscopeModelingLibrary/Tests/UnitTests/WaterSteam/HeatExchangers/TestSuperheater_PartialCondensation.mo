@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestSuperheater_PartialCondensation
   extends Modelica.Icons.Example;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Superheater_PartialCondensation Superheater
     annotation (Placement(transformation(extent={{-16,32},{16,48}})));

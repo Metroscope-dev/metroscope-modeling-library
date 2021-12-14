@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.MoistAir.Machines;
 model AirCompressor
-   replaceable package MoistAirMedium =
+   package MoistAirMedium =
       MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
     extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=1e5), P_out(start=45e5),h_in(start=1e5), h_out(start=1.2e5), redeclare
       package Medium =

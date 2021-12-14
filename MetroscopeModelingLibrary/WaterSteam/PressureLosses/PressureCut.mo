@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.PressureLosses;
 model PressureCut
-   replaceable package WaterSteamMedium =
+   package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   extends MetroscopeModelingLibrary.Common.PressureLosses.PressureCut(redeclare
       package Medium =

@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.Junctions;
 model SteamDryer
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
   Modelica.Units.SI.AbsolutePressure P_in(start=71e5) "Inlet Pressure";

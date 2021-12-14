@@ -2,9 +2,9 @@ within MetroscopeModelingLibrary.Tests.UnitTests.Multifluid.HeatExchangers;
 model TestNTUCounterCurrentHeatExchanger
   extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  replaceable package MoistAirMedium =
+  package MoistAirMedium =
       MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source moistAirSource(h_out(
         start=283945), h_vol(start=283945))

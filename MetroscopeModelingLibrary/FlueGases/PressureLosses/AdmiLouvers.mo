@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.PressureLosses;
 model AdmiLouvers
-   replaceable package FlueGasesMedium =
+   package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
   extends
     MetroscopeModelingLibrary.Common.PressureLosses.SingularPressureLoss_NoIcon(    redeclare

@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Fuel.BoundaryConditions;
 model Source
-      replaceable package FuelMedium =
+      package FuelMedium =
           MetroscopeModelingLibrary.Fuel.Medium.FuelMedium;
       extends MetroscopeModelingLibrary.Common.BoundaryConditions.Source(redeclare
       package     Medium =
