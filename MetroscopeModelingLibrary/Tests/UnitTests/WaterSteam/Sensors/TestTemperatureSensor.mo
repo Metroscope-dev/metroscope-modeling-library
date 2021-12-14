@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Sensors;
 model TestTemperatureSensor
+  extends Modelica.Icons.Example;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-70,-50},{-50,-30}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (
@@ -36,7 +37,6 @@ equation
     annotation (Line(points={{-3.8,-40},{70,-40}}, color={238,46,47}));
   connect(PL.C_out, TemperatureSensor.C_in)
     annotation (Line(points={{-3.8,-40},{32,-40}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-60},
-            {100,-20}})),                                        Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-60},{100,-20}})));
 end TestTemperatureSensor;

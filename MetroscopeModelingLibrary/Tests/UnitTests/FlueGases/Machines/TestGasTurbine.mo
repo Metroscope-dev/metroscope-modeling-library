@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.FlueGases.Machines;
 model TestGasTurbine
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink(h_in(start = 283945),h_vol(start = 283945))
     annotation (Placement(transformation(extent={{66,70},{86,90}})));
@@ -96,7 +97,6 @@ equation
     annotation (Line(points={{-80,80},{-65.8,80}}, color={63,81,181}));
   connect(flueGasesTurbine.C_power, sink1.u) annotation (Line(points={{47.4,
           88.6},{46,88.6},{46,94},{56.4,94}}, color={0,0,127}));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,40},
-            {100,100}})),                                        Diagram(
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,40},{100,100}})));
 end TestGasTurbine;

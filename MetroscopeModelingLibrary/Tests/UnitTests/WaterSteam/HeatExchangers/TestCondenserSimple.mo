@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestCondenserSimple
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet
     annotation (Placement(transformation(extent={{-30,22},{-10,42}})));
@@ -70,7 +71,6 @@ equation
   connect(condenser.C_cold_out, cooling_outlet.C_in)
     annotation (Line(points={{10,-1.77778},{20,-1.77778},{20,0},{30,0}},
                                             color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-40},
-            {60,40}})),                                          Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-60,-40},{60,40}})));
 end TestCondenserSimple;

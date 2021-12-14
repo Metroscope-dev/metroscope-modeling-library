@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.PressureLosses;
 model TestControlValve
+  extends Modelica.Icons.Example;
   input Modelica.Units.SI.AbsolutePressure P_source(start=2e5);
   input Modelica.Units.SI.Temperature T_source(start=20 + 273.15);
   input Modelica.Units.SI.MassFlowRate Q(start=100);
@@ -35,7 +36,6 @@ equation
     annotation (Line(points={{4.2,0},{54,0}}, color={238,46,47}));
   connect(source.C_out, controlValve.C_in)
     annotation (Line(points={{-60,0},{-16,0}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
-            {80,20}})),                                          Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestControlValve;

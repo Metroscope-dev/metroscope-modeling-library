@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Common.Functions;
 function PowerHeatExchange
+  extends Modelica.Icons.Function;
   input Modelica.Units.SI.MassFlowRate Q_hot "Hot mass flow rate at the inlet";
   input Modelica.Units.SI.MassFlowRate Q_cold
     "Cold mass flow rate at the inlet";

@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.PowerPlant.MetroscopiaNPP;
 partial model MetroscopiaNPP_topological
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
@@ -304,8 +305,7 @@ equation
       color={63,81,181},
       thickness=0.5));
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
-            -140},{460,140}})),                                  Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{460,
             140}}),
         graphics={Rectangle(

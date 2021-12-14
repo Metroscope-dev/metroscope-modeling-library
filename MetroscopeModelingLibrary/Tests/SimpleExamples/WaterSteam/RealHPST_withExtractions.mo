@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
 model RealHPST_withExtractions
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   MetroscopeModelingLibrary.WaterSteam.Junctions.SteamExtractionSplitter
     Extraction6
@@ -83,7 +84,6 @@ equation
     annotation (Line(points={{-22,14},{-22,2}},         color={238,46,47}));
   connect(source.C_out, ST1.C_in)
     annotation (Line(points={{-74,20},{-54,20}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-            -20},{100,40}})),                                    Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                    Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-20},{100,40}})));
 end RealHPST_withExtractions;

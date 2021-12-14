@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Sensors;
 model TestMassFlowSensor
+  extends Modelica.Icons.Example;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-74,10},{-54,30}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (
@@ -37,7 +38,6 @@ equation
     annotation (Line(points={{-13.8,20},{7,20}}, color={238,46,47}));
   connect(MassFlowSensor.C_out, sink.C_in)
     annotation (Line(points={{13,20},{36,20}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,0},{
-            60,40}})),                                           Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                           Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,0},{60,40}})));
 end TestMassFlowSensor;

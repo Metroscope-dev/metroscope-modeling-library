@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.MoistAir.PressureLosses;
 model TestSingularPressureLoss
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-76,-10},{-56,10}})));
@@ -40,7 +41,6 @@ equation
     annotation (Line(points={{-56,0},{-12,0}}, color={63,81,181}));
   connect(singularPressureLoss.C_out, sink.C_in)
     annotation (Line(points={{8.2,0},{62,0}},  color={63,81,181}));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
-            {80,20}})),                                          Diagram(
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestSingularPressureLoss;

@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.Multifluid.HeatExchangers;
 model TestNTUCounterCurrentHeatExchanger
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
@@ -44,7 +45,6 @@ equation
     annotation (Line(points={{-20,116},{2,116},{2,90}}, color={238,46,47}));
   connect(nTUCounterCurrentHeatExchanger.C_cold_out, waterSink.C_in)
     annotation (Line(points={{2,70.2},{2,46},{18,46}}, color={238,46,47}));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,20},
-            {100,140}})),                                        Diagram(
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,20},{100,140}})));
 end TestNTUCounterCurrentHeatExchanger;
