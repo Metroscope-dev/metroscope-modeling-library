@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Common.Functions;
 function ThermoSquare "Thermodynamic square"
- input Real x;
+  extends Modelica.Icons.Function;
+  input Real x;
   input Real dx;
   output Real y;
 algorithm

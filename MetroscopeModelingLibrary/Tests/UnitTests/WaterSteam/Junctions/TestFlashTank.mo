@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Junctions;
 model TestFlashTank
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   input Modelica.Units.SI.AbsolutePressure P_source(start=71.2e5);
   input Modelica.Units.SI.SpecificEnthalpy h_source(start=2.1e6);

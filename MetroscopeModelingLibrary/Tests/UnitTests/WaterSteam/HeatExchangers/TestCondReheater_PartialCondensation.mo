@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestCondReheater_PartialCondensation
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;

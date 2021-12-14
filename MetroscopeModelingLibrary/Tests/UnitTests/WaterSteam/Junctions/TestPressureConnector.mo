@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Junctions;
 model TestPressureConnector
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source SOURCE1
     annotation (Placement(transformation(extent={{-90,30},{-70,50}})));

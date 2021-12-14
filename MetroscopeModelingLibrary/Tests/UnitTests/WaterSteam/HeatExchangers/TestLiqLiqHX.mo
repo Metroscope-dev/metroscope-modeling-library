@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestLiqLiqHX
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.LiqLiqHX liqLiqHX
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
@@ -65,7 +66,6 @@ equation
     annotation (Line(points={{-10,26},{0,26},{0,8}}, color={63,81,181}));
   connect(sink_hot.C_in, liqLiqHX.C_hot_out)
     annotation (Line(points={{10,-26},{0,-26},{0,-8}}, color={63,81,181}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-40},
-            {60,40}})), Diagram(coordinateSystem(preserveAspectRatio=false,
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false,
           extent={{-60,-40},{60,40}})));
 end TestLiqLiqHX;

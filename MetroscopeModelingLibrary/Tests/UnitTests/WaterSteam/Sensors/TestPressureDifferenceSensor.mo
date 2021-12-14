@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Sensors;
 model TestPressureDifferenceSensor
+  extends Modelica.Icons.Example;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source sourcesWater1
     annotation (Placement(transformation(extent={{-74,10},{-54,30}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink1 annotation (
@@ -68,7 +69,6 @@ equation
     annotation (Line(points={{2,16},{2,20},{26,20}}, color={0,0,255}));
   connect(pressureDifference.C_out, sink2.C_in)
     annotation (Line(points={{2,4},{2,0},{26,0}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
-            {60,40}})),                                          Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{60,40}})));
 end TestPressureDifferenceSensor;

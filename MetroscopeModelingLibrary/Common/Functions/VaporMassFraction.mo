@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Common.Functions;
 function VaporMassFraction
+  extends Modelica.Icons.Function;
     replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialTwoPhaseMedium;
   input Modelica.Units.SI.AbsolutePressure P;

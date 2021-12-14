@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestSuperheater
+  extends Modelica.Icons.Example;
   replaceable package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Superheater Superheater
@@ -89,7 +90,6 @@ equation
         points={{-30,34},{-20,34},{-20,34.2}}, color={63,81,181}));
   connect(source_cold_steam.C_out, Superheater.C_cold_in)
     annotation (Line(points={{-4,10},{-4,26}},  color={63,81,181}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-20},
-            {60,80}})),                                          Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-60,-20},{60,80}})));
 end TestSuperheater;

@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Common.Functions;
 function SigmoidEnthalpyPropagation
+  extends Modelica.Icons.Function;
   input Real Q;
   input Real Qeps;
   input Real h_negative_flow;

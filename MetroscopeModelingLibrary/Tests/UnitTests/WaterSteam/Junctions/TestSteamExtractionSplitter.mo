@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Junctions;
 model TestSteamExtractionSplitter
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   input Modelica.Units.SI.AbsolutePressure P_source(start=2.64e6);
   input Modelica.Units.SI.SpecificEnthalpy h_source(start=2.65e6);

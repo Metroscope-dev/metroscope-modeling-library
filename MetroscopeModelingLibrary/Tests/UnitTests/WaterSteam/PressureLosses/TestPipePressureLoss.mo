@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.PressureLosses;
 model TestPipePressureLoss
+  extends Modelica.Icons.Example;
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
@@ -34,7 +35,6 @@ equation
     annotation (Line(points={{4.2,0},{54,0}}, color={238,46,47}));
   connect(source.C_out, pipePressureLoss.C_in)
     annotation (Line(points={{-60,0},{-16,0}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
-            {80,20}})),                                          Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestPipePressureLoss;
