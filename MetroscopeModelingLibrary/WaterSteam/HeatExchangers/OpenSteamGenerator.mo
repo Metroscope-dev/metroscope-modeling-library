@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model OpenSteamGenerator
-  replaceable package water =
+  package Water =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
 
   connector InputReal = input Real;
@@ -25,19 +25,19 @@ public
         origin={0,48})));
   BoundaryConditions.Sink waterSupplySink
     annotation (Placement(transformation(extent={{22,0},{-18,40}})));
-  Common.Connectors.FluidInlet C_water_in(redeclare package Medium = water)
+  Common.Connectors.FluidInlet C_water_in(redeclare package Medium = Water)
     annotation (Placement(transformation(extent={{36,10},{56,30}})));
-  Common.Connectors.FluidOutlet C_steam_out(redeclare package Medium = water)
+  Common.Connectors.FluidOutlet C_steam_out(redeclare package Medium = Water)
     annotation (Placement(transformation(extent={{-10,90},{10,112}})));
-  Common.Connectors.FluidOutlet C_drain_out(redeclare package Medium = water)
+  Common.Connectors.FluidOutlet C_drain_out(redeclare package Medium = Water)
     annotation (Placement(transformation(extent={{-8,-110},{12,-88}})));
   BoundaryConditions.Source drainSource annotation (Placement(transformation(
         extent={{20,-20},{-20,20}},
         rotation=90,
         origin={0,-42})));
 equation
-  hlsat=water.bubbleEnthalpy(water.setSat_p(drainSource.P_out));
-  hvsat=water.dewEnthalpy(water.setSat_p(steamSource.P_out));
+  hlsat=Water.bubbleEnthalpy(Water.setSat_p(drainSource.P_out));
+  hvsat=Water.dewEnthalpy(Water.setSat_p(steamSource.P_out));
   ThermalPower=-steamSource.Q_out*steamSource.h_out -waterSupplySink.Q_in *
     waterSupplySink.h_in - drainSource.Q_out*drainSource.h_out;
   drainSource.h_out = hlsat;

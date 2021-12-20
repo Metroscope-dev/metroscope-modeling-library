@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
 model MetroscopeTrainingTest
   extends Modelica.Icons.Example;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   /* --- Boundary Conditions --- */
   input Real W_heater(start = 35);

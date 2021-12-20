@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
 model FlashTank_Reheater
   extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondReheater CondReheater
     annotation (Placement(transformation(extent={{-20,26},{12,42}})));

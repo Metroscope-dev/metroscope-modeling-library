@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.Sensors;
 model PressureDifferenceWater
-      replaceable package WaterSteamMedium =
+      package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
     extends
     MetroscopeModelingLibrary.Common.Sensors.PressureDifferenceSensor(    redeclare package

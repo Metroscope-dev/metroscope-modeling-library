@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Fuel.Sensors;
 model PressureFuel
-    replaceable package FuelMedium =
+    package FuelMedium =
       MetroscopeModelingLibrary.Fuel.Medium.FuelMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.PressureSensor(    redeclare package Medium =
                        FuelMedium);

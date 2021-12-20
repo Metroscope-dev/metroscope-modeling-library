@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.Sensors;
 model PressureDifferenceFlueGases
-      replaceable package FlueGasesMedium =
+      package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.PressureDifferenceSensor(
                                                                           redeclare package

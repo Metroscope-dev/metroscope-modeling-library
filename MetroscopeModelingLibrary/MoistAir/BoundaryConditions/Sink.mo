@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.MoistAir.BoundaryConditions;
 model Sink
-  replaceable package MoistAirMedium =
+  package MoistAirMedium =
           MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
       extends MetroscopeModelingLibrary.Common.BoundaryConditions.Sink(redeclare
       package     Medium =

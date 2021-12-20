@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Multifluid.HeatExchangers;
 model WaterFlueGasesEvaporator
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  replaceable package FlueGasesMedium =
+  package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
   Modelica.Units.SI.Power W(start=1e8);
   Modelica.Units.SI.AbsolutePressure P(start=1e5);

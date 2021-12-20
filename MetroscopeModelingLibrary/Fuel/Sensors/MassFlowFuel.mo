@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Fuel.Sensors;
 model MassFlowFuel
-    replaceable package FuelMedium =
+    package FuelMedium =
       MetroscopeModelingLibrary.Fuel.Medium.FuelMedium;
           extends MetroscopeModelingLibrary.Common.Sensors.MassFlowSensor(
                                                       redeclare package Medium =

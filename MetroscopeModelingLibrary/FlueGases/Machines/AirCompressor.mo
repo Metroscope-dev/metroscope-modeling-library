@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.Machines;
 model AirCompressor
-   replaceable package FlueGasesMedium =
+   package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=1e5), P_out(start=45e5),h_in(start=1e5), h_out(start=1.2e5), redeclare package
               Medium =

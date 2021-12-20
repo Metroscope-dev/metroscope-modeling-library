@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model Reheater
-  replaceable package ColdMedium =
+  package ColdMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  replaceable package HotMedium =
+  package HotMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
 
   connector InputReal = input Real;

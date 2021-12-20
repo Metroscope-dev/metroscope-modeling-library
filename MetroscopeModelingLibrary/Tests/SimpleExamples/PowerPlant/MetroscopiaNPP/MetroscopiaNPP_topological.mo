@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.Tests.SimpleExamples.PowerPlant.MetroscopiaNPP;
 partial model MetroscopiaNPP_topological
   extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.OpenSteamGenerator
     steamGenerator

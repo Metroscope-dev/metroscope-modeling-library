@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.Machines;
 model StaticCentrifugalPump
-   replaceable package WaterSteamMedium =
+   package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   extends MetroscopeModelingLibrary.Common.Machines.StaticCentrifugalPump(redeclare
       package Medium =

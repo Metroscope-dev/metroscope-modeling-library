@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.BoundaryConditions;
 model Sink
-    replaceable package FlueGasesMedium =
+    package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
   extends MetroscopeModelingLibrary.Common.BoundaryConditions.Sink(redeclare
       package                                                                        Medium =

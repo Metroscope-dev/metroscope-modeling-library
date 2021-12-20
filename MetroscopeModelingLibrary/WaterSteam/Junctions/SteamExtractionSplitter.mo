@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.Junctions;
 model SteamExtractionSplitter
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
 
   connector InputReal = input Real;
