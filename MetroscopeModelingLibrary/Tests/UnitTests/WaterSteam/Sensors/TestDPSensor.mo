@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Sensors;
 model TestDPSensor
+  extends Modelica.Icons.Example;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink

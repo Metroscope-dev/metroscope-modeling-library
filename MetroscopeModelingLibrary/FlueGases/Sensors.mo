@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases;
 package Sensors
+  extends Modelica.Icons.SensorsPackage;
   model WaterFlowSensor
     replaceable package WaterSteamMedium =
         MetroscopeModelingLibrary.WaterSteam.Medium.FlueGasesMedium;
