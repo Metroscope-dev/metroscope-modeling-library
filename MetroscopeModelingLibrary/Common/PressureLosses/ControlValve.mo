@@ -5,7 +5,7 @@ model ControlValve "Control valve"
   connector InputCv = input Common.Units.Cv;
   InputCv Cvmax(start=8005.42)
     "Maximum CV (active if mode_caract=0)";
-  MetroscopeModelingLibrary.Common.Units.Cv Cv(start=100) "Cv";
+  Common.Units.Cv Cv(start=100) "Cv";
   Modelica.Blocks.Interfaces.RealInput Opening annotation (Placement(
         transformation(extent={{-62,152},{-22,192}}), iconTransformation(
         extent={{-20,-20},{20,20}},

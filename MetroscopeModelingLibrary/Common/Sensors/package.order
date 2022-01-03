@@ -1,8 +1,5 @@
-BaseSensor
-TemperatureSensor
+BaseSensors
 PressureSensor
-FlowSensor
-DeltaPressureSensor
-HumiditySensor
-RotSpeedSensor
-OpeningSensor
+PressureDifferenceSensor
+MassFlowSensor
+TemperatureSensor

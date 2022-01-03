@@ -19,7 +19,11 @@ connector RealInput = input Real "'input Real' as connector" annotation (
       fillColor={0,0,0},
       fillPattern=FillPattern.Solid,
       points={{0.0,50.0},{100.0,0.0},{0.0,-50.0},{0.0,50.0}},
-        pattern=LinePattern.None)}),
+        pattern=LinePattern.None),
+    Text(
+      lineColor={0,0,0},
+      extent={{-10.0,60.0},{-10.0,85.0}},
+        textString="%name")}),
   Documentation(info="<html>
 <p>
 Connector with one input signal of type Real.

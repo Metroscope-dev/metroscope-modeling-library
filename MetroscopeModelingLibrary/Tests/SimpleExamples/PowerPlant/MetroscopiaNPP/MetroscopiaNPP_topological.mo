@@ -127,27 +127,13 @@ partial model MetroscopiaNPP_topological
         origin={57,-15})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondenserSimple condenser
     annotation (Placement(transformation(extent={{330,-16},{356,6}})));
-  MetroscopeModelingLibrary.WaterSteam.Sensors.WaterPressureSensor
-    waterPressureSensor
-    annotation (Placement(transformation(extent={{-88,24},{-68,44}})));
-  MetroscopeModelingLibrary.WaterSteam.Sensors.WaterFlowSensor waterFlowSensor
-    annotation (Placement(transformation(extent={{-42,-108},{-62,-88}})));
-  MetroscopeModelingLibrary.Common.Sensors.OpeningSensor openingSensor
-    annotation (Placement(transformation(extent={{46,80},{66,100}})));
-  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source
-    annotation (Placement(transformation(
-        extent={{-5.5,-4.5},{5.5,4.5}},
-        rotation=270,
-        origin={66.5,-49.5})));
-  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source1
-    annotation (Placement(transformation(
-        extent={{-5.5,-4.5},{5.5,4.5}},
-        rotation=270,
-        origin={320.5,-51.5})));
 equation
   // Drum equation
   PressureLoss_after_drum.h_in = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(PressureLoss_after_drum.P_in));
 
+  connect(steamGenerator.C_steam_out, HPcontrolValve.C_in) annotation (Line(
+        points={{-98,18.42},{-98,34},{-52,34},{-52,33.8182}}, color={238,46,47},
+      thickness=0.5));
   connect(sinkBlowOff.C_in, steamGenerator.C_drain_out) annotation (Line(points={{-104,
           -90},{-97.36,-90},{-97.36,-65.58}},      color={28,108,200},
       thickness=0.5));
@@ -186,6 +172,11 @@ equation
   connect(Superheater.C_hot_in, SuperHeaterControlValve.C_out) annotation (Line(
         points={{152,50.2},{140,50.2},{140,72},{40.1,72},{40.1,71.8182}}, color={238,46,
           47},
+      thickness=0.5));
+  connect(SuperHeaterControlValve.C_in, HPcontrolValve.C_in) annotation (Line(
+        points={{30,71.8182},{-6,71.8182},{-6,72},{-78,72},{-78,34},{-52,34},{
+          -52,33.8182}},
+                     color={238,46,47},
       thickness=0.5));
   connect(Superheater.C_vent_out, sinkVent.C_in) annotation (Line(points={{184,42},
           {188,42},{188,41},{190,41}}, color={28,108,200},
@@ -269,6 +260,10 @@ equation
       points={{4,-56.2},{4,-90.2},{0,-90.2}},
       color={238,46,47},
       thickness=0.5));
+  connect(HPReheater.C_cold_out, steamGenerator.C_water_in) annotation (Line(
+      points={{-16,-98},{-64,-98},{-64,-15.6},{-83.28,-15.6}},
+      color={28,108,200},
+      thickness=0.5));
   connect(PressureLoss_SteamExtractionHP1.C_out, HPCondReheater_valve.C_in)
     annotation (Line(
       points={{202,5.8},{200,5.8},{200,-18.1818},{62,-18.1818}},
@@ -310,33 +305,6 @@ equation
       color={63,81,181},
       thickness=0.5));
 
-  connect(HPcontrolValve.C_in, waterPressureSensor.C_out) annotation (Line(
-      points={{-52,33.8182},{-67.8,34}},
-      color={238,46,47},
-      thickness=0.5));
-  connect(steamGenerator.C_steam_out, waterPressureSensor.C_in) annotation (
-      Line(
-      points={{-98,18.42},{-98,34},{-88,34}},
-      color={238,46,47},
-      thickness=0.5));
-  connect(SuperHeaterControlValve.C_in, HPcontrolValve.C_in) annotation (Line(
-      points={{30,71.8182},{-12,71.8182},{-12,72},{-60,72},{-60,33.8182},{-52,
-          33.8182}},
-      color={238,46,47},
-      thickness=0.5));
-  connect(HPReheater.C_cold_out, waterFlowSensor.C_in)
-    annotation (Line(points={{-16,-98},{-42,-98}}, color={63,81,181}));
-  connect(steamGenerator.C_water_in, waterFlowSensor.C_out) annotation (Line(
-        points={{-83.28,-15.6},{-70,-15.6},{-70,-98},{-62.2,-98}}, color={63,81,
-          181}));
-  connect(openingSensor.Op_input, SuperHeaterControlValve.Opening)
-    annotation (Line(points={{45.2,90},{35,90},{35,80.0909}}, color={0,0,0}));
-  connect(HPpump.C_power, source.u) annotation (Line(points={{66,-63.8},{66,-55},
-          {66.5,-55}}, color={0,0,127}));
-  connect(LPpump.C_power, source1.u)
-    annotation (Line(points={{320,-63.8},{320.5,-57}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
-            -140},{460,140}})),                                  Diagram(
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{460,
             140}}),

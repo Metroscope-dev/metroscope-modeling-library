@@ -12,8 +12,6 @@ model TestControlValve
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.ControlValve controlValve
     annotation (Placement(transformation(extent={{-16,-4},{4,18}})));
-  Common.Sensors.OpeningSensor openingSensor
-    annotation (Placement(transformation(extent={{12,12},{32,32}})));
 equation
 
   // Unit test for Control Valve
@@ -38,9 +36,6 @@ equation
     annotation (Line(points={{4.2,0},{54,0}}, color={238,46,47}));
   connect(source.C_out, controlValve.C_in)
     annotation (Line(points={{-60,0},{-16,0}}, color={238,46,47}));
-  connect(openingSensor.Op_input, controlValve.Opening)
-    annotation (Line(points={{11.2,22},{-6,22},{-6,18.2}}, color={0,0,0}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
-            {80,40}})),                                          Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,40}})));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestControlValve;

@@ -10,15 +10,10 @@ public
   Connectors.C_power C_power
     annotation (Placement(transformation(extent={{-116,-14},{-84,14}}, rotation=
            0)));
-  Connectors.C_power C_elec annotation (Placement(transformation(extent={{90,-10},{110,
-            10}}), iconTransformation(extent={{90,-10},{110,10}})));
 equation
 
   Wmech = C_power.W;
   Welec = -Wmech*eta;
-
-  C_elec.W = Welec;
-
   annotation (Diagram(coordinateSystem(extent={{-100,-60},{100,60}}),
                       graphics={
         Rectangle(
@@ -129,8 +124,7 @@ equation
           fillPattern=FillPattern.Solid),
         Line(points={{-74,0},{-68,0}}, color={0,128,255}),
         Line(points={{-82,0},{-68,0}}, color={0,0,255}),
-        Line(points={{-96,0},{-82,0}}, color={0,0,255}),
-        Line(points={{78,0},{92,0}},   color={0,0,255})}),
+        Line(points={{-96,0},{-82,0}}, color={0,0,255})}),
     Documentation(info="<html>
 <p><b>Copyright &copy; EDF 2002 - 2010</b></p>
 </HTML>

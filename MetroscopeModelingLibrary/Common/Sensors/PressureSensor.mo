@@ -1,28 +1,15 @@
 within MetroscopeModelingLibrary.Common.Sensors;
 model PressureSensor
-  extends BaseSensor;
-
-  Real P; // Absolute pressure in Pa (SI units)
-  Real P_barA; // Absolute pressure in bar
-  Real P_barG; // Relative (gauge) pressure in bar
-  Real P_mbar; // Pressure in mbar
-  Real P_psi; // Pressure in PSI
-
-
+    replaceable package Medium =
+      MetroscopeModelingLibrary.Common.Medium.PartialMedium;
+    extends
+    MetroscopeModelingLibrary.Common.Sensors.BaseSensors.BaseAbsoluteSensor;
+  Common.Connectors.RealOutput P(final quantity="Pressure",
+                                          final unit="Pa",
+                                          displayUnit="Pa",
+                                          min=0) "Pressure at port" annotation (Placement(transformation(extent={{40,
+            30},{60,50}}), iconTransformation(extent={{40,34},{52,46}})));
 equation
-<<<<<<< HEAD
-
-  P = P_in;
-  P_barA = P_in * 1e-5;
-  P_mbar = P_in * 1e-2;
-  P_barG = P_in*1e-5 - 1;
-  P_psi = P_in*0.000145038;
-
-  annotation (Icon(graphics={Text(
-          extent={{-102,46},{114,-48}},
-          textColor={0,0,0},
-          textString="P")}));
-=======
   C_in.P = P;
     annotation (defaultComponentName = "pressure",
               Icon(coordinateSystem(preserveAspectRatio=false, extent={{-40,-40},
@@ -80,5 +67,4 @@ equation
 <p><br><br><b>Direct mode</b>l : No fixed value. Gives pressure as an output</p>
 <p><b>Modelling choices</b> : - No pressure loss in the component</p>
 </html>"));
->>>>>>> main
 end PressureSensor;

@@ -18,7 +18,11 @@ connector RealOutput = output Real "'output Real' as connector" annotation (
       lineColor={0,0,0},
       fillColor={255,255,255},
       fillPattern=FillPattern.Solid,
-      points={{-100.0,50.0},{0.0,0.0},{-100.0,-50.0}})}),
+      points={{-100.0,50.0},{0.0,0.0},{-100.0,-50.0}}),
+    Text(
+      lineColor={0,0,0},
+      extent={{30.0,60.0},{30.0,110.0}},
+        textString="%name")}),
   Documentation(info="<html>
 <p>
 Connector with one output signal of type Real.
