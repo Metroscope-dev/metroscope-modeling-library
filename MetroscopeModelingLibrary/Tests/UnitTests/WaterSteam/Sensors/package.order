@@ -1,2 +1,5 @@
-TestSensors
-TestDPSensor
+TestPressureDifferenceSensor
+TestPressureSensor
+TestTemperatureSensor
+TestMassFlowSensor
+TestSensors_NoEq
