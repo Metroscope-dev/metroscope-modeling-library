@@ -1,9 +1,8 @@
 within MetroscopeModelingLibrary.Common.Sensors;
 model OpeningSensor
 
-  Real Op; // Opening (0 to 1)
   Real Op_pc; // Opening in percent
-  Connectors.RealInput Op_input annotation (Placement(transformation(extent={{-80,-20},
+  Connectors.RealOutput Opening annotation (Placement(transformation(extent={{-80,-20},
             {-40,20}}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=180,
@@ -11,8 +10,7 @@ model OpeningSensor
 
 equation
 
-  Op = Op_input;  // Opening (0 to 1)
-  Op_pc = Op_input * 100;  // Opening (percentage)
+  Op_pc = Opening * 100;  // Opening (percentage)
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(
