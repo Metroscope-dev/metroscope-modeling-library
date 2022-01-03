@@ -2,8 +2,8 @@ within MetroscopeModelingLibrary.WaterSteam.Machines;
 model StodolaTurbine
    package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-    extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=60e5), P_out(start=55e5),h_in(start=2.7e6), h_out(start=2.6e6), redeclare package
-              Medium =
+    extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=60e5), P_out(start=55e5),h_in(start=2.7e6), h_out(start=2.6e6), redeclare
+      package Medium =
         WaterSteamMedium);
 
   connector InputReal = input Real;

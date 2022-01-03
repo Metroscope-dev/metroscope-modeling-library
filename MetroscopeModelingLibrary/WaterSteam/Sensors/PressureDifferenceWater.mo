@@ -3,8 +3,8 @@ model PressureDifferenceWater
       package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
     extends
-    MetroscopeModelingLibrary.Common.Sensors.PressureDifferenceSensor(    redeclare package
-              Medium =
+    MetroscopeModelingLibrary.Common.Sensors.PressureDifferenceSensor(    redeclare
+      package Medium =
         WaterSteamMedium);
     annotation (defaultComponentName = "pressureDifference",
     Documentation(info="<html>

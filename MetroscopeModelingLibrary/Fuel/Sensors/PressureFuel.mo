@@ -2,7 +2,8 @@ within MetroscopeModelingLibrary.Fuel.Sensors;
 model PressureFuel
     package FuelMedium =
       MetroscopeModelingLibrary.Fuel.Medium.FuelMedium;
-    extends MetroscopeModelingLibrary.Common.Sensors.PressureSensor(    redeclare package Medium =
+    extends MetroscopeModelingLibrary.Common.Sensors.PressureSensor(    redeclare
+      package                                                                             Medium =
                        FuelMedium);
     annotation (defaultComponentName = "pressure",
     Documentation(info="<html>

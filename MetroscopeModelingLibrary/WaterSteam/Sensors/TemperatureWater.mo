@@ -2,8 +2,8 @@ within MetroscopeModelingLibrary.WaterSteam.Sensors;
 model TemperatureWater
     package WaterSteamMedium =
     MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-    extends MetroscopeModelingLibrary.Common.Sensors.TemperatureSensor( redeclare package
-              Medium = WaterSteamMedium);
+    extends MetroscopeModelingLibrary.Common.Sensors.TemperatureSensor( redeclare
+      package Medium = WaterSteamMedium);
     annotation (defaultComponentName = "Temperature",
     Documentation(info="<html>
 <p><b>V3</b> Component now only has one port (31/05/2019)</p>

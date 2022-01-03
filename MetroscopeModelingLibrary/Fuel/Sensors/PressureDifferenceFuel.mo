@@ -3,7 +3,8 @@ model PressureDifferenceFuel
       package FuelMedium =
       MetroscopeModelingLibrary.Fuel.Medium.FuelMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.PressureDifferenceSensor(
-                                                                          redeclare package Medium =
+                                                                          redeclare
+      package                                                                               Medium =
         FuelMedium);
     annotation (defaultComponentName = "pressureDifference",
     Documentation(info="<html>

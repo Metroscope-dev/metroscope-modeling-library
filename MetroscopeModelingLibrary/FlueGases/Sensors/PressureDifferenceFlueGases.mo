@@ -3,8 +3,8 @@ model PressureDifferenceFlueGases
       package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.PressureDifferenceSensor(
-                                                                          redeclare package
-              Medium =
+                                                                          redeclare
+      package Medium =
         FlueGasesMedium);
     annotation (defaultComponentName = "pressureDifference",
     Documentation(info="<html>
