@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
 model FlashTank_Reheater
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondReheater CondReheater
     annotation (Placement(transformation(extent={{-20,26},{12,42}})));
@@ -100,7 +101,6 @@ equation
           {{-87.9,-22},{-88,-22},{-88,56},{-68,56}}, color={63,81,181}));
   connect(DP_vaporBalance.C_out, CondReheater.C_hot_in)
     annotation (Line(points={{-55.88,56},{-3,56},{-3,42}}, color={63,81,181}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-200,-100},
-            {100,100}})),                                        Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-200,-100},{100,100}})));
 end FlashTank_Reheater;

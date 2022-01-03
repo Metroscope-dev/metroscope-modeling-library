@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.DymolaTests.SimpleExamples.WaterSteam;
 model MetroscopeTrainingTest
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   /* --- Boundary Conditions --- */
   input Real W_heater(start = 35);

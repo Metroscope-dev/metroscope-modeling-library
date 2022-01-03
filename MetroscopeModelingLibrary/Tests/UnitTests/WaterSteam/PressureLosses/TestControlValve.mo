@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.PressureLosses;
 model TestControlValve
+  extends Modelica.Icons.Example;
   input Modelica.Units.SI.AbsolutePressure P_source(start=2e5);
-  input Modelica.Units.SI.SpecificEnthalpy T_source(start=20 + 273.15);
+  input Modelica.Units.SI.Temperature T_source(start=20 + 273.15);
   input Modelica.Units.SI.MassFlowRate Q(start=100);
   // For reverse causality :
   //input Modelica.SIunits.AbsolutePressure P_sink(start = 1e5);

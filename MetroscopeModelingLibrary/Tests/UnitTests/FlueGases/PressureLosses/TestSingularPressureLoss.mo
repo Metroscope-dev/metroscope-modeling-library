@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.FlueGases.PressureLosses;
 model TestSingularPressureLoss
+  extends Modelica.Icons.Example;
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink(h_in(start=283945),
       h_vol(start=283945))
     annotation (Placement(transformation(extent={{66,70},{86,90}})));
@@ -42,7 +43,6 @@ equation
     annotation (Line(points={{-80,80},{-53.8,80}}, color={63,81,181}));
   connect(moistAirToFlueGases.C_out, singularPressureLoss.C_in)
     annotation (Line(points={{-34,80},{-2,80}}, color={63,81,181}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,60},
-            {100,100}})), Diagram(coordinateSystem(preserveAspectRatio=false,
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false,
           extent={{-100,60},{100,100}})));
 end TestSingularPressureLoss;

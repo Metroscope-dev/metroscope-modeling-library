@@ -1,14 +1,20 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model Superheater_PartialCondensation
-  replaceable package ColdMedium =
+  package ColdMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  replaceable package HotMedium =
+  package HotMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  Real Kfr_cold(start=1.e3) "Pressure loss coefficient";
-  Real Kfr_hot(start=1.e3) "Pressure loss coefficient";
-  Modelica.Units.SI.CoefficientOfHeatTransfer Kth(start=9000)
+
+  connector InputReal = input Real;
+  connector InputCoefficientOfHeatTransfer = input
+      Modelica.Units.SI.CoefficientOfHeatTransfer;
+  connector InputArea = input Modelica.Units.SI.Area;
+
+  InputReal Kfr_cold(start=1.e3) "Pressure loss coefficient";
+  InputReal Kfr_hot(start=1.e3) "Pressure loss coefficient";
+  InputCoefficientOfHeatTransfer Kth(start=9000)
     "heat transfer coefficient same in all zone";
-  Modelica.Units.SI.Area S_tot(start=100) "Total exchange area";
+  InputArea S_tot(start=100) "Total exchange area";
   Modelica.Units.SI.Power W_CondVap(start=0.5e6)
     "Energy transfer in CondVap zone";
   Modelica.Units.SI.Power W_CondSupH(start=40e6)

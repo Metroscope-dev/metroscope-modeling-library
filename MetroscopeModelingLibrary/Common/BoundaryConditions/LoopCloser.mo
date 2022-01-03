@@ -1,9 +1,16 @@
 within MetroscopeModelingLibrary.Common.BoundaryConditions;
 model LoopCloser
-extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel;
+  extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel;
+
+  connector InputAbsolutePressure = input Modelica.Units.SI.AbsolutePressure;
+
+  InputAbsolutePressure P "Fluid pressure";
 equation
   h_out = h_in;
   P_out = P_in;
+  // The extra pressure variable is defined ad hoc with connector input type
+  // since you cannot change the type of the the variables in the base class
+  P = P_in;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
@@ -12,11 +19,6 @@ equation
           points={{-100,0},{98,0}},
           color={0,0,0},
           thickness=0.5)}),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
@@ -51,5 +53,5 @@ equation
     Metroscope.tech</li>
 </ul>
 </html>
-"), DymolaStoredErrors);
+"));
 end LoopCloser;

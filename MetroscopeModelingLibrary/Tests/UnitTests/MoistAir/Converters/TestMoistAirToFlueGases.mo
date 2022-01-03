@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.MoistAir.Converters;
 model TestMoistAirToFlueGases
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
@@ -39,7 +40,6 @@ equation
     annotation (Line(points={{60.2,-20},{76,-20}}, color={63,81,181}));
   connect(moistAirToFlueGases.C_out, FlueGasesSingularPressureLoss.C_in)
     annotation (Line(points={{10,-20},{40,-20}}, color={63,81,181}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-40},
-            {100,0}})),                                          Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-40},{100,0}})));
 end TestMoistAirToFlueGases;

@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.BoundaryConditions;
 model TestLoopCloser
+  extends Modelica.Icons.Example;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.LoopCloser
                                        loopCloser
    annotation (Placement(
@@ -27,7 +28,6 @@ equation
     annotation (Line(points={{12.2,34},{60,34}}, color={238,46,47}));
   connect(source.C_out, loopCloser.C_in)
     annotation (Line(points={{-54,34},{-8,34}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,0},{
-            80,60}})),                                           Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                           Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,0},{80,60}})));
 end TestLoopCloser;

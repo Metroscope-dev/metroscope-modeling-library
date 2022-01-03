@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestSuperheater_PartialCondensation
-  replaceable package WaterSteamMedium =
+  extends Modelica.Icons.Example;
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Superheater_PartialCondensation Superheater
     annotation (Placement(transformation(extent={{-16,32},{16,48}})));
@@ -91,7 +92,6 @@ equation
   connect(source_cold_steam.C_out, Superheater.C_cold_in)
     annotation (Line(points={{6.66134e-16,20},{6.66134e-16,28},{0,28},{0,32}},
                                                 color={63,81,181}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,0},{
-            60,80}})),                                           Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                           Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-60,0},{60,80}})));
 end TestSuperheater_PartialCondensation;

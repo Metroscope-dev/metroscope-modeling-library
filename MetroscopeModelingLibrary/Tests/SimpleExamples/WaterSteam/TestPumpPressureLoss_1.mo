@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
 model TestPumpPressureLoss_1
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
   input Real valveOpening(start=1);
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.ControlValve controlValve

@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Multifluid.HeatExchangers;
-model PartialHeatExchanger
+partial model PartialHeatExchanger
   replaceable package ColdMedium =
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
   replaceable package HotMedium =

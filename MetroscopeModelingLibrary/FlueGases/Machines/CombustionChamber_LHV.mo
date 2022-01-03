@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.Machines;
 model CombustionChamber_LHV
-  extends CombustionChamber;
+  extends CombustionChamberPartial;
   constant  Real efmCH4= -74.5e3 "CH4 molar enthalpy of formation";
   constant  Real efmC2H6= -83.8e3 "C2H6 molar enthalpy of formation";
   constant  Real efmC3H8=-104.7e3 "C3H8 molar enthalpy of formation";
@@ -21,6 +21,6 @@ equation
    efC4H10= 1e3*efmC4H10/amC4H10 "C4H10 specific enthalpy of formation";
    efCO2= 1e3*efmCO2/amCO2 "CO2 specific enthalpy of formation";
    efH2O= 1e3*efmH2O/amH2O "H2O specific enthalpy of formation";
-   LHV=-(-(X_out_H2O*Q_out/Qfuel+X_in_H2O*Q_in/Qfuel)*efH2O-(X_out_CO2*Q_out/Qfuel+X_in_CO2*Q_in/Qfuel+X_fuel_CO2)*efCO2-X_fuel_CH4*efCH4-X_fuel_C2H6*efC2H6-X_fuel_C3H8*efC3H8-X_fuel_C4H10_n_butane*efC4H10);
+   LHV_int = -(-(X_out_H2O*Q_out/Qfuel+X_in_H2O*Q_in/Qfuel)*efH2O-(X_out_CO2*Q_out/Qfuel+X_in_CO2*Q_in/Qfuel+X_fuel_CO2)*efCO2-X_fuel_CH4*efCH4-X_fuel_C2H6*efC2H6-X_fuel_C3H8*efC3H8-X_fuel_C4H10_n_butane*efC4H10);
 
 end CombustionChamber_LHV;

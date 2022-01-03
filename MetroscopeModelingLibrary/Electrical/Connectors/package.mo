@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Electrical;
 package Connectors
+  extends Modelica.Icons.Package;
   connector C_power
 
     flow Modelica.Units.SI.Power W;

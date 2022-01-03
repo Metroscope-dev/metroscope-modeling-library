@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Machines;
 model TestStodolaTurbine
+  extends Modelica.Icons.Example;
   input Modelica.Units.SI.AbsolutePressure P_source(start=20e5);
   input Modelica.Units.SI.SpecificEnthalpy h_source(start=2.7718e6);
   input Modelica.Units.SI.MassFlowRate Q(start=100);
@@ -46,7 +47,6 @@ equation
     annotation (Line(points={{-60,0},{-14,0}}, color={238,46,47}));
   connect(stodolaTurbine.C_power, sink1.u) annotation (Line(points={{7.4,8.6},{
           6,8.6},{6,14},{14.4,14}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
-            {80,20}})),                                          Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestStodolaTurbine;

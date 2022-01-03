@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Common.Functions;
 function ThermoSquare "Thermodynamic square"
- input Real x;
+  extends Modelica.Icons.Function;
+  input Real x;
   input Real dx;
   output Real y;
 algorithm
@@ -10,11 +11,6 @@ algorithm
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2}), graphics),
-    Window(
-      x=0.11,
-      y=0.2,
-      width=0.6,
-      height=0.6),
     Documentation(info="<html>
 <p><b>Copyright &copy; EDF 2002 - 2010</b></p>
 </HTML>

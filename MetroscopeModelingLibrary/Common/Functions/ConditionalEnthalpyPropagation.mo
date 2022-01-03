@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Common.Functions;
 function ConditionalEnthalpyPropagation
+  extends Modelica.Icons.Function;
   input Real Q;
   input Real Qeps;
   input Real h_negative_flow;
@@ -16,11 +17,6 @@ algorithm
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2}), graphics),
-    Window(
-      x=0.11,
-      y=0.2,
-      width=0.6,
-      height=0.6),
     Documentation(info="<html>
 <p><b></b></p>
 </HTML>

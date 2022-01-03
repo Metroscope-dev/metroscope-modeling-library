@@ -1,7 +1,10 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model SingularPressureLoss_NoIcon "Singular pressure loss"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
- Real Kfr(start=1.e3) "Pressure loss coefficient";
+
+  connector InputReal = input Real;
+
+  InputReal Kfr(start=1.e3) "Pressure loss coefficient";
 equation
   /* Pressure loss */
   deltaP = -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom;
@@ -16,11 +19,6 @@ equation
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2})),
-    Window(
-      x=0.09,
-      y=0.2,
-      width=0.66,
-      height=0.69),
     Documentation(info="<html>
 <h4>Copyright &copy; Metroscope</h4>
 <h4>Metroscope Modeling Library</h4>

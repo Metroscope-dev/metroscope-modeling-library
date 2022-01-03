@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MoistAir.BoundaryConditions;
 model Source
 
-  replaceable package MoistAirMedium =
+  package MoistAirMedium =
           MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
       extends MetroscopeModelingLibrary.Common.BoundaryConditions.Source(redeclare
       package     Medium =

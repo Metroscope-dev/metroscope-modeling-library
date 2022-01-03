@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.MoistAir.PressureLosses;
 model SingularPressureLoss
-  replaceable package MoistAirMedium =
+  package MoistAirMedium =
           MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
       extends
     MetroscopeModelingLibrary.Common.PressureLosses.SingularPressureLoss(          redeclare

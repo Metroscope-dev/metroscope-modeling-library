@@ -1,14 +1,13 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model ControlValve "Control valve"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
-public
-  MetroscopeModelingLibrary.Common.Units.Cv Cvmax(start=8005.42)
+
+  connector InputCv = input Common.Units.Cv;
+  InputCv Cvmax(start=8005.42)
     "Maximum CV (active if mode_caract=0)";
   MetroscopeModelingLibrary.Common.Units.Cv Cv(start=100) "Cv";
-  MetroscopeModelingLibrary.Common.Connectors.RealOutput Opening annotation (Placement(
-        transformation(extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={0,118}),                              iconTransformation(
+  Modelica.Blocks.Interfaces.RealInput Opening annotation (Placement(
+        transformation(extent={{-62,152},{-22,192}}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,182})));
@@ -70,11 +69,6 @@ equation
           lineColor={0,0,255},
           fillColor={127,255,0},
           fillPattern=FillPattern.Solid)}),
-    Window(
-      x=0.07,
-      y=0.13,
-      width=0.8,
-      height=0.77),
     Documentation(info="<html>
 <h4>Copyright &copy; Metroscope</h4>
 <h4>Metroscope Modeling Library</h4>

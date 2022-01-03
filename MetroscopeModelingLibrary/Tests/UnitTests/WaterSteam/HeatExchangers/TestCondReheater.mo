@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.HeatExchangers;
 model TestCondReheater
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink_hot_CondSteam(Q_in(start=60))
     annotation (Placement(transformation(
@@ -79,7 +80,6 @@ equation
     annotation (Line(points={{12,34},{38,34}}, color={63,81,181}));
   connect(CondReheater.C_hot_out, sink_hot_CondSteam.C_in)
     annotation (Line(points={{-4,26},{-4,8},{-2,8}}, color={63,81,181}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-            -20},{100,100}})),                                   Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                   Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-20},{100,100}})));
 end TestCondReheater;

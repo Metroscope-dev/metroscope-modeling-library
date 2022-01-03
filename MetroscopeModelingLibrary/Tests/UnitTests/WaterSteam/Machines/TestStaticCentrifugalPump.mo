@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Machines;
 model TestStaticCentrifugalPump
+  extends Modelica.Icons.Example;
   input Modelica.Units.SI.AbsolutePressure P_source(start=2e5);
   input Modelica.Units.SI.Temperature T_source(start=20 + 273.15);
   input Modelica.Units.SI.MassFlowRate Q(start=100);

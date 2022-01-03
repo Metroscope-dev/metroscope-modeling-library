@@ -1,9 +1,10 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.Multifluid.HeatExchangers;
 model TestNTUCounterCurrentHeatExchanger
+  extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  replaceable package MoistAirMedium =
+  package MoistAirMedium =
       MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source moistAirSource(h_out(
         start=283945), h_vol(start=283945))
@@ -44,8 +45,6 @@ equation
     annotation (Line(points={{-20,116},{2,116},{2,90}}, color={238,46,47}));
   connect(nTUCounterCurrentHeatExchanger.C_cold_out, waterSink.C_in)
     annotation (Line(points={{2,70.2},{2,46},{18,46}}, color={238,46,47}));
-    annotation (Placement(transformation(extent={{-16,42},{-4,54}})),
-              Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,20},
-            {100,140}})),                                        Diagram(
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,20},{100,140}})));
 end TestNTUCounterCurrentHeatExchanger;

@@ -1,14 +1,16 @@
 within MetroscopeModelingLibrary.FlueGases.Machines;
 model FlueGasesTurbine
-   replaceable package FlueGasesMedium =
+   package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
-    extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=1e5), P_out(start=45e5),h_in(start=1e5), h_out(start=1.2e5), redeclare
-      package Medium =
+    extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=1e5), P_out(start=45e5),h_in(start=1e5), h_out(start=1.2e5), redeclare package
+              Medium =
         FlueGasesMedium);
-public
-  Real eta_mech(start=1) "";
-  Real tau(start=15);
-  Real eta_is(start=0.8) "Nominal isentropic efficiency";
+
+  connector InputPerUnit = input Modelica.Units.SI.PerUnit;
+
+  InputPerUnit eta_mech(start=1) "";
+  Modelica.Units.SI.PerUnit tau(start=15);
+  InputPerUnit eta_is(start=0.8) "Nominal isentropic efficiency";
   Modelica.Units.SI.MassFlowRate Q(start=500) "Mass flow rate";
   Modelica.Units.SI.SpecificEnthalpy His(start=1e6);
   FlueGasesMedium.ThermodynamicState state_is;
@@ -43,11 +45,6 @@ equation
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2})),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
@@ -114,5 +111,5 @@ equation
     Daniel Bouskela</li>
 </ul>
 </html>
-"), DymolaStoredErrors);
+"));
 end FlueGasesTurbine;

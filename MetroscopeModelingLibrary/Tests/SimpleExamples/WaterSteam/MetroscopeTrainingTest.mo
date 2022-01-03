@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
 model MetroscopeTrainingTest
-  replaceable package WaterSteamMedium =
+  extends Modelica.Icons.Example;
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   /* --- Boundary Conditions --- */
   input Real W_heater(start = 35);
@@ -123,7 +124,6 @@ equation
     annotation (Line(points={{68,12.2},{68,0},{50,0}}, color={238,46,47}));
   connect(singularPressureLoss1.C_out, pump.C_in)
     annotation (Line(points={{37.88,0},{-16,0}}, color={238,46,47}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},
-            {120,80}})),                                         Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                         Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{120,80}})));
 end MetroscopeTrainingTest;

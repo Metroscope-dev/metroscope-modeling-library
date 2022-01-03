@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.BoundaryConditions;
 model Sink
-  replaceable package WaterSteamMedium =
+  package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   extends MetroscopeModelingLibrary.Common.BoundaryConditions.Sink(redeclare
       package                                                                        Medium =
