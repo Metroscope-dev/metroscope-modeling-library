@@ -2,9 +2,6 @@ within MetroscopeModelingLibrary.Fuel.Sensors;
 model MassFlowFuel
     package FuelMedium =
       MetroscopeModelingLibrary.Fuel.Medium.FuelMedium;
-          extends MetroscopeModelingLibrary.Common.Sensors.MassFlowSensor(
-                                                      redeclare package Medium =
-        FuelMedium);
     annotation (defaultComponentName = "massFlow",
     Documentation(info="<html>
 <p><b>V2</b> Creation of the heritage relationship and modification of the component accordingly (23/05/2019)</p>

@@ -2,9 +2,6 @@ within MetroscopeModelingLibrary.WaterSteam.Sensors;
 model MassFlowWater
     package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-          extends MetroscopeModelingLibrary.Common.Sensors.MassFlowSensor(
-                                                      redeclare package Medium =
-        WaterSteamMedium);
     annotation (defaultComponentName = "massFlow",
     Documentation(info="<html>
 <p><b>V2</b> Creation of the heritage relationship and modification of the component accordingly (23/05/2019)</p>

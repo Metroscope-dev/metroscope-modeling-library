@@ -2,8 +2,6 @@ within MetroscopeModelingLibrary.FlueGases.Sensors;
 model TemperatureFlueGases
     package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
-    extends MetroscopeModelingLibrary.Common.Sensors.TemperatureSensor( redeclare
-      package Medium = FlueGasesMedium);
     annotation (defaultComponentName = "Temperature",
     Documentation(info="<html>
 <p><b>V3</b> Component now only has one port (31/05/2019)</p>

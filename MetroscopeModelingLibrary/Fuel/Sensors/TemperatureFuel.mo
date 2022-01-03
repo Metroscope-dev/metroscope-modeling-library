@@ -2,9 +2,6 @@ within MetroscopeModelingLibrary.Fuel.Sensors;
 model TemperatureFuel
     package FuelMedium =
       MetroscopeModelingLibrary.Fuel.Medium.FuelMedium;
-    extends MetroscopeModelingLibrary.Common.Sensors.TemperatureSensor( redeclare
-      package                                                                             Medium =
-                       FuelMedium);
     annotation (defaultComponentName = "Temperature",
     Documentation(info="<html>
 <p><b>V3</b> Component now only has one port (31/05/2019)</p>

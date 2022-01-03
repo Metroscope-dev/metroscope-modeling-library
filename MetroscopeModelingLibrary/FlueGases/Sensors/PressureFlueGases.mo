@@ -2,8 +2,6 @@ within MetroscopeModelingLibrary.FlueGases.Sensors;
 model PressureFlueGases
     package FlueGasesMedium =
       MetroscopeModelingLibrary.FlueGases.Medium.FlueGasesMedium;
-    extends MetroscopeModelingLibrary.Common.Sensors.PressureSensor(    redeclare
-      package Medium = FlueGasesMedium);
     annotation (defaultComponentName = "pressure",
     Documentation(info="<html>
 <p><b>V2</b> Creation of the heritage relationship and modification of the component accordingly (23/05/2019)</p>
