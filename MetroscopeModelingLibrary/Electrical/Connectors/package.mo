@@ -25,11 +25,7 @@ package Connectors
         lineColor={0,0,127},
         fillColor={0,0,127},
         fillPattern=FillPattern.Solid,
-        points={{0.0,50.0},{100.0,0.0},{0.0,-50.0},{0.0,50.0}}),
-      Text(
-        lineColor={0,0,127},
-        extent={{-10.0,60.0},{-10.0,85.0}},
-        textString="%name")}),
+        points={{0.0,50.0},{100.0,0.0},{0.0,-50.0},{0.0,50.0}})}),
     Documentation(info="<html>
 <p>
 Connector with one input signal of type Real.

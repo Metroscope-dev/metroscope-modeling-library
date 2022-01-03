@@ -1,18 +1,24 @@
 within MetroscopeModelingLibrary.Common.Sensors;
 model TemperatureSensor
-    replaceable package Medium =
-      MetroscopeModelingLibrary.Common.Medium.PartialMedium;
-    extends
-    MetroscopeModelingLibrary.Common.Sensors.BaseSensors.BaseAbsoluteSensor;
-  Medium.ThermodynamicState state_in;
-public
-  Common.Connectors.RealOutput T(
-    final quantity="Temperature",
-    final unit="K",
-    displayUnit="K",
-    min=0)                                       "Temperature at port" annotation (Placement(transformation(extent={{40,
-            30},{60,50}}), iconTransformation(extent={{40,34},{52,46}})));
+  extends BaseSensor;
+
+  Real T; // Temperature in SI Units : K
+  Real T_degC;  // Temperature in degC
+  Real T_degF;  // Temperature in degF
+
+
 equation
+<<<<<<< HEAD
+
+  T = T_in;
+  T_degC = T_in - 273.15; // Conversion de Celsius
+  T_degF = (T_in-273.15)*1.8 + 32.0;  // Conversion to Farenheit
+
+  annotation (Icon(graphics={Text(
+          extent={{-108,44},{108,-50}},
+          textColor={0,0,0},
+          textString="T")}));
+=======
   state_in = Medium.setState_phX(C_in.P, C_in.h_vol,C_in.Xi_vol);
   T = Medium.temperature(state_in);
     annotation (defaultComponentName = "pressure",
@@ -74,4 +80,5 @@ equation
 <p><br><br><br><b>Direct mode</b>l : No fixed value. Gives temperature as an output</p>
 <p><b>Modelling choices</b> : - No pressure loss in the component</p>
 </html>"));
+>>>>>>> main
 end TemperatureSensor;

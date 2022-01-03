@@ -1,4 +1,3 @@
-PressureFuel
-PressureDifferenceFuel
-MassFlowFuel
-TemperatureFuel
+FuelTemperatureSensor
+FuelFlowSensor
+FuelPressureSensor

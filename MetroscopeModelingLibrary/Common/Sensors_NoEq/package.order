@@ -2,3 +2,7 @@ TemperatureSensor
 PressureSensor
 FlowSensor
 DeltaPSensor
+OpeningSensor
+HumiditySensor
+PowerSensor
+RotationalSpeedSensor

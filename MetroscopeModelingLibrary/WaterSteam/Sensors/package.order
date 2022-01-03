@@ -1,4 +1,4 @@
-PressureWater
-PressureDifferenceWater
-MassFlowWater
-TemperatureWater
+WaterFlowSensor
+WaterTemperatureSensor
+WaterPressureSensor
+WaterDeltaPressureSensor
