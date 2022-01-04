@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.MoistAir.Sensors;
 model MoistAirFlowSensor
-    replaceable package MoistAirMedium =
+  package MoistAirMedium =
       MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
   extends MetroscopeModelingLibrary.Common.Sensors.FlowSensor(redeclare package
               Medium =

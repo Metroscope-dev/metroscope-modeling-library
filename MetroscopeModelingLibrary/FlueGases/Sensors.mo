@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.FlueGases;
 package Sensors
   extends Modelica.Icons.SensorsPackage;
   model WaterFlowSensor
-    replaceable package WaterSteamMedium =
+    package WaterSteamMedium =
         MetroscopeModelingLibrary.WaterSteam.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.FlowSensor(redeclare
         package
@@ -11,7 +11,7 @@ package Sensors
   end WaterFlowSensor;
 
   model WaterTemperatureSensor
-    replaceable package WaterSteamMedium =
+    package WaterSteamMedium =
         MetroscopeModelingLibrary.WaterSteam.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.TemperatureSensor(redeclare
         package Medium =
@@ -19,7 +19,7 @@ package Sensors
   end WaterTemperatureSensor;
 
   model WaterPressureSensor
-    replaceable package WaterSteamMedium =
+    package WaterSteamMedium =
         MetroscopeModelingLibrary.WaterSteam.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.PressureSensor(redeclare
         package Medium =
@@ -27,7 +27,7 @@ package Sensors
   end WaterPressureSensor;
 
   model WaterDeltaPressureSensor
-    replaceable package WaterSteamMedium =
+    package WaterSteamMedium =
         MetroscopeModelingLibrary.WaterSteam.Medium.FlueGasesMedium;
     extends MetroscopeModelingLibrary.Common.Sensors.DeltaPressureSensor(redeclare
         package Medium =

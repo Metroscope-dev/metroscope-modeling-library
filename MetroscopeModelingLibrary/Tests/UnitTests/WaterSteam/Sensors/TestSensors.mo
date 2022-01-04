@@ -1,6 +1,8 @@
 within MetroscopeModelingLibrary.Tests.UnitTests.WaterSteam.Sensors;
 model TestSensors
 
+  extends Modelica.Icons.Example;
+
   input Real Q(start=50); // Flow rate of source in tons per hour
   input Real T(start=100); // Temperature of source in degC
   input Real P(start=10); // Pressure of source in bar
