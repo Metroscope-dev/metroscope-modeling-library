@@ -7,6 +7,7 @@ equation
   P_out = P_in;
   Q_in + Q_out = 0;
   Q_in*h_in + Q_out*h_out = 0;
+  Xi_in = Xi_out;
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(

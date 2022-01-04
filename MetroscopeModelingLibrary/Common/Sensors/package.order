@@ -3,6 +3,5 @@ TemperatureSensor
 PressureSensor
 FlowSensor
 DeltaPressureSensor
-HumiditySensor
 RotSpeedSensor
 OpeningSensor
