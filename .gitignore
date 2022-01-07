@@ -8,7 +8,6 @@
 
 # Dymola result files
 *.txt
-*.mat
 *.c
 *.
 *.exe
