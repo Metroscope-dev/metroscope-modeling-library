@@ -10,7 +10,7 @@ model TemperatureSensor
 equation
 
   T = T_in;
-  T_degC = T_in - 273.15; // Conversion de Celsius
+  T_degC = T_in - 273.15; // Conversion to Celsius
   T_degF = (T_in-273.15)*1.8 + 32.0;  // Conversion to Farenheit
 
   annotation (Icon(graphics={Text(
