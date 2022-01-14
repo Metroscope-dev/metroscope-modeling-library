@@ -3,7 +3,7 @@ model Generator "Eletrical generator"
 
   connector InputPerUnit = input Modelica.Units.SI.PerUnit;
 
-  InputPerUnit eta(start = 99.8) "Efficiency (percent)";
+  InputPerUnit eta(start = 0.998) "Efficiency";
   Modelica.Units.SI.Power Welec "Electrical power produced by the generator";
   Modelica.Units.SI.Power Wmech "Electrical power produced by the generator";
 public

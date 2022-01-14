@@ -13,7 +13,7 @@ equation
   source.W = Wmech;
 
   // Forward
-  //generator.eta = 99.8;
+  //generator.eta = 0.998;
 
   // Reverse
   generator.Welec = 100;
