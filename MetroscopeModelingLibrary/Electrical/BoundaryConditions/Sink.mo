@@ -6,7 +6,7 @@ model Sink
         extent={{-20,-20},{20,20}},
         rotation=180,
         origin={-120,0}), iconTransformation(
-        extent={{-20,-20},{20,20}},
+        extent={{20,-20},{-20,20}},
         rotation=180,
         origin={-120,0})));
 equation
