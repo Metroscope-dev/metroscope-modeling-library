@@ -3,17 +3,21 @@ model Generator "Eletrical generator"
 
   connector InputPerUnit = input Modelica.Units.SI.PerUnit;
 
-  InputPerUnit eta(start = 99.8) "Efficiency (percent)";
+  InputPerUnit eta(start = 0.998) "Efficiency";
   Modelica.Units.SI.Power Welec "Electrical power produced by the generator";
   Modelica.Units.SI.Power Wmech "Electrical power produced by the generator";
 public
   Connectors.C_power C_power
     annotation (Placement(transformation(extent={{-116,-14},{-84,14}}, rotation=
            0)));
+  Connectors.C_power C_elec annotation (Placement(transformation(extent={{92,-14},
+            {120,14}}),
+                   iconTransformation(extent={{92,-14},{120,14}})));
 equation
 
   Wmech = C_power.W;
-  Welec = -Wmech*eta;
+  Welec + Wmech*eta = 0;
+  C_elec.W = Welec;
   annotation (Diagram(coordinateSystem(extent={{-100,-60},{100,60}}),
                       graphics={
         Rectangle(
@@ -68,7 +72,8 @@ equation
           fillColor={0,0,255},
           fillPattern=FillPattern.Solid),
         Line(points={{-82,0},{-68,0}}, color={0,0,255}),
-        Line(points={{-96,0},{-82,0}}, color={0,0,255})}),
+        Line(points={{-96,0},{-82,0}}, color={0,0,255}),
+        Line(points={{86,0},{78,0}}, color={28,108,200})}),
                                 Icon(coordinateSystem(extent={{-100,-60},{100,60}}),
                                      graphics={
         Rectangle(
@@ -124,7 +129,8 @@ equation
           fillPattern=FillPattern.Solid),
         Line(points={{-74,0},{-68,0}}, color={0,128,255}),
         Line(points={{-82,0},{-68,0}}, color={0,0,255}),
-        Line(points={{-96,0},{-82,0}}, color={0,0,255})}),
+        Line(points={{-96,0},{-82,0}}, color={0,0,255}),
+        Line(points={{78,0},{92,0}}, color={28,108,200})}),
     Documentation(info="<html>
 <p><b>Copyright &copy; EDF 2002 - 2010</b></p>
 </HTML>

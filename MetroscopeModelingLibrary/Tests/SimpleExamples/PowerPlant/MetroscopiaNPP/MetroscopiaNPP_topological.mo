@@ -127,6 +127,8 @@ partial model MetroscopiaNPP_topological
         origin={57,-15})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondenserSimple condenser
     annotation (Placement(transformation(extent={{330,-16},{356,6}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Sink sink
+    annotation (Placement(transformation(extent={{436,116},{458,136}})));
 equation
   // Drum equation
   PressureLoss_after_drum.h_in = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(PressureLoss_after_drum.P_in));
@@ -305,6 +307,8 @@ equation
       color={63,81,181},
       thickness=0.5));
 
+  connect(generator.C_elec, sink.u)
+    annotation (Line(points={{425.44,126},{436,126}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{460,
             140}}),

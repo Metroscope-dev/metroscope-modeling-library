@@ -6,12 +6,12 @@ model PowerSensor
   Connectors.C_power C_out annotation (Placement(transformation(extent={{92,-20},
             {132,20}}),
                    iconTransformation(extent={{92,-20},{132,20}})));
-  Connectors.C_power C_in annotation (Placement(transformation(extent={{-20,-20},
-            {20,20}},
+  Connectors.C_power C_in annotation (Placement(transformation(extent={{20,-20},
+            {-20,20}},
         rotation=180,
         origin={-36,0}),
                    iconTransformation(
-        extent={{-20,-20},{20,20}},
+        extent={{20,-20},{-20,20}},
         rotation=180,
         origin={-112,0})));
 equation
@@ -20,7 +20,7 @@ equation
   C_in.W + C_out.W = 0;
 
   // Measure
-  W = C_in.W;
+  W = - C_in.W;
   W_MW = W/1e6;
 
     annotation (Placement(transformation(extent={{76,-20},{116,20}})),
