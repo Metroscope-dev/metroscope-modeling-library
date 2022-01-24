@@ -41,6 +41,8 @@ model FlashTank_Reheater
         origin={-117,-68})));
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.SingularPressureLoss DP_vaporBalance
     annotation (Placement(transformation(extent={{-68,50},{-56,62}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source
+    annotation (Placement(transformation(extent={{-150,-68},{-128,-48}})));
 equation
   //inlets
   source_hot_SatSteam_1.h_out = 2.5e6;
@@ -101,6 +103,8 @@ equation
           {{-87.9,-22},{-88,-22},{-88,56},{-68,56}}, color={63,81,181}));
   connect(DP_vaporBalance.C_out, CondReheater.C_hot_in)
     annotation (Line(points={{-55.88,56},{-3,56},{-3,42}}, color={63,81,181}));
+  connect(PRP.C_power, source.u) annotation (Line(points={{-117,-59.04},{-117,
+          -58},{-128,-58}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-200,-100},{100,100}})));
 end FlashTank_Reheater;

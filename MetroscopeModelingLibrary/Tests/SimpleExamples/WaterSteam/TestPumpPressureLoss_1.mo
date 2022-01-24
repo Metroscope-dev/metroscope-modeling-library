@@ -21,6 +21,8 @@ model TestPumpPressureLoss_1
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={72,-14})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source
+    annotation (Placement(transformation(extent={{-14,-26},{8,-6}})));
 equation
   connect(controlValve.C_out, staticCentrifugalPump.C_in) annotation (
     Line(points={{-35.82,10},{16,10}},  color = {238, 46, 47}));
@@ -48,6 +50,8 @@ equation
     annotation (Line(points={{36.2,10},{72,10},{72,-4}}, color={238,46,47}));
   connect(singularPressureLoss.C_out, sinkWater.C_in) annotation (Line(points={{72,
           -24.2},{72,-36},{-86,-36}},    color={238,46,47}));
+  connect(staticCentrifugalPump.C_power, source.u)
+    annotation (Line(points={{26,-1.2},{26,-16},{8,-16}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end TestPumpPressureLoss_1;
