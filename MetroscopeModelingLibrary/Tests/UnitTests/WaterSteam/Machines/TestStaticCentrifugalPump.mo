@@ -18,7 +18,7 @@ model TestStaticCentrifugalPump
 equation
 
   // Forward causality
-  /*
+
   source.P_out = P_source;
   source.T_vol = T_source;
   source.Q_out = -Q;
@@ -33,11 +33,11 @@ equation
   staticCentrifugalPump.b2=3.61;
   staticCentrifugalPump.b3=-0.0075464;
   staticCentrifugalPump.rhmin=0.20;
-  */
+
   // Reverse causality
   // To determine a3, give the outlet pressure
   // To determine b3, give the outlet enthalpy or temperature
-
+  /*
   source.P_out = P_source;
   source.T_vol = T_source;
   source.Q_out = -Q;
@@ -52,7 +52,7 @@ equation
   staticCentrifugalPump.b1=-3.7751;
   staticCentrifugalPump.b2=3.61;
   staticCentrifugalPump.rhmin=0.20;
-
+  */
 
 
   connect(staticCentrifugalPump.C_out, sink.C_in)
