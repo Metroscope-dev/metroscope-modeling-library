@@ -13,9 +13,12 @@ model TestStaticCentrifugalPump
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
   Common.Sensors.RotSpeedSensor rotSpeedSensor
     annotation (Placement(transformation(extent={{12,-32},{32,-12}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source1
+    annotation (Placement(transformation(extent={{-40,6},{-18,26}})));
 equation
 
   // Forward causality
+  /*
   source.P_out = P_source;
   source.T_vol = T_source;
   source.Q_out = -Q;
@@ -30,11 +33,11 @@ equation
   staticCentrifugalPump.b2=3.61;
   staticCentrifugalPump.b3=-0.0075464;
   staticCentrifugalPump.rhmin=0.20;
-
+  */
   // Reverse causality
   // To determine a3, give the outlet pressure
   // To determine b3, give the outlet enthalpy or temperature
-  /*
+
   source.P_out = P_source;
   source.T_vol = T_source;
   source.Q_out = -Q;
@@ -49,7 +52,7 @@ equation
   staticCentrifugalPump.b1=-3.7751;
   staticCentrifugalPump.b2=3.61;
   staticCentrifugalPump.rhmin=0.20;
-  */
+
 
 
   connect(staticCentrifugalPump.C_out, sink.C_in)
@@ -58,6 +61,8 @@ equation
     annotation (Line(points={{-60,0},{-12,0}}, color={238,46,47}));
   connect(staticCentrifugalPump.VRot, rotSpeedSensor.VRot) annotation (Line(
         points={{-2,-12},{4,-12},{4,-22},{11.2,-22}}, color={0,0,127}));
+  connect(staticCentrifugalPump.C_power, source1.u) annotation (Line(points={{-2,
+          11.2},{-12,11.2},{-12,16},{-18,16}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestStaticCentrifugalPump;
