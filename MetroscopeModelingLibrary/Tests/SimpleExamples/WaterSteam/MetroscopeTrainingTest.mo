@@ -60,6 +60,8 @@ model MetroscopeTrainingTest
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.SingularPressureLoss
     singularPressureLoss1
     annotation (Placement(transformation(extent={{50,-6},{38,6}})));
+  Electrical.BoundaryConditions.Source source1
+    annotation (Placement(transformation(extent={{-58,-24},{-36,-4}})));
 equation
   /* --- Boundary Conditions --- */
   W_heater*1e6 = sink.Q_in*(source.h_out - sink.h_in);
@@ -124,6 +126,8 @@ equation
     annotation (Line(points={{68,12.2},{68,0},{50,0}}, color={238,46,47}));
   connect(singularPressureLoss1.C_out, pump.C_in)
     annotation (Line(points={{37.88,0},{-16,0}}, color={238,46,47}));
+  connect(pump.C_power, source1.u) annotation (Line(points={{-26,-11.2},{-26,
+          -14},{-36,-14}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                         Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{120,80}})));
 end MetroscopeTrainingTest;

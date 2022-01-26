@@ -44,6 +44,10 @@ public
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={0,-120})));
+  Electrical.Connectors.C_power C_power "Electrical alimentation of the pump" annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=-90,
+        origin={0,112})));
 equation
   deltaH = h_out - h_in;
   deltaP = P_out - P_in;
@@ -64,7 +68,8 @@ equation
   hn = noEvent(a1*Qv0*abs(Qv0) + a2*Qv0*R + a3*R^2);
   rh = noEvent(max(if (abs(R) > eps) then b1*Qv*abs(Qv)/R^2 + b2*Qv/R + b3 else b3, rhmin));
   /* Mechanical power */
-  Wm = Q*deltaH/rm;
+  Wm + C_power.W = 0; // C_power.W is negative since it is power fed to the component
+  Wm = Q*deltaH/rm; // Wm is positive since it is the power produced by the pump
   /* Hydraulic power */
   Wh = Qv*deltaP/rh;
   annotation (

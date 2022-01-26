@@ -129,6 +129,10 @@ partial model MetroscopiaNPP_topological
     annotation (Placement(transformation(extent={{330,-16},{356,6}})));
   MetroscopeModelingLibrary.Electrical.BoundaryConditions.Sink sink
     annotation (Placement(transformation(extent={{436,116},{458,136}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source
+    annotation (Placement(transformation(extent={{54,-60},{64,-50}})));
+  MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source1
+    annotation (Placement(transformation(extent={{308,-60},{318,-50}})));
 equation
   // Drum equation
   PressureLoss_after_drum.h_in = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(PressureLoss_after_drum.P_in));
@@ -309,6 +313,10 @@ equation
 
   connect(generator.C_elec, sink.u)
     annotation (Line(points={{425.44,126},{436,126}}, color={0,0,127}));
+  connect(HPpump.C_power, source.u)
+    annotation (Line(points={{66,-64.8},{66,-55},{64,-55}}, color={0,0,127}));
+  connect(LPpump.C_power, source1.u) annotation (Line(points={{320,-64.8},{320,
+          -55},{318,-55}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{460,
             140}}),
