@@ -24,9 +24,7 @@ model BasicTransportModel
   Modelica.Units.SI.Temperature T_in(start=290) "Fluid temperature";
   Modelica.Units.SI.Temperature T_out(start=291) "Fluid temperature";
   Modelica.Units.SI.Temperature Tm(start=290) "Fluid temperature";
-  Modelica.Units.SI.MassFlowRate Qi_in[Medium.nXi];
   Medium.MassFraction Xi_in[Medium.nXi];
-  Modelica.Units.SI.MassFlowRate Qi_out[Medium.nXi];
   Medium.MassFraction Xi_out[Medium.nXi];
   Medium.ThermodynamicState state_in;
   Medium.ThermodynamicState state_out;
@@ -45,28 +43,21 @@ equation
   Q_in = C_in.Q;
   Q_out = C_out.Q;
   Qm=(Q_in-Q_out)/2;
-  Qi_in = C_in.Qi;
-  Qi_out = C_out.Qi;
+
   P_in = C_in.P;
   P_out = C_out.P;
   Pm = (P_in + P_out)/2;
   hm = (h_in+h_out)/2;
 
 
-  if Q_in > 0 then
-    C_in.H = Q_in*  C_in.h_vol;
-  else
-    C_out.H = Q_out*  C_out.h_vol;
-  end if;
-  C_in.H = h_in *  Q_in;
-  C_out.H = h_out * Q_out;
-  if Q_in > 0 then
-    C_in.Qi = Q_in*  C_in.Xi_vol;
-  else
-    C_out.Qi = Q_out*  C_out.Xi_vol;
-  end if;
-  C_in.Qi = Xi_in *  Q_in;
-  C_out.Qi = Xi_out * Q_out;
+  h_out = C_out.h_outflow;
+  h_in = inStream(C_in.h_outflow);
+  C_in.h_outflow = 1e5; // Never used with no flow reversal !
+  Xi_in = inStream(C_in.Xi_outflow);
+  Xi_out = C_out.Xi_outflow;
+  C_in.Xi_outflow = zeros(Medium.nXi);
+
+
   /* Fluid thermodynamic properties */
   state_in = Medium.setState_phX(P_in, h_in,Xi_in);
   state_out = Medium.setState_phX(P_out, h_out,Xi_out);

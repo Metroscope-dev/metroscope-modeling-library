@@ -8,15 +8,12 @@ model Source
   connector InputMassFraction = input Medium.MassFraction;
 
   Modelica.Units.SI.MassFlowRate Q_out(start=500);
-  Modelica.Units.SI.VolumeFlowRate Qv_out(start=500);
   InputAbsolutePressure P_out(start=1e5);
   Modelica.Units.SI.Temperature T_out(start=293.15);
-  Modelica.Units.SI.Temperature T_vol(start=293.15);
   Modelica.Units.SI.SpecificEnthalpy h_out(start=1e5);
-  InputSpecificEnthalpy h_vol(start=1e5);
-  Modelica.Units.SI.MassFlowRate Qi_out[Medium.nXi];
-  InputMassFraction Xi_vol[Medium.nXi];
-    Medium.MassFraction Xi_out[Medium.nXi];
+  Medium.MassFraction Xi_out[Medium.nXi];
+  Modelica.Units.SI.VolumeFlowRate Qv_out(start=500);
+
 PartialBoundaryCondition partialBoundaryCondition(redeclare package                Medium =
       Medium)
   annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
@@ -29,13 +26,12 @@ equation
 partialBoundaryCondition.Q = Q_out;
 partialBoundaryCondition.P=P_out;
 partialBoundaryCondition.T=T_out;
-partialBoundaryCondition.T_vol=T_vol;
-partialBoundaryCondition.h=h_out;
-partialBoundaryCondition.h_vol=h_vol;
-partialBoundaryCondition.Qi=Qi_out;
-partialBoundaryCondition.Xi_vol=Xi_vol;
-partialBoundaryCondition.Xi=Xi_out;
+partialBoundaryCondition.C.h_outflow=partialBoundaryCondition.h;
+partialBoundaryCondition.h = h_out;
+partialBoundaryCondition.C.Xi_outflow=Xi_out;
+partialBoundaryCondition.C.Xi_outflow=partialBoundaryCondition.Xi;
 Qv_out=flowModel.Qv_out;
+
 connect(partialBoundaryCondition.C, flowModel.C_in)
   annotation (Line(points={{-48,0},{-28,0}}, color={0,0,0}));
 connect(flowModel.C_out, C_out)
