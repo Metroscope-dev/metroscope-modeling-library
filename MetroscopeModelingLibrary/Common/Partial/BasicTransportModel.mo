@@ -52,6 +52,7 @@ equation
   Pm = (P_in + P_out)/2;
   hm = (h_in+h_out)/2;
 
+
   if Q_in > 0 then
     C_in.H = Q_in*  C_in.h_vol;
   else
