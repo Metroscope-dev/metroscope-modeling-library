@@ -20,16 +20,12 @@ model Source
 PartialBoundaryCondition partialBoundaryCondition(redeclare package                Medium =
       Medium)
   annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
-Partial.BasicTransportModel basicTransport(redeclare package Medium = Medium)
-  annotation (Placement(transformation(extent={{-28,-10},{-8,10}})));
+Partial.IsoPIsoHFlowModel flowModel(redeclare package Medium = Medium)
+    annotation (Placement(transformation(extent={{-28,-10},{-8,10}})));
 Connectors.FluidOutlet C_out(redeclare package                Medium =
       Medium)
   annotation (Placement(transformation(extent={{90,-10},{110,10}})));
 equation
-basicTransport.Q_in + basicTransport.Q_out = 0;
-  basicTransport.P_in = basicTransport.P_out;
-  basicTransport.Q_in*basicTransport.h_in = - basicTransport.Q_out*basicTransport.h_out;
-  basicTransport.Q_in*basicTransport.Xi_in = - basicTransport.Q_out*basicTransport.Xi_out;
 partialBoundaryCondition.Q = Q_out;
 partialBoundaryCondition.P=P_out;
 partialBoundaryCondition.T=T_out;
@@ -39,10 +35,10 @@ partialBoundaryCondition.h_vol=h_vol;
 partialBoundaryCondition.Qi=Qi_out;
 partialBoundaryCondition.Xi_vol=Xi_vol;
 partialBoundaryCondition.Xi=Xi_out;
-Qv_out=basicTransport.Qv_out;
-connect(partialBoundaryCondition.C, basicTransport.C_in)
+Qv_out=flowModel.Qv_out;
+connect(partialBoundaryCondition.C, flowModel.C_in)
   annotation (Line(points={{-48,0},{-28,0}}, color={0,0,0}));
-connect(basicTransport.C_out, C_out)
+connect(flowModel.C_out, C_out)
   annotation (Line(points={{-7.8,0},{100,0}}, color={238,46,47}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Line(points={{40,0},{90,0},{72,10}}),

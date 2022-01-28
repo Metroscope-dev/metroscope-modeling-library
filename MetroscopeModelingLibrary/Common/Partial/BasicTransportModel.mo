@@ -30,6 +30,12 @@ model BasicTransportModel
   Medium.MassFraction Xi_out[Medium.nXi];
   Medium.ThermodynamicState state_in;
   Medium.ThermodynamicState state_out;
+
+  Real W; // Heat Loss
+  Real DM; // Mass Loss
+  Real DP; // Pressure Loss
+  Medium.MassFraction DXi[Medium.nXi]; // Species loss
+
   Connectors.FluidInlet C_in( redeclare package Medium = Medium)  annotation (Placement(transformation(extent={{-110,
             -10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   Connectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (
@@ -73,6 +79,13 @@ equation
   Qv_in=Q_in/rho_in;
   Qv_out=Q_out/rho_out;
   Qvm=Qm/rhom;
+
+  // Conservation equations
+  Q_in + Q_out = DM;
+  Q_in*h_in + Q_out*h_out = W;
+  P_out - P_in = DP;
+  Q_in*Xi_in + Q_out*Xi_out  =DXi;
+
 
      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false), graphics={

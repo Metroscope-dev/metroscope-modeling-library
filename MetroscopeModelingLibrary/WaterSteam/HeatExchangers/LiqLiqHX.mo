@@ -15,11 +15,9 @@ model LiqLiqHX
   InputReal Kfr_hot(start=1.e3) "Pressure loss coefficient";
   InputCoefficientOfHeatTransfer Kth(start=1000)
     "heat transfer coefficient";
-  Modelica.Units.SI.Power Wth(start=100) "Energy transfer during condensation";
+  Modelica.Units.SI.Power W(start=100) "Energy transfer during condensation";
   Modelica.Units.SI.MassFlowRate Q_cold(start=500) "Inlet Mass flow rate";
-  MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
   Modelica.Units.SI.MassFlowRate Q_hot(start=50) "Inlet Mass flow rate";
-  MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
   Modelica.Units.SI.Temperature T_hot_in "hot fluid temperature in K at inlet";
   Modelica.Units.SI.Temperature T_hot_out
     "hot fluid temperature in deg_C at outlet";
@@ -35,10 +33,10 @@ model LiqLiqHX
         ColdMedium)
     annotation (Placement(transformation(extent={{210,-10},{230,10}}),
         iconTransformation(extent={{210,-10},{230,10}})));
-  replaceable Common.Partial.BasicTransportModel hotSide(redeclare package
+  replaceable Common.Partial.IsoPFlowModel hotSide(redeclare package
       Medium = HotMedium)
     annotation (Placement(transformation(extent={{80,38},{38,62}})));
-  replaceable Common.Partial.BasicTransportModel coldSide(redeclare package
+  replaceable Common.Partial.IsoPFlowModel coldSide(redeclare package
       Medium = ColdMedium)
     annotation (Placement(transformation(extent={{40,-56},{88,-32}})));
   Common.Connectors.FluidInlet C_hot_in(redeclare package Medium = HotMedium)
@@ -47,24 +45,29 @@ model LiqLiqHX
   Common.Connectors.FluidOutlet C_hot_out(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{50,-90},{70,-70}}),
         iconTransformation(extent={{50,-90},{70,-70}})));
+  PressureLosses.SingularPressureLoss cold_PL
+    annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
+  PressureLosses.SingularPressureLoss hot_PL
+    annotation (Placement(transformation(extent={{90,70},{110,90}})));
 equation
+
   // Pressure loss
-  deltaP_cold = Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold, coldSide.eps)/coldSide.rho_in;
-  deltaP_hot = Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot,hotSide.eps)/hotSide.rho_in;
-  deltaP_cold = coldSide.P_out - coldSide.P_in;
-  deltaP_hot = hotSide.P_out - hotSide.P_in;
+  cold_PL.Kfr = Kfr_cold;
+  hot_PL.Kfr = Kfr_hot;
+
+  deltaP_cold = cold_PL.P_out - cold_PL.P_in;
+  deltaP_hot = hot_PL.P_out - hot_PL.P_in;
 
   //Mass flows
   Q_cold =coldSide.Q_in;    // Mass flow on the cold side
   Q_hot =hotSide.Q_in;  // Mass flow on the hot side
-  //mass balance equations for each basic transport element
-  coldSide.Q_in + coldSide.Q_out = 0;
-  hotSide.Q_in + hotSide.Q_out = 0;
 
   //Energy balance
-  hotSide.Q_in*hotSide.h_in + hotSide.Q_out*hotSide.h_out = Wth;
-  coldSide.Q_in*coldSide.h_in + coldSide.Q_out*coldSide.h_out = -Wth;
-  Wth =MetroscopeModelingLibrary.Common.Functions.PowerHeatExchange(
+  hotSide.W + coldSide.W = 0;
+
+  // Heat exchange computation
+  hotSide.W = W;
+  W = MetroscopeModelingLibrary.Common.Functions.PowerHeatExchange(
     Q_hot,
     Q_cold,
     HotMedium.specificHeatCapacityCp(hotSide.state_in),
@@ -81,14 +84,18 @@ equation
   T_cold_in=coldSide.T_in;
   T_cold_out=coldSide.T_out;
 
-  connect(C_cold_in, coldSide.C_in) annotation (Line(points={{-100,0},{-40,0},{-40,
-          -44},{40,-44}}, color={0,0,255}));
   connect(hotSide.C_out, C_hot_out) annotation (Line(points={{37.58,50},{-6,50},
           {-6,-80},{60,-80}}, color={238,46,47}));
-  connect(C_hot_in, hotSide.C_in) annotation (Line(points={{60,80},{108,80},{108,
-          50},{80,50}}, color={63,81,181}));
   connect(coldSide.C_out, C_cold_out) annotation (Line(points={{88.48,-44},{160,
           -44},{160,0},{220,0}}, color={63,81,181}));
+  connect(cold_PL.C_in, C_cold_in)
+    annotation (Line(points={{-70,0},{-100,0}}, color={63,81,181}));
+  connect(cold_PL.C_out, coldSide.C_in) annotation (Line(points={{-49.8,0},{-24,
+          0},{-24,-44},{40,-44}}, color={63,81,181}));
+  connect(C_hot_in, hot_PL.C_in) annotation (Line(points={{60,80},{60,66},{84,66},
+          {84,80},{90,80}}, color={63,81,181}));
+  connect(hot_PL.C_out, hotSide.C_in) annotation (Line(points={{110.2,80},{124,80},
+          {124,50},{80,50}}, color={63,81,181}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -80},{220,80}}), graphics={
         Polygon(

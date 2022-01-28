@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model SingularPressureAndHeatLoss "Singular pressure loss"
-  extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
+  extends MetroscopeModelingLibrary.Common.Partial.FlowModel;
 
   connector InputReal = input Real;
 
   InputReal Kfr(start=1.e3) "Friction pressure loss coefficient";
-  Modelica.Blocks.Interfaces.RealInput W annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput W_in annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={-32,60}), iconTransformation(
@@ -14,9 +14,8 @@ model SingularPressureAndHeatLoss "Singular pressure loss"
         origin={0,60})));
 equation
   /* Pressure loss */
-  deltaP = -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom;
-  Q_in*h_in + Q_out*h_out + W = 0;
-  Q_in*Xi_in =- Q_out*Xi_out;
+  DP = -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom;
+  W = W_in;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

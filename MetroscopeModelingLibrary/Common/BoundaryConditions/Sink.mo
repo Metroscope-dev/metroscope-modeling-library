@@ -20,15 +20,11 @@ model Sink
   PartialBoundaryCondition partialBoundaryCondition(redeclare package                Medium =
         Medium)
     annotation (Placement(transformation(extent={{56,-10},{36,10}})));
-  Partial.BasicTransportModel basicTransport(redeclare package Medium = Medium)
+  Partial.IsoPIsoHFlowModel   basicTransport(redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{-28,-10},{-8,10}})));
   Connectors.FluidInlet C_in(redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
 equation
-  basicTransport.Q_in + basicTransport.Q_out = 0;
-  basicTransport.P_in = basicTransport.P_out;
-  basicTransport.Q_in*basicTransport.h_in = - basicTransport.Q_out*basicTransport.h_out;
-  basicTransport.Q_in*basicTransport.Xi_in = - basicTransport.Q_out*basicTransport.Xi_out;
   partialBoundaryCondition.Q = Q_in;
   partialBoundaryCondition.P=P_in;
   partialBoundaryCondition.T=T_in;
