@@ -16,6 +16,7 @@ model TestStodolaTurbine
 equation
 
   // Forward causality
+
   source.P_out = P_source;
   source.h_vol = h_source;
   source.Q_out = -Q;
@@ -24,6 +25,7 @@ equation
   stodolaTurbine.area_nz=1;
   stodolaTurbine.eta_nz=1.0;
   stodolaTurbine.eta_is=0.82042;
+
 
 
   // Reverse causality
@@ -35,7 +37,7 @@ equation
   source.Q_out = -Q;
   sink.h_vol=1e6;
   sink.P_in = 10e5;
-  sink.h_in = 2.55e6;
+  sink1.W = -13120.111;
   stodolaTurbine.area_nz=1;
   stodolaTurbine.eta_nz=1.0;
   */
