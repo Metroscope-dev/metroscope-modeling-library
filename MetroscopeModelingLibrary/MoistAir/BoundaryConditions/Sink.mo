@@ -4,7 +4,7 @@ model Sink
           MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
       extends MetroscopeModelingLibrary.Common.BoundaryConditions.Sink(redeclare
       package     Medium =
-            MoistAirMedium, h_vol(start=3e5));
+            MoistAirMedium);
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end Sink;

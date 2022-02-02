@@ -20,10 +20,8 @@ equation
   // In order to calibrate the Kfr, simply give the output pressure instead of the Kfr.
 
   source.P_out = P_source;
-  source.T_vol = T_source;
+  source.T_out = T_source;
   source.Q_out = -Q;
-
-  sink.h_vol = 1e6;
 
   // For forward causality :
   singularPressureLoss.Kfr = 1e3;

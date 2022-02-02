@@ -14,13 +14,10 @@ equation
   // Forward causality
   source.Q_out = -10;
   source.P_out = 0.989314e5;
-  source.T_vol = 6.6585226+273.15;
+  source.T_out = 6.6585226+273.15;
   source.relative_humidity = 0.100;
 
   singularPressureLoss.Kfr = 1;
-
-  sink.Xi_vol[1] = 0.01;
-  sink.h_vol = 1e5;
 
 
   // Reverse causality

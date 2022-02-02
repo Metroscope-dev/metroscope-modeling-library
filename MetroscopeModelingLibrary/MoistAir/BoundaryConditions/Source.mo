@@ -5,7 +5,7 @@ model Source
           MetroscopeModelingLibrary.MoistAir.Medium.MoistAirMedium;
       extends MetroscopeModelingLibrary.Common.BoundaryConditions.Source(redeclare
       package     Medium =
-            MoistAirMedium, h_vol(start=283945));
+            MoistAirMedium);
 
   Real relative_humidity(start=0.1);
 
@@ -13,7 +13,7 @@ model Source
 equation
 
 
- Xi_vol[1] = MoistAirMedium.massFraction_pTphi(P_out, T_vol, relative_humidity);
+ Xi_out[1] = MoistAirMedium.massFraction_pTphi(P_out, T_out, relative_humidity);
 
 
 
