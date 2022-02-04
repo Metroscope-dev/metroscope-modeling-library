@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Common.Connectors;
 connector FluidInlet
-  extends MetroscopeModelingLibrary.Common.Connectors.FluidPort;
+  extends MetroscopeModelingLibrary.Common.Connectors.FluidPort(Q(min=0, start=500));
   annotation (defaultComponentName="C_in",
   Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},
             {100,100}}),                                       graphics={
