@@ -2,3 +2,4 @@ TemperatureSensor
 PressureSensor
 FlowSensor
 DeltaPSensor
+LevelSensor
