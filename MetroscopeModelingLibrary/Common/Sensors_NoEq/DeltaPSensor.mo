@@ -10,8 +10,7 @@ model DeltaPSensor
         Text(
           extent={{-62,72},{68,48}},
           lineColor={28,108,200},
-          textString="%name",
-          fontSize=6),
+          textString="%name"),
         Rectangle(extent={{-36,40},{44,-40}}, lineColor={0,0,0}),
         Line(points={{84,0},{44,0}}, color={0,0,0}),
         Polygon(points={{-21,19},{-1,-19},{21,19},{-1,9},{-21,19}},
@@ -25,7 +24,6 @@ model DeltaPSensor
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
           textStyle={TextStyle.Bold},
-          textString="P",
-          fontSize=6)}),          Diagram(coordinateSystem(
+          textString="P")}),      Diagram(coordinateSystem(
           preserveAspectRatio=false)));
 end DeltaPSensor;
