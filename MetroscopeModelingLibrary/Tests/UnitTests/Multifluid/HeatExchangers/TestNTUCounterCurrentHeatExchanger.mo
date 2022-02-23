@@ -22,6 +22,7 @@ model TestNTUCounterCurrentHeatExchanger
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink waterSink
     annotation (Placement(transformation(extent={{18,36},{38,56}})));
 equation
+  //inlets
   moistAirSource.P_out = 0.989e5;
   moistAirSource.Q_out = -2;
   moistAirSource.T_vol = 20 + 273.15;
@@ -29,13 +30,24 @@ equation
   waterSource.P_out = 10e5;
   waterSource.Q_out = -100;
   waterSource.T_vol = 5+273.15;
-  nTUCounterCurrentHeatExchanger.K = 1e4;
-  nTUCounterCurrentHeatExchanger.S = 1e4;
-  nTUCounterCurrentHeatExchanger.K_friction_cold = 1e2;
-  nTUCounterCurrentHeatExchanger.K_friction_hot = 1e2;
+  //outlets
   moistAirSink.T_vol = 40 + 273.15;
   moistAirSink.Xi_vol = {0.01};
   waterSink.T_vol = 10+273.15;
+  //exchanger
+  nTUCounterCurrentHeatExchanger.S = 10;//1e4;//
+
+
+  //*** direct parameters***
+  //nTUCounterCurrentHeatExchanger.K = 1e2; // heat transfer coefficient is given by an outlet temperature or enthalpy (whether hot or cold)
+  //nTUCounterCurrentHeatExchanger.K_friction_cold = 0;// pressure loss coefficient for the cold line is given by cold outlet pressure
+  //nTUCounterCurrentHeatExchanger.K_friction_hot = 0;// same, but for the hot line
+  //*** reverse parameters***
+  nTUCounterCurrentHeatExchanger.hotSide.T_out = 287.3;
+  //nTUCounterCurrentHeatExchanger.coldSide.T_out = 5.028 + 273.15;//ou h_out = 29042;
+  nTUCounterCurrentHeatExchanger.coldSide.P_out =10e5;
+  nTUCounterCurrentHeatExchanger.hotSide.P_out = 0.989e5;
+
   connect(moistAirSource.C_out, nTUCounterCurrentHeatExchanger.C_hot_in)
     annotation (Line(points={{-52,80},{-30,80},{-30,80.2},{-7.8,80.2}}, color={238,
           46,47}));
