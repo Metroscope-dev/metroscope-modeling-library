@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
-model TestParallelFeedWaterPumpCausalityReverse
+model TestParallelFeedWaterPumpCausalityDirect
   extends Modelica.Icons.Example;
 
   // BC
@@ -16,29 +16,29 @@ model TestParallelFeedWaterPumpCausalityReverse
 
   // Observables
   // STs_CV
-  input Real STs_CV_Q_in(start=1.8e3) "kg/s";
+  output Real STs_CV_Q_in;
   // STs
-  input Real ST1_P_in(start=10) "barA";
-  input Real ST2_P_in(start=10) "barA";
+  output Real ST1_P_in;
+  output Real ST2_P_in;
   // FWPs
-  input Real FWP1_Q_in(start=7.5e2) "kg/s";
-  input Real FWP1_VRot(start=4000) "rpm";
-  input Real FWP2_VRot(start=4000) "rpm";
-  input Real FWPs_T_out(start=186.4) "degC";
-  input Real FWPs_P_out(start=69) "barA";
+  output Real FWP1_Q_in;
+  output Real FWP1_VRot;
+  output Real FWP2_VRot;
+  output Real FWPs_T_out;
+  output Real FWPs_P_out;
 
   // Component characteristics
   // STs_CV
-  output Real STs_CVmax;
+  parameter Real STs_CVmax = 7216.689;
   // STs
-  output Real ST1_eta_is;
-  output Real ST2_eta_is;
-  output Real ST1_Cst;
-  output Real ST2_Cst;
+  parameter Real ST1_eta_is = 0.004004183;
+  parameter Real ST2_eta_is = 0.004004183;
+  parameter Real ST1_Cst = 2732.2078;
+  parameter Real ST2_Cst = 2732.2078;
   // FWPs
-  output Real FWP1_a3;
-  output Real FWP2_a3;
-  output Real FWPs_b3;
+  parameter Real FWP1_a3 = 522.152;
+  parameter Real FWP2_a3 = 522.152;
+  parameter Real FWPs_b3 = 0.94897354;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source STs_source
     annotation (Placement(transformation(extent={{-136,28},{-116,48}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink STs_sink
@@ -244,4 +244,4 @@ equation
           {64,-138},{64,-104},{87.8,-104}}, color={63,81,181}));
   annotation (Diagram(coordinateSystem(extent={{-200,-180},{240,140}})), Icon(
         coordinateSystem(extent={{-200,-180},{240,140}})));
-end TestParallelFeedWaterPumpCausalityReverse;
+end TestParallelFeedWaterPumpCausalityDirect;

@@ -1,5 +1,5 @@
-model TestParallelFeedWaterPumpCausalityReverse_withStartValues
-  extends TestParallelFeedWaterPumpCausalityReverse(
+model TestParallelFeedWaterPumpCausalityDirect_withStartValues
+  extends TestParallelFeedWaterPumpCausalityDirect(
 FWP1(
 C_in(
 H(start=593440400.0),
@@ -37,6 +37,7 @@ Wm(start=2631360.8),
 a1(start=-172.0),
 a2(start=0.0),
 a3(start=522.152),
+,
 b1(start=0.0),
 b2(start=0.0),
 b3(start=0.94897354),
@@ -65,6 +66,7 @@ d(start=884.0099),
 h(start=794236.1),
 p(start=6900000.0),
 phase(start=0))),
+FWP1_Q_in(start=750.0),
 FWP1_Q_in_sensor(
 C_in(
 H(start=593440400.0),
@@ -111,6 +113,7 @@ d(start=882.7512),
 h(start=791253.9),
 p(start=4400000.0),
 phase(start=0))),
+FWP1_VRot(start=4000.0),
 FWP1_VRot_sensor(
 VRot(start=4000.0)),
 FWP1_a3(start=522.152),
@@ -151,6 +154,7 @@ Wm(start=2631360.8),
 a1(start=-172.0),
 a2(start=0.0),
 a3(start=522.152),
+,
 b1(start=0.0),
 b2(start=0.0),
 b3(start=0.94897354),
@@ -179,6 +183,7 @@ d(start=884.0099),
 h(start=794236.1),
 p(start=6900000.0),
 phase(start=0))),
+FWP2_VRot(start=4000.0),
 FWP2_VRot_sensor(
 VRot(start=4000.0)),
 FWP2_a3(start=522.152),
@@ -230,6 +235,7 @@ d(start=882.7512),
 h(start=791253.9),
 p(start=4400000.0),
 phase(start=0))),
+FWPs_P_out(start=69.0),
 FWPs_P_out_sensor(
 C_in(
 H(start=1191354100.0),
@@ -370,6 +376,7 @@ d(start=882.7512),
 h(start=791253.9),
 p(start=4400000.0),
 phase(start=0))),
+FWPs_T_out(start=186.4),
 FWPs_T_out_sensor(
 C_in(
 H(start=1191354100.0),
@@ -697,6 +704,7 @@ ST1_CV_opening_sensor(
 Op_pc(start=1500.0),
 Opening(start=15.0)),
 ST1_Cst(start=2732.2078),
+ST1_P_in(start=10.0),
 ST1_P_in_sensor(
 C_in(
 H(start=2494620000.0),
@@ -862,6 +870,7 @@ ST2_CV_opening_sensor(
 Op_pc(start=1500.0),
 Opening(start=15.0)),
 ST2_Cst(start=2732.2078),
+ST2_P_in(start=10.0),
 ST2_P_in_sensor(
 C_in(
 H(start=2494620000.0),
@@ -959,6 +968,7 @@ d(start=12.713978),
 h(start=2771800.0),
 p(start=2500000.0),
 phase(start=0))),
+STs_CV_Q_in(start=1800.0),
 STs_CV_Q_in_sensor(
 C_in(
 H(start=4989240000.0),
@@ -1219,4 +1229,4 @@ h(start=2771800.0),
 p(start=2500000.0),
 phase(start=0)))));
   annotation (experiment(__Dymola_fixedstepsize=0.1, __Dymola_Algorithm="Euler"));
-end TestParallelFeedWaterPumpCausalityReverse_withStartValues;
+end TestParallelFeedWaterPumpCausalityDirect_withStartValues;
