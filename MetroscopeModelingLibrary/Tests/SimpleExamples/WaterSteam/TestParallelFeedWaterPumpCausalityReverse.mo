@@ -5,17 +5,18 @@ model TestParallelFeedWaterPumpCausalityReverse
   // BC
   //STs_CV
   input Real STs_CV_P_in(start=25) "barA";
+  //STs
+  input Real STs_P_out(start=0.07) "condenser pressure, barA";
   // FWPs
   input Real FWPs_P_in(start=44) "barA";
   input Real FWPs_Q_in(start=1.5e3) "kg/s";
   input Real FWPs_T_in(start=186) "degC";
-  input Real STs_P_out(start=0.07) "condenser pressure, barA";
+  input Real ST1_CV_opening(start=15) "barA";
+  input Real ST2_CV_opening(start=15) "barA";
 
   // Observables
   // STs_CV
   input Real STs_CV_Q_in(start=1.8e3) "kg/s";
-  input Real ST1_CV_opening(start=15) "barA";
-  input Real ST2_CV_opening(start=15) "barA";
   // STs
   input Real ST1_P_in(start=10) "barA";
   input Real ST2_P_in(start=10) "barA";
@@ -28,8 +29,7 @@ model TestParallelFeedWaterPumpCausalityReverse
 
   // Component characteristics
   // STs_CV
-  output Real ST1_CVmax;
-  output Real ST2_CVmax;
+  output Real STs_CVmax;
   // STs
   output Real ST1_eta_is;
   output Real ST2_eta_is;
@@ -37,9 +37,8 @@ model TestParallelFeedWaterPumpCausalityReverse
   output Real ST2_Cst;
   // FWPs
   output Real FWP1_a3;
-  output Real FWP1_b3;
   output Real FWP2_a3;
-  output Real FWP2_b3;
+  output Real FWPs_b3;
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source STs_source
     annotation (Placement(transformation(extent={{-136,28},{-116,48}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink STs_sink
@@ -47,7 +46,7 @@ model TestParallelFeedWaterPumpCausalityReverse
   MetroscopeModelingLibrary.WaterSteam.Sensors.WaterPressureSensor STs_CV_P_in_sensor
     annotation (Placement(transformation(extent={{-108,28},{-88,48}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine ST1
-    annotation (Placement(transformation(extent={{46,10},{66,-10}})));
+    annotation (Placement(transformation(extent={{40,10},{60,-10}})));
   MetroscopeModelingLibrary.WaterSteam.Sensors.WaterPressureSensor
     STs_P_out_sensor
     annotation (Placement(transformation(extent={{124,28},{144,48}})));
@@ -109,14 +108,13 @@ equation
 
   // ST1_CV
   ST1_CV_opening_sensor.Opening = ST1_CV_opening;
-  ST1_CV.Cvmax = ST1_CVmax;
+  ST1_CV.Cvmax = STs_CVmax;
 
   // ST2_CV
   ST2_CV_opening_sensor.Opening = ST2_CV_opening;
-  ST2_CV.Cvmax = ST2_CVmax;
 
   // Hyp on CVs : same mass flow
-  ST1_CVmax = ST2_CVmax;
+  ST1_CV.Cvmax = ST2_CV.Cvmax;
   //ST1_CV.Q_in = ST2_CV.Q_in;
 
   // ST1
@@ -148,7 +146,7 @@ equation
   FWP1.VRotn = 4500;
   FWP1.rm = 0.85;
   FWP1.rhmin = 0.20;
-  FWP1.b3 = FWP1_b3;
+  FWP1.b3 = FWPs_b3;
   FWP1.b2 = 0;
   FWP1.b1 = 0;
   FWP1.a3 = FWP1_a3;
@@ -160,7 +158,6 @@ equation
   FWP2.VRotn = 4500;
   FWP2.rm = 0.85;
   FWP2.rhmin = 0.20;
-  FWP2.b3 = FWP2_b3;
   FWP2.b2 = 0;
   FWP2.b1 = 0;
   FWP2.a3 = FWP2_a3;
@@ -183,9 +180,9 @@ equation
     annotation (Line(points={{144.2,38},{166,38}},
                                                  color={63,81,181}));
   connect(ST2.C_out,ST1. C_out) annotation (Line(points={{60.2,74},{72,74},{72,0},
-          {66.2,0}},       color={63,81,181}));
+          {60.2,0}},       color={63,81,181}));
   connect(STs_P_out_sensor.C_in,ST1. C_out) annotation (Line(points={{124,38},{72,
-          38},{72,0},{66.2,0}},    color={63,81,181}));
+          38},{72,0},{60.2,0}},    color={63,81,181}));
   connect(FWPs_P_in_sensor.C_out,FWPs_T_in_sensor. C_in)
     annotation (Line(points={{115.8,-104},{108,-104}},
                                                    color={63,81,181}));
@@ -210,7 +207,7 @@ equation
   connect(FWP2.C_out, FWP1.C_out) annotation (Line(points={{-10.2,-138},{-20,-138},
           {-20,-68},{-10.2,-68}}, color={63,81,181}));
   connect(ST1.C_power, FWP1.C_power) annotation (Line(
-      points={{67.4,-8.6},{92,-8.6},{92,-48},{0,-48},{0,-56.8}},
+      points={{61.4,-8.6},{92,-8.6},{92,-48},{0,-48},{0,-56.8}},
       color={0,0,0},
       pattern=LinePattern.Dash,
       thickness=0.5));
@@ -232,7 +229,7 @@ equation
   connect(ST1_CV.C_out, ST1_P_in_sensor.C_in)
     annotation (Line(points={{0.2,0},{10,0}}, color={63,81,181}));
   connect(ST1.C_in, ST1_P_in_sensor.C_out)
-    annotation (Line(points={{46,0},{30.2,0}}, color={63,81,181}));
+    annotation (Line(points={{40,0},{30.2,0}}, color={63,81,181}));
   connect(ST1_CV.C_in, ST2_CV.C_in) annotation (Line(points={{-20,0},{-50,0},{-50,
           74},{-20,74}}, color={63,81,181}));
   connect(STs_CV_P_in_sensor.C_out, STs_CV_Q_in_sensor.C_in)

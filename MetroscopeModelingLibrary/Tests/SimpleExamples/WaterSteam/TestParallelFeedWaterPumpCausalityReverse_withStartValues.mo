@@ -114,7 +114,6 @@ phase(start=0))),
 FWP1_VRot_sensor(
 VRot(start=4000.0)),
 FWP1_a3(start=522.152),
-FWP1_b3(start=0.94897354),
 FWP2(
 C_in(
 H(start=593440400.0),
@@ -183,7 +182,6 @@ phase(start=0))),
 FWP2_VRot_sensor(
 VRot(start=4000.0)),
 FWP2_a3(start=522.152),
-FWP2_b3(start=0.94897354),
 FWPs_P_in_sensor(
 C_in(
 H(start=1186880800.0),
@@ -418,6 +416,7 @@ d(start=884.0099),
 h(start=794236.1),
 p(start=6900000.0),
 phase(start=0))),
+FWPs_b3(start=0.94897354),
 FWPs_sink(
 C_in(
 H(start=1191354100.0),
@@ -697,7 +696,6 @@ phase(start=0))),
 ST1_CV_opening_sensor(
 Op_pc(start=1500.0),
 Opening(start=15.0)),
-ST1_CVmax(start=7216.689),
 ST1_Cst(start=2732.2078),
 ST1_P_in_sensor(
 C_in(
@@ -863,7 +861,6 @@ phase(start=0))),
 ST2_CV_opening_sensor(
 Op_pc(start=1500.0),
 Opening(start=15.0)),
-ST2_CVmax(start=7216.689),
 ST2_Cst(start=2732.2078),
 ST2_P_in_sensor(
 C_in(
@@ -1008,6 +1005,7 @@ d(start=12.713978),
 h(start=2771800.0),
 p(start=2500000.0),
 phase(start=0))),
+STs_CVmax(start=7216.689),
 STs_P_out_sensor(
 C_in(
 H(start=4983977500.0),
