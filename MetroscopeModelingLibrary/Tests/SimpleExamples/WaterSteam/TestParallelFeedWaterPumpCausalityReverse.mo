@@ -4,11 +4,13 @@ model TestParallelFeedWaterPumpCausalityReverse
 
   // BC
   //STs_CV
-  input Real STs_CV_P_in(start=25) "barA";
+  input Real STs_CV_P_in(start=15) "barA"; // 11 ??
+  //Real STs_CV_P_in;
   //STs
   input Real STs_P_out(start=0.07) "condenser pressure, barA";
   // FWPs
-  input Real FWPs_P_in(start=44) "barA";
+  input Real FWPs_P_in(start=44.6) "barA";//44.6
+  //Real FWPs_P_in;
   input Real FWPs_Q_in(start=1.5e3) "kg/s";
   input Real FWPs_T_in(start=186) "degC";
   input Real ST1_CV_opening(start=15) "barA";
@@ -16,16 +18,22 @@ model TestParallelFeedWaterPumpCausalityReverse
 
   // Observables
   // STs_CV
-  input Real STs_CV_Q_in(start=1.8e3) "kg/s";
+  input Real STs_CV_Q_in(start=13.4) "kg/s";//13.4
+  //Real STs_CV_Q_in;
   // STs
   input Real ST1_P_in(start=10) "barA";
   input Real ST2_P_in(start=10) "barA";
   // FWPs
-  input Real FWP1_Q_in(start=7.5e2) "kg/s";
-  input Real FWP1_VRot(start=4000) "rpm";
-  input Real FWP2_VRot(start=4000) "rpm";
-  input Real FWPs_T_out(start=186.4) "degC";
-  input Real FWPs_P_out(start=69) "barA";
+  input Real FWP1_Q_in(start=783.5) "kg/s"; //783.5
+  //Real FWP1_Q_in;
+  input Real FWP1_VRot(start=4253) "rpm"; // 4253
+  //Real FWP1_VRot;
+  input Real FWP2_VRot(start=4206) "rpm"; // 4206
+  //Real FWP2_VRot;
+  input Real FWPs_T_out(start=186.7) "degC"; //186.7
+  //Real FWPs_T_out;
+  input Real FWPs_P_out(start=82) "barA"; //82
+  //Real FWPs_P_out;
 
   // Component characteristics
   // STs_CV
@@ -100,9 +108,18 @@ model TestParallelFeedWaterPumpCausalityReverse
   MetroscopeModelingLibrary.WaterSteam.Sensors.WaterFlowSensor FWPs_Q_in_sensor
     annotation (Placement(transformation(extent={{162,-94},{142,-114}})));
 equation
+  //STs_CV_P_in = time * 15 + (1-time)*25;
+  //FWPs_P_in = time * 44.6 + (1-time)*44;
+  //STs_CV_Q_in = time * 13.4 + (1-time)*1500;
+  //FWP1_Q_in = time * 7.5e2 + (1-time)*783.5;
+  //FWP1_VRot = time * 4253 + (1-time)*4000;
+  //FWP2_VRot = time * 4206 + (1-time)*4000;
+  //FWPs_T_out = time * 186.7 + (1-time)*186.4;
+  //FWPs_P_out = time * 82+ (1-time)*69;
+
   // ------------- REVERSE ------------- //
   // STs source
-  STs_source.h_out = 2.7718e6;
+  STs_source.h_out = 2.7718e6; // set Temp ?
   STs_CV_Q_in_sensor.Q = STs_CV_Q_in;
   STs_CV_P_in_sensor.P_barA = STs_CV_P_in;
 
