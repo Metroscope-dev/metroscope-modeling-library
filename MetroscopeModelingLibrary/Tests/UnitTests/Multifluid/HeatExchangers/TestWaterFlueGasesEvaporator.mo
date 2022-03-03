@@ -49,16 +49,16 @@ equation
   waterFlueGasesEvaporator.S = 10; // for linearity considerations, S must be given even for reverse causality
 
   // FORWARD CAUSALITY
-  /*
-  waterFlueGasesEvaporator.K = 102000; // global heat coef
-  waterFlueGasesEvaporator.K_fg = 0; //Pressure loss coeff
-*/
+
+  //waterFlueGasesEvaporator.K = 102000; // global heat coef
+  //waterFlueGasesEvaporator.K_fg = 0; //Pressure loss coeff
+
   // REVERSE CAUSALITY
   // To compute K, specifiy Q_in or T_in for the outlet flue gases.
-  sinkWaterLiquid.Q_in = 96.98174;
+  sinkWaterLiquid.Q_in = 97.02405;//96.98174;
   //sink_flueGas.T_in = 151+273.15; --> May not converge, pay attention to the start values.
   // To compute K_fg, specify P_in for the outlet flue gas/
-  sink_flueGas.P_in = 3.6840706e5;
+  sink_flueGas.P_in = 1e5;//3.6840706e5;
 
 
 
