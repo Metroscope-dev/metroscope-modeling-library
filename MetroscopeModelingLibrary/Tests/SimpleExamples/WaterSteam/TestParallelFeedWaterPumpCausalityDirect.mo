@@ -4,13 +4,11 @@ model TestParallelFeedWaterPumpCausalityDirect
 
   // BC
   //STs_CV
-  input Real STs_CV_P_in(start=15) "barA"; // 11 ??
-  //Real STs_CV_P_in;
+  input Real STs_CV_P_in(start=15) "barA";
   //STs
   input Real STs_P_out(start=0.07) "condenser pressure, barA";
   // FWPs
-  input Real FWPs_P_in(start=44.6) "barA";//44.6
-  //Real FWPs_P_in;
+  input Real FWPs_P_in(start=44.6) "barA";
   input Real FWPs_Q_in(start=1.5e3) "kg/s";
   input Real FWPs_T_in(start=186) "degC";
   input Real ST1_CV_opening(start=15) "barA";
@@ -18,22 +16,16 @@ model TestParallelFeedWaterPumpCausalityDirect
 
   // Observables
   // STs_CV
-  output Real STs_CV_Q_in; //13.4
-  //Real STs_CV_Q_in;
+  output Real STs_CV_Q_in;
   // STs
   output Real ST1_P_in;
   output Real ST2_P_in;
   // FWPs
-  output Real FWP1_Q_in; //783.5
-  //Real FWP1_Q_in;
-  output Real FWP1_VRot; // 4253
-  //Real FWP1_VRot;
-  output Real FWP2_VRot; // 4206
-  //Real FWP2_VRot;
-  output Real FWPs_T_out; //186.7
-  //Real FWPs_T_out;
-  output Real FWPs_P_out; //82
-  //Real FWPs_P_out;
+  output Real FWP1_Q_in;
+  output Real FWP1_VRot;
+  output Real FWP2_VRot;
+  output Real FWPs_T_out;
+  output Real FWPs_P_out;
 
   // Component characteristics
   // STs_CV
@@ -108,16 +100,7 @@ model TestParallelFeedWaterPumpCausalityDirect
   MetroscopeModelingLibrary.WaterSteam.Sensors.WaterFlowSensor FWPs_Q_in_sensor
     annotation (Placement(transformation(extent={{162,-94},{142,-114}})));
 equation
-  //STs_CV_P_in = time * 15 + (1-time)*25;
-  //FWPs_P_in = time * 44.6 + (1-time)*44;
-  //STs_CV_Q_in = time * 13.4 + (1-time)*1500;
-  //FWP1_Q_in = time * 7.5e2 + (1-time)*783.5;
-  //FWP1_VRot = time * 4253 + (1-time)*4000;
-  //FWP2_VRot = time * 4206 + (1-time)*4000;
-  //FWPs_T_out = time * 186.7 + (1-time)*186.4;
-  //FWPs_P_out = time * 82+ (1-time)*69;
-
-  // ------------- REVERSE ------------- //
+  // ------------- DIRECT ------------- //
   // STs source
   STs_source.h_out = 2.7718e6; // set Temp ?
   STs_CV_Q_in_sensor.Q = STs_CV_Q_in;
@@ -181,7 +164,7 @@ equation
   FWP2.a2 = 0;
   FWP2.a1 = -172;
 
-  // Hyp on both pumps
+  // Possible hyp on both pumps
   //FWP1.a3 = FWP2.a3; // same contribution to pressure
   FWP1.b3 = FWP2.b3; // same contribution to enthalpy
 
