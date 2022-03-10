@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model ControlValve "Control valve"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
+  parameter Real CVmax_0 = 8005.4 "Maximum CV (active if mode_caract=0)";
 
   connector InputCv = input Common.Units.Cv;
-  InputCv Cvmax(start=8005.42)
-    "Maximum CV (active if mode_caract=0)";
+  InputCv Cvmax(start=CVmax_0) "Maximum CV (active if mode_caract=0)";
   Common.Units.Cv Cv(start=100) "Cv";
   Modelica.Blocks.Interfaces.RealInput Opening annotation (Placement(
         transformation(extent={{-62,152},{-22,192}}), iconTransformation(
@@ -13,11 +13,14 @@ model ControlValve "Control valve"
         origin={0,182})));
 equation
   /* Pressure loss */
-  deltaP*Cv*abs(Cv) = -1.733e12*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom^2;
+  //deltaP*Cv*abs(Cv) = -1.733e12*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom^2;
+  DP*Cv*abs(Cv) = -1.733e12*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom^2; // NON LINEAR
   /* Cv as a function of the valve position */
-  Cv = Opening*Cvmax;
-  Q_in*h_in + Q_out*h_out = 0;
-  Q_in*Xi_in =- Q_out*Xi_out;
+  Cv = homotopy(Opening*Cvmax, Opening*CVmax_0);
+  //Q_in*h_in + Q_out*h_out = 0;
+  W = 0;
+  //Q_in*Xi_in + Q_out*Xi_out = zeros(Medium.nXi); //FlowModel
+  //DXi = zeros(Medium.nXi); //FlowModel
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=false,

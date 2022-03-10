@@ -20,9 +20,10 @@ equation
   // Forward causality
 
   source.P_out = P_source;
-  source.T_vol = T_source;
+  //source.T_vol = T_source;
+  source.T_out = T_source;
   source.Q_out = -Q;
-  sink.h_vol=1e6;
+  //sink.h_vol=1e6;
   staticCentrifugalPump.VRot=1400;
   staticCentrifugalPump.VRotn=1400;
   staticCentrifugalPump.rm=0.85;
@@ -39,9 +40,10 @@ equation
   // To determine b3, give the outlet enthalpy or temperature
   /*
   source.P_out = P_source;
-  source.T_vol = T_source;
+  //source.T_vol = T_source;
+  source.T_out = T_source;
   source.Q_out = -Q;
-  sink.h_vol=1e6;
+  //sink.h_vol=1e6;
   sink.P_in = 6e5;
   sink.T_in = 273.15+20;
   staticCentrifugalPump.VRot=1400;
