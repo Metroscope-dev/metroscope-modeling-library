@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.WaterSteam.Machines;
 model StodolaTurbine
    package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-    extends MetroscopeModelingLibrary.Common.Partial.BasicTransportModel(P_in(start=60e5), P_out(start=55e5),h_in(start=2.7e6), h_out(start=2.6e6), redeclare
+    extends MetroscopeModelingLibrary.Common.Partial.FlowModel(P_in(start=60e5), P_out(start=55e5),h_in(start=2.7e6), h_out(start=2.6e6), redeclare
       package Medium =
         WaterSteamMedium);
 
@@ -24,6 +24,8 @@ model StodolaTurbine
   Modelica.Units.SI.Velocity u_out(start=0);
   Medium.ThermodynamicState state_is;
   Modelica.Units.SI.Power Wmech;
+
+  parameter Real eta_is_0 = 0.9;
   Electrical.Connectors.C_power C_power annotation (Placement(transformation(
           extent={{100,70},{128,100}}), iconTransformation(
         extent={{-14,-14},{14,14}},
@@ -32,25 +34,32 @@ model StodolaTurbine
 
 
 equation
-  Q_in + Q_out = 0;
+  //Q_in + Q_out = 0; //FlowModel
   Q = Q_in;
+
   /* Stodola's ellipse law */
-  Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));
+  Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in)); //NON LINEAR
+
   /* Average vapor mass fraction during the expansion */
   xm = (x_in + x_inner)/2;
+
   /* Fluid specific enthalpy after the expansion */
-  Hre - h_in = xm*eta_is*(His - h_in);
+  Hre - h_in = homotopy(xm*eta_is*(His - h_in), xm*eta_is_0*((His - h_in)));
+
   /* Fluid specific enthalpy at the outlet of the nozzle */
   u_out = Q/rho_out/area_nz;
   h_out - Hre = (1 - eta_nz)*u_out^2/2;
+
   /* Mechanical power produced by the turbine */
   Wmech = C_power.W;
-  Wmech = Q*(h_in - h_out);
+  Wmech = W; //Q*(h_in - h_out);
+
   /* Vapor fractions */
   x_in = MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_in,h_in);
   x_out = MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_out,h_out);
   x_inner = MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_out,Hre);
-  /* Isentropic  expansion */
+
+  /* Isentropic expansion */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in));
   His = Medium.specificEnthalpy(state_is);
   annotation (

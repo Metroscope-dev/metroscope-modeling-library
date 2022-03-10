@@ -73,8 +73,8 @@ equation
   R = VRot/VRotn;
 
   /* Pump characteristics */
-  hn = noEvent(homotopy(a1*Qv0*abs(Qv0), a1*Qv_0*abs(Qv_0)) + a2*Qv0*R + a3*R^2);
-  rh = noEvent(max(if (abs(R) > eps) then b1*Qv*abs(Qv)/R^2 + b2*Qv/R + b3 else b3, rhmin));
+  hn = noEvent(homotopy(a1*Qv0*abs(Qv0), a1*Qv_0*abs(Qv_0)) + a2*Qv0*R + a3*R^2); // NON LINEAR
+  rh = noEvent(max(if (abs(R) > eps) then b1*Qv*abs(Qv)/R^2 + b2*Qv/R + b3 else b3, rhmin)); // NON LINEAR
 
   /* Mechanical power */
   Wm + C_power.W = 0; // C_power.W is negative since it is power fed to the component

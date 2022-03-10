@@ -17,9 +17,10 @@ equation
 
   // Forward causality
   source.P_out = P_source;
-  source.h_vol = h_source;
+  //source.h_vol = h_source;
+  source.h_out = h_source;
   source.Q_out = -Q;
-  sink.h_vol=1e6;
+  //sink.h_vol=1e6;
   stodolaTurbine.Cst=1458.5354;
   stodolaTurbine.area_nz=1;
   stodolaTurbine.eta_nz=1.0;
@@ -31,9 +32,10 @@ equation
   // To determine Cst, give the outlet pressure
   /*
   source.P_out = P_source;
-  source.h_vol = h_source;
+  //source.h_vol = h_source;
+  source.h_out = h_source;
   source.Q_out = -Q;
-  sink.h_vol=1e6;
+  //sink.h_vol=1e6;
   sink.P_in = 10e5;
   sink.h_in = 2.55e6;
   stodolaTurbine.area_nz=1;
