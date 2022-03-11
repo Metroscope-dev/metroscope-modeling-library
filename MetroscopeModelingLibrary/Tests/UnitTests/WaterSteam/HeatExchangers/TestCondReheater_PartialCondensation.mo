@@ -43,8 +43,8 @@ equation
   source_cold_coldwater.Q_out = -500;
 
   //outlets
-  sink_cold_hotwater.h_vol = 0.9e6;
-  sink_hot_CondSteam.h_vol = 1e6;
+  //sink_cold_hotwater.h_vol = 0.9e6;
+  //sink_hot_CondSteam.h_vol = 1e6;
 
   CondReheater.S_tot = 100;
   CondReheater.Kth = 61e3;
@@ -67,11 +67,11 @@ equation
   source_cold_coldwater.Q_out = -500;
 
   //outlets
-  sink_cold_hotwater.h_vol = 0.9e6;
+  //sink_cold_hotwater.h_vol = 0.9e6;
   sink_cold_hotwater.T_in = 180 + 273.15;
   sink_cold_hotwater.P_in = 49.9e5;
 
-  sink_hot_CondSteam.h_vol = 1e6;
+  //sink_hot_CondSteam.h_vol = 1e6;
   sink_hot_CondSteam.P_in = 10.9e5;
 
   CondReheater.S_tot = 100;

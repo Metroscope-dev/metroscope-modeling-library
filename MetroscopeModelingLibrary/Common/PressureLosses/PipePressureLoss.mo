@@ -17,9 +17,11 @@ equation
   /* Pressure loss */
   deltaPf = -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom;
   deltaPg = -rhom*g*(z2 - z1);
-  deltaP = deltaPf + deltaPg;
-  Q_in*h_in + Q_out*h_out = 0;
-  Q_in*Xi_in =- Q_out*Xi_out;
+  DP = deltaPf + deltaPg;
+  //deltaP = deltaPf + deltaPg;
+  //Q_in*h_in + Q_out*h_out = 0;
+  W = 0;
+  //Q_in*Xi_in =- Q_out*Xi_out;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

@@ -23,12 +23,12 @@ model FlashTank_Reheater
         rotation=-90,
         origin={-4,78})));
   MetroscopeModelingLibrary.WaterSteam.Junctions.FlashTank flashTank
-    annotation (Placement(transformation(extent={{-132,-50},{-90,-22}})));
+    annotation (Placement(transformation(extent={{-132,-44},{-90,-16}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source_hot_SatSteam_2
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
-        origin={-132,80})));
+        origin={-132,76})));
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.PipePressureLoss DPz
     annotation (Placement(transformation(
         extent={{-12.5,-12.5},{12.5,12.5}},
@@ -36,11 +36,11 @@ model FlashTank_Reheater
         origin={-34.5,8.5})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StaticCentrifugalPump PRP
     annotation (Placement(transformation(
-        extent={{7,-8},{-7,8}},
+        extent={{9,-9},{-9,9}},
         rotation=0,
-        origin={-117,-68})));
+        origin={-115,-69})));
   MetroscopeModelingLibrary.WaterSteam.PressureLosses.SingularPressureLoss DP_vaporBalance
-    annotation (Placement(transformation(extent={{-68,50},{-56,62}})));
+    annotation (Placement(transformation(extent={{40,48},{28,60}})));
   MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-150,-68},{-128,-48}})));
 equation
@@ -57,7 +57,7 @@ equation
   //source_hot_SatSteam_2.P_out = 11e5;
 
   //outlets
-  sink_cold_hotwater.h_vol = 0.9e6;
+  //sink_cold_hotwater.h_vol = 0.9e6;
   //sink_cold_hotwater.T_in = 180 + 273.15;
 
   //sink_hot_CondSteam.h_vol = 1e6;
@@ -90,20 +90,23 @@ equation
   connect(sink_cold_hotwater.C_in, CondReheater.C_cold_out) annotation (Line(
         points={{-176,34},{-20,34}},                  color={63,81,181}));
   connect(source_hot_SatSteam_2.C_out, flashTank.C_in)
-    annotation (Line(points={{-132,70},{-132,-22.7}}, color={63,81,181}));
+    annotation (Line(points={{-132,66},{-132,-16.7}}, color={63,81,181}));
   connect(CondReheater.C_hot_out, DPz.C_in) annotation (Line(points={{-4,26},{-6,
           26},{-6,8},{-22,8.5}}, color={63,81,181}));
   connect(DPz.C_out, flashTank.C_in) annotation (Line(points={{-47.25,8.5},{-132,
-          8},{-132,-22.7}}, color={63,81,181}));
-  connect(flashTank.C_liquid_out, PRP.C_in) annotation (Line(points={{-87.9,-49.3},
-          {-87.9,-68},{-110,-68}}, color={63,81,181}));
-  connect(PRP.C_out, sink_cold_hotwater.C_in) annotation (Line(points={{-124.14,
-          -68},{-152,-68},{-152,34},{-176,34}}, color={63,81,181}));
-  connect(flashTank.C_vapor_out, DP_vaporBalance.C_in) annotation (Line(points=
-          {{-87.9,-22},{-88,-22},{-88,56},{-68,56}}, color={63,81,181}));
+          8.5},{-132,-16.7}},
+                            color={63,81,181}));
+  connect(flashTank.C_liquid_out, PRP.C_in) annotation (Line(points={{-87.9,
+          -43.3},{-87.9,-69},{-106,-69}},
+                                   color={63,81,181}));
+  connect(PRP.C_out, sink_cold_hotwater.C_in) annotation (Line(points={{-124.18,
+          -69},{-152,-69},{-152,34},{-176,34}}, color={63,81,181}));
+  connect(flashTank.C_vapor_out, DP_vaporBalance.C_in) annotation (Line(points={{-87.9,
+          -16},{76,-16},{76,54},{40,54}},            color={63,81,181}));
   connect(DP_vaporBalance.C_out, CondReheater.C_hot_in)
-    annotation (Line(points={{-55.88,56},{-3,56},{-3,42}}, color={63,81,181}));
-  connect(PRP.C_power, source.u) annotation (Line(points={{-117,-59.04},{-117,
+    annotation (Line(points={{27.88,54},{-4,54},{-4,42},{-3,42}},
+                                                           color={63,81,181}));
+  connect(PRP.C_power, source.u) annotation (Line(points={{-115,-58.92},{-115,
           -58},{-128,-58}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-200,-100},{100,100}})));

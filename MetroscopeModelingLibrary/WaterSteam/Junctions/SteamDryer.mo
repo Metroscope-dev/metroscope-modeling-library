@@ -1,5 +1,7 @@
 within MetroscopeModelingLibrary.WaterSteam.Junctions;
 model SteamDryer
+  Real Q_in_0;
+  parameter Real x_out_0 = 0.99;
   package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
@@ -9,13 +11,13 @@ model SteamDryer
     "Enthalpy of saturated water";
   Modelica.Units.SI.SpecificEnthalpy hvsat(start=1e6)
     "Enthalpy of saturated vapor";
-  Modelica.Units.SI.MassFraction x_out(start=0.99)
+  Modelica.Units.SI.MassFraction x_out(start=x_out_0)
     "Vapor mass fraction at outlet (0 < x <= 1 and x > x_in)";
   Modelica.Units.SI.MassFraction x_in(start=0.8)
     "Vapor mass fraction at the inlet";
-  Modelica.Units.SI.MassFraction x(start=0.99)
+  Modelica.Units.SI.MassFraction x(start=x_out_0)
     "Desired vapor mass fraction at the outlet";
-  replaceable Common.Partial.BasicTransportModel liquidSide(redeclare package
+  replaceable Common.Partial.FlowModel liquidSide(redeclare package
       Medium = WaterSteamMedium) annotation (Placement(transformation(
         extent={{19,-8},{-19,8}},
         rotation=180,
@@ -24,7 +26,7 @@ model SteamDryer
         WaterSteamMedium)
     annotation (Placement(transformation(extent={{100,-108},{120,-88}}),
         iconTransformation(extent={{100,-108},{120,-88}})));
-  replaceable Common.Partial.BasicTransportModel vaporSide(redeclare package
+  replaceable Common.Partial.FlowModel vaporSide(redeclare package
       Medium =
         WaterSteamMedium) annotation (Placement(transformation(
         extent={{-18,-8},{18,8}},
@@ -39,27 +41,30 @@ model SteamDryer
     annotation (Placement(transformation(extent={{-110,-32},{-90,-12}}),
         iconTransformation(extent={{-110,-32},{-90,-12}})));
 equation
-  // Defenition of all intermediate variables
+  // Definition of all intermediate variables
   hvsat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in));
   hesat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in));
-  Q_in = liquidSide.Q_in  + vaporSide.Q_in;
-  h_in * Q_in = liquidSide.h_in *liquidSide.Q_in +vaporSide.h_in *vaporSide.Q_in;
+  Q_in = liquidSide.Q_in + vaporSide.Q_in;
+  Q_in_0 = liquidSide.Q_in_0 + vaporSide.Q_in_0;
+  homotopy(h_in*Q_in, h_in*Q_in_0) = homotopy(liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in,
+                                              liquidSide.h_in*liquidSide.Q_in_0 + vaporSide.h_in*vaporSide.Q_in_0);
 
   x_in = noEvent(max(0,(h_in - hesat)/(hvsat-hesat)));
 
   x_out = noEvent(max(x_in, x));  // Efficiency determination
   // Mass balance
-  vaporSide.Q_in + vaporSide.Q_out  = 0;
-  liquidSide.Q_in +liquidSide.Q_out = 0;
+  //vaporSide.Q_in + vaporSide.Q_out  = 0;
+  //liquidSide.Q_in +liquidSide.Q_out = 0;
   //Energy balance
-  vaporSide.Q_in * vaporSide.h_in + vaporSide.Q_out * vaporSide.h_out + liquidSide.Q_in * liquidSide.h_in + liquidSide.Q_out * liquidSide.h_out = 0;
+  vaporSide.W + liquidSide.W = 0;
   // Saturation
-  vaporSide.h_out = x_out * hvsat + (1 - x_out) * hesat;
+  vaporSide.h_out = homotopy(x_out * hvsat + (1 - x_out) * hesat,
+                             x_out_0 * hvsat + (1 - x_out_0) * hesat);
   liquidSide.h_out = hesat;
   //Mechanical Balance
-  P_in =vaporSide.P_out;
-  P_in =liquidSide.P_out;
-  P_in =vaporSide.P_in;
+  P_in = vaporSide.P_out;
+  P_in = liquidSide.P_out;
+  P_in = vaporSide.P_in;
 
   connect(vaporSide.C_out, C_vapor_out)
     annotation (Line(points={{38.36,-30},{56,-30},{56,-30},{74,-30},{74,-20},{

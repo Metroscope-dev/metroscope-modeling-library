@@ -27,9 +27,9 @@ equation
   sourcesWater1.h_out = h_source; // value fixed to have about 80% vapor at the inlet
   sourcesWater1.Q_out = -Q;
 
-  sink_steam.h_vol = 1e6;
+  //sink_steam.h_vol = 1e6;
                      //steam outlet
-  sink_water.h_vol = 1e6;
+  //sink_water.h_vol = 1e6;
                      //water outlet
 
   // Reverse causality

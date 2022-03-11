@@ -17,10 +17,10 @@ equation
   // In order to calibrate Kfr, simply give the output pressure.
 
   source.P_out = 2e5;
-  source.T_vol = 20+273.15;
+  source.T_out = 20+273.15;
   source.Q_out = -100;
 
-  sink.h_vol = 1e6;
+  //sink.h_vol = 1e6;
 
   pipePressureLoss.z1 = 23;
   pipePressureLoss.z2 = 25;
@@ -29,7 +29,7 @@ equation
   pipePressureLoss.Kfr = 1e-3;
 
   // For reverse causality :
-  //sink.P_in =  P_sink;
+  //sink.P_in = 1.5e5;
 
   connect(pipePressureLoss.C_out, sink.C_in)
     annotation (Line(points={{4.2,0},{54,0}}, color={238,46,47}));

@@ -10,6 +10,8 @@ model CondReheater_PartialCondensation
       Modelica.Units.SI.CoefficientOfHeatTransfer;
   connector InputArea = input Modelica.Units.SI.Area;
 
+  parameter Real x_hot_out_0 = 0.99;
+
   InputReal Kfr_cold(start=1.e3) "Pressure loss coefficient";
   InputReal Kfr_hot(start=1.e3) "Pressure loss coefficient";
   InputCoefficientOfHeatTransfer Kth(start=9000)
@@ -28,8 +30,8 @@ model CondReheater_PartialCondensation
     "saturated liquid water (hot side) specific enthalpy at condensing inlet";
   Modelica.Units.SI.MassFlowRate Q_cold(start=250) "Inlet Mass flow rate";
   Modelica.Units.SI.MassFlowRate Q_hot(start=50) "Inlet Mass flow rate";
-  MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
-  MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
+  //MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_cold "Singular pressure loss";
+  //MetroscopeModelingLibrary.Common.Units.DifferentialPressure deltaP_hot "Singular pressure loss";
   Modelica.Units.SI.Temperature T_hot_in "hot fluid temperature in K at inlet";
   Modelica.Units.SI.Temperature T_hot_out
     "hot fluid temperature in K at outlet";
@@ -45,11 +47,11 @@ model CondReheater_PartialCondensation
         ColdMedium)
     annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),
         iconTransformation(extent={{-110,-10},{-90,10}})));
-  replaceable Common.Partial.BasicTransportModel deheating_hot(redeclare
+  replaceable MetroscopeModelingLibrary.Common.PressureLosses.SingularPressureAndHeatLoss deheating_hot(redeclare
       package Medium = HotMedium)
     annotation (Placement(transformation(extent={{-52,28},{2,52}})));
-  replaceable Common.Partial.BasicTransportModel deheating_cold(redeclare
-      package Medium = ColdMedium)
+  replaceable Common.Partial.IsoPFlowModel deheating_cold(redeclare package
+      Medium =         ColdMedium)
     annotation (Placement(transformation(extent={{0,-52},{-52,-28}})));
   Common.Connectors.FluidInlet C_hot_in(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{60,70},{80,90}}),
@@ -57,10 +59,10 @@ model CondReheater_PartialCondensation
   Common.Connectors.FluidOutlet C_hot_out(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{50,-90},{70,-70}}),
         iconTransformation(extent={{50,-90},{70,-70}})));
-  replaceable Common.Partial.BasicTransportModel condensing_hot(redeclare
-      package Medium = HotMedium)
+  replaceable Common.Partial.IsoPFlowModel condensing_hot(redeclare package
+      Medium =         HotMedium)
     annotation (Placement(transformation(extent={{32,28},{82,52}})));
-  replaceable Common.Partial.BasicTransportModel condensing_cold(redeclare
+  replaceable MetroscopeModelingLibrary.Common.PressureLosses.SingularPressureAndHeatLoss condensing_cold(redeclare
       package Medium = ColdMedium)
     annotation (Placement(transformation(extent={{78,-52},{26,-28}})));
 equation
@@ -69,55 +71,65 @@ equation
   // The pressure loss coefficient, is however calculated for the whole system, for both sides.
 
   //in CondReH on cold side
-  deltaP_cold =-Kfr_cold*
-    MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold,
-    condensing_cold.eps)/condensing_cold.rho_in;
-  deltaP_cold =condensing_cold.P_out - condensing_cold.P_in;
-  deheating_cold.P_in = deheating_cold.P_out;
+  //condensing_cold.DP = -Kfr_cold*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_cold,condensing_cold.eps)/condensing_cold.rho_in;
+  condensing_cold.Kfr = Kfr_cold;
+  //deltaP_cold =condensing_cold.P_out - condensing_cold.P_in;
+  //deheating_cold.P_in = deheating_cold.P_out;
 
   //DesHReH on hot side.
-  deltaP_hot =-Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(
-    Q_hot, deheating_hot.eps)/deheating_hot.rho_in;
-  deltaP_hot =deheating_hot.P_out - deheating_hot.P_in;
-  condensing_hot.P_in = condensing_hot.P_out;
+  //deheating_hot.DP = -Kfr_hot*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_hot, deheating_hot.eps)/deheating_hot.rho_in;
+  deheating_hot.Kfr = Kfr_hot;
+  //deltaP_hot =deheating_hot.P_out - deheating_hot.P_in;
+  //condensing_hot.P_in = condensing_hot.P_out;
 
   /*==== Mass flows ====*/
-  Q_cold =condensing_cold.Q_in;
+  Q_cold = condensing_cold.Q_in;
                             // Mass flow on the cold side
-  Q_hot =deheating_hot.Q_in;  // Mass flow on the hot side
+  Q_hot = deheating_hot.Q_in;  // Mass flow on the hot side
 
   //mass balance equations for each basic transport element
-  deheating_hot.Q_in + deheating_hot.Q_out = 0;
-  condensing_hot.Q_in + condensing_hot.Q_out = 0;
-  condensing_cold.Q_in + condensing_cold.Q_out = 0;
-  deheating_cold.Q_in + deheating_cold.Q_out = 0;
+  //deheating_hot.Q_in + deheating_hot.Q_out = 0;
+  //condensing_hot.Q_in + condensing_hot.Q_out = 0;
+  //condensing_cold.Q_in + condensing_cold.Q_out = 0;
+  //deheating_cold.Q_in + deheating_cold.Q_out = 0;
 
   /*==== Energy balance ====*/
   /*----------------*/
   /*- CondReH zone-*/
   /*----------------*/
   //Condensation on hot side, reheating on cold side
-  //Energy alance equations
-  Q_hot*(condensing_hot.h_out - condensing_hot.h_in) = -W_CondReH;
-  Q_cold*(condensing_cold.h_out - condensing_cold.h_in) = W_CondReH;
+  //Energy balance equations
+  //Q_hot*(condensing_hot.h_out - condensing_hot.W) = W_CondReH;
+  condensing_hot.W = W_CondReH;
+  //Q_cold*(condensing_cold.h_out - condensing_cold.h_in) = W_CondReH;
+  condensing_cold.W = - W_CondReH;
   //QCpMIN=Q_cold*ColdMedium.specificHeatCapacityCp(condensing_cold.state_in);
   //W_CondReH=(1 - exp(-Kth*S_CondReH/QCpMIN))*QCpMIN*(condensing_hot.T_in -
   //  condensing_cold.T_in);
-  hlsat_hot=HotMedium.bubbleEnthalpy(HotMedium.setSat_p(condensing_hot.P_out));
-  condensing_hot.h_out = hlsat_hot*(1-x_hot_out) + hvsat_hot*x_hot_out;
+  hlsat_hot = HotMedium.bubbleEnthalpy(HotMedium.setSat_p(condensing_hot.P_out));
+  condensing_hot.h_out = homotopy(hlsat_hot*(1-x_hot_out) + hvsat_hot*x_hot_out,
+                                  hlsat_hot*(1-x_hot_out_0) + hvsat_hot*x_hot_out_0);
 
   W_CondReH = MetroscopeModelingLibrary.Common.Functions.PowerHeatExchange(Q_hot,Q_cold,
-          0,ColdMedium.specificHeatCapacityCp(condensing_cold.state_in),
-          condensing_hot.T_in,condensing_cold.T_in,Kth,S_tot,0.5); // the hot side heat capacity is useless for a two-phase flow
+          0,
+          ColdMedium.specificHeatCapacityCp(condensing_cold.state_in),
+          condensing_hot.T_in,
+          condensing_cold.T_in,
+          Kth,
+          S_tot,
+          0.5);
+           // the hot side heat capacity is useless for a two-phase flow
 
   /*----------------*/
   /*- DesHReH zone-*/
   /*----------------*/
   //Desuperheating on hot side, superheating on cold side
   //Energy alance equations
-  Q_hot*(deheating_hot.h_out - deheating_hot.h_in) = -W_DesHReH;
-  Q_cold*(deheating_cold.h_out - deheating_cold.h_in) = W_DesHReH;
-  hvsat_hot=HotMedium.dewEnthalpy(HotMedium.setSat_p(deheating_hot.P_out));
+  //Q_hot*(deheating_hot.h_out - deheating_hot.h_in) = -W_DesHReH;
+  deheating_hot.W = W_DesHReH;
+  //Q_cold*(deheating_cold.h_out - deheating_cold.h_in) = W_DesHReH;
+  deheating_cold.W = - W_DesHReH;
+  hvsat_hot = HotMedium.dewEnthalpy(HotMedium.setSat_p(deheating_hot.P_out));
 
   if noEvent(deheating_hot.h_in > hvsat_hot) then
     //Desuperheating is present
@@ -132,10 +144,10 @@ equation
   //Surface repartition
   S_tot = S_CondReH;
   //calculation of temperautre at the boundaries
-  T_hot_in=deheating_hot.T_in;
-  T_hot_out=condensing_hot.T_out;
-  T_cold_in=condensing_cold.T_in;
-  T_cold_out=deheating_cold.T_out;
+  T_hot_in = deheating_hot.T_in;
+  T_hot_out = condensing_hot.T_out;
+  T_cold_in = condensing_cold.T_in;
+  T_cold_out = deheating_cold.T_out;
   connect(deheating_hot.C_out, condensing_hot.C_in)
     annotation (Line(points={{2.54,40},{32,40}}, color={63,81,181}));
   connect(deheating_hot.C_in, C_hot_in) annotation (Line(points={{-52,40},{-68,

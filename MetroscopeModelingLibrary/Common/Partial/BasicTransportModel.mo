@@ -76,10 +76,12 @@ equation
 
   // Conservation equations
   Q_in + Q_out = DM;
-  homotopy(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out) = W;
+  //homotopy(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out) = W;
+  Q_in*h_in + Q_out*h_out = W;
   //Q_in*h_in + Q_out*h_out = W;
   P_out - P_in = DP;
-  homotopy(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out) = DXi;
+  //homotopy(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out) = DXi;
+  Q_in*Xi_in + Q_out*Xi_out = DXi;
   //Q_in*Xi_in + Q_out*Xi_out = DXi;
 
 

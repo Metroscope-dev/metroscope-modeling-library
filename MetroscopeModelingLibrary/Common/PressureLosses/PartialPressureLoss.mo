@@ -1,12 +1,12 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 partial model PartialPressureLoss "Singular pressure loss"
   extends MetroscopeModelingLibrary.Common.Partial.FlowModel;
-  Modelica.Units.SI.MassFlowRate Q(start=100) "Inlet Mass flow rate";
-  parameter Common.Units.DifferentialPressure deltaP=0 "Singular pressure loss";
+  //Modelica.Units.SI.MassFlowRate Q(start=100) "Inlet Mass flow rate";
+  //parameter Common.Units.DifferentialPressure deltaP=0 "Singular pressure loss";
 equation
   //deltaP = P_out - P_in;
   //DP = P_out - P_in;
-  Q = Q_in;
+  //Q = Q_in;
   //DM = 0;
   annotation (
     Diagram(coordinateSystem(

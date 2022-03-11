@@ -13,10 +13,10 @@ model TestPressureCut
 equation
 
   source.P_out = 2e5;
-  source.T_vol = 273.15 + 20;
+  source.T_out = 273.15 + 20;
   source.Q_out = -100;
 
-  sink.h_vol = 1e6;
+  //sink.h_vol = 1e6;
 
   sink.P_in =  1.9e5;
 

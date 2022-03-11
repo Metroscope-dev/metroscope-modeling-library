@@ -6,8 +6,9 @@ model PressureCut "Pressure Cut"
 
   InputAbsolutePressure P "Fluid pressure";
 equation
-  Q_in*h_in + Q_out*h_out = 0;
-  Q_in*Xi_in =- Q_out*Xi_out;
+  //Q_in*h_in + Q_out*h_out = 0;
+  W = 0;
+  //Q_in*Xi_in =- Q_out*Xi_out;
   // The extra pressure variable is defined ad hoc with connector input type
   // since you cannot change the type of the the variables in the base class
   P = P_in;

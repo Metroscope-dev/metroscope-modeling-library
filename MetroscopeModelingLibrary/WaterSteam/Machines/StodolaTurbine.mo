@@ -44,7 +44,8 @@ equation
   xm = (x_in + x_inner)/2;
 
   /* Fluid specific enthalpy after the expansion */
-  Hre - h_in = homotopy(xm*eta_is*(His - h_in), xm*eta_is_0*((His - h_in)));
+  //Hre - h_in = homotopy(xm*eta_is*(His - h_in), xm*eta_is_0*((His - h_in)));
+  Hre - h_in = xm*eta_is*(His - h_in);
 
   /* Fluid specific enthalpy at the outlet of the nozzle */
   u_out = Q/rho_out/area_nz;

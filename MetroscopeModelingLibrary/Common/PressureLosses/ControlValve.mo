@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model ControlValve "Control valve"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
+  //extends MetroscopeModelingLibrary.Common.Partial.IsoHFlowModel;
   parameter Real CVmax_0 = 8005.4 "Maximum CV (active if mode_caract=0)";
 
   connector InputCv = input Common.Units.Cv;
@@ -16,7 +17,8 @@ equation
   //deltaP*Cv*abs(Cv) = -1.733e12*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom^2;
   DP*Cv*abs(Cv) = -1.733e12*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom^2; // NON LINEAR
   /* Cv as a function of the valve position */
-  Cv = homotopy(Opening*Cvmax, Opening*CVmax_0);
+  //Cv = homotopy(Opening*Cvmax, Opening*CVmax_0);
+  Cv = Opening*Cvmax;
   //Q_in*h_in + Q_out*h_out = 0;
   W = 0;
   //Q_in*Xi_in + Q_out*Xi_out = zeros(Medium.nXi); //FlowModel

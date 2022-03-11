@@ -3,7 +3,7 @@ model SingularPressureAndHeatLoss
    package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   extends
-    MetroscopeModelingLibrary.Common.PressureLosses.SingularPressureAndHeatLoss(      redeclare
+    MetroscopeModelingLibrary.Common.PressureLosses.SingularPressureAndHeatLoss(redeclare
       package Medium =
         WaterSteamMedium);
 end SingularPressureAndHeatLoss;
