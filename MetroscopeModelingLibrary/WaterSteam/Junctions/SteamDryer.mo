@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.WaterSteam.Junctions;
 model SteamDryer
-  parameter Real Q_in_0 = liquidSide.Q_in_0 + vaporSide.Q_in_0;
-  parameter Real P_in_0 = 71e5;
+  parameter Real Q_liq_0 = 100;
+  parameter Real Q_vap_0 = 100;
+  parameter Real P_0 = 71e5;
   package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
@@ -21,7 +22,7 @@ model SteamDryer
     "Vapor mass fraction at the inlet";
   Modelica.Units.SI.MassFraction x(start=0.99)
     "Desired vapor mass fraction at the outlet";
-  replaceable Common.Partial.FlowModel liquidSide(redeclare package
+  replaceable Common.Partial.FlowModel liquidSide(Q_0 = Q_liq_0, redeclare package
       Medium = WaterSteamMedium) annotation (Placement(transformation(
         extent={{19,-8},{-19,8}},
         rotation=180,
@@ -30,7 +31,7 @@ model SteamDryer
         WaterSteamMedium)
     annotation (Placement(transformation(extent={{100,-108},{120,-88}}),
         iconTransformation(extent={{100,-108},{120,-88}})));
-  replaceable Common.Partial.FlowModel vaporSide(redeclare package
+  replaceable Common.Partial.IsoPFlowModel vaporSide(Q_0 = Q_vap_0, redeclare package
       Medium =
         WaterSteamMedium) annotation (Placement(transformation(
         extent={{-18,-8},{18,8}},
@@ -44,15 +45,17 @@ model SteamDryer
         WaterSteamMedium)
     annotation (Placement(transformation(extent={{-110,-32},{-90,-12}}),
         iconTransformation(extent={{-110,-32},{-90,-12}})));
+protected
+  parameter Real Q_0 = Q_liq_0 + Q_vap_0;
 equation
   // Definition of all intermediate variables
   hvsat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in));
   hesat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in));
-  hvsat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
-  hesat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
+  hvsat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
+  hesat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
   Q_in = liquidSide.Q_in + vaporSide.Q_in;
-  homotopy(h_in*Q_in, h_in*Q_in_0) = homotopy(liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in,
-                                              liquidSide.h_in*liquidSide.Q_in_0 + vaporSide.h_in*vaporSide.Q_in_0);
+  homotopy(h_in*Q_in, h_in*Q_0) = homotopy(liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in,
+                                           liquidSide.h_in*liquidSide.Q_0 + vaporSide.h_in*vaporSide.Q_0);
 
   x_in = noEvent(max(0,homotopy((h_in - hesat)/(hvsat-hesat), (h_in - hesat)/(hvsat_0-hesat_0))));
 
@@ -69,7 +72,6 @@ equation
   //Mechanical Balance
   P_in = vaporSide.P_out;
   P_in = liquidSide.P_out;
-  P_in = vaporSide.P_in;
 
   connect(vaporSide.C_out, C_vapor_out)
     annotation (Line(points={{38.36,-30},{56,-30},{56,-30},{74,-30},{74,-20},{

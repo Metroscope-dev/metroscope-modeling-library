@@ -16,8 +16,8 @@ protected
 equation
   /* Pressure loss */
   deltaPf = homotopy(-Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in, eps)/rhom,
-                     -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/rhom);
-  deltaPg = -rhom*g*(z2 - z1);
+                     -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/Medium.rho_0);
+  deltaPg = homotopy(-rhom*g*(z2 - z1), -Medium.rho_0*g*(z2 - z1));
   DP = deltaPf + deltaPg;
   //deltaP = deltaPf + deltaPg;
   //Q_in*h_in + Q_out*h_out = 0;

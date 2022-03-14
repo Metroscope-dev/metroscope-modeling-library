@@ -24,6 +24,7 @@ model BasicTransportModel
   Modelica.Units.SI.Density rho_in(start=998) "Fluid density";
   Modelica.Units.SI.Density rho_out(start=998) "Fluid density";
   Modelica.Units.SI.Density rhom(start=998) "Fluid density";
+  parameter Modelica.Units.SI.Density rho_0 = Medium.rho_0 "Fluid density";
   Modelica.Units.SI.Temperature T_in(start=290) "Fluid temperature";
   Modelica.Units.SI.Temperature T_out(start=291) "Fluid temperature";
   Modelica.Units.SI.Temperature Tm(start=290) "Fluid temperature";
@@ -45,7 +46,7 @@ model BasicTransportModel
 equation
   Q_in = C_in.Q;
   Q_out = C_out.Q;
-  Qm=(Q_in-Q_out)/2;
+  Qm = (Q_in-Q_out)/2;
 
   P_in = C_in.P;
   P_out = C_out.P;
@@ -64,8 +65,8 @@ equation
 
 
   /* Fluid thermodynamic properties */
-  state_in = Medium.setState_phX(P_in, h_in,Xi_in);
-  state_out = Medium.setState_phX(P_out, h_out,Xi_out);
+  state_in = Medium.setState_phX(P_in, h_in, Xi_in);
+  state_out = Medium.setState_phX(P_out, h_out, Xi_out);
   T_in = Medium.temperature(state_in);
   rho_in = Medium.density(state_in);
   T_out = Medium.temperature(state_out);
@@ -73,9 +74,9 @@ equation
   Tm = (T_in+T_out)/2;
   rhom = (rho_in+rho_out)/2;
 
-  Qv_in=Q_in/rho_in;
-  Qv_out=Q_out/rho_out;
-  Qvm=Qm/rhom;
+  Qv_in = Q_in/rho_in;
+  Qv_out = Q_out/rho_out;
+  Qvm = Qm/rhom;
 
   // Conservation equations
   Q_in + Q_out = DM;
