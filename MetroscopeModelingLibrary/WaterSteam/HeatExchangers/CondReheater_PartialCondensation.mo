@@ -49,9 +49,9 @@ model CondReheater_PartialCondensation
         ColdMedium)
     annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),
         iconTransformation(extent={{-110,-10},{-90,10}})));
-  replaceable MetroscopeModelingLibrary.Common.Partial.IsoPFlowModel deheating_hot(Q_in_0=Q_hot_0, redeclare package Medium = HotMedium)
+  replaceable MetroscopeModelingLibrary.Common.Partial.IsoPFlowModel deheating_hot(Q_0=Q_hot_0, redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{-52,28},{2,52}})));
-  replaceable Common.Partial.IsoPFlowModel deheating_cold(Q_in_0=Q_cold_0, redeclare package Medium = ColdMedium)
+  replaceable Common.Partial.IsoPFlowModel deheating_cold(Q_0=Q_cold_0, redeclare package Medium = ColdMedium)
     annotation (Placement(transformation(extent={{0,-52},{-52,-28}})));
   Common.Connectors.FluidInlet C_hot_in(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{50,70},{70,90}}),
@@ -59,13 +59,13 @@ model CondReheater_PartialCondensation
   Common.Connectors.FluidOutlet C_hot_out(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{50,-90},{70,-70}}),
         iconTransformation(extent={{50,-90},{70,-70}})));
-  replaceable Common.Partial.IsoPFlowModel condensing_hot(Q_in_0=Q_hot_0, redeclare package Medium = HotMedium)
+  replaceable Common.Partial.IsoPFlowModel condensing_hot(Q_0=Q_hot_0, redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{32,28},{82,52}})));
-  replaceable MetroscopeModelingLibrary.Common.Partial.IsoPFlowModel condensing_cold(Q_in_0=Q_cold_0, redeclare package Medium = ColdMedium)
+  replaceable MetroscopeModelingLibrary.Common.Partial.IsoPFlowModel condensing_cold(Q_0=Q_cold_0, redeclare package Medium = ColdMedium)
     annotation (Placement(transformation(extent={{78,-52},{26,-28}})));
-  PressureLosses.SingularPressureLoss hot_pressure_loss(Q_in_0=Q_hot_0)
+  PressureLosses.SingularPressureLoss hot_pressure_loss(Q_0=Q_hot_0)
     annotation (Placement(transformation(extent={{-2,70},{-22,90}})));
-  PressureLosses.SingularPressureLoss cold_pressure_loss(Q_in_0=Q_cold_0)
+  PressureLosses.SingularPressureLoss cold_pressure_loss(Q_0=Q_cold_0)
     annotation (Placement(transformation(extent={{182,-10},{162,10}})));
 equation
   /*===== Pressure loss ====*/

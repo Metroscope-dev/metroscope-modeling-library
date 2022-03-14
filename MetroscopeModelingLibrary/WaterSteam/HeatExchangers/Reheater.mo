@@ -7,8 +7,7 @@ model Reheater
 
   connector InputReal = input Real;
   connector InputArea = input Modelica.Units.SI.Area;
-  connector InputCoefficientOfHeatTransfer = input
-      Modelica.Units.SI.CoefficientOfHeatTransfer;
+  connector InputCoefficientOfHeatTransfer = input Modelica.Units.SI.CoefficientOfHeatTransfer;
 
   InputArea S_tot(start=1000) "Total exchange area";
   Real Level( start=0.2) "in [0;1], is an image of the set water level";
@@ -46,10 +45,7 @@ model Reheater
     "hot fluid temperature in deg_C at inlet";
   Modelica.Units.SI.Temperature T_cold_out
     "hot fluid temperature in deg_C at outlet";
-  replaceable Common.Partial.BasicTransportModel deheating_hot(C_out(
-                                                               h_vol(      start=2500e3)),
-                                                                                         redeclare
-      package Medium =                                                                                              HotMedium)
+  replaceable Common.Partial.BasicTransportModel deheating_hot(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{150,40},{104,64}})));
   Common.Connectors.FluidInlet C_cold_in( redeclare package Medium =
         ColdMedium)
@@ -59,17 +55,17 @@ model Reheater
         ColdMedium)
     annotation (Placement(transformation(extent={{210,-10},{230,10}}),
         iconTransformation(extent={{210,-10},{230,10}})));
-  replaceable Common.Partial.BasicTransportModel condensing_hot(redeclare
-      package Medium =                                                                     HotMedium)
+  replaceable Common.Partial.BasicTransportModel condensing_hot(redeclare package
+              Medium =                                                                     HotMedium)
     annotation (Placement(transformation(extent={{70,40},{16,64}})));
   replaceable Common.Partial.BasicTransportModel purge_hot(redeclare package
       Medium =                                                                        HotMedium)
     annotation (Placement(transformation(extent={{-10,40},{-52,64}})));
-  replaceable Common.Partial.BasicTransportModel deheating_cold(h_in(start=500e3),redeclare
-      package Medium =                                                                                       ColdMedium)
+  replaceable Common.Partial.BasicTransportModel deheating_cold(h_in(start=500e3),redeclare package
+              Medium =                                                                                       ColdMedium)
     annotation (Placement(transformation(extent={{100,-58},{150,-34}})));
-  replaceable Common.Partial.BasicTransportModel condensing_cold(redeclare
-      package Medium =                                                                      ColdMedium)
+  replaceable Common.Partial.BasicTransportModel condensing_cold(redeclare package
+              Medium =                                                                      ColdMedium)
     annotation (Placement(transformation(extent={{24,-58},{76,-34}})));
   replaceable Common.Partial.BasicTransportModel purge_cold(redeclare package
       Medium =                                                                         ColdMedium)

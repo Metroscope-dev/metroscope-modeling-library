@@ -321,7 +321,7 @@ equation
       thickness=0.5));
   connect(LPReheater.C_hot_in, PressureLoss_DryerCondensats2.C_out) annotation (
      Line(
-      points={{247,-68},{250,-68},{250,11.8}},
+      points={{246,-68},{250,-68},{250,11.8}},
       color={28,108,200},
       thickness=0.5));
   connect(PressureLoss_DryerCondensats.C_out, steamDryerValve.C_in) annotation (
@@ -335,8 +335,7 @@ equation
     annotation (Line(points={{184.2,58},{202,58},{202,26}}, color={28,108,200},
       thickness=0.5));
   connect(HPCondReheaterControlValve.C_out, PressureLoss_before_drum.C_out)
-    annotation (Line(points={{102.1,-122.182},{154,-122.182},{154,-76},{171.8,
-          -76}},
+    annotation (Line(points={{102.1,-122.182},{154,-122.182},{154,-76},{171.8,-76}},
         color={28,108,200},
       thickness=0.5));
   connect(PressureLoss_SteamExtractionHP2.C_out, HPReheater.C_hot_in)

@@ -39,11 +39,11 @@ equation
   source_cold_steam.Q_out = -275;
 
   //outlets
-  sink_hot_Cond.h_vol = 1.2e6;
-  sink_cold_ReheatSt.h_vol = 1e6;
+  //sink_hot_Cond.h_vol = 1.2e6;
+  //sink_cold_ReheatSt.h_vol = 1e6;
 
   sinkVent.Q_in = 2.5;
-  sinkVent.h_vol = 1.2e6;
+  //sinkVent.h_vol = 1.2e6;
 
   //heatexchangers
   Superheater.Kth = 6300;
@@ -65,13 +65,13 @@ equation
   source_cold_steam.Q_out = -275;
 
   //outlets
-  sink_hot_Cond.h_vol = 1.2e6;
+  //sink_hot_Cond.h_vol = 1.2e6;
 
   sink_cold_ReheatSt.T_in = 246+273.15;
-  sink_cold_ReheatSt.h_vol = 1e6;
+  //sink_cold_ReheatSt.h_vol = 1e6;
 
   sinkVent.Q_in = 2.5;
-  sinkVent.h_vol = 1.2e6;
+  //sinkVent.h_vol = 1.2e6;
 
   //heatexchangers
   Superheater.S_tot = 100;

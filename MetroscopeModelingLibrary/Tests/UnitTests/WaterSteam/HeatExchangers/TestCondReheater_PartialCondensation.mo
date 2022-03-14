@@ -60,11 +60,11 @@ equation
   //inlets
   source_hot_SatSteam.h_out = 2.5e6;
   source_hot_SatSteam.P_out = 11e5;
-  source_hot_mainSt.Q_out = -60;
+  source_hot_SatSteam.Q_out = -60;
 
   //source_cold_coldwater.P_out = 50e5;
   source_cold_coldwater.T_out = 130 + 273.15;
-  //source_cold_coldwater.Q_out = -500;
+  source_cold_coldwater.Q_out = -500;
 
   //outlets
   //sink_cold_hotwater.h_vol = 0.9e6;

@@ -22,7 +22,7 @@ model SteamDryer
     "Vapor mass fraction at the inlet";
   Modelica.Units.SI.MassFraction x(start=0.99)
     "Desired vapor mass fraction at the outlet";
-  replaceable Common.Partial.FlowModel liquidSide(Q_0 = Q_liq_0, redeclare package
+  replaceable Common.Partial.FlowModel liquidSide(Q_0=Q_liq_0, redeclare package
       Medium = WaterSteamMedium) annotation (Placement(transformation(
         extent={{19,-8},{-19,8}},
         rotation=180,

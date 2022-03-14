@@ -1,10 +1,9 @@
 within MetroscopeModelingLibrary.Common.Machines;
 model StaticCentrifugalPump "Static centrifugal pump"
-  extends MetroscopeModelingLibrary.Common.Partial.FlowModel(Q_in_0=500);
+  extends MetroscopeModelingLibrary.Common.Partial.FlowModel(Q_0=500);
   parameter Real rh_0 = 0.85 "Nominal Hydraulic efficiency";
   parameter Real rm_0 = 0.85 "Nominal mechanical efficiency";
-  parameter Real Qv_0 = Q_in_0/1000 "Nominal volumic flow rate"; // Qv = Q/rho
-  parameter Real hn_0 = 10 "Nominal pump head";
+  parameter Real Qv_0 = Q_0/Medium.rho_0 "Nominal volumic flow rate"; // Qv = Q/rho
 
   parameter Boolean adiabatic_compression=false
     "true: compression at constant enthalpy - false: compression with varying enthalpy";
@@ -34,7 +33,7 @@ protected
     "Gravity constant";
 public
   Real rh(nominal=rh_0) "Hydraulic efficiency";
-  Modelica.Units.SI.Height hn(start=hn_0, nominal=hn_0) "Pump head";
+  Modelica.Units.SI.Height hn(start=10) "Pump head";
   Real R(start=1) "Reduced rotational speed";
   //InputMassFlowRate Q(start=500) "Mass flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv(start=Qv_0, nominal=Qv_0) "Volume flow rate";
@@ -56,7 +55,7 @@ public
 equation
   DH = h_out - h_in;
   //DP = P_out - P_in;
-  DP = homotopy(rhom*g*hn, rhom*g*hn_0);
+  DP = homotopy(rhom*g*hn, Medium.rho_0*g*hn);
   //DP = rhom*g*hn;
   //Q_in + Q_out = 0; //FlowModel
   //Q = Q_in; //FlowModel

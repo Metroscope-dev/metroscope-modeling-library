@@ -62,9 +62,9 @@ equation
   connect(source.C_out, staticCentrifugalPump.C_in)
     annotation (Line(points={{-60,0},{-12,0}}, color={238,46,47}));
   connect(staticCentrifugalPump.VRot, rotSpeedSensor.VRot) annotation (Line(
-        points={{-2,-12},{4,-12},{4,-22},{11.2,-22}}, color={0,0,127}));
-  connect(staticCentrifugalPump.C_power, source1.u) annotation (Line(points={{-2,
-          11.2},{-12,11.2},{-12,16},{-18,16}}, color={0,0,127}));
+        points={{-2,-12},{-2,-22},{11.2,-22}},        color={0,0,127}));
+  connect(staticCentrifugalPump.C_power, source1.u) annotation (Line(points={{-2,11.2},{-2,16},{-18,16}},
+                                               color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)),                                          Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-80,-20},{80,20}})));
 end TestStaticCentrifugalPump;

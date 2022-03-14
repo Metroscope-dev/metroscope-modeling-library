@@ -8,7 +8,7 @@ model SingularPressureLoss_NoIcon "Singular pressure loss"
 equation
   /* Pressure loss */
   DP = homotopy(-Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in, eps)/rhom,
-                -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/rhom);
+                -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/Medium.rho_0);
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

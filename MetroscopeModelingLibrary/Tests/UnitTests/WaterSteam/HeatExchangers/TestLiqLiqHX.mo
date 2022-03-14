@@ -25,8 +25,8 @@ equation
   source_cold.T_out = 273.15 + 100;
   source_cold.Q_out = -50;
 
-  sink_hot.h_vol=1e6;
-  sink_cold.h_vol=1e6;
+  //sink_hot.h_vol=1e6;
+  //sink_cold.h_vol=1e6;
 
   liqLiqHX.S_tot = 100;
   liqLiqHX.Kth = 500;
