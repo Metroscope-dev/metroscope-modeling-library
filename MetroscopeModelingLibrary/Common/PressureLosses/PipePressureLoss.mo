@@ -15,7 +15,8 @@ protected
     "Gravity constant";
 equation
   /* Pressure loss */
-  deltaPf = -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q, eps)/rhom;
+  deltaPf = homotopy(-Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in, eps)/rhom,
+                     -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/rhom);
   deltaPg = -rhom*g*(z2 - z1);
   DP = deltaPf + deltaPg;
   //deltaP = deltaPf + deltaPg;

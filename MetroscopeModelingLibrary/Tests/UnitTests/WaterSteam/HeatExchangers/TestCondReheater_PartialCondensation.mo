@@ -11,12 +11,12 @@ model TestCondReheater_PartialCondensation
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-2,-2})));
+        origin={-4,-10})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink_cold_hotwater
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
-        origin={-58,36})));
+        origin={-58,34})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source_cold_coldwater
     annotation (Placement(transformation(
@@ -60,11 +60,11 @@ equation
   //inlets
   source_hot_SatSteam.h_out = 2.5e6;
   source_hot_SatSteam.P_out = 11e5;
-  //source_hot_mainSt.Q_out = -60;
+  source_hot_mainSt.Q_out = -60;
 
-  source_cold_coldwater.P_out = 50e5;
+  //source_cold_coldwater.P_out = 50e5;
   source_cold_coldwater.T_out = 130 + 273.15;
-  source_cold_coldwater.Q_out = -500;
+  //source_cold_coldwater.Q_out = -500;
 
   //outlets
   //sink_cold_hotwater.h_vol = 0.9e6;
@@ -77,13 +77,13 @@ equation
   CondReheater.S_tot = 100;
   CondReheater.x_hot_out = 0.05;
   connect(source_hot_SatSteam.C_out, CondReheater.C_hot_in)
-    annotation (Line(points={{-4,68},{-4,42},{-3,42}}, color={63,81,181}));
+    annotation (Line(points={{-4,68},{-4,42},{-4,42}}, color={63,81,181}));
   connect(source_cold_coldwater.C_out, CondReheater.C_cold_in)
     annotation (Line(points={{38,34},{12,34}}, color={63,81,181}));
   connect(sink_cold_hotwater.C_in, CondReheater.C_cold_out) annotation (Line(
-        points={{-48,36},{-34,36},{-34,34},{-20,34}}, color={63,81,181}));
+        points={{-48,34},{-20,34}},                   color={63,81,181}));
   connect(sink_hot_CondSteam.C_in, CondReheater.C_hot_out)
-    annotation (Line(points={{-2,8},{-4,8},{-4,26}}, color={63,81,181}));
+    annotation (Line(points={{-4,0},{-4,26}},        color={63,81,181}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end TestCondReheater_PartialCondensation;

@@ -71,10 +71,10 @@ equation
   source_cold_coldwater.Q_out = -1500;
 
   //outlets
-  sink_cold_hotwater.h_vol = 0.9e6;
+  //sink_cold_hotwater.h_vol = 0.9e6;
   sink_cold_hotwater.T_in = 190 + 273.15;
 
-  sink_hot_CondSteam.h_vol = 1e6;
+  //sink_hot_CondSteam.h_vol = 1e6;
   sink_hot_CondSteam.T_in = 185+273.15;
 
 

@@ -4,11 +4,12 @@ model BasicTransportModel
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
   extends MetroscopeModelingLibrary.Common.Constants.Constants;
   Modelica.Units.SI.AbsolutePressure P_in(start=1e5) "Inlet Pressure";
+  parameter Modelica.Units.SI.AbsolutePressure P_in_0 = 10e5 "Nominal Inlet Pressure";
   Modelica.Units.SI.AbsolutePressure P_out(start=0.9e5) "Outlet Pressure";
   Modelica.Units.SI.AbsolutePressure Pm(start=1.e5) "Average fluid pressure";
   parameter Modelica.Units.SI.MassFlowRate Q_in_0 = 100 "Inlet nominal Mass flow rate";
   Modelica.Units.SI.MassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
-  parameter Modelica.Units.SI.MassFlowRate Q_out_0 = 100 "Outlet nominal Mass flow rate";
+  parameter Modelica.Units.SI.MassFlowRate Q_out_0 = Q_in_0 "Outlet nominal Mass flow rate";
   Modelica.Units.SI.MassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
   Modelica.Units.SI.MassFlowRate Qm(start=100) "Mean Mass flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv_in(start=0.1) "inlet volume flow rate";
@@ -52,12 +53,14 @@ equation
   hm = (h_in+h_out)/2;
 
 
-  h_out = C_out.h_outflow;
   h_in = inStream(C_in.h_outflow);
-  C_in.h_outflow = 1e5; // Never used with no flow reversal !
   Xi_in = inStream(C_in.Xi_outflow);
+  h_out = C_out.h_outflow;
   Xi_out = C_out.Xi_outflow;
+
+  // Never used with no flow reversal:
   C_in.Xi_outflow = zeros(Medium.nXi);
+  C_in.h_outflow = 1e5;
 
 
   /* Fluid thermodynamic properties */
@@ -76,12 +79,10 @@ equation
 
   // Conservation equations
   Q_in + Q_out = DM;
-  //homotopy(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out) = W;
-  Q_in*h_in + Q_out*h_out = W;
+  homotopy(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out) = W;
   //Q_in*h_in + Q_out*h_out = W;
   P_out - P_in = DP;
-  //homotopy(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out) = DXi;
-  Q_in*Xi_in + Q_out*Xi_out = DXi;
+  homotopy(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out) = DXi;
   //Q_in*Xi_in + Q_out*Xi_out = DXi;
 
 

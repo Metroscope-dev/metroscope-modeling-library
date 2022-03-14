@@ -3,7 +3,7 @@ model StaticCentrifugalPump "Static centrifugal pump"
   extends MetroscopeModelingLibrary.Common.Partial.FlowModel(Q_in_0=500);
   parameter Real rh_0 = 0.85 "Nominal Hydraulic efficiency";
   parameter Real rm_0 = 0.85 "Nominal mechanical efficiency";
-  parameter Real Qv_0 = 0.5 "Nominal volumic flow rate";
+  parameter Real Qv_0 = Q_in_0/1000 "Nominal volumic flow rate"; // Qv = Q/rho
   parameter Real hn_0 = 10 "Nominal pump head";
 
   parameter Boolean adiabatic_compression=false
@@ -56,12 +56,12 @@ public
 equation
   DH = h_out - h_in;
   //DP = P_out - P_in;
-  //DP = homotopy(rhom*g*hn, rhom*g*hn_0);
-  DP = rhom*g*hn;
+  DP = homotopy(rhom*g*hn, rhom*g*hn_0);
+  //DP = rhom*g*hn;
   //Q_in + Q_out = 0; //FlowModel
   //Q = Q_in; //FlowModel
-  //Q = homotopy(Qv*rhom, Qv_0*rhom);
-  Q = Qv*rhom;
+  Q = homotopy(Qv*rhom, Qv_0*rhom);
+  //Q = Qv*rhom;
   Q = max(Qv0*rhom, Qeps);
 
   /* Energy balance equation */
@@ -76,17 +76,17 @@ equation
   R = VRot/VRotn;
 
   /* Pump characteristics */
-  //hn = noEvent(homotopy(a1*Qv0*abs(Qv0), a1*Qv_0*abs(Qv_0)) + a2*Qv0*R + a3*R^2); // NON LINEAR
-  hn = noEvent(a1*Qv0*abs(Qv0) + a2*Qv0*R + a3*R^2); // NON LINEAR
+  hn = noEvent(homotopy(a1*Qv0*abs(Qv0), a1*Qv_0*abs(Qv_0)) + a2*Qv0*R + a3*R^2); // NON LINEAR
+  //hn = noEvent(a1*Qv0*abs(Qv0) + a2*Qv0*R + a3*R^2); // NON LINEAR
   rh = noEvent(max(if (abs(R) > eps) then b1*Qv*abs(Qv)/R^2 + b2*Qv/R + b3 else b3, rhmin)); // NON LINEAR
 
   /* Mechanical power */
   Wm + C_power.W = 0; // C_power.W is negative since it is power fed to the component
-  //Wm = homotopy(DH*Q/rm, DH*Q_in_0/rm_0); // Wm is positive since it is the power produced by the pump
-  Wm = DH*Q/rm; // Wm is positive since it is the power produced by the pump
+  Wm = homotopy(DH*Q/rm, DH*Q_in_0/rm_0); // Wm is positive since it is the power produced by the pump
+  //Wm = DH*Q/rm; // Wm is positive since it is the power produced by the pump
   /* Hydraulic power */
-  //Wh = homotopy(Qv*DP/rh, Qv_0*DP/rh_0);
-  Wh = Qv*DP/rh;
+  Wh = homotopy(Qv*DP/rh, Qv_0*DP/rh_0);
+  //Wh = Qv*DP/rh;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

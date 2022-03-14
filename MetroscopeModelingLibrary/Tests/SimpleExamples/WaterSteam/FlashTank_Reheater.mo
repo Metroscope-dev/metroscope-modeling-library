@@ -2,9 +2,14 @@ within MetroscopeModelingLibrary.Tests.SimpleExamples.WaterSteam;
 model FlashTank_Reheater
   extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary;
+  parameter Real cold_Q_in_0 = 1000;
+  parameter Real hot_Q_in_0 = 500;
   package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
-  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondReheater CondReheater
+  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondReheater CondReheater(deheating_hot(Q_in_0 = hot_Q_in_0),
+                                                                                condensing_hot(Q_in_0 = hot_Q_in_0),
+                                                                                deheating_cold(Q_in_0 = cold_Q_in_0),
+                                                                                condensing_cold(Q_in_0 = cold_Q_in_0))
     annotation (Placement(transformation(extent={{-20,26},{12,42}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink_cold_hotwater
     annotation (Placement(transformation(
@@ -22,14 +27,14 @@ model FlashTank_Reheater
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-4,78})));
-  MetroscopeModelingLibrary.WaterSteam.Junctions.FlashTank flashTank
+  MetroscopeModelingLibrary.WaterSteam.Junctions.FlashTank flashTank(P_0 = 11e5)
     annotation (Placement(transformation(extent={{-132,-44},{-90,-16}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source_hot_SatSteam_2
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-132,76})));
-  MetroscopeModelingLibrary.WaterSteam.PressureLosses.PipePressureLoss DPz
+  MetroscopeModelingLibrary.WaterSteam.PressureLosses.PipePressureLoss DPz(Q_in_0 = hot_Q_in_0)
     annotation (Placement(transformation(
         extent={{-12.5,-12.5},{12.5,12.5}},
         rotation=180,
@@ -84,15 +89,15 @@ equation
   PRP.rh = 1;
 
   connect(source_hot_SatSteam_1.C_out, CondReheater.C_hot_in)
-    annotation (Line(points={{-4,68},{-4,42},{-3,42}}, color={63,81,181}));
+    annotation (Line(points={{-4,68},{-4,42},{-4,42}}, color={63,81,181}));
   connect(source_cold_coldwater.C_out, CondReheater.C_cold_in)
     annotation (Line(points={{38,34},{12,34}}, color={63,81,181}));
   connect(sink_cold_hotwater.C_in, CondReheater.C_cold_out) annotation (Line(
         points={{-176,34},{-20,34}},                  color={63,81,181}));
   connect(source_hot_SatSteam_2.C_out, flashTank.C_in)
     annotation (Line(points={{-132,66},{-132,-16.7}}, color={63,81,181}));
-  connect(CondReheater.C_hot_out, DPz.C_in) annotation (Line(points={{-4,26},{-6,
-          26},{-6,8},{-22,8.5}}, color={63,81,181}));
+  connect(CondReheater.C_hot_out, DPz.C_in) annotation (Line(points={{-4,26},{-4,
+          8.5},{-22,8.5}},       color={63,81,181}));
   connect(DPz.C_out, flashTank.C_in) annotation (Line(points={{-47.25,8.5},{-132,
           8.5},{-132,-16.7}},
                             color={63,81,181}));
@@ -104,7 +109,7 @@ equation
   connect(flashTank.C_vapor_out, DP_vaporBalance.C_in) annotation (Line(points={{-87.9,
           -16},{76,-16},{76,54},{40,54}},            color={63,81,181}));
   connect(DP_vaporBalance.C_out, CondReheater.C_hot_in)
-    annotation (Line(points={{27.88,54},{-4,54},{-4,42},{-3,42}},
+    annotation (Line(points={{27.88,54},{-4,54},{-4,42},{-4,42}},
                                                            color={63,81,181}));
   connect(PRP.C_power, source.u) annotation (Line(points={{-115,-58.92},{-115,
           -58},{-128,-58}}, color={0,0,127}));

@@ -41,8 +41,8 @@ equation
   source_cold_coldwater.Q_out = -500;
 
   //outlets
-  sink_cold_hotwater.h_vol = 0.9e6;
-  sink_hot_CondSteam.h_vol = 1e6;
+  //sink_cold_hotwater.h_vol = 0.9e6;
+  //sink_hot_CondSteam.h_vol = 1e6;
 
   CondReheater.S_tot = 100;
   CondReheater.Kth = 61e3;
@@ -75,7 +75,7 @@ equation
   connect(sink_cold_hotwater.C_in,CondReheater. C_cold_out) annotation (Line(
         points={{-48,36},{-34,36},{-34,34},{-20,34}}, color={63,81,181}));
   connect(source_hot_SatSteam.C_out,CondReheater. C_hot_in) annotation (Line(
-        points={{-4,68},{-4,56},{-4,42},{-3,42}}, color={63,81,181}));
+        points={{-4,68},{-4,56},{-4,42},{-4,42}}, color={63,81,181}));
   connect(CondReheater.C_cold_in, source_cold_coldwater.C_out)
     annotation (Line(points={{12,34},{38,34}}, color={63,81,181}));
   connect(CondReheater.C_hot_out, sink_hot_CondSteam.C_in)

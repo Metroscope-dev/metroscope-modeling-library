@@ -55,8 +55,8 @@ equation
   cold_PL.Kfr = Kfr_cold;
   hot_PL.Kfr = Kfr_hot;
 
-  deltaP_cold = cold_PL.P_out - cold_PL.P_in;
-  deltaP_hot = hot_PL.P_out - hot_PL.P_in;
+  //deltaP_cold = cold_PL.P_out - cold_PL.P_in;
+  //deltaP_hot = hot_PL.P_out - hot_PL.P_in;
 
   //Mass flows
   Q_cold =coldSide.Q_in;    // Mass flow on the cold side
