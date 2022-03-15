@@ -1,5 +1,7 @@
 within MetroscopeModelingLibrary.Common.Partial;
 model BasicTransportModel
+  parameter Boolean use_homotopy = false;
+  import MetroscopeModelingLibrary.Common.Functions.homotopy;
   replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
   extends MetroscopeModelingLibrary.Common.Constants.Constants;
@@ -80,10 +82,10 @@ equation
 
   // Conservation equations
   Q_in + Q_out = DM;
-  homotopy(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out) = W;
+  homotopy(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out, use_homotopy) = W;
   //Q_in*h_in + Q_out*h_out = W;
   P_out - P_in = DP;
-  homotopy(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out) = DXi;
+  homotopy(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out, use_homotopy) = DXi;
   //Q_in*Xi_in + Q_out*Xi_out = DXi;
 
 

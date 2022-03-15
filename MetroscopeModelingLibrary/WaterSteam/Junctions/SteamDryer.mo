@@ -3,6 +3,8 @@ model SteamDryer
   parameter Real Q_liq_0 = 100;
   parameter Real Q_vap_0 = 100;
   parameter Real P_0 = 71e5;
+  parameter Boolean use_homotopy = false;
+  import MetroscopeModelingLibrary.Common.Functions.homotopy;
   package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
@@ -10,19 +12,15 @@ model SteamDryer
   Modelica.Units.SI.SpecificEnthalpy h_in(start=1e5) "Inlet specific enthalpy";
   Modelica.Units.SI.SpecificEnthalpy hesat(start=2e6)
     "Enthalpy of saturated water";
-  Modelica.Units.SI.SpecificEnthalpy hesat_0(start=2e6)
-    "Nominal enthalpy of saturated water";
   Modelica.Units.SI.SpecificEnthalpy hvsat(start=1e6)
     "Enthalpy of saturated vapor";
-  Modelica.Units.SI.SpecificEnthalpy hvsat_0(start=1e6)
-    "Nominal enthalpy of saturated vapor";
   Modelica.Units.SI.MassFraction x_out(start=0.99)
     "Vapor mass fraction at outlet (0 < x <= 1 and x > x_in)";
   Modelica.Units.SI.MassFraction x_in(start=0.8)
     "Vapor mass fraction at the inlet";
   Modelica.Units.SI.MassFraction x(start=0.99)
     "Desired vapor mass fraction at the outlet";
-  replaceable Common.Partial.FlowModel liquidSide(Q_0=Q_liq_0, redeclare package
+  replaceable Common.Partial.FlowModel liquidSide(Q_0=Q_liq_0, use_homotopy=use_homotopy, redeclare package
       Medium = WaterSteamMedium) annotation (Placement(transformation(
         extent={{19,-8},{-19,8}},
         rotation=180,
@@ -31,7 +29,7 @@ model SteamDryer
         WaterSteamMedium)
     annotation (Placement(transformation(extent={{100,-108},{120,-88}}),
         iconTransformation(extent={{100,-108},{120,-88}})));
-  replaceable Common.Partial.IsoPFlowModel vaporSide(Q_0 = Q_vap_0, redeclare package
+  replaceable Common.Partial.IsoPFlowModel vaporSide(Q_0 = Q_vap_0, use_homotopy=use_homotopy, redeclare package
       Medium =
         WaterSteamMedium) annotation (Placement(transformation(
         extent={{-18,-8},{18,8}},
@@ -47,6 +45,10 @@ model SteamDryer
         iconTransformation(extent={{-110,-32},{-90,-12}})));
 protected
   parameter Real Q_0 = Q_liq_0 + Q_vap_0;
+  Modelica.Units.SI.SpecificEnthalpy hvsat_0(start=1e6)
+    "Nominal enthalpy of saturated vapor";
+  Modelica.Units.SI.SpecificEnthalpy hesat_0(start=2e6)
+    "Nominal enthalpy of saturated water";
 equation
   // Definition of all intermediate variables
   hvsat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in));
@@ -54,10 +56,10 @@ equation
   hvsat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
   hesat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
   Q_in = liquidSide.Q_in + vaporSide.Q_in;
-  homotopy(h_in*Q_in, h_in*Q_0) = homotopy(liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in,
-                                           liquidSide.h_in*liquidSide.Q_0 + vaporSide.h_in*vaporSide.Q_0);
+  homotopy(h_in*Q_in, h_in*Q_0, use_homotopy) = homotopy(liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in,
+                                           liquidSide.h_in*liquidSide.Q_0 + vaporSide.h_in*vaporSide.Q_0, use_homotopy);
 
-  x_in = noEvent(max(0,homotopy((h_in - hesat)/(hvsat-hesat), (h_in - hesat)/(hvsat_0-hesat_0))));
+  x_in = noEvent(max(0,homotopy((h_in - hesat)/(hvsat-hesat), (h_in - hesat)/(hvsat_0-hesat_0), use_homotopy)));
 
   x_out = noEvent(max(x_in, x));  // Efficiency determination
   // Mass balance
@@ -67,7 +69,7 @@ equation
   vaporSide.W + liquidSide.W = 0;
   // Saturation
   vaporSide.h_out = homotopy(x_out * hvsat + (1 - x_out) * hesat,
-                             x_out * hvsat_0 + (1 - x_out) * hesat_0);
+                             x_out * hvsat_0 + (1 - x_out) * hesat_0, use_homotopy);
   liquidSide.h_out = hesat;
   //Mechanical Balance
   P_in = vaporSide.P_out;

@@ -4,9 +4,10 @@ model FlashTank_Reheater
   import MetroscopeModelingLibrary;
   parameter Real Q_cold_0 = 1000;
   parameter Real Q_hot_0 = 500;
-
+  parameter Boolean use_homotopy = false;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.CondReheater CondReheater(Q_hot_0 = Q_hot_0,
-                                                                                Q_cold_0 = Q_cold_0)
+                                                                                Q_cold_0 = Q_cold_0,
+                                                                                use_homotopy=use_homotopy)
     annotation (Placement(transformation(extent={{-20,26},{12,42}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink_cold_hotwater
     annotation (Placement(transformation(
@@ -23,24 +24,24 @@ model FlashTank_Reheater
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-4,78})));
-  MetroscopeModelingLibrary.WaterSteam.Junctions.FlashTank flashTank(P_0=11e5, Q_liq_0=1e-3, Q_vap_0=Q_hot_0)
+  MetroscopeModelingLibrary.WaterSteam.Junctions.FlashTank flashTank(P_0=11e5, Q_liq_0=1e-3, Q_vap_0=Q_hot_0, use_homotopy=use_homotopy)
     annotation (Placement(transformation(extent={{-132,-44},{-90,-16}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source_hot_SatSteam_2
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-132,76})));
-  MetroscopeModelingLibrary.WaterSteam.PressureLosses.PipePressureLoss DPz(Q_in_0 = Q_hot_0)
+  MetroscopeModelingLibrary.WaterSteam.PressureLosses.PipePressureLoss DPz(Q_in_0 = Q_hot_0, use_homotopy=use_homotopy)
     annotation (Placement(transformation(
         extent={{-12.5,-12.5},{12.5,12.5}},
         rotation=180,
         origin={-34.5,8.5})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.StaticCentrifugalPump PRP(Q_0=Q_hot_0/3)
+  MetroscopeModelingLibrary.WaterSteam.Machines.StaticCentrifugalPump PRP(Q_0=Q_hot_0/3, use_homotopy=use_homotopy)
     annotation (Placement(transformation(
         extent={{9,-9},{-9,9}},
         rotation=0,
         origin={-115,-69})));
-  MetroscopeModelingLibrary.WaterSteam.PressureLosses.SingularPressureLoss DP_vaporBalance(Q_0=Q_hot_0/2)
+  MetroscopeModelingLibrary.WaterSteam.PressureLosses.SingularPressureLoss DP_vaporBalance(Q_0=Q_hot_0/2, use_homotopy=use_homotopy)
     annotation (Placement(transformation(extent={{40,48},{28,60}})));
   MetroscopeModelingLibrary.Electrical.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{-150,-68},{-128,-48}})));
@@ -51,7 +52,7 @@ equation
 
   source_cold_coldwater.P_out = 50e5;
   source_cold_coldwater.T_out = 130 + 273.15;
-  source_cold_coldwater.Q_out = -1000;
+  source_cold_coldwater.Q_out = -1000;//-1000;
 
   source_hot_SatSteam_2.h_out = 8e5;
   source_hot_SatSteam_2.Q_out = -500;

@@ -1,14 +1,16 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model SingularPressureLoss_NoIcon "Singular pressure loss"
   extends MetroscopeModelingLibrary.Common.Partial.IsoHFlowModel;
-
+  import MetroscopeModelingLibrary.Common.Functions.homotopy;
+  import MetroscopeModelingLibrary.Common.Functions.ThermoSquare;
   connector InputReal = input Real;
 
   InputReal Kfr(start=1.e3) "Pressure loss coefficient";
 equation
   /* Pressure loss */
-  DP = homotopy(-Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in, eps)/rhom,
-                -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/Medium.rho_0);
+  DP = homotopy(-Kfr*ThermoSquare(Q_in, eps)/rhom,
+                   -Kfr*ThermoSquare(Q_in_0, eps)/Medium.rho_0,
+                   use_homotopy);
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

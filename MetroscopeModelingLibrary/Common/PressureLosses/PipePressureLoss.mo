@@ -1,6 +1,8 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model PipePressureLoss "Pipe generic pressure loss"
   extends MetroscopeModelingLibrary.Common.PressureLosses.PartialPressureLoss;
+  import MetroscopeModelingLibrary.Common.Functions.homotopy;
+  import MetroscopeModelingLibrary.Common.Functions.ThermoSquare;
 
   connector InputReal = input Real;
   connector InputPosition = input Modelica.Units.SI.Position;
@@ -15,9 +17,9 @@ protected
     "Gravity constant";
 equation
   /* Pressure loss */
-  deltaPf = homotopy(-Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in, eps)/rhom,
-                     -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/Medium.rho_0);
-  deltaPg = homotopy(-rhom*g*(z2 - z1), -Medium.rho_0*g*(z2 - z1));
+  deltaPf = homotopy(-Kfr*ThermoSquare(Q_in, eps)/rhom,
+                     -Kfr*ThermoSquare(Q_in_0, eps)/Medium.rho_0, use_homotopy);
+  deltaPg = homotopy(-rhom*g*(z2 - z1), -Medium.rho_0*g*(z2 - z1), use_homotopy);
   DP = deltaPf + deltaPg;
   //deltaP = deltaPf + deltaPg;
   //Q_in*h_in + Q_out*h_out = 0;

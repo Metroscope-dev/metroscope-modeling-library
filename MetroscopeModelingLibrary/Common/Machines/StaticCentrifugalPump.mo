@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Common.Machines;
 model StaticCentrifugalPump "Static centrifugal pump"
-  extends MetroscopeModelingLibrary.Common.Partial.FlowModel(Q_0=500);
+  extends MetroscopeModelingLibrary.Common.Partial.FlowModel;
+  import MetroscopeModelingLibrary.Common.Functions.homotopy;
   parameter Real rh_0 = 0.85 "Nominal Hydraulic efficiency";
   parameter Real rm_0 = 0.85 "Nominal mechanical efficiency";
   parameter Real Qv_0 = Q_0/Medium.rho_0 "Nominal volumic flow rate"; // Qv = Q/rho
@@ -55,11 +56,11 @@ public
 equation
   DH = h_out - h_in;
   //DP = P_out - P_in;
-  DP = homotopy(rhom*g*hn, Medium.rho_0*g*hn);
+  DP = homotopy(rhom*g*hn, Medium.rho_0*g*hn, use_homotopy);
   //DP = rhom*g*hn;
   //Q_in + Q_out = 0; //FlowModel
   //Q = Q_in; //FlowModel
-  Q = homotopy(Qv*rhom, Qv_0*rhom);
+  Q = homotopy(Qv*rhom, Qv_0*rhom, use_homotopy);
   //Q = Qv*rhom;
   Q = max(Qv0*rhom, Qeps);
 
@@ -67,7 +68,7 @@ equation
   if adiabatic_compression then
     DH = 0;
   else
-    //DH = homotopy(g*hn/rh, g*hn/rh_0);
+    //DH = homotopy(g*hn/rh, g*hn/rh_0, use_homotopy);
     DH = g*hn/rh;
   end if;
 
@@ -75,16 +76,16 @@ equation
   R = VRot/VRotn;
 
   /* Pump characteristics */
-  hn = noEvent(homotopy(a1*Qv0*abs(Qv0), a1*Qv_0*abs(Qv_0)) + a2*Qv0*R + a3*R^2); // NON LINEAR
+  hn = noEvent(homotopy(a1*Qv0*abs(Qv0), a1*Qv_0*abs(Qv_0), use_homotopy) + a2*Qv0*R + a3*R^2); // NON LINEAR
   //hn = noEvent(a1*Qv0*abs(Qv0) + a2*Qv0*R + a3*R^2); // NON LINEAR
   rh = noEvent(max(if (abs(R) > eps) then b1*Qv*abs(Qv)/R^2 + b2*Qv/R + b3 else b3, rhmin)); // NON LINEAR
 
   /* Mechanical power */
   Wm + C_power.W = 0; // C_power.W is negative since it is power fed to the component
-  Wm = homotopy(DH*Q/rm, DH*Q_in_0/rm_0); // Wm is positive since it is the power produced by the pump
+  Wm = homotopy(DH*Q/rm, DH*Q_in_0/rm_0, use_homotopy); // Wm is positive since it is the power produced by the pump
   //Wm = DH*Q/rm; // Wm is positive since it is the power produced by the pump
   /* Hydraulic power */
-  Wh = homotopy(Qv*DP/rh, Qv_0*DP/rh_0);
+  Wh = homotopy(Qv*DP/rh, Qv_0*DP/rh_0, use_homotopy);
   //Wh = Qv*DP/rh;
   annotation (
     Diagram(coordinateSystem(
