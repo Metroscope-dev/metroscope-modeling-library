@@ -14,6 +14,7 @@ model CondReheater_PartialCondensation
   parameter Real Q_cold_0=1000;
   parameter Real Q_hot_0=500;
   parameter Boolean use_homotopy = false;
+  import MetroscopeModelingLibrary.Common.Functions.homotopy;
 
   InputReal Kfr_cold(start=1.e3) "Pressure loss coefficient";
   InputReal Kfr_hot(start=1.e3) "Pressure loss coefficient";
@@ -114,7 +115,7 @@ equation
   hlsat_hot_0 = HotMedium.bubbleEnthalpy(HotMedium.setSat_p(condensing_hot.P_0));
   hvsat_hot_0 = HotMedium.dewEnthalpy(ColdMedium.setSat_p(condensing_hot.P_0));
   condensing_hot.h_out = homotopy(hlsat_hot*(1-x_hot_out) + hvsat_hot*x_hot_out,
-                                  hlsat_hot_0*(1-x_hot_out) + hvsat_hot_0*x_hot_out);
+                                  hlsat_hot_0*(1-x_hot_out) + hvsat_hot_0*x_hot_out, use_homotopy);
 
   W_CondReH = MetroscopeModelingLibrary.Common.Functions.PowerHeatExchange(Q_hot,Q_cold,
           0,

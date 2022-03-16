@@ -6,5 +6,5 @@ function homotopy
   input Boolean use_homotopy = false;
   output Real value;
 algorithm
-  value := if use_homotopy then homotopy(actual_value, simplified_value) else actual_value;
+  value := homotopy(actual_value, simplified_value); //if use_homotopy then homotopy(actual_value, simplified_value) else actual_value;
 end homotopy;

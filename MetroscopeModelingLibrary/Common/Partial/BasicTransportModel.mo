@@ -10,9 +10,9 @@ model BasicTransportModel
   Modelica.Units.SI.AbsolutePressure P_out(start=0.9e5) "Outlet Pressure";
   Modelica.Units.SI.AbsolutePressure Pm(start=1.e5) "Average fluid pressure";
   parameter Modelica.Units.SI.MassFlowRate Q_in_0 = 100 "Inlet nominal Mass flow rate";
-  Modelica.Units.SI.MassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_in(start=100) "Inlet Mass flow rate";
   parameter Modelica.Units.SI.MassFlowRate Q_out_0 = Q_in_0 "Outlet nominal Mass flow rate";
-  Modelica.Units.SI.MassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_out(start=100) "Outlet Mass flow rate";
   Modelica.Units.SI.MassFlowRate Qm(start=100) "Mean Mass flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv_in(start=0.1) "inlet volume flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv_out(start=0.1) "outlet volume flow rate";
