@@ -1,18 +1,19 @@
 within MetroscopeModelingLibrary.Common.Partial;
 model BasicTransportModel
   parameter Boolean use_homotopy = false;
-  import MetroscopeModelingLibrary.Common.Functions.homotopy;
+  import MetroscopeModelingLibrary.Common.Functions.HomotopyMML;
   replaceable package Medium =
       MetroscopeModelingLibrary.Common.Medium.PartialMedium;
   extends MetroscopeModelingLibrary.Common.Constants.Constants;
   Modelica.Units.SI.AbsolutePressure P_in(start=1e5) "Inlet Pressure";
   parameter Modelica.Units.SI.AbsolutePressure P_in_0 = 10e5 "Nominal Inlet Pressure";
+  parameter Modelica.Units.SI.Temperature T_in_0 = 50 + 273.15 "Nominal Inlet Temperature (K)";
   Modelica.Units.SI.AbsolutePressure P_out(start=0.9e5) "Outlet Pressure";
   Modelica.Units.SI.AbsolutePressure Pm(start=1.e5) "Average fluid pressure";
   parameter Modelica.Units.SI.MassFlowRate Q_in_0 = 100 "Inlet nominal Mass flow rate";
-  Modelica.Units.SI.MassFlowRate Q_in(start=100) "Inlet Mass flow rate";
-  parameter Modelica.Units.SI.MassFlowRate Q_out_0 = Q_in_0 "Outlet nominal Mass flow rate";
-  Modelica.Units.SI.MassFlowRate Q_out(start=100) "Outlet Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
+  parameter Modelica.Units.SI.MassFlowRate Q_out_0 = 100 "Outlet nominal Mass flow rate";
+  Modelica.Units.SI.MassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
   Modelica.Units.SI.MassFlowRate Qm(start=100) "Mean Mass flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv_in(start=0.1) "inlet volume flow rate";
   Modelica.Units.SI.VolumeFlowRate Qv_out(start=0.1) "outlet volume flow rate";
@@ -26,7 +27,6 @@ model BasicTransportModel
   Modelica.Units.SI.Density rho_in(start=998) "Fluid density";
   Modelica.Units.SI.Density rho_out(start=998) "Fluid density";
   Modelica.Units.SI.Density rhom(start=998) "Fluid density";
-  parameter Modelica.Units.SI.Density rho_0 = Medium.rho_0 "Fluid density";
   Modelica.Units.SI.Temperature T_in(start=290) "Fluid temperature";
   Modelica.Units.SI.Temperature T_out(start=291) "Fluid temperature";
   Modelica.Units.SI.Temperature Tm(start=290) "Fluid temperature";
@@ -82,11 +82,11 @@ equation
 
   // Conservation equations
   Q_in + Q_out = DM;
-  homotopy(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out, use_homotopy) = W;
-  //Q_in*h_in + Q_out*h_out = W;
+  //HomotopyMML(Q_in*h_in + Q_out*h_out, Q_in_0*h_in + Q_out_0*h_out) = W;
+  Q_in*h_in + Q_out*h_out = W;
   P_out - P_in = DP;
-  homotopy(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out, use_homotopy) = DXi;
-  //Q_in*Xi_in + Q_out*Xi_out = DXi;
+  //HomotopyMML(Q_in*Xi_in + Q_out*Xi_out, Q_in_0*Xi_in + Q_out_0*Xi_out) = DXi;
+  Q_in*Xi_in + Q_out*Xi_out = DXi;
 
 
      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

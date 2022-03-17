@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Common.PressureLosses;
 model SingularPressureAndHeatLoss "Singular pressure loss"
   extends MetroscopeModelingLibrary.Common.Partial.FlowModel;
+  import MetroscopeModelingLibrary.Common.Functions.ThermoSquare;
 
   connector InputReal = input Real;
 
@@ -14,8 +15,9 @@ model SingularPressureAndHeatLoss "Singular pressure loss"
         origin={0,60})));
 equation
   /* Pressure loss */
-  DP = homotopy(-Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in, eps)/rhom,
-                -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/rhom);
+  //DP = homotopy(-Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in, eps)/rhom,
+  //              -Kfr*MetroscopeModelingLibrary.Common.Functions.ThermoSquare(Q_in_0, eps)/rhom);
+  DP = -Kfr*ThermoSquare(Q_in, eps)/rhom;
   W = W_in;
   annotation (
     Diagram(coordinateSystem(

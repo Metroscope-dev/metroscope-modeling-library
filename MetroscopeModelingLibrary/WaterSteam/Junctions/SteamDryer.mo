@@ -4,7 +4,7 @@ model SteamDryer
   parameter Real Q_vap_0 = 100;
   parameter Real P_0 = 71e5;
   parameter Boolean use_homotopy = false;
-  import MetroscopeModelingLibrary.Common.Functions.homotopy;
+  import MetroscopeModelingLibrary.Common.Functions.HomotopyMML;
   package WaterSteamMedium =
       MetroscopeModelingLibrary.WaterSteam.Medium.WaterSteamMedium;
   Modelica.Units.SI.MassFlowRate Q_in(start=4000) "Inlet Mass flow rate";
@@ -45,22 +45,19 @@ model SteamDryer
         iconTransformation(extent={{-110,-32},{-90,-12}})));
 protected
   parameter Real Q_0 = Q_liq_0 + Q_vap_0;
-  Modelica.Units.SI.SpecificEnthalpy hvsat_0(start=1e6)
-    "Nominal enthalpy of saturated vapor";
-  Modelica.Units.SI.SpecificEnthalpy hesat_0(start=2e6)
-    "Nominal enthalpy of saturated water";
+  parameter Modelica.Units.SI.SpecificEnthalpy hesat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0)) "Nominal enthalpy of saturated water";
+  parameter Modelica.Units.SI.SpecificEnthalpy hvsat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0)) "Nominal enthalpy of saturated vapor";
 equation
   // Definition of all intermediate variables
   hvsat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in));
   hesat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in));
-  hvsat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
-  hesat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
   Q_in = liquidSide.Q_in + vaporSide.Q_in;
-  homotopy(h_in*Q_in, h_in*Q_0, use_homotopy) = homotopy(liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in,
-                                           liquidSide.h_in*liquidSide.Q_0 + vaporSide.h_in*vaporSide.Q_0, use_homotopy);
+  //HomotopyMML(h_in*Q_in, h_in*Q_0) = HomotopyMML(liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in,
+  //                                         liquidSide.h_in*liquidSide.Q_0 + vaporSide.h_in*vaporSide.Q_0);
+  h_in*Q_in = liquidSide.h_in*liquidSide.Q_in + vaporSide.h_in*vaporSide.Q_in;
 
-  x_in = noEvent(max(0,homotopy((h_in - hesat)/(hvsat-hesat), (h_in - hesat)/(hvsat_0-hesat_0), use_homotopy)));
-
+  //x_in = noEvent(max(0,HomotopyMML((h_in - hesat)/(hvsat-hesat), (h_in - hesat)/(hvsat_0-hesat_0))));
+  x_in = noEvent(max(0,(h_in - hesat)/(hvsat-hesat)));
   x_out = noEvent(max(x_in, x));  // Efficiency determination
   // Mass balance
   //vaporSide.Q_in + vaporSide.Q_out  = 0;
@@ -68,8 +65,9 @@ equation
   //Energy balance
   vaporSide.W + liquidSide.W = 0;
   // Saturation
-  vaporSide.h_out = homotopy(x_out * hvsat + (1 - x_out) * hesat,
-                             x_out * hvsat_0 + (1 - x_out) * hesat_0, use_homotopy);
+  //vaporSide.h_out = HomotopyMML(x_out * hvsat + (1 - x_out) * hesat,
+  //                           x_out * hvsat_0 + (1 - x_out) * hesat_0);
+  vaporSide.h_out = x_out * hvsat + (1 - x_out) * hesat;
   liquidSide.h_out = hesat;
   //Mechanical Balance
   P_in = vaporSide.P_out;

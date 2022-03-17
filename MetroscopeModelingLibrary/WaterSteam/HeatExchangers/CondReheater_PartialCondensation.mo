@@ -9,12 +9,13 @@ model CondReheater_PartialCondensation
   connector InputCoefficientOfHeatTransfer = input Modelica.Units.SI.CoefficientOfHeatTransfer;
   connector InputArea = input Modelica.Units.SI.Area;
 
-  Real hlsat_hot_0;
-  Real hvsat_hot_0;
-  parameter Real Q_cold_0=1000;
-  parameter Real Q_hot_0=500;
+  parameter Real Q_cold_0 = 1000;
+  parameter Real Q_hot_0 = 500;
+  parameter Real T_cold_0 = 25 + 273.25 "cold phase nominal temperature, K";
+  parameter Real T_hot_0 = 150 + 273.25 "hot phase nominal temperature, K";
   parameter Boolean use_homotopy = false;
-  import MetroscopeModelingLibrary.Common.Functions.homotopy;
+  parameter Real S_tot_0 = 100;
+  import MetroscopeModelingLibrary.Common.Functions.HomotopyMML;
 
   InputReal Kfr_cold(start=1.e3) "Pressure loss coefficient";
   InputReal Kfr_hot(start=1.e3) "Pressure loss coefficient";
@@ -61,14 +62,17 @@ model CondReheater_PartialCondensation
   Common.Connectors.FluidOutlet C_hot_out(redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{50,-90},{70,-70}}),
         iconTransformation(extent={{50,-90},{70,-70}})));
-  replaceable Common.Partial.IsoPFlowModel condensing_hot(Q_0=Q_hot_0, use_homotopy=use_homotopy, redeclare package Medium = HotMedium)
+  replaceable Common.Partial.IsoPFlowModel condensing_hot(Q_0=Q_hot_0, T_in_0=T_hot_0, use_homotopy=use_homotopy, redeclare package Medium = HotMedium)
     annotation (Placement(transformation(extent={{32,28},{82,52}})));
-  replaceable MetroscopeModelingLibrary.Common.Partial.IsoPFlowModel condensing_cold(Q_0=Q_cold_0, use_homotopy=use_homotopy, redeclare package Medium = ColdMedium)
+  replaceable MetroscopeModelingLibrary.Common.Partial.IsoPFlowModel condensing_cold(Q_0=Q_cold_0, T_in_0=T_cold_0, use_homotopy=use_homotopy, redeclare package Medium = ColdMedium)
     annotation (Placement(transformation(extent={{78,-52},{26,-28}})));
   PressureLosses.SingularPressureLoss hot_pressure_loss(Q_0=Q_hot_0, use_homotopy=use_homotopy)
     annotation (Placement(transformation(extent={{-2,70},{-22,90}})));
   PressureLosses.SingularPressureLoss cold_pressure_loss(Q_0=Q_cold_0, use_homotopy=use_homotopy)
     annotation (Placement(transformation(extent={{182,-10},{162,10}})));
+protected
+  parameter Real hlsat_hot_0 = HotMedium.bubbleEnthalpy(HotMedium.setSat_p(condensing_hot.P_0));
+  parameter Real hvsat_hot_0 = HotMedium.dewEnthalpy(ColdMedium.setSat_p(condensing_hot.P_0));
 equation
   /*===== Pressure loss ====*/
   // For convenience, the whole pressure loss in the component is modelized as only occuring in one zone.
@@ -106,27 +110,20 @@ equation
   //Q_hot*(condensing_hot.h_out - condensing_hot.h_in) = W_CondReH;
   condensing_hot.W = W_CondReH;
   //Q_cold*(condensing_cold.h_out - condensing_cold.h_in) = W_CondReH;
-  condensing_cold.W = - W_CondReH;
+  condensing_hot.W + condensing_cold.W = 0;
   //QCpMIN=Q_cold*ColdMedium.specificHeatCapacityCp(condensing_cold.state_in);
   //W_CondReH=(1 - exp(-Kth*S_CondReH/QCpMIN))*QCpMIN*(condensing_hot.T_in -
   //condensing_cold.T_in);
-  hlsat_hot = HotMedium.bubbleEnthalpy(HotMedium.setSat_p(condensing_hot.P_0));
-  hvsat_hot = HotMedium.dewEnthalpy(HotMedium.setSat_p(deheating_hot.P_out));
-  hlsat_hot_0 = HotMedium.bubbleEnthalpy(HotMedium.setSat_p(condensing_hot.P_0));
-  hvsat_hot_0 = HotMedium.dewEnthalpy(ColdMedium.setSat_p(condensing_hot.P_0));
-  condensing_hot.h_out = homotopy(hlsat_hot*(1-x_hot_out) + hvsat_hot*x_hot_out,
-                                  hlsat_hot_0*(1-x_hot_out) + hvsat_hot_0*x_hot_out, use_homotopy);
+  hlsat_hot = HotMedium.bubbleEnthalpy(HotMedium.setSat_p(condensing_hot.P));
+  hvsat_hot = HotMedium.dewEnthalpy(HotMedium.setSat_p(condensing_hot.P));
+  //condensing_hot.h_out = HomotopyMML(hlsat_hot*(1-x_hot_out) + hvsat_hot*x_hot_out,
+  //                                hlsat_hot_0*(1-x_hot_out) + hvsat_hot_0*x_hot_out);
+  condensing_hot.h_out = hlsat_hot*(1-x_hot_out) + hvsat_hot*x_hot_out;
 
-  W_CondReH = MetroscopeModelingLibrary.Common.Functions.PowerHeatExchange(Q_hot,Q_cold,
-          0,
-          ColdMedium.specificHeatCapacityCp(condensing_cold.state_in),
-          condensing_hot.T_in,
-          condensing_cold.T_in,
-          Kth,
-          S_tot,
-          0.5);
+  //W_CondReH = HomotopyMML(MetroscopeModelingLibrary.Common.Functions.PowerHeatExchange(Q_hot,Q_cold,0,ColdMedium.specificHeatCapacityCp(condensing_cold.state_in), condensing_hot.T_in, condensing_cold.T_in,Kth,S_tot,0.5),
+  //                     Kth*S_tot_0*(condensing_hot.T_in_0 - condensing_cold.T_in_0));
            // the hot side heat capacity is useless for a two-phase flow
-
+  W_CondReH = MetroscopeModelingLibrary.Common.Functions.PowerHeatExchange(Q_hot,Q_cold,0,ColdMedium.specificHeatCapacityCp(condensing_cold.state_in), condensing_hot.T_in, condensing_cold.T_in,Kth,S_tot,0.5);
   /*----------------*/
   /*- DesHReH zone-*/
   /*----------------*/
@@ -135,7 +132,7 @@ equation
   //Q_hot*(deheating_hot.h_out - deheating_hot.h_in) = -W_DesHReH;
   deheating_hot.W = W_DesHReH;
   //Q_cold*(deheating_cold.h_out - deheating_cold.h_in) = W_DesHReH;
-  deheating_cold.W = - W_DesHReH;
+  deheating_hot.W + deheating_cold.W = 0;
 
   if noEvent(deheating_hot.h_in > hvsat_hot) then
     //Desuperheating is present

@@ -5,7 +5,7 @@ function ThermoSquare "Thermodynamic square"
   input Real dx;
   output Real y;
 algorithm
-  y := if (abs(x) > dx) then homotopy(x*abs(x), x) else x*dx;
+  y := if (abs(x) > dx) then x*abs(x) else x*dx;
   annotation (smoothOrder = 1,
     Icon(coordinateSystem(
         preserveAspectRatio=false,
