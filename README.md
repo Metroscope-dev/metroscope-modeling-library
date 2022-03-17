@@ -1,10 +1,10 @@
 # TODO List
 
 - [ ] Setup Git
-    - [ ] Créer la branche mml3-main
-    - [ ] Créer CHANGELOG.md
-    - [ ] Créer template PullRequest
-    - [ ] Créer template Issues
+    - [x] Créer la branche mml3-main
+    - [x] Créer CHANGELOG.md
+    - [x] Créer template PullRequest
+    - [x] Créer template Issues
 - [ ] Ecrire Units
 - [ ] Connecteurs + PartialTransportModel + BaseClasses (non medium-specific)
 - [ ] BoundaryConditions
