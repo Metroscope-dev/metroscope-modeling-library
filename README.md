@@ -1,28 +1,29 @@
 # TODO List
 
-[ ] Setup Git
-    [ ] Créer CHANGELOG.md
-    [ ] Créer template PullRequest
-    [ ] Créer template Issues
-[ ] Ecrire Units
-[ ] Connecteurs + PartialTransportModel + BaseClasses (non medium-specific)
-[ ] BoundaryConditions
-[ ] Sensors
-[ ] Créer Medium.WaterSteam, hériter les premières classes.
-    [ ] Tester chaque classe
-[ ] Créer Tests
-[ ] Créer MoistAir et vérifier que le x est bien traité
-[ ] Construire Pipes + Tests
-    [ ] Partial.Pipes
-    [ ] WaterSteam.Pipe
-[ ] Autres types de composants + Tests
-[ ] Examples
-    [ ] Metroscopia
-    [ ] MetroscopiaCCGT ?
-    [ ] GasTurbine
-    [ ] ParallelFWP
-    [ ] FlashTank_Reheater
-    [ ] TurbineLine
+- [ ] Setup Git
+    - [ ] Créer la branche mml3-main
+    - [ ] Créer CHANGELOG.md
+    - [ ] Créer template PullRequest
+    - [ ] Créer template Issues
+- [ ] Ecrire Units
+- [ ] Connecteurs + PartialTransportModel + BaseClasses (non medium-specific)
+- [ ] BoundaryConditions
+- [ ] Sensors
+- [ ] Créer Medium.WaterSteam, hériter les premières classes.
+    - [ ] Tester chaque classe
+- [ ] Créer Tests
+- [ ] Créer MoistAir et vérifier que le x est bien traité
+- [ ] Construire Pipes + Tests
+    - [ ] Partial.Pipes
+    - [ ] WaterSteam.Pipe
+- [ ] Autres types de composants + Tests
+- [ ] Examples
+    - [ ] Metroscopia
+    - [ ] MetroscopiaCCGT ?
+    - [ ] GasTurbine
+    - [ ] ParallelFWP
+    - [ ] FlashTank_Reheater
+    - [ ] TurbineLine
 
 # Workflow
 
