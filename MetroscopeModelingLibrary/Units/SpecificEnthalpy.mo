@@ -1,2 +1,2 @@
 within MetroscopeModelingLibrary.Units;
-type SpecificEnthalpy = Modelica.Units.SI.SpecificEnthalpy;
+type SpecificEnthalpy = SI.SpecificEnthalpy;

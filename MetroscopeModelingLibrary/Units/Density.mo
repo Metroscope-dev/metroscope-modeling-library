@@ -1,2 +1,2 @@
 within MetroscopeModelingLibrary.Units;
-type Density = Modelica.Units.SI.Density;
+type Density = SI.Density;

@@ -1,2 +1,2 @@
 within MetroscopeModelingLibrary.Units;
-type Height = Modelica.Units.SI.Height(nominal=1);
+type Height = SI.Height(nominal=1);
