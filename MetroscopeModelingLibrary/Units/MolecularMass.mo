@@ -1,2 +1,2 @@
 within MetroscopeModelingLibrary.Units;
-type MolecularMass = Modelica.Units.SI.RelativeMolecularMass(min=0);
+type MolecularMass = SI.RelativeMolecularMass(min=0);
