@@ -4,17 +4,19 @@ package Connectors
 
   annotation (Icon(graphics={
         Line(
-          points={{-26,0},{30,0}},
-          color={28,108,200},
+          points={{-26,0},{22,0}},
+          color={102,102,102},
           thickness=1),
         Rectangle(
           extent={{-76,26},{-26,-24}},
-          lineColor={28,108,200},
-          lineThickness=1),
+          lineColor={102,102,102},
+          lineThickness=1,
+          fillColor={102,102,102},
+          fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{22,30},{80,-28}},
-          lineColor={28,108,200},
+          lineColor={102,102,102},
           lineThickness=1,
-          fillColor={28,108,200},
+          fillColor={102,102,102},
           fillPattern=FillPattern.Solid)}));
 end Connectors;
