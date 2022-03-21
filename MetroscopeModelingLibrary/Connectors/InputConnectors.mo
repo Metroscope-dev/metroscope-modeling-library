@@ -9,7 +9,7 @@ package InputConnectors
   connector InputDifferentialTemperature = input Units.DifferentialTemperature;
   connector InputFrictionCoefficient = input Units.FrictionCoefficient;
   connector InputHeight =input Units.Height;
-  connector InputMassFlow = input Units.MassFlow;
+  connector InputMassFlowRate = input Units.MassFlowRate;
   connector InputMassFraction = input Units.MassFraction;
   connector InputPower = input Units.Power;
   connector InputPressure = input Units.Pressure;

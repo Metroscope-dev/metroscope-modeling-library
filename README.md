@@ -9,7 +9,7 @@
 - [ ] Connecteurs + PartialTransportModel + BaseClasses (non medium-specific)
     - [x] Connecteurs
     - [x] PartialTransportModel
-    - [ ] BaseClasses (non medium-specific)
+    - [x] BaseClasses (non medium-specific)
 - [ ] BoundaryConditions
 - [ ] Sensors
 - [ ] Créer Medium.WaterSteam, hériter les premières classes.
