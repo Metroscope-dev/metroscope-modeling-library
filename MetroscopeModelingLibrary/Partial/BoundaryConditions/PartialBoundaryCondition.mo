@@ -21,5 +21,10 @@ equation
 
   // Computed quantity
   T = Medium.temperature(state);
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Ellipse(
+          extent={{-60,60},{60,-60}},
+          lineColor={28,108,200},
+          lineThickness=1,
+          fillColor={255,255,255},
+          fillPattern=FillPattern.None)}),                       Diagram(coordinateSystem(preserveAspectRatio=false)));
 end PartialBoundaryCondition;
