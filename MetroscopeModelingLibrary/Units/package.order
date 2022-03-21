@@ -10,7 +10,7 @@ FrictionCoefficient
 GasDensity
 Height
 LiquidDensity
-MassFlow
+MassFlowRate
 MassFraction
 Temperature
 Power
@@ -18,3 +18,4 @@ Pressure
 SpecificEnthalpy
 Velocity
 Yield
+VolumeFlowRate

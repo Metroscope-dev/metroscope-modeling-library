@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary;
 package Units
-  import Modelica.Units.SI;
+  extends Modelica.Icons.Package;
+   import Modelica.Units.SI;
 
   annotation(Icon(graphics={
       Polygon(

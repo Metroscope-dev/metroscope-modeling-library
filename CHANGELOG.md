@@ -7,20 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### To be addressed
+ - Partial icons to be redesigned
 ### Fixed
+ - 📏 Fixed [#39](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/39) defined ./Units package, with all units defined in MML. ([PR#68](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/68))
 
 ### Changed
 
 ### Added
+ - Added Issue and PR Template ([PR#68](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/68))
+ - Added Units ([PR#68](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/68))
+ - Added ./Connectors/InputConnectors to consistently declare all inputs ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
+ - Added ./Constants package, to protect constants values and use them easily in the library ([PR#69](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/69))
+ - Added ./PartialTransport package, in which are implemented PartialTransportX.mo, where X is among h, P, Q, Xi, quantities that flow through the component.
+  And gathered all this PartialTransportX in one PartialTransportModel ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
+ - Added initialization parameters (Q_in_0, P_out_0, etc.) ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
+ - Added Base classes and checked locally balances ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
 
 ### Removed
+ - 🧹 Removed everything from previous MML
 
 ## [2.4] 2022-01-04
-
-### Fixed
-
-### Changed
-
-### Added
-
-### Removed
