@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  - Added ./Connectors/InputConnectors to consistently declare all inputs
  - Added ./Constants package, to protect constants values and use them easily in the library
+ - Added ./PartialTransport package, in which are implemented PartialTransportX.mo, where X is among h, P, Q, Xi, quantities that flow through the connector.
+  And gathered all this PartialTransportX in one PartialTransportModel
+ - Added initialization parameters (Q_in_0, P_out_0, etc.)
 
 ### Removed
  - 🧹 Removed everything from previous MML

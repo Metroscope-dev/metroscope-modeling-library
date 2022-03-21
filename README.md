@@ -7,6 +7,9 @@
     - [x] Créer template Issues
 - [x] Ecrire Units
 - [ ] Connecteurs + PartialTransportModel + BaseClasses (non medium-specific)
+    - [x] Connecteurs
+    - [x] PartialTransportModel
+    - [ ] BaseClasses (non medium-specific)
 - [ ] BoundaryConditions
 - [ ] Sensors
 - [ ] Créer Medium.WaterSteam, hériter les premières classes.
