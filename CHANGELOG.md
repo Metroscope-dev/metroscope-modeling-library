@@ -8,19 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+ - 📏 Fixed [#39](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/39) defined ./Units package, with all units defined in MML. 
 
 ### Changed
 
 ### Added
+ - Added ./Connectors/InputConnectors to consistently declare all inputs
+ - Added ./Constants package, to protect constants values and use them easily in the library
 
 ### Removed
+ - 🧹 Removed everything from previous MML
 
 ## [2.4] 2022-01-04
-
-### Fixed
-
-### Changed
-
-### Added
-
-### Removed
