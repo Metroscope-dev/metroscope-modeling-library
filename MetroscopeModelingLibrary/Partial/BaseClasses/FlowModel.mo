@@ -1,7 +1,6 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model FlowModel "PartialTransportModel with no flow or species variation"
   extends PartialTransport.PartialTransportModel(Q_in_0 = Q_0, Q_out_0 = Q_0);
-  import MetroscopeModelingLibrary.Connectors.InputConnectors;
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters

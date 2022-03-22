@@ -1,10 +1,5 @@
 within MetroscopeModelingLibrary.Partial;
 package BaseClasses
-  Connectors.FluidConnectors.FluidInlet C_in3(redeclare package Medium = Medium)
-                                                                                annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-64,-18},{-28,18}})));
-  Connectors.FluidConnectors.FluidOutlet C_out3(redeclare package Medium = Medium)
-                                                                                  annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{28,-16},{60,16}})));
-
   annotation (
   Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
           100}}), graphics={

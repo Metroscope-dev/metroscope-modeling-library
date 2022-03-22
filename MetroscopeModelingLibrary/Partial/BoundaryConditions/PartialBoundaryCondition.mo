@@ -2,18 +2,22 @@ within MetroscopeModelingLibrary.Partial.BoundaryConditions;
 partial model PartialBoundaryCondition
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Units.Inputs;
 
+  // Input Quantities
+  Inputs.InputSpecificEnthalpy h(start=1e5);
+  Inputs.InputPressure P(start=1e5);
+  Units.MassFlowRate Q(start=500);
+  Inputs.InputMassFraction Xi[Medium.nXi];
+
+  Units.VolumeFlowRate Qv(start=0.5);
+
+  // Computed quantities
   Units.Temperature T(start=300);
-  Units.SpecificEnthalpy h(start=1e5);
-  Units.MassFraction Xi[Medium.nXi];
   Medium.ThermodynamicState state;
 
-  // To be set by connector
-  Units.Pressure P(start=1e5);
-  Units.MassFlowRate Q(start=500);
-  Units.VolumeFlowRate Qv(start=0.1);
-
-  replaceable MetroscopeModelingLibrary.Connectors.FluidConnectors.FluidPort C;
+  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidPort C
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}), iconTransformation(extent={{-10,-10},{10,10}})));
 equation
   // Connector
   C.P = P;
@@ -22,16 +26,10 @@ equation
   // State
   state = Medium.setState_phX(P,h,Xi);
 
-  // Computed quantity
+  // Computed quantities
   T = Medium.temperature(state);
   Qv = Q / Medium.density(state);
-
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Ellipse(
-          extent={{-40,40},{40,-40}},
-          lineColor={0,0,255},
-          fillColor={255,255,0},
-          fillPattern=FillPattern.Solid,
-          lineThickness=1)}),             Diagram(coordinateSystem(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)),
+                                          Diagram(coordinateSystem(
           preserveAspectRatio=false)));
 end PartialBoundaryCondition;

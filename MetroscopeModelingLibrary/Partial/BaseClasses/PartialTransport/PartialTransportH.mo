@@ -2,6 +2,7 @@ within MetroscopeModelingLibrary.Partial.BaseClasses.PartialTransport;
 partial model PartialTransportH
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Partial.Connectors;
 
   // ------ Initialization parameters ------
   parameter Units.SpecificEnthalpy h_in_0 = 1e6;
@@ -13,8 +14,8 @@ partial model PartialTransportH
   Units.SpecificEnthalpy hm(start=hm_0) "Average specific enthalpy";
 
   // Connectors
-  Connectors.FluidConnectors.FluidInlet C_in(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-120,-20},{-80,20}})));
-  Connectors.FluidConnectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{80,-20},{120,20}})));
+  replaceable Connectors.FluidInlet C_in(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-120,-20},{-80,20}})));
+  replaceable Connectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{80,-20},{120,20}})));
 protected
   parameter Units.SpecificEnthalpy hm_0 = (h_in_0 + h_out_0)/2;
 equation
