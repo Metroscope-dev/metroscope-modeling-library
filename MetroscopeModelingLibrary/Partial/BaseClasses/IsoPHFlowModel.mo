@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
-model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
+partial model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
   extends FlowModel(P_in_0 = P_0, P_out_0 = P_0, h_in_0 = h_0, h_out_0 = h_0);
   import MetroscopeModelingLibrary.Units;
 
