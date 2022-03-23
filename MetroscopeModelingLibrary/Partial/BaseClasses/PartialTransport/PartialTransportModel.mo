@@ -1,17 +1,18 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses.PartialTransport;
 partial model PartialTransportModel "Basic fluid transport brick for all components"
-  replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
+  //replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Units.Inputs;
 
   // ------ Input Quantities ------
   // Enthalpies
-  extends PartialTransportH(Medium = Medium);
+  extends PartialTransportH(redeclare package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium);
   // Mass flow rate
-  extends PartialTransportQ(Medium = Medium);
+  extends PartialTransportQ(redeclare package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium);
   // Pressures
-  extends PartialTransportP(Medium = Medium);
+  extends PartialTransportP(redeclare package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium);
   // Mass fractions
-  extends PartialTransportXi(Medium = Medium);
+  extends PartialTransportXi(redeclare package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium);
 
 
   // ------ Computed Quantities ------
@@ -39,6 +40,7 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.DifferentialPressure DP(nominal=0, start=0); // Pressure Loss
   Units.Power W(nominal=0, start=0); // Heat Loss
   Units.MassFraction DXi[Medium.nXi] "species mass fraction variation in component";
+  //Inputs.InputMassFraction DXi[Medium.nXi] "species mass fraction variation in component";
 
 protected
   parameter Medium.ThermodynamicState statem_0 = Medium.setState_phX(Pm_0, hm_0, Xim_0);

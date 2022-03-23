@@ -1,7 +1,6 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model IsoHFlowModel
   extends FlowModel(h_in_0 = h_0, h_out_0 = h_0);
-  import MetroscopeModelingLibrary.Connectors.InputConnectors;
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters

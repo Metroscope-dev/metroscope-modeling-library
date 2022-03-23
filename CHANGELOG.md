@@ -23,7 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   And gathered all this PartialTransportX in one PartialTransportModel ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
  - Added initialization parameters (Q_in_0, P_out_0, etc.) ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
  - Added Base classes and checked locally balances ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
- - Added Sources and Sink
+ - Added Sources and Sink ([PR#71](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/71))
+ - Added WaterSteamMedium and WaterBaseClasses ([PR#72](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/72))
 
 ### Removed
  - In partial sources and sink, simplified models by **not** redefining in/out variables

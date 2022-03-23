@@ -11,8 +11,8 @@
     - [x] PartialTransportModel
     - [x] BaseClasses (non medium-specific)
 - [x] BoundaryConditions
+- [x] Créer Medium.WaterSteam, hériter les premières classes.
 - [ ] Sensors
-- [ ] Créer Medium.WaterSteam, hériter les premières classes.
     - [ ] Tester chaque classe
 - [ ] Créer Tests
 - [ ] Créer MoistAir et vérifier que le x est bien traité

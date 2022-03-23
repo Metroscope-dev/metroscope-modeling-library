@@ -1,2 +1,5 @@
 FluidConnectors
 InputConnectors
+FluidPort
+FluidInlet
+FluidOutlet
