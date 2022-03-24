@@ -4,17 +4,18 @@ package Constants "Stores all constants used in MML"
   import MetroscopeModelingLibrary.Units;
   // Temperature conversions
   final constant Units.Temperature T0_degC_in_K = 273.15;
-  final constant Units.Temperature T0_degC_in_degF = 32;
+  final constant Real T0_degC_in_degF(unit="degF") = 32;
   final constant Real degC_to_degF(unit="degF/degC") = 1.8;
 
   // Pressure conversions
-  final constant Real Pa_to_barA(unit="Pa/bar") = 1e-5;
-  final constant Real Pa_to_mbar(unit="Pa/mbar") = 1e-2;
-  final constant Real Pa_to_psi(unit="Pa/psi") = 0.000145038;
+  final constant Real Pa_to_barA(unit="bar/Pa") = 1e-5;
+  final constant Real Pa_to_mbar(unit="mbar/Pa") = 1e-2;
+  final constant Real Pa_to_psi(unit="1/Pa") = 0.000145038;
+  final constant Real P0_barG_in_barA(unit="bar") = 1;
 
   // Mass flow conversions
-  final constant Real kgs_to_th(unit="(ton/hour)/(kg/s)") = 3.6;
-  final constant Real kgs_to_lbs(unit="(ton/hour)/(kg/s)") = 0.453592428;
+  final constant Real kgs_to_th(unit="(t/hour)/(kg/s)") = 3.6;
+  final constant Real kgs_to_lbs(unit="(t/hour)/(kg/s)") = 0.453592428;
 
   // Atomic/Molecular masses
   final constant Units.AtomicMass m_H = 1.00798;
