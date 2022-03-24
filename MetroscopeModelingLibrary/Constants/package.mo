@@ -5,7 +5,7 @@ package Constants "Stores all constants used in MML"
   // Temperature conversions
   final constant Units.Temperature T0_degC_in_K = 273.15;
   final constant Units.Temperature T0_degC_in_degF = 32;
-  final constant Units.Temperature degC_to_degF(unit="degF/degC") = 1.8;
+  final constant Real degC_to_degF(unit="degF/degC") = 1.8;
 
   // Pressure conversions
   final constant Real Pa_to_barA(unit="Pa/bar") = 1e-5;
