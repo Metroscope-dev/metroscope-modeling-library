@@ -3,26 +3,29 @@ package WaterSteam
 
   model WaterPressureSensor
     package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-    extends Partial.Sensors.PressureSensor(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterFluidInlet C_in,
-                                           redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterFluidOutlet C_out,
-                                           redeclare package Medium = WaterSteamMedium);
+    extends Partial.Sensors.PressureSensor(
+      redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
+      redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
+      redeclare package Medium = WaterSteamMedium);
 
     annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
   end WaterPressureSensor;
 
   model WaterTemperatureSensor
     package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-    extends Partial.Sensors.TemperatureSensor(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterFluidInlet C_in,
-                                              redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterFluidOutlet C_out,
-                                              redeclare package Medium = WaterSteamMedium);
+    extends Partial.Sensors.TemperatureSensor(
+      redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
+      redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
+      redeclare package Medium = WaterSteamMedium);
     annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
   end WaterTemperatureSensor;
 
   model WaterDeltaPressureSensor
     package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-    extends Partial.Sensors.DeltaPressureSensor(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterFluidInlet C_in,
-                                           redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterFluidOutlet C_out,
-                                           redeclare package Medium = WaterSteamMedium);
+    extends Partial.Sensors.DeltaPressureSensor(
+      redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
+      redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
+      redeclare package Medium = WaterSteamMedium);
     annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
   end WaterDeltaPressureSensor;
   annotation (Icon(graphics={

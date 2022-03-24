@@ -1,19 +1,51 @@
 within MetroscopeModelingLibrary.Partial.BoundaryConditions;
 partial model Sink
-  extends PartialBoundaryCondition(redeclare replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C);
+  replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
+
+  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Units.Inputs;
+
+  // Input Quantities
+  Inputs.InputSpecificEnthalpy h_in(start=1e5);
+  Inputs.InputMassFraction Xi_in[Medium.nXi];
+  Units.Pressure P_in(start=1e5);
+  Units.MassFlowRate Q_in(start=500);
+
+  Units.VolumeFlowRate Qv_in(start=0.5);
+
+  // Computed quantities
+  Units.Temperature T_in(start=300);
+  Medium.ThermodynamicState state_in;
+
+  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in
+    annotation (Placement(transformation(extent={{-62,-10},{-42,10}}),iconTransformation(extent={{-62,-10},{-42,10}})));
 equation
-  inStream(C.h_outflow) = h;
-  inStream(C.Xi_outflow) = Xi;
+  // Connector
+  C_in.P = P_in;
+  C_in.Q = Q_in;
+  inStream(C_in.h_outflow) = h_in;
+  inStream(C_in.Xi_outflow) = Xi_in;
+
+  // State
+  state_in = Medium.setState_phX(P_in,h_in,Xi_in);
+
+  // Computed quantities
+  T_in = Medium.temperature(state_in);
+  Qv_in = Q_in / Medium.density(state_in);
+
+  // No flow reversal in stream connector
+  C_in.h_outflow = 1e5; // Never used arbitrary value
+  C_in.Xi_outflow = zeros(Medium.nXi); // No flow reversal
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Line(points={{-40,0},{-12,0},{-26,10}}),
-        Line(points={{-26,-10},{-12,0}}),
+        Line(points={{-90,0},{-62,0},{-76,10}}),
+        Line(points={{-76,-10},{-62,0}}),
         Ellipse(
-          extent={{8,60},{128,-60}},
+          extent={{-40,60},{80,-60}},
           lineColor={0,0,0},
           fillColor={0,0,0},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{18,50},{118,-50}},
+          extent={{-30,50},{70,-50}},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0})}),             Diagram(coordinateSystem(

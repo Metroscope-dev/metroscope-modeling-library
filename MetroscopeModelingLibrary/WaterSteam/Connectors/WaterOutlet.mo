@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.WaterSteam.Connectors;
-connector WaterFluidOutlet
+connector WaterOutlet
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
   extends Partial.Connectors.FluidOutlet(redeclare package Medium = WaterSteamMedium);
-end WaterFluidOutlet;
+end WaterOutlet;

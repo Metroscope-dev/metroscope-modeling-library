@@ -6,7 +6,7 @@ partial model FlowModel "PartialTransportModel with no flow or species variation
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_0 = 100;
-  parameter Units.MassFraction Xi_0 = 100;
+  parameter Units.MassFraction Xi_0[Medium.nXi] = zeros(Medium.nXi);
 
   // Input Quantity
   Units.MassFlowRate Q(start=Q_0) "Component mass flow rate";
