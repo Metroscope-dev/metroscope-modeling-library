@@ -4,7 +4,6 @@ partial model PressureSensor
   extends Partial.BaseClasses.IsoPHFlowModel annotation(IconMap(primitivesVisible=false));
 
   import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
   import MetroscopeModelingLibrary.Constants;
 
   //Inputs.InputPressure P_in;

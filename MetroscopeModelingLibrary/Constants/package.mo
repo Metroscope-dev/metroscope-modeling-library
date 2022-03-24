@@ -14,8 +14,8 @@ package Constants "Stores all constants used in MML"
   final constant Real P0_barG_in_barA(unit="bar") = 1;
 
   // Mass flow conversions
-  final constant Real kgs_to_th(unit="(t/hour)/(kg/s)") = 3.6;
-  final constant Real kgs_to_lbs(unit="(t/hour)/(kg/s)") = 0.453592428;
+  final constant Real kgs_to_th(unit="(1/h)/(kg/s)") = 3.6;
+  final constant Real kgs_to_lbs(unit="(1/h)/(kg/s)") = 0.453592428;
 
   // Atomic/Molecular masses
   final constant Units.AtomicMass m_H = 1.00798;

@@ -6,7 +6,6 @@ partial model DeltaPressureSensor
   replaceable Partial.Connectors.FluidInlet C_in(redeclare package Medium = Medium);
   replaceable Partial.Connectors.FluidOutlet C_out(redeclare package Medium = Medium);
 
-  import MetroscopeModelingLibrary.Units.Inputs;
   Units.DifferentialPressure DP;
   Real DP_bar; // Pressure difference in bar
   Real DP_mbar; // Pressure difference in mbar
