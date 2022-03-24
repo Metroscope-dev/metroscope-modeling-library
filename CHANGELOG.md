@@ -19,12 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Added Units ([PR#68](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/68))
  - Added ./Connectors/InputConnectors to consistently declare all inputs ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
  - Added ./Constants package, to protect constants values and use them easily in the library ([PR#69](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/69))
- - Added ./PartialTransport package, in which are implemented PartialTransportX.mo, where X is among h, P, Q, Xi, quantities that flow through the component.
+ - Added ./PartialTransport package, in which are implemented PartialTransportX.mo, where X is among h, P, Q, Xi, quantities that flow through the component. Redisgned this into only one PartialTransportModel model ([PR#73](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/73)), fixing [#73](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/73)
   And gathered all this PartialTransportX in one PartialTransportModel ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
  - Added initialization parameters (Q_in_0, P_out_0, etc.) ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
  - Added Base classes and checked locally balances ([PR#70](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/70))
  - Added Sources and Sink ([PR#71](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/71))
  - Added WaterSteamMedium and WaterBaseClasses ([PR#72](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/72))
+ - Added first Partial sensors and inherited them into Sensors/WaterSteam ([PR#73](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/73))
 
 ### Removed
  - In partial sources and sink, simplified models by **not** redefining in/out variables
