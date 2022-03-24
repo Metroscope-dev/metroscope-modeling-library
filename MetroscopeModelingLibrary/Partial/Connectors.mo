@@ -10,24 +10,25 @@ partial package Connectors
     Units.Pressure P(start=1e5);
     stream Units.SpecificEnthalpy h_outflow(start=1e5);
     stream Medium.MassFraction Xi_outflow[Medium.nXi];
+
     annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
   end FluidPort;
 
   partial connector FluidInlet
-    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(Q(min=0, start=500));
-                                                                                 // Q into component is positive
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(Q(min=0, start=500)); // Q into component is positive
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false),
+        graphics={
           Rectangle(
             extent={{-100,100},{100,-100}},
             lineColor={28,108,200},
             lineThickness=1,
             fillColor={28,108,200},
-            fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)));
+            fillPattern=FillPattern.Solid)}),
+          Diagram(coordinateSystem(preserveAspectRatio=false)));
   end FluidInlet;
 
   partial connector FluidOutlet
-    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(Q(max=0, start=-500));
-                                                                                  // Q out of component is negative
+    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(Q(max=0, start=-500)); // Q out of component is negative
     annotation (Icon(coordinateSystem(extent={{80,-100},{100,-80}}),
                      graphics={
           Rectangle(

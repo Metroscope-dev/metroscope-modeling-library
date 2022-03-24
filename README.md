@@ -12,8 +12,7 @@
     - [x] BaseClasses (non medium-specific)
 - [x] BoundaryConditions
 - [x] Créer Medium.WaterSteam, hériter les premières classes.
-- [ ] Sensors
-    - [ ] Tester chaque classe
+- [x] Sensors
 - [ ] Créer Tests
 - [ ] Créer MoistAir et vérifier que le x est bien traité
 - [ ] Construire Pipes + Tests

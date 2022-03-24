@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Partial.BaseClasses.PartialTransport;
+within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model PartialTransportModel "Basic fluid transport brick for all components"
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
@@ -8,6 +8,8 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   // Enthalpies
   parameter Units.SpecificEnthalpy h_in_0 = 1e6;
   parameter Units.SpecificEnthalpy h_out_0 = 1e6;
+  parameter Units.Temperature T_in_0 = 300;
+  parameter Units.Temperature T_out_0 = 300;
   // Mass Flow Rate
   parameter Units.MassFlowRate Q_in_0 = 100;
   parameter Units.MassFlowRate Q_out_0 = - Q_in_0;
@@ -17,7 +19,6 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   // Mass fractions
   parameter Units.MassFraction Xi_in_0[Medium.nXi] = zeros(Medium.nXi);
   parameter Units.MassFraction Xi_out_0[Medium.nXi] = zeros(Medium.nXi);
-
 
   // ------ Input Quantities ------
   // Enthalpies
@@ -38,7 +39,6 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.MassFraction Xim[Medium.nXi](start=Xim_0) "Outlet species mass fraction";
   //extends PartialTransportXi(redeclare package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium);
 
-
   // ------ Computed Quantities ------
   // Densities
   Units.Density rho_in(start=998) "Inlet Fluid density";
@@ -51,15 +51,13 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.VolumeFlowRate Qvm(start=0.1) "Mean volume flow rate";
 
   // Temperatures
-  Units.Temperature T_in(start=290) "Fluid temperature";
-  Units.Temperature T_out(start=291) "Fluid temperature";
-  Units.Temperature Tm(start=290) "Fluid temperature";
-
+  Units.Temperature T_in(start=T_in_0) "Fluid temperature";
+  Units.Temperature T_out(start=T_out_0) "Fluid temperature";
+  Units.Temperature Tm(start=Tm_0) "Fluid temperature";
 
   // ------ States ------
   Medium.ThermodynamicState state_in;
   Medium.ThermodynamicState state_out;
-
 
   // ------ Conservation variables ------
   Units.MassFlowRate DM(nominal=0, start=0); // Mass Loss
@@ -72,6 +70,7 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   replaceable Connectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{80,-20},{120,20}})));
 protected
   parameter Units.SpecificEnthalpy hm_0 = (h_in_0 + h_out_0)/2;
+  parameter Units.Temperature Tm_0 = (T_in_0 + T_out_0)/2;
   parameter Units.MassFlowRate Qm_0 = (Q_in_0 + Q_out_0)/2;
   parameter Units.Pressure Pm_0 = (P_in_0 + P_out_0)/2;
   parameter Units.MassFraction Xim_0[Medium.nXi] = (Xi_in_0 + Xi_out_0)/2;
