@@ -1,5 +1,7 @@
-within MetroscopeModelingLibrary.Sensors;
-package WaterSteam
+within MetroscopeModelingLibrary.Media;
+package MoistAirMedium
+  extends Modelica.Media.Air.MoistAir;
+
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
@@ -17,4 +19,4 @@ package WaterSteam
           pattern=LinePattern.None,
           fillPattern=FillPattern.Sphere,
           extent={{-60,-60},{60,60}})}));
-end WaterSteam;
+end MoistAirMedium;

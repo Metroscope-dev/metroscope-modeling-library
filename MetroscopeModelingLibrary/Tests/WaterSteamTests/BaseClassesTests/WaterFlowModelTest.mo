@@ -14,8 +14,10 @@ equation
   waterPressureSensor.P = 1e5;
   waterFlowSensor.Q = 100;
 
+  //waterSink.C_in.h_outflow = 0;
+
   assert(abs(waterSink.Q_in + waterSource.Q_out) <= 1e-5, "In flow model, DM should be 0");
-  connect(waterFlowModel.C_out, waterSink.C_in) annotation (Line(points={{57,-0.23},{57,0},{71.08,0}},color={28,108,200}));
+  connect(waterFlowModel.C_out, waterSink.C_in) annotation (Line(points={{57,-0.23},{57,0},{71.5,0}}, color={28,108,200}));
   connect(waterSource.C_out, waterPressureSensor.C_in) annotation (Line(points={{-71.64,0},{-71.64,-0.1},{-60,-0.1}}, color={28,108,200}));
   connect(waterPressureSensor.C_out, waterFlowSensor.C_in) annotation (Line(points={{-40,-0.1},{-24,-0.1}}, color={28,108,200}));
   connect(waterFlowModel.C_in, waterFlowSensor.C_out) annotation (Line(points={{11,-0.23},{8,-0.23},{8,-0.1},{-4,-0.1}}, color={28,108,200}));

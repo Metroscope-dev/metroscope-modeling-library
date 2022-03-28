@@ -11,11 +11,10 @@ partial model FluidSource
   parameter Units.Pressure P_out_0 = 1e5;
   parameter Units.MassFlowRate Q_out_0 = 500;
 
-  parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0 / Medium.density;
+  parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0 / 1000;
 
   // Computed quantities
   parameter Units.Temperature T_out_0 = 300;
-  parameter Medium.ThermodynamicState state_out_0 = Medium.setState_phX(P_out_0, h_out_0, Xi_out_0);
 
 
   // Input Quantities
@@ -28,7 +27,7 @@ partial model FluidSource
 
   // Computed quantities
   Units.Temperature T_out(start=T_out_0);
-  Medium.ThermodynamicState state_out(start=state_out_0);
+  Medium.ThermodynamicState state_out;
 
   replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidOutlet C_out
     annotation (Placement(transformation(extent={{34,-10},{54,10}}),  iconTransformation(extent={{34,-10},{54,10}})));

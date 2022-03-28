@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Added WaterSteamMedium and WaterBaseClasses ([PR#72](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/72))
  - Added first Partial sensors and inherited them into Sensors/WaterSteam ([PR#73](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/73))
  - Added WaterSteam/BaseClasses/Tests ([PR#76](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/76))
+ - Added Moist air package, inherited classes and added tests ([PR#78](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/78))
 
 ### Removed
  - In partial sources and sink, simplified models by **not** redefining in/out variables
