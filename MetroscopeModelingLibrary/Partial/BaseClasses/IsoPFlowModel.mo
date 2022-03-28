@@ -9,9 +9,6 @@ partial model IsoPFlowModel "Flow model with no pressure variation"
 
   // Input Quantity
   Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
-
-  // Balance inputs
-  Inputs.InputPower FlowModel_W(nominal=0, start=0);
 equation
   // Input Quantity
   P = P_in;

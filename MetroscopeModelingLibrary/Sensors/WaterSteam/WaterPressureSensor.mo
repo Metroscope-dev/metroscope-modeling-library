@@ -1,8 +1,10 @@
-within MetroscopeModelingLibrary.WaterSteam.BaseClasses;
-model WaterIsoPHFlowModel
+within MetroscopeModelingLibrary.Sensors.WaterSteam;
+model WaterPressureSensor
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  extends Partial.BaseClasses.IsoPHFlowModel(
+  extends Partial.Sensors.PressureSensor(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
     redeclare package Medium = WaterSteamMedium);
-end WaterIsoPHFlowModel;
+
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+end WaterPressureSensor;

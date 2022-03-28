@@ -3,3 +3,4 @@ InformationSensorIcon
 TemperatureSensor
 PressureSensor
 DeltaPressureSensor
+FlowSensor

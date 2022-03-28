@@ -66,8 +66,8 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.MassFraction DXi[Medium.nXi] "species mass fraction variation in component";
 
   // ------ Connectors ------
-  replaceable Connectors.FluidInlet C_in(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-120,-20},{-80,20}})));
-  replaceable Connectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{80,-20},{120,20}})));
+  replaceable Connectors.FluidInlet C_in(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-120,-21},{-80,19}})));
+  replaceable Connectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{80,-21},{120,19}})));
 protected
   parameter Units.SpecificEnthalpy hm_0 = (h_in_0 + h_out_0)/2;
   parameter Units.Temperature Tm_0 = (T_in_0 + T_out_0)/2;
