@@ -1,9 +1,6 @@
 within MetroscopeModelingLibrary.Tests;
 package WaterSteamTests
 
-
-
-
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
