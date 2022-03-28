@@ -2,6 +2,8 @@ within MetroscopeModelingLibrary;
 package Constants "Stores all constants used in MML"
   extends Modelica.Icons.Package;
   import MetroscopeModelingLibrary.Units;
+  // Gravity
+  final constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
   // Temperature conversions
   final constant Units.Temperature T0_degC_in_K = 273.15;
   final constant Real T0_degC_in_degF(unit="degF") = 32;

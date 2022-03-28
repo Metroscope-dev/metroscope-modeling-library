@@ -15,14 +15,14 @@ partial package Connectors
 
   partial connector FluidInlet
     extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(Q(min=0, start=500)); // Q into component is positive
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false),
+    annotation (Icon(coordinateSystem(preserveAspectRatio=true),
         graphics={
           Rectangle(
             extent={{-100,100},{100,-100}},
             lineColor={255,255,255},
             fillColor={28,108,200},
             fillPattern=FillPattern.Solid)}),
-          Diagram(coordinateSystem(preserveAspectRatio=false)));
+          Diagram(coordinateSystem(preserveAspectRatio=true)));
   end FluidInlet;
 
   partial connector FluidOutlet
