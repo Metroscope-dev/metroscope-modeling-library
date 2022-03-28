@@ -5,16 +5,28 @@ partial model FluidSink
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
-  // Input Quantities
-  Inputs.InputSpecificEnthalpy h_in(start=1e5);
-  Inputs.InputMassFraction Xi_in[Medium.nXi];
-  Units.Pressure P_in(start=1e5);
-  Units.MassFlowRate Q_in(start=500);
+    // Initialization parameters
+  parameter Units.SpecificEnthalpy h_in_0 = 1e6;
+  parameter Units.MassFraction Xi_in_0[Medium.nXi] = zeros(Medium.nXi);
+  parameter Units.Pressure P_in_0 = 1e5;
+  parameter Units.MassFlowRate Q_in_0 = 500;
 
-  Units.VolumeFlowRate Qv_in(start=0.5);
+  parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0 / 1000;
 
   // Computed quantities
-  Units.Temperature T_in(start=300);
+  parameter Units.Temperature T_in_0 = 300;
+
+
+  // Input Quantities
+  Inputs.InputSpecificEnthalpy h_in(start=h_in_0);
+  Inputs.InputMassFraction Xi_in[Medium.nXi](start=Xi_in_0);
+  Inputs.InputPressure P_in(start=P_in_0);
+  Units.MassFlowRate Q_in(start=Q_in_0);
+
+  Units.VolumeFlowRate Qv_in(start=Qv_in_0);
+
+  // Computed quantities
+  Units.Temperature T_in(start=T_in_0);
   Medium.ThermodynamicState state_in;
 
   replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in

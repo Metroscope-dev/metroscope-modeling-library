@@ -5,17 +5,30 @@ partial model FluidSource
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
-  // Input Quantities
-  Inputs.InputSpecificEnthalpy h_out(start=1e5);
-  Inputs.InputMassFraction Xi_out[Medium.nXi];
-  Inputs.InputPressure P_out(start=1e5);
-  Units.MassFlowRate Q_out(start=500);
+  // Initialization parameters
+  parameter Units.SpecificEnthalpy h_out_0 = 1e6;
+  parameter Units.MassFraction Xi_out_0[Medium.nXi] = zeros(Medium.nXi);
+  parameter Units.Pressure P_out_0 = 1e5;
+  parameter Units.MassFlowRate Q_out_0 = 500;
 
-  Units.VolumeFlowRate Qv_out(start=0.5);
+  parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0 / Medium.density;
 
   // Computed quantities
-  Units.Temperature T_out(start=300);
-  Medium.ThermodynamicState state_out;
+  parameter Units.Temperature T_out_0 = 300;
+  parameter Medium.ThermodynamicState state_out_0 = Medium.setState_phX(P_out_0, h_out_0, Xi_out_0);
+
+
+  // Input Quantities
+  Inputs.InputSpecificEnthalpy h_out(start=h_out_0);
+  Inputs.InputMassFraction Xi_out[Medium.nXi](start=Xi_out_0);
+  Inputs.InputPressure P_out(start=P_out_0);
+  Units.MassFlowRate Q_out(start=Q_out_0);
+
+  Units.VolumeFlowRate Qv_out(start=Qv_out_0);
+
+  // Computed quantities
+  Units.Temperature T_out(start=T_out_0);
+  Medium.ThermodynamicState state_out(start=state_out_0);
 
   replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidOutlet C_out
     annotation (Placement(transformation(extent={{34,-10},{54,10}}),  iconTransformation(extent={{34,-10},{54,10}})));
