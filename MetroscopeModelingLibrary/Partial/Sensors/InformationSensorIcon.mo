@@ -12,5 +12,5 @@ partial model InformationSensorIcon
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+          pattern=LinePattern.None)}), Diagram(coordinateSystem(preserveAspectRatio=true)));
 end InformationSensorIcon;

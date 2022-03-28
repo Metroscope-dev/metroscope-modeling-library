@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial.BoundaryConditions;
-partial model Sink
+partial model FluidSink
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
   import MetroscopeModelingLibrary.Units;
@@ -40,14 +40,17 @@ equation
         Line(points={{-90,0},{-62,0},{-76,10}}),
         Line(points={{-76,-10},{-62,0}}),
         Ellipse(
-          extent={{-40,60},{80,-60}},
+          extent={{-41,59},{79,-61}},
           lineColor={0,0,0},
-          fillColor={0,0,0},
+          fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-30,50},{70,-50}},
+          extent={{-31,49},{69,-51}},
+          lineColor={0,0,0},
           fillColor={255,255,255},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0})}),             Diagram(coordinateSystem(
+          fillPattern=FillPattern.Solid),
+        Line(points={{-16,34},{54,-36}}, color={0,0,0}),
+        Line(points={{-16,-36},{54,34}}, color={0,0,0})}),
+                                            Diagram(coordinateSystem(
           preserveAspectRatio=false)));
-end Sink;
+end FluidSink;

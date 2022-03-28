@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model TemperatureSensor
   extends Partial.BaseClasses.IsoPHFlowModel annotation(IconMap(primitivesVisible=false));
-  extends FluidSensorIcon annotation(primitivesVisible=false);
+  extends FluidSensorIcon;
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Constants;
