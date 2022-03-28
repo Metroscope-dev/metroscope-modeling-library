@@ -13,7 +13,7 @@
 - [x] BoundaryConditions
 - [x] Créer Medium.WaterSteam, hériter les premières classes.
 - [x] Sensors
-- [ ] Créer Tests
+- [x] Créer Tests
 - [ ] Créer MoistAir et vérifier que le x est bien traité
 - [ ] Construire Pipes + Tests
     - [ ] Partial.Pipes
