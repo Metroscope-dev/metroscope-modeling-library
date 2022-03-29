@@ -4,28 +4,36 @@ package Pipes
   model SteamExtractionSplitterTest
     WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter annotation (Placement(transformation(extent={{-27,-26.6667},{27,21.3333}})));
     WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
+    WaterSteam.BoundaryConditions.WaterSink main_sink annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=0,
+          origin={90,-5.55112e-16})));
+    Sensors.WaterSteam.WaterPressureSensor inlet_pressure_sensor annotation (Placement(transformation(extent={{-76,-6},{-64,6}})));
+    Sensors.WaterSteam.WaterFlowSensor inlet_flow_sensor annotation (Placement(transformation(extent={{-56,-6},{-44,6}})));
     WaterSteam.BoundaryConditions.WaterSink extraction_sink annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
+          rotation=-90,
+          origin={0,-70})));
+    Sensors.WaterSteam.WaterFlowSensor extracted_flow_sensor annotation (Placement(transformation(
+          extent={{-6,-6},{6,6}},
           rotation=270,
-          origin={0,-67.3333})));
-    Sensors.WaterSteam.WaterPressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-76,-6},{-64,6}})));
-    Sensors.WaterSteam.WaterFlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-56,-6},{-44,6}})));
-    WaterSteam.BoundaryConditions.WaterSink main_sink annotation (Placement(transformation(extent={{80,-10},{100,10}})));
+          origin={0,-50})));
   equation
     source.h_out = 2.65e6;
-    source.P_out = 2.64e6;
-    source.Q_out = -1900;
+
+    inlet_pressure_sensor.P_barA = 2.64;
+    inlet_flow_sensor.Q = 1900;
 
     steamExtractionSplitter.alpha = 1;
     steamExtractionSplitter.x_in = 0.8;
 
-    extraction_sink.Q_in = 122;
-    connect(steamExtractionSplitter.C_main_out, main_sink.C_in) annotation (Line(points={{28.62,-3.33333e-05},{28,-3.33333e-05},{28,0},{86,0},{86,9e-06},{85,9e-06}},
-                                                                                                                                                            color={28,108,200}));
-    connect(steamExtractionSplitter.C_ext_out, extraction_sink.C_in) annotation (Line(points={{0,-18.1334},{8.88178e-16,-18.1334},{8.88178e-16,-62.3333}}, color={28,108,200}));
-    connect(waterPressureSensor.C_in, source.C_out) annotation (Line(points={{-76,-0.06},{-80,-0.06},{-80,0},{-85.6,0}}, color={28,108,200}));
-    connect(steamExtractionSplitter.C_in, waterFlowSensor.C_out) annotation (Line(points={{-28.62,-3.33333e-05},{-44.8,-3.33333e-05},{-44.8,-0.06},{-44,-0.06}}, color={28,108,200}));
-    connect(waterFlowSensor.C_in, waterPressureSensor.C_out) annotation (Line(points={{-56,-0.06},{-58,-0.06},{-58,-0.06},{-64,-0.06}}, color={28,108,200}));
+    extracted_flow_sensor.Q = 122;
+    connect(inlet_pressure_sensor.C_in, source.C_out) annotation (Line(points={{-76,-0.06},{-80,-0.06},{-80,0},{-85.6,0}}, color={28,108,200}));
+    connect(steamExtractionSplitter.C_in, inlet_flow_sensor.C_out) annotation (Line(points={{-28.62,-3.33333e-05},{-44.8,-3.33333e-05},{-44.8,-0.06},{-44,-0.06}}, color={28,108,200}));
+    connect(inlet_flow_sensor.C_in, inlet_pressure_sensor.C_out) annotation (Line(points={{-56,-0.06},{-64,-0.06}}, color={28,108,200}));
+    connect(main_sink.C_in, steamExtractionSplitter.C_main_out) annotation (Line(points={{85,0},{56,0},{56,-3.33333e-05},{28.62,-3.33333e-05}}, color={28,108,200}));
+    connect(steamExtractionSplitter.C_ext_out, extracted_flow_sensor.C_in) annotation (Line(points={{0,-18.1334},{0,-41.5667},{-0.06,-41.5667},{-0.06,-44}}, color={28,108,200}));
+    connect(extracted_flow_sensor.C_out, extraction_sink.C_in) annotation (Line(points={{-0.06,-56},{-0.06,-60.5},{8.88178e-16,-60.5},{8.88178e-16,-65}}, color={28,108,200}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Ellipse(lineColor = {75,138,73},
                   fillColor={255,255,255},

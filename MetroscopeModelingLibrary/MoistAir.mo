@@ -6,8 +6,8 @@ package MoistAir
     model MoistAirSource
       package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
       extends Partial.BoundaryConditions.FluidSource(h_out_0=300, Xi_out_0={MoistAirMedium.massFraction_pTphi(P_out_0, T_out_0, relative_humidity_0)},
-                                                redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirOutlet C_out,
-                                                redeclare package Medium = MoistAirMedium);
+                                                     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirOutlet C_out,
+                                                     redeclare package Medium = MoistAirMedium);
 
       parameter Real relative_humidity_0(min=0, max=1) = 0.1;
       Real relative_humidity(start=relative_humidity_0, min=0, max=1);

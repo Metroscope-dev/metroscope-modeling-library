@@ -9,15 +9,15 @@ partial model FluidSink
   parameter Units.SpecificEnthalpy h_in_0 = 1e6;
   parameter Units.MassFraction Xi_in_0[Medium.nXi] = zeros(Medium.nXi);
   parameter Units.Pressure P_in_0 = 1e5;
-  parameter Units.MassFlowRate Q_in_0 = 500;
+  parameter Units.InletMassFlowRate Q_in_0 = 500;
   parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0 / 1000;
   parameter Units.Temperature T_in_0 = 300;
 
 
   // Input Quantities
-  Inputs.InputSpecificEnthalpy h_in(start=h_in_0);
+  Units.SpecificEnthalpy h_in(start=h_in_0);
   Inputs.InputMassFraction Xi_in[Medium.nXi](start=Xi_in_0);
-  Inputs.InputPressure P_in(start=P_in_0);
+  Units.Pressure P_in(start=P_in_0);
   Units.MassFlowRate Q_in(min=0, start=Q_in_0, nominal=Q_in_0);
   Units.VolumeFlowRate Qv_in(min=0, start=Qv_in_0, nominal=Qv_in_0);
 
@@ -25,7 +25,7 @@ partial model FluidSink
   Units.Temperature T_in(start=T_in_0);
   Medium.ThermodynamicState state_in;
 
-  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in
+  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in(Q(start=Q_in_0, nominal=Q_in_0), P(start=P_in_0, nominal=P_in_0))
     annotation (Placement(transformation(extent={{-62,-10},{-42,10}}),iconTransformation(extent={{-60,-10},{-40,10}})));
 equation
   // Connector

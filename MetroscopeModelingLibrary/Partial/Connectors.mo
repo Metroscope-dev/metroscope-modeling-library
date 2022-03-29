@@ -14,17 +14,10 @@ partial package Connectors
   end FluidPort;
 
   partial connector FluidInlet
-    // Initialization parameters
-    parameter Units.InletMassFlowRate Q_in_0=100;
-    parameter Units.Pressure P_in_0=1e5;
-    parameter Units.SpecificEnthalpy h_outflow_0=1e5;
-
     import MetroscopeModelingLibrary.Units;
     replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
 
-    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(redeclare Units.InletMassFlowRate Q(start=Q_in_0, nominal=Q_in_0),
-                                                                   P(start=P_in_0, nominal=P_in_0),
-                                                                   h_outflow(start=h_outflow_0, nominal=h_outflow_0)); // Q out of component is negative
+    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(redeclare Units.InletMassFlowRate Q(start=500, nominal=500)); // Q out of component is negative
     annotation (Icon(coordinateSystem(preserveAspectRatio=true),
         graphics={
           Rectangle(
@@ -36,17 +29,10 @@ partial package Connectors
   end FluidInlet;
 
   partial connector FluidOutlet
-    // Initialization parameters
-    parameter Units.InletMassFlowRate Q_out_0=100;
-    parameter Units.Pressure P_out_0=1e5;
-    parameter Units.SpecificEnthalpy h_outflow_0=0;
-
     import MetroscopeModelingLibrary.Units;
     replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
 
-    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(redeclare Units.OutletMassFlowRate Q(start=Q_out_0, nominal=Q_out_0),
-                                                                   P(start=P_out_0, nominal=P_out_0),
-                                                                   h_outflow(start=h_outflow_0, nominal=h_outflow_0)); // Q out of component is negative
+    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(redeclare Units.OutletMassFlowRate Q(start=-500, nominal=-500)); // Q out of component is negative
     annotation (Icon(coordinateSystem(extent={{-100,-100},{100,100}}),
                      graphics={
           Rectangle(
