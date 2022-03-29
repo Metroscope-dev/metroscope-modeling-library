@@ -36,8 +36,8 @@ package Pipes
           origin={0,-30})));
     WaterSteam.BaseClasses.WaterIsoPFlowModel mainFlow(Q_0=Q_main_0, P_0=P_0) annotation (Placement(transformation(extent={{31,-27},{81,27}})));
 
-    Connectors.WaterOutlet C_main_out(Q(start=Q_main_0), P(start=P_0)) annotation (Placement(transformation(extent={{96,-10},{116,10}}), iconTransformation(extent={{96,-10},{116,10}})));
     Connectors.WaterInlet C_in(Q(start=Q_in_0), P(start=P_0)) annotation (Placement(transformation(extent={{-116,-10},{-96,10}}), iconTransformation(extent={{-116,-10},{-96,10}})));
+    Connectors.WaterOutlet C_main_out(Q(start=Q_main_0), P(start=P_0)) annotation (Placement(transformation(extent={{96,-10},{116,10}}), iconTransformation(extent={{96,-10},{116,10}})));
     Connectors.WaterOutlet C_ext_out(Q(start=-Q_ext_0), P(start=P_0)) annotation (Placement(transformation(extent={{-10,-74},{10,-54}}), iconTransformation(extent={{-10,-78},{10,-58}})));
   protected
     parameter Units.SpecificEnthalpy hvsat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
@@ -48,7 +48,7 @@ package Pipes
     hesat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
     Q_in = inletFlow.Q;
     P = inletFlow.P;
-    h_in = inletFlow.h_in;
+    h_in = inletFlow.h;
 
     //Energy balance
     //inletFlow.W + extractedFlow.W + mainFlow.W = 0;

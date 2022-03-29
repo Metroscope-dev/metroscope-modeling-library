@@ -17,23 +17,22 @@ package Pipes
     Sensors.WaterSteam.WaterFlowSensor extracted_flow_sensor annotation (Placement(transformation(
           extent={{-6,-6},{6,6}},
           rotation=270,
-          origin={0,-50})));
+          origin={0,-44})));
   equation
     source.h_out = 2.65e6;
 
     inlet_pressure_sensor.P_barA = 2.64;
-    inlet_flow_sensor.Q = 1900;
+    inlet_flow_sensor.Q = 2000;
 
     steamExtractionSplitter.alpha = 1;
-    steamExtractionSplitter.x_in = 0.8;
 
-    extracted_flow_sensor.Q = 122;
+    extracted_flow_sensor.Q = 100;
     connect(inlet_pressure_sensor.C_in, source.C_out) annotation (Line(points={{-76,-0.06},{-80,-0.06},{-80,0},{-85.6,0}}, color={28,108,200}));
     connect(steamExtractionSplitter.C_in, inlet_flow_sensor.C_out) annotation (Line(points={{-28.62,-3.33333e-05},{-44.8,-3.33333e-05},{-44.8,-0.06},{-44,-0.06}}, color={28,108,200}));
     connect(inlet_flow_sensor.C_in, inlet_pressure_sensor.C_out) annotation (Line(points={{-56,-0.06},{-64,-0.06}}, color={28,108,200}));
     connect(main_sink.C_in, steamExtractionSplitter.C_main_out) annotation (Line(points={{85,0},{56,0},{56,-3.33333e-05},{28.62,-3.33333e-05}}, color={28,108,200}));
-    connect(steamExtractionSplitter.C_ext_out, extracted_flow_sensor.C_in) annotation (Line(points={{0,-18.1334},{0,-41.5667},{-0.06,-41.5667},{-0.06,-44}}, color={28,108,200}));
-    connect(extracted_flow_sensor.C_out, extraction_sink.C_in) annotation (Line(points={{-0.06,-56},{-0.06,-60.5},{8.88178e-16,-60.5},{8.88178e-16,-65}}, color={28,108,200}));
+    connect(steamExtractionSplitter.C_ext_out, extracted_flow_sensor.C_in) annotation (Line(points={{0,-18.1334},{0,-41.5667},{-0.06,-41.5667},{-0.06,-38}}, color={28,108,200}));
+    connect(extracted_flow_sensor.C_out, extraction_sink.C_in) annotation (Line(points={{-0.06,-50},{-0.06,-60.5},{8.88178e-16,-60.5},{8.88178e-16,-65}}, color={28,108,200}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Ellipse(lineColor = {75,138,73},
                   fillColor={255,255,255},
