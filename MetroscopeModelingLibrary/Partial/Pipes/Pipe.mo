@@ -51,5 +51,15 @@ equation
         Text(
           extent={{-46,37},{46,-37}},
           textColor={0,0,0},
-          textString="DP")}));
+          textString="DP"),
+        Line(
+          points={{-80,72},{-48,54},{0,48},{46,54},{80,72}},
+          color={28,108,200},
+          thickness=1,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{-80,-72},{-48,-54},{0,-48},{46,-54},{80,-72}},
+          color={28,108,200},
+          thickness=1,
+          smooth=Smooth.Bezier)}));
 end Pipe;

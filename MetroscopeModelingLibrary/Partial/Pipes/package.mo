@@ -23,7 +23,7 @@ partial package Pipes
         fillColor={255,255,255},
         fillPattern=FillPattern.Solid),
                                Rectangle(
-          extent={{-48,34},{48,-36}},
+          extent={{-48,33},{48,-37}},
           lineColor={0,0,255},
           fillColor={85,255,85},
           fillPattern=FillPattern.Solid),
@@ -32,5 +32,15 @@ partial package Pipes
         lineColor={215,215,215},
         fillColor={215,215,215},
         fillPattern=FillPattern.Solid,
-        rotation=45)}));
+        rotation=45),
+        Rectangle(
+          extent={{-62,11},{-36,-15}},
+          lineColor={28,108,200},
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid),
+        Rectangle(
+          extent={{36,10},{60,-14}},
+          lineColor={28,108,200},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid)}));
 end Pipes;

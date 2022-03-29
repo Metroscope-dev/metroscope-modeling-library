@@ -19,7 +19,7 @@ partial package Connectors
         graphics={
           Rectangle(
             extent={{-100,100},{100,-100}},
-            lineColor={255,255,255},
+            lineColor={28,108,200},
             fillColor={28,108,200},
             fillPattern=FillPattern.Solid)}),
           Diagram(coordinateSystem(preserveAspectRatio=true)));
