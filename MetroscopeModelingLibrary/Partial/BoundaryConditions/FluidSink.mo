@@ -18,8 +18,8 @@ partial model FluidSink
   Inputs.InputSpecificEnthalpy h_in(start=h_in_0);
   Inputs.InputMassFraction Xi_in[Medium.nXi](start=Xi_in_0);
   Inputs.InputPressure P_in(start=P_in_0);
-  Units.MassFlowRate Q_in(start=Q_in_0);
-  Units.VolumeFlowRate Qv_in(start=Qv_in_0);
+  Units.MassFlowRate Q_in(min=0, start=Q_in_0, nominal=Q_in_0);
+  Units.VolumeFlowRate Qv_in(min=0, start=Qv_in_0, nominal=Qv_in_0);
 
   // Computed quantities
   Units.Temperature T_in(start=T_in_0);

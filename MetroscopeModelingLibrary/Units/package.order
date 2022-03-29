@@ -12,6 +12,8 @@ GasDensity
 Height
 LiquidDensity
 MassFlowRate
+InletMassFlowRate
+OutletMassFlowRate
 MassFraction
 Temperature
 Power

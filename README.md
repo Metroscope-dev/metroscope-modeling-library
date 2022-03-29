@@ -15,8 +15,8 @@
 - [x] Sensors
 - [x] Créer Tests
 - [x] Créer MoistAir et vérifier que le x est bien traité
-- [ ] Construire Pipes + Tests
-    - [ ] Partial.Pipes
+- [x] Construire Pipes + Tests
+    - [x] Partial.Pipes
     - [ ] WaterSteam.Pipe
 - [ ] Autres types de composants + Tests
 - [ ] Examples

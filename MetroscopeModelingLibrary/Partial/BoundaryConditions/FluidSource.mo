@@ -38,6 +38,9 @@ equation
   C_out.h_outflow = h_out;
   C_out.Xi_outflow = Xi_out;
 
+  inStream(C_out.h_outflow) = 0;
+  inStream(C_out.Xi_outflow) = 0;
+
   // State
   state_out = Medium.setState_phX(P_out, h_out, Xi_out);
 

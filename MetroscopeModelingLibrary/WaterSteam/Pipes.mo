@@ -84,6 +84,27 @@ package Pipes
             textColor={28,108,200},
             textString="inlet")}));
   end SteamExtractionSplitter;
+
+  model WaterPipe
+    package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+    extends Partial.Pipes.Pipe(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
+                               redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
+                               redeclare package Medium = WaterSteamMedium);
+  end WaterPipe;
+
+  model WaterControlValve
+    package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+    extends Partial.Pipes.ControlValve(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
+                                            redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
+                                            redeclare package Medium = WaterSteamMedium);
+  end WaterControlValve;
+
+  model WaterHeatLoss
+    package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+    extends Partial.Pipes.HeatLoss(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
+                                        redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
+                                        redeclare package Medium = WaterSteamMedium);
+  end WaterHeatLoss;
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
