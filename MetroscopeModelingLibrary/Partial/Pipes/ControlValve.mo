@@ -7,7 +7,7 @@ partial model ControlValve
 
   Inputs.InputCv Cvmax(start=8005.42) "Maximum CV (active if mode_caract=0)";
   Units.Cv Cv(start=100) "Cv";
-  Modelica.Blocks.Interfaces.RealInput Opening(min=0., max=1.) annotation (Placement(
+  Modelica.Blocks.Interfaces.RealInput Opening(min=0., max=1., nominal=0.5) annotation (Placement(
         transformation(extent={{-20,-20},{20,20}},
         rotation=270,
         origin={0,174}),                              iconTransformation(

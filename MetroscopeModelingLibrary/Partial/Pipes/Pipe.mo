@@ -29,13 +29,7 @@ equation
           extent={{-100,20},{100,-20}},
           lineColor={0,0,255},
           fillColor={85,255,85},
-          fillPattern=FillPattern.Solid), Text(
-          extent={{-12,14},{16,-14}},
-          lineColor={0,0,255},
-          fillColor={85,255,85},
-          fillPattern=FillPattern.Solid,
-          textString=
-               "K")}),
+          fillPattern=FillPattern.Solid)}),
     Icon(coordinateSystem(
         preserveAspectRatio=true,
         extent={{-100,-100},{100,100}},
