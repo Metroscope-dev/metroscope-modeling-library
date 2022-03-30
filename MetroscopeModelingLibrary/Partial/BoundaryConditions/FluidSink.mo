@@ -45,13 +45,13 @@ equation
   C_in.h_outflow = 0; // Never used arbitrary value
   C_in.Xi_outflow = zeros(Medium.nXi); // No flow reversal
   annotation (Icon(coordinateSystem(preserveAspectRatio=true), graphics={
-        Line(points={{-90,0},{-62,0},{-76,10}}),
-        Line(points={{-76,-10},{-62,0}}),
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={0,0,0},
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
+        Line(points={{-90,0},{-62,0},{-76,10}}),
+        Line(points={{-76,-10},{-62,0}}),
         Ellipse(
           extent={{-30,50},{70,-50}},
           lineColor={0,0,0},

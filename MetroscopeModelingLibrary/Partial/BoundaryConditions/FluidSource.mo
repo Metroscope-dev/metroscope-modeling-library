@@ -29,7 +29,7 @@ partial model FluidSource
   Medium.ThermodynamicState state_out;
 
   replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidOutlet C_out(Q(start=Q_out_0), P(start=P_out_0))
-    annotation (Placement(transformation(extent={{34,-10},{54,10}}),  iconTransformation(extent={{34,-10},{54,10}})));
+    annotation (Placement(transformation(extent={{40,-10},{60,10}}),  iconTransformation(extent={{40,-10},{60,10}})));
 equation
   // Connector
   C_out.P = P_out;
@@ -45,11 +45,11 @@ equation
   Qv_out = Q_out / Medium.density(state_out);
   annotation (Icon(graphics={
         Ellipse(
-          extent={{-74,60},{46,-60}},
+          extent={{-80,60},{40,-60}},
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5,
           pattern=LinePattern.None),
-        Line(points={{42,0},{80,0},{66,10}}),
-        Line(points={{66,-10},{80,0}})}));
+        Line(points={{62,0},{100,0},{86,10}}),
+        Line(points={{86,-10},{100,0}})}));
 end FluidSource;
