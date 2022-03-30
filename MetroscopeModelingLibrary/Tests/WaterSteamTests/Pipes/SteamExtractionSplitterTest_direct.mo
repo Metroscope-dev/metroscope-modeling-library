@@ -6,10 +6,10 @@ model SteamExtractionSplitterTest_direct
   input Units.MassFlowRate source_Q(start=2000) "kg/s";
   input Units.MassFlowRate extracted_Q(start=100) "kg/s";
 
-  // Component parameters
+  // Input: Component parameters
   input Real alpha(start=0.8, min=0, max=1) "1";
 
-  // Observables
+  // Output: Observables
   output Units.SpecificEnthalpy main_h_out;
 
   // Components
@@ -38,10 +38,10 @@ equation
   source_Q_sensor.Q = source_Q;
   extracted_Q_sensor.Q = extracted_Q;
 
-  // Component parameters
+  // Input: Component parameters
   steamExtractionSplitter.alpha = alpha;
 
-  // Observables
+  // Output: Observables
   steamExtractionSplitter.mainFlow.h_out = main_h_out;
   connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-76,0},{-80,0},{-80,0},{-85.6,0}}, color={28,108,200}));
   connect(steamExtractionSplitter.C_in, source_Q_sensor.C_out) annotation (Line(points={{-28.62,-3.33333e-05},{-44.8,-3.33333e-05},{-44.8,0},{-44,0}}, color={28,108,200}));

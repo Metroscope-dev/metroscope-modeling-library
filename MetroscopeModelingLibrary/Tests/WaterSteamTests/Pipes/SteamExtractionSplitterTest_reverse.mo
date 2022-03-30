@@ -6,10 +6,10 @@ model SteamExtractionSplitterTest_reverse
   input Units.MassFlowRate source_Q(start=2000) "kg/s";
   input Units.MassFlowRate extracted_Q(start=100) "kg/s";
 
-  // Observables
+  // Input: Observables
   input Units.SpecificEnthalpy main_h_out(start=2.67e6);
 
-  // Component parameters
+  // Output: Component parameters
   output Real alpha(min=0, max=1) "1";
 
   // Components
@@ -38,11 +38,11 @@ equation
   source_Q_sensor.Q = source_Q;
   extracted_Q_sensor.Q = extracted_Q;
 
-  // Component parameters
-  steamExtractionSplitter.mainFlow.h_out = main_h_out;
-
-  // Observables
+  // Input: Observables
   steamExtractionSplitter.alpha = alpha;
+
+  // Output: Component parameters
+  steamExtractionSplitter.mainFlow.h_out = main_h_out;
 
   // Assertion
   assert(alpha <= 1 and alpha >= 0, "From model assertion error: alpha should be within 0 and 1");
