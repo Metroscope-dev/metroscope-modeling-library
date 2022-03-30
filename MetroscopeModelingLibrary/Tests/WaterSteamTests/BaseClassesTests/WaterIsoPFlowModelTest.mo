@@ -29,23 +29,5 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}}),
-     Rectangle(
-          extent={{22,-28},{84,-97}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid,
-          lineThickness=1),
-        Rectangle(
-          extent={{66,-46},{100,-80}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{4,-45},{40,-81}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}),                     Diagram(coordinateSystem(preserveAspectRatio=false)));
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterIsoPFlowModelTest;

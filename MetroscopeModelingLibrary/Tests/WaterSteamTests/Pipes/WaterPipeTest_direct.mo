@@ -52,35 +52,6 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}}),
-                               Rectangle(
-          extent={{14,-30},{88,-76}},
-          lineColor={0,0,255},
-          fillColor={85,255,85},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{25,-33.5},{77,-72.5}},
-          textColor={0,0,0},
-          textString="DP"),
-        Line(
-          points={{13,-12},{29,-22},{49,-28},{71,-22},{89,-12}},
-          color={28,108,200},
-          thickness=1,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{13,-94},{29,-84},{49,-78},{71,-84},{89,-94}},
-          color={28,108,200},
-          thickness=1,
-          smooth=Smooth.Bezier),
-        Rectangle(
-          extent={{2,-42},{22,-62}},
-          lineColor={28,108,200},
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{80,-44},{98,-62}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid)}),
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
                                 Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterPipeTest_direct;

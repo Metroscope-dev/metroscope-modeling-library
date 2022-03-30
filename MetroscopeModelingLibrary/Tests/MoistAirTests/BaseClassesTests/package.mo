@@ -20,23 +20,5 @@ package BaseClassesTests
           fillColor={78,138,73},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
-          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}}),
-     Rectangle(
-          extent={{16,-26},{78,-95}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid,
-          lineThickness=1),
-        Rectangle(
-          extent={{60,-44},{94,-78}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{-2,-43},{34,-79}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}));
+          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}));
 end BaseClassesTests;

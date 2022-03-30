@@ -41,38 +41,6 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}}),
-        Line(
-          points={{56,-20},{56,-20},{46,-30},{60,-40},{46,-54},{56,-62}},
-          color={238,46,47},
-          smooth=Smooth.Bezier,
-          thickness=0.5),
-        Line(
-          points={{70,-20},{70,-20},{60,-30},{74,-40},{60,-54},{70,-62}},
-          color={238,46,47},
-          smooth=Smooth.Bezier,
-          thickness=0.5),
-        Line(
-          points={{84,-20},{84,-20},{74,-30},{88,-40},{74,-54},{84,-62}},
-          color={238,46,47},
-          smooth=Smooth.Bezier,
-          thickness=0.5),      Rectangle(
-          extent={{40,-66},{90,-86}},
-          lineColor={0,0,255},
-          fillColor={85,255,85},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{52,-65.5},{80,-86.5}},
-          textColor={0,0,0},
-          textString="W"),
-        Rectangle(
-          extent={{34,-71},{44,-81}},
-          lineColor={28,108,200},
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{86,-71},{96,-81}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
+                                            Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterHeatLossTest;

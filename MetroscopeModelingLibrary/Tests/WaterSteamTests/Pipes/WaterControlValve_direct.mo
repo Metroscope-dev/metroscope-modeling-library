@@ -56,36 +56,6 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}}),
-        Polygon(
-          points={{26,-92},{60,-84},{26,-74},{26,-92},{26,-92}},
-          lineColor={0,0,255},
-          fillColor={127,255,0},
-          fillPattern=FillPattern.Solid),
-        Polygon(
-          points={{60,-84},{94,-74},{94,-92},{60,-84},{60,-84}},
-          lineColor={0,0,255},
-          fillColor={127,255,0},
-          fillPattern=FillPattern.Solid),
-        Polygon(
-          points={{60,-84},{78,-42},{44,-42},{60,-84}},
-          lineColor={0,0,255},
-          fillColor={127,255,0},
-          fillPattern=FillPattern.Solid),
-        Polygon(
-          points={{78,-42},{44,-42},{44,-28},{48,-20},{56,-16},{66,-16},{74,-20},{78,-28},{78,-42},{78,-28},{78,-28},{78,-42}},
-          lineColor={0,0,255},
-          fillColor={127,255,0},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{88,-78},{98,-88}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{22,-78},{32,-88}},
-          lineColor={28,108,200},
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}),
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
                                 Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterControlValve_direct;
