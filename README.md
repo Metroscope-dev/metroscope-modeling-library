@@ -1,12 +1,12 @@
 # TODO List
 
-- [ ] Setup Git
+- [x] Setup Git
     - [x] Créer la branche mml3-main
     - [x] Créer CHANGELOG.md
     - [x] Créer template PullRequest
     - [x] Créer template Issues
 - [x] Ecrire Units
-- [ ] Connecteurs + PartialTransportModel + BaseClasses (non medium-specific)
+- [x] Connecteurs + PartialTransportModel + BaseClasses (non medium-specific)
     - [x] Connecteurs
     - [x] PartialTransportModel
     - [x] BaseClasses (non medium-specific)
@@ -15,9 +15,9 @@
 - [x] Sensors
 - [x] Créer Tests
 - [x] Créer MoistAir et vérifier que le x est bien traité
-- [ ] Construire Pipes + Tests
-    - [ ] Partial.Pipes
-    - [ ] WaterSteam.Pipe
+- [x] Construire Pipes + Tests
+    - [x] Partial.Pipes
+    - [x] WaterSteam.Pipe
 - [ ] Autres types de composants + Tests
 - [ ] Examples
     - [ ] Metroscopia

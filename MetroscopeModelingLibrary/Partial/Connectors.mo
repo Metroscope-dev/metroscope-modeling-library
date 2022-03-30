@@ -6,7 +6,7 @@ partial package Connectors
     import MetroscopeModelingLibrary.Units;
     replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
 
-    flow Units.MassFlowRate Q(start=500);
+    replaceable flow Units.MassFlowRate Q constrainedby Units.MassFlowRate;
     Units.Pressure P(start=1e5);
     stream Units.SpecificEnthalpy h_outflow(start=1e5);
     stream Medium.MassFraction Xi_outflow[Medium.nXi];
@@ -14,19 +14,25 @@ partial package Connectors
   end FluidPort;
 
   partial connector FluidInlet
-    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(Q(min=0, start=500)); // Q into component is positive
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false),
+    import MetroscopeModelingLibrary.Units;
+    replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
+
+    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(redeclare Units.InletMassFlowRate Q(start=500, nominal=500)); // Q out of component is negative
+    annotation (Icon(coordinateSystem(preserveAspectRatio=true),
         graphics={
           Rectangle(
             extent={{-100,100},{100,-100}},
-            lineColor={255,255,255},
+            lineColor={28,108,200},
             fillColor={28,108,200},
             fillPattern=FillPattern.Solid)}),
-          Diagram(coordinateSystem(preserveAspectRatio=false)));
+          Diagram(coordinateSystem(preserveAspectRatio=true)));
   end FluidInlet;
 
   partial connector FluidOutlet
-    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(Q(max=0, start=-500)); // Q out of component is negative
+    import MetroscopeModelingLibrary.Units;
+    replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
+
+    extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(redeclare Units.OutletMassFlowRate Q(start=-500, nominal=-500)); // Q out of component is negative
     annotation (Icon(coordinateSystem(extent={{-100,-100},{100,100}}),
                      graphics={
           Rectangle(

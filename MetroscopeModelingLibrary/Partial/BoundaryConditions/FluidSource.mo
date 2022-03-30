@@ -9,8 +9,7 @@ partial model FluidSource
   parameter Units.SpecificEnthalpy h_out_0 = 1e6;
   parameter Units.MassFraction Xi_out_0[Medium.nXi] = zeros(Medium.nXi);
   parameter Units.Pressure P_out_0 = 1e5;
-  parameter Units.MassFlowRate Q_out_0 = 500;
-
+  parameter Units.OutletMassFlowRate Q_out_0 = -500;
   parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0 / 1000;
 
   // Computed quantities
@@ -21,15 +20,15 @@ partial model FluidSource
   Inputs.InputSpecificEnthalpy h_out(start=h_out_0);
   Inputs.InputMassFraction Xi_out[Medium.nXi](start=Xi_out_0);
   Inputs.InputPressure P_out(start=P_out_0);
-  Units.MassFlowRate Q_out(start=Q_out_0);
+  Units.MassFlowRate Q_out(max=0, start=Q_out_0, nominal=Q_out_0);
 
-  Units.VolumeFlowRate Qv_out(start=Qv_out_0);
+  Units.VolumeFlowRate Qv_out(max=0, start=Qv_out_0, nominal=Qv_out_0);
 
   // Computed quantities
   Units.Temperature T_out(start=T_out_0);
   Medium.ThermodynamicState state_out;
 
-  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidOutlet C_out
+  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidOutlet C_out(Q(start=Q_out_0), P(start=P_out_0))
     annotation (Placement(transformation(extent={{34,-10},{54,10}}),  iconTransformation(extent={{34,-10},{54,10}})));
 equation
   // Connector

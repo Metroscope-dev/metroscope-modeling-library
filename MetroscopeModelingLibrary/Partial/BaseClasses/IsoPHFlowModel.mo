@@ -4,8 +4,8 @@ partial model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters
-  parameter Units.SpecificEnthalpy h_0=1e5;
-  parameter Units.Pressure P_0=1e5;
+  parameter Units.SpecificEnthalpy h_0 = 1e6;
+  parameter Units.Pressure P_0 = 1e5;
   parameter Units.Temperature T_0 = 300;
 
   // Input Quantities
