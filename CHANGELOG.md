@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### To be addressed
- - Partial icons to be redesigned
 ### Fixed
  - 📏 Fixed [#39](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/39) defined ./Units package, with all units defined in MML. ([PR#68](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/68))
 
@@ -28,10 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Added first Partial sensors and inherited them into Sensors/WaterSteam ([PR#73](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/73))
  - Added WaterSteam/BaseClasses/Tests ([PR#76](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/76))
  - Added Moist air package, inherited classes and added tests ([PR#78](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/78))
- - Added Pipes package, inherited classes and added tests ([PR#?](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/?))
+ - Added Pipes package, inherited classes and added tests ([PR#83](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/83))
 
 ### Removed
- - In partial sources and sink, simplified models by **not** redefining in/out variables
+ - Removed PartialBoundaryCondition model, and separated in two : source and sink
  - 🧹 Removed everything from previous MML
 
 ## [2.4] 2022-01-04

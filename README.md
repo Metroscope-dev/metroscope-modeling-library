@@ -17,7 +17,7 @@
 - [x] Créer MoistAir et vérifier que le x est bien traité
 - [x] Construire Pipes + Tests
     - [x] Partial.Pipes
-    - [ ] WaterSteam.Pipe
+    - [x] WaterSteam.Pipe
 - [ ] Autres types de composants + Tests
 - [ ] Examples
     - [ ] Metroscopia
