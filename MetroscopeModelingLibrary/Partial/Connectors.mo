@@ -14,21 +14,19 @@ partial package Connectors
   end FluidPort;
 
   partial connector FluidInlet
+    extends MetroscopeModelingLibrary.Icons.Connectors.FluidInletIcon;
+
     import MetroscopeModelingLibrary.Units;
     replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
 
     extends MetroscopeModelingLibrary.Partial.Connectors.FluidPort(redeclare Units.InletMassFlowRate Q(start=500, nominal=500)); // Q out of component is negative
-    annotation (Icon(coordinateSystem(preserveAspectRatio=true),
-        graphics={
-          Rectangle(
-            extent={{-100,100},{100,-100}},
-            lineColor={28,108,200},
-            fillColor={28,108,200},
-            fillPattern=FillPattern.Solid)}),
+    annotation (Icon(coordinateSystem(preserveAspectRatio=true)),
           Diagram(coordinateSystem(preserveAspectRatio=true)));
   end FluidInlet;
 
   partial connector FluidOutlet
+    extends MetroscopeModelingLibrary.Icons.Connectors.FluidOutletIcon;
+
     import MetroscopeModelingLibrary.Units;
     replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
 

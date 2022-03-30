@@ -16,7 +16,7 @@ equation
   moist_air_FlowSensor.Q = 100;
 
   assert(abs(moist_air_Sink.Q_in + moist_air_Source.Q_out) <= 1e-5, "In flow model, DM should be 0");
-  connect(moist_air_Source.C_out, moist_air_PressureSensor.C_in) annotation (Line(points={{-81.86,0},{-72,0},{-72,0}},          color={28,108,200}));
+  connect(moist_air_Source.C_out, moist_air_PressureSensor.C_in) annotation (Line(points={{-80.75,0},{-72,0},{-72,0}},          color={28,108,200}));
   connect(moist_air_PressureSensor.C_out, moist_air_FlowSensor.C_in) annotation (Line(points={{-52,0},{-50,0},{-50,0.1},{-46,0.1},{-46,0},{-40,0}},
                                                                                                                       color={28,108,200}));
   connect(moist_air_FlowModel.C_in, moist_air_FlowSensor.C_out) annotation (Line(points={{7,0},{4.5,0},{4.5,0},{-20,0}},           color={28,108,200}));

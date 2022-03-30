@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Sensors;
 package Other
-  
+
 annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
