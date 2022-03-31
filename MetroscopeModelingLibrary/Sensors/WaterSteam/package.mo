@@ -13,8 +13,8 @@ package WaterSteam
           radius=25.0),
         Ellipse(
           lineColor={102,102,102},
-          fillColor={204,204,204},
+          fillColor={28,108,200},
           pattern=LinePattern.None,
-          fillPattern=FillPattern.Sphere,
+          fillPattern=FillPattern.Solid,
           extent={{-60,-60},{60,60}})}));
 end WaterSteam;

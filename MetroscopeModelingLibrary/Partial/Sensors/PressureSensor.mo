@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model PressureSensor
-  extends FluidSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.FluidSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.PressureIcon;
   extends Partial.BaseClasses.IsoPHFlowModel annotation(IconMap(primitivesVisible=false));
 
   import MetroscopeModelingLibrary.Units;
@@ -16,10 +17,4 @@ equation
   P * Constants.Pa_to_mbar = P_mbar;
   P * Constants.Pa_to_psi = P_psi;
   P_barA = P_barG + Constants.P0_barG_in_barA;
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Text(
-          extent={{-36,52},{46,-56}},
-          textColor={0,0,0},
-          textString="P")}),
-        Diagram(coordinateSystem(preserveAspectRatio=false)));
 end PressureSensor;

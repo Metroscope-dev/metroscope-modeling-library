@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model PartialTransportModel "Basic fluid transport brick for all components"
+
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
@@ -78,7 +79,7 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   replaceable Partial.Connectors.FluidOutlet C_out(
     Q(start=Q_out_0, nominal=Q_out_0),
     P(start=P_out_0, nominal=P_in_0),
-    redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{109,8}}),  iconTransformation(extent={{90,-10.5},{110,10.5}})));
+    redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
 protected
   parameter Medium.ThermodynamicState state_in_0 = Medium.setState_phX(P_in_0, h_in_0, Xi_in_0);
   parameter Medium.ThermodynamicState state_out_0 = Medium.setState_phX(P_out_0, h_out_0, Xi_out_0);
@@ -133,12 +134,4 @@ equation
   P_out - P_in = DP;
   Q_in*h_in + Q_out*h_out = W;
   Q_in*Xi_in + Q_out*Xi_out = DXi;
-  annotation (Icon(graphics={
-        Rectangle(
-          extent={{-100,41},{100,-41}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid,
-          lineThickness=1)}),
-        primitivesVisible=primitivesVisible);
 end PartialTransportModel;

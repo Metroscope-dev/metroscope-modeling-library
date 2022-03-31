@@ -18,11 +18,5 @@ package WaterSteamTests
           fillColor={78,138,73},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
-          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}}),
-        Ellipse(
-          lineColor={102,102,102},
-          fillColor={204,204,204},
-          pattern=LinePattern.None,
-          fillPattern=FillPattern.Sphere,
-          extent={{12,-92},{92,-12}})}));
+          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}));
 end WaterSteamTests;

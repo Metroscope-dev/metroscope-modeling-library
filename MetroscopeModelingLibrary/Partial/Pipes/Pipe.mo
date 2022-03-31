@@ -34,26 +34,12 @@ equation
         preserveAspectRatio=true,
         extent={{-100,-100},{100,100}},
         grid={2,2}), graphics={Rectangle(
-          extent={{-100,40},{100,-40}},
+          extent={{-100,30},{100,-30}},
           lineColor={0,0,255},
           fillColor={85,255,85},
           fillPattern=FillPattern.Solid), Text(
           extent={{-12,14},{16,-14}},
           lineColor={0,0,255},
           fillColor={85,255,85},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{-46,37},{46,-37}},
-          textColor={0,0,0},
-          textString="DP"),
-        Line(
-          points={{-80,72},{-48,54},{0,48},{46,54},{80,72}},
-          color={28,108,200},
-          thickness=1,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{-80,-72},{-48,-54},{0,-48},{46,-54},{80,-72}},
-          color={28,108,200},
-          thickness=1,
-          smooth=Smooth.Bezier)}));
+          fillPattern=FillPattern.Solid)}));
 end Pipe;

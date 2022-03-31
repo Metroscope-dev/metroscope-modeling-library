@@ -16,7 +16,7 @@ equation
 
   assert(abs(waterSink.Q_in + waterSource.Q_out) <= 1e-5, "In flow model, DM should be 0");
   connect(waterFlowModel.C_out, waterSink.C_in) annotation (Line(points={{57,0},{57,0},{71.5,0}},     color={28,108,200}));
-  connect(waterSource.C_out, waterPressureSensor.C_in) annotation (Line(points={{-71.64,0},{-71.64,0},{-60,0}},       color={28,108,200}));
+  connect(waterSource.C_out, waterPressureSensor.C_in) annotation (Line(points={{-70.5,0},{-70.5,0},{-60,0}},         color={28,108,200}));
   connect(waterPressureSensor.C_out, waterFlowSensor.C_in) annotation (Line(points={{-40,0},{-36,0},{-36,0.1},{-32,0.1},{-32,0},{-24,0}},
                                                                                                             color={28,108,200}));
   connect(waterFlowModel.C_in, waterFlowSensor.C_out) annotation (Line(points={{11,0},{8,0},{8,0},{-4,0}},               color={28,108,200}));
@@ -29,23 +29,5 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}}),
-     Rectangle(
-          extent={{22,-26},{84,-95}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid,
-          lineThickness=1),
-        Rectangle(
-          extent={{66,-44},{100,-78}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{4,-43},{40,-79}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}),                     Diagram(coordinateSystem(preserveAspectRatio=false)));
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterFlowModelTest;

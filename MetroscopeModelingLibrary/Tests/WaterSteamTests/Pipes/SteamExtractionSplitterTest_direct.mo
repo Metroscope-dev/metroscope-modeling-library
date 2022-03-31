@@ -43,7 +43,7 @@ equation
 
   // Output: Observables
   steamExtractionSplitter.mainFlow.h_out = main_h_out;
-  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-76,0},{-80,0},{-80,0},{-85.6,0}}, color={28,108,200}));
+  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-76,0},{-80,0},{-80,0},{-85,0}},   color={28,108,200}));
   connect(steamExtractionSplitter.C_in, source_Q_sensor.C_out) annotation (Line(points={{-28.62,-3.33333e-05},{-44.8,-3.33333e-05},{-44.8,0},{-44,0}}, color={28,108,200}));
   connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-56,0},{-58,0},{-58,0.06},{-60,0.06},{-60,0},{-64,0}}, color={28,108,200}));
   connect(main_sink.C_in, steamExtractionSplitter.C_main_out) annotation (Line(points={{85,0},{56,0},{56,-3.33333e-05},{28.62,-3.33333e-05}}, color={28,108,200}));
@@ -58,27 +58,6 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}}),
-                                   Polygon(
-          points={{10,-22},{10,-62},{28,-62},{48,-80},{64,-80},{58,-62},{88,-62},{88,-22},{10,-22}},
-          lineColor={64,82,185},
-          fillColor={236,238,248},
-          fillPattern=FillPattern.Solid,
-          lineThickness=0.5),
-        Rectangle(
-          extent={{80,-34},{96,-50}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{46,-76},{62,-92}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{0,-32},{20,-52}},
-          lineColor={28,108,200},
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}),
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
                                 Diagram(coordinateSystem(preserveAspectRatio=false)));
 end SteamExtractionSplitterTest_direct;

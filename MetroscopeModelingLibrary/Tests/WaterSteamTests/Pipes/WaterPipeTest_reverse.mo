@@ -41,7 +41,7 @@ equation
   // Output: Component parameters
   pipe.Kfr = Kfr;
   pipe.z2 = z2;
-  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85.6,7.5e-06}}, color={28,108,200}));
+  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85,7.5e-06}},   color={28,108,200}));
   connect(pipe.C_in, source_Q_sensor.C_out) annotation (Line(points={{-6.5,0},{-30,0}}, color={28,108,200}));
   connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-42,0},{-54,0}}, color={28,108,200}));
   connect(sink.C_in, pipe.C_out) annotation (Line(points={{85,0},{26.5,0}}, color={28,108,200}));
@@ -54,35 +54,6 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}}),
-                               Rectangle(
-          extent={{14,-30},{88,-76}},
-          lineColor={0,0,255},
-          fillColor={85,255,85},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{25,-33.5},{77,-72.5}},
-          textColor={0,0,0},
-          textString="DP"),
-        Line(
-          points={{13,-12},{29,-22},{49,-28},{71,-22},{89,-12}},
-          color={28,108,200},
-          thickness=1,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{13,-94},{29,-84},{49,-78},{71,-84},{89,-94}},
-          color={28,108,200},
-          thickness=1,
-          smooth=Smooth.Bezier),
-        Rectangle(
-          extent={{2,-42},{22,-62}},
-          lineColor={28,108,200},
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{80,-44},{98,-62}},
-          lineColor={28,108,200},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid)}),
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
                                 Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterPipeTest_reverse;

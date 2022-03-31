@@ -1,9 +1,11 @@
 within MetroscopeModelingLibrary.Sensors.WaterSteam;
 model WaterDeltaPressureSensor
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  extends MetroscopeModelingLibrary.Icons.Sensors.OtherSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.DeltaPressureIcon;
+
   extends Partial.Sensors.DeltaPressureSensor(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
-    redeclare package Medium = WaterSteamMedium);
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+    redeclare package Medium = WaterSteamMedium, medium_name="WaterSteam") annotation(IconMap(primitivesVisible=false));
 end WaterDeltaPressureSensor;
