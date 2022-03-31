@@ -18,5 +18,4 @@ package Power
           pattern=LinePattern.None,
           fillPattern=FillPattern.Sphere,
           extent={{-60,-60},{60,60}})}));
-
 end Power;

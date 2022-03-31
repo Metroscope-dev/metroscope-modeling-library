@@ -7,6 +7,6 @@ model MoistAirDeltaPressureSensor
   extends Partial.Sensors.DeltaPressureSensor(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirInlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirOutlet C_out,
-    redeclare package Medium = MoistAirMedium, medium_name="MoistAir") annotation(IconMap(primitivesVisible=false));
+    redeclare package Medium = MoistAirMedium) annotation(IconMap(primitivesVisible=false));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end MoistAirDeltaPressureSensor;

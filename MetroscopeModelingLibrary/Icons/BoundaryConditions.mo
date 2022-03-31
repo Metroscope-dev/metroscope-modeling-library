@@ -1,3 +1,0 @@
-within MetroscopeModelingLibrary.Icons;
-package BoundaryConditions
-end BoundaryConditions;
