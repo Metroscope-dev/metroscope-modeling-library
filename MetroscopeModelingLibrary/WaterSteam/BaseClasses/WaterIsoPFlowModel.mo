@@ -5,7 +5,7 @@ model WaterIsoPFlowModel
   extends Partial.BaseClasses.IsoPFlowModel(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
-    redeclare package Medium = WaterSteamMedium, medium_name="WaterSteam") annotation(primitivesVisible=false);
+    redeclare package Medium = WaterSteamMedium) annotation(IconMap(primitivesVisible=false));
 
   import MetroscopeModelingLibrary.Units.Inputs;
   Inputs.InputPower W_input(start=0);

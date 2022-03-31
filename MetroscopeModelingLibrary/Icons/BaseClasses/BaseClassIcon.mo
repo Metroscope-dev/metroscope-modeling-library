@@ -1,4 +1,9 @@
 within MetroscopeModelingLibrary.Icons.BaseClasses;
 partial model BaseClassIcon "should be extended in partial base classes"
-  extends PartialIcon_BaseClass(medium_name = "Partial");
+  annotation (Icon(graphics={   Rectangle(
+          extent={{-100,40},{100,-40}},
+          lineColor={0,0,0},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid,
+          lineThickness=1)}));
 end BaseClassIcon;
