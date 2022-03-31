@@ -15,6 +15,4 @@ equation
   T = T_in;
   T_degC + Constants.T0_degC_in_K = T_in; // Conversion K to Celsius
   T_degF = T_degC*Constants.degC_to_degF + Constants.T0_degC_in_degF;  // Conversion Celsius to Farenheit
-  annotation (Icon(coordinateSystem(extent={{-100,-100},{100,100}})),
-                             Diagram(coordinateSystem(extent={{-100,-100},{100,100}})));
 end TemperatureSensor;

@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Partial.BoundaryConditions;
 partial model FluidSource
+  extends MetroscopeModelingLibrary.Icons.BoundaryConditions.FluidSourceIcon;
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
   import MetroscopeModelingLibrary.Units;
@@ -43,13 +44,4 @@ equation
   // Computed quantities
   T_out = Medium.temperature(state_out);
   Qv_out = Q_out / Medium.density(state_out);
-  annotation (Icon(graphics={
-        Ellipse(
-          extent={{-80,60},{40,-60}},
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid,
-          lineThickness=0.5,
-          pattern=LinePattern.None),
-        Line(points={{62,0},{100,0},{86,10}}),
-        Line(points={{86,-10},{100,0}})}));
 end FluidSource;

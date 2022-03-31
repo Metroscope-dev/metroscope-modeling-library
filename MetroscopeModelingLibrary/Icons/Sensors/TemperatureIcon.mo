@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Icons.Sensors;
 partial model TemperatureIcon
-  annotation (Icon(coordinateSystem(preserveAspectRatio=true), graphics={Text(
+  annotation (Icon(graphics={Text(
           extent={{-60,60},{60,-60}},
           textColor={0,0,0},
-          textString="T")}),                                    Diagram(coordinateSystem(preserveAspectRatio=true)));
+          textString="T")}));
 end TemperatureIcon;
