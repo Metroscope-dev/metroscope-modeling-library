@@ -5,7 +5,7 @@ model MoistAirIsoPFlowModel
   extends Partial.BaseClasses.IsoPFlowModel(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirInlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirOutlet C_out,
-    redeclare package Medium = MoistAirMedium) annotation(primitivesVisible=flase);
+    redeclare package Medium = MoistAirMedium, medium_name="MoistAir") annotation(IconMap(primitivesVisible=false));
 
   import MetroscopeModelingLibrary.Units.Inputs;
   Inputs.InputPower W_input(start=0);

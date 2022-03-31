@@ -1,5 +1,7 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model FlowModel "PartialTransportModel with no flow or species variation"
+  extends MetroscopeModelingLibrary.Icons.BaseClasses.BaseClassIcon;
+
   extends PartialTransportModel(Q_in_0=Q_0, Q_out_0=-Q_0, Xi_in_0=Xi_0, Xi_out_0=Xi_0) annotation(IconMap(primitivesVisible=true));
   import MetroscopeModelingLibrary.Units;
 

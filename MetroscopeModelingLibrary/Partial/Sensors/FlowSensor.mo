@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model FlowSensor
   extends Partial.BaseClasses.IsoPHFlowModel annotation(IconMap(primitivesVisible=false));
-  extends FluidSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.FluidSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.FlowIcon;
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Constants;
@@ -11,9 +12,4 @@ partial model FlowSensor
 equation
   Q_th = Q * Constants.kgs_to_th;
   Q_lbs = Q * Constants.kgs_to_lbs;
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-                             Text(
-          extent={{-40,52},{42,-56}},
-          textColor={0,0,0},
-          textString="Q")}),                                     Diagram(coordinateSystem(preserveAspectRatio=false)));
 end FlowSensor;

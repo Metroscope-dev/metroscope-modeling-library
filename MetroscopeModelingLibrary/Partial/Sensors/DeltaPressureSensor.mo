@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model DeltaPressureSensor
-  extends InformationSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.OtherSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.DifferentialPressureIcon;
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
   replaceable Partial.Connectors.FluidInlet C_in(redeclare package Medium = Medium);
@@ -26,15 +27,4 @@ equation
   DP_bar = DP * Constants.Pa_to_barA;
   DP_mbar = DP * Constants.Pa_to_mbar;
   DP_psi = DP * Constants.Pa_to_psi;
-
-  /*(Icon(graphics={Text(          
-          extent={{-56,64},{62,-64}},
-          textColor={0,0,0},
-          textString="DP")}));*/
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Text(
-          extent={{-106,46},{110,-48}},
-          textColor={0,0,0},
-          textString="DP")}),
-        Diagram(coordinateSystem(preserveAspectRatio=false)));
 end DeltaPressureSensor;

@@ -3,6 +3,6 @@ connector MoistAirInlet
   extends MetroscopeModelingLibrary.Icons.Connectors.MoistAirInletIcon;
 
   package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
-  extends Partial.Connectors.FluidInlet(redeclare package Medium = MoistAirMedium) annotation(primitivesVisible=false);
+  extends Partial.Connectors.FluidInlet(redeclare package Medium = MoistAirMedium, medium_name="MoistAir") annotation(IconMap(primitivesVisible=false));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end MoistAirInlet;

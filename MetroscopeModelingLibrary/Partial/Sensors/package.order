@@ -1,6 +1,4 @@
-FluidSensorIcon
-InformationSensorIcon
 TemperatureSensor
 PressureSensor
-DeltaPressureSensor
 FlowSensor
+DeltaPressureSensor

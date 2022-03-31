@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model TemperatureSensor
   extends Partial.BaseClasses.IsoPHFlowModel annotation(IconMap(primitivesVisible=false));
-  extends FluidSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.FluidSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.TemperatureIcon;
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Constants;
@@ -14,9 +15,6 @@ equation
   T = T_in;
   T_degC + Constants.T0_degC_in_K = T_in; // Conversion K to Celsius
   T_degF = T_degC*Constants.degC_to_degF + Constants.T0_degC_in_degF;  // Conversion Celsius to Farenheit
-  annotation (Icon(coordinateSystem(extent={{-100,-100},{100,100}}),
-                   graphics={Text(
-          extent={{-42,48},{40,-60}},
-          textColor={0,0,0},
-          textString="T")}), Diagram(coordinateSystem(extent={{-100,-100},{100,100}})));
+  annotation (Icon(coordinateSystem(extent={{-100,-100},{100,100}})),
+                             Diagram(coordinateSystem(extent={{-100,-100},{100,100}})));
 end TemperatureSensor;

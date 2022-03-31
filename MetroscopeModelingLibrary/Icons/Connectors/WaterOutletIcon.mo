@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
 partial connector WaterOutletIcon
-  extends MetroscopeModelingLibrary.Icons.Connectors.PartialIcon_Outlet(is_in_water_steam=true);
+  extends MetroscopeModelingLibrary.Icons.Connectors.PartialIcon_Outlet(medium_name = "WaterSteam");
 end WaterOutletIcon;

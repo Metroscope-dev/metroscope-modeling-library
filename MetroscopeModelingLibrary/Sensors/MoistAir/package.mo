@@ -1,5 +1,5 @@
-within MetroscopeModelingLibrary.Tests.MoistAirTests;
-package BaseClassesTests
+within MetroscopeModelingLibrary.Sensors;
+package MoistAir
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
@@ -11,11 +11,9 @@ package BaseClassesTests
           lineColor={128,128,128},
           extent={{-100,-100},{100,100}},
           radius=25.0),
-        Polygon(
-          origin={8,14},
-          lineColor={78,138,73},
-          fillColor={78,138,73},
-          pattern=LinePattern.None,
+        Ellipse(
+          fillColor={85,170,255},
           fillPattern=FillPattern.Solid,
-          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}));
-end BaseClassesTests;
+          extent={{-60,-60},{60,60}},
+        pattern=LinePattern.None)}));
+end MoistAir;

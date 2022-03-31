@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
 partial connector MoistAirOutletIcon
-  extends MetroscopeModelingLibrary.Icons.Connectors.PartialIcon_Outlet(is_in_moist_air=true);
+  extends MetroscopeModelingLibrary.Icons.Connectors.PartialIcon_Outlet(medium_name = "MoistAir");
 end MoistAirOutletIcon;

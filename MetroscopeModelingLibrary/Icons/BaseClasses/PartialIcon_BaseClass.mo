@@ -1,8 +1,6 @@
 within MetroscopeModelingLibrary.Icons.BaseClasses;
 partial model PartialIcon_BaseClass "should not be extended in model"
-  extends MetroscopeModelingLibrary.Icons.Colors;
-equation
-  assert(is_in_partial or is_in_water_steam or is_in_moist_air, "You must define as 'true' at least one of is_in_partial, is_in_water_steam, is_in_moist_air parameters");
+  extends MetroscopeModelingLibrary.Icons.ModelColors;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false),
               graphics={
                 Rectangle(
