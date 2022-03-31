@@ -16,3 +16,5 @@ InputReal
 InputVelocity
 InputTemperature
 InputYield
+InputHeatExchangeCoefficient
+InputHeatCapacity
