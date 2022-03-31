@@ -18,7 +18,7 @@ equation
   connect(waterIsoPFlowModel.C_out, waterSink.C_in) annotation (Line(points={{51,0},{57.2,0},{57.2,0},{76,0}},             color={28,108,200}));
   connect(waterPressureSensor.C_out,waterFlowSensor. C_in) annotation (Line(points={{-50,0},{-48,0},{-48,0.1},{-44,0.1},{-44,0},{-38,0}},
                                                                                                             color={28,108,200}));
-  connect(waterPressureSensor.C_in, waterSource.C_out) annotation (Line(points={{-70,0},{-73.82,0},{-73.82,0},{-81.64,0}},       color={28,108,200}));
+  connect(waterPressureSensor.C_in, waterSource.C_out) annotation (Line(points={{-70,0},{-73.82,0},{-73.82,0},{-80.5,0}},        color={28,108,200}));
   connect(waterIsoPFlowModel.C_in, waterFlowSensor.C_out) annotation (Line(points={{5,0},{-11.5,0},{-11.5,0},{-18,0}},               color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},

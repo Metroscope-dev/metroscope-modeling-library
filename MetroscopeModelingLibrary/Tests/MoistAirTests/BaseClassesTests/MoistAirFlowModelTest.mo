@@ -12,7 +12,7 @@ equation
   moist_air_Source.relative_humidity = 0.1;
   moist_air_Source.h_out = 1e3;
 
-  moist_air_PressureSensor.P = 0.9e5;
+  moist_air_PressureSensor.P_barA = 0.9;
   moist_air_FlowSensor.Q = 100;
 
   assert(abs(moist_air_Sink.Q_in + moist_air_Source.Q_out) <= 1e-5, "In flow model, DM should be 0");

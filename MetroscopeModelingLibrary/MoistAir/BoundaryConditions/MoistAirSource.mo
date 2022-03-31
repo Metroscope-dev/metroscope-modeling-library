@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MoistAir.BoundaryConditions;
 model MoistAirSource
   package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
-  extends Partial.BoundaryConditions.FluidSource(h_out_0=300, Xi_out_0={MoistAirMedium.massFraction_pTphi(P_out_0, T_out_0, relative_humidity_0)},
+  extends Partial.BoundaryConditions.FluidSource(P_out_0=0.9e3, h_out_0=1e3, T_out_0=300, Xi_out_0={MoistAirMedium.massFraction_pTphi(P_out_0, T_out_0, relative_humidity_0)},
                                                  redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirOutlet C_out,
                                                  redeclare package Medium = MoistAirMedium);
 

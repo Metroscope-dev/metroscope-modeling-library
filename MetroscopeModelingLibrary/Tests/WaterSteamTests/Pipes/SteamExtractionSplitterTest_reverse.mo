@@ -46,7 +46,7 @@ equation
 
   // Assertion
   assert(alpha <= 1 and alpha >= 0, "From model assertion error: alpha should be within 0 and 1");
-  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-76,0},{-80,0},{-80,0},{-85.6,0}}, color={28,108,200}));
+  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-76,0},{-80,0},{-80,0},{-85,0}},   color={28,108,200}));
   connect(steamExtractionSplitter.C_in, source_Q_sensor.C_out) annotation (Line(points={{-28.62,-3.33333e-05},{-44.8,-3.33333e-05},{-44.8,0},{-44,0}}, color={28,108,200}));
   connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-56,0},{-58,0},{-58,0.06},{-60,0.06},{-60,0},{-64,0}}, color={28,108,200}));
   connect(main_sink.C_in, steamExtractionSplitter.C_main_out) annotation (Line(points={{85,0},{56,0},{56,-3.33333e-05},{28.62,-3.33333e-05}}, color={28,108,200}));

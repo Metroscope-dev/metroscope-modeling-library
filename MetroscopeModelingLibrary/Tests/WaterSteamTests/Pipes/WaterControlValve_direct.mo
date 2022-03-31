@@ -40,7 +40,7 @@ equation
   control_valve.Cv = Cv;
   CV_P_out_sensor.P = CV_P_out;
 
-  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85.6,7.5e-06}}, color={28,108,200}));
+  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85,7.5e-06}},   color={28,108,200}));
   connect(control_valve.C_in, source_Q_sensor.C_out) annotation (Line(points={{-6.5,-1.81818e-06},{-18,-1.81818e-06},{-18,0},{-30,0}},
                                                                                         color={28,108,200}));
   connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-42,0},{-54,0}}, color={28,108,200}));

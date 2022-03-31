@@ -15,5 +15,5 @@ package MoistAir
           fillColor={85,170,255},
           fillPattern=FillPattern.Solid,
           extent={{-60,-60},{60,60}},
-        pattern=LinePattern.None)}));
+          pattern=LinePattern.None)}));
 end MoistAir;

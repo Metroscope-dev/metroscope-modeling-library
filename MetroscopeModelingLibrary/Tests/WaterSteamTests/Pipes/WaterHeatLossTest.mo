@@ -27,7 +27,7 @@ equation
 
   // Observables
   heat_loss.W_input = W_input;
-  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,-3.75e-06},{-84.2,-3.75e-06},{-84.2,3.75e-06},{-85.6,3.75e-06}},
+  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,-3.75e-06},{-84.2,-3.75e-06},{-84.2,3.75e-06},{-85,3.75e-06}},
                                                                                                                            color={28,108,200}));
   connect(heat_loss.C_in, source_Q_sensor.C_out) annotation (Line(points={{-8.5,0},{-30,0}}, color={28,108,200}));
   connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-42,0},{-54,0}}, color={28,108,200}));
