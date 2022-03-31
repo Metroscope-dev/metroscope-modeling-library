@@ -15,8 +15,9 @@ package MoistAir
           extent={{-100,-100},{100,100}},
           radius=25.0),
         Ellipse(
-          fillColor={170,213,255},
+          lineColor={102,102,102},
+          fillColor={204,204,204},
           pattern=LinePattern.None,
-          fillPattern=FillPattern.Solid,
+          fillPattern=FillPattern.Sphere,
           extent={{-60,-60},{60,60}})}));
 end MoistAir;

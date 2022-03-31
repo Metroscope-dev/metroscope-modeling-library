@@ -7,5 +7,5 @@ model WaterPressureSensor
   extends Partial.Sensors.PressureSensor(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
-    redeclare package Medium = WaterSteamMedium) annotation(IconMap(primitivesVisible=false));
+    redeclare package Medium = WaterSteamMedium, medium_name="WaterSteam") annotation(IconMap(primitivesVisible=false));
 end WaterPressureSensor;

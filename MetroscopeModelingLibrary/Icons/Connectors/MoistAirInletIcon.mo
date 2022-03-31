@@ -1,9 +1,4 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
 partial connector MoistAirInletIcon
-  annotation (Icon(graphics={
-        Rectangle(
-          extent={{-100,100},{100,-100}},
-          lineColor={170,213,255},
-          fillColor={170,213,255},
-          fillPattern=FillPattern.Solid)}));
+  extends MetroscopeModelingLibrary.Icons.Connectors.PartialIcon_Inlet(medium_name = "MoistAir");
 end MoistAirInletIcon;

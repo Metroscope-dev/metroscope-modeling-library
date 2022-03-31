@@ -1,7 +1,6 @@
 within MetroscopeModelingLibrary.Icons.Sensors;
 partial model OtherSensorIcon "should be extended in partial base classes"
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
-  annotation (Icon(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=true),
       graphics={
         Ellipse(
           extent={{-100,100},{100,-98}},
@@ -14,5 +13,6 @@ partial model OtherSensorIcon "should be extended in partial base classes"
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None)}));
+          pattern=LinePattern.None)}),
+        Diagram(coordinateSystem(preserveAspectRatio=true)));
 end OtherSensorIcon;
