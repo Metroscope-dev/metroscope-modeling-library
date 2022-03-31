@@ -20,3 +20,5 @@ SpecificEnthalpy
 Velocity
 Yield
 VolumeFlowRate
+HeatExchangeCoefficient
+HeatCapacity
