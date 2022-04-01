@@ -6,7 +6,7 @@ model OpeningSensor
 
   parameter Real Opening_pc_0=15;
   Inputs.InputReal Opening_pc(start=Opening_pc_0, min=0, max=100, nominal=Opening_pc_0); // Opening in percentage
-  Modelica.Blocks.Interfaces.RealOutput Opening(min=0, max=1, nominal=0.5)
+  Modelica.Blocks.Interfaces.RealOutput Opening(min=0, max=1, nominal=Opening_pc_0/100, start=Opening_pc_0/100)
     annotation (Placement(transformation(
         extent={{-27,-27},{27,27}},
         rotation=270,
