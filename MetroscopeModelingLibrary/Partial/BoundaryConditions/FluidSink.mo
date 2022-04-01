@@ -1,32 +1,22 @@
 within MetroscopeModelingLibrary.Partial.BoundaryConditions;
 partial model FluidSink
-  extends MetroscopeModelingLibrary.Icons.BoundaryConditions.FluidSinkIcon;
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
-    // Initialization parameters
-  parameter Units.SpecificEnthalpy h_in_0 = 1e6;
-  parameter Units.MassFraction Xi_in_0[Medium.nXi] = zeros(Medium.nXi);
-  parameter Units.Pressure P_in_0 = 1e5;
-  parameter Units.InletMassFlowRate Q_in_0 = 500;
-  parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0 / 1000;
-  parameter Units.Temperature T_in_0 = 300;
-
-
   // Input Quantities
-  Units.SpecificEnthalpy h_in(start=h_in_0);
-  Inputs.InputMassFraction Xi_in[Medium.nXi](start=Xi_in_0);
-  Units.Pressure P_in(start=P_in_0);
-  Units.MassFlowRate Q_in(min=0, start=Q_in_0, nominal=Q_in_0);
-  Units.VolumeFlowRate Qv_in(min=0, start=Qv_in_0, nominal=Qv_in_0);
+  Units.SpecificEnthalpy h_in;
+  Inputs.InputMassFraction Xi_in[Medium.nXi];
+  Units.Pressure P_in;
+  Units.MassFlowRate Q_in;
+  Units.VolumeFlowRate Qv_in;
 
   // Computed quantities
-  Units.Temperature T_in(start=T_in_0);
+  Units.Temperature T_in;
   Medium.ThermodynamicState state_in;
 
-  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in(Q(start=Q_in_0, nominal=Q_in_0), P(start=P_in_0, nominal=P_in_0))
+  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in
     annotation (Placement(transformation(extent={{-62,-10},{-42,10}}),iconTransformation(extent={{-60,-10},{-40,10}})));
 equation
   // Connector
@@ -45,4 +35,21 @@ equation
   // No flow reversal in stream connector
   C_in.h_outflow = 0; // Never used arbitrary value
   C_in.Xi_outflow = zeros(Medium.nXi); // No flow reversal
+  annotation (Icon(coordinateSystem(preserveAspectRatio=true), graphics={
+        Ellipse(
+          extent={{-40,60},{80,-60}},
+          lineColor={0,0,0},
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid),
+        Line(points={{-90,0},{-62,0},{-76,10}}),
+        Line(points={{-76,-10},{-62,0}}),
+        Ellipse(
+          extent={{-30,50},{70,-50}},
+          lineColor={0,0,0},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+        Line(points={{-15,35},{55,-35}}, color={0,0,0}),
+        Line(points={{-15,-35},{55,35}}, color={0,0,0})}),
+                                            Diagram(coordinateSystem(
+          preserveAspectRatio=true)));
 end FluidSink;
