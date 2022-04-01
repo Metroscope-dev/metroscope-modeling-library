@@ -130,8 +130,8 @@ equation
   Qvm = Qm / rhom;
 
   // ------ Conservation equations ------
-  Q_in + Q_out = DM;
+  Q_in + Q_out = - DM; // Q_out < 0 if Q_out flows out of component, DM = Q out of component - Q into component
   P_out - P_in = DP;
-  Q_in*h_in + Q_out*h_out = W;
-  Q_in*Xi_in + Q_out*Xi_out = DXi;
+  Q_in*h_in + Q_out*h_out = - W; // W = (Qh) out of component - (Qh) into component
+  Q_in*Xi_in + Q_out*Xi_out = - DXi; // W = (QXi) out of component - (QXi) into component
 end PartialTransportModel;
