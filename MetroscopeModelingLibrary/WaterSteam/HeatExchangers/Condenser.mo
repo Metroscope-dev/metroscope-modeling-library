@@ -33,7 +33,6 @@ model Condenser
   parameter Units.MassFlowRate Q_cold_0 = 3820;
   parameter Units.MassFlowRate Q_hot_0 = 150;
   parameter Units.Pressure Psat_0 = 0.19e5;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 6.4e4;
 
   Connectors.WaterInlet C_cold_in(Q(start=Q_cold_0))
     annotation (Placement(transformation(extent={{-114,40},{-94,60}}),
@@ -48,15 +47,15 @@ model Condenser
     annotation (Placement(transformation(extent={{90,-16},{110,4}}),
         iconTransformation(extent={{90,-16},{110,4}})));
 
-  Pipes.WaterPipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0)
+  Pipes.WaterPipe cold_side_pipe(Q_0=Q_cold_0)
     annotation (Placement(transformation(extent={{-82,40},{-62,60}})));
   BaseClasses.WaterIsoPFlowModel hot_side(Q_0=Q_hot_0, P_0=Psat_0) annotation (Placement(transformation(
         extent={{-24,-24},{24,24}},
         rotation=180,
         origin={0,22})));
-  BaseClasses.WaterIsoPFlowModel cold_side(Q_0=Q_cold_0, h_in_0=h_cold_in_0)
+  BaseClasses.WaterIsoPFlowModel cold_side(Q_0=Q_cold_0)
     annotation (Placement(transformation(extent={{-24,-30},{24,18}})));
-  Pipes.WaterPipe water_height_pipe(Q_0=Q_hot_0, P_in_0 = Psat_0, P_out_0 = Psat_0, h_0=1500e3) annotation (Placement(transformation(
+  Pipes.WaterPipe water_height_pipe(Q_0=Q_hot_0, P_in_0 = Psat_0, P_out_0 = Psat_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,-46})));
