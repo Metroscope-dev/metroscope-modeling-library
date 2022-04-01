@@ -8,7 +8,10 @@ Density
 DifferentialPressure
 DifferentialTemperature
 FrictionCoefficient
+Fraction
 GasDensity
+HeatExchangeCoefficient
+HeatCapacity
 Height
 LiquidDensity
 MassFlowRate
@@ -20,7 +23,7 @@ Power
 Pressure
 SpecificEnthalpy
 Velocity
-Yield
 VolumeFlowRate
-HeatExchangeCoefficient
-HeatCapacity
+InletVolumeFlowRate
+OutletVolumeFlowRate
+Yield
