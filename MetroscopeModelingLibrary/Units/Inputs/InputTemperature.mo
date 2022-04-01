@@ -1,2 +1,2 @@
 within MetroscopeModelingLibrary.Units.Inputs;
-connector InputTemperature = input Units.Temperature annotation ();
+connector InputTemperature = input Units.Temperature;

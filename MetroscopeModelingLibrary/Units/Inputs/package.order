@@ -3,7 +3,10 @@ InputArea
 InputCv
 InputDifferentialPressure
 InputDifferentialTemperature
+InputFraction
 InputFrictionCoefficient
+InputHeatExchangeCoefficient
+InputHeatCapacity
 InputHeight
 InputMassFlowRate
 InputInletMassFlowRate
@@ -14,7 +17,8 @@ InputPressure
 InputSpecificEnthalpy
 InputReal
 InputVelocity
+InputVolumeFlowRate
+InputInletVolumeFlowRate
+InputOutletVolumeFlowRate
 InputTemperature
 InputYield
-InputHeatExchangeCoefficient
-InputHeatCapacity
