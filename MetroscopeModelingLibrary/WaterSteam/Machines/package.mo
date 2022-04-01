@@ -1,6 +1,6 @@
-within MetroscopeModelingLibrary.Partial;
-partial package Machines
-
+within MetroscopeModelingLibrary.WaterSteam;
+package Machines
+  
 annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
@@ -12,43 +12,27 @@ annotation (Icon(graphics={
           lineColor={128,128,128},
           extent={{-100,-100},{100,100}},
           radius=25.0),
-      Ellipse(
-        extent={{-80,80},{80,-80}},
-        lineColor={215,215,215},
-        fillColor={215,215,215},
-        fillPattern=FillPattern.Solid),
-      Ellipse(
-        extent={{-55,55},{55,-55}},
-        lineColor={255,255,255},
-        fillColor={255,255,255},
-        fillPattern=FillPattern.Solid),
         Ellipse(
           extent={{-60,60},{60,-60}},
           lineColor={0,0,0},
           fillColor={127,255,0},
           fillPattern=FillPattern.Solid),
-        Line(points={{-31,0},{31,0}},
+        Line(points={{-32,0},{30,0}},
         color={0,0,0},
         thickness=1),
-        Line(points={{32,0},{8,-20}},
+        Line(points={{30,0},{6,20}},
         color={0,0,0},
         thickness=1),
-        Line(points={{32,0},{8,20}},
+        Line(points={{30,0},{6,-20}},
         color={0,0,0},
         thickness=1),
-      Rectangle(
-        extent={{-60,14},{60,-14}},
-        lineColor={215,215,215},
-        fillColor={215,215,215},
-        fillPattern=FillPattern.Solid,
-        rotation=45),
         Rectangle(
           extent={{-76,13},{-50,-13}},
           lineColor={28,108,200},
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Rectangle(
-          extent={{50,10},{74,-14}},
+          extent={{50,12},{74,-12}},
           lineColor={28,108,200},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid)}));

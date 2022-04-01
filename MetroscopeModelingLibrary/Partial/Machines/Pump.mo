@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Partial.Machines;
 partial model Pump
   extends BaseClasses.FlowModel annotation(IconMap(primitivesVisible=false));
+  extends MetroscopeModelingLibrary.Icons.Machines.PumpIcon;
 
   parameter Boolean adiabatic_compression=false
     "true: compression at constant enthalpy - false: compression with varying enthalpy";
