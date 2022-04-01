@@ -11,12 +11,11 @@ model SteamExtractionSplitter
   parameter Units.InletMassFlowRate Q_main_0 = 3900;
   parameter Units.InletMassFlowRate Q_ext_0 = Q_in_0 - Q_main_0;
   parameter Units.Pressure P_0 = 71e5;
-  parameter Units.SpecificEnthalpy h_in_0 = 1e5;
 
   // Variables
   Units.InletMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
   Units.Pressure P(start=P_0) "Inlet Pressure";
-  Units.SpecificEnthalpy h_in(start=h_in_0) "Inlet specific enthalpy";
+  Units.SpecificEnthalpy h_in "Inlet specific enthalpy";
   Units.SpecificEnthalpy hesat(start=hesat_0) "Enthalpy of saturated water";
   Units.SpecificEnthalpy hvsat(start=hvsat_0) "Enthalpy of saturated vapor";
   Units.MassFraction x_ext_out(start=0.8) "Vapor mass fraction at extraction outlet (0 <= x_ext_out <= x_in)";
@@ -26,7 +25,7 @@ model SteamExtractionSplitter
   Inputs.InputReal alpha(start=1, min=0, max=1) "Extraction paramater";
 
   // Components
-  WaterSteam.BaseClasses.WaterIsoPHFlowModel inletFlow(Q_0=Q_in_0, P_0=P_0, h_in_0=h_in_0) annotation (Placement(transformation(extent={{-85,-27},{-35,27}})));
+  WaterSteam.BaseClasses.WaterIsoPHFlowModel inletFlow(Q_0=Q_in_0, P_0=P_0) annotation (Placement(transformation(extent={{-85,-27},{-35,27}})));
   WaterSteam.BaseClasses.WaterIsoPFlowModel extractedFlow(Q_0=Q_ext_0, P_0=P_0) annotation (Placement(transformation(
         extent={{-11.5,-10.5},{11.5,10.5}},
         rotation=270,
