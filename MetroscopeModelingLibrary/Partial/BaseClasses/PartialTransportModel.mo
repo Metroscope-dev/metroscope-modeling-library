@@ -29,7 +29,7 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   // ------ Input Quantities ------
   // Enthalpies
   Units.SpecificEnthalpy h_in(start=h_in_0) "Inlet specific enthalpy";
-  Units.SpecificEnthalpy h_out(start=h_out_0) "Outlet specific enthalpy";
+  Units.SpecificEnthalpy h_out(start=h_in_0) "Outlet specific enthalpy";
   Units.SpecificEnthalpy hm(start=(h_in_0 + h_out_0)/2) "Average specific enthalpy";
   // Mass flow rate
   Units.InletMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
