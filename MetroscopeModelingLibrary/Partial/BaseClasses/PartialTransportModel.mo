@@ -6,31 +6,26 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   import MetroscopeModelingLibrary.Units.Inputs;
 
   // ------ Initialization parameters ------
-  // Enthalpies
-  parameter Units.SpecificEnthalpy h_in_0 = 1e6;
-  parameter Units.SpecificEnthalpy h_out_0 = h_in_0;
+  // Temperatures
   parameter Units.Temperature T_in_0 = 300;
   parameter Units.Temperature T_out_0 = T_in_0;
   // Mass Flow Rate
   parameter Units.MassFlowRate Q_in_0 = 100;
   parameter Units.MassFlowRate Q_out_0 = - Q_in_0;
-  parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0/rho_in_0;
-  parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0/rho_out_0;
+  parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0/1000;
+  parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0/1000;
   // Pressure
   parameter Units.Pressure P_in_0 = 1e5;
   parameter Units.Pressure P_out_0 = P_in_0;
   // Mass fractions
   parameter Units.MassFraction Xi_in_0[Medium.nXi] = zeros(Medium.nXi);
   parameter Units.MassFraction Xi_out_0[Medium.nXi] = Xi_in_0;
-  // Densities
-  parameter Units.Density rho_in_0 = Medium.density(state_in_0);
-  parameter Units.Density rho_out_0 = Medium.density(state_out_0);
 
   // ------ Input Quantities ------
   // Enthalpies
-  Units.SpecificEnthalpy h_in(start=h_in_0) "Inlet specific enthalpy";
-  Units.SpecificEnthalpy h_out(start=h_out_0) "Outlet specific enthalpy";
-  Units.SpecificEnthalpy hm(start=(h_in_0 + h_out_0)/2) "Average specific enthalpy";
+  Units.SpecificEnthalpy h_in "Inlet specific enthalpy";
+  Units.SpecificEnthalpy h_out "Outlet specific enthalpy";
+  Units.SpecificEnthalpy hm "Average specific enthalpy";
   // Mass flow rate
   Units.MassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
   Units.MassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
@@ -47,9 +42,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
 
   // ------ Computed Quantities ------
   // Densities
-  Units.Density rho_in(start=rho_in_0) "Inlet Fluid density";
-  Units.Density rho_out(start=rho_out_0) "Outlet Fluid density";
-  Units.Density rhom(start=(rho_in_0+rho_out_0)/2) "Average Fluid density";
+  Units.Density rho_in "Inlet Fluid density";
+  Units.Density rho_out "Outlet Fluid density";
+  Units.Density rhom "Average Fluid density";
 
   // Volumic flow rates
   Units.VolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
@@ -80,9 +75,6 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
     Q(start=Q_out_0, nominal=Q_out_0),
     P(start=P_out_0, nominal=P_in_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
-protected
-  parameter Medium.ThermodynamicState state_in_0 = Medium.setState_phX(P_in_0, h_in_0, Xi_in_0);
-  parameter Medium.ThermodynamicState state_out_0 = Medium.setState_phX(P_out_0, h_out_0, Xi_out_0);
 equation
   // ------ Input Quantities ------
   // Enthalpies
