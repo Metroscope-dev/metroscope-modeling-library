@@ -12,10 +12,10 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   parameter Units.Temperature T_in_0 = 300;
   parameter Units.Temperature T_out_0 = T_in_0;
   // Mass Flow Rate
-  parameter Units.MassFlowRate Q_in_0 = 100;
-  parameter Units.MassFlowRate Q_out_0 = - Q_in_0;
-  parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0/rho_in_0;
-  parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0/rho_out_0;
+  parameter Units.InletMassFlowRate Q_in_0 = 100;
+  parameter Units.OutletMassFlowRate Q_out_0 = - Q_in_0;
+  parameter Units.InletVolumeFlowRate Qv_in_0 = Q_in_0/rho_in_0;
+  parameter Units.OutletVolumeFlowRate Qv_out_0 = Q_out_0/rho_out_0;
   // Pressure
   parameter Units.Pressure P_in_0 = 1e5;
   parameter Units.Pressure P_out_0 = P_in_0;
@@ -32,9 +32,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.SpecificEnthalpy h_out(start=h_out_0) "Outlet specific enthalpy";
   Units.SpecificEnthalpy hm(start=(h_in_0 + h_out_0)/2) "Average specific enthalpy";
   // Mass flow rate
-  Units.MassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
-  Units.MassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
-  Units.MassFlowRate Qm(start=(Q_in_0 + Q_out_0)/2) "Mean Mass flow rate";
+  Units.InletMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
+  Units.OutletMassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
+  Units.InletMassFlowRate Qm(start=(Q_in_0 + Q_out_0)/2) "Mean Mass flow rate";
   // Pressures
   Units.Pressure P_in(start=P_in_0) "Inlet Pressure";
   Units.Pressure P_out(start=P_out_0) "Outlet Pressure";
@@ -52,9 +52,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.Density rhom(start=(rho_in_0+rho_out_0)/2) "Average Fluid density";
 
   // Volumic flow rates
-  Units.VolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
-  Units.VolumeFlowRate Qv_out(start=Qv_out_0) "outlet volume flow rate";
-  Units.VolumeFlowRate Qvm(start=(Qv_in_0+Qv_out_0)/2) "Mean volume flow rate";
+  Units.InletVolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
+  Units.OutletVolumeFlowRate Qv_out(start=Qv_out_0) "outlet volume flow rate";
+  Units.InletVolumeFlowRate Qvm(start=(Qv_in_0+Qv_out_0)/2) "Mean volume flow rate";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";
@@ -78,7 +78,7 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   replaceable Partial.Connectors.FluidOutlet C_out(
     Q(start=Q_out_0, nominal=Q_out_0),
-    P(start=P_out_0, nominal=P_in_0),
+    P(start=P_out_0, nominal=P_out_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
 protected
   parameter Medium.ThermodynamicState state_in_0 = Medium.setState_phX(P_in_0, h_in_0, Xi_in_0);
