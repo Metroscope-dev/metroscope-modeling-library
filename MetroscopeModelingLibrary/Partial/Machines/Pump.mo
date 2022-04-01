@@ -52,13 +52,13 @@ equation
   R = VRot/VRotn;
 
   // Pump characteristics
-  hn = noEvent(a1*Qvm^2 + a2*Qvm*R + a3*R^2);
-  rh = noEvent(max(if (R > 1e-5) then b1*Qvm^2/R^2 + b2*Qvm/R + b3 else b3, rhmin));
+  hn = noEvent(a1*Qv_in^2 + a2*Qv_in*R + a3*R^2);
+  rh = noEvent(max(if (R > 1e-5) then b1*Qv_in^2/R^2 + b2*Qv_in/R + b3 else b3, rhmin));
 
   // Mechanical power
   //Wm = C_power.W; // C_power.W is positive since it is power fed to the component
   Wm = W/rm; // Wm is positive since it is the power produced by the pump
 
   // Hydraulic power
-  Wh = Qvm*DP / rh;
+  Wh = Qv_in*DP / rh;
 end Pump;
