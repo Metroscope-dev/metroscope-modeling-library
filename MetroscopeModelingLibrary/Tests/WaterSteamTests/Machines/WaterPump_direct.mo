@@ -26,6 +26,10 @@ model WaterPump_direct
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,-48})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource powerSource annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,50})));
 equation
   // Boundary conditions
   source.P_out = source_P;
@@ -47,4 +51,5 @@ equation
   connect(pump.C_in, source.C_out) annotation (Line(points={{-10,0},{-61,0}}, color={28,108,200}));
   connect(pump.C_out, sink.C_in) annotation (Line(points={{10,0},{71,0}}, color={28,108,200}));
   connect(pump.VRot, pump_VRot_sensor.VRot) annotation (Line(points={{0,-12},{0,-37.8},{1.77636e-15,-37.8}}, color={0,0,127}));
+  connect(pump.C_power, powerSource.C_W_out) annotation (Line(points={{0,10.8},{0,28},{-8.88178e-16,28},{-8.88178e-16,45.2}}, color={244,125,35}));
 end WaterPump_direct;
