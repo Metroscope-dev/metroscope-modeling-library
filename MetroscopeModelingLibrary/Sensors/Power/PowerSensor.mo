@@ -12,7 +12,6 @@ model PowerSensor
 equation
   // Conservation of power
   C_in.W + C_out.W = 0; // C_out.W < 0 if power flows out of component, as for mass flows
-  C_in.unused = C_out.unused;
 
   // Measure
   W = C_in.W;
