@@ -25,8 +25,8 @@ model WaterPipeTest_reverse
 
   WaterSteam.Pipes.WaterPipe pipe annotation (Placement(transformation(extent={{-6.5,-16.3333},{26.5,16.3333}})));
 
-  Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
-  Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
 equation
   // Boundary conditions
   source.h_out = h_source;

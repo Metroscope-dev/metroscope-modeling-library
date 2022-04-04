@@ -22,10 +22,10 @@ model WaterControlValve_direct
 
   WaterSteam.Pipes.WaterControlValve control_valve annotation (Placement(transformation(extent={{-6.5,-5.93938},{26.5,26.7272}})));
 
-  Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
-  Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
-  Sensors.Other.OpeningSensor CV_opening_sensor annotation (Placement(transformation(extent={{0,40},{20,60}})));
-  Sensors.WaterSteam.WaterPressureSensor CV_P_out_sensor annotation (Placement(transformation(extent={{52,-6},{64,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
+  MetroscopeModelingLibrary.Sensors.Other.OpeningSensor CV_opening_sensor annotation (Placement(transformation(extent={{0,40},{20,60}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor CV_P_out_sensor annotation (Placement(transformation(extent={{52,-6},{64,6}})));
 equation
   // Boundary conditions
   source.h_out = source_h;

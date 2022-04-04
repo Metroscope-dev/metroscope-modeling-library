@@ -25,9 +25,10 @@ model SteamExtractionSplitterTest_reverse
         rotation=-90,
         origin={0,-70})));
 
-  Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-76,-6},{-64,6}})));
-  Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-56,-6},{-44,6}})));
-  Sensors.WaterSteam.WaterFlowSensor extracted_Q_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-76,-6},{-64,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-56,-6},{-44,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor extracted_Q_sensor
+    annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,-44})));

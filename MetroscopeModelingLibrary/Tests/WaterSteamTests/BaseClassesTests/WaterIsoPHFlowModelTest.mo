@@ -3,8 +3,8 @@ model WaterIsoPHFlowModelTest
   WaterSteam.BaseClasses.WaterIsoPHFlowModel waterIsoPHFlowModel annotation (Placement(transformation(extent={{5,-23},{51,23}})));
   WaterSteam.BoundaryConditions.WaterSource waterSource annotation (Placement(transformation(extent={{-109,-19},{-71,19}})));
   WaterSteam.BoundaryConditions.WaterSink waterSink annotation (Placement(transformation(extent={{66,-19.5},{106,19.5}})));
-  Sensors.WaterSteam.WaterPressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
-  Sensors.WaterSteam.WaterFlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
 equation
   waterSource.h_out = 1e6;
 
