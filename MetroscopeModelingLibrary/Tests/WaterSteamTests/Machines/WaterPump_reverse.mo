@@ -27,17 +27,21 @@ model WaterPump_reverse
 
   WaterSteam.Machines.WaterPump pump annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={-30,0})));
   WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={-70,0})));
-  WaterSteam.BoundaryConditions.WaterSink waterSink annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={80,0})));
+  WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={80,0})));
   Sensors.WaterSteam.WaterTemperatureSensor pump_T_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   Sensors.WaterSteam.WaterPressureSensor pump_P_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={40,0})));
+  Sensors.Other.VRotSensor pump_VRot_sensor annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-30,-46})));
 equation
   // Boundary conditions
   source.P_out = source_P;
   source.T_out = source_T;
   source.Q_out = source_Q;
+  pump_VRot_sensor.VRot = pump_VRot;
 
   // Component parameters
-  pump.VRot = pump_VRot;
   pump.VRotn = pump_VRotn;
   pump.rm = pump_rm;
   pump.a1 = pump_a1;
@@ -57,5 +61,6 @@ equation
   connect(pump.C_in, source.C_out) annotation (Line(points={{-40,0},{-65,0}}, color={28,108,200}));
   connect(pump.C_out, pump_T_out_sensor.C_in) annotation (Line(points={{-20,0},{-10,0}}, color={28,108,200}));
   connect(pump_T_out_sensor.C_out, pump_P_out_sensor.C_in) annotation (Line(points={{10,0},{30,0}}, color={28,108,200}));
-  connect(pump_P_out_sensor.C_out, waterSink.C_in) annotation (Line(points={{50,0},{75,0}}, color={28,108,200}));
+  connect(pump_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{50,0},{75,0}}, color={28,108,200}));
+  connect(pump.VRot, pump_VRot_sensor.VRot) annotation (Line(points={{-30,-12},{-30,-35.8}}, color={0,0,127}));
 end WaterPump_reverse;

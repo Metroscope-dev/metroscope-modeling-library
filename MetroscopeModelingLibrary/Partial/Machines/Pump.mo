@@ -11,7 +11,6 @@ partial model Pump
   import MetroscopeModelingLibrary.Constants;
 
   Real VRotn(start=1400, min=0, nominal=2000) "Nominal rotational speed";
-  Inputs.InputReal VRot(start=1400, min=0, nominal=2000) "rotational speed";
   Inputs.InputReal a1(start=-88.67) "x^2 coef. of the pump characteristics hn = f(vol_flow) (s2/m5)";
   Inputs.InputReal a2(start=0) "x coef. of the pump characteristics hn = f(vol_flow) (s/m2)";
   Inputs.InputReal a3(start=43.15) "Constant coef. of the pump characteristics hn = f(vol_flow) (m)";
@@ -29,11 +28,14 @@ partial model Pump
   Units.Power Wh "Hydraulic power";
   Inputs.InputPower Wm "Mechanical power";
 
-  /*Modelica.Blocks.Interfaces.RealInput VRot annotation (Placement(
-        transformation(extent={{0,-142},{40,-102}}), iconTransformation(
+  Modelica.Blocks.Interfaces.RealInput VRot "Pump rotational speed" annotation (Placement(
+        transformation(extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={0,-98}),                             iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={0,-120})));
+  /*
   Electrical.Connectors.C_power C_power "Electrical alimentation of the pump" annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
