@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.BaseClasses;
-partial model BaseClassIcon "should be extended in partial base classes"
+partial record BaseClassIcon "should be extended in partial base classes"
   annotation (Icon(graphics={   Rectangle(
           extent={{-100,40},{100,-40}},
           lineColor={0,0,0},

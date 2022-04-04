@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Icons.Machines;
-model PumpIcon
+partial record PumpIcon
+  extends Icons.KeepingScaleIcon;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=true,
