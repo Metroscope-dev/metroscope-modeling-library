@@ -22,7 +22,7 @@ model WaterPump_direct
   WaterSteam.Machines.WaterPump pump annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-76,-10},{-56,10}})));
   WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(extent={{66,-10},{86,10}})));
-  Sensors.Other.VRotSensor pump_VRot_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.Other.VRotSensor pump_VRot_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,-48})));

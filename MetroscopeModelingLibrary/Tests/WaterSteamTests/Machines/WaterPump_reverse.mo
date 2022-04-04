@@ -28,9 +28,9 @@ model WaterPump_reverse
   WaterSteam.Machines.WaterPump pump annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={-30,0})));
   WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={-70,0})));
   WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={80,0})));
-  Sensors.WaterSteam.WaterTemperatureSensor pump_T_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  Sensors.WaterSteam.WaterPressureSensor pump_P_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={40,0})));
-  Sensors.Other.VRotSensor pump_VRot_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor pump_T_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor pump_P_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={40,0})));
+  MetroscopeModelingLibrary.Sensors.Other.VRotSensor pump_VRot_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-30,-46})));
@@ -43,7 +43,7 @@ equation
   source.P_out = source_P;
   source.T_out = source_T;
   source.Q_out = source_Q;
-  pump_VRot_sensor.VRot = pump_VRot;
+  pump_VRot_sensor.VRot = pump_VRot; // Could be replaced by power fed to component
 
   // Component parameters
   pump.VRotn = pump_VRotn;
