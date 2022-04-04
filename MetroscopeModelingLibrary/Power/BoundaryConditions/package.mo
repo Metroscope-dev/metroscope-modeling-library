@@ -1,14 +1,7 @@
 within MetroscopeModelingLibrary.Power;
 package BoundaryConditions
-
-  model PowerSource
-    extends MetroscopeModelingLibrary.Icons.BoundaryConditions.PowerSourceIcon;
-  end PowerSource;
-
-  model PowerSink
-    extends MetroscopeModelingLibrary.Icons.BoundaryConditions.PowerSinkIcon;
-  end PowerSink;
-  annotation (Icon(graphics={
+  
+annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
           fillColor={248,248,248},
