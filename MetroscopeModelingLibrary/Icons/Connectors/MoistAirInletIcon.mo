@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
-partial connector MoistAirInletIcon
+partial record MoistAirInletIcon
   annotation (Icon(graphics={
         Rectangle(
           extent={{-100,100},{100,-100}},

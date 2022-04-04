@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.BoundaryConditions;
-partial model MoistAirSourceIcon
+partial record MoistAirSourceIcon
   extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   annotation (Icon(graphics={
         Ellipse(

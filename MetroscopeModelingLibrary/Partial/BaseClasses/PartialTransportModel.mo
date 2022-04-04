@@ -27,9 +27,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.SpecificEnthalpy h_out "Outlet specific enthalpy";
   Units.SpecificEnthalpy hm "Average specific enthalpy";
   // Mass flow rate
-  Units.MassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
-  Units.MassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
-  Units.MassFlowRate Qm(start=(Q_in_0 + Q_out_0)/2) "Mean Mass flow rate";
+  Units.InletMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
+  Units.OutletMassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
+  Units.InletMassFlowRate Qm(start=(Q_in_0 + Q_out_0)/2) "Mean Mass flow rate";
   // Pressures
   Units.Pressure P_in(start=P_in_0) "Inlet Pressure";
   Units.Pressure P_out(start=P_out_0) "Outlet Pressure";
@@ -47,9 +47,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.Density rhom "Average Fluid density";
 
   // Volumic flow rates
-  Units.VolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
-  Units.VolumeFlowRate Qv_out(start=Qv_out_0) "outlet volume flow rate";
-  Units.VolumeFlowRate Qvm(start=(Qv_in_0+Qv_out_0)/2) "Mean volume flow rate";
+  Units.InletVolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
+  Units.OutletVolumeFlowRate Qv_out(start=Qv_out_0) "outlet volume flow rate";
+  Units.InletVolumeFlowRate Qvm(start=(Qv_in_0+Qv_out_0)/2) "Mean volume flow rate";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";
@@ -73,7 +73,7 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   replaceable Partial.Connectors.FluidOutlet C_out(
     Q(start=Q_out_0, nominal=Q_out_0),
-    P(start=P_out_0, nominal=P_in_0),
+    P(start=P_out_0, nominal=P_out_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
 equation
   // ------ Input Quantities ------

@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.Sensors;
-partial model MoistAirSensorIcon "should be extended in partial base classes"
+partial record MoistAirSensorIcon "should be extended in partial base classes"
   extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   annotation (Icon(
       graphics={

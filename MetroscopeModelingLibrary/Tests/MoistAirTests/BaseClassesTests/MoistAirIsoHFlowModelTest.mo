@@ -3,8 +3,8 @@ model MoistAirIsoHFlowModelTest
   MoistAir.BaseClasses.MoistAirIsoHFlowModel moist_air_IsoPFlowModel annotation (Placement(transformation(extent={{5,-23},{51,23}})));
   MoistAir.BoundaryConditions.MoistAirSource moist_air_Source annotation (Placement(transformation(extent={{-109,-19},{-71,19}})));
   MoistAir.BoundaryConditions.MoistAirSink moist_air_Sink annotation (Placement(transformation(extent={{66,-19.5},{106,19.5}})));
-  Sensors.MoistAir.MoistAirPressureSensor moist_air_PressureSensor annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
-  Sensors.MoistAir.MoistAirFlowSensor moist_air_FlowSensor annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
+  MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirPressureSensor moist_air_PressureSensor annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
+  MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirFlowSensor moist_air_FlowSensor annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
 equation
   moist_air_IsoPFlowModel.DP_input = 0;
 

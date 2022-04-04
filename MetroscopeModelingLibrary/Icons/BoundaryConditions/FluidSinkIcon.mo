@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.BoundaryConditions;
-partial model FluidSinkIcon
+partial record FluidSinkIcon
   extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   annotation (Icon(graphics={
         Ellipse(

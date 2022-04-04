@@ -40,20 +40,17 @@ model Condenser_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-44})));
-  Sensors.WaterSteam.WaterPressureSensor P_cond_sensor annotation (Placement(
-        transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cond_sensor annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={1,25})));
-  Sensors.WaterSteam.WaterTemperatureSensor circulating_water_T_out_sensor
-    annotation (Placement(transformation(extent={{24,-6},{34,4}})));
-  Sensors.WaterSteam.WaterTemperatureSensor condensate_temperature_sensor
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor circulating_water_T_out_sensor annotation (Placement(transformation(extent={{24,-6},{34,4}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor condensate_temperature_sensor
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={-1,-21})));
-  Sensors.WaterSteam.WaterPressureSensor circulating_water_P_out_sensor
-    annotation (Placement(transformation(extent={{40,-6},{50,4}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor circulating_water_P_out_sensor annotation (Placement(transformation(extent={{40,-6},{50,4}})));
 equation
 
   // Boundary Conditions
