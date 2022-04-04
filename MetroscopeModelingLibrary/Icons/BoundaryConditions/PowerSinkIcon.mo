@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Icons.BoundaryConditions;
 partial record PowerSinkIcon
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  extends Icons.KeepingScaleIcon;
+  annotation (Icon(graphics={
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={0,0,0},
@@ -14,5 +15,5 @@ partial record PowerSinkIcon
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
         Line(points={{-15,35},{55,-35}}, color={0,0,0}),
-        Line(points={{-15,-35},{55,35}}, color={0,0,0})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+        Line(points={{-15,-35},{55,35}}, color={0,0,0})}));
 end PowerSinkIcon;
