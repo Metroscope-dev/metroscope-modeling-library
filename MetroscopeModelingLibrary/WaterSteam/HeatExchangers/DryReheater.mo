@@ -8,7 +8,7 @@ model DryReheater
   Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputArea S_condensing;
-  Inputs.InputHeatExchangeCoefficient Kth;
+  Units.HeatExchangeCoefficient Kth;
 
   Units.SpecificEnthalpy h_vap_sat;
   Units.SpecificEnthalpy h_liq_sat;
@@ -17,8 +17,8 @@ model DryReheater
   Units.Power W_condensing;
   parameter String HX_config="condenser_counter_current";
 
-  Units.MassFlowRate Q_cold;
-  Units.MassFlowRate Q_hot;
+  Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
+  Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in;
   Units.Temperature T_cold_out;
   Units.Temperature T_hot_in;
@@ -74,8 +74,8 @@ equation
   T_hot_in = hot_side_deheating.T_in;
   T_hot_out = hot_side_condensing.T_out;
 
-  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
+  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
 
 
   // Pressure losses

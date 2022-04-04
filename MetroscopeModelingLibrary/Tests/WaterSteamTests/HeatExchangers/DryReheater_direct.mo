@@ -3,7 +3,7 @@ model DryReheater_direct
 
   extends Modelica.Icons.Example;
 
-  /*  // Boundary conditions
+  // Boundary conditions
   input Real P_hot_source(start=50, min=0, nominal=10) "barA";
   input Units.MassFlowRate Q_hot_source(start=50) "kg/s";
   input Real T_hot_source(start = 100, min = 0, nominal = 50) "degC";
@@ -11,9 +11,8 @@ model DryReheater_direct
   input Real P_cold_source(start=20, min=0, nominal=10) "barA";
   input Units.MassFlowRate Q_cold_source(start=100) "kg/s";
   input Real T_cold_source(start = 50, min = 0, nominal = 50) "degC";
-  */
 
-    // Parameters
+  // Parameters
   parameter Units.Area S = 100;
   parameter Units.HeatExchangeCoefficient Kth = 61e3;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
