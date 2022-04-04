@@ -35,12 +35,10 @@ partial model Pump
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={0,-120})));
-  /*
   Electrical.Connectors.C_power C_power "Electrical alimentation of the pump" annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,112})));
-  */
 equation
   DP = rhom*Constants.g*hn;
 
