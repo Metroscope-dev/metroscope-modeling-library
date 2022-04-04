@@ -20,6 +20,8 @@ OutletMassFlowRate
 MassFraction
 Temperature
 Power
+InletPower
+OutletPower
 Pressure
 SpecificEnthalpy
 Velocity

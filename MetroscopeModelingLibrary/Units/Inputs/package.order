@@ -13,6 +13,8 @@ InputInletMassFlowRate
 InputOutletMassFlowRate
 InputMassFraction
 InputPower
+InputInletPower
+InputOutletPower
 InputPressure
 InputSpecificEnthalpy
 InputReal
