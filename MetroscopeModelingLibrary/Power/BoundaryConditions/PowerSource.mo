@@ -6,4 +6,5 @@ model PowerSource
   Connectors.PowerOutlet C_W_out annotation (Placement(transformation(extent={{38,-10},{58,10}}), iconTransformation(extent={{38,-10},{58,10}})));
 equation
   W_out = C_W_out.W;
+  C_W_out.unused = 0;
 end PowerSource;
