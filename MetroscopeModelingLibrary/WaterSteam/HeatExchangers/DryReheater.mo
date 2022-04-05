@@ -10,8 +10,8 @@ model DryReheater
   Inputs.InputArea S_condensing;
   Units.HeatExchangeCoefficient Kth;
 
-  Units.SpecificEnthalpy h_vap_sat;
-  Units.SpecificEnthalpy h_liq_sat;
+  Units.SpecificEnthalpy h_vap_sat(start=2e6);
+  Units.SpecificEnthalpy h_liq_sat(start=1e5);
 
   Units.Power W_deheating;
   Units.Power W_condensing;

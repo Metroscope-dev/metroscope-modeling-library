@@ -5,10 +5,10 @@ model Condenser
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
-  Units.Height water_height;
+  Inputs.InputHeight water_height;
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputArea S;
-  Inputs.InputHeatExchangeCoefficient Kth;
+  Units.HeatExchangeCoefficient Kth;
   Units.VolumeFlowRate Qv_cold_in;
 
   parameter String QCp_max_side = "cold";
