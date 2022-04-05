@@ -5,10 +5,10 @@ model Condenser
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
-  Units.Height water_height;
+  Inputs.InputHeight water_height;
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputArea S;
-  Inputs.InputHeatExchangeCoefficient Kth;
+  Units.HeatExchangeCoefficient Kth;
   Units.VolumeFlowRate Qv_cold_in;
 
   parameter String QCp_max_side = "cold";
@@ -37,10 +37,10 @@ model Condenser
   Connectors.WaterInlet C_cold_in(Q(start=Q_cold_0))
     annotation (Placement(transformation(extent={{-114,40},{-94,60}}),
         iconTransformation(extent={{-114,40},{-94,60}})));
-  Connectors.WaterInlet C_hot_in(Q(start=Q_hot_0),P(start=Psat_0, nominal=Psat_0))
+  Connectors.WaterInlet C_hot_in(Q(start=Q_hot_0), P(start=Psat_0, nominal=Psat_0))
     annotation (Placement(transformation(extent={{-10,90},{10,110}}),
         iconTransformation(extent={{-10,90},{10,110}})));
-  Connectors.WaterOutlet C_hot_out(Q(start=Q_cold_0),P(start=Psat_0, nominal=Psat_0))
+  Connectors.WaterOutlet C_hot_out(Q(start=Q_cold_0), P(start=Psat_0, nominal=Psat_0))
     annotation (Placement(transformation(extent={{-10,-94},{10,-74}}),
         iconTransformation(extent={{-10,-94},{10,-74}})));
   Connectors.WaterOutlet C_cold_out(Q(start=-Q_cold_0))
@@ -55,7 +55,7 @@ model Condenser
         origin={0,22})));
   BaseClasses.WaterIsoPFlowModel cold_side(Q_0=Q_cold_0)
     annotation (Placement(transformation(extent={{-24,-30},{24,18}})));
-  Pipes.WaterPipe water_height_pipe(Q_0=Q_hot_0, P_in_0 = Psat_0, P_out_0 = Psat_0) annotation (Placement(transformation(
+  Pipes.WaterPipe water_height_pipe(Q_0=Q_hot_0, P_in_0 = Psat_0, P_out_0 = Psat_0, h(start=2.46e5)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,-46})));

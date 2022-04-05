@@ -23,7 +23,6 @@ model Condenser_reverse
     // Inputs for calibration
   input Real P_cond(start = 0.19e5) "Pa";
 
-
   WaterSteam.BoundaryConditions.WaterSource cooling_source
     annotation (Placement(transformation(extent={{-58,-6},{-38,14}})));
   WaterSteam.BoundaryConditions.WaterSink cooling_sink

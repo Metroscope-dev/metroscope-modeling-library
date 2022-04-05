@@ -3,17 +3,14 @@ model DryReheater_direct
 
   extends Modelica.Icons.Example;
 
-  /*  // Boundary conditions
-  input Real P_hot_source(start=50, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_hot_source(start=50) "kg/s";
-  input Real T_hot_source(start = 100, min = 0, nominal = 50) "degC";
+  // Boundary conditions
+  input Units.Pressure P_hot_source(start=11e5, min=0, nominal=11e5) "Pa";
+  input Units.Pressure P_cold_source(start=50e5, min=0, nominal=50e5) "Pa";
+  input Units.OutletMassFlowRate Q_cold_source(start=-500) "kg/s";
+  input Units.SpecificEnthalpy cold_source_h_out(start=5.5e5) "J/kg";
+  input Units.SpecificEnthalpy hot_source_h_out(start=2.5e6) "J/kg";
 
-  input Real P_cold_source(start=20, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_cold_source(start=100) "kg/s";
-  input Real T_cold_source(start = 50, min = 0, nominal = 50) "degC";
-  */
-
-    // Parameters
+  // Parameters
   parameter Units.Area S = 100;
   parameter Units.HeatExchangeCoefficient Kth = 61e3;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
@@ -23,8 +20,7 @@ model DryReheater_direct
     annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   WaterSteam.BoundaryConditions.WaterSink cold_sink
     annotation (Placement(transformation(extent={{40,-10},{60,10}})));
-  WaterSteam.HeatExchangers.DryReheater
-                                     dryReheater
+  WaterSteam.HeatExchangers.DryReheater dryReheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
   WaterSteam.BoundaryConditions.WaterSource hot_source annotation (Placement(
         transformation(
@@ -37,14 +33,15 @@ model DryReheater_direct
         rotation=270,
         origin={0,-30})));
 equation
+  // Boundary conditions
+  hot_source.P_out = P_hot_source;
+  hot_source.h_out = hot_source_h_out;
 
-  hot_source.P_out = 11e5;
-  hot_source.h_out = 2.5e6;
+  cold_source.P_out = P_cold_source;
+  cold_source.h_out = cold_source_h_out;
+  cold_source.Q_out = Q_cold_source;
 
-  cold_source.P_out = 50e5;
-  cold_source.h_out = 549552;
-  cold_source.Q_out = - 500;
-
+  // Component parameters
   dryReheater.S_condensing = S;
   dryReheater.Kth = Kth;
   dryReheater.Kfr_hot = Kfr_hot;
@@ -58,7 +55,4 @@ equation
           25},{-8.88178e-16,16.5},{0,16.5},{0,8}}, color={28,108,200}));
   connect(cold_source.C_out, dryReheater.C_cold_in)
     annotation (Line(points={{-43,0},{-16.2,0}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
-            {100,80}})),Diagram(coordinateSystem(preserveAspectRatio=false,
-          extent={{-100,-100},{100,100}})));
 end DryReheater_direct;

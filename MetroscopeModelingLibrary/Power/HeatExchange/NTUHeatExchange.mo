@@ -10,7 +10,6 @@ model NTUHeatExchange
   Inputs.InputArea S "Heat exchange surface";
   Inputs.InputHeatExchangeCoefficient Kth "Heat exchange coefficient";
 
-
   /* Exchanger output */
   Units.Power W;
 
@@ -73,11 +72,16 @@ equation
     Cr = QCpMIN/QCpMAX;
     NTU = Kth*S/QCpMIN;
     epsilon = 1 - exp(-NTU);
+  else // Added this forbidden case to simplify model checking, but it is anyway overriden by assert below
+    QCpMAX = 0;
+    QCpMIN = 0;
 
+    Cr = 0;
+    NTU = 0;
+    epsilon = 0;
   end if;
 
-
-
+  assert(config=="condenser_counter_current" or config=="monophasic_counter_current", "config parameter of NTUHeatExchange should be one of 'monophasic_counter_current', 'condenser_counter_current'");
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(
