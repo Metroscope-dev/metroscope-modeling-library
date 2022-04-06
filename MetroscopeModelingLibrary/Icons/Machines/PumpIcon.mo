@@ -1,9 +1,8 @@
 within MetroscopeModelingLibrary.Icons.Machines;
 partial record PumpIcon
-  extends Icons.KeepingScaleIcon;
+  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   annotation (
     Diagram(coordinateSystem(
-        preserveAspectRatio=true,
         extent={{-100,-100},{100,100}},
         grid={2,2}), graphics={
         Ellipse(
@@ -15,7 +14,6 @@ partial record PumpIcon
         Line(points={{80,0},{2,60}}),
         Line(points={{80,0},{0,-60}})}),
     Icon(coordinateSystem(
-        preserveAspectRatio=true,
         extent={{-100,-100},{100,100}},
         grid={2,2}), graphics={
         Ellipse(
