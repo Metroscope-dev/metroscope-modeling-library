@@ -11,8 +11,9 @@ partial model IsoHFlowModel
 equation
   // Input Quantity
   h = h_in;
+  h_in = h_out;
 
   // Conservation equation
-  W = 0;
+  //W = 0;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end IsoHFlowModel;

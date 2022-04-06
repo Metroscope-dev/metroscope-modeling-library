@@ -12,12 +12,13 @@ model DryReheater
 
   Units.SpecificEnthalpy h_vap_sat(start=2e6);
   Units.SpecificEnthalpy h_liq_sat(start=1e5);
+  Units.Temperature Tsat;
 
   Units.Power W_deheating;
   Units.Power W_condensing;
   parameter String HX_config="condenser_counter_current";
 
-  Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
+  Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0, min=1e-5);
   Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in;
   Units.Temperature T_cold_out;
@@ -69,10 +70,11 @@ equation
   // Definitions
   Q_cold = cold_side_condensing.Q_in;
   Q_hot = hot_side_deheating.Q_in;
-  T_cold_in = cold_side_condensing.T_in;
+  T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side_deheating.T_out;
-  T_hot_in = hot_side_deheating.T_in;
+  T_hot_in = hot_side_pipe.T_in;
   T_hot_out = hot_side_condensing.T_out;
+  Tsat = hot_side_deheating.T_out;
 
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
@@ -81,7 +83,6 @@ equation
   // Pressure losses
   cold_side_pipe.z1 = 0;
   cold_side_pipe.z2 = 0;
-  //connect(cold_side_pipe.Kfr, Kfr_cold);
   cold_side_pipe.Kfr = Kfr_cold;
   hot_side_pipe.z1 = 0;
   hot_side_pipe.z2 = 0;
@@ -91,20 +92,20 @@ equation
   /* Deheating */
   // Energy balance
   hot_side_deheating.W + cold_side_deheating.W = 0;
-  hot_side_deheating.W = W_deheating;
+  cold_side_deheating.W = W_deheating;
 
   // Power Exchange
   if hot_side_deheating.h_in > h_vap_sat then
       hot_side_deheating.h_out = h_vap_sat; // if steam is superheated, it is first deheated
   else
-      W_deheating = 0;
+      hot_side_deheating.h_out = hot_side_deheating.h_in;
   end if;
 
 
   /* Condensing */
   // Energy Balance
   hot_side_condensing.W + cold_side_condensing.W = 0;
-  hot_side_condensing.W = W_condensing;
+  cold_side_condensing.W = W_condensing;
 
   // Power Exchange
   hot_side_condensing.h_out = h_liq_sat;
@@ -115,9 +116,10 @@ equation
   HX_condensing.Q_cold = Q_cold;
   HX_condensing.Q_hot = Q_hot;
   HX_condensing.T_cold_in = cold_side_condensing.T_in;
-  HX_condensing.T_hot_in = hot_side_condensing.T_in;
+  HX_condensing.T_hot_in = Tsat;
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
   HX_condensing.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side_condensing.state_in);
+
   connect(cold_side_deheating.C_out, C_cold_out) annotation (Line(
       points={{96,-34},{144,-34},{144,0},{160,0}},
       color={28,108,200},

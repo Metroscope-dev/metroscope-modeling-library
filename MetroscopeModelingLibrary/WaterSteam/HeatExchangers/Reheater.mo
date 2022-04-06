@@ -27,9 +27,7 @@ model Reheater
 
   Units.SpecificEnthalpy h_vap_sat(start=2e6);
   Units.SpecificEnthalpy h_liq_sat(start=1e5);
-
-
-
+  Units.Temperature Tsat;
 
   parameter String HX_config_condensing="condenser_counter_current";
   parameter String HX_config_subcooling= "monophasic_counter_current";
@@ -99,19 +97,19 @@ equation
   // Definitions
   Q_cold = cold_side_condensing.Q_in;
   Q_hot = hot_side_deheating.Q_in;
-  T_cold_in = cold_side_condensing.T_in;
+  T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side_deheating.T_out;
-  T_hot_in = hot_side_deheating.T_in;
-  T_hot_out = hot_side_condensing.T_out;
+  T_hot_in = hot_side_pipe.T_in;
+  T_hot_out = hot_side_subcooling.T_out;
   W_tot = W_deheating + W_condensing + W_subcooling;
 
+  Tsat = hot_side_deheating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
 
   // Pressure losses
   cold_side_pipe.z1 = 0;
   cold_side_pipe.z2 = 0;
-  //connect(cold_side_pipe.Kfr, Kfr_cold);
   cold_side_pipe.Kfr = Kfr_cold;
   hot_side_pipe.z1 = 0;
   hot_side_pipe.z2 = 0;
@@ -120,13 +118,13 @@ equation
   /* Deheating */
   // Energy balance
   hot_side_deheating.W + cold_side_deheating.W = 0;
-  hot_side_deheating.W = W_deheating;
+  cold_side_deheating.W = W_deheating;
 
   // Power Exchange
   if hot_side_deheating.h_in > h_vap_sat then
       hot_side_deheating.h_out = h_vap_sat; // if steam is superheated, it is first deheated
   else
-      W_deheating = 0;
+      hot_side_deheating.h_out = hot_side_deheating.h_in;
   end if;
 
 
@@ -137,7 +135,7 @@ equation
   /* Condensing */
   // Energy Balance
   hot_side_condensing.W + cold_side_condensing.W = 0;
-  hot_side_condensing.W = W_condensing;
+  cold_side_condensing.W = W_condensing;
 
   // Power Exchange
   hot_side_condensing.h_out = h_liq_sat;
@@ -155,7 +153,7 @@ equation
   /* Subcooling */
   // Energy Balance
   hot_side_subcooling.W + cold_side_subcooling.W = 0;
-  hot_side_subcooling.W = W_subcooling;
+  cold_side_subcooling.W = W_subcooling;
 
   // Power exchange
   HX_subcooling.W = W_subcooling;

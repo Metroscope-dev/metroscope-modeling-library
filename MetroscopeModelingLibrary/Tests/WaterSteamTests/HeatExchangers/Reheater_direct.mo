@@ -4,10 +4,10 @@ model Reheater_direct
   extends Modelica.Icons.Example;
 
   // Boundary conditions
-  input Units.Pressure P_hot_source(start=11e5, min=0, nominal=11e5) "Pa";
-  input Units.Pressure P_cold_source(start=50e5, min=0, nominal=50e5) "Pa";
-  input Units.OutletMassFlowRate Q_cold_source(start=-500) "kg/s";
-  input Units.SpecificEnthalpy cold_source_h_out(start=5.5e5) "J/kg";
+  input Real P_hot_source(start=11, min=0, nominal=11) "bar";
+  input Real P_cold_source(start=50, min=0, nominal=50) "bar";
+  input Units.InletMassFlowRate Q_cold(start=500) "kg/s";
+  input Real T_cold_in(start=50) "degC";
   input Units.SpecificEnthalpy hot_source_h_out(start=2.5e6) "J/kg";
 
   // Parameters
@@ -35,13 +35,14 @@ model Reheater_direct
         rotation=270,
         origin={0,-30})));
 equation
+
   // Boundary conditions
-  hot_source.P_out = P_hot_source;
+  hot_source.P_out = P_hot_source*1e5;
   hot_source.h_out = hot_source_h_out;
 
-  cold_source.P_out = P_cold_source;
-  cold_source.h_out = cold_source_h_out;
-  cold_source.Q_out = Q_cold_source;
+  cold_source.P_out = P_cold_source*1e5;
+  cold_source.T_out = T_cold_in + 273.15;
+  cold_source.Q_out = -Q_cold;
 
   // Component parameters
   reheater.S_tot = S_tot;

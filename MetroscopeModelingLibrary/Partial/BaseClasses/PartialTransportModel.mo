@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model PartialTransportModel "Basic fluid transport brick for all components"
 
-  replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
+  replaceable package Medium =
+      MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
@@ -126,4 +127,6 @@ equation
   P_out - P_in = DP;
   Q_in*h_in + Q_out*h_out = - W; // W = (Qh) out of component - (Qh) into component
   Q_in*Xi_in + Q_out*Xi_out = - DXi; // W = (QXi) out of component - (QXi) into component
+
+  //assert(Q_in > 1e-5, "Q_in is almost null");
 end PartialTransportModel;
