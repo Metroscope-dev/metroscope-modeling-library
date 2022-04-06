@@ -3,13 +3,15 @@ model SteamDryer
 
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
-  Real h_vap_sat;
-  Real h_liq_sat;
+  import MetroscopeModelingLibrary.Units;
 
-  Real P;
-  Real Q_in;
+  Units.SpecificEnthalpy h_vap_sat; // Saturated liquid enthalpy
+  Units.SpecificEnthalpy h_liq_sat; // Saturated steam enthalpy
 
-  Real x_steam_out;
+  Units.Pressure P(start=10e5); // Pressure in dryer
+  Units.InletMassFlowRate Q_in; // Inlet mass flow rate
+
+  Units.MassFraction x_steam_out; // Steam mass fraction at steam outlet
 
   WaterSteam.Connectors.WaterInlet C_in
     annotation (Placement(transformation(extent={{-110,30},{-90,50}}),
@@ -24,16 +26,20 @@ model SteamDryer
     annotation (Placement(transformation(extent={{26,-50},{46,-30}})));
 equation
 
+  // Definitions
   P = C_in.P;
-  Q_in = steam_phase.Q_in + steam_phase.Q_out;
+  Q_in = steam_phase.Q_in + liquid_phase.Q_in;
 
+  // Saturation at both outlets
+  h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P));
+  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
   steam_phase.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
   liquid_phase.h_out = h_liq_sat;
 
+  // Energy balance
   steam_phase.W + liquid_phase.W = 0;
 
-  h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P));
-  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
+
 
   connect(liquid_phase.C_in, C_in) annotation (Line(points={{26,-40},{-40,-40},{
           -40,40},{-100,40}},
