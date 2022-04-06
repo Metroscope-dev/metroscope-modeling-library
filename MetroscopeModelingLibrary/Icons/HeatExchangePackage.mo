@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons;
-partial record HeatExchangePackage
+partial package HeatExchangePackage
    annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
       Rectangle(
         lineColor={200,200,200},
@@ -12,29 +12,40 @@ partial record HeatExchangePackage
         extent={{-100,-100},{100,100}},
         radius=25.0),
         Polygon(
-          points={{-66,-70},{-48,-70},{-48,-64},{-50,-52},{-54,-42},{-58,-32},{-60,
-              -26},{-60,-14},{-60,-6},{-54,10},{-52,14},{-50,22},{-48,32},{-48,38},
-              {-32,38},{-56,70},{-56,70},{-80,38},{-64,38},{-64,32},{-66,26},{-68,
-              18},{-72,10},{-74,4},{-76,-4},{-76,-14},{-76,-26},{-74,-34},{-70,-46},
-              {-66,-56},{-66,-70}},
+          points={{-68,38},{-28,38},{-48,64},{-68,38}},
           lineColor={238,46,47},
-          fillColor={238,46,47},
-          fillPattern=FillPattern.Solid),
+          fillPattern=FillPattern.HorizontalCylinder,
+          fillColor={238,46,47}),
         Polygon(
-          points={{-10,-70},{8,-70},{8,-64},{6,-52},{2,-42},{-2,-32},{-4,-26},{-4,
-              -14},{-4,-6},{2,10},{4,14},{6,22},{8,32},{8,38},{24,38},{0,70},{0,
-              70},{-24,38},{-8,38},{-8,32},{-10,26},{-12,18},{-16,10},{-18,4},{-20,
-              -4},{-20,-14},{-20,-26},{-18,-34},{-14,-46},{-10,-56},{-10,-70}},
+          points={{-8,42},{6,42},{6,32},{2,22},{0,6},{2,-8},{4,-20},{2,-40},{-2,
+              -56},{-2,-66},{-14,-66},{-14,-54},{-10,-40},{-8,-26},{-10,-8},{
+              -12,8},{-10,22},{-6,34},{-6,44},{-8,42}},
           lineColor={238,46,47},
-          fillColor={238,46,47},
-          fillPattern=FillPattern.Solid),
+          fillPattern=FillPattern.HorizontalCylinder,
+          fillColor={238,46,47}),
         Polygon(
-          points={{48,-70},{66,-70},{66,-64},{64,-52},{60,-42},{56,-32},{54,-26},
-              {54,-14},{54,-6},{60,10},{62,14},{64,22},{66,32},{66,38},{82,38},{
-              58,70},{58,70},{34,38},{50,38},{50,32},{48,26},{46,18},{42,10},{40,
-              4},{38,-4},{38,-14},{38,-26},{40,-34},{44,-46},{48,-56},{48,-70}},
+          points={{-20,38},{20,38},{0,64},{-20,38}},
           lineColor={238,46,47},
-          fillColor={238,46,47},
-          fillPattern=FillPattern.Solid)}),                      Diagram(
+          fillPattern=FillPattern.HorizontalCylinder,
+          fillColor={238,46,47}),
+        Polygon(
+          points={{40,42},{54,42},{54,32},{50,22},{48,6},{50,-8},{52,-20},{50,
+              -40},{46,-56},{46,-66},{34,-66},{34,-54},{38,-40},{40,-26},{38,-8},
+              {36,8},{38,22},{42,34},{42,44},{40,42}},
+          lineColor={238,46,47},
+          fillPattern=FillPattern.HorizontalCylinder,
+          fillColor={238,46,47}),
+        Polygon(
+          points={{28,38},{68,38},{48,64},{28,38}},
+          lineColor={238,46,47},
+          fillPattern=FillPattern.HorizontalCylinder,
+          fillColor={238,46,47}),
+        Polygon(
+          points={{-56,42},{-42,42},{-42,32},{-46,22},{-48,6},{-46,-8},{-44,-20},
+              {-46,-40},{-50,-56},{-50,-66},{-62,-66},{-62,-54},{-58,-40},{-56,
+              -26},{-58,-8},{-60,8},{-58,22},{-54,34},{-54,44},{-56,42}},
+          lineColor={238,46,47},
+          fillPattern=FillPattern.HorizontalCylinder,
+          fillColor={238,46,47})}),                              Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end HeatExchangePackage;
