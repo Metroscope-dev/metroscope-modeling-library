@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
 partial record WaterOutletIcon
+  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   annotation (Icon(graphics={
         Rectangle(
           extent={{-100,100},{100,-100}},

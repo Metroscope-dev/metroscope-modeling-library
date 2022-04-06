@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Icons.BoundaryConditions;
 partial record PowerSourceIcon
-  extends Icons.KeepingScaleIcon;
+  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   annotation (Icon(graphics={
         Ellipse(
           extent={{-80,60},{40,-60}},
