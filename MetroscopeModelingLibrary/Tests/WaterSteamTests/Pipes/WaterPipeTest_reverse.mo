@@ -6,7 +6,7 @@ model WaterPipeTest_reverse
   input Units.SpecificEnthalpy source_h(start=1e6);
   input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
-  input Units.DifferentialHeight DZ(start=1) "m";
+  input Units.DifferentialHeight delta_z(start=1) "m";
 
   // Input: Observables
   input Units.DifferentialPressure DP(start=0.5e5) "Pa";
@@ -29,7 +29,7 @@ equation
   source.h_out = source_h;
   source.P_out = source_P;
   source.Q_out = source_Q;
-  pipe.DZ = DZ;
+  pipe.delta_z = delta_z;
 
   // Input: Observables
   DP_sensor.DP = DP;

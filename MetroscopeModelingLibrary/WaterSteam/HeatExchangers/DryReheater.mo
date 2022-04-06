@@ -81,9 +81,9 @@ equation
 
 
   // Pressure losses
-  cold_side_pipe.DZ=0;
+  cold_side_pipe.delta_z=0;
   cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.DZ=0;
+  hot_side_pipe.delta_z=0;
   hot_side_pipe.Kfr = Kfr_hot;
 
 
