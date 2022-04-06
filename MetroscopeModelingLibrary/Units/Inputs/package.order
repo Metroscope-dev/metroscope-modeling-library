@@ -9,6 +9,7 @@ InputFrictionCoefficient
 InputHeatExchangeCoefficient
 InputHeatCapacity
 InputHeight
+InputDifferentialHeight
 InputMassFlowRate
 InputInletMassFlowRate
 InputOutletMassFlowRate

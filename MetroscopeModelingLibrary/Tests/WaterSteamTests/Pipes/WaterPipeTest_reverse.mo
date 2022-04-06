@@ -3,18 +3,16 @@ model WaterPipeTest_reverse
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditions
-  input Units.SpecificEnthalpy h_source(start=1e6);
-  input Real source_P(start=10, min=0, nominal=10) "barA";
-  input Units.MassFlowRate source_Q(start=100) "kg/s";
-  input Units.Height z1(start=0) "m";
+  input Units.SpecificEnthalpy source_h(start=1e6);
+  input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
+  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.DifferentialHeight delta_z(start=1) "m";
 
   // Input: Observables
-  input Units.DifferentialPressure DP_f(start=-0.5e5) "Pa";
-  input Units.DifferentialPressure DP_z(start=0.6e5) "Pa";
+  input Units.DifferentialPressure DP(start=0.5e5) "Pa";
 
   // Output: Component parameters
   output Units.FrictionCoefficient Kfr;
-  output Units.Height z2;
 
   // Components
   WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
@@ -23,28 +21,25 @@ model WaterPipeTest_reverse
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  WaterSteam.Pipes.WaterPipe pipe annotation (Placement(transformation(extent={{-6.5,-16.3333},{26.5,16.3333}})));
+  WaterSteam.Pipes.WaterPipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
 
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterDeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,30},{10,50}})));
 equation
   // Boundary conditions
-  source.h_out = h_source;
-  source_P_sensor.P_barA = source_P;
-  source_Q_sensor.Q = source_Q;
-  pipe.z1 = z1;
+  source.h_out = source_h;
+  source.P_out = source_P;
+  source.Q_out = source_Q;
+  pipe.delta_z = delta_z;
 
   // Input: Observables
-  pipe.DP_f = DP_f;
-  pipe.DP_z = DP_z;
+  DP_sensor.DP = DP;
 
   // Output: Component parameters
   pipe.Kfr = Kfr;
-  pipe.z2 = z2;
-  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85,7.5e-06}},   color={28,108,200}));
-  connect(pipe.C_in, source_Q_sensor.C_out) annotation (Line(points={{-6.5,0},{-30,0}}, color={28,108,200}));
-  connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-42,0},{-54,0}}, color={28,108,200}));
-  connect(sink.C_in, pipe.C_out) annotation (Line(points={{85,0},{26.5,0}}, color={28,108,200}));
+  connect(sink.C_in, pipe.C_out) annotation (Line(points={{85,0},{16.5,0}}, color={28,108,200}));
+  connect(pipe.C_in, source.C_out) annotation (Line(points={{-16.5,0},{-85,0}}, color={28,108,200}));
+  connect(DP_sensor.C_out, pipe.C_out) annotation (Line(points={{10,40},{36,40},{36,0},{16.5,0}}, color={28,108,200}));
+  connect(DP_sensor.C_in, source.C_out) annotation (Line(points={{-10,40},{-36,40},{-36,0},{-85,0}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},

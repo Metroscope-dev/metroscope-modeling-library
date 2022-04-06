@@ -1,2 +1,2 @@
 within MetroscopeModelingLibrary.Units;
-type Height = SI.Position(nominal=1);
+type Height = SI.Height(nominal=1);
