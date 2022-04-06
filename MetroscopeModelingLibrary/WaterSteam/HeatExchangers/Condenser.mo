@@ -82,12 +82,10 @@ equation
   hot_side.W + cold_side.W = 0;
 
   // Pressure losses
-  cold_side_pipe.z1 = 0;
-  cold_side_pipe.z2 = 0;
+  cold_side_pipe.DZ=0;
   cold_side_pipe.Kfr = Kfr_cold;
 
-  water_height_pipe.z1 = 0;
-  water_height_pipe.z2 = - water_height;
+  water_height_pipe.DZ = - water_height;
   water_height_pipe.Kfr = 0;
 
   // Incondensables
