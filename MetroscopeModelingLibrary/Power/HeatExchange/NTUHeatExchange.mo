@@ -21,7 +21,6 @@ model NTUHeatExchange
   Inputs.InputTemperature T_hot_in "Temperature, hot side, at the inlet";
   Inputs.InputTemperature T_cold_in "Temperature, cold side, at the inlet";
 
-protected
   Real QCpMIN;
   Real QCpMAX;
   Real NTU;
@@ -72,6 +71,7 @@ equation
     Cr = QCpMIN/QCpMAX;
     NTU = Kth*S/QCpMIN;
     epsilon = 1 - exp(-NTU);
+
   else // Added this forbidden case to simplify model checking, but it is anyway overriden by assert below
     QCpMAX = 0;
     QCpMIN = 0;

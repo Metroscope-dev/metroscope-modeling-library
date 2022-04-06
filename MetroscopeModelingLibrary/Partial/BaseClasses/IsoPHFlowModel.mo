@@ -20,6 +20,6 @@ equation
 
   // Conservation equation
   DP = 0;
-  W = 0;
+  h_in = h_out;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end IsoPHFlowModel;

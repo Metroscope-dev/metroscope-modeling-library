@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
-model DryReheater_reverse
+model Reheater_reverse
 
   extends Modelica.Icons.Example;
 
@@ -11,22 +11,26 @@ model DryReheater_reverse
   input Units.SpecificEnthalpy hot_source_h_out(start=2.9e6) "J/kg";
 
   // Component Parameters
-  parameter Units.Area S = 100;
+  parameter Units.Area S_tot = 100;
+  parameter Units.Area level = 0.3;
+
   parameter Units.FrictionCoefficient Kfr_hot = 0;
 
   // Observables for calibration
   input Real P_cold_sink(start=49, min=0, nominal=50) "bar";
   input Real T_cold_sink(start=70, min=0, nominal=200) "degC";
+  input Real T_drains(start=80, min=0, nominal=200) "degC";
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
+  output Units.HeatExchangeCoefficient Kth_cond;
   output Units.FrictionCoefficient Kfr_cold;
+  output Units.HeatExchangeCoefficient Kth_subc;
 
   WaterSteam.BoundaryConditions.WaterSource cold_source
     annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   WaterSteam.BoundaryConditions.WaterSink cold_sink
     annotation (Placement(transformation(extent={{68,-10},{88,10}})));
-  WaterSteam.HeatExchangers.DryReheater dryReheater
+  WaterSteam.HeatExchangers.Reheater    reheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
   WaterSteam.BoundaryConditions.WaterSource hot_source annotation (Placement(
         transformation(
@@ -37,9 +41,14 @@ model DryReheater_reverse
         transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-36})));
+        origin={0,-56})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor T_cold_sink_sensor annotation (Placement(transformation(extent={{48,-10},{68,10}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cold_sink_sensor annotation (Placement(transformation(extent={{22,-10},{42,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor T_drains_sensor
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,-30})));
 equation
 
   // Boundary conditions
@@ -51,24 +60,32 @@ equation
   cold_source.Q_out = -Q_cold;
 
   // Component parameters
-  dryReheater.S_condensing = S;
-  dryReheater.Kfr_hot = Kfr_hot;
+  reheater.S_tot = S_tot;
+  reheater.Kfr_hot = Kfr_hot;
+  reheater.level = level;
 
   // Observables for calibration
   P_cold_sink_sensor.P_barA = P_cold_sink;
   T_cold_sink_sensor.T_degC = T_cold_sink;
+  T_drains_sensor.T_degC = T_drains;
+
 
   // Calibrated parameters
-  dryReheater.Kth = Kth;
-  dryReheater.Kfr_cold = Kfr_cold;
+  reheater.Kth_cond = Kth_cond;
+  reheater.Kfr_cold = Kfr_cold;
+  reheater.Kth_subc = Kth_subc;
 
-  connect(hot_source.C_out, dryReheater.C_hot_in) annotation (Line(points={{-8.88178e-16,
+  connect(hot_source.C_out, reheater.C_hot_in) annotation (Line(points={{-8.88178e-16,
           25},{-8.88178e-16,16.5},{0,16.5},{0,8}}, color={28,108,200}));
-  connect(cold_source.C_out, dryReheater.C_cold_in)
+  connect(cold_source.C_out, reheater.C_cold_in)
     annotation (Line(points={{-43,0},{-16.2,0}}, color={28,108,200}));
-  connect(dryReheater.C_cold_out, P_cold_sink_sensor.C_in) annotation (Line(points={{16,0},{22,0}}, color={28,108,200}));
+  connect(reheater.C_cold_out, P_cold_sink_sensor.C_in)
+    annotation (Line(points={{16,0},{22,0}}, color={28,108,200}));
   connect(P_cold_sink_sensor.C_out, T_cold_sink_sensor.C_in) annotation (Line(points={{42,0},{48,0}}, color={28,108,200}));
   connect(T_cold_sink_sensor.C_out, cold_sink.C_in) annotation (Line(points={{68,0},{73,0}}, color={28,108,200}));
-  connect(dryReheater.C_hot_out, hot_sink.C_in) annotation (Line(points={{0,-8},
-          {0,-19.5},{8.88178e-16,-19.5},{8.88178e-16,-31}}, color={28,108,200}));
-end DryReheater_reverse;
+  connect(T_drains_sensor.C_in, reheater.C_hot_out) annotation (Line(points={{1.77636e-15,
+          -20},{1.77636e-15,-14},{0,-14},{0,-8}}, color={28,108,200}));
+  connect(T_drains_sensor.C_out, hot_sink.C_in) annotation (Line(points={{-1.77636e-15,
+          -40},{-1.77636e-15,-45.5},{8.88178e-16,-45.5},{8.88178e-16,-51}},
+        color={28,108,200}));
+end Reheater_reverse;

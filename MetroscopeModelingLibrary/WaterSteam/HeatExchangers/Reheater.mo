@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
-model DryReheater
+model Reheater
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
   import MetroscopeModelingLibrary.Units;
@@ -7,18 +7,33 @@ model DryReheater
 
   Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputFrictionCoefficient Kfr_cold;
-  Inputs.InputArea S_condensing;
-  Units.HeatExchangeCoefficient Kth;
+
+  Units.Power W_tot;
+  Inputs.InputArea S_tot;
+  Inputs.InputReal level(min= 0, max=1, start = 0.3);
+
+  // Deheating
+  Units.Power W_deheating;
+
+  // Condensation
+  Units.Area S_cond;
+  Units.HeatExchangeCoefficient Kth_cond;
+  Units.Power W_condensing;
+
+  // Subcooling
+  Units.Area S_subc;
+  Inputs.InputHeatExchangeCoefficient Kth_subc;
+  Units.Power W_subcooling;
 
   Units.SpecificEnthalpy h_vap_sat(start=2e6);
   Units.SpecificEnthalpy h_liq_sat(start=1e5);
   Units.Temperature Tsat;
 
-  Units.Power W_deheating;
-  Units.Power W_condensing;
-  parameter String HX_config="condenser_counter_current";
+  parameter String HX_config_condensing="condenser_counter_current";
+  parameter String HX_config_subcooling= "monophasic_counter_current";
+  parameter String QCp_max_side_subcooling = "cold";
 
-  Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0, min=1e-5);
+  Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
   Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in;
   Units.Temperature T_cold_out;
@@ -52,20 +67,32 @@ model DryReheater
       Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
-        origin={71,19})));
+        origin={101,19})));
   BaseClasses.WaterIsoPFlowModel cold_side_deheating(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{48,-58},{96,-10}})));
+    annotation (Placement(transformation(extent={{80,-58},{128,-10}})));
   BaseClasses.WaterIsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (
       Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
-        origin={-59,21})));
+        origin={23,19})));
   BaseClasses.WaterIsoPFlowModel cold_side_condensing(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-82,-58},{-34,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config) annotation (Placement(transformation(
+    annotation (Placement(transformation(extent={{0,-58},{48,-10}})));
+  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config_condensing) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-60,0})));
+        origin={24,-6})));
+  BaseClasses.WaterIsoPFlowModel hot_side_subcooling(Q_0=Q_hot_0) annotation (
+      Placement(transformation(
+        extent={{-23,-23},{23,23}},
+        rotation=180,
+        origin={-55,19})));
+  BaseClasses.WaterIsoPFlowModel cold_side_subcooling(Q_0=Q_cold_0)
+    annotation (Placement(transformation(extent={{-78,-58},{-30,-10}})));
+  Power.HeatExchange.NTUHeatExchange HX_subcooling(config=HX_config_subcooling, QCp_max_side = QCp_max_side_subcooling)
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-54,-6})));
 equation
   // Definitions
   Q_cold = cold_side_condensing.Q_in;
@@ -73,12 +100,12 @@ equation
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side_deheating.T_out;
   T_hot_in = hot_side_pipe.T_in;
-  T_hot_out = hot_side_condensing.T_out;
-  Tsat = hot_side_deheating.T_out;
+  T_hot_out = hot_side_subcooling.T_out;
+  W_tot = W_deheating + W_condensing + W_subcooling;
 
+  Tsat = hot_side_deheating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
-
 
   // Pressure losses
   cold_side_pipe.z1 = 0;
@@ -87,7 +114,6 @@ equation
   hot_side_pipe.z1 = 0;
   hot_side_pipe.z2 = 0;
   hot_side_pipe.Kfr = Kfr_hot;
-
 
   /* Deheating */
   // Energy balance
@@ -102,6 +128,10 @@ equation
   end if;
 
 
+  /* Water level */
+  S_tot = S_cond + S_subc;  // Deheating surface is neglected
+  S_subc = level * S_tot;
+
   /* Condensing */
   // Energy Balance
   hot_side_condensing.W + cold_side_condensing.W = 0;
@@ -111,17 +141,33 @@ equation
   hot_side_condensing.h_out = h_liq_sat;
 
   HX_condensing.W = W_condensing;
-  HX_condensing.Kth = Kth;
-  HX_condensing.S = S_condensing;
+  HX_condensing.Kth = Kth_cond;
+  HX_condensing.S = S_cond;
   HX_condensing.Q_cold = Q_cold;
   HX_condensing.Q_hot = Q_hot;
   HX_condensing.T_cold_in = cold_side_condensing.T_in;
-  HX_condensing.T_hot_in = Tsat;
+  HX_condensing.T_hot_in = hot_side_condensing.T_in;
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
   HX_condensing.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side_condensing.state_in);
 
+  /* Subcooling */
+  // Energy Balance
+  hot_side_subcooling.W + cold_side_subcooling.W = 0;
+  cold_side_subcooling.W = W_subcooling;
+
+  // Power exchange
+  HX_subcooling.W = W_subcooling;
+  HX_subcooling.Kth = Kth_subc;
+  HX_subcooling.S = S_subc;
+  HX_subcooling.Q_cold = Q_cold;
+  HX_subcooling.Q_hot = Q_hot;
+  HX_subcooling.T_cold_in = cold_side_subcooling.T_in;
+  HX_subcooling.T_hot_in = hot_side_subcooling.T_in;
+  HX_subcooling.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_subcooling.state_in);
+  HX_subcooling.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side_subcooling.state_in);
+
   connect(cold_side_deheating.C_out, C_cold_out) annotation (Line(
-      points={{96,-34},{144,-34},{144,0},{160,0}},
+      points={{128,-34},{144,-34},{144,0},{160,0}},
       color={28,108,200},
       thickness=1));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
@@ -133,30 +179,39 @@ equation
       color={238,46,47},
       thickness=1));
   connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
-      points={{-1.77636e-15,46},{-1.77636e-15,40},{134,40},{134,19},{94,19}},
+      points={{-1.77636e-15,46},{-1.77636e-15,38},{132,38},{132,19},{124,19}},
       color={238,46,47},
       thickness=1));
   connect(hot_side_deheating.C_out, hot_side_condensing.C_in) annotation (Line(
-      points={{48,19},{48,20},{-36,20},{-36,21}},
-      color={238,46,47},
-      thickness=1));
-  connect(hot_side_condensing.C_out, C_hot_out) annotation (Line(
-      points={{-82,21},{-84,21},{-84,22},{-104,22},{-104,-66},{0,-66},{0,-80}},
+      points={{78,19},{46,19}},
       color={238,46,47},
       thickness=1));
 
-  connect(cold_side_condensing.C_in, cold_side_pipe.C_out) annotation (Line(
-      points={{-82,-34},{-114,-34},{-114,0},{-120,0}},
-      color={28,108,200},
-      thickness=1));
   connect(cold_side_condensing.C_out, cold_side_deheating.C_in) annotation (
       Line(
-      points={{-34,-34},{48,-34}},
+      points={{48,-34},{80,-34}},
       color={28,108,200},
       thickness=1));
 
-  annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
-                   graphics={
+  connect(hot_side_condensing.C_out, hot_side_subcooling.C_in) annotation (Line(
+      points={{-3.55271e-15,19},{-32,19}},
+      color={238,46,47},
+      thickness=1));
+  connect(hot_side_subcooling.C_out, C_hot_out) annotation (Line(
+      points={{-78,19},{-78,18},{-102,18},{-102,-62},{0,-62},{0,-80}},
+      color={238,46,47},
+      thickness=1));
+  connect(cold_side_condensing.C_in, cold_side_subcooling.C_out) annotation (
+      Line(
+      points={{0,-34},{-30,-34}},
+      color={28,108,200},
+      thickness=1));
+  connect(cold_side_subcooling.C_in, cold_side_pipe.C_out) annotation (Line(
+      points={{-78,-34},{-114,-34},{-114,0},{-120,0}},
+      color={28,108,200},
+      thickness=1));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},
+            {160,80}}),      graphics={
         Polygon(
           points={{-160,80},{-160,60},{-160,-62.5},{-160,-80},{-120,-80},{10,-80},
               {160,-80},{160,80},{10,80},{-120,80},{-160,80}},
@@ -166,45 +221,53 @@ equation
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
         Polygon(
-          points={{-98,58},{-98,36},{-98,-44},{-98,-64},{-78,-64},{14,-64},{142,
-              -64},{142,58},{10,58},{-78,58},{-98,58}},
+          points={{-98,60},{-98,38},{-98,-42},{-98,-62},{-78,-62},{14,-62},{142,
+              -62},{142,60},{10,60},{-78,60},{-98,60}},
           smooth=Smooth.Bezier,
           lineThickness=1,
           fillColor={205,225,255},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None),
         Polygon(
-          points={{-108,40},{-116,42},{-116,-46},{-108,-46},{-98,-46},{16,-46},{
-              124,-46},{126,40},{12,40},{-100,40},{-108,40}},
+          points={{-126,-18},{-138,-18},{-138,-48},{-136,-60},{-80,-62},{12,-62},
+              {122,-62},{144,-18},{126,-18},{10,-20},{-112,-18},{-126,-18}},
+          smooth=Smooth.Bezier,
+          lineThickness=1,
+          fillColor={35,138,255},
+          fillPattern=FillPattern.Solid,
+          pattern=LinePattern.None),
+        Polygon(
+          points={{-108,42},{-116,44},{-116,-44},{-108,-44},{-98,-44},{16,-44},{
+              124,-44},{126,42},{12,42},{-100,42},{-108,42}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Polygon(
-          points={{-114,46},{-120,46},{-120,-52},{-112,-52},{-100,-52},{10,-52},
-              {132,-52},{132,46},{10,46},{-100,46},{-114,46}},
+          points={{-114,48},{-120,48},{-120,-50},{-112,-50},{-100,-50},{10,-50},
+              {132,-50},{132,48},{10,48},{-100,48},{-114,48}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Polygon(
-          points={{-114,28},{-120,28},{-120,-34},{-112,-34},{-100,-34},{14,-34},
-              {112,-34},{110,26},{12,28},{-100,28},{-114,28}},
+          points={{-114,30},{-120,30},{-120,-32},{-112,-32},{-100,-32},{14,-32},
+              {112,-32},{110,28},{12,30},{-100,30},{-114,30}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Polygon(
-          points={{-118,34},{-124,34},{-124,-38},{-116,-40},{-106,-40},{6,-40},{
-              116,-42},{120,32},{8,34},{-104,34},{-118,34}},
+          points={{-118,36},{-124,36},{-124,-36},{-116,-38},{-106,-38},{6,-38},{
+              116,-40},{120,34},{8,36},{-104,36},{-118,36}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Rectangle(
-          extent={{-148,50},{-98,-56}},
+          extent={{-150,50},{-100,-66}},
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None),
         Rectangle(
-          extent={{-148,58},{-102,22}},
+          extent={{-148,60},{-102,24}},
           pattern=LinePattern.None,
           lineThickness=1,
           fillColor={157,166,218},
@@ -212,21 +275,21 @@ equation
           lineColor={0,0,0},
           radius=10),
         Rectangle(
-          extent={{-148,50},{-100,16}},
+          extent={{-148,52},{-100,18}},
           pattern=LinePattern.None,
           lineThickness=1,
           fillColor={157,166,218},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
-          radius = 0),
+          radius=0),
         Rectangle(
-          extent={{-120,58},{-100,36}},
+          extent={{-120,60},{-100,38}},
           pattern=LinePattern.None,
           lineThickness=1,
           fillColor={157,166,218},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
-          radius = 0),
+          radius=0),
         Rectangle(
           extent={{20,23},{-20,-23}},
           pattern=LinePattern.None,
@@ -235,7 +298,7 @@ equation
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
           radius=10,
-          origin={-123,-42},
+          origin={-123,-40},
           rotation=90),
         Rectangle(
           extent={{10.5,11.5},{-10.5,-11.5}},
@@ -244,8 +307,8 @@ equation
           fillColor={157,166,218},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
-          radius = 0,
-          origin={-111.5,-51.5},
+          radius=0,
+          origin={-111.5,-49.5},
           rotation=90),
         Rectangle(
           extent={{14,23},{-14,-23}},
@@ -254,14 +317,8 @@ equation
           fillColor={157,166,218},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
-          radius = 0,
-          origin={-123,-36},
-          rotation=90)}), Diagram(coordinateSystem(extent={{-160,-80},{160,80}}),
-        graphics={Text(
-          extent={{42,-8},{102,-20}},
-          textColor={28,108,200},
-          textString="Deheating"), Text(
-          extent={{-88,-8},{-28,-20}},
-          textColor={28,108,200},
-          textString="Condensing")}));
-end DryReheater;
+          radius=0,
+          origin={-123,-34},
+          rotation=90)}),                                        Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}})));
+end Reheater;

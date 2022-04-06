@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
-model DryReheater_direct
+model Reheater_direct
 
   extends Modelica.Icons.Example;
 
@@ -11,16 +11,18 @@ model DryReheater_direct
   input Units.SpecificEnthalpy hot_source_h_out(start=2.5e6) "J/kg";
 
   // Parameters
-  parameter Units.Area S = 100;
-  parameter Units.HeatExchangeCoefficient Kth = 50e3;
+  parameter Units.Area S_tot = 100;
+  parameter Units.Area level = 0.3;
+  parameter Units.HeatExchangeCoefficient Kth_cond = 61e3;
+  parameter Units.HeatExchangeCoefficient Kth_subc = 8e3;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Units.FrictionCoefficient Kfr_cold = 500; // About 1 bar of pressure loss in the reheater
+  parameter Units.FrictionCoefficient Kfr_cold = 0;
 
   WaterSteam.BoundaryConditions.WaterSource cold_source
     annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   WaterSteam.BoundaryConditions.WaterSink cold_sink
     annotation (Placement(transformation(extent={{40,-10},{60,10}})));
-  WaterSteam.HeatExchangers.DryReheater dryReheater
+  WaterSteam.HeatExchangers.Reheater    reheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
   WaterSteam.BoundaryConditions.WaterSource hot_source annotation (Placement(
         transformation(
@@ -43,18 +45,20 @@ equation
   cold_source.Q_out = -Q_cold;
 
   // Component parameters
-  dryReheater.S_condensing = S;
-  dryReheater.Kth = Kth;
-  dryReheater.Kfr_hot = Kfr_hot;
-  dryReheater.Kfr_cold = Kfr_cold;
+  reheater.S_tot = S_tot;
+  reheater.Kth_cond = Kth_cond;
+  reheater.Kth_subc = Kth_subc;
+  reheater.Kfr_hot = Kfr_hot;
+  reheater.Kfr_cold = Kfr_cold;
+  reheater.level = level;
 
 
-  connect(dryReheater.C_cold_out, cold_sink.C_in)
+  connect(reheater.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{16,0},{45,0}}, color={28,108,200}));
-  connect(hot_sink.C_in, dryReheater.C_hot_out) annotation (Line(points={{8.88178e-16,
+  connect(hot_sink.C_in, reheater.C_hot_out) annotation (Line(points={{8.88178e-16,
           -25},{8.88178e-16,-20.5},{0,-20.5},{0,-8}}, color={28,108,200}));
-  connect(hot_source.C_out, dryReheater.C_hot_in) annotation (Line(points={{-8.88178e-16,
+  connect(hot_source.C_out, reheater.C_hot_in) annotation (Line(points={{-8.88178e-16,
           25},{-8.88178e-16,16.5},{0,16.5},{0,8}}, color={28,108,200}));
-  connect(cold_source.C_out, dryReheater.C_cold_in)
+  connect(cold_source.C_out, reheater.C_cold_in)
     annotation (Line(points={{-43,0},{-16.2,0}}, color={28,108,200}));
-end DryReheater_direct;
+end Reheater_direct;
