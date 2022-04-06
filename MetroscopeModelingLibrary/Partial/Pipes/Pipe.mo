@@ -6,7 +6,7 @@ partial model Pipe
   import MetroscopeModelingLibrary.Constants;
 
   // Initialization parameters
-  parameter Units.Height delta_z_0 = 0;
+  parameter Units.Height delta_z_0 = 0; // delta_z = z_out - z_in, delta_z > 0 means DP_z < 0
   parameter Units.DifferentialPressure DP_f_0 = 1e5;
   parameter Units.DifferentialPressure DP_z_0 = 0.001e5;
 
