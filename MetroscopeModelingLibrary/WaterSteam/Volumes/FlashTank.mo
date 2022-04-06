@@ -3,8 +3,9 @@ model FlashTank
 
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
-  Real P;
-  Real Q_in;
+  import MetroscopeModelingLibrary.Units;
+  Units.Pressure P(start=10e5);
+  Units.InletMassFlowRate Q_in;
 
   WaterSteam.Connectors.WaterInlet C_in
     annotation (Placement(transformation(extent={{-110,30},{-90,50}}),
@@ -19,12 +20,15 @@ model FlashTank
     annotation (Placement(transformation(extent={{26,-50},{46,-30}})));
 equation
 
+  // Definitions
   P = C_in.P;
-  Q_in = steam_phase.Q_in + steam_phase.Q_out;
+  Q_in = steam_phase.Q_in + liquid_phase.Q_in;
 
+  // Saturation at both outlets
   steam_phase.h_out = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P));
   liquid_phase.h_out = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
 
+  // Energy balance
   steam_phase.W + liquid_phase.W = 0;
 
   connect(steam_phase.C_in, C_in)
