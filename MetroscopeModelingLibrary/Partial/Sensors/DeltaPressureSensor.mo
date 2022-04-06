@@ -28,21 +28,4 @@ equation
   DP_bar = DP * Constants.Pa_to_barA;
   DP_mbar = DP * Constants.Pa_to_mbar;
   DP_psi = DP * Constants.Pa_to_psi;
-  annotation (Icon(graphics={
-        Line(
-          points={{-100,114},{100,114}},
-          color={0,0,0},
-          thickness=1),
-        Polygon(
-          points={{80,100},{100,114},{80,114},{80,100}},
-          lineColor={0,0,0},
-          lineThickness=1,
-          fillColor={0,0,0},
-          fillPattern=FillPattern.Solid),
-        Polygon(
-          points={{80,128},{100,114},{80,114},{80,128}},
-          lineColor={0,0,0},
-          lineThickness=1,
-          fillColor={0,0,0},
-          fillPattern=FillPattern.Solid)}));
 end DeltaPressureSensor;
