@@ -3,7 +3,7 @@ model Source
   extends Modelica.Icons.Example;
   import MetroscopeModelingLibrary.Units;
 
-  // Boundary conditinos
+  // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
