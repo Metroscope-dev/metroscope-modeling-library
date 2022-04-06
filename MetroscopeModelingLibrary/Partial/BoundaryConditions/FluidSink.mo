@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Partial.BoundaryConditions;
 partial model FluidSink
+  extends MetroscopeModelingLibrary.Icons.BoundaryConditions.FluidSinkIcon;
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
   import MetroscopeModelingLibrary.Units;
@@ -35,21 +36,4 @@ equation
   // No flow reversal in stream connector
   C_in.h_outflow = 0; // Never used arbitrary value
   C_in.Xi_outflow = zeros(Medium.nXi); // No flow reversal
-  annotation (Icon(coordinateSystem(preserveAspectRatio=true), graphics={
-        Ellipse(
-          extent={{-40,60},{80,-60}},
-          lineColor={0,0,0},
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Line(points={{-90,0},{-62,0},{-76,10}}),
-        Line(points={{-76,-10},{-62,0}}),
-        Ellipse(
-          extent={{-30,50},{70,-50}},
-          lineColor={0,0,0},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Line(points={{-15,35},{55,-35}}, color={0,0,0}),
-        Line(points={{-15,-35},{55,35}}, color={0,0,0})}),
-                                            Diagram(coordinateSystem(
-          preserveAspectRatio=true)));
 end FluidSink;

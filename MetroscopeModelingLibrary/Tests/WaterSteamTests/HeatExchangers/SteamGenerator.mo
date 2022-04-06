@@ -32,8 +32,8 @@ equation
       Line(points={{63,-8},{38.5,-8},{38.5,-1},{14,-1}}, color={28,108,200}));
   connect(steamGenerator.steam_outlet, steam_sink.C_in)
     annotation (Line(points={{-2,58},{-2,74},{45,74}}, color={28,108,200}));
-  connect(purge_sink.C_in, steamGenerator.purge_outlet) annotation (Line(points={{-2,-79},
-          {-2,-69.0083},{-2,-59.0167},{-2,-59.0167}},          color={28,108,200}));
+  connect(purge_sink.C_in, steamGenerator.purge_outlet) annotation (Line(points={{-2,-79},{-2,-69.0083},{-2,-59.0167},{-2,-59.0167}},
+                                                               color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end SteamGenerator;
