@@ -1,16 +1,20 @@
 within MetroscopeModelingLibrary.Examples.NPP_Subsystems;
 model ParallelTurboFWP_direct
+  import MetroscopeModelingLibrary.Units;
+
   // Initialization parameters
-  parameter Units.Pressure P_0 = 30e5;
+  parameter Units.Pressure STs_CV_P_in_0 = 30e5;
+  parameter Units.Pressure STs_P_out_0 = 0.07e5;
+  parameter Units.Pressure FWPs_P_in_0 = 44.6e5;
   // BC
   //STs_CV
-  input Units.Pressure STs_CV_P_in(start=P_0) "Pa";
+  input Units.Pressure STs_CV_P_in(start=STs_CV_P_in_0) "Pa";
   input Units.Fraction ST1_CV_opening(start=0.70) "%";
   input Units.Fraction ST2_CV_opening(start=0.70) "%";
   //STs
-  input Units.Pressure STs_P_out(start=0.07e5) "condenser pressure, Pa";
+  input Units.Pressure STs_P_out(start=STs_P_out_0) "condenser pressure, Pa";
   // FWPs
-  input Units.Pressure FWPs_P_in(start=44.6e5) "Pa";
+  input Units.Pressure FWPs_P_in(start=FWPs_P_in_0) "Pa";
   input Units.OutletMassFlowRate FWPs_Q_in(start=-1.5e3) "kg/s";
   input Units.Temperature FWPs_T_in(start=186 + 273.15) "degC";
 
@@ -32,11 +36,11 @@ model ParallelTurboFWP_direct
   WaterSteam.BoundaryConditions.WaterSource STs_source annotation (Placement(transformation(extent={{-128,70},{-108,90}})));
   WaterSteam.BoundaryConditions.WaterSink STs_sink annotation (Placement(transformation(extent={{108,70},{128,90}})));
   // STs
-  WaterSteam.Machines.StodolaTurbine ST1 annotation (Placement(transformation(extent={{20,90.0002},{40,110}})));
-  WaterSteam.Machines.StodolaTurbine ST2 annotation (Placement(transformation(extent={{20,70},{40,50}})));
+  WaterSteam.Machines.StodolaTurbine ST1(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{20,90.0002},{40,110}})));
+  WaterSteam.Machines.StodolaTurbine ST2(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{20,70},{40,50}})));
   // STs CV
-  WaterSteam.Pipes.WaterControlValve ST2_CV(P_in_0=P_0) annotation (Placement(transformation(extent={{-16,62.5455},{-4,48.5455}})));
-  WaterSteam.Pipes.WaterControlValve ST1_CV(P_in_0=P_0) annotation (Placement(transformation(extent={{-16,97.4545},{-4,111.455}})));
+  WaterSteam.Pipes.WaterControlValve ST2_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,62.5455},{-4,48.5455}})));
+  WaterSteam.Pipes.WaterControlValve ST1_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,97.4545},{-4,111.455}})));
   Sensors.Other.OpeningSensor ST1_CV_opening_sensor annotation (Placement(transformation(extent={{-14,116},{-6,124}})));
   Sensors.Other.OpeningSensor ST2_CV_opening_sensor annotation (Placement(transformation(extent={{-14,44},{-6,36}})));
 
@@ -44,12 +48,12 @@ model ParallelTurboFWP_direct
   WaterSteam.BoundaryConditions.WaterSource FWPs_source annotation (Placement(transformation(extent={{128,-70},{108,-50}})));
   WaterSteam.BoundaryConditions.WaterSink FWPs_sink annotation (Placement(transformation(extent={{-108,-70},{-128,-50}})));
 
-  WaterSteam.Machines.WaterPump FWP2 annotation (Placement(transformation(extent={{-10,-40},{-30,-20}})));
-  WaterSteam.Machines.WaterPump FWP1 annotation (Placement(transformation(extent={{-10,-80},{-30,-100}})));
+  WaterSteam.Machines.WaterPump FWP2(P_in_0=FWPs_P_in_0) annotation (Placement(transformation(extent={{-10,-40},{-30,-20}})));
+  WaterSteam.Machines.WaterPump FWP1(P_in_0=FWPs_P_in_0) annotation (Placement(transformation(extent={{-10,-80},{-30,-100}})));
 equation
   // Boundary conditions
   // STs source
-  STs_source.h_out = 2.7718e6; // set Temp ?
+  STs_source.h_out = 2.7718e6;
   STs_source.P_out = STs_CV_P_in;
 
   // ST1 CV
@@ -87,6 +91,7 @@ equation
   ST2.Cst = ST2_Cst;
 
   // FWP1
+  FWP1.VRotn = 4300;
   FWP1.rm = 0.85;
   FWP1.rhmin = 0.20;
   FWP1.b3 = FWPs_b3;
@@ -97,7 +102,6 @@ equation
   FWP1.a1 = -172;
 
   // FWP2
-  //FWP2_VRot_sensor.VRot = FWP2_VRot;
   FWP2.VRotn = 4500;
   FWP2.rm = 0.85;
   FWP2.rhmin = 0.20;

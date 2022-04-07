@@ -6,12 +6,12 @@ partial model Pipe
   import MetroscopeModelingLibrary.Constants;
 
   // Initialization parameters
-  parameter Units.Height delta_z_0 = 0; // delta_z = z_out - z_in, delta_z > 0 means DP_z < 0
+  parameter Units.DifferentialHeight delta_z_0 = 0; // delta_z = z_out - z_in, delta_z > 0 means DP_z < 0
   parameter Units.DifferentialPressure DP_f_0 = 1e5;
   parameter Units.DifferentialPressure DP_z_0 = 0.001e5;
 
   Inputs.InputFrictionCoefficient Kfr(start=10) "Friction pressure loss coefficient";
-  Inputs.InputHeight delta_z(start=delta_z_0, nominal=5) "Height difference between outlet and inlet";
+  Inputs.InputDifferentialHeight delta_z(start=delta_z_0, nominal=5) "Height difference between outlet and inlet";
   Units.DifferentialPressure DP_f(start=DP_f_0) "Singular pressure loss";
   Units.DifferentialPressure DP_z(start=DP_z_0) "Singular pressure loss";
 equation

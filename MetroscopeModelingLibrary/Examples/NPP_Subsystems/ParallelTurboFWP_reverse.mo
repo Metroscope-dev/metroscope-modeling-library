@@ -1,5 +1,7 @@
 within MetroscopeModelingLibrary.Examples.NPP_Subsystems;
 model ParallelTurboFWP_reverse
+  import MetroscopeModelingLibrary.Units;
+
   // Initialization parameters
   parameter Units.Pressure STs_CV_P_in_0 = 30e5;
   parameter Units.Pressure STs_P_out_0 = 0.07e5;
