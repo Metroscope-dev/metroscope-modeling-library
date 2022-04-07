@@ -22,7 +22,7 @@ model SteamExtractionSplitter
   Units.MassFraction x_main_out(start=0.8) "Vapor mass fraction at main outlet";
   Units.MassFraction x_in(start=0.8) "Vapor mass fraction at inlet";
 
-  Inputs.InputReal alpha(start=1, min=0, max=1) "Extraction paramater";
+  Inputs.InputFraction alpha(start=1) "Extraction paramater";
 
   // Components
   WaterSteam.BaseClasses.WaterIsoPFlowModel extractedFlow(Q_0=Q_ext_0, P_0=P_0) annotation (Placement(transformation(

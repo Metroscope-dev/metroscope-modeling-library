@@ -10,7 +10,7 @@ model SteamExtractionSplitterTest_reverse
   input Units.SpecificEnthalpy main_h_out(start=2.67e6);
 
   // Output: Component parameters
-  output Real alpha(min=0, max=1) "1";
+  output Units.Fraction alpha;
 
   // Components
   WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter annotation (Placement(transformation(extent={{-27,-26.6667},{27,21.3333}})));

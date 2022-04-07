@@ -7,7 +7,7 @@ model SteamExtractionSplitterTest_direct
   input Units.MassFlowRate extracted_Q(start=100) "kg/s";
 
   // Input: Component parameters
-  input Real alpha(start=0.8, min=0, max=1) "1";
+  input Units.Fraction alpha(start=0.8);
 
   // Components
   WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter annotation (Placement(transformation(extent={{-27,-26.6667},{27,21.3333}})));
@@ -38,9 +38,6 @@ equation
 
   // Input: Component parameters
   steamExtractionSplitter.alpha = alpha;
-
-  // Output: Observables
-  steamExtractionSplitter.mainFlow.h_out = main_h_out;
   connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-76,0},{-80,0},{-80,0},{-85,0}},   color={28,108,200}));
   connect(steamExtractionSplitter.C_in, source_Q_sensor.C_out) annotation (Line(points={{-28.62,-3.33333e-05},{-44.8,-3.33333e-05},{-44.8,0},{-44,0}}, color={28,108,200}));
   connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-56,0},{-58,0},{-58,0.06},{-60,0.06},{-60,0},{-64,0}}, color={28,108,200}));
