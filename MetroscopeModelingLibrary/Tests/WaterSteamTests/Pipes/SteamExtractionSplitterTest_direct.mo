@@ -9,9 +9,6 @@ model SteamExtractionSplitterTest_direct
   // Input: Component parameters
   input Real alpha(start=0.8, min=0, max=1) "1";
 
-  // Output: Observables
-  output Units.SpecificEnthalpy main_h_out;
-
   // Components
   WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter annotation (Placement(transformation(extent={{-27,-26.6667},{27,21.3333}})));
 

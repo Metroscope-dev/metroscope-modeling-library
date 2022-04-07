@@ -40,10 +40,10 @@ equation
   extracted_Q_sensor.Q = extracted_Q;
 
   // Input: Observables
-  steamExtractionSplitter.alpha = alpha;
+  steamExtractionSplitter.mainFlow.h_out = main_h_out;
 
   // Output: Component parameters
-  steamExtractionSplitter.mainFlow.h_out = main_h_out;
+  steamExtractionSplitter.alpha = alpha;
 
   // Assertion
   assert(alpha <= 1 and alpha >= 0, "From model assertion error: alpha should be within 0 and 1");
