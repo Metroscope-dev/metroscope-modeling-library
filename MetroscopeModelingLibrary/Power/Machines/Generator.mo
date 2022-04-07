@@ -4,12 +4,15 @@ model Generator
   import MetroscopeModelingLibrary.Units.Inputs;
 
   Inputs.InputYield eta(start=0.998) "Generator's efficiency";
-  Units.OutletPower Welec "Electrical power produced by the generator";
-  Units.InletPower Wmech "Mechanical power received by the generator";
+  Units.OutletPower W_elec "Electrical power produced by the generator";
+  Units.InletPower W_mech "Mechanical power received by the generator";
 
   Connectors.PowerInlet C_in annotation (Placement(transformation(extent={{-72,-10},{-52,10}}), iconTransformation(extent={{-72,-10},{-52,10}})));
   Connectors.PowerOutlet C_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
-equation
+equation 
+  W_mech = C_in.W;
+  W_elec + W_mech*eta = 0;
+  C_out.W = W_elec;
 
   annotation (Diagram(coordinateSystem(extent={{-100,-60},{100,60}})),
                                 Icon(coordinateSystem(extent={{-100,-60},{100,60}}),
