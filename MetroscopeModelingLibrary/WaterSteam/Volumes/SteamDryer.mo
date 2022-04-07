@@ -5,25 +5,32 @@ model SteamDryer
 
   import MetroscopeModelingLibrary.Units;
 
-  Units.SpecificEnthalpy h_vap_sat; // Saturated liquid enthalpy
-  Units.SpecificEnthalpy h_liq_sat; // Saturated steam enthalpy
+  // Initialization parameters
+  parameter Units.Pressure P_0 = 10e5;
+  parameter Units.InletMassFlowRate Q_in_0=500;
 
-  Units.Pressure P(start=10e5); // Pressure in dryer
-  Units.InletMassFlowRate Q_in; // Inlet mass flow rate
+  Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0); // Saturated liquid enthalpy
+  Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0); // Saturated steam enthalpy
+
+  Units.Pressure P(start=P_0); // Pressure in dryer
+  Units.InletMassFlowRate Q_in(start=Q_in_0); // Inlet mass flow rate
 
   Units.MassFraction x_steam_out; // Steam mass fraction at steam outlet
 
-  WaterSteam.Connectors.WaterInlet C_in
+  WaterSteam.Connectors.WaterInlet C_in(P(start=P_0), Q(start=Q_in_0))
     annotation (Placement(transformation(extent={{-110,30},{-90,50}}),
         iconTransformation(extent={{-110,30},{-90,50}})));
-  WaterSteam.Connectors.WaterOutlet C_hot_steam
+  WaterSteam.Connectors.WaterOutlet C_hot_steam(P(start=P_0), Q(start=-Q_in_0/2))
     annotation (Placement(transformation(extent={{90,30},{110,50}})));
-  WaterSteam.Connectors.WaterOutlet C_hot_liquid
+  WaterSteam.Connectors.WaterOutlet C_hot_liquid(P(start=P_0), Q(start=-Q_in_0/2))
     annotation (Placement(transformation(extent={{90,-50},{110,-30}})));
-  WaterSteam.BaseClasses.WaterIsoPFlowModel steam_phase
+  WaterSteam.BaseClasses.WaterIsoPFlowModel steam_phase(P_0=P_0, Q_0=Q_in_0/2)
     annotation (Placement(transformation(extent={{26,30},{46,50}})));
-  WaterSteam.BaseClasses.WaterIsoPFlowModel liquid_phase
+  WaterSteam.BaseClasses.WaterIsoPFlowModel liquid_phase(P_0=P_0, Q_0=Q_in_0/2)
     annotation (Placement(transformation(extent={{26,-50},{46,-30}})));
+protected
+  parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
+  parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
 equation
 
   // Definitions
@@ -38,8 +45,6 @@ equation
 
   // Energy balance
   steam_phase.W + liquid_phase.W = 0;
-
-
 
   connect(liquid_phase.C_in, C_in) annotation (Line(points={{26,-40},{-40,-40},{
           -40,40},{-100,40}},
