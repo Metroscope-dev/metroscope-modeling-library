@@ -26,7 +26,7 @@ model FlashTank_Reheater
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-78,78})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe DPz(Q_0=Q_hot_0)
+  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe reheater_to_flash_tank_DP(Q_0=Q_hot_0)
     annotation (Placement(transformation(
         extent={{-12.5,-12.5},{12.5,12.5}},
         rotation=180,
@@ -35,10 +35,9 @@ model FlashTank_Reheater
         extent={{9,-9},{-9,9}},
         rotation=0,
         origin={-60,-80})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe DP_vaporBalance(Q_0=Q_hot_0/2)
-    annotation (Placement(transformation(extent={{100,42},{73,69}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource source
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe flash_tank_to_reheater_DP(Q_0=Q_hot_0/2) annotation (Placement(transformation(extent={{100,42},{73,69}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource power_source annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-60,-52})));
   Sensors.Other.VRotSensor feed_water_pump_VRot_sensor annotation (Placement(transformation(
@@ -64,9 +63,9 @@ equation
   dry_reheater.Kth = 1e5;
 
   // Pressure losses
-  DPz.delta_z = -10;
-  DPz.Kfr = 1;
-  DP_vaporBalance.delta_z = 0;
+  reheater_to_flash_tank_DP.delta_z = -10;
+  reheater_to_flash_tank_DP.Kfr = 1;
+  flash_tank_to_reheater_DP.delta_z = 0;
 
   // Pump
   // Observables used for calibration
@@ -81,23 +80,19 @@ equation
   feed_water_pump.rhmin = 0.20;
   feed_water_pump.rh = 1;
 
-  connect(source.C_out, feed_water_pump.C_power) annotation (Line(points={{-60,-56.8},{-60,-70.28}}, color={244,125,35}));
+  connect(power_source.C_out, feed_water_pump.C_power) annotation (Line(points={{-60,-56.8},{-60,-70.28}}, color={244,125,35}));
   connect(turbine_extraction_source.C_out, dry_reheater.C_hot_in) annotation (Line(points={{50,73},{50,38}}, color={63,81,181}));
   connect(feed_water_source.C_out, dry_reheater.C_cold_in) annotation (Line(points={{95,30},{66.2,30}}, color={63,81,181}));
   connect(feed_water_sink.C_in, dry_reheater.C_cold_out) annotation (Line(points={{-115,30},{34,30}}, color={63,81,181}));
   connect(drains_cooling_source.C_out, flashTank.C_in)
     annotation (Line(points={{-78,73},{-78,-14},{-78,-14},{-78,-14.6}},
                                                       color={63,81,181}));
-  connect(dry_reheater.C_hot_out, DPz.C_in) annotation (Line(points={{50,22},{50,10},{12.5,10}},
-                                 color={63,81,181}));
-  connect(DPz.C_out, flashTank.C_in) annotation (Line(points={{-12.5,10},{-78,10},{-78,-14.6}},
-                            color={63,81,181}));
+  connect(dry_reheater.C_hot_out, reheater_to_flash_tank_DP.C_in) annotation (Line(points={{50,22},{50,10},{12.5,10}}, color={63,81,181}));
+  connect(reheater_to_flash_tank_DP.C_out, flashTank.C_in) annotation (Line(points={{-12.5,10},{-78,10},{-78,-14.6}}, color={63,81,181}));
   connect(feed_water_pump.C_out, feed_water_sink.C_in) annotation (Line(points={{-69,-80},{-99,-80},{-99,30},{-115,30}}, color={63,81,181}));
-  connect(DP_vaporBalance.C_out, dry_reheater.C_hot_in)
-    annotation (Line(points={{73,55.5},{50,55.5},{50,38}}, color={63,81,181}));
+  connect(flash_tank_to_reheater_DP.C_out, dry_reheater.C_hot_in) annotation (Line(points={{73,55.5},{50,55.5},{50,38}}, color={63,81,181}));
   connect(flashTank.C_hot_liquid, feed_water_pump.C_in) annotation (Line(points={{-36,-31.4},{-36,-30},{-28,-30},{-28,-80},{-51,-80}}, color={28,108,200}));
-  connect(flashTank.C_hot_steam, DP_vaporBalance.C_in) annotation (Line(points={{-36,-14.6},{112,-14.6},{112,55.5},{100,55.5}},
-                                                                                                                         color={28,108,200}));
+  connect(flashTank.C_hot_steam, flash_tank_to_reheater_DP.C_in) annotation (Line(points={{-36,-14.6},{112,-14.6},{112,55.5},{100,55.5}}, color={28,108,200}));
   connect(feed_water_pump.VRot, feed_water_pump_VRot_sensor.VRot) annotation (Line(points={{-60,-90.8},{-60,-101.84}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-140,-140},{140,140}})), Icon(coordinateSystem(extent={{-140,-140},{140,140}}), graphics={
         Rectangle(
