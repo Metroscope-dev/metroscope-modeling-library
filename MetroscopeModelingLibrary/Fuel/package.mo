@@ -1,19 +1,6 @@
-within MetroscopeModelingLibrary.Media;
-package FlueGasesMedium
-  extends Modelica.Media.IdealGases.Common.MixtureGasNasa(
-    mediumName="MediaMonomeld",
-    data={Modelica.Media.IdealGases.Common.SingleGasesData.N2,
-          Modelica.Media.IdealGases.Common.SingleGasesData.O2,
-          Modelica.Media.IdealGases.Common.SingleGasesData.H2O,
-          Modelica.Media.IdealGases.Common.SingleGasesData.CO2,
-          Modelica.Media.IdealGases.Common.SingleGasesData.SO2},
-    fluidConstants={Modelica.Media.IdealGases.Common.FluidData.N2,
-                    Modelica.Media.IdealGases.Common.FluidData.O2,
-                    Modelica.Media.IdealGases.Common.FluidData.H2O,
-                    Modelica.Media.IdealGases.Common.FluidData.CO2,
-                    Modelica.Media.IdealGases.Common.FluidData.SO2},
-    substanceNames={"Nitrogen","Oxygen","Water","Carbondioxide","Sulfurdioxide"},
-    reference_X={0.768,0.232,0.0,0.0,0.0}) annotation(IconMap(primitivesVisible=false));
+within MetroscopeModelingLibrary;
+package Fuel
+
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
@@ -43,8 +30,8 @@ package FlueGasesMedium
           radius=25.0),
         Ellipse(
           lineColor={102,102,102},
-          fillColor={95,95,95},
+          fillColor={213,213,0},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           extent={{-60,-60},{60,60}})}));
-end FlueGasesMedium;
+end Fuel;
