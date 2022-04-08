@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
 model CondenserCounterCurrentNTUHXTest
 
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
 
   MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "condenser_counter_current");
 

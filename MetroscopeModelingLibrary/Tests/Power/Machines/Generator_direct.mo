@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Power.Machines;
 model Generator_direct
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
   import MetroscopeModelingLibrary.Units;
 
   // Boundary Condition

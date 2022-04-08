@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests;
 package Power
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestPackageIcon;
 
 
 

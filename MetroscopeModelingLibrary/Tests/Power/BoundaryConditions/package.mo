@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Power;
 package BoundaryConditions
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestPackageIcon;
 
 end BoundaryConditions;
