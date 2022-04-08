@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Sensors;
-package MoistAir
+package FlueGases
   extends Modelica.Icons.ExamplesPackage;
 
-end MoistAir;
+end FlueGases;
