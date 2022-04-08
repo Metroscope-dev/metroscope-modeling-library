@@ -19,6 +19,14 @@ package BoundaryConditions
           lineThickness=1,
           pattern=LinePattern.None,
           lineColor={0,0,0}),
-        Line(points={{44,0},{78,0},{64,10}}),
-        Line(points={{64,-10},{78,0}})}));
+      Line(
+        points={{54,-2},{84,-2}},
+        color={213,213,0},
+        thickness=1),
+        Rectangle(
+          extent={{42,10},{66,-14}},
+          lineColor={213,213,0},
+          lineThickness=1,
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid)}));
 end BoundaryConditions;

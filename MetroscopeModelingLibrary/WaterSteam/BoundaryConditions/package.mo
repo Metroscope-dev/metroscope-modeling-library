@@ -10,6 +10,14 @@ package BoundaryConditions
           lineThickness=1,
           pattern=LinePattern.None,
           lineColor={0,0,0}),
-        Line(points={{44,0},{78,0},{64,10}}),
-        Line(points={{64,-10},{78,0}})}));
+      Line(
+        points={{54,0},{84,0}},
+        color={28,108,200},
+        thickness=1),
+        Rectangle(
+          extent={{42,12},{66,-12}},
+          lineColor={28,108,200},
+          lineThickness=1,
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid)}));
 end BoundaryConditions;
