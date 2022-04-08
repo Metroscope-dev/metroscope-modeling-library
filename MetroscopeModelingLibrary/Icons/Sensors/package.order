@@ -2,6 +2,7 @@ FluidSensorIcon
 WaterSensorIcon
 MoistAirSensorIcon
 FlueGasesSensorIcon
+FuelSensorIcon
 OtherSensorIcon
 TemperatureIcon
 PressureIcon
