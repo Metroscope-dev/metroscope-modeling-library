@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.BaseClassesTests;
 model WaterFlowModelTest
-  WaterSteam.BaseClasses.WaterFlowModel waterFlowModel annotation (Placement(transformation(extent={{11,-23},{57,23}})));
+  WaterSteam.BaseClasses.WaterFlowModel waterFlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
   WaterSteam.BoundaryConditions.WaterSource waterSource annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
-  WaterSteam.BoundaryConditions.WaterSink waterSink annotation (Placement(transformation(extent={{61,-20},{103,20}})));
+  WaterSteam.BoundaryConditions.WaterSink waterSink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-24,-10},{-4,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
 equation
   waterFlowModel.W_input = 0;
   waterFlowModel.DP_input = 0;
@@ -15,11 +15,11 @@ equation
   waterFlowSensor.Q = 100;
 
   assert(abs(waterSink.Q_in + waterSource.Q_out) <= 1e-5, "In flow model, DM should be 0");
-  connect(waterFlowModel.C_out, waterSink.C_in) annotation (Line(points={{57,0},{57,0},{71.5,0}},     color={28,108,200}));
-  connect(waterSource.C_out, waterPressureSensor.C_in) annotation (Line(points={{-70.5,0},{-70.5,0},{-60,0}},         color={28,108,200}));
-  connect(waterPressureSensor.C_out, waterFlowSensor.C_in) annotation (Line(points={{-40,0},{-36,0},{-36,0.1},{-32,0.1},{-32,0},{-24,0}},
+  connect(waterFlowModel.C_out, waterSink.C_in) annotation (Line(points={{53,0},{69.5,0}},            color={28,108,200}));
+  connect(waterSource.C_out, waterPressureSensor.C_in) annotation (Line(points={{-70.5,0},{-60,0}},                   color={28,108,200}));
+  connect(waterPressureSensor.C_out, waterFlowSensor.C_in) annotation (Line(points={{-40,0},{-34,0},{-34,0.025},{-30,0.025},{-30,0},{-20,0}},
                                                                                                             color={28,108,200}));
-  connect(waterFlowModel.C_in, waterFlowSensor.C_out) annotation (Line(points={{11,0},{8,0},{8,0},{-4,0}},               color={28,108,200}));
+  connect(waterFlowModel.C_in, waterFlowSensor.C_out) annotation (Line(points={{7,0},{0,0}},                             color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},

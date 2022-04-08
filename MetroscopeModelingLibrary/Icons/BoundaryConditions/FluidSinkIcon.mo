@@ -7,13 +7,13 @@ partial record FluidSinkIcon
           lineColor={0,0,0},
           fillColor={0,0,0},
           fillPattern=FillPattern.Solid),
-        Line(points={{-88,0},{-60,0},{-74,10}}),
-        Line(points={{-74,-10},{-60,0}}),
         Ellipse(
           extent={{-30,50},{70,-50}},
           lineColor={0,0,0},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
-        Line(points={{-15,35},{55,-35}}, color={0,0,0}),
-        Line(points={{-15,-35},{55,35}}, color={0,0,0})}));
+        Line(points={{-16,36},{57,-37}}, color={0,0,0},
+          thickness=1),
+        Line(points={{-16,-36},{57,37}}, color={0,0,0},
+          thickness=1)}));
 end FluidSinkIcon;

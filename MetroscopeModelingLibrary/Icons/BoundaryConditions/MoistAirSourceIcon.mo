@@ -8,7 +8,5 @@ partial record MoistAirSourceIcon
           fillPattern=FillPattern.Solid,
           lineThickness=0.5,
           pattern=LinePattern.None,
-          lineColor={0,0,0}),
-        Line(points={{40,0},{100,0},{86,10}}),
-        Line(points={{86,-10},{100,0}})}));
+          lineColor={0,0,0})}));
 end MoistAirSourceIcon;
