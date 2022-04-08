@@ -1,6 +1,7 @@
 FluidSensorIcon
 WaterSensorIcon
 MoistAirSensorIcon
+FlueGasesSensorIcon
 OtherSensorIcon
 TemperatureIcon
 PressureIcon
