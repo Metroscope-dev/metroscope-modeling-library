@@ -14,18 +14,18 @@ annotation (Icon(graphics={
           radius=25.0),
         Rectangle(
           extent={{-74,26},{-24,-24}},
-          lineColor={175,175,175},
+          lineColor={95,95,95},
           lineThickness=1,
         fillColor={255,255,255},
         fillPattern=FillPattern.Solid),
         Line(
           points={{-24,0},{24,0}},
-          color={175,175,175},
+          color={95,95,95},
           thickness=1),
         Rectangle(
           extent={{24,30},{82,-28}},
-          lineColor={175,175,175},
+          lineColor={95,95,95},
           lineThickness=1,
-          fillColor={175,175,175},
+          fillColor={95,95,95},
           fillPattern=FillPattern.Solid)}));
 end Connectors;

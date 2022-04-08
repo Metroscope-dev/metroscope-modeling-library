@@ -4,7 +4,7 @@ partial record FluidSourceIcon
   annotation (Icon(graphics={
         Ellipse(
           extent={{-80,60},{40,-60}},
-          fillColor={95,95,95},
+          fillColor={0,0,0},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5,
           pattern=LinePattern.None,

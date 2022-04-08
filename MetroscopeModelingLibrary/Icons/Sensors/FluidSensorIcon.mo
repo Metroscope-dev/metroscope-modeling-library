@@ -6,7 +6,7 @@ partial record FluidSensorIcon "should be extended in partial base classes"
         Ellipse(
           extent={{-100,100},{100,-98}},
           lineColor={0,0,0},
-          fillColor={95,95,95},
+          fillColor={0,0,0},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5),
         Ellipse(

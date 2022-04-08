@@ -5,7 +5,7 @@ partial record FluidSinkIcon
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={0,0,0},
-          fillColor={95,95,95},
+          fillColor={0,0,0},
           fillPattern=FillPattern.Solid),
         Line(points={{-88,0},{-60,0},{-74,10}}),
         Line(points={{-74,-10},{-60,0}}),

@@ -35,5 +35,9 @@ annotation (Icon(graphics={
         lineColor={215,215,215},
         fillColor={215,215,215},
         fillPattern=FillPattern.Solid,
-        rotation=45)}));
+        rotation=45),
+        Rectangle(
+          lineColor={128,128,128},
+          extent={{-100,-100},{100,100}},
+          radius=25.0)}));
 end BoundaryConditions;

@@ -10,5 +10,4 @@ model VRotSensor
         origin={1,-17}), iconTransformation(extent={{-27,-27},{27,27}},
         rotation=270,
         origin={0,-102})));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end VRotSensor;

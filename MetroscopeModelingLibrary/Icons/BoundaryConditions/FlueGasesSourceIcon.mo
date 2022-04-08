@@ -4,7 +4,7 @@ partial record FlueGasesSourceIcon
   annotation (Icon(graphics={
         Ellipse(
           extent={{-80,60},{40,-60}},
-          fillColor={175,175,175},
+          fillColor={95,95,95},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5,
           pattern=LinePattern.None,
