@@ -15,19 +15,19 @@ partial package Connectors
         fillPattern=FillPattern.Solid),
         Line(
           points={{-26,0},{22,0}},
-          color={102,102,102},
+          color={0,0,0},
           thickness=1),
         Rectangle(
           extent={{-76,26},{-26,-24}},
-          lineColor={102,102,102},
+          lineColor={0,0,0},
           lineThickness=1,
-          fillColor={102,102,102},
+          fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{22,30},{80,-28}},
-          lineColor={102,102,102},
+          lineColor={0,0,0},
           lineThickness=1,
-          fillColor={175,175,175},
+          fillColor={0,0,0},
           fillPattern=FillPattern.Solid),
       Rectangle(
         extent={{-60,14},{60,-14}},

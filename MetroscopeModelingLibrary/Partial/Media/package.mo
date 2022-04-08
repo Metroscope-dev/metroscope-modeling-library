@@ -25,9 +25,9 @@ package Media
         fillPattern=FillPattern.Solid),
       Ellipse(
         lineColor={102,102,102},
-        fillColor={204,204,204},
+        fillColor={0,0,0},
         pattern=LinePattern.None,
-        fillPattern=FillPattern.Sphere,
+        fillPattern=FillPattern.Solid,
         extent={{-43,-42},{43,42}}),
       Rectangle(
         extent={{-60,14},{60,-14}},

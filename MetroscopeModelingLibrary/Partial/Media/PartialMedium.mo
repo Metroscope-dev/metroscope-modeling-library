@@ -25,11 +25,11 @@ package PartialMedium
         fillColor={255,255,255},
         fillPattern=FillPattern.Solid),
       Ellipse(
-        lineColor={102,102,102},
-        fillColor={204,204,204},
-        pattern=LinePattern.None,
-        fillPattern=FillPattern.Sphere,
-        extent={{-43,-42},{43,42}}),
+          lineColor={102,102,102},
+          fillColor={0,0,0},
+          pattern=LinePattern.None,
+          fillPattern=FillPattern.Solid,
+          extent={{-43,-42},{43,42}}),
       Rectangle(
         extent={{-60,14},{60,-14}},
         lineColor={215,215,215},

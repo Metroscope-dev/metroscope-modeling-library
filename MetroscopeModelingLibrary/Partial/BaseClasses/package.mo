@@ -25,19 +25,19 @@ package BaseClasses
         fillPattern=FillPattern.Solid),
      Rectangle(
           extent={{-46,49},{46,-47}},
-          lineColor={28,108,200},
+          lineColor={0,0,0},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           lineThickness=1),
         Rectangle(
           extent={{-64,19},{-28,-17}},
-          lineColor={28,108,200},
+          lineColor={0,0,0},
           lineThickness=1,
-          fillColor={28,108,200},
+          fillColor={0,0,0},
           fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{26,18},{60,-16}},
-          lineColor={28,108,200},
+          lineColor={0,0,0},
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
