@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.BoundaryConditions;
 model Source
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditions

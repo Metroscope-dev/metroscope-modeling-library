@@ -1,8 +1,6 @@
-within MetroscopeModelingLibrary.Icons;
-package Tests
-
-
-  annotation (Icon(graphics={
+within MetroscopeModelingLibrary.Icons.Tests;
+partial record FlueGasesTestPackageIcon
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           lineColor={200,200,200},
           fillColor={248,248,248},
@@ -16,8 +14,9 @@ package Tests
         Polygon(
           origin={8,14},
           lineColor={78,138,73},
-          fillColor={78,138,73},
+          fillColor={95,95,95},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
-          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}));
-end Tests;
+          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}),
+                                                                 Diagram(coordinateSystem(preserveAspectRatio=false)));
+end FlueGasesTestPackageIcon;
