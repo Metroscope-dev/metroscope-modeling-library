@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.BaseClassesTests;
 model WaterIsoPFlowModelTest
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
   WaterSteam.BaseClasses.WaterIsoPFlowModel waterIsoPFlowModel annotation (Placement(transformation(extent={{5,-23},{51,23}})));
   WaterSteam.BoundaryConditions.WaterSource waterSource annotation (Placement(transformation(extent={{-109,-19},{-71,19}})));
   WaterSteam.BoundaryConditions.WaterSink waterSink annotation (Placement(transformation(extent={{66,-19.5},{106,19.5}})));
@@ -20,14 +21,4 @@ equation
                                                                                                             color={28,108,200}));
   connect(waterPressureSensor.C_in, waterSource.C_out) annotation (Line(points={{-70,0},{-73.82,0},{-73.82,0},{-80.5,0}},        color={28,108,200}));
   connect(waterIsoPFlowModel.C_in, waterFlowSensor.C_out) annotation (Line(points={{5,0},{-11.5,0},{-11.5,0},{-18,0}},               color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Ellipse(lineColor = {75,138,73},
-                fillColor={255,255,255},
-                fillPattern = FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(lineColor = {0,0,255},
-                fillColor = {75,138,73},
-                pattern = LinePattern.None,
-                fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterIsoPFlowModelTest;

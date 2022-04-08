@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.BoundaryConditions;
 model Source
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditions

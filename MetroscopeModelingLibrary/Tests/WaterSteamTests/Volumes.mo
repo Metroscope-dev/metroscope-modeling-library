@@ -1,8 +1,9 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests;
 package Volumes
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestPackageIcon;
+
   model FlashTank_direct
-    extends Modelica.Icons.Example;
+    extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary Conditions
     input Real P(start = 10, nominal=1e5) "barA";
@@ -31,7 +32,7 @@ package Volumes
   end FlashTank_direct;
 
   model SteamDryer_direct
-    extends Modelica.Icons.Example;
+    extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary Conditions
     input Real P(start = 10, nominal=10) "barA";

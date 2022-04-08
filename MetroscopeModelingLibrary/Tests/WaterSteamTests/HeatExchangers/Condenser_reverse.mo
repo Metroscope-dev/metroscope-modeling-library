@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
 model Condenser_reverse
 
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
   input Units.MassFlowRate Q_turbine(start=150) "kg/s";

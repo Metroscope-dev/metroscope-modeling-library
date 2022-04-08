@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
 model SuperHeater_direct
 
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
   input Real P_hot_steam(start=60, min=0, nominal=11) "bar";
