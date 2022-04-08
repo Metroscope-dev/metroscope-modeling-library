@@ -43,7 +43,7 @@ package FlueGasesMedium
           radius=25.0),
         Ellipse(
           lineColor={102,102,102},
-          fillColor={175,175,175},
+          fillColor={95,95,95},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           extent={{-60,-60},{60,60}})}));
