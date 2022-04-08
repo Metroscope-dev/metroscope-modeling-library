@@ -13,8 +13,8 @@ partial package BaseClasses
           radius=25.0),
                 Rectangle(
                   extent={{-48,27},{48,-27}},
-                  lineColor=DynamicSelect({28,108,200}, line_color),
-                  fillColor=DynamicSelect({255,255,255}, fill_color),
+                  lineColor={0,0,0},
+                  fillColor={255,255,255},
                   fillPattern=FillPattern.Solid,
                   lineThickness=1)}));
 end BaseClasses;
