@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.FlueGases;
 package BoundaryConditions
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestPackageIcon;
 
 end BoundaryConditions;

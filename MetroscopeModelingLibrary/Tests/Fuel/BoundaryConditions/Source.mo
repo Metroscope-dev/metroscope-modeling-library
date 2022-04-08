@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Fuel.BoundaryConditions;
 model Source
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.FuelTestIcon;
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditions

@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.MoistAirTests;
 package BoundaryConditions
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestPackageIcon;
 
 end BoundaryConditions;

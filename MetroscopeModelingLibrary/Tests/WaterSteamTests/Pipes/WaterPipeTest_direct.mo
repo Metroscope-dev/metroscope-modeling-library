@@ -1,6 +1,8 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.Pipes;
 model WaterPipeTest_direct
   import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+
 
   // Boundary conditions
   input Units.SpecificEnthalpy source_h(start=1e6);
@@ -31,15 +33,4 @@ equation
   pipe.Kfr = Kfr;
   connect(sink.C_in, pipe.C_out) annotation (Line(points={{85,0},{16.5,0}}, color={28,108,200}));
   connect(source.C_out, pipe.C_in) annotation (Line(points={{-85,0},{-16.5,0}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Ellipse(lineColor = {75,138,73},
-                fillColor={255,255,255},
-                fillPattern = FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(lineColor = {0,0,255},
-                fillColor = {75,138,73},
-                pattern = LinePattern.None,
-                fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
-                                Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterPipeTest_direct;

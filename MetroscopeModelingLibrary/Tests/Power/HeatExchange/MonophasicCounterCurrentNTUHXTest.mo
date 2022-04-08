@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
 model MonophasicCounterCurrentNTUHXTest
 
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
 
   MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "monophasic_counter_current",QCp_max_side = "cold");
 

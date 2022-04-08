@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Power.BoundaryConditions;
 model Sink
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditinos

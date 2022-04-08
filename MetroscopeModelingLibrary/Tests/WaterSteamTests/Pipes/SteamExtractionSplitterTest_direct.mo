@@ -1,5 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.Pipes;
 model SteamExtractionSplitterTest_direct
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+
   // Boundary conditions
   input Units.SpecificEnthalpy h_source(start=2.65e6);
   input Real source_P(start=2.64, min=0, nominal=10) "barA";
@@ -44,15 +46,4 @@ equation
   connect(main_sink.C_in, steamExtractionSplitter.C_main_out) annotation (Line(points={{85,0},{56,0},{56,-3.33333e-05},{28.62,-3.33333e-05}}, color={28,108,200}));
   connect(steamExtractionSplitter.C_ext_out, extracted_Q_sensor.C_in) annotation (Line(points={{0,-18.1334},{0,-38},{1.10328e-15,-38}}, color={28,108,200}));
   connect(extracted_Q_sensor.C_out, extraction_sink.C_in) annotation (Line(points={{-1.10328e-15,-50},{-1.10328e-15,-60.5},{8.88178e-16,-60.5},{8.88178e-16,-65}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Ellipse(lineColor = {75,138,73},
-                fillColor={255,255,255},
-                fillPattern = FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(lineColor = {0,0,255},
-                fillColor = {75,138,73},
-                pattern = LinePattern.None,
-                fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
-                                Diagram(coordinateSystem(preserveAspectRatio=false)));
 end SteamExtractionSplitterTest_direct;

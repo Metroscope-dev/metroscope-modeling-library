@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Sensors.WaterSteam;
 model WaterPressureSensor
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";

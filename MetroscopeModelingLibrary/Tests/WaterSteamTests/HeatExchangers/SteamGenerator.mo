@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
 model SteamGenerator
 
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
   WaterSteam.HeatExchangers.SteamGenerator steamGenerator
     annotation (Placement(transformation(extent={{-34,-60},{30,58}})));
   WaterSteam.BoundaryConditions.WaterSource feedwater_source annotation (

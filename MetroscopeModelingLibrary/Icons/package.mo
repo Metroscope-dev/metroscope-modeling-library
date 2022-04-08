@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary;
-partial package Icons
+package Icons
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},

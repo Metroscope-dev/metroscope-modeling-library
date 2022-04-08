@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Power;
 package Machines
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestPackageIcon;
 
 end Machines;

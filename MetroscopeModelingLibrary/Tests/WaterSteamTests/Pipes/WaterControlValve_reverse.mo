@@ -1,5 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.Pipes;
 model WaterControlValve_reverse
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+
   // Boundary conditions
   input Units.SpecificEnthalpy source_h(start=1e3);
   input Real source_P(start=2, min=0, nominal=2) "barA";
@@ -46,15 +48,4 @@ equation
   connect(CV_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{56,0},{85,0}}, color={28,108,200}));
   connect(CV_P_out_sensor.C_in, control_valve.C_out) annotation (Line(points={{44,0},{33.25,0},{33.25,-1.81818e-06},{16.5,-1.81818e-06}}, color={28,108,200}));
   connect(control_valve.Opening, CV_opening_sensor.Opening) annotation (Line(points={{0,23.7575},{0,49.8}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Ellipse(lineColor = {75,138,73},
-                fillColor={255,255,255},
-                fillPattern = FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(lineColor = {0,0,255},
-                fillColor = {75,138,73},
-                pattern = LinePattern.None,
-                fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
-                                Diagram(coordinateSystem(preserveAspectRatio=false)));
 end WaterControlValve_reverse;

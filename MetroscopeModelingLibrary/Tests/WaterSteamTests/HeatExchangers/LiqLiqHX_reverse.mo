@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
 model LiqLiqHX_reverse
 
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
   input Real P_hot_source(start=50, min=0, nominal=10) "barA";

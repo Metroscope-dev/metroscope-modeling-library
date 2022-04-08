@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.MoistAirTests.BoundaryConditions;
 model Sink
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditinos

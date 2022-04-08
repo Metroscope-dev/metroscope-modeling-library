@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.Machines;
 model WaterPump_reverse
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
   input Units.Pressure source_P(start=2e5);
