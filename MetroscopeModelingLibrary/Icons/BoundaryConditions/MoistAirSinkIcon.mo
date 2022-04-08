@@ -5,7 +5,7 @@ partial record MoistAirSinkIcon
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={0,0,0},
-          fillColor={170,213,255},
+          fillColor={85,170,255},
           fillPattern=FillPattern.Solid),
         Line(points={{-88,0},{-60,0},{-74,10}}),
         Line(points={{-74,-10},{-60,0}}),

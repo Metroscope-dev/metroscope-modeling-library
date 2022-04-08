@@ -4,7 +4,7 @@ partial record MoistAirSourceIcon
   annotation (Icon(graphics={
         Ellipse(
           extent={{-80,60},{40,-60}},
-          fillColor={170,213,255},
+          fillColor={85,170,255},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5,
           pattern=LinePattern.None,
