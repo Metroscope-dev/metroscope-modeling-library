@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Media;
-package FlueGases
+package FlueGasesMedium
   extends Modelica.Media.IdealGases.Common.MixtureGasNasa(
     mediumName="MediaMonomeld",
     data={Modelica.Media.IdealGases.Common.SingleGasesData.N2,
@@ -14,7 +14,6 @@ package FlueGases
                     Modelica.Media.IdealGases.Common.FluidData.SO2},
     substanceNames={"Nitrogen","Oxygen","Water","Carbondioxide","Sulfurdioxide"},
     reference_X={0.768,0.232,0.0,0.0,0.0});
-
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
@@ -48,4 +47,4 @@ package FlueGases
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           extent={{-60,-60},{60,60}})}));
-end FlueGases;
+end FlueGasesMedium;
