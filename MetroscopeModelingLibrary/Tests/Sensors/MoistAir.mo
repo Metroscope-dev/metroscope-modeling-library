@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.Sensors;
 package MoistAir
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestPackageIcon;
 
   model MoistAirTemperatureSensor
-    extends Modelica.Icons.Example;
+    extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
     input Units.Pressure source_P(start=1e5) "Pa";
@@ -28,7 +28,7 @@ package MoistAir
   end MoistAirTemperatureSensor;
 
   model MoistAirFlowSensor
-    extends Modelica.Icons.Example;
+    extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
     input Units.Pressure source_P(start=1e5) "Pa";
@@ -53,7 +53,7 @@ package MoistAir
   end MoistAirFlowSensor;
 
   model MoistAirPressureSensor
-    extends Modelica.Icons.Example;
+    extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
     input Units.Pressure source_P(start=1e5) "Pa";
@@ -79,7 +79,7 @@ package MoistAir
   end MoistAirPressureSensor;
 
   model MoistAirDeltaPressureSensor
-    extends Modelica.Icons.Example;
+    extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
     input Units.Pressure source_P(start=1e5) "Pa";

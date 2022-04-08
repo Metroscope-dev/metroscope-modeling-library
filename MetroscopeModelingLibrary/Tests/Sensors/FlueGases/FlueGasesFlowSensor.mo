@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Sensors.FlueGases;
 model FlueGasesFlowSensor
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";

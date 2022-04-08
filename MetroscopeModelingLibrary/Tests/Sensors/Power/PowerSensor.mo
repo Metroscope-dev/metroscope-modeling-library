@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Sensors.Power;
 model PowerSensor
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
 
   MetroscopeModelingLibrary.Sensors.Power.PowerSensor powerSensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));

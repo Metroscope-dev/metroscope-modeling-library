@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Sensors;
 package WaterSteam
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestPackageIcon;
 
 end WaterSteam;

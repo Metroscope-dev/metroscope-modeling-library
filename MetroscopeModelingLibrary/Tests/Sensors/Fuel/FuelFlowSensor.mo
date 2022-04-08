@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Sensors.Fuel;
 model FuelFlowSensor
-  extends Modelica.Icons.Example;
+  extends MetroscopeModelingLibrary.Icons.Tests.FuelTestIcon;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
