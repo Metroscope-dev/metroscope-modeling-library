@@ -1,8 +1,5 @@
 within MetroscopeModelingLibrary.Sensors;
 package FlueGases
-
-
-
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
