@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.Examples;
-package CCGPowerPlant
+package CCGT
   extends Modelica.Icons.ExamplesPackage;
-end CCGPowerPlant;
+end CCGT;
