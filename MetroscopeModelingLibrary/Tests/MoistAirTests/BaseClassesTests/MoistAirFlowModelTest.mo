@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.MoistAirTests.BaseClassesTests;
 model MoistAirFlowModelTest
+  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
   MoistAir.BaseClasses.MoistAirFlowModel moist_air_FlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
   MoistAir.BoundaryConditions.MoistAirSource moist_air_Source annotation (Placement(transformation(extent={{-108.5,-18.5},{-71.5,18.5}})));
   MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirPressureSensor moist_air_PressureSensor annotation (Placement(transformation(extent={{-72,-10},{-52,10}})));
@@ -21,14 +22,4 @@ equation
                                                                                                                       color={85,170,255}));
   connect(moist_air_FlowModel.C_in, moist_air_FlowSensor.C_out) annotation (Line(points={{7,0},{4.5,0},{4.5,0},{-20,0}},           color={85,170,255}));
   connect(moist_air_FlowModel.C_out, moist_air_Sink.C_in) annotation (Line(points={{53,0},{62.375,0},{62.375,0},{71.75,0}},         color={85,170,255}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Ellipse(lineColor = {75,138,73},
-                fillColor={255,255,255},
-                fillPattern = FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(lineColor = {0,0,255},
-                fillColor = {75,138,73},
-                pattern = LinePattern.None,
-                fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end MoistAirFlowModelTest;
