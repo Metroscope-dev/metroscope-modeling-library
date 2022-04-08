@@ -1,7 +1,8 @@
+Color
 KeepingScaleIcon
-Connectors
-BoundaryConditions
 BaseClasses
+Connectors
+Sensors
+BoundaryConditions
 Machines
 HeatExchangePackage
-Sensors
