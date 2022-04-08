@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Fuel;
 package BoundaryConditions
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.FuelTestPackageIcon;
 
 
 end BoundaryConditions;

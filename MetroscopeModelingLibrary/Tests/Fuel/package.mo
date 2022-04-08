@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests;
 package Fuel
-  extends Modelica.Icons.ExamplesPackage;
+  extends MetroscopeModelingLibrary.Icons.Tests.FuelTestPackageIcon;
 
 end Fuel;
