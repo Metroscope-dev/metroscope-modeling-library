@@ -1,5 +1,5 @@
-within MetroscopeModelingLibrary.Power;
-package BoundaryConditions
+within MetroscopeModelingLibrary.Fuel;
+package Connectors
 
   annotation (Icon(graphics={
         Rectangle(
@@ -12,21 +12,20 @@ package BoundaryConditions
           lineColor={128,128,128},
           extent={{-100,-100},{100,100}},
           radius=25.0),
-        Ellipse(
-          extent={{-76,58},{44,-62}},
-          fillColor={244,125,35},
-          fillPattern=FillPattern.Solid,
-          lineThickness=1,
-          pattern=LinePattern.None,
-          lineColor={0,0,0}),
-      Line(
-        points={{54,0},{84,0}},
-        color={244,125,35},
-        thickness=1),
         Rectangle(
-          extent={{42,12},{66,-12}},
-          lineColor={244,125,35},
+          extent={{-74,26},{-24,-24}},
+          lineColor={213,213,0},
           lineThickness=1,
           fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+        Line(
+          points={{-24,0},{24,0}},
+          color={213,213,0},
+          thickness=1),
+        Rectangle(
+          extent={{24,30},{82,-28}},
+          lineColor={213,213,0},
+          lineThickness=1,
+          fillColor={213,213,0},
           fillPattern=FillPattern.Solid)}));
-end BoundaryConditions;
+end Connectors;
