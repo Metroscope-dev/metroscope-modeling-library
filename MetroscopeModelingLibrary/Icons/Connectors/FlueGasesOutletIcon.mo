@@ -4,7 +4,7 @@ partial record FlueGasesOutletIcon
   annotation (Icon(graphics={
         Rectangle(
           extent={{-100,100},{100,-100}},
-          lineColor={175,175,175},
+          lineColor={95,95,95},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid)}));
 end FlueGasesOutletIcon;
