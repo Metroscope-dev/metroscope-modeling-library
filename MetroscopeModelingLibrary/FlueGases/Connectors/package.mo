@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.FlueGases;
 package Connectors
-  
-annotation (Icon(graphics={
+
+  annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
           fillColor={248,248,248},
@@ -16,8 +16,8 @@ annotation (Icon(graphics={
           extent={{-74,26},{-24,-24}},
           lineColor={95,95,95},
           lineThickness=1,
-        fillColor={255,255,255},
-        fillPattern=FillPattern.Solid),
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
         Line(
           points={{-24,0},{24,0}},
           color={95,95,95},

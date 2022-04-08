@@ -4,7 +4,7 @@ partial record MoistAirOutletIcon
   annotation (Icon(graphics={
         Rectangle(
           extent={{-100,100},{100,-100}},
-          lineColor={170,213,255},
+          lineColor={85,170,255},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid)}));
 end MoistAirOutletIcon;
