@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.Tests;
-partial record FuelTestPackageIcon
+partial package FuelTestPackageIcon
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           lineColor={200,200,200},

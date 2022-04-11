@@ -43,5 +43,5 @@ equation
   connect(stodolaTurbine_P_out_sensor.C_in, stodolaTurbine.C_out) annotation (Line(points={{32,0},{10,0}}, color={28,108,200}));
   connect(sink.C_in, stodolaTurbine_P_out_sensor.C_out) annotation (Line(points={{67,0},{52,0}}, color={28,108,200}));
   connect(stodolaTurbine.C_W_out, stodolaTurbine_W_out_sensor.C_in) annotation (Line(points={{10,8.4},{18,8.4},{18,30},{32,30}}, color={244,125,35}));
-  connect(stodolaTurbine_W_out_sensor.C_out, power_sink.C_W_in) annotation (Line(points={{51.8,30},{67,30}}, color={244,125,35}));
+  connect(stodolaTurbine_W_out_sensor.C_out, power_sink.C_in) annotation (Line(points={{51.8,30},{67,30}}, color={244,125,35}));
 end StodolaTurbine_reverse;

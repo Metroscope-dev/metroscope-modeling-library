@@ -26,5 +26,5 @@ equation
 
   connect(sink.C_in, stodolaTurbine.C_out) annotation (Line(points={{67,0},{10,0}}, color={28,108,200}));
   connect(stodolaTurbine.C_in, source.C_out) annotation (Line(points={{-10,0},{-51,0}}, color={28,108,200}));
-  connect(stodolaTurbine.C_W_out, power_sink.C_W_in) annotation (Line(points={{10,8.4},{56,8.4},{56,30},{67,30}}, color={244,125,35}));
+  connect(stodolaTurbine.C_W_out, power_sink.C_in) annotation (Line(points={{10,8.4},{56,8.4},{56,30},{67,30}}, color={244,125,35}));
 end StodolaTurbine_direct;

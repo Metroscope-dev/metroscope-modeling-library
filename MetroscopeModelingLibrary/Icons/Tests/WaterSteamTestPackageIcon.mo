@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.Tests;
-partial record WaterSteamTestPackageIcon
+partial package WaterSteamTestPackageIcon
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           lineColor={200,200,200},
