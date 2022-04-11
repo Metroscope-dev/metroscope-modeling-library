@@ -8,8 +8,8 @@ model Source
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSource source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
 equation
   source.P_out = source_P;
   source.h_out = source_h;

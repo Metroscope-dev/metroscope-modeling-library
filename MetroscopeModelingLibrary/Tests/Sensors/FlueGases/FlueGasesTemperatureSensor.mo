@@ -8,8 +8,8 @@ model FlueGasesTemperatureSensor
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesTemperatureSensor T_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation
   source.P_out = source_P;
   source.Q_out = source_Q;

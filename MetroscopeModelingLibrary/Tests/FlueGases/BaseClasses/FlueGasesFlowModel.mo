@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.BaseClasses;
 model FlueGasesFlowModel
   extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
-  MetroscopeModelingLibrary.FlueGases.BaseClasses.FlueGasesFlowModel flowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSource source annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSink sink annotation (Placement(transformation(extent={{61,-20},{103,20}})));
+  MetroscopeModelingLibrary.FlueGases.BaseClasses.FlowModel flowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{61,-20},{103,20}})));
 equation
   flowModel.W_input = 0;
   flowModel.DP_input = 0;

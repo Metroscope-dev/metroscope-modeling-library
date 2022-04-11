@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Fuel.Connectors;
-connector FuelInlet
+connector Inlet
   extends MetroscopeModelingLibrary.Icons.Connectors.FuelInletIcon;
 
   package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
   extends Partial.Connectors.FluidInlet(redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
-end FuelInlet;
+end Inlet;

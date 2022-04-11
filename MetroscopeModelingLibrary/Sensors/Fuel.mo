@@ -6,9 +6,9 @@ package Fuel
     extends MetroscopeModelingLibrary.Icons.Sensors.TemperatureIcon;
 
     extends Partial.Sensors.TemperatureSensor(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
   end FuelTemperatureSensor;
 
   model FuelPressureSensor
@@ -17,9 +17,9 @@ package Fuel
     extends MetroscopeModelingLibrary.Icons.Sensors.PressureIcon;
 
     extends Partial.Sensors.PressureSensor(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
   end FuelPressureSensor;
 
   model FuelDeltaPressureSensor
@@ -28,9 +28,9 @@ package Fuel
     extends MetroscopeModelingLibrary.Icons.Sensors.DeltaPressureIcon;
 
     extends Partial.Sensors.DeltaPressureSensor(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
   end FuelDeltaPressureSensor;
 
   model FuelFlowSensor
@@ -39,9 +39,9 @@ package Fuel
     extends MetroscopeModelingLibrary.Icons.Sensors.FlowIcon;
 
     extends Partial.Sensors.FlowSensor(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
   end FuelFlowSensor;
   annotation (Icon(graphics={
         Rectangle(

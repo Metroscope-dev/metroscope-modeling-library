@@ -8,8 +8,8 @@ model FuelFlowSensor
   input Units.InletMassFlowRate source_Q(start=100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.Fuel.FuelFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.FuelSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.FuelSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation
   source.P_out = source_P;
   source.h_out = source_h;

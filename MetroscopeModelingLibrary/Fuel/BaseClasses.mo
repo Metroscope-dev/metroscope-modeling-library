@@ -1,12 +1,12 @@
 within MetroscopeModelingLibrary.Fuel;
 package BaseClasses
-  model FuelFlowModel
+  model FlowModel
     extends MetroscopeModelingLibrary.Icons.BaseClasses.FuelBaseClassIcon;
     package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
     extends Partial.BaseClasses.FlowModel(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
 
     import MetroscopeModelingLibrary.Units.Inputs;
     Inputs.InputPower W_input(start=0);
@@ -14,44 +14,44 @@ package BaseClasses
   equation
     W = W_input;
     DP = DP_input;
-  end FuelFlowModel;
+  end FlowModel;
 
-  model FuelIsoPFlowModel
+  model IsoPFlowModel
     extends MetroscopeModelingLibrary.Icons.BaseClasses.FuelBaseClassIcon;
     package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
     extends Partial.BaseClasses.IsoPFlowModel(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
 
     import MetroscopeModelingLibrary.Units.Inputs;
     Inputs.InputPower W_input(start=0);
   equation
     W = W_input;
-  end FuelIsoPFlowModel;
+  end IsoPFlowModel;
 
-  model FuelIsoHFlowModel
+  model IsoHFlowModel
     extends MetroscopeModelingLibrary.Icons.BaseClasses.FuelBaseClassIcon;
     package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
     extends Partial.BaseClasses.IsoHFlowModel(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
 
     import MetroscopeModelingLibrary.Units.Inputs;
     Inputs.InputDifferentialPressure DP_input(start=0);
   equation
     DP = DP_input;
-  end FuelIsoHFlowModel;
+  end IsoHFlowModel;
 
-  model FuelIsoPHFlowModel
+  model IsoPHFlowModel
     extends MetroscopeModelingLibrary.Icons.BaseClasses.FuelBaseClassIcon;
     package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
     extends Partial.BaseClasses.IsoPHFlowModel(
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelInlet C_in,
-      redeclare MetroscopeModelingLibrary.Fuel.Connectors.FuelOutlet C_out,
-      redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));
-  end FuelIsoPHFlowModel;
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
+      redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
+      redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
+  end IsoPHFlowModel;
   annotation (Icon(graphics={
       Rectangle(
         lineColor={200,200,200},

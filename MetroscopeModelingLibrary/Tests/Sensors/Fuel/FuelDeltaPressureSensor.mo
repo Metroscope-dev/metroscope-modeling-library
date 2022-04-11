@@ -8,9 +8,9 @@ model FuelDeltaPressureSensor
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.Fuel.FuelDeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,10},{10,30}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.FuelSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.FuelSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
-  MetroscopeModelingLibrary.Fuel.BaseClasses.FuelIsoHFlowModel FuelIsoHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  MetroscopeModelingLibrary.Fuel.BaseClasses.IsoHFlowModel FuelIsoHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
 equation
   source.h_out = source_h;
   source.Q_out = source_Q;
