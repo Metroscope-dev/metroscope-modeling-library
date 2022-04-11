@@ -30,7 +30,7 @@ model FlashTank_Reheater
         extent={{-12.5,-12.5},{12.5,12.5}},
         rotation=180,
         origin={0,10})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.WaterPump feed_water_pump(Q_0=Q_hot_0/3) annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.Machines.Pump feed_water_pump(Q_0=Q_hot_0/3) annotation (Placement(transformation(
         extent={{9,-9},{-9,9}},
         rotation=0,
         origin={-60,-80})));
