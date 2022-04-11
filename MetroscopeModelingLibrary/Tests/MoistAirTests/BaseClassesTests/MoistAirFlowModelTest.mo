@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Tests.MoistAirTests.BaseClassesTests;
 model MoistAirFlowModelTest
   extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
-  MoistAir.BaseClasses.MoistAirFlowModel moist_air_FlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
-  MoistAir.BoundaryConditions.MoistAirSource moist_air_Source annotation (Placement(transformation(extent={{-108.5,-18.5},{-71.5,18.5}})));
+  MoistAir.BaseClasses.FlowModel moist_air_FlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
+  MoistAir.BoundaryConditions.Source moist_air_Source annotation (Placement(transformation(extent={{-108.5,-18.5},{-71.5,18.5}})));
   MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirPressureSensor moist_air_PressureSensor annotation (Placement(transformation(extent={{-72,-10},{-52,10}})));
   MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirFlowSensor moist_air_FlowSensor annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
-  MoistAir.BoundaryConditions.MoistAirSink moist_air_Sink annotation (Placement(transformation(extent={{61.5,-20},{102.5,20}})));
+  MoistAir.BoundaryConditions.Sink moist_air_Sink annotation (Placement(transformation(extent={{61.5,-20},{102.5,20}})));
 equation
   moist_air_FlowModel.W_input = 0;
   moist_air_FlowModel.DP_input = 0;

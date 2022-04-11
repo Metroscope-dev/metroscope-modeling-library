@@ -5,7 +5,7 @@ model MoistAirTemperatureSensor
   extends MetroscopeModelingLibrary.Icons.Sensors.TemperatureIcon;
 
   extends Partial.Sensors.TemperatureSensor(
-    redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirInlet C_in,
-    redeclare MetroscopeModelingLibrary.MoistAir.Connectors.MoistAirOutlet C_out,
-    redeclare package Medium = MoistAirMedium) annotation(IconMap(primitivesVisible=false));
+    redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
+    redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
+    redeclare package Medium = MoistAirMedium) annotation (IconMap(primitivesVisible=false));
 end MoistAirTemperatureSensor;

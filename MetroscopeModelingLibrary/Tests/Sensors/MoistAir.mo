@@ -11,8 +11,8 @@ package MoistAir
     input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
     MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirTemperatureSensor T_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
   equation
     source.P_out = source_P;
     source.Q_out = source_Q;
@@ -36,8 +36,8 @@ package MoistAir
     input Units.InletMassFlowRate source_Q(start=100) "kg/s";
 
     MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
   equation
     source.P_out = source_P;
     source.h_out = source_h;
@@ -61,8 +61,8 @@ package MoistAir
     input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
     MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirPressureSensor P_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
   equation
     source.h_out = source_h;
     source.Q_out = source_Q;
@@ -87,9 +87,9 @@ package MoistAir
     input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
     MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirDeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,10},{10,30}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
-    MetroscopeModelingLibrary.MoistAir.BaseClasses.MoistAirIsoHFlowModel MoistAirIsoHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+    MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+    MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoHFlowModel MoistAirIsoHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   equation
     source.h_out = source_h;
     source.Q_out = source_Q;

@@ -9,8 +9,8 @@ model Sink
   input Units.InletMassFlowRate sink_Q(start=100) "kg/s";
   input Units.Fraction sink_relative_humidity(start=0.5) "1";
 
-  MoistAir.BoundaryConditions.MoistAirSource source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
-  MoistAir.BoundaryConditions.MoistAirSink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
+  MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
+  MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
 equation
   sink.P_in = sink_P;
   sink.h_in = sink_h;
