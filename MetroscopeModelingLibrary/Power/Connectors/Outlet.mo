@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Power.Connectors;
-connector PowerOutlet
+connector Outlet
   extends Icons.Connectors.PowerOutletIcon;
   import MetroscopeModelingLibrary.Units;
 
   flow Units.OutletPower W;
-end PowerOutlet;
+end Outlet;

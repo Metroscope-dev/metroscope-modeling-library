@@ -11,7 +11,7 @@ model StodolaTurbine_direct
   WaterSteam.Machines.StodolaTurbine stodolaTurbine annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{62,-10},{82,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSink power_sink annotation (Placement(transformation(extent={{62,20},{82,40}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink power_sink annotation (Placement(transformation(extent={{62,20},{82,40}})));
 equation
   // Boundary conditions
   source.P_out = source_P;

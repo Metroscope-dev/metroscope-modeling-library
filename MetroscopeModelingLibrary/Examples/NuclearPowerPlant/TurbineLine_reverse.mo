@@ -57,7 +57,7 @@ model TurbineLine_reverse
   WaterSteam.Pipes.SteamExtractionSplitter ST3_ext annotation (Placement(transformation(extent={{74,-10},{94,8}})));
 
   // Electricity
-  Power.BoundaryConditions.PowerSink powerSink annotation (Placement(transformation(extent={{122,30},{142,50}})));
+  Power.BoundaryConditions.Sink powerSink annotation (Placement(transformation(extent={{122,30},{142,50}})));
   Power.Machines.Generator generator annotation (Placement(transformation(extent={{68,28},{108,52}})));
   Sensors.WaterSteam.WaterPressureSensor ST1_ext_P_sensor annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},

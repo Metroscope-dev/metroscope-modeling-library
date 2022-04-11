@@ -10,8 +10,8 @@ model Generator_direct
   parameter Units.Yield generator_eta = 0.99;
 
   MetroscopeModelingLibrary.Power.Machines.Generator generator annotation (Placement(transformation(extent={{-46,-26},{40,26}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource source annotation (Placement(transformation(extent={{-78,-10},{-58,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSink sink annotation (Placement(transformation(extent={{60,-10},{80,10}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-78,-10},{-58,10}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{60,-10},{80,10}})));
 equation
   // Boundary conditions
   source.W_out = source_W;

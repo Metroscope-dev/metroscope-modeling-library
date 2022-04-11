@@ -26,7 +26,7 @@ model WaterPump_direct
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,-48})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource powerSource annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Source powerSource annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,50})));

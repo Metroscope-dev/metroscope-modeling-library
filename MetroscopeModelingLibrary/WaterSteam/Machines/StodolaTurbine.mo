@@ -35,7 +35,7 @@ model StodolaTurbine
   Medium.ThermodynamicState state_is; // ok
   //Units.OutletPower Wmech;
 
-  Power.Connectors.PowerOutlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
+  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 equation
 
 ///*

@@ -54,7 +54,7 @@ model TurbineLine_direct
   WaterSteam.Pipes.SteamExtractionSplitter ST3_ext annotation (Placement(transformation(extent={{74,-10},{94,8}})));
 
   // Electricity
-  Power.BoundaryConditions.PowerSink powerSink annotation (Placement(transformation(extent={{118,30},{138,50}})));
+  Power.BoundaryConditions.Sink powerSink annotation (Placement(transformation(extent={{118,30},{138,50}})));
   Power.Machines.Generator generator annotation (Placement(transformation(extent={{78,28},{118,52}})));
 equation
   // Boundary conditions
