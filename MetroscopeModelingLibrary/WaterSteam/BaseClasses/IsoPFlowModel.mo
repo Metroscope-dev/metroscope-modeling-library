@@ -1,14 +1,14 @@
 within MetroscopeModelingLibrary.WaterSteam.BaseClasses;
-model WaterIsoHFlowModel
+model IsoPFlowModel
   extends MetroscopeModelingLibrary.Icons.BaseClasses.WaterSteamBaseClassIcon;
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  extends Partial.BaseClasses.IsoHFlowModel(
+  extends Partial.BaseClasses.IsoPFlowModel(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
 
   import MetroscopeModelingLibrary.Units.Inputs;
-  Inputs.InputDifferentialPressure DP_input(start=0);
+  Inputs.InputPower W_input(start=0);
 equation
-  DP = DP_input;
-end WaterIsoHFlowModel;
+  W = W_input;
+end IsoPFlowModel;

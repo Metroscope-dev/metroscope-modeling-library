@@ -25,11 +25,11 @@ model SteamExtractionSplitter
   Inputs.InputFraction alpha(start=1) "Extraction paramater";
 
   // Components
-  WaterSteam.BaseClasses.WaterIsoPFlowModel extractedFlow(Q_0=Q_ext_0, P_0=P_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel extractedFlow(Q_0=Q_ext_0, P_0=P_0) annotation (Placement(transformation(
         extent={{-11.5,-10.5},{11.5,10.5}},
         rotation=270,
         origin={0,-30})));
-  WaterSteam.BaseClasses.WaterIsoPFlowModel mainFlow(Q_0=Q_main_0, P_0=P_0) annotation (Placement(transformation(extent={{35,-27},{85,27}})));
+  BaseClasses.IsoPFlowModel mainFlow(Q_0=Q_main_0, P_0=P_0) annotation (Placement(transformation(extent={{35,-27},{85,27}})));
 
   Connectors.Inlet C_in(Q(start=Q_in_0), P(start=P_0)) annotation (Placement(transformation(extent={{-120,-10},{-100,10}}), iconTransformation(extent={{-116,-10},{-96,10}})));
   Connectors.Outlet C_main_out(Q(start=-Q_main_0), P(start=P_0)) annotation (Placement(transformation(extent={{100,-10},{120,10}}), iconTransformation(extent={{96,-10},{116,10}})));

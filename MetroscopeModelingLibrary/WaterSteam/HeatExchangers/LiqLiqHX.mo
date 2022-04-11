@@ -36,12 +36,11 @@ model LiqLiqHX
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,52})));
-  BaseClasses.WaterIsoPFlowModel hot_side(Q_0 = Q_hot_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
         origin={-1,21})));
-  BaseClasses.WaterIsoPFlowModel cold_side(Q_0 = Q_cold_0)
-    annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
+  BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
   Power.HeatExchange.NTUHeatExchange HX(config="monophasic_counter_current", QCp_max_side = QCp_max_side) annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},

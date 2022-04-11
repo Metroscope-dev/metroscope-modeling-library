@@ -40,20 +40,16 @@ model DryReheater
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,56})));
-  BaseClasses.WaterIsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
         origin={71,19})));
-  BaseClasses.WaterIsoPFlowModel cold_side_deheating(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{48,-58},{96,-10}})));
-  BaseClasses.WaterIsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel cold_side_deheating(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{48,-58},{96,-10}})));
+  BaseClasses.IsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
         origin={-59,21})));
-  BaseClasses.WaterIsoPFlowModel cold_side_condensing(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-82,-58},{-34,-10}})));
+  BaseClasses.IsoPFlowModel cold_side_condensing(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-82,-58},{-34,-10}})));
   Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,

@@ -41,20 +41,17 @@ model Condenser
 
   Pipes.WaterPipe cold_side_pipe(Q_0=Q_cold_0)
     annotation (Placement(transformation(extent={{-82,40},{-62,60}})));
-  BaseClasses.WaterIsoPFlowModel hot_side(Q_0=Q_hot_0, P_0=Psat_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0, P_0=Psat_0) annotation (Placement(transformation(
         extent={{-24,-24},{24,24}},
         rotation=180,
         origin={0,22})));
-  BaseClasses.WaterIsoPFlowModel cold_side(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-24,-30},{24,18}})));
+  BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-24,-30},{24,18}})));
   Pipes.WaterPipe water_height_pipe(Q_0=Q_hot_0, P_in_0 = Psat_0, P_out_0 = Psat_0, h(start=2.46e5)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,-46})));
-  BaseClasses.WaterIsoHFlowModel incondensables_in
-    annotation (Placement(transformation(extent={{8,62},{28,82}})));
-  BaseClasses.WaterIsoHFlowModel incondensables_out annotation (Placement(
-        transformation(
+  BaseClasses.IsoHFlowModel incondensables_in annotation (Placement(transformation(extent={{8,62},{28,82}})));
+  BaseClasses.IsoHFlowModel incondensables_out annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,-18})));

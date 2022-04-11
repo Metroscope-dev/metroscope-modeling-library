@@ -56,34 +56,31 @@ model SuperHeater
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-132,2})));
-  BaseClasses.WaterIsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={-34,44})));
-  BaseClasses.WaterIsoPFlowModel cold_side_deheating(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-15,-15},{15,15}},
+  BaseClasses.IsoPFlowModel cold_side_deheating(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
         rotation=90,
         origin={39,45})));
-  BaseClasses.WaterIsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-17,-16},{17,16}},
         rotation=270,
         origin={-34,1})));
-  BaseClasses.WaterIsoPFlowModel cold_side_condensing(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-17,-17},{17,17}},
+  BaseClasses.IsoPFlowModel cold_side_condensing(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-17,-17},{17,17}},
         rotation=90,
         origin={39,1})));
   Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config) annotation (Placement(transformation(
         extent={{-10,-21},{10,21}},
         rotation=270,
         origin={3,2})));
-  BaseClasses.WaterIsoPFlowModel cold_side_vaporising(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-17,-17},{17,17}},
+  BaseClasses.IsoPFlowModel cold_side_vaporising(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-17,-17},{17,17}},
         rotation=90,
         origin={39,-43})));
-  BaseClasses.WaterIsoPFlowModel hot_side_vaporising(Q_0=Q_cold_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_vaporising(Q_0=Q_cold_0) annotation (Placement(transformation(
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={-34,-44})));
