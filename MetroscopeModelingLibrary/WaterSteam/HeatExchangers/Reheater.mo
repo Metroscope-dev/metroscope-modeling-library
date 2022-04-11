@@ -44,18 +44,10 @@ model Reheater
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
 
-  Connectors.WaterInlet C_cold_in(Q(start=Q_cold_0))
-    annotation (Placement(transformation(extent={{-172,-10},{-152,10}}),
-        iconTransformation(extent={{-172,-10},{-152,10}})));
-  Connectors.WaterInlet C_hot_in(Q(start=Q_hot_0))
-    annotation (Placement(transformation(extent={{-10,70},{10,90}}),
-        iconTransformation(extent={{-10,70},{10,90}})));
-  Connectors.WaterOutlet C_hot_out(Q(start=-Q_hot_0))
-    annotation (Placement(transformation(extent={{-10,-90},{10,-70}}),
-        iconTransformation(extent={{-10,-90},{10,-70}})));
-  Connectors.WaterOutlet C_cold_out(Q(start=-Q_cold_0))
-    annotation (Placement(transformation(extent={{150,-10},{170,10}}),
-        iconTransformation(extent={{150,-10},{170,10}})));
+  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
+  Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
+  Connectors.Outlet C_hot_out(Q(start=-Q_hot_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
 
   Pipes.WaterPipe cold_side_pipe(Q_0=Q_cold_0)
     annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));

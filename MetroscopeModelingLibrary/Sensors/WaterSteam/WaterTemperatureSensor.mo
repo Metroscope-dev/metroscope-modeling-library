@@ -5,7 +5,7 @@ model WaterTemperatureSensor
   extends MetroscopeModelingLibrary.Icons.Sensors.TemperatureIcon;
 
   extends Partial.Sensors.TemperatureSensor(
-    redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
-    redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
-    redeclare package Medium = WaterSteamMedium) annotation(IconMap(primitivesVisible=false));
+    redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
+    redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
+    redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
 end WaterTemperatureSensor;

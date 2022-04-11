@@ -17,13 +17,9 @@ model SteamDryer
 
   Units.MassFraction x_steam_out; // Steam mass fraction at steam outlet
 
-  WaterSteam.Connectors.WaterInlet C_in(P(start=P_0), Q(start=Q_in_0))
-    annotation (Placement(transformation(extent={{-110,30},{-90,50}}),
-        iconTransformation(extent={{-110,30},{-90,50}})));
-  WaterSteam.Connectors.WaterOutlet C_hot_steam(P(start=P_0), Q(start=-Q_in_0/2))
-    annotation (Placement(transformation(extent={{90,30},{110,50}})));
-  WaterSteam.Connectors.WaterOutlet C_hot_liquid(P(start=P_0), Q(start=-Q_in_0/2))
-    annotation (Placement(transformation(extent={{90,-50},{110,-30}})));
+  Connectors.Inlet C_in(P(start=P_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
+  Connectors.Outlet C_hot_steam(P(start=P_0), Q(start=-Q_in_0/2)) annotation (Placement(transformation(extent={{90,30},{110,50}})));
+  Connectors.Outlet C_hot_liquid(P(start=P_0), Q(start=-Q_in_0/2)) annotation (Placement(transformation(extent={{90,-50},{110,-30}})));
   WaterSteam.BaseClasses.WaterIsoPFlowModel steam_phase(P_0=P_0, Q_0=Q_in_0/2)
     annotation (Placement(transformation(extent={{26,30},{46,50}})));
   WaterSteam.BaseClasses.WaterIsoPFlowModel liquid_phase(P_0=P_0, Q_0=Q_in_0/2)

@@ -43,18 +43,10 @@ model SuperHeater
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
 
-  Connectors.WaterInlet C_cold_in(Q(start=Q_cold_0))
-    annotation (Placement(transformation(extent={{-10,-90},{10,-70}}),
-        iconTransformation(extent={{-10,-90},{10,-70}})));
-  Connectors.WaterInlet C_hot_in(Q(start=Q_hot_0))
-    annotation (Placement(transformation(extent={{-170,-8},{-150,12}}),
-        iconTransformation(extent={{-170,-8},{-150,12}})));
-  Connectors.WaterOutlet C_hot_out(Q(start=-Q_hot_0))
-    annotation (Placement(transformation(extent={{150,-10},{170,10}}),
-        iconTransformation(extent={{150,-10},{170,10}})));
-  Connectors.WaterOutlet C_cold_out(Q(start=-Q_cold_0))
-    annotation (Placement(transformation(extent={{-12,70},{8,90}}),
-        iconTransformation(extent={{-12,70},{8,90}})));
+  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-170,-8},{-150,12}}), iconTransformation(extent={{-170,-8},{-150,12}})));
+  Connectors.Outlet C_hot_out(Q(start=-Q_hot_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
+  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{-12,70},{8,90}}), iconTransformation(extent={{-12,70},{8,90}})));
 
   Pipes.WaterPipe cold_side_pipe(Q_0=Q_cold_0)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
@@ -95,8 +87,7 @@ model SuperHeater
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={-34,-44})));
-  Connectors.WaterOutlet C_vent
-    annotation (Placement(transformation(extent={{150,-88},{170,-68}})));
+  Connectors.Outlet C_vent annotation (Placement(transformation(extent={{150,-88},{170,-68}})));
 equation
 
   // Definitions
