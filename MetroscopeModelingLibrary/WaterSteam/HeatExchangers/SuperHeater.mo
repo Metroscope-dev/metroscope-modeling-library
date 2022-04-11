@@ -48,11 +48,11 @@ model SuperHeater
   Connectors.Outlet C_hot_out(Q(start=-Q_hot_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
   Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{-12,70},{8,90}}), iconTransformation(extent={{-12,70},{8,90}})));
 
-  Pipes.WaterPipe cold_side_pipe(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
         rotation=0,
         origin={16,-64})));
-  Pipes.WaterPipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(
+  Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-132,2})));

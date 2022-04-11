@@ -20,7 +20,7 @@ model WaterPipeTest_direct
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  WaterSteam.Pipes.WaterPipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
+  WaterSteam.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
 
 equation
   // Boundary conditions

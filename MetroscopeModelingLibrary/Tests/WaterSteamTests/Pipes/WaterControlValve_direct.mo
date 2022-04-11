@@ -22,7 +22,7 @@ model WaterControlValve_direct
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  WaterSteam.Pipes.WaterControlValve control_valve annotation (Placement(transformation(extent={{-6.5,-5.93938},{26.5,26.7272}})));
+  WaterSteam.Pipes.ControlValve control_valve annotation (Placement(transformation(extent={{-6.5,-5.93938},{26.5,26.7272}})));
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));

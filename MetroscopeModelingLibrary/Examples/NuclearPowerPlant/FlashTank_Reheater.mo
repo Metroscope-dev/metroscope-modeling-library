@@ -25,7 +25,7 @@ model FlashTank_Reheater
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-78,78})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe reheater_to_flash_tank_DP(Q_0=Q_hot_0)
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe reheater_to_flash_tank_DP(Q_0=Q_hot_0)
     annotation (Placement(transformation(
         extent={{-12.5,-12.5},{12.5,12.5}},
         rotation=180,
@@ -34,7 +34,7 @@ model FlashTank_Reheater
         extent={{9,-9},{-9,9}},
         rotation=0,
         origin={-60,-80})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe flash_tank_to_reheater_DP(Q_0=Q_hot_0/2) annotation (Placement(transformation(extent={{100,42},{73,69}})));
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe flash_tank_to_reheater_DP(Q_0=Q_hot_0/2) annotation (Placement(transformation(extent={{100,42},{73,69}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource power_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,

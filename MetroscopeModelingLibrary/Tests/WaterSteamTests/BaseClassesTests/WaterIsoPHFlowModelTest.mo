@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.BaseClassesTests;
 model WaterIsoPHFlowModelTest
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
-  WaterSteam.BaseClasses.WaterIsoPHFlowModel waterIsoPHFlowModel annotation (Placement(transformation(extent={{5,-23},{51,23}})));
+  WaterSteam.BaseClasses.IsoPHFlowModel waterIsoPHFlowModel annotation (Placement(transformation(extent={{5,-23},{51,23}})));
   WaterSteam.BoundaryConditions.Source waterSource annotation (Placement(transformation(extent={{-109,-19},{-71,19}})));
   WaterSteam.BoundaryConditions.Sink waterSink annotation (Placement(transformation(extent={{66,-19.5},{106,19.5}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));

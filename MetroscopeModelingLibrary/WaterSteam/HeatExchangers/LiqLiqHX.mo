@@ -30,9 +30,8 @@ model LiqLiqHX
   Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
 
 
-  Pipes.WaterPipe cold_side_pipe(Q_0 = Q_cold_0)
-    annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
-  Pipes.WaterPipe hot_side_pipe(Q_0 = Q_hot_0) annotation (Placement(transformation(
+  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
+  Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,52})));
