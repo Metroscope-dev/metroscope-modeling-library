@@ -11,12 +11,9 @@ package Volumes
     input Real h_in(start=2e6) "J/kg";
     WaterSteam.Volumes.FlashTank flashTank
       annotation (Placement(transformation(extent={{-32,-30},{28,30}})));
-    WaterSteam.BoundaryConditions.WaterSource source
-      annotation (Placement(transformation(extent={{-80,2},{-60,22}})));
-    WaterSteam.BoundaryConditions.WaterSink steam_sink
-      annotation (Placement(transformation(extent={{56,2},{76,22}})));
-    WaterSteam.BoundaryConditions.WaterSink liquid_sink
-      annotation (Placement(transformation(extent={{56,-22},{76,-2}})));
+    WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-80,2},{-60,22}})));
+    WaterSteam.BoundaryConditions.Sink steam_sink annotation (Placement(transformation(extent={{56,2},{76,22}})));
+    WaterSteam.BoundaryConditions.Sink liquid_sink annotation (Placement(transformation(extent={{56,-22},{76,-2}})));
   equation
 
     source.P_out = P*1e5;
@@ -44,12 +41,9 @@ package Volumes
 
     WaterSteam.Volumes.SteamDryer steamDryer
       annotation (Placement(transformation(extent={{-32,-28},{28,32}})));
-    WaterSteam.BoundaryConditions.WaterSource source
-      annotation (Placement(transformation(extent={{-80,2},{-60,22}})));
-    WaterSteam.BoundaryConditions.WaterSink steam_sink
-      annotation (Placement(transformation(extent={{56,2},{76,22}})));
-    WaterSteam.BoundaryConditions.WaterSink liquid_sink
-      annotation (Placement(transformation(extent={{56,-22},{76,-2}})));
+    WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-80,2},{-60,22}})));
+    WaterSteam.BoundaryConditions.Sink steam_sink annotation (Placement(transformation(extent={{56,2},{76,22}})));
+    WaterSteam.BoundaryConditions.Sink liquid_sink annotation (Placement(transformation(extent={{56,-22},{76,-2}})));
   equation
 
     // Boundary conditions

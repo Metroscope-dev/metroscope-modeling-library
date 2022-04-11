@@ -27,18 +27,15 @@ model SteamGenerator
     annotation (Placement(transformation(extent={{-10,110},{10,130}}),
         iconTransformation(extent={{-10,110},{10,130}})));
 
-  BoundaryConditions.WaterSource steam_source annotation (Placement(
-        transformation(
+  BoundaryConditions.Source steam_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,88})));
-  BoundaryConditions.WaterSink feedwater_sink annotation (Placement(
-        transformation(
+  BoundaryConditions.Sink feedwater_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={2,0})));
-  BoundaryConditions.WaterSource purge_source annotation (Placement(
-        transformation(
+  BoundaryConditions.Source purge_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-82})));

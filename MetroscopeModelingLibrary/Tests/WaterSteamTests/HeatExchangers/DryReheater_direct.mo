@@ -16,19 +16,15 @@ model DryReheater_direct
   parameter Units.FrictionCoefficient Kfr_hot = 0;
   parameter Units.FrictionCoefficient Kfr_cold = 500; // About 1 bar of pressure loss in the reheater
 
-  WaterSteam.BoundaryConditions.WaterSource cold_source
-    annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  WaterSteam.BoundaryConditions.WaterSink cold_sink
-    annotation (Placement(transformation(extent={{40,-10},{60,10}})));
+  WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
   WaterSteam.HeatExchangers.DryReheater dryReheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
-  WaterSteam.BoundaryConditions.WaterSource hot_source annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,30})));
-  WaterSteam.BoundaryConditions.WaterSink hot_sink annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-30})));

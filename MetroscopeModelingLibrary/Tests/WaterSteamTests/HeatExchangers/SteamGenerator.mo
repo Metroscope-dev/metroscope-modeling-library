@@ -4,15 +4,12 @@ model SteamGenerator
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
   WaterSteam.HeatExchangers.SteamGenerator steamGenerator
     annotation (Placement(transformation(extent={{-34,-60},{30,58}})));
-  WaterSteam.BoundaryConditions.WaterSource feedwater_source annotation (
-      Placement(transformation(
+  WaterSteam.BoundaryConditions.Source feedwater_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={68,-8})));
-  WaterSteam.BoundaryConditions.WaterSink steam_sink
-    annotation (Placement(transformation(extent={{40,64},{60,84}})));
-  WaterSteam.BoundaryConditions.WaterSink purge_sink annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Sink steam_sink annotation (Placement(transformation(extent={{40,64},{60,84}})));
+  WaterSteam.BoundaryConditions.Sink purge_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-2,-84})));

@@ -25,19 +25,15 @@ model LiqLiqHX_reverse
   input Real P_hot_out(start = 50, min = 0, nominal = 10) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
   input Real T_cold_out(start = 55, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
 
-  WaterSteam.BoundaryConditions.WaterSource cold_source
-    annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  WaterSteam.BoundaryConditions.WaterSink cold_sink
-    annotation (Placement(transformation(extent={{52,-10},{72,10}})));
+  WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{52,-10},{72,10}})));
   WaterSteam.HeatExchangers.LiqLiqHX liqLiqHX
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
-  WaterSteam.BoundaryConditions.WaterSource hot_source annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,30})));
-  WaterSteam.BoundaryConditions.WaterSink hot_sink annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-36})));

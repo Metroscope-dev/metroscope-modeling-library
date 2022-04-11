@@ -20,19 +20,15 @@ model Condenser_direct
   parameter Units.Pressure C_incond = 0;
 
 
-  WaterSteam.BoundaryConditions.WaterSource cooling_source
-    annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  WaterSteam.BoundaryConditions.WaterSink cooling_sink
-    annotation (Placement(transformation(extent={{40,-10},{60,10}})));
+  WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  WaterSteam.BoundaryConditions.Sink cooling_sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
   WaterSteam.HeatExchangers.Condenser condenser
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
-  WaterSteam.BoundaryConditions.WaterSource turbine_outlet annotation (
-      Placement(transformation(
+  WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,30})));
-  WaterSteam.BoundaryConditions.WaterSink condensate_sink annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-30})));

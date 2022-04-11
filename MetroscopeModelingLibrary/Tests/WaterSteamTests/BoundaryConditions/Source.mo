@@ -8,8 +8,8 @@ model Source
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
-  WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
-  WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
 equation
   source.P_out = source_P;
   source.h_out = source_h;

@@ -19,18 +19,13 @@ model SuperHeater_direct
   parameter Units.InletMassFlowRate Q_vent = 1;
 
 
-  WaterSteam.BoundaryConditions.WaterSource hot_steam_source
-    annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
-  WaterSteam.BoundaryConditions.WaterSink drains_sink
-    annotation (Placement(transformation(extent={{48,-10},{68,10}})));
-  WaterSteam.BoundaryConditions.WaterSource cold_steam_source
-    annotation (Placement(transformation(extent={{-42,-50},{-22,-30}})));
-  WaterSteam.BoundaryConditions.WaterSink superheated_steam_sink
-    annotation (Placement(transformation(extent={{16,30},{36,50}})));
+  WaterSteam.BoundaryConditions.Source hot_steam_source annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
+  WaterSteam.BoundaryConditions.Sink drains_sink annotation (Placement(transformation(extent={{48,-10},{68,10}})));
+  WaterSteam.BoundaryConditions.Source cold_steam_source annotation (Placement(transformation(extent={{-42,-50},{-22,-30}})));
+  WaterSteam.BoundaryConditions.Sink superheated_steam_sink annotation (Placement(transformation(extent={{16,30},{36,50}})));
   WaterSteam.HeatExchangers.SuperHeater superheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
-  WaterSteam.BoundaryConditions.WaterSink vent_sink
-    annotation (Placement(transformation(extent={{48,-30},{68,-10}})));
+  WaterSteam.BoundaryConditions.Sink vent_sink annotation (Placement(transformation(extent={{48,-30},{68,-10}})));
 equation
 
   // Boundary conditions

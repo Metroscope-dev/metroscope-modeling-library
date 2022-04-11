@@ -11,8 +11,8 @@ model WaterHeatLossTest
   input Real W_input(start=1e5, min=0, nominal=100);
 
   // Components
-  WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
-  WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={90,-6.10623e-16})));

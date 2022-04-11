@@ -16,8 +16,8 @@ model WaterControlValve_direct
   output Units.Pressure CV_P_out;
 
   // Components
-  WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
-  WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={90,-6.10623e-16})));

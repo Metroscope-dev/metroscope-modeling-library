@@ -17,12 +17,12 @@ model SteamExtractionSplitterTest_reverse
   // Components
   WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter annotation (Placement(transformation(extent={{-27,-26.6667},{27,21.3333}})));
 
-  WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
-  WaterSteam.BoundaryConditions.WaterSink main_sink annotation (Placement(transformation(
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
+  WaterSteam.BoundaryConditions.Sink main_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={90,-5.55112e-16})));
-  WaterSteam.BoundaryConditions.WaterSink extraction_sink annotation (Placement(transformation(
+  WaterSteam.BoundaryConditions.Sink extraction_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={0,-70})));

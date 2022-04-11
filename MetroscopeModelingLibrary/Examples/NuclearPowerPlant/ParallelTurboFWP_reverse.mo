@@ -46,8 +46,8 @@ model ParallelTurboFWP_reverse
 
   // Components
   // ST BCs
-  WaterSteam.BoundaryConditions.WaterSource STs_source annotation (Placement(transformation(extent={{-128,70},{-108,90}})));
-  WaterSteam.BoundaryConditions.WaterSink STs_sink annotation (Placement(transformation(extent={{108,70},{128,90}})));
+  WaterSteam.BoundaryConditions.Source STs_source annotation (Placement(transformation(extent={{-128,70},{-108,90}})));
+  WaterSteam.BoundaryConditions.Sink STs_sink annotation (Placement(transformation(extent={{108,70},{128,90}})));
   // STs
   Sensors.WaterSteam.WaterPressureSensor ST1_P_in_sensor annotation (Placement(transformation(extent={{10,93.0001},{24,107}})));
   Sensors.WaterSteam.WaterPressureSensor ST2_P_in_sensor annotation (Placement(transformation(extent={{10,53},{24,67}})));
@@ -60,8 +60,8 @@ model ParallelTurboFWP_reverse
   Sensors.Other.OpeningSensor ST2_CV_opening_sensor annotation (Placement(transformation(extent={{-14,44},{-6,36}})));
 
   // FWP BCs
-  WaterSteam.BoundaryConditions.WaterSource FWPs_source annotation (Placement(transformation(extent={{128,-70},{108,-50}})));
-  WaterSteam.BoundaryConditions.WaterSink FWPs_sink annotation (Placement(transformation(extent={{-108,-70},{-128,-50}})));
+  WaterSteam.BoundaryConditions.Source FWPs_source annotation (Placement(transformation(extent={{128,-70},{108,-50}})));
+  WaterSteam.BoundaryConditions.Sink FWPs_sink annotation (Placement(transformation(extent={{-108,-70},{-128,-50}})));
   // Pumps
   WaterSteam.Machines.WaterPump FWP2 annotation (Placement(transformation(extent={{-10,-40},{-30,-20}})));
   WaterSteam.Machines.WaterPump FWP1 annotation (Placement(transformation(extent={{-10,-80},{-30,-100}})));
