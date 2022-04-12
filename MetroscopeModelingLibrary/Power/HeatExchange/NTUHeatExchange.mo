@@ -35,31 +35,37 @@ equation
 
   if config == "monophasic_counter_current" then
 
+    if QCp_max_side == "hot" then
+      QCpMAX = Q_hot*Cp_hot;
+      QCpMIN = Q_cold*Cp_cold;
+    else
+      QCpMIN = Q_hot*Cp_hot;
+      QCpMAX = Q_cold*Cp_cold;
+    end if;
+    assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+
+    NTU = Kth*S/QCpMIN;
+    Cr =QCpMIN/QCpMAX;
+    epsilon = 2*1/( 1 + Cr + sqrt(1+Cr^2)* (1+exp(-NTU*(1+Cr^2)^0.5))/(1-exp(-NTU*(1+Cr^2)^0.5)));
+
+
+  elseif config == "monophasic_cross_current" then
+
     NTU = Kth*S/QCpMIN;
     Cr =QCpMIN/QCpMAX;
 
     if QCp_max_side == "hot" then
-
       /* QCpMAX is associated to the mixed fluid, shell side, considered as hot side */
-
       QCpMAX = Q_hot*Cp_hot;
       QCpMIN = Q_cold*Cp_cold;
-
       assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
-
       epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
-
     else
-
       /* QCpMAX is associated to the unmixed fluid, tube side, considered as cold side */
-
       QCpMIN = Q_hot*Cp_hot;
       QCpMAX = Q_cold*Cp_cold;
-
       assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
-
       epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
-
     end if;
 
 
@@ -72,6 +78,8 @@ equation
     NTU = Kth*S/QCpMIN;
     epsilon = 1 - exp(-NTU);
 
+
+
   else // Added this forbidden case to simplify model checking, but it is anyway overriden by assert below
     QCpMAX = 0;
     QCpMIN = 0;
@@ -81,7 +89,7 @@ equation
     epsilon = 0;
   end if;
 
-  assert(config=="condenser_counter_current" or config=="monophasic_counter_current", "config parameter of NTUHeatExchange should be one of 'monophasic_counter_current', 'condenser_counter_current'");
+  assert(config=="condenser_counter_current" or config=="monophasic_counter_current" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'monophasic_counter_current', 'condenser_counter_current'");
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(
