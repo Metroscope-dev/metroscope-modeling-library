@@ -6,13 +6,14 @@ model WaterControlValve_reverse
   input Units.SpecificEnthalpy source_h(start=1e3);
   input Real source_P(start=2, min=0, nominal=2) "barA";
   input Units.MassFlowRate source_Q(start=100) "kg/s";
-  input Real CV_opening(start=0.15) "Cv";
 
   // Input: Observables
   input Real CV_P_out(start=1.8, min=0, nominal=2) "barA"; // Could be a boundary condition, and replaced by mass flow rate
+  input Real CV_opening(start=0.15) "Cv";
 
   // Output: Component parameters
   output Units.Cv Cvmax;
+  output Units.Cv Cv;
 
   // Components
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
@@ -39,6 +40,7 @@ equation
 
   // Output: Component parameters
   control_valve.Cvmax = Cvmax;
+  control_valve.Cv = Cv;
   connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85,7.5e-06}},   color={28,108,200}));
   connect(control_valve.C_in, source_Q_sensor.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-23.25,-1.81818e-06},{-23.25,0},{-30,0}},
                                                                                         color={28,108,200}));

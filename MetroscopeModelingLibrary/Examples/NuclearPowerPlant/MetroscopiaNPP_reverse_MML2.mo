@@ -74,13 +74,13 @@ model MetroscopiaNPP_reverse_MML2
   output Real HPReheater_Kth_cond;
   output Real HPReheater_Kth_subc;
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterControlValve
+  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve
     HPControlValve
     annotation (Placement(transformation(extent={{-62,36},{-52,26}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine
     HighPressureTurbine_1
     annotation (Placement(transformation(extent={{-30,24},{-10,44}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe
     PressureLoss_SteamExtractionHP annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
@@ -92,96 +92,96 @@ model MetroscopiaNPP_reverse_MML2
     HighPressureTurbine_2
     annotation (Placement(transformation(extent={{28,22},{48,42}})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.SteamExtractionSplitter SteamExtraction_BeforeDryer annotation (Placement(transformation(extent={{62,24},{82,42}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_ExtractionBeforeDryer
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_ExtractionBeforeDryer
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={72,-6})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_ExhaustHP
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_ExhaustHP
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={98,34})));
   MetroscopeModelingLibrary.WaterSteam.Volumes.SteamDryer steamDryer
     annotation (Placement(transformation(extent={{132,22},{154,44}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_DryerCondensats
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_DryerCondensats
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={154,-6})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.SuperHeater Superheater
     annotation (Placement(transformation(extent={{152,50},{184,66}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterControlValve SuperHeaterControlValve
+  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve SuperHeaterControlValve
     annotation (Placement(transformation(extent={{30,56},{40,66}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LowPressureTurbine_1
     annotation (Placement(transformation(extent={{208,72},{228,92}})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.SteamExtractionSplitter SteamExtraction_LP
     annotation (Placement(transformation(extent={{240,70},{262,90}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_LPExtraction annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_LPExtraction annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={250,22})));
   MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LowPressureTurbine_2
     annotation (Placement(transformation(extent={{280,72},{300,92}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.WaterSource coldSource
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source coldSource
     annotation (Placement(transformation(extent={{342,-8},{358,8}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_Condenser
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_Condenser
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={380,-60})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.WaterPump LPpump
+  MetroscopeModelingLibrary.WaterSteam.Machines.Pump LPpump
     annotation (Placement(transformation(extent={{358,-86},{338,-66}})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.DryReheater LPReheater
     annotation (Placement(transformation(extent={{262,-84},{230,-68}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterControlValve PumpControlValve
+  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve PumpControlValve
     annotation (Placement(transformation(extent={{308,-78},{298,-68}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterControlValve steamDryerValve
+  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve steamDryerValve
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={157,-31})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterControlValve LPReheaterControlValve
+  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve LPReheaterControlValve
     annotation (Placement(transformation(extent={{318,-124},{328,-114}})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.WaterPump HPpump
+  MetroscopeModelingLibrary.WaterSteam.Machines.Pump HPpump
     annotation (Placement(transformation(extent={{80,-86},{60,-66}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_before_drum
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_before_drum
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={182,-76})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_after_drum
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_after_drum
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={126,-76})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_SuperheaterDrains
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_SuperheaterDrains
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={202,16})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe PressureLoss_MainSteamExtraction
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe PressureLoss_MainSteamExtraction
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={6,-46})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Reheater HPReheater
     annotation (Placement(transformation(extent={{22,-84},{-10,-68}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterControlValve HPReheaterControlValve annotation (Placement(transformation(extent={{92,-124},{102,-114}})));
+  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve HPReheaterControlValve annotation (Placement(transformation(extent={{92,-124},{102,-114}})));
   Power.Machines.Generator generator
     annotation (Placement(transformation(extent={{334,112},{382,140}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterControlValve HPReheater_valve
+  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve HPReheater_valve
     annotation (Placement(transformation(
         extent={{5,-5},{-5,5}},
         rotation=0,
         origin={43,-17})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser
     annotation (Placement(transformation(extent={{367,-16},{393,6}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSink sink
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink
     annotation (Placement(transformation(extent={{436,116},{458,136}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource source
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Source source
     annotation (Placement(transformation(extent={{54,-60},{64,-50}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource source1
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Source source1
     annotation (Placement(transformation(extent={{336,-60},{346,-50}})));
 
   // Sensors
@@ -252,7 +252,7 @@ model MetroscopiaNPP_reverse_MML2
         origin={52,-122.182})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor Qi_SteamGenerator_sensor
     annotation (Placement(transformation(extent={{-38,-82},{-50,-70}})));
-  WaterSteam.BoundaryConditions.WaterSource waterSource annotation (Placement(transformation(extent={{-120,24},{-100,44}})));
+  WaterSteam.BoundaryConditions.Source waterSource annotation (Placement(transformation(extent={{-120,24},{-100,44}})));
 equation
   // ----- Boundary Conditions ------
   // steamGenerator.thermal_power = ThermalPower*1e6;
