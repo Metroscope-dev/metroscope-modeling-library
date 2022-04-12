@@ -25,18 +25,13 @@ model SuperHeater_reverse
   output Units.HeatExchangeCoefficient Kth;
   output Units.FrictionCoefficient Kfr_hot;
 
-  WaterSteam.BoundaryConditions.WaterSource hot_steam_source
-    annotation (Placement(transformation(extent={{-70,-2},{-50,18}})));
-  WaterSteam.BoundaryConditions.WaterSink drains_sink
-    annotation (Placement(transformation(extent={{70,-10},{90,10}})));
-  WaterSteam.BoundaryConditions.WaterSource cold_steam_source
-    annotation (Placement(transformation(extent={{-42,-50},{-22,-30}})));
-  WaterSteam.BoundaryConditions.WaterSink superheated_steam_sink
-    annotation (Placement(transformation(extent={{16,30},{36,50}})));
+  WaterSteam.BoundaryConditions.Source hot_steam_source annotation (Placement(transformation(extent={{-70,-2},{-50,18}})));
+  WaterSteam.BoundaryConditions.Sink drains_sink annotation (Placement(transformation(extent={{70,-10},{90,10}})));
+  WaterSteam.BoundaryConditions.Source cold_steam_source annotation (Placement(transformation(extent={{-42,-50},{-22,-30}})));
+  WaterSteam.BoundaryConditions.Sink superheated_steam_sink annotation (Placement(transformation(extent={{16,30},{36,50}})));
   WaterSteam.HeatExchangers.SuperHeater superheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
-  WaterSteam.BoundaryConditions.WaterSink vent_sink
-    annotation (Placement(transformation(extent={{70,-30},{90,-10}})));
+  WaterSteam.BoundaryConditions.Sink vent_sink annotation (Placement(transformation(extent={{70,-30},{90,-10}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor
     superheated_steam_temperature_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

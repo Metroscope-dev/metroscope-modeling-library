@@ -23,19 +23,15 @@ model Condenser_reverse
     // Inputs for calibration
   input Real P_cond(start = 0.19e5) "Pa";
 
-  WaterSteam.BoundaryConditions.WaterSource cooling_source
-    annotation (Placement(transformation(extent={{-58,-6},{-38,14}})));
-  WaterSteam.BoundaryConditions.WaterSink cooling_sink
-    annotation (Placement(transformation(extent={{62,-12},{82,8}})));
+  WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(extent={{-58,-6},{-38,14}})));
+  WaterSteam.BoundaryConditions.Sink cooling_sink annotation (Placement(transformation(extent={{62,-12},{82,8}})));
   WaterSteam.HeatExchangers.Condenser condenser
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
-  WaterSteam.BoundaryConditions.WaterSource turbine_outlet annotation (
-      Placement(transformation(
+  WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,46})));
-  WaterSteam.BoundaryConditions.WaterSink condensate_sink annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-44})));

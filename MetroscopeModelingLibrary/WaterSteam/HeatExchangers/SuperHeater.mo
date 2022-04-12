@@ -43,60 +43,48 @@ model SuperHeater
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
 
-  Connectors.WaterInlet C_cold_in(Q(start=Q_cold_0))
-    annotation (Placement(transformation(extent={{-10,-90},{10,-70}}),
-        iconTransformation(extent={{-10,-90},{10,-70}})));
-  Connectors.WaterInlet C_hot_in(Q(start=Q_hot_0))
-    annotation (Placement(transformation(extent={{-170,-8},{-150,12}}),
-        iconTransformation(extent={{-170,-8},{-150,12}})));
-  Connectors.WaterOutlet C_hot_out(Q(start=-Q_hot_0))
-    annotation (Placement(transformation(extent={{150,-10},{170,10}}),
-        iconTransformation(extent={{150,-10},{170,10}})));
-  Connectors.WaterOutlet C_cold_out(Q(start=-Q_cold_0))
-    annotation (Placement(transformation(extent={{-12,70},{8,90}}),
-        iconTransformation(extent={{-12,70},{8,90}})));
+  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-170,-8},{-150,12}}), iconTransformation(extent={{-170,-8},{-150,12}})));
+  Connectors.Outlet C_hot_out(Q(start=-Q_hot_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
+  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{-12,70},{8,90}}), iconTransformation(extent={{-12,70},{8,90}})));
 
-  Pipes.WaterPipe cold_side_pipe(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
         rotation=0,
         origin={16,-64})));
-  Pipes.WaterPipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(
+  Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-132,2})));
-  BaseClasses.WaterIsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={-34,44})));
-  BaseClasses.WaterIsoPFlowModel cold_side_deheating(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-15,-15},{15,15}},
+  BaseClasses.IsoPFlowModel cold_side_deheating(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
         rotation=90,
         origin={39,45})));
-  BaseClasses.WaterIsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-17,-16},{17,16}},
         rotation=270,
         origin={-34,1})));
-  BaseClasses.WaterIsoPFlowModel cold_side_condensing(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-17,-17},{17,17}},
+  BaseClasses.IsoPFlowModel cold_side_condensing(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-17,-17},{17,17}},
         rotation=90,
         origin={39,1})));
   Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config) annotation (Placement(transformation(
         extent={{-10,-21},{10,21}},
         rotation=270,
         origin={3,2})));
-  BaseClasses.WaterIsoPFlowModel cold_side_vaporising(Q_0=Q_cold_0)
-    annotation (Placement(transformation(extent={{-17,-17},{17,17}},
+  BaseClasses.IsoPFlowModel cold_side_vaporising(Q_0=Q_cold_0) annotation (Placement(transformation(
+        extent={{-17,-17},{17,17}},
         rotation=90,
         origin={39,-43})));
-  BaseClasses.WaterIsoPFlowModel hot_side_vaporising(Q_0=Q_cold_0) annotation (
-      Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_vaporising(Q_0=Q_cold_0) annotation (Placement(transformation(
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={-34,-44})));
-  Connectors.WaterOutlet C_vent
-    annotation (Placement(transformation(extent={{150,-88},{170,-68}})));
+  Connectors.Outlet C_vent annotation (Placement(transformation(extent={{150,-88},{170,-68}})));
 equation
 
   // Definitions

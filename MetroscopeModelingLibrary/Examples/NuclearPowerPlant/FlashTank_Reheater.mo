@@ -5,38 +5,37 @@ model FlashTank_Reheater
   parameter Units.MassFlowRate Q_hot_0 = 500;
 
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.DryReheater dry_reheater(Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0) annotation (Placement(transformation(extent={{66,22},{34,38}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.WaterSink feed_water_sink annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink feed_water_sink annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={-120,30})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.WaterSource feed_water_source
-    annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source feed_water_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={100,30})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.WaterSource turbine_extraction_source
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_extraction_source
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={50,78})));
   MetroscopeModelingLibrary.WaterSteam.Volumes.FlashTank flashTank
     annotation (Placement(transformation(extent={{-78,-44},{-36,-2}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.WaterSource drains_cooling_source
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source drains_cooling_source
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-78,78})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe reheater_to_flash_tank_DP(Q_0=Q_hot_0)
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe reheater_to_flash_tank_DP(Q_0=Q_hot_0)
     annotation (Placement(transformation(
         extent={{-12.5,-12.5},{12.5,12.5}},
         rotation=180,
         origin={0,10})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.WaterPump feed_water_pump(Q_0=Q_hot_0/3) annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.Machines.Pump feed_water_pump(Q_0=Q_hot_0/3) annotation (Placement(transformation(
         extent={{9,-9},{-9,9}},
         rotation=0,
         origin={-60,-80})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.WaterPipe flash_tank_to_reheater_DP(Q_0=Q_hot_0/2) annotation (Placement(transformation(extent={{100,42},{73,69}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource power_source annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe flash_tank_to_reheater_DP(Q_0=Q_hot_0/2) annotation (Placement(transformation(extent={{100,42},{73,69}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Source power_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-60,-52})));

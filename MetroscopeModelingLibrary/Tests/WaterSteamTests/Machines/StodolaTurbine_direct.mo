@@ -9,9 +9,9 @@ model StodolaTurbine_direct
   input Units.OutletMassFlowRate source_Q(start=-100);
 
   WaterSteam.Machines.StodolaTurbine stodolaTurbine annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));
-  WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(extent={{62,-10},{82,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSink power_sink annotation (Placement(transformation(extent={{62,20},{82,40}})));
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{62,-10},{82,10}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink power_sink annotation (Placement(transformation(extent={{62,20},{82,40}})));
 equation
   // Boundary conditions
   source.P_out = source_P;
@@ -26,5 +26,5 @@ equation
 
   connect(sink.C_in, stodolaTurbine.C_out) annotation (Line(points={{67,0},{10,0}}, color={28,108,200}));
   connect(stodolaTurbine.C_in, source.C_out) annotation (Line(points={{-10,0},{-51,0}}, color={28,108,200}));
-  connect(stodolaTurbine.C_W_out, power_sink.C_W_in) annotation (Line(points={{10,8.4},{56,8.4},{56,30},{67,30}}, color={244,125,35}));
+  connect(stodolaTurbine.C_W_out, power_sink.C_in) annotation (Line(points={{10,8.4},{56,8.4},{56,30},{67,30}}, color={244,125,35}));
 end StodolaTurbine_direct;

@@ -1,4 +1,4 @@
-FlueGasesFlowModel
-FlueGasesIsoPFlowModel
-FlueGasesIsoHFlowModel
-FlueGasesIsoPHFlowModel
+FlowModel
+IsoPFlowModel
+IsoHFlowModel
+IsoPHFlowModel

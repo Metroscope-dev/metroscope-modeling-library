@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.BaseClasses;
 model FlueGasesIsoPFlowModel
   extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
-  MetroscopeModelingLibrary.FlueGases.BaseClasses.FlueGasesIsoPFlowModel isoPFlowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSource source annotation (Placement(transformation(extent={{-103,-19},{-65,19}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.FlueGasesSink sink annotation (Placement(transformation(extent={{64,-19.5},{104,19.5}})));
+  MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPFlowModel isoPFlowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-103,-19},{-65,19}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{64,-19.5},{104,19.5}})));
 equation
   isoPFlowModel.W_input = 0;
 

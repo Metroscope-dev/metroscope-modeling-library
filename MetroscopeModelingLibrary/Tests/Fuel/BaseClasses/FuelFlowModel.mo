@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.Fuel.BaseClasses;
 model FuelFlowModel
   extends MetroscopeModelingLibrary.Icons.Tests.FuelTestIcon;
-  MetroscopeModelingLibrary.Fuel.BaseClasses.FuelFlowModel flowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.FuelSource source annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.FuelSink sink annotation (Placement(transformation(extent={{61,-20},{103,20}})));
+  MetroscopeModelingLibrary.Fuel.BaseClasses.FlowModel flowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{61,-20},{103,20}})));
 equation
   flowModel.W_input = 0;
   flowModel.DP_input = 0;

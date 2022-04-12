@@ -6,8 +6,8 @@ model Sink
   // Boundary conditinos
   input Units.InletPower sink_W(start=1e6) "W";
 
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
 equation
   sink.W_in = sink_W;
 

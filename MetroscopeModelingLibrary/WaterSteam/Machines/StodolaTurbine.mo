@@ -2,10 +2,14 @@ within MetroscopeModelingLibrary.WaterSteam.Machines;
 model StodolaTurbine
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
-  extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(P_in_0=60e5, P_out_0=55e5, h_in(start=2.7e6), h_out(start=2.6e6),
-                                                                  redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterInlet C_in,
-                                                                  redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.WaterOutlet C_out,
-                                                                  redeclare package Medium=WaterSteamMedium) annotation(IconMap(primitivesVisible=false));
+  extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
+    P_in_0=60e5,
+    P_out_0=55e5,
+    h_in(start=2.7e6),
+    h_out(start=2.6e6),
+    redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
+    redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
+    redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
   import MetroscopeModelingLibrary.Units.Inputs;
 
   Inputs.InputCst Cst "Stodola's ellipse coefficient";
@@ -31,7 +35,7 @@ model StodolaTurbine
   Medium.ThermodynamicState state_is; // ok
   //Units.OutletPower Wmech;
 
-  Power.Connectors.PowerOutlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
+  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 equation
 
 ///*

@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.BaseClassesTests;
 model WaterFlowModelTest
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
-  WaterSteam.BaseClasses.WaterFlowModel waterFlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
-  WaterSteam.BoundaryConditions.WaterSource waterSource annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
-  WaterSteam.BoundaryConditions.WaterSink waterSink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
+  WaterSteam.BaseClasses.FlowModel waterFlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
+  WaterSteam.BoundaryConditions.Source waterSource annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
+  WaterSteam.BoundaryConditions.Sink waterSink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
 equation

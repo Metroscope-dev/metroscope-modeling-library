@@ -7,8 +7,8 @@ model Generator
   Units.OutletPower W_elec "Electrical power produced by the generator";
   Units.InletPower W_mech "Mechanical power received by the generator";
 
-  Connectors.PowerInlet C_in annotation (Placement(transformation(extent={{-72,-10},{-52,10}}), iconTransformation(extent={{-72,-10},{-52,10}})));
-  Connectors.PowerOutlet C_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
+  Connectors.Inlet C_in annotation (Placement(transformation(extent={{-72,-10},{-52,10}}), iconTransformation(extent={{-72,-10},{-52,10}})));
+  Connectors.Outlet C_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
 equation
   W_mech = C_in.W;
   W_elec + W_mech*eta = 0;

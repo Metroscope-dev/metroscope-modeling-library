@@ -22,19 +22,15 @@ model DryReheater_reverse
   output Units.HeatExchangeCoefficient Kth;
   output Units.FrictionCoefficient Kfr_cold;
 
-  WaterSteam.BoundaryConditions.WaterSource cold_source
-    annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  WaterSteam.BoundaryConditions.WaterSink cold_sink
-    annotation (Placement(transformation(extent={{68,-10},{88,10}})));
+  WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{68,-10},{88,10}})));
   WaterSteam.HeatExchangers.DryReheater dryReheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
-  WaterSteam.BoundaryConditions.WaterSource hot_source annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,30})));
-  WaterSteam.BoundaryConditions.WaterSink hot_sink annotation (Placement(
-        transformation(
+  WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-36})));

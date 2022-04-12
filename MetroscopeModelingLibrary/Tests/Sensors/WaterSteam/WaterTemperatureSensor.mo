@@ -8,8 +8,8 @@ model WaterTemperatureSensor
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor T_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation
   source.P_out = source_P;
   source.Q_out = source_Q;

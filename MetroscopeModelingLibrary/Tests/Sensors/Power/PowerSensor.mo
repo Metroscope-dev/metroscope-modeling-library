@@ -3,8 +3,8 @@ model PowerSensor
   extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
 
   MetroscopeModelingLibrary.Sensors.Power.PowerSensor powerSensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.PowerSink sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
 equation
   source.W_out = -10;      // Power flowing out of component is negative
 

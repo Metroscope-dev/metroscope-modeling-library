@@ -16,13 +16,13 @@ model WaterPipeTest_reverse
   output Units.FrictionCoefficient Kfr;
 
   // Components
-  WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
-  WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  WaterSteam.Pipes.WaterPipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
+  WaterSteam.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterDeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,30},{10,50}})));
 equation

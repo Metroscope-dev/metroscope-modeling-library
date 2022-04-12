@@ -17,28 +17,19 @@ model SteamGenerator
   Units.Power thermal_power;
 
 
-  Connectors.WaterInlet feedwater_inlet
-    annotation (Placement(transformation(extent={{20,-10},{40,10}}),
-        iconTransformation(extent={{20,-10},{40,10}})));
-  Connectors.WaterOutlet purge_outlet
-    annotation (Placement(transformation(extent={{-10,-128},{10,-108}}),
-        iconTransformation(extent={{-10,-128},{10,-108}})));
-  Connectors.WaterOutlet steam_outlet
-    annotation (Placement(transformation(extent={{-10,110},{10,130}}),
-        iconTransformation(extent={{-10,110},{10,130}})));
+  Connectors.Inlet feedwater_inlet annotation (Placement(transformation(extent={{20,-10},{40,10}}), iconTransformation(extent={{20,-10},{40,10}})));
+  Connectors.Outlet purge_outlet annotation (Placement(transformation(extent={{-10,-128},{10,-108}}), iconTransformation(extent={{-10,-128},{10,-108}})));
+  Connectors.Outlet steam_outlet annotation (Placement(transformation(extent={{-10,110},{10,130}}), iconTransformation(extent={{-10,110},{10,130}})));
 
-  BoundaryConditions.WaterSource steam_source annotation (Placement(
-        transformation(
+  BoundaryConditions.Source steam_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,88})));
-  BoundaryConditions.WaterSink feedwater_sink annotation (Placement(
-        transformation(
+  BoundaryConditions.Sink feedwater_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={2,0})));
-  BoundaryConditions.WaterSource purge_source annotation (Placement(
-        transformation(
+  BoundaryConditions.Source purge_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-82})));

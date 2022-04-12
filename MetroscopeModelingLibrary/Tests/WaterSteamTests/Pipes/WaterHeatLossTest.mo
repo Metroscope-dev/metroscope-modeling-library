@@ -11,13 +11,13 @@ model WaterHeatLossTest
   input Real W_input(start=1e5, min=0, nominal=100);
 
   // Components
-  WaterSteam.BoundaryConditions.WaterSource source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
-  WaterSteam.BoundaryConditions.WaterSink sink annotation (Placement(transformation(
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  WaterSteam.Pipes.WaterHeatLoss heat_loss annotation (Placement(transformation(extent={{-8.5,-16.3333},{24.5,16.3333}})));
+  WaterSteam.Pipes.HeatLoss heat_loss annotation (Placement(transformation(extent={{-8.5,-16.3333},{24.5,16.3333}})));
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));

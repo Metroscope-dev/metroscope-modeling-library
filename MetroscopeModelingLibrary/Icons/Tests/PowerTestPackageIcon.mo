@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.Tests;
-partial record PowerTestPackageIcon
+partial package PowerTestPackageIcon
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           lineColor={200,200,200},
