@@ -12,7 +12,6 @@ model WaterControlValve_direct
   input Units.Cv Cvmax(start=8000) "Cv";
 
   // Output: Observables
-  output Units.Cv Cv;
   output Units.Pressure CV_P_out;
 
   // Components
@@ -39,7 +38,6 @@ equation
   control_valve.Cvmax = Cvmax;
 
   // Output: Observables
-  control_valve.Cv = Cv;
   CV_P_out_sensor.P = CV_P_out;
 
   connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85,7.5e-06}},   color={28,108,200}));
