@@ -16,15 +16,14 @@ model StodolaTurbine
   Inputs.InputYield eta_is(start=0.8) "Nominal isentropic efficiency";
   Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
   Units.Area area_nz(start=1) "Nozzle area";
-
   Units.Velocity u_out(start=0);
 
   Units.MassFraction x_in(start=1); // ok
   Units.MassFraction x_inner(start=0.9);
   Units.MassFraction xm(start=0.95);
 
-  Units.SpecificEnthalpy Hre(start=1e6);
-  Units.SpecificEnthalpy His(start=1e6); // ok
+  Units.SpecificEnthalpy Hre(start=2.6e6);
+  Units.SpecificEnthalpy His(start=2.6e6); // ok
 
   // Liq/Vap enthalpies
   Units.SpecificEnthalpy h_vap_in(start=1e6);
