@@ -10,9 +10,9 @@ partial model FluidSource
   Inputs.InputSpecificEnthalpy h_out;
   Inputs.InputMassFraction Xi_out[Medium.nXi];
   Inputs.InputPressure P_out;
-  Units.MassFlowRate Q_out;
+  Units.OutletMassFlowRate Q_out;
 
-  Units.VolumeFlowRate Qv_out;
+  Units.OutletVolumeFlowRate Qv_out;
 
   // Computed quantities
   Units.Temperature T_out;
