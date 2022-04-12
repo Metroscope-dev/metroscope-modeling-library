@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary.Examples.NuclearPowerPlant;
+﻿within MetroscopeModelingLibrary.Examples.NuclearPowerPlant.MetroscopiaNPP;
 model MetroscopiaNPP_reverse_MML2
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
@@ -357,7 +357,6 @@ equation
     Superheater.S = 100;
     Superheater.Kfr_hot = Superheater_Kfr_hot; // REPLACED
     Superheater.C_vent.Q = -2.5; // ADDED
-
 
     // Observable used for calibration (Cooled outlet)
     Pc_Superheater = Pc_Superheater_sensor.P_barA;
