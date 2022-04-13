@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
-model MonophasicCounterCurrentNTUHXTest
+model ShellAndtubesNTUHXTest
 
   extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
 
-  MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "monophasic_counter_current",QCp_max_side = "cold");
+  MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "shell_and_tubes",QCp_max_side = "cold");
 
 equation
 
@@ -23,4 +23,4 @@ equation
     annotation (Placement(transformation(extent={{-10,-10},{10,10}})),
                 Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
-end MonophasicCounterCurrentNTUHXTest;
+end ShellAndtubesNTUHXTest;
