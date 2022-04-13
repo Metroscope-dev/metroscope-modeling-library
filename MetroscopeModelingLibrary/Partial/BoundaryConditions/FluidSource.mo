@@ -10,15 +10,15 @@ partial model FluidSource
   Inputs.InputSpecificEnthalpy h_out;
   Inputs.InputMassFraction Xi_out[Medium.nXi];
   Inputs.InputPressure P_out;
-  Units.OutletMassFlowRate Q_out;
+  Units.OutletMassFlowRate Q_out(start=-1e3);
 
-  Units.OutletVolumeFlowRate Qv_out;
+  Units.OutletVolumeFlowRate Qv_out(start=-1);
 
   // Computed quantities
   Units.Temperature T_out;
   Medium.ThermodynamicState state_out;
 
-  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidOutlet C_out
+  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidOutlet C_out(Q(start=-1e3))
     annotation (Placement(transformation(extent={{40,-10},{60,10}}),  iconTransformation(extent={{40,-10},{60,10}})));
 equation
   // Connector

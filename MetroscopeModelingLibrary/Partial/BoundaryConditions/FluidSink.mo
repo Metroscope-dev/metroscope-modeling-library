@@ -10,14 +10,14 @@ partial model FluidSink
   Units.SpecificEnthalpy h_in;
   Inputs.InputMassFraction Xi_in[Medium.nXi];
   Units.Pressure P_in;
-  Units.InletMassFlowRate Q_in;
-  Units.InletVolumeFlowRate Qv_in;
+  Units.InletMassFlowRate Q_in(start=1e3);
+  Units.InletVolumeFlowRate Qv_in(start=1);
 
   // Computed quantities
   Units.Temperature T_in;
   Medium.ThermodynamicState state_in;
 
-  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in
+  replaceable MetroscopeModelingLibrary.Partial.Connectors.FluidInlet C_in(Q(start=1e3))
     annotation (Placement(transformation(extent={{-62,-10},{-42,10}}),iconTransformation(extent={{-60,-10},{-40,10}})));
 equation
   // Connector

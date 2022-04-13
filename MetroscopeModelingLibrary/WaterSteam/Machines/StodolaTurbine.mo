@@ -36,13 +36,11 @@ model StodolaTurbine
 
   Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 equation
-
-///*
   // Stodola's ellipse law
   Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));
 
   // Isentropic expansion
-  state_is = Medium.setState_psX(P_out, Medium.specificEntropy(state_in)); // state_is
+  state_is = Medium.setState_psX(P_out, Medium.specificEntropy(state_in));
   His = Medium.specificEnthalpy(state_is);
 
   // Fluid specific enthalpy after the expansion
@@ -54,20 +52,17 @@ equation
 
   // Mechanical power produced by the turbine
   W = C_W_out.W;
-  //Wmech = C_W_out.W;
-  //Wmech = - W; //Q*(h_in - h_out);
 
   // Vapor fractions
   h_vap_in = Medium.dewEnthalpy(Medium.setSat_p(P_in));
   h_liq_in = Medium.bubbleEnthalpy(Medium.setSat_p(P_in));
-  x_in = min((h_in - h_liq_in)/(h_vap_in - h_liq_in), 1);// MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_in,h_in);
+  x_in = min((h_in - h_liq_in)/(h_vap_in - h_liq_in), 1);
 
   h_vap_out = Medium.dewEnthalpy(Medium.setSat_p(P_out));
   h_liq_out = Medium.bubbleEnthalpy(Medium.setSat_p(P_out));
-  x_inner = min((Hre - h_liq_out)/(h_vap_out - h_liq_out), 1);//MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_out,Hre);
+  x_inner = min((Hre - h_liq_out)/(h_vap_out - h_liq_out), 1);
 
   xm = (x_in + x_inner)/2;
-//*/
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
