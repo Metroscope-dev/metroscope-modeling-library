@@ -40,7 +40,7 @@ model LiqLiqHX
         rotation=180,
         origin={-1,21})));
   BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX(config="monophasic_counter_current", QCp_max_side = QCp_max_side) annotation (Placement(
+  Power.HeatExchange.NTUHeatExchange HX(config="shell_and_tubes", QCp_max_side = QCp_max_side) annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,

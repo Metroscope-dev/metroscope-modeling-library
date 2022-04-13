@@ -30,7 +30,7 @@ model Reheater
   Units.Temperature Tsat;
 
   parameter String HX_config_condensing="condenser_counter_current";
-  parameter String HX_config_subcooling= "monophasic_counter_current";
+  parameter String HX_config_subcooling= "shell_and_tubes";
   parameter String QCp_max_side_subcooling = "cold";
 
   Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
