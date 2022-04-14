@@ -14,7 +14,7 @@ annotation (Icon(graphics={
         Ellipse(
           extent={{-60,60},{60,-60}},
           lineColor={0,0,0},
-          fillColor={127,255,0},
+          fillColor={175,175,175},
           fillPattern=FillPattern.Solid),
         Line(points={{-32,0},{30,0}},
         color={0,0,0},
@@ -27,12 +27,12 @@ annotation (Icon(graphics={
         thickness=1),
         Rectangle(
           extent={{-76,13},{-50,-13}},
-          lineColor={28,108,200},
-          fillColor={28,108,200},
+          lineColor={95,95,95},
+          fillColor={95,95,95},
           fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{50,12},{74,-12}},
-          lineColor={28,108,200},
+          lineColor={95,95,95},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid)}));
 end Machines;
