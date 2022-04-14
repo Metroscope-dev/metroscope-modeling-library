@@ -2,6 +2,8 @@ within MetroscopeModelingLibrary.Tests.FlueGases.Machines;
 model AirCompressor_direct
   extends Icons.Tests.FlueGasesTestIcon;
 
+  import MetroscopeModelingLibrary.Units;
+
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
   input Units.OutletMassFlowRate source_Q(start=-500) "kg/s";

@@ -2,6 +2,8 @@ within MetroscopeModelingLibrary.Tests.FlueGases.Machines;
 model GasTurbine_reverse
   extends Icons.Tests.FlueGasesTestIcon;
 
+  import MetroscopeModelingLibrary.Units;
+
   // Boundary conditions
   input Units.Pressure source_P(start=16e5) "Pa";
   input Units.OutletMassFlowRate source_Q(start=-500) "kg/s";
