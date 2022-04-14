@@ -4,6 +4,7 @@ MoistAirSensorIcon
 FlueGasesSensorIcon
 FuelSensorIcon
 OtherSensorIcon
+PowerSensorIcon
 TemperatureIcon
 PressureIcon
 DeltaPressureIcon

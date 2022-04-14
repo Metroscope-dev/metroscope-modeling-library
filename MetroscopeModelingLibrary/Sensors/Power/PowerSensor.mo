@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Sensors.Power;
 model PowerSensor
-  extends MetroscopeModelingLibrary.Icons.Sensors.OtherSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.PowerSensorIcon;
   extends MetroscopeModelingLibrary.Icons.Sensors.PowerIcon;
   import MetroscopeModelingLibrary.Units.Inputs;
 
