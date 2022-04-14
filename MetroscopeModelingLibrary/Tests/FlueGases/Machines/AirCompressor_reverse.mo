@@ -5,7 +5,7 @@ model AirCompressor_reverse
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
   input Units.SpecificEnthalpy source_h(start=0.3e6) "J/kg";
-  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.OutletMassFlowRate source_Q(start=-500) "kg/s";
 
   // Parameters to calibrate
   output Real compression_rate;

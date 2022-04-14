@@ -4,7 +4,7 @@ model AirCompressor_direct
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.OutletMassFlowRate source_Q(start=-500) "kg/s";
   input Units.SpecificEnthalpy source_h(start=0.3e6) "J/kg";
 
   // Parameters
