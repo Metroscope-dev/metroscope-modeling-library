@@ -4,34 +4,54 @@ model NTUHeatExchange
   import MetroscopeModelingLibrary.Units.Inputs;
   import MetroscopeModelingLibrary.Units;
 
+  // Initialization parameters
+  parameter Units.MassFlowRate Q_hot_0 = 50 "Init parameter for Hot mass flow rate at the inlet";
+  parameter Units.MassFlowRate Q_cold_0 = 1500 "Init parameter for Cold mass flow rate at the inlet";
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 200 "Init parameter for Hot mass flow rate at the inlet";
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 100 "Init parameter for Cold mass flow rate at the inlet";
+  parameter Units.HeatCapacity Cp_hot_0 = 45 "Init parameter for Hot fluid specific heat capacity";
+  parameter Units.HeatCapacity Cp_cold_0 = 75 "Init parameter for Cold fluid specific heat capacity";
+  parameter Units.Area S_0 = 100 "init parameter for Heat exchange surface";
+  parameter Units.HeatExchangeCoefficient Kth_0 = 5000 "init parameter for Heat exchange coefficient";
+
   /* Exchanger configuration and parameters */
   parameter String config = "shell_and_tubes";
   parameter String QCp_max_side = "cold";
-  Inputs.InputArea S "Heat exchange surface";
-  Inputs.InputHeatExchangeCoefficient Kth "Heat exchange coefficient";
+  Inputs.InputArea S(start=S_0) "Heat exchange surface";
+  Inputs.InputHeatExchangeCoefficient Kth(start=Kth_0) "Heat exchange coefficient";
 
   /* Exchanger output */
-  Units.Power W;
+  Units.Power W(start=W_0);
 
   /* Exchanger boundary conditions */
-  Inputs.InputMassFlowRate Q_hot "Hot mass flow rate at the inlet";
-  Inputs.InputMassFlowRate Q_cold "Cold mass flow rate at the inlet";
-  Inputs.InputHeatCapacity Cp_hot "Hot fluid specific heat capacity";
-  Inputs.InputHeatCapacity Cp_cold "Cold fluid specific heat capacity";
-  Inputs.InputTemperature T_hot_in "Temperature, hot side, at the inlet";
-  Inputs.InputTemperature T_cold_in "Temperature, cold side, at the inlet";
+  Inputs.InputMassFlowRate Q_hot(start=Q_hot_0) "Hot mass flow rate at the inlet";
+  Inputs.InputMassFlowRate Q_cold(start=Q_cold_0) "Cold mass flow rate at the inlet";
+  Inputs.InputHeatCapacity Cp_hot(start=Cp_hot_0) "Hot fluid specific heat capacity";
+  Inputs.InputHeatCapacity Cp_cold(start=Cp_cold_0) "Cold fluid specific heat capacity";
+  Inputs.InputTemperature T_hot_in(start=T_hot_in_0) "Temperature, hot side, at the inlet";
+  Inputs.InputTemperature T_cold_in(start=T_cold_in_0) "Temperature, cold side, at the inlet";
 
-  Real QCpMIN;
-  Real QCpMAX;
-  Real NTU;
-  Real Cr;
-  Real epsilon;
-  Real W_max;
-
+  // Exchange parameters
+  Real QCpMIN(start=QCpMIN_0);
+  Real QCpMAX(start=QCpMAX_0);
+  Real NTU(start=NTU_0);
+  Units.Fraction Cr(start=Cr_0);
+  Real epsilon(start=epsilon_0);
+  Units.Power W_max(start=W_max_0);
+protected
+  parameter Real QCpMIN_0 = if QCp_max_side == "hot" then Q_cold_0 * Cp_cold_0 else Q_hot_0 * Cp_hot_0;
+  parameter Real QCpMAX_0 = if QCp_max_side == "cold" then Q_cold_0 * Cp_cold_0 else Q_hot_0 * Cp_hot_0;
+  parameter Real NTU_0 = Kth_0*S_0/QCpMIN_0;
+  parameter Units.Fraction Cr_0 = QCpMIN_0 / QCpMAX_0;
+  parameter Real epsilon_0 = 2/(1 + Cr_0 + sqrt(1+Cr_0^2)* (1+exp(-NTU_0*(1+Cr_0^2)^0.5))/(1-exp(-NTU_0*(1+Cr_0^2)^0.5)));
+  parameter Units.Power W_max_0 = QCpMIN_0*(T_hot_in_0 - T_cold_in_0);
+  parameter Units.Power W_0 = epsilon_0*W_max_0;
 equation
 
   W_max = QCpMIN*(T_hot_in - T_cold_in);
   W = epsilon*W_max;
+  NTU = Kth*S/QCpMIN;
+  Cr = QCpMIN/QCpMAX;
 
   if config == "shell_and_tubes" then
 
@@ -44,15 +64,10 @@ equation
     end if;
     assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
 
-    NTU = Kth*S/QCpMIN;
-    Cr =QCpMIN/QCpMAX;
     epsilon = 2*1/( 1 + Cr + sqrt(1+Cr^2)* (1+exp(-NTU*(1+Cr^2)^0.5))/(1-exp(-NTU*(1+Cr^2)^0.5)));
 
 
   elseif config == "monophasic_cross_current" then
-
-    NTU = Kth*S/QCpMIN;
-    Cr =QCpMIN/QCpMAX;
 
     if QCp_max_side == "hot" then
       /* QCpMAX is associated to the mixed fluid, shell side, considered as hot side */
@@ -74,8 +89,6 @@ equation
     QCpMAX = Q_hot*Cp_hot;
     QCpMIN = Q_cold*Cp_cold;
 
-    Cr = QCpMIN/QCpMAX;
-    NTU = Kth*S/QCpMIN;
     epsilon = 1 - exp(-NTU);
 
 
@@ -84,8 +97,6 @@ equation
     QCpMAX = 0;
     QCpMIN = 0;
 
-    Cr = 0;
-    NTU = 0;
     epsilon = 0;
   end if;
 

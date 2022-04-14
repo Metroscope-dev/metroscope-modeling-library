@@ -33,15 +33,17 @@ model SuperHeater
   // Definitions
   Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0, min=1e-5);
   Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
-  Units.Temperature T_cold_in;
+  Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out;
-  Units.Temperature T_hot_in;
+  Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out;
   Units.Power W_tot;
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 220;
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 100;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-170,-8},{-150,12}}), iconTransformation(extent={{-170,-8},{-150,12}})));
@@ -72,7 +74,8 @@ model SuperHeater
         extent={{-17,-17},{17,17}},
         rotation=90,
         origin={39,1})));
-  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config) annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
+                                                   T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-21},{10,21}},
         rotation=270,
         origin={3,2})));

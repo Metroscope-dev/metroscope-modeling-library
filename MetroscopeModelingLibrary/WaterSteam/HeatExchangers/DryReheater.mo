@@ -20,14 +20,16 @@ model DryReheater
 
   Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0, min=1e-5);
   Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
-  Units.Temperature T_cold_in;
+  Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out;
-  Units.Temperature T_hot_in;
+  Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out;
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 200;
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
@@ -49,7 +51,8 @@ model DryReheater
         rotation=180,
         origin={-59,21})));
   BaseClasses.IsoPFlowModel cold_side_condensing(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-82,-58},{-34,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config) annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
+                                                   T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-60,0})));

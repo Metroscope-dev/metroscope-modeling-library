@@ -30,19 +30,21 @@ model Reheater
   Units.Temperature Tsat;
 
   parameter String HX_config_condensing="condenser_counter_current";
-  parameter String HX_config_subcooling= "shell_and_tubes";
+  parameter String HX_config_subcooling="shell_and_tubes";
   parameter String QCp_max_side_subcooling = "cold";
 
   Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
   Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
-  Units.Temperature T_cold_in;
+  Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out;
   Units.Temperature T_hot_in;
-  Units.Temperature T_hot_out;
+  Units.Temperature T_hot_out(start=T_hot_in_0);
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 200;
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
@@ -64,7 +66,8 @@ model Reheater
         rotation=180,
         origin={23,19})));
   BaseClasses.IsoPFlowModel cold_side_condensing(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{0,-58},{48,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config_condensing) annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config_condensing, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
+                                                   T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={24,-6})));
@@ -73,7 +76,8 @@ model Reheater
         rotation=180,
         origin={-55,19})));
   BaseClasses.IsoPFlowModel cold_side_subcooling(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-78,-58},{-30,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX_subcooling(config=HX_config_subcooling, QCp_max_side = QCp_max_side_subcooling)
+  Power.HeatExchange.NTUHeatExchange HX_subcooling(config=HX_config_subcooling, QCp_max_side=QCp_max_side_subcooling, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
+                                                   T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0)
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
