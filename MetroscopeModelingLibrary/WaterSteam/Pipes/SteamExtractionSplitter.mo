@@ -7,8 +7,8 @@ model SteamExtractionSplitter
   import MetroscopeModelingLibrary.WaterSteam.Connectors;
 
   // Initialization parameters
-  parameter Units.InletMassFlowRate Q_in_0 = 4000;
-  parameter Units.InletMassFlowRate Q_main_0 = 3900;
+  parameter Units.InletMassFlowRate Q_in_0 = 1600;
+  parameter Units.InletMassFlowRate Q_main_0 = 1500;
   parameter Units.InletMassFlowRate Q_ext_0 = Q_in_0 - Q_main_0;
   parameter Units.Pressure P_0 = 71e5;
 
@@ -25,7 +25,7 @@ model SteamExtractionSplitter
   Inputs.InputFraction alpha(start=1) "Extraction paramater";
 
   // Components
-  BaseClasses.IsoPFlowModel extractedFlow(Q_0=Q_ext_0, P_0=P_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel extractedFlow(Q_0=Q_in_0, P_0=P_0) annotation (Placement(transformation(
         extent={{-11.5,-10.5},{11.5,10.5}},
         rotation=270,
         origin={0,-30})));

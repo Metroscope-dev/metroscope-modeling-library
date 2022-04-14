@@ -3,6 +3,7 @@ model StodolaTurbine
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
+    Q_0=1500,
     P_in_0=60e5,
     P_out_0=55e5,
     h_in(start=2.7e6),
