@@ -76,7 +76,7 @@ package MultiFluid
 
       Units.Power Wth;
       Inputs.InputSpecificEnthalpy LHV;
-      Units.SpecificEnthalpy h_in_air;
+      Units.SpecificEnthalpy h_in_air(start=h_in_air_0);
       Units.SpecificEnthalpy h_in_fuel;
       Units.SpecificEnthalpy h_exhaust;
 
@@ -118,6 +118,9 @@ package MultiFluid
       constant Units.MolecularMass m_CO2 = m_C + m_O*2;
       constant Units.MolecularMass m_H2O = m_H*2 + m_O;
 
+      // Initialization parameters
+      parameter Units.SpecificEnthalpy h_in_air_0;
+
       FlueGases.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
       FlueGases.Connectors.Outlet outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));
       Fuel.Connectors.Inlet inlet1 annotation (Placement(transformation(extent={{-10,-110},{10,-90}})));
@@ -126,7 +129,7 @@ package MultiFluid
             rotation=90,
             origin={0,-22})));
       FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
-      FlueGases.BoundaryConditions.Sink sink_air annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
+      FlueGases.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
     equation
 
       // Definitions

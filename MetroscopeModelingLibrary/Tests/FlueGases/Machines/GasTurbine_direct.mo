@@ -15,6 +15,7 @@ model GasTurbine_direct
   parameter Real eta_is = 0.9;
   parameter Real eta_mech = 0.99;
 
+
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-48,-10},{-28,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{28,-10},{48,10}})));
   MetroscopeModelingLibrary.FlueGases.Machines.GasTurbine    gasTurbine    annotation (Placement(transformation(extent={{-8,-10},{12,10}})));

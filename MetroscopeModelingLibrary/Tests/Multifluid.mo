@@ -23,7 +23,7 @@ package Multifluid
 
       // Parameters
       parameter Units.SpecificEnthalpy LHV = 48130e3;
-      parameter Units.FrictionCoefficient combustion_chamber_pressure_loss = 0.1e5;
+      parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
 
       MultiFluid.Machines.CombustionChamber combustionChamber annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
       MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel annotation (Placement(transformation(
