@@ -13,16 +13,16 @@ package Pipes
           radius=25.0),        Rectangle(
           extent={{-48,33},{48,-37}},
           lineColor={0,0,255},
-          fillColor={85,255,85},
+          fillColor={95,95,95},
           fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{-62,11},{-36,-15}},
-          lineColor={28,108,200},
-          fillColor={28,108,200},
+          lineColor={95,95,95},
+          fillColor={95,95,95},
           fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{36,10},{60,-14}},
-          lineColor={28,108,200},
+          lineColor={95,95,95},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid)}));
 end Pipes;

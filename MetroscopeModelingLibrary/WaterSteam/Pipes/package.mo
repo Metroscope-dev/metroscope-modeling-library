@@ -13,7 +13,7 @@ package Pipes
           radius=25.0),        Rectangle(
           extent={{-48,33},{48,-37}},
           lineColor={0,0,255},
-          fillColor={85,255,85},
+          fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{-62,11},{-36,-15}},

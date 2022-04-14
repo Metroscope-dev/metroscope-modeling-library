@@ -15,7 +15,7 @@ annotation (Icon(graphics={
         Ellipse(
           extent={{-60,60},{60,-60}},
           lineColor={0,0,0},
-          fillColor={127,255,0},
+          fillColor={207,211,237},
           fillPattern=FillPattern.Solid),
         Line(points={{-32,0},{30,0}},
         color={0,0,0},
