@@ -197,7 +197,7 @@ model Metroscopia_NPP_reverse
         origin={58,-46})));
     Sensors.WaterSteam.WaterTemperatureSensor HP_pump_T_out_sensor annotation (Placement(transformation(extent={{36,-77},{22,-63}})));
     Sensors.WaterSteam.WaterPressureSensor HP_pump_P_out_sensor annotation (Placement(transformation(extent={{7,-7},{-7,7}}, origin={1,-70})));
-  WaterSteam.HeatExchangers.Reheater HP_reheater annotation (Placement(transformation(extent={{-20,-78},{-52,-62}})));
+  WaterSteam.HeatExchangers.Reheater HP_reheater(Q_cold_0=1500, Q_hot_0=50) annotation (Placement(transformation(extent={{-20,-78},{-52,-62}})));
   Sensors.WaterSteam.WaterTemperatureSensor HP_reheater_T_cold_out_sensor annotation (Placement(transformation(extent={{-80,-77},{-94,-63}})));
   Sensors.WaterSteam.WaterPressureSensor HP_reheater_P_cold_out_sensor annotation (Placement(transformation(extent={{-60,-77},{-74,-63}})));
     Sensors.WaterSteam.WaterTemperatureSensor HP_reheater_T_drains_sensor annotation (Placement(transformation(
