@@ -12,7 +12,7 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   parameter Units.Temperature T_out_0 = T_in_0;
   // Mass Flow Rate
   parameter Units.MassFlowRate Q_in_0 = 100;
-  parameter Units.MassFlowRate Q_out_0 = - Q_in_0;
+  parameter Units.MassFlowRate Q_out_0 = - 100;
   parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0/1000;
   parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0/1000;
   // Pressure

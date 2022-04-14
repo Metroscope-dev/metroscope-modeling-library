@@ -6,14 +6,14 @@ model WaterControlValve_direct
   input Units.SpecificEnthalpy source_h(start=1e3);
   input Real source_P(start=2, min=0, nominal=2) "barA";
   input Units.MassFlowRate source_Q(start=100) "kg/s";
-  input Real CV_opening(start=0.15) "Cv";
 
   // Input: Component parameters
-  input Units.Cv Cvmax(start=8000) "Cv";
+  input Units.Cv Cvmax(start=8000) "Cvmax";
+  input Units.Cv Cv(start=1600) "Cv";
 
   // Output: Observables
-  output Units.Cv Cv;
   output Units.Pressure CV_P_out;
+  output Units.Fraction CV_opening;
 
   // Components
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
@@ -33,14 +33,14 @@ equation
   source.h_out = source_h;
   source_P_sensor.P_barA = source_P;
   source_Q_sensor.Q = source_Q;
-  CV_opening_sensor.Opening = CV_opening;
 
   // Input: Component parameters
   control_valve.Cvmax = Cvmax;
+  control_valve.Cv = Cv;
 
   // Output: Observables
-  control_valve.Cv = Cv;
   CV_P_out_sensor.P = CV_P_out;
+  CV_opening_sensor.Opening = CV_opening;
 
   connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85,7.5e-06}},   color={28,108,200}));
   connect(control_valve.C_in, source_Q_sensor.C_out) annotation (Line(points={{-6.5,-1.81818e-06},{-18,-1.81818e-06},{-18,0},{-30,0}},

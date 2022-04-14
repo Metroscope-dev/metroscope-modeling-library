@@ -3,6 +3,7 @@ model StodolaTurbine
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
+    Q_0=1500,
     P_in_0=60e5,
     P_out_0=55e5,
     h_in(start=2.7e6),
@@ -16,15 +17,14 @@ model StodolaTurbine
   Inputs.InputYield eta_is(start=0.8) "Nominal isentropic efficiency";
   Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
   Units.Area area_nz(start=1) "Nozzle area";
-
   Units.Velocity u_out(start=0);
 
   Units.MassFraction x_in(start=1); // ok
   Units.MassFraction x_inner(start=0.9);
   Units.MassFraction xm(start=0.95);
 
-  Units.SpecificEnthalpy Hre(start=1e6);
-  Units.SpecificEnthalpy His(start=1e6); // ok
+  Units.SpecificEnthalpy Hre(start=2.6e6);
+  Units.SpecificEnthalpy His(start=2.6e6); // ok
 
   // Liq/Vap enthalpies
   Units.SpecificEnthalpy h_vap_in(start=1e6);
@@ -37,13 +37,11 @@ model StodolaTurbine
 
   Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 equation
-
-///*
   // Stodola's ellipse law
   Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));
 
   // Isentropic expansion
-  state_is = Medium.setState_psX(P_out, Medium.specificEntropy(state_in)); // state_is
+  state_is = Medium.setState_psX(P_out, Medium.specificEntropy(state_in));
   His = Medium.specificEnthalpy(state_is);
 
   // Fluid specific enthalpy after the expansion
@@ -55,20 +53,17 @@ equation
 
   // Mechanical power produced by the turbine
   W = C_W_out.W;
-  //Wmech = C_W_out.W;
-  //Wmech = - W; //Q*(h_in - h_out);
 
   // Vapor fractions
   h_vap_in = Medium.dewEnthalpy(Medium.setSat_p(P_in));
   h_liq_in = Medium.bubbleEnthalpy(Medium.setSat_p(P_in));
-  x_in = min((h_in - h_liq_in)/(h_vap_in - h_liq_in), 1);// MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_in,h_in);
+  x_in = min((h_in - h_liq_in)/(h_vap_in - h_liq_in), 1);
 
   h_vap_out = Medium.dewEnthalpy(Medium.setSat_p(P_out));
   h_liq_out = Medium.bubbleEnthalpy(Medium.setSat_p(P_out));
-  x_inner = min((Hre - h_liq_out)/(h_vap_out - h_liq_out), 1);//MetroscopeModelingLibrary.WaterSteam.Functions.VaporMassFraction(P_out,Hre);
+  x_inner = min((Hre - h_liq_out)/(h_vap_out - h_liq_out), 1);
 
   xm = (x_in + x_inner)/2;
-//*/
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

@@ -45,10 +45,10 @@ equation
   steam_source.Q_out + purge_source.Q_out + feedwater_sink.Q_in = 0;
 
   // Power
-  thermal_power= -steam_source.Q_out*steam_source.h_out - feedwater_sink.Q_in*feedwater_sink.h_in - purge_source.Q_out*purge_source.h_out;
+  thermal_power = -steam_source.Q_out*steam_source.h_out - feedwater_sink.Q_in*feedwater_sink.h_in - purge_source.Q_out*purge_source.h_out;
 
   // Purge
-  purge_source.h_out = Water.bubbleEnthalpy(Water.setSat_p(purge_source.P_out));
+  purge_source.h_out = Water.bubbleEnthalpy(Water.setSat_p(P_purge));
   purge_source.Q_out = - Q_purge;
   purge_source.P_out = P_purge;
 
