@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.Tests.Sensors;
 package MoistAir
   extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestPackageIcon;
 
-  model MoistAirTemperatureSensor
+  model TemperatureSensor
     extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
@@ -25,9 +25,9 @@ package MoistAir
     assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");
     connect(T_sensor.C_in, source.C_out) annotation (Line(points={{-10,0},{-43,0}}, color={28,108,200}));
     connect(T_sensor.C_out, sink.C_in) annotation (Line(points={{10,0},{43,0}}, color={28,108,200}));
-  end MoistAirTemperatureSensor;
+  end TemperatureSensor;
 
-  model MoistAirFlowSensor
+  model FlowSensor
     extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
@@ -50,9 +50,9 @@ package MoistAir
     assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");
     connect(source_Q_sensor.C_in, source.C_out) annotation (Line(points={{-10,0},{-43,0}}, color={28,108,200}));
     connect(source_Q_sensor.C_out, sink.C_in) annotation (Line(points={{10,0},{43,0}}, color={28,108,200}));
-  end MoistAirFlowSensor;
+  end FlowSensor;
 
-  model MoistAirPressureSensor
+  model PressureSensor
     extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
@@ -76,9 +76,9 @@ package MoistAir
     assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");
     connect(P_sensor.C_in, source.C_out) annotation (Line(points={{-10,0},{-43,0}}, color={28,108,200}));
     connect(P_sensor.C_out, sink.C_in) annotation (Line(points={{10,0},{43,0}}, color={28,108,200}));
-  end MoistAirPressureSensor;
+  end PressureSensor;
 
-  model MoistAirDeltaPressureSensor
+  model DeltaPressureSensor
     extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
     // Boundary conditions
@@ -105,5 +105,5 @@ package MoistAir
     connect(source.C_out, MoistAirIsoHFlowModel.C_in) annotation (Line(points={{-43,0},{-10,0}}, color={28,108,200}));
     connect(MoistAirIsoHFlowModel.C_out, sink.C_in) annotation (Line(points={{10,0},{43,0}}, color={28,108,200}));
     connect(DP_sensor.C_in, MoistAirIsoHFlowModel.C_in) annotation (Line(points={{-10,20},{-20,20},{-20,0},{-10,0}}, color={28,108,200}));
-  end MoistAirDeltaPressureSensor;
+  end DeltaPressureSensor;
 end MoistAir;

@@ -1,8 +1,8 @@
-SteamExtractionSplitterTest_direct
-SteamExtractionSplitterTest_reverse
-WaterPipeTest_direct
-WaterPipeTest_reverse
-WaterControlValve_direct
-WaterControlValve_reverse
-WaterHeatLossTest
+SteamExtractionSplitter_direct
+SteamExtractionSplitter_reverse
+Pipe_direct
+Pipe_reverse
+ControlValve_direct
+ControlValve_reverse
+HeatLoss
 PressureCut
