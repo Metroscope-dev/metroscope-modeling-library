@@ -15,10 +15,6 @@ model PressureCut
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  WaterSteam.Pipes.PressureCut
-                        pressureCut
-                             annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
-
 equation
 
   // Boundary conditions
