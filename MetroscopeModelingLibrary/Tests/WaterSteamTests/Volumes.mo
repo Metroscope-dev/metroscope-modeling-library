@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.Tests.WaterSteamTests;
 package Volumes
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestPackageIcon;
 
-  model FlashTank_direct
+  model FlashTank
     extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary Conditions
@@ -26,9 +26,9 @@ package Volumes
       annotation (Line(points={{28,12},{61,12}}, color={28,108,200}));
     connect(flashTank.C_hot_liquid, liquid_sink.C_in)
       annotation (Line(points={{28,-12},{61,-12}}, color={28,108,200}));
-  end FlashTank_direct;
+  end FlashTank;
 
-  model SteamDryer_direct
+  model SteamDryer
     extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary Conditions
@@ -60,5 +60,5 @@ package Volumes
                                                     color={28,108,200}));
     connect(steamDryer.C_hot_liquid, liquid_sink.C_in) annotation (Line(points={{28,-11.6364},{44,-11.6364},{44,-12},{61,-12}},
                                                         color={28,108,200}));
-  end SteamDryer_direct;
+  end SteamDryer;
 end Volumes;

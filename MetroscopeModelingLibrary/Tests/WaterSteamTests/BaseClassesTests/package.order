@@ -1,4 +1,4 @@
-WaterFlowModelTest
-WaterIsoPFlowModelTest
-WaterIsoHFlowModelTest
-WaterIsoPHFlowModelTest
+FlowModel
+IsoPFlowModel
+IsoHFlowModel
+IsoPHFlowModel
