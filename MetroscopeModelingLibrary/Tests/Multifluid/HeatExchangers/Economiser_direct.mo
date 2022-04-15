@@ -10,15 +10,16 @@ model Economiser_direct
   input Units.MassFlowRate Q_cold_source(start=100) "kg/s";
   input Real T_cold_source(start = 50, min = 0, nominal = 50) "degC";
 
-  parameter Units.Temperature nominal_cold_side_temperature_rise = 20;
-  parameter Units.Temperature nominal_hot_side_temperature_rise = 10;
-
   // Parameters
   parameter String QCp_max_side = "cold";
   parameter Units.Area S = 100;
   parameter Units.HeatExchangeCoefficient Kth = 500;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
   parameter Units.FrictionCoefficient Kfr_cold = 20;
+
+  parameter Units.Temperature nominal_cold_side_temperature_rise = 20;
+  parameter Units.Temperature nominal_hot_side_temperature_rise = 10;
+
 
   MultiFluid.HeatExchangers.Economiser economiser(QCp_max_side=QCp_max_side)  annotation (Placement(transformation(extent={{-36,-34},{34,34}})));
   WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(
