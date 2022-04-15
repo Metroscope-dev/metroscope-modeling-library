@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Partial.BoundaryConditions;
 partial model FluidSource
   extends MetroscopeModelingLibrary.Icons.BoundaryConditions.FluidSourceIcon;
-  replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
+  replaceable package Medium =
+      MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
