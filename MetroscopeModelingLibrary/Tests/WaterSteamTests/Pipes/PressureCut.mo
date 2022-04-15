@@ -15,6 +15,7 @@ model PressureCut
         rotation=0,
         origin={90,-6.10623e-16})));
 
+  WaterSteam.Pipes.PressureCut pressureCut annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
 equation
 
   // Boundary conditions
@@ -23,6 +24,6 @@ equation
   source.Q_out = source_Q;
   sink.P_in = sink_P;
 
-  connect(sink.C_in, pressureCut.C_out) annotation (Line(points={{85,0},{16.5,0}}, color={28,108,200}));
-  connect(source.C_out, pressureCut.C_in) annotation (Line(points={{-85,0},{-16.5,0}}, color={28,108,200}));
+  connect(source.C_out, pressureCut.C_in) annotation (Line(points={{-85,0},{-10,0}}, color={28,108,200}));
+  connect(pressureCut.C_out, sink.C_in) annotation (Line(points={{10,0},{85,0}}, color={28,108,200}));
 end PressureCut;
