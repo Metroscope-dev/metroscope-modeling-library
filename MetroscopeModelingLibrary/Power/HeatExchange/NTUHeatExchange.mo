@@ -15,7 +15,7 @@ model NTUHeatExchange
   parameter Units.HeatExchangeCoefficient Kth_0 = 5000 "init parameter for Heat exchange coefficient";
 
   /* Exchanger configuration and parameters */
-  parameter String config = "shell_and_tubes";
+  parameter String config = "shell_and_tubes_two_passes";
   parameter String QCp_max_side = "cold";
   Inputs.InputArea S(start=S_0) "Heat exchange surface";
   Inputs.InputHeatExchangeCoefficient Kth(start=Kth_0) "Heat exchange coefficient";
@@ -53,7 +53,10 @@ equation
   NTU = Kth*S/QCpMIN;
   Cr = QCpMIN/QCpMAX;
 
-  if config == "shell_and_tubes" then
+  if config == "shell_and_tubes_two_passes" then
+
+    /* This is a monophasic shell and tube heat exchanger with two tube passes, 
+    for instance for U-shaped tubes */
 
     if QCp_max_side == "hot" then
       QCpMAX = Q_hot*Cp_hot;
@@ -68,6 +71,9 @@ equation
 
 
   elseif config == "monophasic_cross_current" then
+
+  /* This is a monophasic shell and tube heat exchanger with cross current flow, which is equivalent
+  to saying there is one tube pass, as opposed to the two tube passes of U-shaped tubes */
 
     if QCp_max_side == "hot" then
       /* QCpMAX is associated to the mixed fluid, shell side, considered as hot side */
@@ -100,7 +106,7 @@ equation
     epsilon = 0;
   end if;
 
-  assert(config=="condenser_counter_current" or config=="shell_and_tubes" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes', 'condenser_counter_current'");
+  assert(config=="condenser_counter_current" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser_counter_current'");
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(

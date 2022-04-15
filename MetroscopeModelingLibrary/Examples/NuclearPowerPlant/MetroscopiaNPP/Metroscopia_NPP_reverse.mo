@@ -184,7 +184,8 @@ model Metroscopia_NPP_reverse
   Sensors.WaterSteam.WaterPressureSensor LP_reheater_P_cold_out_sensor annotation (Placement(transformation(extent={{242,-77},{228,-63}})));
   WaterSteam.Pipes.SteamExtractionSplitter LP_turbines_ext annotation (Placement(transformation(extent={{186,120},{206,138}})));
   WaterSteam.Pipes.Pipe flash_tank_inlet_pipe annotation (Placement(transformation(extent={{200,-80},{180,-60}})));
-  WaterSteam.Pipes.Pipe steam_dryer_liq_out_pipe annotation (Placement(transformation(
+  WaterSteam.Pipes.PressureCut
+                        steam_dryer_liq_out_pipe annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={142,-8})));
@@ -204,7 +205,8 @@ model Metroscopia_NPP_reverse
         extent={{7,-7},{-7,7}},
         rotation=90,
         origin={-36,-98})));
-  WaterSteam.Pipes.Pipe superheater_drains_pipe annotation (Placement(transformation(
+  WaterSteam.Pipes.PressureCut
+                        superheater_drains_pipe annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={122,32})));
@@ -212,12 +214,14 @@ model Metroscopia_NPP_reverse
       WaterSteam.Pipes.ControlValve HP_reheater_drains_control_valve annotation (Placement(transformation(extent={{6,-124},{16,-112}})));
       Sensors.Other.OpeningSensor HP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{6,-108},{16,-98}})));
   Sensors.WaterSteam.WaterPressureSensor HP_reheater_drains_control_valve_P_out_sensor annotation (Placement(transformation(extent={{24,-127.818},{36,-115.818}})));
-  WaterSteam.Pipes.Pipe HP_reheater_drains_pipe
+  WaterSteam.Pipes.PressureCut
+                        HP_reheater_drains_pipe
                                               annotation (Placement(transformation(extent={{64,-132},{84,-112}})));
       WaterSteam.Pipes.ControlValve LP_reheater_drains_control_valve annotation (Placement(transformation(extent={{288,-122},{298,-110}})));
       Sensors.Other.OpeningSensor LP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{288,-106},{298,-96}})));
   Sensors.WaterSteam.WaterPressureSensor LP_reheater_drains_control_valve_P_out_sensor annotation (Placement(transformation(extent={{306,-125.818},{318,-113.818}})));
-  WaterSteam.Pipes.Pipe LP_reheater_drains_pipe annotation (Placement(transformation(extent={{346,-130},{366,-110}})));
+  WaterSteam.Pipes.PressureCut
+                        LP_reheater_drains_pipe annotation (Placement(transformation(extent={{346,-130},{366,-110}})));
 equation
   // ----- Boundary Conditions ------
   steam_generator.vapor_fraction = steam_generator_vapor_fraction;
@@ -268,7 +272,6 @@ equation
 
         // Observable used for calibration
         HP_turbines_ext_P_sensor.P_barA = HP_turbines_ext_P;
-        superheater_drains_pipe.delta_z = 0;
 
     // HP Turbine 2
       // Calibrated parameters
@@ -401,13 +404,9 @@ equation
       LP_reheater_drains_control_valve.Cvmax = LP_reheater_drains_control_valve_Cvmax;
       LP_reheater_drains_control_valve.Cv = LP_reheater_drains_control_valve_Cv;
 
-      LP_reheater_drains_pipe.delta_z = 0;
 
   // Flash tank
     // Inlet Pipe
-    //steam_dryer_liq_out_pipe.Kfr = 0;
-    steam_dryer_liq_out_pipe.delta_z = 5;
-
     flash_tank_inlet_pipe.Kfr = 0;
     flash_tank_inlet_pipe.delta_z = 5;
 
@@ -458,7 +457,6 @@ equation
       HP_reheater_drains_control_valve.Cvmax = HP_reheater_drains_control_valve_Cvmax;
       HP_reheater_drains_control_valve.Cv = HP_reheater_drains_control_valve_Cv;
 
-      HP_reheater_drains_pipe.delta_z = 0;
   connect(steam_generator.purge_outlet, blow_down_sink.C_in) annotation (Line(points={{-174,-115.233},{-174,-132},{-185,-132}},
                                                                                                                    color={28,108,200}));
   connect(steam_generator.steam_outlet, HP_control_valve.C_in) annotation (Line(points={{-174,-24},{-174,72.1818},{-136,72.1818}},color={28,108,200}));
