@@ -20,8 +20,8 @@ package MultiFluid
           extent={{-60,-54},{60,66}}),
         Ellipse(
           extent={{56,50},{0,-6}},
-          lineColor={135,135,135},
-          fillColor={135,135,135},
+          lineColor={95,95,95},
+          fillColor={95,95,95},
           fillPattern=FillPattern.Solid),
         Line(points={{-44,90}}, color={175,175,175}),
         Ellipse(
