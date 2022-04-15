@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.WaterSteam.Pipes;
-package PressureCut
+model PressureCut
   extends BaseClasses.IsoHFlowModel annotation(IconMap(primitivesVisible=false));
   annotation (Icon(graphics={Rectangle(
           extent={{-100,30},{100,-30}},

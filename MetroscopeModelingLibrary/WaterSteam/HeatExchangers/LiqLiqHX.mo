@@ -10,6 +10,7 @@ model LiqLiqHX
   Inputs.InputHeatExchangeCoefficient Kth;
 
   parameter String QCp_max_side = "cold";
+  parameter String HX_config = "shell_and_tubes_two_passes"; // Valid for U-shaped tubes. Otherwise use "monophasic_cross_current"
 
   Units.Power W;
   Units.MassFlowRate Q_cold;
@@ -40,7 +41,7 @@ model LiqLiqHX
         rotation=180,
         origin={-1,21})));
   BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX(config="shell_and_tubes", QCp_max_side = QCp_max_side) annotation (Placement(
+  Power.HeatExchange.NTUHeatExchange HX(config=HX_config, QCp_max_side = QCp_max_side) annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
