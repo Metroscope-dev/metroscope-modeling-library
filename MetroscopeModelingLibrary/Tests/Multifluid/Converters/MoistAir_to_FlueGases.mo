@@ -5,17 +5,16 @@ model MoistAir_to_FlueGases
 
   // Boundary conditinos
   input Units.Pressure source_P(start=5e5) "Pa";
-  //input Units.SpecificEnthalpy source_h(start=1e5) "J/kg";
+  input Units.Temperature source_T(start=273.15+24) "K";
   input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
-  input Units.Fraction source_relative_humidity(start=0.1) "1";
+  input Units.Fraction source_relative_humidity(start=0.01) "1";
   MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{28,-10},{48,10}})));
   MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-48,-10},{-28,10}})));
 equation
 
   source.P_out = source_P;
-  //source.h_out = source_h;
-  source.T_out = 273.15 + 24;
+  source.T_out = source_T;
   source.Q_out = source_Q;
   source.relative_humidity = source_relative_humidity;
 
