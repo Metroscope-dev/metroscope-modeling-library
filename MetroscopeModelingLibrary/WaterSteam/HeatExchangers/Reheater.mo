@@ -40,6 +40,11 @@ model Reheater
   Units.Temperature T_hot_in;
   Units.Temperature T_hot_out(start=T_hot_in_0);
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Real fouling(min = 0, max=100); // Fouling percentage
+  Real water_level_rise;  // Water level rise (can be negative)
+
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
@@ -83,6 +88,13 @@ model Reheater
         rotation=180,
         origin={-54,-6})));
 equation
+
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+    water_level_rise = 0;
+  end if;
+
   // Definitions
   Q_cold = cold_side_condensing.Q_in;
   Q_hot = hot_side_deheating.Q_in;
@@ -114,10 +126,9 @@ equation
       hot_side_deheating.h_out = hot_side_deheating.h_in;
   end if;
 
-
   /* Water level */
   S_tot = S_cond + S_subc;  // Deheating surface is neglected
-  S_subc = level * S_tot;
+  S_subc = (level + water_level_rise) * S_tot;
 
   /* Condensing */
   // Energy Balance
@@ -128,7 +139,7 @@ equation
   hot_side_condensing.h_out = h_liq_sat;
 
   HX_condensing.W = W_condensing;
-  HX_condensing.Kth = Kth_cond;
+  HX_condensing.Kth = Kth_cond * (1-fouling/100);
   HX_condensing.S = S_cond;
   HX_condensing.Q_cold = Q_cold;
   HX_condensing.Q_hot = Q_hot;
@@ -144,7 +155,7 @@ equation
 
   // Power exchange
   HX_subcooling.W = W_subcooling;
-  HX_subcooling.Kth = Kth_subc;
+  HX_subcooling.Kth = Kth_subc * (1-fouling/100);
   HX_subcooling.S = S_subc;
   HX_subcooling.Q_cold = Q_cold;
   HX_subcooling.Q_hot = Q_hot;

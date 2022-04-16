@@ -25,6 +25,10 @@ model DryReheater
   Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out;
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Real fouling(min = 0, max=100); // Fouling percentage
+
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
@@ -57,6 +61,12 @@ model DryReheater
         rotation=180,
         origin={-60,0})));
 equation
+
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
   // Definitions
   Q_cold = cold_side_condensing.Q_in;
   Q_hot = hot_side_deheating.Q_in;
@@ -99,7 +109,7 @@ equation
   hot_side_condensing.h_out = h_liq_sat;
 
   HX_condensing.W = W_condensing;
-  HX_condensing.Kth = Kth;
+  HX_condensing.Kth = Kth*(1-fouling/100);
   HX_condensing.S = S_condensing;
   HX_condensing.Q_cold = Q_cold;
   HX_condensing.Q_hot = Q_hot;

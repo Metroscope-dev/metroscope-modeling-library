@@ -29,6 +29,11 @@ model Condenser
   Inputs.InputPressure P_offset "Offset correction for ideal gas law";
   constant Real R=Modelica.Constants.R "ideal gas constant";
 
+    // Failure modes
+  parameter Boolean faulty = false;
+  Real fouling(min = 0, max=100); // Fouling percentage
+  Real air_intake(min=0); // Air intake
+
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 3820;
   parameter Units.MassFlowRate Q_hot_0 = 150;
@@ -59,6 +64,14 @@ model Condenser
         rotation=270,
         origin={-40,-18})));
 equation
+
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+    air_intake=0;
+  end if;
+
+
   // Definitions
   Q_cold = cold_side.Q_in;
   T_cold_in = cold_side.T_in;
@@ -83,7 +96,7 @@ equation
   water_height_pipe.Kfr = 0;
 
   // Incondensables
-  P_incond = P_offset + R * C_incond * Tsat;  // Ideal gaz law
+  P_incond = P_offset + R * (C_incond + air_intake) * Tsat;  // Ideal gaz law
   /* According to Dalton law, incondensable pressure is substracted first, 
   then water is condensed, then incondensable pressure is added again. */
   incondensables_in.DP = - P_incond;
@@ -95,7 +108,7 @@ equation
   hot_side.h_out = Water.bubbleEnthalpy(Water.setSat_T(Tsat));
 
   // Heat Exchange
-  0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*S*((T_cold_in - T_cold_out)/W));
+  0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*S*((T_cold_in - T_cold_out)/W));
 
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
