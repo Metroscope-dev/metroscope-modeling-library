@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons.Sensors;
-partial record OtherSensorIcon "should be extended in partial base classes"
+partial record OutlineSensorIcon "should be extended in partial base classes"
   extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   annotation (Icon(
       graphics={
@@ -9,4 +9,4 @@ partial record OtherSensorIcon "should be extended in partial base classes"
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5)}));
-end OtherSensorIcon;
+end OutlineSensorIcon;

@@ -24,7 +24,7 @@ package Fuel
 
   model FuelDeltaPressureSensor
     package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
-    extends MetroscopeModelingLibrary.Icons.Sensors.OtherSensorIcon;
+    extends MetroscopeModelingLibrary.Icons.Sensors.OutlineSensorIcon;
     extends MetroscopeModelingLibrary.Icons.Sensors.DeltaPressureIcon;
 
     extends Partial.Sensors.DeltaPressureSensor(
