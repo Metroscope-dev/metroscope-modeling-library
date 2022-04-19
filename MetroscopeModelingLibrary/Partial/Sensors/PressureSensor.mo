@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.Partial.Sensors;
 partial model PressureSensor
   extends MetroscopeModelingLibrary.Icons.Sensors.FluidSensorIcon;
   extends MetroscopeModelingLibrary.Icons.Sensors.PressureIcon;
-  extends Partial.BaseClasses.IsoPHFlowModel annotation(IconMap(primitivesVisible=false));
+  extends Partial.BaseClasses.IsoPHFlowSimplifiedModel annotation(IconMap(primitivesVisible=false));
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Constants;

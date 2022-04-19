@@ -29,7 +29,7 @@ model MetroscopiaNPP_direct_withStartValues
       h_in(start=2711326.868510008),
       xm(start=0.9541932851606466)),
     LP_turbines_ext(x_ext_out(start=0.9825512482992033)),
-    LP_turbines_ext_P_sensor(h_in(start=2711326.8685100074)),
+    LP_turbines_ext_P_sensor(h(start=2711326.8685100074)),
     cold_source(h_out(start=63182.42669967564)),
     condenser(
       C_cold_out(h_outflow(start=108089.31410937822)),

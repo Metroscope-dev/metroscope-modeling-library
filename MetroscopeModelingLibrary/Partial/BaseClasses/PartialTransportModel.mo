@@ -1,8 +1,7 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model PartialTransportModel "Basic fluid transport brick for all components"
 
-  replaceable package Medium =
-      MetroscopeModelingLibrary.Partial.Media.PartialMedium;
+  replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 

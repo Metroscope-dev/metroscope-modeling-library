@@ -32,7 +32,7 @@ model MetroscopiaNPP_faulty_withStartValues
       h_in(start=2711326.0),
       xm(start=0.9541946053504944)),
     LP_turbines_ext(x_ext_out(start=0.9825506806373596)),
-    LP_turbines_ext_P_sensor(h_in(start=2711326.0)),
+    LP_turbines_ext_P_sensor(h(start=2711326.0)),
     condenser(
       C_cold_out(h_outflow(start=108142.765625)),
       C_hot_out(P(start=16716.490234375), h_outflow(start=163149.5625)),
