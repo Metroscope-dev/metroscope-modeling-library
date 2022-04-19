@@ -18,7 +18,7 @@ equation
 
   source.Xi_out = {0.92,0.048,0.005,0.002,0.015,0.01};
 
-  assert(abs(T_sensor.T_degC - 679.9747) < 1e-2, "T_sensor should detect 679.9747 deg C");
+  assert(abs(T_sensor.T_degC - 189.54956) < 1e-2, "T_sensor should detect T = 189.54956 degC");
   assert(abs(source.P_out - sink.P_in) < 1e-5, "Pressure should be the same from source to sink");
   assert(abs(source.h_out - sink.h_in) < 1e-5, "Enthalpy should be the same from source to sink");
   assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");
