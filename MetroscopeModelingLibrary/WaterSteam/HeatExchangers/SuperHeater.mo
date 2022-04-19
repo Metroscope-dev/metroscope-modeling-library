@@ -29,6 +29,7 @@ model SuperHeater
 
   // Ventilation
   Units.InletMassFlowRate Q_vent;
+  Units.InletMassFlowRate Q_vent_faulty;
 
   // Definitions
   Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0, min=1e-5);
@@ -38,6 +39,11 @@ model SuperHeater
   Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out;
   Units.Power W_tot;
+
+  // Failure modes
+  parameter Boolean faulty = false;
+  Real fouling(min = 0, max=100); // Fouling percentage
+  Real closed_vent(min = 0, max= 100); // Vent closing percentage
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
@@ -90,6 +96,12 @@ model SuperHeater
   Connectors.Outlet C_vent annotation (Placement(transformation(extent={{150,-88},{170,-68}})));
 equation
 
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+    closed_vent = 0;
+  end if;
+
   // Definitions
   Q_cold = cold_side_condensing.Q_in;
   Q_hot = hot_side_pipe.Q_in;
@@ -100,8 +112,8 @@ equation
   W_tot = W_deheating + W_condensing + W_vaporising;
 
   // Ventilation
-  Q_vent = - C_vent.Q;
-
+  Q_vent_faulty = - C_vent.Q; // 1e-3 is used as a protection against zero flow in case the vent is totally closed
+  Q_vent_faulty = Q_vent*(1-closed_vent/100) + 1e-3;
   // Pressure losses
   cold_side_pipe.delta_z = 0;
   cold_side_pipe.Kfr = Kfr_cold;
@@ -138,7 +150,7 @@ equation
 
   // Power Exchange
   HX_condensing.W = W_condensing;
-  HX_condensing.Kth = Kth;
+  HX_condensing.Kth = Kth * (1 - fouling/100);
   HX_condensing.S = S;
   HX_condensing.Q_cold = Q_cold;
   HX_condensing.Q_hot = Q_hot - Q_vent;

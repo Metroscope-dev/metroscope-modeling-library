@@ -20,6 +20,10 @@ model LiqLiqHX
   Units.Temperature T_hot_in;
   Units.Temperature T_hot_out;
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Real fouling(min = 0, max=100); // Fouling percentage
+
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
@@ -48,6 +52,11 @@ model LiqLiqHX
         origin={0,-6})));
 equation
 
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
   // Definitions
   Q_cold =cold_side.Q_in;
   Q_hot =hot_side.Q_in;
@@ -68,7 +77,7 @@ equation
 
   // Power Exchange
   HX.W = W;
-  HX.Kth =  Kth;
+  HX.Kth =  Kth*(1-fouling/100);
   HX.S = S;
   HX.Q_cold = Q_cold;
   HX.Q_hot = Q_hot;

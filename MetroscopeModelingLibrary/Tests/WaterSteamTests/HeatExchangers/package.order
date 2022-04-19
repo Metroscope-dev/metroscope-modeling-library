@@ -1,11 +1,16 @@
 LiqLiqHX_direct
 LiqLiqHX_reverse
+LiqLiqHX_faulty
 SteamGenerator
 DryReheater_direct
 DryReheater_reverse
+DryReheater_faulty
 Condenser_direct
 Condenser_reverse
+Condenser_faulty
 Reheater_direct
 Reheater_reverse
+Reheater_faulty
 SuperHeater_direct
 SuperHeater_reverse
+SuperHeater_faulty
