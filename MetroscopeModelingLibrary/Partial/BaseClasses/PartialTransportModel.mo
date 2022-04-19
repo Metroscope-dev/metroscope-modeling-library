@@ -9,19 +9,20 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   // ------ Initialization parameters ------
   // Temperatures
   parameter Units.Temperature T_in_0 = 300;
-  parameter Units.Temperature T_out_0 = T_in_0;
+  parameter Units.Temperature T_out_0 = 300;
   // Mass Flow Rate
-  parameter Units.MassFlowRate Q_in_0 = 100;
-  parameter Units.MassFlowRate Q_out_0 = - 100;
+  parameter Units.InletMassFlowRate Q_in_0 = 100;
+  parameter Units.OutletMassFlowRate Q_out_0 = - 100;
   parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0/1000;
   parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0/1000;
+  parameter Units.MassFlowRate DM_0 = - Q_out_0 - Q_in_0;
   // Pressure
   parameter Units.Pressure P_in_0 = 1e5;
-  parameter Units.Pressure P_out_0 = P_in_0;
+  parameter Units.Pressure P_out_0 = 1e5;
+  parameter Units.DifferentialPressure DP_0 = P_out_0 - P_in_0;
   // Mass fractions
   parameter Units.MassFraction Xi_in_0[Medium.nXi] = zeros(Medium.nXi);
   parameter Units.MassFraction Xi_out_0[Medium.nXi] = Xi_in_0;
-
   // ------ Input Quantities ------
   // Enthalpies
   Units.SpecificEnthalpy h_in "Inlet specific enthalpy";
@@ -62,8 +63,8 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Medium.ThermodynamicState state_out;
 
   // ------ Conservation variables ------
-  Units.MassFlowRate DM(nominal=0, start=0); // Mass Loss
-  Units.DifferentialPressure DP(nominal=0, start=0); // Pressure Loss
+  Units.MassFlowRate DM(nominal=0, start=DM_0); // Mass Loss
+  Units.DifferentialPressure DP(nominal=DP_0, start=DP_0); // Pressure Loss
   Units.Power W(nominal=0, start=0); // Heat Loss
   Units.MassFraction DXi[Medium.nXi] "species mass fraction variation in component";
 
