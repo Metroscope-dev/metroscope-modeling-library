@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
-model Metroscopia_NPP_direct_with_Start_Values
-  extends Metroscopia_NPP_direct(
+model MetroscopiaNPP_direct_withStartValues
+  extends MetroscopiaNPP_direct(
     HP_control_valve(DP(start=-150000.10398137878)),
     HP_pump(DP(start=5300155.457528055)),
     HP_reheater(
@@ -45,4 +45,4 @@ model Metroscopia_NPP_direct_with_Start_Values
       h_vap_sat_hot(start=2800897.3791935025),
       hot_side_condensing(h_out(start=1551308.1818043843))),
     superheater_control_valve(DP(start=-900029.3313351283)));
-end Metroscopia_NPP_direct_with_Start_Values;
+end MetroscopiaNPP_direct_withStartValues;

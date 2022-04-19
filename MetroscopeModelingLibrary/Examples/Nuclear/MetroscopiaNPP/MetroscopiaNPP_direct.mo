@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
-model Metroscopia_NPP_direct
+model MetroscopiaNPP_direct
   // Boundary Conditions
     // Steam generator
     input Real steam_generator_vapor_fraction(start = 0.99);
@@ -198,7 +198,6 @@ equation
 
   cold_source.P_out = cold_source_P_out * 1e5;
   cold_source.T_out = cold_source_T_out + 273.15;
-
 
 // ----- Components ------
   // SteamGenerator
@@ -503,4 +502,4 @@ equation
           lineThickness=1,
           fillColor={170,213,255},
           fillPattern=FillPattern.Solid)}));
-end Metroscopia_NPP_direct;
+end MetroscopiaNPP_direct;
