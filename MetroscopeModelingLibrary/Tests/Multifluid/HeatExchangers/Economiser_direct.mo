@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Economiser_direct
+  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
 
       // Boundary conditions
   input Real P_hot_source(start=50, min=0, nominal=10) "barA";
@@ -60,31 +61,4 @@ equation
     annotation (Line(points={{-25.5,0},{-49,0}}, color={95,95,95}));
   connect(economiser.C_hot_out, hot_sink.C_in)
     annotation (Line(points={{23.5,0},{63,0}}, color={95,95,95}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Ellipse(lineColor = {75,138,73},
-                fillColor={255,255,255},
-                fillPattern = FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(
-          origin={20,14},
-          lineColor={78,138,73},
-          fillColor={95,95,95},
-          pattern=LinePattern.None,
-          fillPattern=FillPattern.Solid,
-          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}}),
-        Polygon(
-          origin={20,14},
-          lineColor={78,138,73},
-          fillColor={213,213,0},
-          pattern=LinePattern.None,
-          fillPattern=FillPattern.Solid,
-          points={{-58,46},{-4,14},{-58,-14},{-58,46}}),
-        Polygon(
-          origin={20,14},
-          lineColor={78,138,73},
-          fillColor={28,108,200},
-          pattern=LinePattern.None,
-          fillPattern=FillPattern.Solid,
-          points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
 end Economiser_direct;
