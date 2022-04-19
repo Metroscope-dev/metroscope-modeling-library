@@ -7,7 +7,7 @@ model Pipe_direct
     // Boundary conditions
   input Units.Pressure source_P(start=10e5) "Pa";
   input Units.SpecificEnthalpy source_h(start=0.5e6) "J/kg";
-  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   // Parameters
   parameter Units.FrictionCoefficient Kfr = 1e2;

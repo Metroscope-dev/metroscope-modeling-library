@@ -4,7 +4,7 @@ model Generator_reverse
   import MetroscopeModelingLibrary.Units;
 
   // Boundary Condition
-  input Units.OutletPower source_W(start=-1e6);
+  input Units.NegativePower source_W(start=-1e6);
 
   // Observable for calibration
   input Real sink_W(start=0.99, nominal=100, min=0);

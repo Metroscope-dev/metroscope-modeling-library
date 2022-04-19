@@ -7,13 +7,13 @@ model SteamExtractionSplitter
   import MetroscopeModelingLibrary.WaterSteam.Connectors;
 
   // Initialization parameters
-  parameter Units.InletMassFlowRate Q_in_0 = 1600;
-  parameter Units.InletMassFlowRate Q_main_0 = 1500;
-  parameter Units.InletMassFlowRate Q_ext_0 = Q_in_0 - Q_main_0;
+  parameter Units.PositiveMassFlowRate Q_in_0=1600;
+  parameter Units.PositiveMassFlowRate Q_main_0=1500;
+  parameter Units.PositiveMassFlowRate Q_ext_0=Q_in_0 - Q_main_0;
   parameter Units.Pressure P_0 = 71e5;
 
   // Variables
-  Units.InletMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
+  Units.PositiveMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
   Units.Pressure P(start=P_0) "Inlet Pressure";
   Units.SpecificEnthalpy h_in "Inlet specific enthalpy";
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0) "Enthalpy of saturated water";

@@ -139,7 +139,7 @@ public
     WaterSteam.BoundaryConditions.Sink blow_down_sink annotation (Placement(transformation(extent={{-10,-10},{10,10}},rotation=180,origin={-190,-132})));
     Sensors.WaterSteam.WaterFlowSensor steam_generator_Q_in_sensor annotation (Placement(transformation(extent={{-100,-77},{-114,-63}})));
     WaterSteam.Pipes.ControlValve HP_control_valve(P_in_0=50e5, P_out_0=48.5e5) annotation (Placement(transformation(extent={{-136,70},{-126,82}})));
-    Sensors.Other.OpeningSensor HP_control_valve_opening_sensor annotation (Placement(transformation(extent={{-136,86},{-126,96}})));
+  Sensors.Outline.OpeningSensor HP_control_valve_opening_sensor annotation (Placement(transformation(extent={{-136,86},{-126,96}})));
     Sensors.WaterSteam.WaterPressureSensor HP_turbine_1_P_in_sensor annotation (Placement(transformation(extent={{-106,66.1818},{-94,78.1818}})));
     WaterSteam.Machines.StodolaTurbine HP_turbine_1 annotation (Placement(transformation(extent={{-80,64.1818},{-62,80.1818}})));
     WaterSteam.Machines.StodolaTurbine HP_turbine_2 annotation (Placement(transformation(extent={{-8,64.1818},{10,80.1818}})));
@@ -152,7 +152,7 @@ public
     Sensors.WaterSteam.WaterPressureSensor superheater_drains_P_out_sensor annotation (Placement(transformation(extent={{100,106},{112,118}})));
     Sensors.WaterSteam.WaterTemperatureSensor superheated_steam_T_out_sensor annotation (Placement(transformation(extent={{88,124},{100,136}})));
     WaterSteam.Pipes.ControlValve superheater_control_valve annotation (Placement(transformation(extent={{-136,110},{-126,122}})));
-    Sensors.Other.OpeningSensor superheater_control_valve_opening_sensor annotation (Placement(transformation(extent={{-136,132},{-126,142}})));
+  Sensors.Outline.OpeningSensor superheater_control_valve_opening_sensor annotation (Placement(transformation(extent={{-136,132},{-126,142}})));
     Sensors.WaterSteam.WaterPressureSensor superheater_hot_P_in_sensor annotation (Placement(transformation(extent={{-106,106.182},{-94,118.182}})));
     WaterSteam.Pipes.PressureCut superheater_drains_pipe annotation (Placement(transformation(extent={{10,-10},{-10,10}},rotation=90,origin={122,32})));
     WaterSteam.Machines.StodolaTurbine LP_turbine_1 annotation (Placement(transformation(extent={{152,122.182},{170,138.182}})));
@@ -176,7 +176,7 @@ public
     Sensors.WaterSteam.WaterTemperatureSensor LP_reheater_T_cold_out_sensor annotation (Placement(transformation(extent={{220,-77},{206,-63}})));
     Sensors.WaterSteam.WaterPressureSensor LP_reheater_P_cold_out_sensor annotation (Placement(transformation(extent={{242,-77},{228,-63}})));
     WaterSteam.Pipes.ControlValve LP_reheater_drains_control_valve annotation (Placement(transformation(extent={{288,-122},{298,-110}})));
-    Sensors.Other.OpeningSensor LP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{288,-106},{298,-96}})));
+  Sensors.Outline.OpeningSensor LP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{288,-106},{298,-96}})));
     Sensors.WaterSteam.WaterPressureSensor LP_reheater_drains_control_valve_P_out_sensor annotation (Placement(transformation(extent={{306,-125.818},{318,-113.818}})));
     WaterSteam.Pipes.PressureCut LP_reheater_drains_pipe annotation (Placement(transformation(extent={{346,-130},{366,-110}})));
     WaterSteam.Pipes.Pipe flash_tank_inlet_pipe(delta_z_0=5) annotation (Placement(transformation(extent={{200,-80},{180,-60}})));
@@ -191,7 +191,7 @@ public
     Sensors.WaterSteam.WaterPressureSensor HP_reheater_P_cold_out_sensor annotation (Placement(transformation(extent={{-60,-77},{-74,-63}})));
     Sensors.WaterSteam.WaterTemperatureSensor HP_reheater_T_drains_sensor annotation (Placement(transformation(extent={{7,-7},{-7,7}},rotation=90,origin={-36,-98})));
     WaterSteam.Pipes.ControlValve HP_reheater_drains_control_valve annotation (Placement(transformation(extent={{6,-124},{16,-112}})));
-    Sensors.Other.OpeningSensor HP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{6,-108},{16,-98}})));
+  Sensors.Outline.OpeningSensor HP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{6,-108},{16,-98}})));
     Sensors.WaterSteam.WaterPressureSensor HP_reheater_drains_control_valve_P_out_sensor annotation (Placement(transformation(extent={{24,-127.818},{36,-115.818}})));
     WaterSteam.Pipes.PressureCut HP_reheater_drains_pipe annotation (Placement(transformation(extent={{64,-132},{84,-112}})));
 equation

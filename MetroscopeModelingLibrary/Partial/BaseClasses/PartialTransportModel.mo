@@ -10,8 +10,8 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   parameter Units.Temperature T_in_0 = 300;
   parameter Units.Temperature T_out_0 = 300;
   // Mass Flow Rate
-  parameter Units.InletMassFlowRate Q_in_0 = 100;
-  parameter Units.OutletMassFlowRate Q_out_0 = - 100;
+  parameter Units.PositiveMassFlowRate Q_in_0=100;
+  parameter Units.NegativeMassFlowRate Q_out_0=-100;
   parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0/1000;
   parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0/1000;
   parameter Units.MassFlowRate DM_0 = - Q_out_0 - Q_in_0;
@@ -28,9 +28,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.SpecificEnthalpy h_out "Outlet specific enthalpy";
   Units.SpecificEnthalpy hm "Average specific enthalpy";
   // Mass flow rate
-  Units.InletMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
-  Units.OutletMassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
-  Units.InletMassFlowRate Qm(start=(Q_in_0 + Q_out_0)/2) "Mean Mass flow rate";
+  Units.PositiveMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
+  Units.NegativeMassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
+  Units.PositiveMassFlowRate Qm(start=(Q_in_0 + Q_out_0)/2) "Mean Mass flow rate";
   // Pressures
   Units.Pressure P_in(start=P_in_0) "Inlet Pressure";
   Units.Pressure P_out(start=P_out_0) "Outlet Pressure";
@@ -48,9 +48,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.Density rhom "Average Fluid density";
 
   // Volumic flow rates
-  Units.InletVolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
-  Units.OutletVolumeFlowRate Qv_out(start=Qv_out_0) "outlet volume flow rate";
-  Units.InletVolumeFlowRate Qvm(start=(Qv_in_0+Qv_out_0)/2) "Mean volume flow rate";
+  Units.PositiveVolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
+  Units.NegativeVolumeFlowRate Qv_out(start=Qv_out_0) "outlet volume flow rate";
+  Units.PositiveVolumeFlowRate Qvm(start=(Qv_in_0 + Qv_out_0)/2) "Mean volume flow rate";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";

@@ -8,7 +8,7 @@ model SteamGenerator
 
   Inputs.InputMassFraction vapor_fraction;
   Inputs.InputPressure steam_pressure;
-  Inputs.InputInletMassFlowRate Q_purge;
+  Inputs.InputPositiveMassFlowRate Q_purge;
   Units.Pressure P_purge;
 
   Units.SpecificEnthalpy h_vap_sat;

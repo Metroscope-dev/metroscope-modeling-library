@@ -6,7 +6,7 @@ model StodolaTurbine_direct
   input Units.Pressure source_P(start=20e5);
   //input Units.Temperature source_T(start=20 + 273.15);
   input Units.SpecificEnthalpy source_h(start=2.7718e6);
-  input Units.OutletMassFlowRate source_Q(start=-100);
+  input Units.NegativeMassFlowRate source_Q(start=-100);
 
   WaterSteam.Machines.StodolaTurbine stodolaTurbine annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));

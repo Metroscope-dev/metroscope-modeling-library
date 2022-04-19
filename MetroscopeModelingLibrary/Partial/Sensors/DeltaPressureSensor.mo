@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model DeltaPressureSensor
-  extends MetroscopeModelingLibrary.Icons.Sensors.OtherSensorIcon;
+  extends MetroscopeModelingLibrary.Icons.Sensors.OutlineSensorIcon;
   extends MetroscopeModelingLibrary.Icons.Sensors.DeltaPressureIcon;
   replaceable package Medium =
       MetroscopeModelingLibrary.Partial.Media.PartialMedium;

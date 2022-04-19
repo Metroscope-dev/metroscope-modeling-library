@@ -6,7 +6,7 @@ model DryReheater_direct
   // Boundary conditions
   input Real P_hot_source(start=11, min=0, nominal=11) "bar";
   input Real P_cold_source(start=50, min=0, nominal=50) "bar";
-  input Units.InletMassFlowRate Q_cold(start=500) "kg/s";
+  input Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
   input Real T_cold_in(start=50) "degC";
   input Units.SpecificEnthalpy hot_source_h_out(start=2.5e6) "J/kg";
 

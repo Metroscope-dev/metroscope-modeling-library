@@ -1,9 +1,9 @@
-FluidSensorIcon
+InlineSensorIcon
 WaterSensorIcon
 MoistAirSensorIcon
 FlueGasesSensorIcon
 FuelSensorIcon
-OtherSensorIcon
+OutlineSensorIcon
 PowerSensorIcon
 TemperatureIcon
 PressureIcon

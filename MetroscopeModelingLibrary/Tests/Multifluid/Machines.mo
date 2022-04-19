@@ -8,11 +8,11 @@ package Machines
     // Boundary conditions
     input Units.Pressure source_P(start=17e5) "Pa";
     input Units.SpecificEnthalpy source_h(start=0.7e6) "J/kg";
-    input Units.OutletMassFlowRate source_Q(start=-500) "kg/s";
+    input Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
 
     input Units.Pressure P_fuel(start = 30e5);
     input Units.SpecificEnthalpy h_fuel(start=0.9e6);
-    input Units.OutletMassFlowRate Q_fuel(start=15);
+    input Units.NegativeMassFlowRate Q_fuel(start=15);
 
     // Parameters
     parameter Units.SpecificEnthalpy LHV = 48130e3;

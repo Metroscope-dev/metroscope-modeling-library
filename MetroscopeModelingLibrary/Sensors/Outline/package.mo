@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Sensors;
-package Other
+package Outline
 
 annotation (Icon(graphics={
         Rectangle(
@@ -36,4 +36,4 @@ annotation (Icon(graphics={
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           extent={{-7,-7},{7,7}})}));
-end Other;
+end Outline;

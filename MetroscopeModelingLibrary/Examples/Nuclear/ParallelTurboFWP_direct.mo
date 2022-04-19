@@ -15,7 +15,7 @@ model ParallelTurboFWP_direct
   input Units.Pressure STs_P_out(start=STs_P_out_0) "condenser pressure, Pa";
   // FWPs
   input Units.Pressure FWPs_P_in(start=FWPs_P_in_0) "Pa";
-  input Units.OutletMassFlowRate FWPs_Q_in(start=-1.5e3) "kg/s";
+  input Units.NegativeMassFlowRate FWPs_Q_in(start=-1.5e3) "kg/s";
   input Units.Temperature FWPs_T_in(start=186 + 273.15) "degC";
 
   // Component characteristics
@@ -41,8 +41,8 @@ model ParallelTurboFWP_direct
   // STs CV
   WaterSteam.Pipes.ControlValve ST2_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,62.5455},{-4,48.5455}})));
   WaterSteam.Pipes.ControlValve ST1_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,97.4545},{-4,111.455}})));
-  Sensors.Other.OpeningSensor ST1_CV_opening_sensor annotation (Placement(transformation(extent={{-14,116},{-6,124}})));
-  Sensors.Other.OpeningSensor ST2_CV_opening_sensor annotation (Placement(transformation(extent={{-14,44},{-6,36}})));
+  Sensors.Outline.OpeningSensor ST1_CV_opening_sensor annotation (Placement(transformation(extent={{-14,116},{-6,124}})));
+  Sensors.Outline.OpeningSensor ST2_CV_opening_sensor annotation (Placement(transformation(extent={{-14,44},{-6,36}})));
 
   // FWPs
   WaterSteam.BoundaryConditions.Source FWPs_source annotation (Placement(transformation(extent={{128,-70},{108,-50}})));

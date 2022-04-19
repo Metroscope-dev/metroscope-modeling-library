@@ -13,18 +13,18 @@ model MetroscopiaNPP_faulty
   input Real Failure_water_level_rise(start=0);
 
   // Leaks
-  input Units.InletMassFlowRate Failure_bypass_HP_control_valve_to_condenser_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_bypass_HP_turbine_to_condenser_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_bypass_LP_turbine_to_condenser_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_superheater_tube_rupture_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_HP_reheater_tube_rupture_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_LP_reheater_tube_rupture_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_HP_reheater_spearator_plate_rupture_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_LP_reheater_spearator_plate_rupture_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_bypass_superheater_to_condenser_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_bypass_HP_turbine_ext_to_condenser_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_bypass_LP_reheater_drains_to_condenser_Q(start=1e-3);
-  input Units.InletMassFlowRate Failure_bypass_HP_reheater_drains_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_control_valve_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_turbine_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_LP_turbine_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_superheater_tube_rupture_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_HP_reheater_tube_rupture_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_LP_reheater_tube_rupture_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_HP_reheater_spearator_plate_rupture_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_LP_reheater_spearator_plate_rupture_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_superheater_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_turbine_ext_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_LP_reheater_drains_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_reheater_drains_to_condenser_Q(start=1e-3);
 
   // Bypasses
   WaterSteam.Pipes.Leak bypass_HP_control_valve_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-147,51})));

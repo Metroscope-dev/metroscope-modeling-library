@@ -33,8 +33,8 @@ model Reheater
   parameter String HX_config_subcooling="monophasic_cross_current"; // In subcooling zone, there is only the bottom part of the U-shaped tubes, so it is considered as cross current.
   parameter String QCp_max_side_subcooling = "cold";
 
-  Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
-  Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
+  Units.PositiveMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
+  Units.PositiveMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out;
   Units.Temperature T_hot_in;
@@ -46,8 +46,8 @@ model Reheater
   Real water_level_rise;  // Water level rise (can be negative)
 
   // Initialization parameters
-  parameter Units.InletMassFlowRate Q_cold_0 = 500;
-  parameter Units.InletMassFlowRate Q_hot_0 = 50;
+  parameter Units.PositiveMassFlowRate Q_cold_0=500;
+  parameter Units.PositiveMassFlowRate Q_hot_0=50;
   parameter Units.Temperature T_hot_in_0 = 273.15 + 200;
   parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
 

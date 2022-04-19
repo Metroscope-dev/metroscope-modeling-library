@@ -6,11 +6,11 @@ partial model FlowModel "PartialTransportModel with no flow or species variation
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters
-  parameter Units.InletMassFlowRate Q_0 = 100;
+  parameter Units.PositiveMassFlowRate Q_0=100;
   parameter Units.MassFraction Xi_0[Medium.nXi] = zeros(Medium.nXi);
 
   // Input Quantity
-  Units.InletMassFlowRate Q(start=Q_0, nominal=Q_0) "Component mass flow rate";
+  Units.PositiveMassFlowRate Q(start=Q_0, nominal=Q_0) "Component mass flow rate";
   Units.MassFraction Xi[Medium.nXi](start=Xi_0) "Component mass fractions";
 equation
   // Input Quantity

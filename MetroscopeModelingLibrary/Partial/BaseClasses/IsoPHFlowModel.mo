@@ -4,12 +4,13 @@ partial model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters
-  parameter Units.InletVolumeFlowRate Qv_0 = 100;
+  parameter Units.PositiveVolumeFlowRate Qv_0=100;
   parameter Units.Pressure P_0 = 1e5;
   parameter Units.Temperature T_0 = 300;
 
   // Input Quantities
-  Units.InletVolumeFlowRate Qv(start=Qv_0, nominal=Qv_0) "Component volume flow rate"; // No volume flow rate variation in IsoPHFlowModel
+  Units.PositiveVolumeFlowRate Qv(start=Qv_0, nominal=Qv_0) "Component volume flow rate";
+                                                                                       // No volume flow rate variation in IsoPHFlowModel
   Units.SpecificEnthalpy h "Enthalpy of the fluid into the component";
   Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
 equation

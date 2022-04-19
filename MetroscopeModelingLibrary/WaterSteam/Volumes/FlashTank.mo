@@ -7,10 +7,10 @@ model FlashTank
 
   // Initialization parameters
   parameter Units.Pressure P_0 = 10e5;
-  parameter Units.InletMassFlowRate Q_in_0=500;
+  parameter Units.PositiveMassFlowRate Q_in_0=500;
 
   Units.Pressure P(start=P_0);
-  Units.InletMassFlowRate Q_in(start=Q_in_0);
+  Units.PositiveMassFlowRate Q_in(start=Q_in_0);
 
   Connectors.Inlet C_in(P(start=P_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
   Connectors.Outlet C_hot_steam(P(start=P_0), Q(start=-Q_in_0/2)) annotation (Placement(transformation(extent={{90,30},{110,50}})));

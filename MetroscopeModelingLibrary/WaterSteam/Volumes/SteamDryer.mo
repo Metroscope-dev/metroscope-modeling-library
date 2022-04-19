@@ -7,13 +7,14 @@ model SteamDryer
 
   // Initialization parameters
   parameter Units.Pressure P_0 = 10e5;
-  parameter Units.InletMassFlowRate Q_in_0=500;
+  parameter Units.PositiveMassFlowRate Q_in_0=500;
 
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0); // Saturated liquid enthalpy
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0); // Saturated steam enthalpy
 
   Units.Pressure P(start=P_0); // Pressure in dryer
-  Units.InletMassFlowRate Q_in(start=Q_in_0); // Inlet mass flow rate
+  Units.PositiveMassFlowRate Q_in(start=Q_in_0);
+                                              // Inlet mass flow rate
 
   Units.MassFraction x_steam_out; // Steam mass fraction at steam outlet
 

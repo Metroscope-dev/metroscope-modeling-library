@@ -18,8 +18,11 @@ model DryReheater
   Units.Power W_condensing;
   parameter String HX_config="condenser_counter_current";
 
-  Units.InletMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0, min=1e-5);
-  Units.InletMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
+  Units.PositiveMassFlowRate Q_cold(
+    start=Q_cold_0,
+    nominal=Q_cold_0,
+    min=1e-5);
+  Units.PositiveMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out;
   Units.Temperature T_hot_in(start=T_hot_in_0);
