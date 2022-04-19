@@ -7,7 +7,7 @@ model PressureCut
   input Units.SpecificEnthalpy source_h(start=1e6);
   input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
   input Units.Pressure sink_P(start=1e5, min=0, nominal=10e5) "Pa";
-  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(

@@ -39,7 +39,7 @@ model FlashTank_Reheater
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-60,-52})));
-  Sensors.Other.VRotSensor feed_water_pump_VRot_sensor annotation (Placement(transformation(
+  Sensors.Outline.VRotSensor feed_water_pump_VRot_sensor annotation (Placement(transformation(
         extent={{-8,-8},{8,8}},
         rotation=180,
         origin={-60,-110})));

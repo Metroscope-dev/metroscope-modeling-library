@@ -6,7 +6,7 @@ model SuperHeater_reverse
     // Boundary conditions
   input Real P_hot_steam(start=60, min=0, nominal=11) "bar";
   input Real P_cold_steam(start=11, min=0, nominal=50) "bar";
-  input Units.InletMassFlowRate Q_cold(start=500) "kg/s";
+  input Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
   input Real h_cold_steam(start=2.75e6) "J/kg"; // slightly humid cold steam
   input Real h_hot_steam(start=2.8e6) "J/kg"; // slightly superheated hot steam
 
@@ -15,7 +15,7 @@ model SuperHeater_reverse
 
   parameter Units.FrictionCoefficient Kfr_cold = 0;
 
-  parameter Units.InletMassFlowRate Q_vent = 1;
+  parameter Units.PositiveMassFlowRate Q_vent=1;
 
   // Inputs for calibration
   input Real superheated_steam_temperature(start=224, min=0, nominal = 200) "degC";

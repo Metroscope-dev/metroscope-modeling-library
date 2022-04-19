@@ -11,8 +11,8 @@ partial model FluidSink
   Units.SpecificEnthalpy h_in;
   Inputs.InputMassFraction Xi_in[Medium.nXi];
   Units.Pressure P_in;
-  Units.InletMassFlowRate Q_in(start=1e3);
-  Units.InletVolumeFlowRate Qv_in(start=1);
+  Units.PositiveMassFlowRate Q_in(start=1e3);
+  Units.PositiveVolumeFlowRate Qv_in(start=1);
 
   // Computed quantities
   Units.Temperature T_in;

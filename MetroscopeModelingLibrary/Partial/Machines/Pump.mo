@@ -26,7 +26,7 @@ partial model Pump
   Units.Fraction R(start=1) "Reduced rotational speed";
 
   Units.Power Wh "Hydraulic power";
-  Units.InletPower Wm "Mechanical power";
+  Units.PositivePower Wm "Mechanical power";
 
   Modelica.Blocks.Interfaces.RealInput VRot "Pump rotational speed" annotation (Placement(
         transformation(extent={{-20,-20},{20,20}},

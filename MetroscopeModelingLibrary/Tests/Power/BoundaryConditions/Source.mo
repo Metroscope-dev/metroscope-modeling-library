@@ -4,7 +4,7 @@ model Source
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditions
-  input Units.OutletPower source_W(start=-1e6) "W";
+  input Units.NegativePower source_W(start=-1e6) "W";
 
   MetroscopeModelingLibrary.Power.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));

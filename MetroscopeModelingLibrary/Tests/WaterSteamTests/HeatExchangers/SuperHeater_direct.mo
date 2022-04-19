@@ -6,7 +6,7 @@ model SuperHeater_direct
     // Boundary conditions
   input Real P_hot_steam(start=60, min=0, nominal=11) "bar";
   input Real P_cold_steam(start=11, min=0, nominal=50) "bar";
-  input Units.InletMassFlowRate Q_cold(start=500) "kg/s";
+  input Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
   input Real h_cold_steam(start=2.75e6) "J/kg"; // slightly humid cold steam
   input Real h_hot_steam(start=2.8e6) "J/kg"; // slightly superheated hot steam
 
@@ -16,7 +16,7 @@ model SuperHeater_direct
   parameter Units.HeatExchangeCoefficient Kth = 7e3;
   parameter Units.FrictionCoefficient Kfr_cold = 0;
   parameter Units.FrictionCoefficient Kfr_hot = 500; // About 1 bar of pressure loss in the reheater
-  parameter Units.InletMassFlowRate Q_vent = 1;
+  parameter Units.PositiveMassFlowRate Q_vent=1;
 
 
   WaterSteam.BoundaryConditions.Source hot_steam_source annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));

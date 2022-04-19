@@ -6,7 +6,7 @@ model GasTurbine_direct
 
   // Boundary conditions
   input Units.Pressure source_P(start=16e5) "Pa";
-  input Units.OutletMassFlowRate source_Q(start=-500) "kg/s";
+  input Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
   input Units.SpecificEnthalpy source_h(start=1.8e6) "J/kg";
   input Units.Power Wcompressor(start=200e6) "W";
 

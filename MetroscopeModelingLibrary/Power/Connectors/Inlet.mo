@@ -3,5 +3,5 @@ connector Inlet
   extends Icons.Connectors.PowerInletIcon;
   import MetroscopeModelingLibrary.Units;
 
-  flow Units.InletPower W;
+  flow Units.PositivePower W;
 end Inlet;

@@ -6,7 +6,7 @@ model Pipe_reverse
   // Boundary conditions
   input Units.SpecificEnthalpy source_h(start=1e6);
   input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
-  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
   input Units.DifferentialHeight delta_z(start=1) "m";
 
   // Input: Observables

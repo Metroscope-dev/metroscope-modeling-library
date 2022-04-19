@@ -5,9 +5,9 @@ package Machines
     import MetroscopeModelingLibrary.Units;
     import MetroscopeModelingLibrary.Units.Inputs;
 
-    Units.InletMassFlowRate Q_air;
-    Units.InletMassFlowRate Q_fuel;
-    Units.InletMassFlowRate Q_exhaust;
+    Units.PositiveMassFlowRate Q_air;
+    Units.PositiveMassFlowRate Q_fuel;
+    Units.PositiveMassFlowRate Q_exhaust;
 
     Inputs.InputDifferentialPressure DP;
 

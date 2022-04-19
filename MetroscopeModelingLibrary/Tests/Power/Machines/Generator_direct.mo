@@ -4,7 +4,7 @@ model Generator_direct
   import MetroscopeModelingLibrary.Units;
 
   // Boundary Condition
-  input Units.OutletPower source_W(start=-1e6);
+  input Units.NegativePower source_W(start=-1e6);
 
   // Component parameter
   parameter Units.Yield generator_eta = 0.99;

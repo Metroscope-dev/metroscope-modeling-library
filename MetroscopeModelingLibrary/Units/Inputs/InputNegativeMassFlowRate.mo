@@ -1,0 +1,2 @@
+within MetroscopeModelingLibrary.Units.Inputs;
+connector InputNegativeMassFlowRate=input Units.NegativeMassFlowRate;

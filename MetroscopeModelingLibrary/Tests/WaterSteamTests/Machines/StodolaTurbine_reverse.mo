@@ -6,7 +6,7 @@ model StodolaTurbine_reverse
   input Units.Pressure source_P(start=20e5);
   //input Units.Temperature source_T(start=20 + 273.15);
   input Units.SpecificEnthalpy source_h(start=2.7718e6);
-  input Units.OutletMassFlowRate source_Q(start=-100);
+  input Units.NegativeMassFlowRate source_Q(start=-100);
 
   // Calibration observables
   input Real stodolaTurbine_P_out(start=15, unit="bar", nominal=15, min=0) "bar";

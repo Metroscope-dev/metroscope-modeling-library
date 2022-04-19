@@ -5,7 +5,7 @@ model FlowSensor
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
-  input Units.InletMassFlowRate source_Q(start=100) "kg/s";
+  input Units.PositiveMassFlowRate source_Q(start=100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));

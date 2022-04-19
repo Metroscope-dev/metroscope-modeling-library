@@ -5,7 +5,7 @@ model Pump_reverse
   // Boundary conditions
   input Units.Pressure source_P(start=2e5);
   input Units.Temperature source_T(start=20 + 273.15);
-  input Units.OutletMassFlowRate source_Q(start=-100);
+  input Units.NegativeMassFlowRate source_Q(start=-100);
 
   // Component parameters
   parameter Real pump_VRot = 1400;
@@ -30,7 +30,7 @@ model Pump_reverse
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={80,0})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor pump_T_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor pump_P_out_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={40,0})));
-  MetroscopeModelingLibrary.Sensors.Other.VRotSensor pump_VRot_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.Outline.VRotSensor pump_VRot_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-30,-46})));

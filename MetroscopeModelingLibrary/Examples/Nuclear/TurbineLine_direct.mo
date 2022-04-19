@@ -5,7 +5,7 @@ model TurbineLine_direct
   // Boundary conditions
   input Units.Pressure source_P(start=6.05e6);
   input Units.SpecificEnthalpy source_h(start=2.78e6);
-  input Units.OutletMassFlowRate source_Q(start=-1000);
+  input Units.NegativeMassFlowRate source_Q(start=-1000);
 
   // Component parameters
   // Turbines

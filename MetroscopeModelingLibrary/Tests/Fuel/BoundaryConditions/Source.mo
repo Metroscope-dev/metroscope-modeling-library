@@ -6,7 +6,7 @@ model Source
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
-  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));

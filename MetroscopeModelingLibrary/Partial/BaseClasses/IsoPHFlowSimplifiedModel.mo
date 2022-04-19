@@ -6,13 +6,13 @@ partial model IsoPHFlowSimplifiedModel
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters
-  parameter Units.InletMassFlowRate Q_0 = 100;
+  parameter Units.PositiveMassFlowRate Q_0=100;
   parameter Units.MassFraction Xi_0[Medium.nXi] = zeros(Medium.nXi);
   parameter Units.Pressure P_0 = 1e5;
   Medium.ThermodynamicState state;
 
   // Input Quantity
-  Units.InletMassFlowRate Q(start=Q_0, nominal=Q_0) "Component mass flow rate";
+  Units.PositiveMassFlowRate Q(start=Q_0, nominal=Q_0) "Component mass flow rate";
   Units.MassFraction Xi[Medium.nXi](start=Xi_0) "Component mass fractions";
   Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
   Units.SpecificEnthalpy h "Enthalpy of the fluid into the component";
