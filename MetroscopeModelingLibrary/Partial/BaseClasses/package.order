@@ -2,4 +2,5 @@ FlowModel
 IsoPFlowModel
 IsoHFlowModel
 IsoPHFlowModel
+IsoPHFlowSimplifiedModel
 PartialTransportModel
