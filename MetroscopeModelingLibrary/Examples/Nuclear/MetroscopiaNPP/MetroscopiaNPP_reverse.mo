@@ -310,7 +310,7 @@ equation
     condenser.P_offset = 0;
 
     // Observable used for calibration
-    cold_source_Qv_out_sensor.Qv_out = cold_source_Qv_out;
+    cold_source_Qv_out_sensor.Qv = cold_source_Qv_out;
     condenser_P_in_sensor.P_mbar = condenser_P_in;
     cold_sink_P_in_sensor.P_barA = cold_sink_P_in;
 
