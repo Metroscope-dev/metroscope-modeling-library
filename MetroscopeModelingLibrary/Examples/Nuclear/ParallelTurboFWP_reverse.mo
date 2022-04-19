@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Examples.NuclearPowerPlant;
+within MetroscopeModelingLibrary.Examples.Nuclear;
 model ParallelTurboFWP_reverse
   import MetroscopeModelingLibrary.Units;
 
