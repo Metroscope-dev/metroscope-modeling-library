@@ -21,19 +21,19 @@ model Economiser_direct
   parameter Units.Temperature nominal_hot_side_temperature_rise = 10;
 
 
-  MultiFluid.HeatExchangers.Economiser economiser(QCp_max_side=QCp_max_side)  annotation (Placement(transformation(extent={{-36,-34},{34,34}})));
   WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(
         transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={10,-50})));
+        origin={10,44})));
   WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(
         transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-12,46})));
+        origin={-12,-46})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-64,-10},{-44,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{58,-10},{78,10}})));
+  MultiFluid.HeatExchangers.Economiser economiser(QCp_max_side=QCp_max_side) annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
 equation
 
   hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
@@ -52,14 +52,10 @@ equation
   economiser.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
   economiser.nominal_hot_side_temperature_rise = nominal_hot_side_temperature_rise;
 
-  connect(cold_source.C_out, economiser.C_cold_in) annotation (Line(points={{10,
-          -45},{10,-23.8},{9.5,-23.8}}, color={28,108,200}));
-  connect(economiser.C_cold_out, cold_sink.C_in) annotation (Line(points={{-11.5,
-          23.8},{-11.5,32.4},{-12,32.4},{-12,41}}, color={28,108,200}));
-  connect(economiser.C_hot_in, hot_source.C_out)
-    annotation (Line(points={{-25.5,0},{-49,0}}, color={95,95,95}));
-  connect(economiser.C_hot_out, hot_sink.C_in)
-    annotation (Line(points={{23.5,0},{63,0}}, color={95,95,95}));
+  connect(economiser.C_cold_in, cold_source.C_out) annotation (Line(points={{1,7},{0,7},{0,30},{10,30},{10,39}}, color={28,108,200}));
+  connect(economiser.C_hot_out, hot_sink.C_in) annotation (Line(points={{5,0},{63,0}}, color={95,95,95}));
+  connect(economiser.C_cold_out, cold_sink.C_in) annotation (Line(points={{-5,-7},{-5,-41},{-12,-41}}, color={28,108,200}));
+  connect(economiser.C_hot_in, hot_source.C_out) annotation (Line(points={{-9,0},{-49,0}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},

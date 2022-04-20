@@ -30,28 +30,28 @@ model Economiser_reverse
             {34,34}})));
   WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(
         transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={10,-48})));
+        origin={10,42})));
   WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(
         transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-12,70})));
+        origin={-12,-70})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-60,-10},
             {-40,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{60,-10},
             {80,10}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor T_cold_out_sensor
     annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
+        extent={{4,-4},{-4,4}},
         rotation=90,
-        origin={-12,54})));
+        origin={-12,-52})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cold_out_sensor
     annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
+        extent={{4,-4},{-4,4}},
         rotation=90,
-        origin={-12,38})));
+        origin={-12,-38})));
   MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesPressureSensor P_hot_out_sensor
     annotation (Placement(transformation(extent={{40,-4},{48,4}})));
 equation
@@ -79,20 +79,20 @@ equation
   economiser.Kfr_hot = Kfr_hot;
   economiser.Kfr_cold = Kfr_cold;
 
-  connect(economiser.C_cold_out, P_cold_out_sensor.C_in) annotation (Line(
-        points={{-11.5,23.8},{-11.5,27.9},{-12,27.9},{-12,34}}, color={28,108,200}));
   connect(P_cold_out_sensor.C_out, T_cold_out_sensor.C_in)
-    annotation (Line(points={{-12,42},{-12,50}}, color={28,108,200}));
+    annotation (Line(points={{-12,-42},{-12,-48}},
+                                                 color={28,108,200}));
   connect(cold_sink.C_in, T_cold_out_sensor.C_out)
-    annotation (Line(points={{-12,65},{-12,58}}, color={28,108,200}));
-  connect(economiser.C_cold_in, cold_source.C_out) annotation (Line(points={{9.5,
-          -23.8},{9.5,-33.4},{10,-33.4},{10,-43}}, color={28,108,200}));
+    annotation (Line(points={{-12,-65},{-12,-56}},
+                                                 color={28,108,200}));
   connect(economiser.C_hot_in, hot_source.C_out)
     annotation (Line(points={{-25.5,0},{-45,0}}, color={95,95,95}));
   connect(economiser.C_hot_out, P_hot_out_sensor.C_in)
     annotation (Line(points={{23.5,0},{40,0}}, color={95,95,95}));
   connect(hot_sink.C_in, P_hot_out_sensor.C_out)
     annotation (Line(points={{65,0},{48,0}}, color={95,95,95}));
+  connect(P_cold_out_sensor.C_in, economiser.C_cold_out) annotation (Line(points={{-12,-34},{-12,-28.9},{-11.5,-28.9},{-11.5,-23.8}}, color={28,108,200}));
+  connect(cold_source.C_out, economiser.C_cold_in) annotation (Line(points={{10,37},{9.5,37},{9.5,23.8}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},
