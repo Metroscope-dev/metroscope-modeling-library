@@ -10,6 +10,7 @@ DifferentialPressure
 DifferentialTemperature
 FrictionCoefficient
 Fraction
+Percentage
 GasDensity
 HeatExchangeCoefficient
 HeatCapacity

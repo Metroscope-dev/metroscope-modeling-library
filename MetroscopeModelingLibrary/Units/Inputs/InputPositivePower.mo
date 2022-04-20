@@ -1,3 +1,2 @@
 within MetroscopeModelingLibrary.Units.Inputs;
-connector InputPositivePower =
-                            input Units.PositivePower;
+connector InputPositivePower = input Units.PositivePower;
