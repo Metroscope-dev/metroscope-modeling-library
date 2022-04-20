@@ -1,31 +1,22 @@
 within MetroscopeModelingLibrary.Icons;
 partial package Connectors
+  extends Icons.PackageIcon;
 
-  annotation (Icon(graphics={
-        Rectangle(
-          lineColor={200,200,200},
-          fillColor={248,248,248},
-          fillPattern=FillPattern.HorizontalCylinder,
-          extent={{-100,-100},{100,100}},
-          radius=25.0),
+annotation (Icon(graphics={
         Line(
-          points={{-26,0},{22,0}},
+          points={{-30,-2},{18,-2}},
           color={0,0,0},
           thickness=1),
         Rectangle(
-          extent={{-76,26},{-26,-24}},
+          extent={{-80,24},{-30,-26}},
           lineColor={0,0,0},
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
         Rectangle(
-          extent={{22,30},{80,-28}},
+          extent={{18,28},{76,-30}},
           lineColor={0,0,0},
           lineThickness=1,
           fillColor={0,0,0},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          lineColor={128,128,128},
-          extent={{-100,-100},{100,100}},
-          radius=25.0)}));
+          fillPattern=FillPattern.Solid)}));
 end Connectors;
