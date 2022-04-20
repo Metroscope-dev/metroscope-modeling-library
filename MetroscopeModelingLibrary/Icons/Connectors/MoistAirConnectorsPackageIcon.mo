@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
-partial record MoistAirConnectorsPackageIcon
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
+partial package MoistAirConnectorsPackageIcon
+  //extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   extends MetroscopeModelingLibrary.Icons.PackageIcon;
   annotation (Icon(graphics={
         Rectangle(

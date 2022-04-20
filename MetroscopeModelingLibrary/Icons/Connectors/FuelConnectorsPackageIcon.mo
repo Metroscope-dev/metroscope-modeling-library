@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
-partial record FuelConnectorsPackageIcon
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
+partial package FuelConnectorsPackageIcon
+  //extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   extends MetroscopeModelingLibrary.Icons.PackageIcon;
   annotation (Icon(graphics={
         Rectangle(

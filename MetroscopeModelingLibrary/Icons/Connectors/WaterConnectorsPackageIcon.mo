@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Icons.Connectors;
-partial record WaterConnectorsPackageIcon
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
+partial package WaterConnectorsPackageIcon
+  //extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   extends MetroscopeModelingLibrary.Icons.PackageIcon;
   annotation (Icon(graphics={
         Rectangle(

@@ -13,18 +13,18 @@ model MetroscopiaNPP_faulty
   input Real Failure_water_level_rise(start=0);
 
   // Leaks
-  input Units.PositiveMassFlowRate Failure_bypass_HP_control_valve_to_condenser_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_bypass_HP_turbine_to_condenser_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_bypass_LP_turbine_to_condenser_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_superheater_tube_rupture_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_HP_reheater_tube_rupture_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_LP_reheater_tube_rupture_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_HP_reheater_spearator_plate_rupture_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_LP_reheater_spearator_plate_rupture_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_bypass_superheater_to_condenser_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_bypass_HP_turbine_ext_to_condenser_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_bypass_LP_reheater_drains_to_condenser_Q(start=1e-3);
-  input Units.PositiveMassFlowRate Failure_bypass_HP_reheater_drains_to_condenser_Q(start=1e-3);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_control_valve_to_condenser_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_turbine_to_condenser_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_bypass_LP_turbine_to_condenser_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_superheater_tube_rupture_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_HP_reheater_tube_rupture_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_LP_reheater_tube_rupture_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_HP_reheater_spearator_plate_rupture_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_LP_reheater_spearator_plate_rupture_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_bypass_superheater_to_condenser_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_turbine_ext_to_condenser_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_bypass_LP_reheater_drains_to_condenser_Q(start=0);
+  input Units.PositiveMassFlowRate Failure_bypass_HP_reheater_drains_to_condenser_Q(start=0);
 
   // Bypasses
   WaterSteam.Pipes.Leak bypass_HP_control_valve_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-147,51})));
@@ -56,18 +56,18 @@ equation
   HP_reheater.water_level_rise = Failure_water_level_rise;
 
   // Leaks
-  bypass_HP_control_valve_to_condenser.Q = Failure_bypass_HP_control_valve_to_condenser_Q;
-  bypass_HP_turbine_to_condenser.Q = Failure_bypass_HP_turbine_to_condenser_Q;
-  bypass_LP_turbine_to_condenser.Q = Failure_bypass_LP_turbine_to_condenser_Q;
-  superheater_tube_rupture.Q = Failure_superheater_tube_rupture_Q;
-  HP_reheater_tube_rupture.Q = Failure_HP_reheater_tube_rupture_Q;
-  LP_reheater_tube_rupture.Q = Failure_LP_reheater_tube_rupture_Q;
-  HP_reheater_spearator_plate_rupture.Q = Failure_HP_reheater_spearator_plate_rupture_Q;
-  LP_reheater_spearator_plate_rupture.Q = Failure_LP_reheater_spearator_plate_rupture_Q;
-  bypass_superheater_to_condenser.Q = Failure_bypass_superheater_to_condenser_Q;
-  bypass_HP_turbine_ext_to_condenser.Q = Failure_bypass_HP_turbine_ext_to_condenser_Q;
-  bypass_LP_reheater_drains_to_condenser.Q = Failure_bypass_LP_reheater_drains_to_condenser_Q;
-  bypass_HP_reheater_drains_to_condenser.Q = Failure_bypass_HP_reheater_drains_to_condenser_Q;
+  bypass_HP_control_valve_to_condenser.Q = Failure_bypass_HP_control_valve_to_condenser_Q + 1e-3;
+  bypass_HP_turbine_to_condenser.Q = Failure_bypass_HP_turbine_to_condenser_Q + 1e-3;
+  bypass_LP_turbine_to_condenser.Q = Failure_bypass_LP_turbine_to_condenser_Q + 1e-3;
+  superheater_tube_rupture.Q = Failure_superheater_tube_rupture_Q + 1e-3;
+  HP_reheater_tube_rupture.Q = Failure_HP_reheater_tube_rupture_Q + 1e-3;
+  LP_reheater_tube_rupture.Q = Failure_LP_reheater_tube_rupture_Q + 1e-3;
+  HP_reheater_spearator_plate_rupture.Q = Failure_HP_reheater_spearator_plate_rupture_Q + 1e-3;
+  LP_reheater_spearator_plate_rupture.Q = Failure_LP_reheater_spearator_plate_rupture_Q + 1e-3;
+  bypass_superheater_to_condenser.Q = Failure_bypass_superheater_to_condenser_Q + 1e-3;
+  bypass_HP_turbine_ext_to_condenser.Q = Failure_bypass_HP_turbine_ext_to_condenser_Q + 1e-3;
+  bypass_LP_reheater_drains_to_condenser.Q = Failure_bypass_LP_reheater_drains_to_condenser_Q + 1e-3;
+  bypass_HP_reheater_drains_to_condenser.Q = Failure_bypass_HP_reheater_drains_to_condenser_Q + 1e-3;
 
   connect(superheater_tube_rupture.C_in, superheater.C_hot_in) annotation (Line(points={{46,149},{30,149},{30,112.2},{56,112.2}}, color={217,67,180}));
   connect(bypass_HP_control_valve_to_condenser.C_in, HP_control_valve.C_in) annotation (Line(points={{-147,60},{-148,60},{-148,72.1818},{-136,72.1818}}, color={217,67,180}));
