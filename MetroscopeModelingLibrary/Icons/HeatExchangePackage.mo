@@ -1,16 +1,7 @@
 within MetroscopeModelingLibrary.Icons;
 partial package HeatExchangePackage
+  extends Icons.PackageIcon;
    annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-      Rectangle(
-        lineColor={200,200,200},
-        fillColor={248,248,248},
-        fillPattern=FillPattern.HorizontalCylinder,
-        extent={{-100,-100},{100,100}},
-        radius=25.0),
-      Rectangle(
-        lineColor={128,128,128},
-        extent={{-100,-100},{100,100}},
-        radius=25.0),
         Polygon(
           points={{-66,-70},{-48,-70},{-48,-64},{-50,-52},{-54,-42},{-58,-32},{-60,
               -26},{-60,-14},{-60,-6},{-54,10},{-52,14},{-50,22},{-48,32},{-48,38},
