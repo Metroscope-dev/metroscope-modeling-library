@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model LiqLiqHX
-
+  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
@@ -22,7 +22,7 @@ model LiqLiqHX
 
   // Failure modes
   parameter Boolean faulty = false;
-  Real fouling(min = 0, max=100); // Fouling percentage
+  Unis.Percentage fouling(min = 0, max=100); // Fouling percentage
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
@@ -58,21 +58,21 @@ equation
   end if;
 
   // Definitions
-  Q_cold =cold_side.Q_in;
-  Q_hot =hot_side.Q_in;
-  T_cold_in =cold_side.T_in;
-  T_cold_out =cold_side.T_out;
-  T_hot_in =hot_side.T_in;
-  T_hot_out =hot_side.T_out;
+  Q_cold = cold_side.Q_in;
+  Q_hot = hot_side.Q_in;
+  T_cold_in = cold_side.T_in;
+  T_cold_out = cold_side.T_out;
+  T_hot_in = hot_side.T_in;
+  T_hot_out = hot_side.T_out;
   cold_side.W = W;
 
   // Energy balance
   hot_side.W + cold_side.W = 0;
 
   // Pressure losses
-  cold_side_pipe.delta_z=0;
+  cold_side_pipe.delta_z = 0;
   cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z=0;
+  hot_side_pipe.delta_z = 0;
   hot_side_pipe.Kfr = Kfr_hot;
 
   // Power Exchange
@@ -83,12 +83,8 @@ equation
   HX.Q_hot = Q_hot;
   HX.T_cold_in = T_cold_in;
   HX.T_hot_in = T_hot_in;
-  HX.Cp_cold =
-    MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(
-    cold_side.state_in);
-  HX.Cp_hot =
-    MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(
-    hot_side.state_in);
+  HX.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in);
+  HX.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side.state_in);
 
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
