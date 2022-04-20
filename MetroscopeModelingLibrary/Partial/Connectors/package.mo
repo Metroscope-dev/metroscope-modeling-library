@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial;
 partial package Connectors
-  extends Modelica.Icons.Package;
+  extends Icons.PackageIcon;
 
   annotation (Icon(graphics={
       Ellipse(
