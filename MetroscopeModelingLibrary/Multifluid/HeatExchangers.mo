@@ -5,6 +5,7 @@ package HeatExchangers
   model Economiser
     extends Partial.HeatExchangers.hrsg_monophasic_HX(QCp_max_side = "cold",T_cold_in_0=76 + 273.15,P_cold_in_0 = 18 *1e5,Q_cold_0=178);
 
+<<<<<<< HEAD
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
             Rectangle(
             extent={{-68,50},{70,-50}},
@@ -68,6 +69,8 @@ package HeatExchangers
       annotation (Line(points={{-70,0},{-70,28},{-48,28}}, color={95,95,95}));
     connect(hot_side_pipe.C_out, hot_side.C_in)
       annotation (Line(points={{-28,28},{-2,28},{-2,18}}, color={95,95,95}));
+=======
+>>>>>>> 43b3d09 (ajout d'un superheater)
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
             Rectangle(
             extent={{-68,50},{70,-50}},
@@ -88,6 +91,9 @@ package HeatExchangers
   end Economiser;
 
   model Superheater
+    extends Partial.HeatExchangers.hrsg_monophasic_HX(QCp_max_side = "hot",T_cold_in_0=140 + 273.15,P_cold_in_0 = 3.5 *1e5, Q_cold_0= 11);
+    import MetroscopeModelingLibrary.Units.Inputs;
+
   public
     FlueGases.Connectors.Inlet C_hot_in annotation (Placement(transformation(
             extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},
@@ -96,11 +102,41 @@ package HeatExchangers
             extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,
               10}})));
     WaterSteam.Connectors.Inlet C_cold_in annotation (Placement(transformation(
-            extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{
-              -20,80}})));
+            extent={{20,-80},{40,-60}}), iconTransformation(extent={{20,-80},{40,-60}})));
     WaterSteam.Connectors.Outlet C_cold_out annotation (Placement(transformation(
-            extent={{20,-80},{40,-60}}), iconTransformation(extent={{20,-80},{
-              40,-60}})));
+            extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
+    FlueGases.Pipes.Pipe hot_side_pipe annotation (Placement(transformation(extent={{-56,-10},{-36,10}})));
+    Power.HeatExchange.NTUHeatExchange HX(config="monophasic_cross_current", QCp_max_side=QCp_max_side)
+                                                                                                       annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=-90)));
+    FlueGases.BaseClasses.IsoPFlowModel hot_side annotation (Placement(
+          transformation(
+          extent={{10,-10},{-10,10}},
+          rotation=90,
+          origin={-20,0})));
+    WaterSteam.BaseClasses.IsoPFlowModel cold_side annotation (Placement(
+          transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=90,
+          origin={22,2})));
+    WaterSteam.Pipes.Pipe cold_side_pipe annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=90,
+          origin={22,-36})));
+  equation
+    connect(cold_side_pipe.C_out,cold_side. C_in)
+      annotation (Line(points={{22,-26},{22,-8}}, color={28,108,200}));
+    connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{22,-46},{22,-70},{30,-70}},
+                                     color={28,108,200}));
+    connect(cold_side.C_out, C_cold_out)
+      annotation (Line(points={{22,12},{22,70},{-30,70}}, color={28,108,200}));
+    connect(hot_side.C_out, C_hot_out) annotation (Line(points={{-20,-10},{-20,-14},{70,-14},{70,0}},
+                         color={95,95,95}));
+    connect(hot_side_pipe.C_out,hot_side. C_in)
+      annotation (Line(points={{-36,0},{-28,0},{-28,10},{-20,10}},
+                                                          color={95,95,95}));
+    connect(C_hot_in, hot_side_pipe.C_in) annotation (Line(points={{-70,0},{-56,0}}, color={95,95,95}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
             Rectangle(
             extent={{-68,50},{70,-50}},
