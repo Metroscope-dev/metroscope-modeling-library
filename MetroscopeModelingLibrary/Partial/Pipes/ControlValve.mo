@@ -7,7 +7,7 @@ partial model ControlValve
 
   Inputs.InputCv Cvmax(start=8005.42) "Maximum CV (active if mode_caract=0)";
   Units.Cv Cv(start=100) "Cv";
-  Modelica.Blocks.Interfaces.RealInput Opening(min=0., max=1., nominal=0.5) annotation (Placement(
+  Modelica.Blocks.Interfaces.RealInput Opening(unit="1", min=0., max=1., nominal=0.5) annotation (Placement(
         transformation(extent={{-20,-20},{20,20}},
         rotation=270,
         origin={0,174}),                              iconTransformation(
@@ -17,7 +17,7 @@ partial model ControlValve
 
 equation
   /* Pressure loss */
-  DP*Cv*abs(Cv) = -1.733e12*Q*abs(Q)/rhom^2;
+  DP*Cv^2 = -1.733e12*Q^2/rhom^2;
   /* Cv as a function of the valve position */
   Cv = Opening*Cvmax;
   annotation (

@@ -10,7 +10,7 @@ model Reheater
 
   Units.Power W_tot;
   Inputs.InputArea S_tot;
-  Inputs.InputReal level(min= 0, max=1, start = 0.3);
+  Inputs.InputFraction level(min= 0, max=1, start = 0.3);
 
   // Deheating
   Units.Power W_deheating;
@@ -42,8 +42,8 @@ model Reheater
 
   // Failure modes
   parameter Boolean faulty = false;
-  Real fouling(min = 0, max=100); // Fouling percentage
-  Real water_level_rise;  // Water level rise (can be negative)
+  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+  Units.Fraction water_level_rise;  // Water level rise (can be negative)
 
   // Initialization parameters
   parameter Units.PositiveMassFlowRate Q_cold_0=500;

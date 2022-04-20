@@ -25,14 +25,14 @@ model Condenser
   Units.Pressure Psat(start=Psat_0, nominal=Psat_0);
   Units.Temperature Tsat;
   Units.Pressure P_incond(start=0.001e5);
-  Inputs.InputReal C_incond "Incondensable molar concentration";
+  Inputs.InputReal C_incond(unit="mol/m3", min=0) "Incondensable molar concentration";
   Inputs.InputPressure P_offset "Offset correction for ideal gas law";
-  constant Real R=Modelica.Constants.R "ideal gas constant";
+  constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
 
     // Failure modes
   parameter Boolean faulty = false;
-  Real fouling(min = 0, max=100); // Fouling percentage
-  Real air_intake(min=0); // Air intake
+  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+  Real air_intake(unit="mol/m3", min=0); // Air intake
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 3820;

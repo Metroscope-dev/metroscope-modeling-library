@@ -1,3 +1,2 @@
 within MetroscopeModelingLibrary.Units.Inputs;
-connector InputPositiveVolumeFlowRate =
-                                     input VolumeFlowRate;
+connector InputPositiveVolumeFlowRate = input VolumeFlowRate;

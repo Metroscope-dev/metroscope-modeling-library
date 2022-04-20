@@ -5,6 +5,7 @@ InputCst
 InputDifferentialPressure
 InputDifferentialTemperature
 InputFraction
+InputPercentage
 InputFrictionCoefficient
 InputHeatExchangeCoefficient
 InputHeatCapacity
