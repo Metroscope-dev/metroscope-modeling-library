@@ -17,10 +17,7 @@ annotation (Icon(graphics={
           lineColor={0,0,0},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          lineThickness=0.5),Text(
-          extent={{-66,34},{66,-34}},
-          textColor={0,0,0},
-        textString="X"),
+          lineThickness=0.5),
       Polygon(
         points={{-20,-57},{0,-91},{20,-57},{-20,-57}},
         lineColor={0,0,0},
