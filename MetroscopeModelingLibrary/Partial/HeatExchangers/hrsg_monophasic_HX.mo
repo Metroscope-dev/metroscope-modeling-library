@@ -55,7 +55,7 @@ partial model hrsg_monophasic_HX
   WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0,T_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={32,10})));
+        origin={32,-58})));
 
   // Intermediate variables
 protected
@@ -108,17 +108,15 @@ equation
 
 
 
-  connect(cold_side.C_out, C_cold_out)
-    annotation (Line(points={{32,-26},{32,-70},{-30,-70}},
-                                                        color={28,108,200}));
   connect(hot_side.C_out, C_hot_out) annotation (Line(points={{-10,-30},{-10,-32},{70,-32},{70,0}},
                        color={95,95,95}));
   connect(C_hot_in,hot_side_pipe. C_in)
     annotation (Line(points={{-70,0},{-56,0}},           color={95,95,95}));
   connect(hot_side_pipe.C_out,hot_side. C_in)
     annotation (Line(points={{-36,0},{-10,0},{-10,-10}},color={95,95,95}));
-  connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{32,20},{32,70},{30,70}}, color={28,108,200}));
-  connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{32,0},{32,-6}}, color={28,108,200}));
+  connect(cold_side.C_out, cold_side_pipe.C_in) annotation (Line(points={{32,-26},{32,-48}}, color={28,108,200}));
+  connect(cold_side_pipe.C_out, C_cold_out) annotation (Line(points={{32,-68},{32,-70},{-30,-70}}, color={28,108,200}));
+  connect(cold_side.C_in, C_cold_in) annotation (Line(points={{32,-6},{32,56},{30,56},{30,70}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-68,50},{70,-50}},
