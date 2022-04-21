@@ -3,8 +3,9 @@ WaterSensorIcon
 MoistAirSensorIcon
 FlueGasesSensorIcon
 FuelSensorIcon
-OutlineSensorIcon
 PowerSensorIcon
+OutlineSensorIcon
+AbstractSensorIcon
 TemperatureIcon
 PressureIcon
 DeltaPressureIcon

@@ -1,9 +1,17 @@
-within MetroscopeModelingLibrary.Icons;
-package Sensors
-  extends Icons.PackageIcon;
-
+within MetroscopeModelingLibrary.Sensors;
+package Abstract
 
   annotation (Icon(graphics={
+        Rectangle(
+          lineColor={200,200,200},
+          fillColor={248,248,248},
+          fillPattern=FillPattern.HorizontalCylinder,
+          extent={{-100,-100},{100,100}},
+          radius=25.0),
+        Rectangle(
+          lineColor={128,128,128},
+          extent={{-100,-100},{100,100}},
+          radius=25.0),
         Ellipse(
           fillColor={245,245,245},
           fillPattern=FillPattern.Solid,
@@ -28,4 +36,4 @@ package Sensors
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           extent={{-7,-7},{7,7}})}));
-end Sensors;
+end Abstract;
