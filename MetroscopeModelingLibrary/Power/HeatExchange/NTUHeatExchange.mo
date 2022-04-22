@@ -98,6 +98,14 @@ equation
     epsilon = 1 - exp(-NTU);
 
 
+    elseif config == "evaporator" then
+
+    QCpMAX = 1000000;// not supposed to be used because Cp(fluid changing phase) = infinite
+    QCpMIN = Q_hot*Cp_hot;
+
+    epsilon = 1 - exp(-NTU);
+
+
 
   else // Added this forbidden case to simplify model checking, but it is anyway overriden by assert below
     QCpMAX = 0;
@@ -106,7 +114,7 @@ equation
     epsilon = 0;
   end if;
 
-  assert(config=="condenser_counter_current" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser_counter_current'");
+  assert(config=="condenser_counter_current" or config == "evaporator" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser_counter_current'");
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(
