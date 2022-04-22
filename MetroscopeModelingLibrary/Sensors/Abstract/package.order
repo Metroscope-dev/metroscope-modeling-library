@@ -1,3 +1,5 @@
 TemperatureSensor
 PressureSensor
 FlowSensor
+LevelSensor
+DeltaPressureSensor

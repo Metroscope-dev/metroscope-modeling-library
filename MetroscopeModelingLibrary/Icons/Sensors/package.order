@@ -6,10 +6,12 @@ FuelSensorIcon
 PowerSensorIcon
 OutlineSensorIcon
 AbstractSensorIcon
+AbstractDifferenceSensorIcon
 TemperatureIcon
 PressureIcon
 DeltaPressureIcon
 FlowIcon
+PowerIcon
 OpeningIcon
 VRotIcon
-PowerIcon
+LevelIcon
