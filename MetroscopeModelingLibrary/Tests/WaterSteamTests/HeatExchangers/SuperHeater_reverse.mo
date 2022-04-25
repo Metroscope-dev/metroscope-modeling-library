@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
-model SuperHeater_reverse
+model Superheater_reverse
 
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
@@ -29,17 +29,14 @@ model SuperHeater_reverse
   WaterSteam.BoundaryConditions.Sink drains_sink annotation (Placement(transformation(extent={{70,-10},{90,10}})));
   WaterSteam.BoundaryConditions.Source cold_steam_source annotation (Placement(transformation(extent={{-42,-50},{-22,-30}})));
   WaterSteam.BoundaryConditions.Sink superheated_steam_sink annotation (Placement(transformation(extent={{16,30},{36,50}})));
-  WaterSteam.HeatExchangers.SuperHeater superheater
+  WaterSteam.HeatExchangers.Superheater superheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
   WaterSteam.BoundaryConditions.Sink vent_sink annotation (Placement(transformation(extent={{70,-30},{90,-10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor
-    superheated_steam_temperature_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor superheated_steam_temperature_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,24})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor
-    drains_pressure_sensor
-    annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor drains_pressure_sensor annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation
 
   // Boundary conditions
@@ -79,4 +76,4 @@ equation
     annotation (Line(points={{16,0},{38,0}}, color={28,108,200}));
   connect(drains_pressure_sensor.C_out, drains_sink.C_in)
     annotation (Line(points={{58,0},{75,0}}, color={28,108,200}));
-end SuperHeater_reverse;
+end Superheater_reverse;

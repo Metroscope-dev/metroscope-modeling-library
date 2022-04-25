@@ -1,4 +1,4 @@
-MoistAirTemperatureSensor
-MoistAirPressureSensor
-MoistAirDeltaPressureSensor
-MoistAirFlowSensor
+TemperatureSensor
+PressureSensor
+DeltaPressureSensor
+FlowSensor

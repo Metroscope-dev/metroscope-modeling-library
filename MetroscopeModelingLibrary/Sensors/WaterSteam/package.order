@@ -1,4 +1,4 @@
-WaterTemperatureSensor
-WaterPressureSensor
-WaterDeltaPressureSensor
-WaterFlowSensor
+TemperatureSensor
+PressureSensor
+DeltaPressureSensor
+FlowSensor

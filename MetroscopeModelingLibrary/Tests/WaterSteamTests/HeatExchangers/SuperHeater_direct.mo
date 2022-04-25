@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
-model SuperHeater_direct
+model Superheater_direct
 
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
@@ -10,7 +10,6 @@ model SuperHeater_direct
   input Real h_cold_steam(start=2.75e6) "J/kg"; // slightly humid cold steam
   input Real h_hot_steam(start=2.8e6) "J/kg"; // slightly superheated hot steam
 
-
   // Parameters
   parameter Units.Area S = 100;
   parameter Units.HeatExchangeCoefficient Kth = 7e3;
@@ -18,12 +17,11 @@ model SuperHeater_direct
   parameter Units.FrictionCoefficient Kfr_hot = 500; // About 1 bar of pressure loss in the reheater
   parameter Units.PositiveMassFlowRate Q_vent=1;
 
-
   WaterSteam.BoundaryConditions.Source hot_steam_source annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
   WaterSteam.BoundaryConditions.Sink drains_sink annotation (Placement(transformation(extent={{48,-10},{68,10}})));
   WaterSteam.BoundaryConditions.Source cold_steam_source annotation (Placement(transformation(extent={{-42,-50},{-22,-30}})));
   WaterSteam.BoundaryConditions.Sink superheated_steam_sink annotation (Placement(transformation(extent={{16,30},{36,50}})));
-  WaterSteam.HeatExchangers.SuperHeater superheater
+  WaterSteam.HeatExchangers.Superheater superheater
     annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
   WaterSteam.BoundaryConditions.Sink vent_sink annotation (Placement(transformation(extent={{48,-30},{68,-10}})));
 equation
@@ -43,7 +41,6 @@ equation
   superheater.Kfr_hot=Kfr_hot;
   superheater.Q_vent = Q_vent;
 
-
   connect(superheater.C_cold_out, superheated_steam_sink.C_in) annotation (Line(
         points={{-0.2,8},{0,8},{0,40},{21,40}}, color={28,108,200}));
   connect(superheater.C_hot_out, drains_sink.C_in)
@@ -54,4 +51,4 @@ equation
          {{-53,0},{-34.5,0},{-34.5,0.2},{-16,0.2}}, color={28,108,200}));
   connect(vent_sink.C_in, superheater.C_vent) annotation (Line(points={{53,-20},
           {16,-20},{16,-7.8}}, color={28,108,200}));
-end SuperHeater_direct;
+end Superheater_direct;

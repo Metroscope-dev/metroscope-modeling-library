@@ -1,10 +1,9 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
-model SuperHeater
+model Superheater
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
-
 
   // Pressure Losses
   Inputs.InputFrictionCoefficient Kfr_hot;
@@ -130,7 +129,6 @@ equation
   Tsat_cold = cold_side_pipe.T_out;
   h_vap_sat_cold = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_pipe.P_out));
 
-
   /* Deheating on hot side, superheating on cold side */
 
   // Energy balance
@@ -143,7 +141,6 @@ equation
   else
       hot_side_deheating.h_out = hot_side_deheating.h_in;
   end if;
-
 
   /* Condensing on hot side, superheating on cold side */
 
@@ -161,7 +158,6 @@ equation
   HX_condensing.T_hot_in = Tsat_hot;
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
   HX_condensing.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side_condensing.state_in);
-
 
   /* Vaporising on cold side, condensation on hot side*/
 
@@ -362,4 +358,4 @@ equation
           origin={-66,-90},
           rotation=90,
           textString="Vent")}));
-end SuperHeater;
+end Superheater;

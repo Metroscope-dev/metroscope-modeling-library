@@ -32,8 +32,8 @@ model GasTurbine_reverse
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-38,40})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesPressureSensor turbine_P_out_sensor annotation (Placement(transformation(extent={{22,-10},{42,10}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesTemperatureSensor turbine_T_out_sensor annotation (Placement(transformation(extent={{50,-10},{70,10}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor turbine_P_out_sensor annotation (Placement(transformation(extent={{22,-10},{42,10}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor turbine_T_out_sensor annotation (Placement(transformation(extent={{50,-10},{70,10}})));
 equation
 
   // Boundary conditions

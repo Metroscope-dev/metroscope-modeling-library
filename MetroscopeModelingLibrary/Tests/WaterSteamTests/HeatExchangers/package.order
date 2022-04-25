@@ -11,6 +11,6 @@ Condenser_faulty
 Reheater_direct
 Reheater_reverse
 Reheater_faulty
-SuperHeater_direct
-SuperHeater_reverse
-SuperHeater_faulty
+Superheater_direct
+Superheater_reverse
+Superheater_faulty

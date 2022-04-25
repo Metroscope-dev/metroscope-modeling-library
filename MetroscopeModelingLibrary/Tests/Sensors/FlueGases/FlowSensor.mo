@@ -7,7 +7,7 @@ model FlowSensor
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
   input Units.PositiveMassFlowRate source_Q(start=100) "kg/s";
 
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.FlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation

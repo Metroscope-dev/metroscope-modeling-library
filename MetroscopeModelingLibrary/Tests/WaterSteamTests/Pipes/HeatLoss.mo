@@ -19,8 +19,8 @@ model HeatLoss
 
   WaterSteam.Pipes.HeatLoss heat_loss annotation (Placement(transformation(extent={{-8.5,-16.3333},{24.5,16.3333}})));
 
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
 equation
   // Boundary conditions
   source.h_out = source_h;

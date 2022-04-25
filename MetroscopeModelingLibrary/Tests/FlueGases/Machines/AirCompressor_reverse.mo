@@ -28,8 +28,8 @@ model AirCompressor_reverse
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={38,40})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesTemperatureSensor compressor_T_out_sensor annotation (Placement(transformation(extent={{18,-10},{38,10}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesPressureSensor compressor_P_out_sensor annotation (Placement(transformation(extent={{46,-10},{66,10}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor annotation (Placement(transformation(extent={{18,-10},{38,10}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor compressor_P_out_sensor annotation (Placement(transformation(extent={{46,-10},{66,10}})));
 equation
 
   // Boundary conditions

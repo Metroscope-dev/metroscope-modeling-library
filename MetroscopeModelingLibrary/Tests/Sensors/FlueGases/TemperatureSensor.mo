@@ -7,7 +7,7 @@ model TemperatureSensor
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
   input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesTemperatureSensor T_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor T_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation

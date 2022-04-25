@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
-model SuperHeater_faulty
-  extends SuperHeater_direct(
+model Superheater_faulty
+  extends Superheater_direct(
       superheater(faulty = true));
 
   Real Failure_fouling(start=0);
@@ -16,4 +16,4 @@ equation
   superheater.fouling = Failure_fouling;
   superheater.closed_vent = Failure_closed_vent;
 
-end SuperHeater_faulty;
+end Superheater_faulty;
