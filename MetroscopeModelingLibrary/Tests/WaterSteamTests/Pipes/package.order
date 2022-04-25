@@ -6,3 +6,4 @@ ControlValve_direct
 ControlValve_reverse
 HeatLoss
 PressureCut
+LoopBreaker
