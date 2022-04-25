@@ -24,7 +24,7 @@ model Pipe_reverse
 
   WaterSteam.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
 
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterDeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,30},{10,50}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.DeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,30},{10,50}})));
 equation
   // Boundary conditions
   source.h_out = source_h;

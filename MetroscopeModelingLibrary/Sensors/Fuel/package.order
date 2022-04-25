@@ -1,4 +1,4 @@
-FuelTemperatureSensor
-FuelPressureSensor
-FuelDeltaPressureSensor
-FuelFlowSensor
+TemperatureSensor
+PressureSensor
+DeltaPressureSensor
+FlowSensor

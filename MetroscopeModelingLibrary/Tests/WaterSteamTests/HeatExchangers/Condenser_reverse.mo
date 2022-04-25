@@ -33,17 +33,16 @@ model Condenser_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-44})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cond_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={1,25})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor circulating_water_T_out_sensor annotation (Placement(transformation(extent={{24,-6},{34,4}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor condensate_temperature_sensor
-    annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor circulating_water_T_out_sensor annotation (Placement(transformation(extent={{24,-6},{34,4}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor condensate_temperature_sensor annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={-1,-21})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor circulating_water_P_out_sensor annotation (Placement(transformation(extent={{40,-6},{50,4}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor circulating_water_P_out_sensor annotation (Placement(transformation(extent={{40,-6},{50,4}})));
   WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,

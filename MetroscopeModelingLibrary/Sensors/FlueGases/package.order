@@ -1,4 +1,4 @@
-FlueGasesTemperatureSensor
-FlueGasesPressureSensor
-FlueGasesDeltaPressureSensor
-FlueGasesFlowSensor
+TemperatureSensor
+PressureSensor
+DeltaPressureSensor
+FlowSensor

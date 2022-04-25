@@ -37,9 +37,9 @@ model LiqLiqHX_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-36})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor T_cold_out_sensor annotation (Placement(transformation(extent={{22,-6},{34,6}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cold_out_sensor annotation (Placement(transformation(extent={{38,-6},{50,6}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_hot_out_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cold_out_sensor annotation (Placement(transformation(extent={{22,-6},{34,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cold_out_sensor annotation (Placement(transformation(extent={{38,-6},{50,6}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_hot_out_sensor annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,-18})));

@@ -34,8 +34,8 @@ model DryReheater_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-36})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor T_cold_sink_sensor annotation (Placement(transformation(extent={{48,-10},{68,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cold_sink_sensor annotation (Placement(transformation(extent={{22,-10},{42,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cold_sink_sensor annotation (Placement(transformation(extent={{48,-10},{68,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cold_sink_sensor annotation (Placement(transformation(extent={{22,-10},{42,10}})));
 equation
 
   // Boundary conditions

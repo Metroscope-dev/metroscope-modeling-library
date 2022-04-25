@@ -43,18 +43,15 @@ model Economiser_reverse
             {-40,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{60,-10},
             {80,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterTemperatureSensor T_cold_out_sensor
-    annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cold_out_sensor annotation (Placement(transformation(
         extent={{4,-4},{-4,4}},
         rotation=90,
         origin={-12,-52})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cold_out_sensor
-    annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cold_out_sensor annotation (Placement(transformation(
         extent={{4,-4},{-4,4}},
         rotation=90,
         origin={-12,-38})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesPressureSensor P_hot_out_sensor
-    annotation (Placement(transformation(extent={{40,-4},{48,4}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_hot_out_sensor annotation (Placement(transformation(extent={{40,-4},{48,4}})));
 equation
   // Boundary conditions
   hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};

@@ -7,7 +7,7 @@ model PressureSensor
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
   input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
-  MetroscopeModelingLibrary.Sensors.Fuel.FuelPressureSensor P_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.Sensors.Fuel.PressureSensor P_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation

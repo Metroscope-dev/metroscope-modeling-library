@@ -4,8 +4,8 @@ model FlowModel
   WaterSteam.BaseClasses.FlowModel waterFlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
   WaterSteam.BoundaryConditions.Source waterSource annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
   WaterSteam.BoundaryConditions.Sink waterSink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterFlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
 equation
   waterFlowModel.W_input = 0;
   waterFlowModel.DP_input = 0;

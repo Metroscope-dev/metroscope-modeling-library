@@ -59,15 +59,15 @@ model TurbineLine_reverse
   // Electricity
   Power.BoundaryConditions.Sink powerSink annotation (Placement(transformation(extent={{122,30},{142,50}})));
   Power.Machines.Generator generator annotation (Placement(transformation(extent={{68,28},{108,52}})));
-  Sensors.WaterSteam.WaterPressureSensor ST1_ext_P_sensor annotation (Placement(transformation(
+  Sensors.WaterSteam.PressureSensor ST1_ext_P_sensor annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
         origin={-66,-25})));
-  Sensors.WaterSteam.WaterPressureSensor ST3_ext_P_sensor annotation (Placement(transformation(
+  Sensors.WaterSteam.PressureSensor ST3_ext_P_sensor annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
         origin={84,-25})));
-  Sensors.WaterSteam.WaterPressureSensor ST2_ext_P_sensor annotation (Placement(transformation(
+  Sensors.WaterSteam.PressureSensor ST2_ext_P_sensor annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
         origin={8,-25})));

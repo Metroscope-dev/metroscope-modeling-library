@@ -20,7 +20,7 @@ model StodolaTurbine_reverse
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{62,-10},{82,10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink power_sink annotation (Placement(transformation(extent={{62,20},{82,40}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor stodolaTurbine_P_out_sensor annotation (Placement(transformation(extent={{32,-10},{52,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor stodolaTurbine_P_out_sensor annotation (Placement(transformation(extent={{32,-10},{52,10}})));
   MetroscopeModelingLibrary.Sensors.Power.PowerSensor stodolaTurbine_W_out_sensor annotation (Placement(transformation(extent={{32,20},{52,40}})));
 equation
   // Boundary conditions

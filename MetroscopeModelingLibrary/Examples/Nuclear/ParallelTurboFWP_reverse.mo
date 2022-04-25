@@ -49,8 +49,8 @@ model ParallelTurboFWP_reverse
   WaterSteam.BoundaryConditions.Source STs_source annotation (Placement(transformation(extent={{-128,70},{-108,90}})));
   WaterSteam.BoundaryConditions.Sink STs_sink annotation (Placement(transformation(extent={{108,70},{128,90}})));
   // STs
-  Sensors.WaterSteam.WaterPressureSensor ST1_P_in_sensor annotation (Placement(transformation(extent={{10,93.0001},{24,107}})));
-  Sensors.WaterSteam.WaterPressureSensor ST2_P_in_sensor annotation (Placement(transformation(extent={{10,53},{24,67}})));
+  Sensors.WaterSteam.PressureSensor ST1_P_in_sensor annotation (Placement(transformation(extent={{10,93.0001},{24,107}})));
+  Sensors.WaterSteam.PressureSensor ST2_P_in_sensor annotation (Placement(transformation(extent={{10,53},{24,67}})));
   WaterSteam.Machines.StodolaTurbine ST1(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{32,90.0002},{52,110}})));
   WaterSteam.Machines.StodolaTurbine ST2(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{32,70},{52,50}})));
   // STs CV
@@ -65,7 +65,7 @@ model ParallelTurboFWP_reverse
   // Pumps
   WaterSteam.Machines.Pump FWP2 annotation (Placement(transformation(extent={{-10,-40},{-30,-20}})));
   WaterSteam.Machines.Pump FWP1 annotation (Placement(transformation(extent={{-10,-80},{-30,-100}})));
-  Sensors.WaterSteam.WaterFlowSensor STs_CV_Q_in_sensor annotation (Placement(transformation(extent={{-76,73},{-62,87}})));
+  Sensors.WaterSteam.FlowSensor STs_CV_Q_in_sensor annotation (Placement(transformation(extent={{-76,73},{-62,87}})));
   Sensors.Outline.VRotSensor FWP1_VRot_sensor annotation (Placement(transformation(
         extent={{-7.5,-7.5},{7.5,7.5}},
         rotation=270,
@@ -75,9 +75,9 @@ model ParallelTurboFWP_reverse
         rotation=270,
         origin={0,-50})));
   // Pumps outlet
-  Sensors.WaterSteam.WaterTemperatureSensor FWPs_T_out_sensor annotation (Placement(transformation(extent={{-84,-67},{-98,-53}})));
-  Sensors.WaterSteam.WaterPressureSensor FWPs_P_out_sensor annotation (Placement(transformation(extent={{-64,-67},{-78,-53}})));
-  Sensors.WaterSteam.WaterFlowSensor FWP1_Q_in_sensor annotation (Placement(transformation(extent={{38,-97},{24,-83}})));
+  Sensors.WaterSteam.TemperatureSensor FWPs_T_out_sensor annotation (Placement(transformation(extent={{-84,-67},{-98,-53}})));
+  Sensors.WaterSteam.PressureSensor FWPs_P_out_sensor annotation (Placement(transformation(extent={{-64,-67},{-78,-53}})));
+  Sensors.WaterSteam.FlowSensor FWP1_Q_in_sensor annotation (Placement(transformation(extent={{38,-97},{24,-83}})));
 equation
   // Boundary conditions
   // STs source
