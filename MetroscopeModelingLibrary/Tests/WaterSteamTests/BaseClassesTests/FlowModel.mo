@@ -1,24 +1,32 @@
 within MetroscopeModelingLibrary.Tests.WaterSteamTests.BaseClassesTests;
 model FlowModel
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
-  WaterSteam.BaseClasses.FlowModel waterFlowModel annotation (Placement(transformation(extent={{7,-23},{53,23}})));
-  WaterSteam.BoundaryConditions.Source waterSource annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
-  WaterSteam.BoundaryConditions.Sink waterSink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor waterPressureSensor annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor waterFlowSensor annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
+
+  import MetroscopeModelingLibrary.Units;
+
+  // Boundary conditions
+  input Units.Pressure source_P(start=50e5) "Pa";
+  input Units.SpecificEnthalpy source_h(start=2e6) "J/kg";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+
+  // Parameters
+  input Units.DifferentialPressure DP(start=1e5);
+  input Units.Power W(start=1e5);
+
+  WaterSteam.BaseClasses.FlowModel flowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
 equation
-  waterFlowModel.W_input = 0;
-  waterFlowModel.DP_input = 0;
 
-  waterSource.h_out = 1e6;
+  // Boundary Conditions
+  source.h_out = source_h;
+  source.P_out = source_P;
+  source.Q_out = source_Q;
 
-  waterPressureSensor.P = 1e5;
-  waterFlowSensor.Q = 100;
+  // Parameters
+  flowModel.DP = DP;
+  flowModel.W = W;
 
-  assert(abs(waterSink.Q_in + waterSource.Q_out) <= 1e-5, "In flow model, DM should be 0");
-  connect(waterFlowModel.C_out, waterSink.C_in) annotation (Line(points={{53,0},{69.5,0}},            color={28,108,200}));
-  connect(waterSource.C_out, waterPressureSensor.C_in) annotation (Line(points={{-70.5,0},{-60,0}},                   color={28,108,200}));
-  connect(waterPressureSensor.C_out, waterFlowSensor.C_in) annotation (Line(points={{-40,0},{-34,0},{-34,0.025},{-30,0.025},{-30,0},{-20,0}},
-                                                                                                            color={28,108,200}));
-  connect(waterFlowModel.C_in, waterFlowSensor.C_out) annotation (Line(points={{7,0},{0,0}},                             color={28,108,200}));
+  connect(flowModel.C_out, sink.C_in) annotation (Line(points={{23,0},{69.5,0}}, color={28,108,200}));
+  connect(flowModel.C_in, source.C_out) annotation (Line(points={{-23,0},{-70.5,0}}, color={28,108,200}));
 end FlowModel;

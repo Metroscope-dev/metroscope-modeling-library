@@ -4,7 +4,6 @@ model StodolaTurbine_direct
 
   // Boundary conditions
   input Units.Pressure source_P(start=20e5);
-  //input Units.Temperature source_T(start=20 + 273.15);
   input Units.SpecificEnthalpy source_h(start=2.7718e6);
   input Units.NegativeMassFlowRate source_Q(start=-100);
 
@@ -13,6 +12,7 @@ model StodolaTurbine_direct
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{62,-10},{82,10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink power_sink annotation (Placement(transformation(extent={{62,20},{82,40}})));
 equation
+
   // Boundary conditions
   source.P_out = source_P;
   source.h_out = source_h;

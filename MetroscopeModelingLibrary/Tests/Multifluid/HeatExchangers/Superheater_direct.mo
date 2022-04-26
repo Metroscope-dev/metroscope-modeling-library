@@ -21,13 +21,11 @@ model Superheater_direct
   parameter Units.Temperature nominal_cold_side_temperature_rise = 140;
   parameter Units.Temperature nominal_hot_side_temperature_rise = 3;
 
-  WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(
-        transformation(
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={12,44})));
-  WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(
-        transformation(
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,-46})));

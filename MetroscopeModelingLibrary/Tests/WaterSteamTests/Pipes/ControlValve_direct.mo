@@ -2,51 +2,42 @@ within MetroscopeModelingLibrary.Tests.WaterSteamTests.Pipes;
 model ControlValve_direct
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
+  /* In direct mode, control valves are usually used as a sort of pressure cut in the system. The pressure
+  will be known on both sides (for instance on a NPP, it will come from the condenser through the turbine line and
+  reach the high pressure steam valve, and on the other side the pressure will come from the steam generator.
+  As the characteristics of the valve is known and the mass flow rate is known, its opening will adapt to match the pressure
+  difference. */
+
   // Boundary conditions
-  input Units.SpecificEnthalpy source_h(start=1e3);
-  input Real source_P(start=2, min=0, nominal=2) "barA";
-  input Units.MassFlowRate source_Q(start=100) "kg/s";
+  input Units.SpecificEnthalpy source_h(start=1e6);
+  input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.Pressure sink_P(start=9e5) "Pa";
 
-  // Input: Component parameters
-  input Units.Cv Cvmax(start=8000) "Cvmax";
-  input Units.Cv Cv(start=1600) "Cv";
-
-  // Output: Observables
-  output Units.Pressure CV_P_out;
-  output Units.Fraction CV_opening;
+  // Parameters
+  parameter Units.Cv Cvmax=3e4 "Cvmax";
 
   // Components
-  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-68,-9.99996},{-48,9.99996}})));
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={90,-6.10623e-16})));
+        origin={58,-6.10623e-16})));
 
-  WaterSteam.Pipes.ControlValve control_valve annotation (Placement(transformation(extent={{-6.5,-5.93938},{26.5,26.7272}})));
+  WaterSteam.Pipes.ControlValve control_valve annotation (Placement(transformation(extent={{-16.5,-5.93938},{16.5,26.7272}})));
 
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor source_P_sensor annotation (Placement(transformation(extent={{-66,-6},{-54,6}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-42,-6},{-30,6}})));
-  MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor CV_opening_sensor annotation (Placement(transformation(extent={{0,40},{20,60}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor CV_P_out_sensor annotation (Placement(transformation(extent={{52,-6},{64,6}})));
 equation
+
+
   // Boundary conditions
   source.h_out = source_h;
-  source_P_sensor.P_barA = source_P;
-  source_Q_sensor.Q = source_Q;
+  source.P_out = source_P;
+  source.Q_out = source_Q;
+  sink.P_in = sink_P;
 
-  // Input: Component parameters
+  // Parameters
   control_valve.Cvmax = Cvmax;
-  control_valve.Cv = Cv;
 
-  // Output: Observables
-  CV_P_out_sensor.P = CV_P_out;
-  CV_opening_sensor.Opening = CV_opening;
-
-  connect(source_P_sensor.C_in, source.C_out) annotation (Line(points={{-66,0},{-84.2,0},{-84.2,7.5e-06},{-85,7.5e-06}},   color={28,108,200}));
-  connect(control_valve.C_in, source_Q_sensor.C_out) annotation (Line(points={{-6.5,-1.81818e-06},{-18,-1.81818e-06},{-18,0},{-30,0}},
-                                                                                        color={28,108,200}));
-  connect(source_Q_sensor.C_in, source_P_sensor.C_out) annotation (Line(points={{-42,0},{-54,0}}, color={28,108,200}));
-  connect(control_valve.Opening, CV_opening_sensor.Opening) annotation (Line(points={{10,23.7575},{10,39.8}}, color={0,0,127}));
-  connect(CV_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{64,0},{85,0}}, color={28,108,200}));
-  connect(CV_P_out_sensor.C_in, control_valve.C_out) annotation (Line(points={{52,0},{39.25,0},{39.25,-1.81818e-06},{26.5,-1.81818e-06}}, color={28,108,200}));
+  connect(control_valve.C_out, sink.C_in) annotation (Line(points={{16.5,-1.81818e-06},{34.75,-1.81818e-06},{34.75,0},{53,0}}, color={28,108,200}));
+  connect(control_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}},color={28,108,200}));
 end ControlValve_direct;

@@ -2,34 +2,51 @@ within MetroscopeModelingLibrary.Tests.WaterSteamTests.HeatExchangers;
 model SteamGenerator
 
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+
+  // Boundary conditions
+  input Units.Pressure P_steam(start=70e5) "Pa";
+  input Units.PositiveMassFlowRate Q_feedwater(start=500) "kg/s";
+  input Units.Pressure P_feedwater(start=80e5) "Pa";
+  input Units.Temperature T_feedwater(start=225+273.15) "K";
+  input Units.PositiveMassFlowRate Q_purge(start=1) "kg/s";
+
+
+  // Parameters
+  input Real vapor_fraction(start=0.99);
+
+
   WaterSteam.HeatExchangers.SteamGenerator steamGenerator
-    annotation (Placement(transformation(extent={{-34,-60},{30,58}})));
+    annotation (Placement(transformation(extent={{-32,-60},{32,60}})));
   WaterSteam.BoundaryConditions.Source feedwater_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={68,-8})));
-  WaterSteam.BoundaryConditions.Sink steam_sink annotation (Placement(transformation(extent={{40,64},{60,84}})));
+        origin={58,0})));
+  WaterSteam.BoundaryConditions.Sink steam_sink annotation (Placement(transformation(extent={{48,70},{68,90}})));
   WaterSteam.BoundaryConditions.Sink purge_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-2,-84})));
+        origin={0,-78})));
 equation
 
-  purge_sink.Q_in = 1e-3;
-  purge_sink.P_in = 80e5;
+  // Boundary conditions
+  steam_sink.P_in = P_steam;
+  feedwater_source.Q_out = - Q_feedwater;
+  feedwater_source.P_out = P_feedwater;
+  feedwater_source.T_out = T_feedwater;
+  purge_sink.Q_in = Q_purge;
 
-  feedwater_source.Q_out = -500;
-  feedwater_source.P_out = 80e5;
-  feedwater_source.T_out = 273.15 + 225;
-
-  steam_sink.P_in = 70e5;
+  // Parameters
   steamGenerator.vapor_fraction = 0.99;
 
+  // Hypothesis
+  steamGenerator.P_purge = P_steam; // Steam generator blowdown is assumed to be at the saturation pressure
+
   connect(feedwater_source.C_out, steamGenerator.feedwater_inlet) annotation (
-      Line(points={{63,-8},{38.5,-8},{38.5,-1},{14,-1}}, color={28,108,200}));
+      Line(points={{53,5.55112e-17},{34.5,5.55112e-17},{34.5,0},{16,0}},
+                                                         color={28,108,200}));
   connect(steamGenerator.steam_outlet, steam_sink.C_in)
-    annotation (Line(points={{-2,58},{-2,74},{45,74}}, color={28,108,200}));
-  connect(purge_sink.C_in, steamGenerator.purge_outlet) annotation (Line(points={{-2,-79},{-2,-69.0083},{-2,-59.0167},{-2,-59.0167}},
+    annotation (Line(points={{0,60},{0,80},{53,80}},   color={28,108,200}));
+  connect(purge_sink.C_in, steamGenerator.purge_outlet) annotation (Line(points={{8.88178e-16,-73},{8.88178e-16,-59},{0,-59}},
                                                                color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
