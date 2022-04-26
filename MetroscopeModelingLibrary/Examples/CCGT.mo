@@ -238,7 +238,7 @@ package CCGT
     parameter Units.FrictionCoefficient Kfr_cold = 1;
 
 
-    MultiFluid.HeatExchangers.Evaporator_without_flashTank evaporator_without_flashTank annotation (Placement(transformation(extent={{-38,-36},{40,36}})));
+    MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent={{-38,-36},{40,36}})));
     WaterSteam.Volumes.FlashTank flashTank annotation (Placement(transformation(extent={{-26,38},{-46,58}})));
     WaterSteam.BoundaryConditions.Sink cold_liquid_sink annotation (Placement(transformation(extent={{-78,-62},{-98,-42}})));
     WaterSteam.BoundaryConditions.Sink cold_steam_sink annotation (Placement(transformation(extent={{-80,42},{-100,62}})));
@@ -256,17 +256,17 @@ package CCGT
     cold_source.T_out =  T_cold_source;
     cold_source.Q_out = - Q_cold_source;
 
-    evaporator_without_flashTank.S_vaporising = S;
-    evaporator_without_flashTank.Kth = Kth;
-    evaporator_without_flashTank.Kfr_hot = Kfr_hot;
-    evaporator_without_flashTank.Kfr_cold = Kfr_cold;
+    evaporator.S_vaporising = S;
+    evaporator.Kth = Kth;
+    evaporator.Kfr_hot = Kfr_hot;
+    evaporator.Kfr_cold = Kfr_cold;
 
-    connect(flashTank.C_in, evaporator_without_flashTank.C_cold_out) annotation (Line(points={{-26,52},{-10.7,52},{-10.7,25.2}}, color={28,108,200}));
+    connect(flashTank.C_in, evaporator.C_cold_out) annotation (Line(points={{-26,52},{-10.7,52},{-10.7,25.2}}, color={28,108,200}));
     connect(flashTank.C_hot_steam, cold_steam_sink.C_in) annotation (Line(points={{-46,52},{-85,52}}, color={28,108,200}));
     connect(flashTank.C_hot_liquid, cold_liquid_sink.C_in) annotation (Line(points={{-46,44},{-76,44},{-76,-52},{-83,-52}}, color={28,108,200}));
-    connect(evaporator_without_flashTank.C_hot_in, hot_source.C_out) annotation (Line(points={{-26.3,-0.72},{-55.65,-0.72},{-55.65,0},{-85,0}}, color={95,95,95}));
-    connect(evaporator_without_flashTank.C_hot_out, hot_sink.C_in) annotation (Line(points={{28.3,-0.72},{45.65,-0.72},{45.65,0},{59,0}}, color={95,95,95}));
-    connect(evaporator_without_flashTank.C_cold_in, cold_source.C_out) annotation (Line(points={{12.7,25.2},{12.7,40},{57,40}}, color={28,108,200}));
+    connect(evaporator.C_hot_in, hot_source.C_out) annotation (Line(points={{-26.3,-0.72},{-55.65,-0.72},{-55.65,0},{-85,0}}, color={95,95,95}));
+    connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{28.3,-0.72},{45.65,-0.72},{45.65,0},{59,0}}, color={95,95,95}));
+    connect(evaporator.C_cold_in, cold_source.C_out) annotation (Line(points={{12.7,25.2},{12.7,40},{57,40}}, color={28,108,200}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Ellipse(
             extent={{-40,76},{-4,40}},
@@ -345,7 +345,7 @@ package CCGT
     input Real P_cold_out(start = 3.5, min=1.5, nominal=3.5) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
     input Real P_hot_out(start=1, min=1, nominal=1) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
     input Real Q_cold_liq_out(start = 97, min = 80, nominal = 97) "kg/s"; // Outlet temperature on cold side, to calibrate Kth
-    MultiFluid.HeatExchangers.Evaporator_without_flashTank evaporator_without_flashTank annotation (Placement(transformation(extent={{-38,-36},{40,36}})));
+    MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent={{-38,-36},{40,36}})));
     WaterSteam.Volumes.FlashTank flashTank annotation (Placement(transformation(extent={{-26,38},{-46,58}})));
     WaterSteam.BoundaryConditions.Sink cold_liquid_sink annotation (Placement(transformation(extent={{-78,-62},{-98,-42}})));
     WaterSteam.BoundaryConditions.Sink cold_steam_sink annotation (Placement(transformation(extent={{-80,42},{-100,62}})));
@@ -370,7 +370,7 @@ package CCGT
     cold_source.Q_out = - Q_cold_source;
 
     // Parameters
-    evaporator_without_flashTank.S_vaporising = S;
+    evaporator.S_vaporising = S;
 
     // Inputs for calibration
     Q_cold_liquid_out.Q = Q_cold_liq_out;
@@ -378,14 +378,14 @@ package CCGT
     P_hot_out_sensor.P_barA = P_hot_out;
 
     // Calibrated parameters
-    evaporator_without_flashTank.Kth = Kth;
-    evaporator_without_flashTank.Kfr_hot = Kfr_hot;
-    evaporator_without_flashTank.Kfr_cold = Kfr_cold;
+    evaporator.Kth = Kth;
+    evaporator.Kfr_hot = Kfr_hot;
+    evaporator.Kfr_cold = Kfr_cold;
 
-    connect(flashTank.C_in,evaporator_without_flashTank. C_cold_out) annotation (Line(points={{-26,52},{-10.7,52},{-10.7,25.2}}, color={28,108,200}));
-    connect(evaporator_without_flashTank.C_hot_in,hot_source. C_out) annotation (Line(points={{-26.3,-0.72},{-55.65,-0.72},{-55.65,0},{-85,0}}, color={95,95,95}));
-    connect(evaporator_without_flashTank.C_cold_in,cold_source. C_out) annotation (Line(points={{12.7,25.2},{12.7,40},{57,40}}, color={28,108,200}));
-    connect(evaporator_without_flashTank.C_hot_out, P_hot_out_sensor.C_in) annotation (Line(points={{28.3,-0.72},{36.15,-0.72},{36.15,0},{44,0}}, color={95,95,95}));
+    connect(flashTank.C_in, evaporator.C_cold_out) annotation (Line(points={{-26,52},{-10.7,52},{-10.7,25.2}}, color={28,108,200}));
+    connect(evaporator.C_hot_in, hot_source.C_out) annotation (Line(points={{-26.3,-0.72},{-55.65,-0.72},{-55.65,0},{-85,0}}, color={95,95,95}));
+    connect(evaporator.C_cold_in, cold_source.C_out) annotation (Line(points={{12.7,25.2},{12.7,40},{57,40}}, color={28,108,200}));
+    connect(evaporator.C_hot_out, P_hot_out_sensor.C_in) annotation (Line(points={{28.3,-0.72},{36.15,-0.72},{36.15,0},{44,0}}, color={95,95,95}));
     connect(hot_sink.C_in, P_hot_out_sensor.C_out) annotation (Line(points={{59,0},{52,0}}, color={95,95,95}));
     connect(cold_liquid_sink.C_in, Q_cold_liquid_out.C_out) annotation (Line(points={{-83,-52},{-50,-52},{-50,-44}}, color={28,108,200}));
     connect(flashTank.C_hot_liquid, Q_cold_liquid_out.C_in) annotation (Line(points={{-46,44},{-50,44},{-50,-28}}, color={28,108,200}));
