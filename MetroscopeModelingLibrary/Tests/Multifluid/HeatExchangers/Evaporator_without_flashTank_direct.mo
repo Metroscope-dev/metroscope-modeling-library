@@ -1,25 +1,23 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
-model EvaporatorV2_direct
+model Evaporator_without_flashTank_direct
+      extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
 
   // Boundary conditions
-  input Real P_hot_source(start=1*1e5, min=1*1e5, nominal=1*1e5) "barA";
-  input Units.MassFlowRate Q_hot_source(start=586) "kg/s";
-  input Real hot_source_h(start=494000) "J/kg";
+  input Real P_hot_source(start=1*1e5, min=1*1e5, nominal=1*1e5);
+  input Units.MassFlowRate Q_hot_source(start=586);
+  input Real hot_source_h(start=494000);
 
-  input Real P_cold_source(start=3.5*1e5, min=1.5*1e5, nominal=3.5*1e5) "barA";
-  input Units.MassFlowRate Q_cold_source(start=96) "kg/s";
-  input Real T_cold_source(start = 132+273.15, min = 130+273.15, nominal = 150+273.15) "degC";
+  input Real P_cold_source(start=3.5*1e5, min=1.5*1e5, nominal=3.5*1e5);
+  input Units.MassFlowRate Q_cold_source(start=96);
+  input Real T_cold_source(start = 132+273.15, min = 130+273.15, nominal = 150+273.15);
 
      // Parameters
-  //parameter String QCp_max_side = "hot";
   parameter Units.Area S = 10;
   parameter Units.HeatExchangeCoefficient Kth = 102000;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
   parameter Units.FrictionCoefficient Kfr_cold = 1;
-  //parameter Units.Temperature nominal_hot_side_temperature_rise = 3;
 
-
-  MultiFluid.HeatExchangers.Evaporator_2phases_outlet evaporator_2phases_outlet annotation (Placement(transformation(extent={{-50,-56},{50,58}})));
+  MultiFluid.HeatExchangers.Evaporator_without_flashTank evaporator_2phases_outlet annotation (Placement(transformation(extent={{-50,-56},{50,58}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-78,-10},{-58,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{70,-10},{90,10}})));
   WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
@@ -40,17 +38,14 @@ equation
   cold_source.T_out =  T_cold_source;
   cold_source.Q_out = - Q_cold_source;
 
-
   evaporator_2phases_outlet.S_vaporising = S;
   evaporator_2phases_outlet.Kth = Kth;
   evaporator_2phases_outlet.Kfr_hot = Kfr_hot;
   evaporator_2phases_outlet.Kfr_cold = Kfr_cold;
-  //evaporator_2phases_outlet.nominal_hot_side_temperature_rise = nominal_hot_side_temperature_rise;
-
 
   connect(evaporator_2phases_outlet.C_hot_in, hot_source.C_out) annotation (Line(points={{-35,-0.14},{-35,0},{-63,0}}, color={95,95,95}));
   connect(evaporator_2phases_outlet.C_hot_out, hot_sink.C_in) annotation (Line(points={{35,-0.14},{56,-0.14},{56,0},{75,0}}, color={95,95,95}));
   connect(cold_sink.C_in, evaporator_2phases_outlet.C_cold_out) annotation (Line(points={{-14,65},{-14,52.95},{-15,52.95},{-15,40.9}}, color={28,108,200}));
   connect(cold_source.C_out, evaporator_2phases_outlet.C_cold_in) annotation (Line(points={{14,65},{14,40.9},{15,40.9}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
-end EvaporatorV2_direct;
+end Evaporator_without_flashTank_direct;

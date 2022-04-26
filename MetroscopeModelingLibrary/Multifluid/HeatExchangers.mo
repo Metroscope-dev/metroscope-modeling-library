@@ -19,16 +19,24 @@ package HeatExchangers
       import MetroscopeModelingLibrary.Units;
       import MetroscopeModelingLibrary.Units.Inputs;
 
-
+      // Pressure Losses
       Inputs.InputFrictionCoefficient Kfr_cold;
       Inputs.InputFrictionCoefficient Kfr_hot;
       Inputs.InputArea S_vaporising;
+
+      // Heating
+      Units.Power W_heating;
+
+      // Vaporisation
+      Units.Power W_vaporising;
       Inputs.InputHeatExchangeCoefficient Kth;
+      parameter String HX_config="phase_change";
+      Units.MassFraction x_steam_out(start=0.7); // Steam mass fraction at water outlet
+      Units.SpecificEnthalpy h_vap_sat(start=2e6);
+      Units.SpecificEnthalpy h_liq_sat(start=1e5);
+      Units.Temperature Tsat;
 
-      //Units.Temperature nominal_hot_side_temperature_rise; // flue gases reference temperature rise based on H&MB diagramm values
-      //Units.Power W;
-
-      //Units.MassFlowRate Q_cold_liq_out;
+      // Definitions
       Units.MassFlowRate Q_cold;
       Units.MassFlowRate Q_hot;
       Units.Temperature T_cold_in;
@@ -36,21 +44,11 @@ package HeatExchangers
       Units.Temperature T_cold_out;
       Units.Temperature T_hot_out;
 
-      //Units.MassFraction x_steam_out(start=0.7);
-      Units.SpecificEnthalpy h_vap_sat(start=2e6);
-      Units.SpecificEnthalpy h_liq_sat(start=1e5);
-      Units.Temperature Tsat;
-
-      Units.Power W_heating;
-      Units.Power W_vaporising;
-
             // Initialization parameters
       parameter Units.MassFlowRate Q_cold_0 = 500;
       parameter Units.MassFlowRate Q_hot_0 = 50;
       parameter Units.Temperature T_cold_in_0 = 76 + 273.15;
       parameter Units.Pressure P_cold_in_0 = 18 *1e5;
-
-
 
     FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(
             extent={{-80,-12},{-60,8}}),  iconTransformation(extent={{-80,-12},{-60,8}})));
@@ -61,7 +59,7 @@ package HeatExchangers
     WaterSteam.Connectors.Outlet C_cold_vap_out(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-80,80},{-60,100}}), iconTransformation(extent={{-80,80},{-60,100}})));
     WaterSteam.Connectors.Outlet C_cold_liq_out annotation (Placement(transformation(extent={{-80,-100},{-60,-80}}), iconTransformation(extent={{-80,-100},{-60,-80}})));
     FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(extent={{-58,-30},{-38,-10}})));
-    Power.HeatExchange.NTUHeatExchange HX_vaporising(config="evaporator", T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
+    Power.HeatExchange.NTUHeatExchange HX_vaporising(config=HX_config, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
           rotation=0,
           origin={-20,0})));
@@ -92,9 +90,6 @@ package HeatExchangers
           rotation=0,
           origin={20,20})));
     WaterSteam.Volumes.FlashTank flashTank annotation (Placement(transformation(extent={{-52,12},{-72,32}})));
-    //MetroscopeModelingLibrary.Units.HeatCapacity Cp_hot_min;
-    //MetroscopeModelingLibrary.Units.HeatCapacity Cp_hot_max;
-    //MetroscopeModelingLibrary.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
 
   equation
     // Definitions
@@ -132,8 +127,8 @@ package HeatExchangers
     hot_side_vaporising.W + cold_side_vaporising.W = 0;
     cold_side_vaporising.W = W_vaporising;
     // Power Exchange
-    //hot_side_vaporising.h_out = h_vap_sat;
-    //cold_side_vaporising.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
+    cold_side_vaporising.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
+
     HX_vaporising.W = W_vaporising;
     HX_vaporising.Kth = Kth;
     HX_vaporising.S = S_vaporising;
@@ -141,13 +136,8 @@ package HeatExchangers
     HX_vaporising.Q_hot = Q_hot;
     HX_vaporising.T_cold_in = Tsat;//cold_side_vaporising.T_in;
     HX_vaporising.T_hot_in = hot_side_vaporising.T_in;
-    HX_vaporising.Cp_cold = 1000000;// not supposed to be used because Cp(fluid changing phase) = infinite
-    HX_vaporising.Cp_hot = MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);//(Cp_hot_min + Cp_hot_max)/2;
-
-
-    //Cp_hot_max=MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);// fg inlet Cp
-    //state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side_vaporising.P_in, hot_side_vaporising.T_in + nominal_hot_side_temperature_rise,hot_side_vaporising.Xi_in);
-    //Cp_hot_min =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
+    HX_vaporising.Cp_cold = 10000000;// not supposed to be used because Cp(fluid changing phase) = infinite
+    HX_vaporising.Cp_hot = MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
 
 
@@ -229,39 +219,45 @@ package HeatExchangers
             thickness=1)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
   end Evaporator;
 
-  model Evaporator_2phases_outlet
+  model Evaporator_without_flashTank
      package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
       import MetroscopeModelingLibrary.Units;
       import MetroscopeModelingLibrary.Units.Inputs;
 
-
+      // Pressure Losses
       Inputs.InputFrictionCoefficient Kfr_cold;
       Inputs.InputFrictionCoefficient Kfr_hot;
       Inputs.InputArea S_vaporising;
+
+      // Heating
+      Units.Power W_heating;
+
+      // Vaporisation
+      Units.Power W_vaporising;
       Inputs.InputHeatExchangeCoefficient Kth;
-
-      //Units.Temperature nominal_hot_side_temperature_rise; // flue gases reference temperature rise based on H&MB diagramm values
-      Units.MassFlowRate Q_cold;
-      Units.MassFlowRate Q_hot;
-      Units.Temperature T_cold_in;
-      Units.Temperature T_hot_in;
-
+      parameter String HX_config="phase_change";
       Units.MassFraction x_steam_out(start=0.7); // Steam mass fraction at water outlet
       Units.SpecificEnthalpy h_vap_sat(start=2e6);
       Units.SpecificEnthalpy h_liq_sat(start=1e5);
       Units.Temperature Tsat;
 
-      Units.Power W_heating;
-      Units.Power W_vaporising;
+      // Definitions
+      Units.MassFlowRate Q_cold;
+      Units.MassFlowRate Q_hot;
+      Units.Temperature T_cold_in;
+      Units.Temperature T_hot_in;
+      Units.Temperature T_cold_out;
+      Units.Temperature T_hot_out;
 
-            // Initialization parameters
+
+      // Initialization parameters
       parameter Units.MassFlowRate Q_cold_0 = 500;
       parameter Units.MassFlowRate Q_hot_0 = 50;
       parameter Units.Temperature T_cold_in_0 = 76 + 273.15;
       parameter Units.Pressure P_cold_in_0 = 18 *1e5;
 
     FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(extent={{-58,-30},{-38,-10}})));
-    Power.HeatExchange.NTUHeatExchange HX_vaporising(config="evaporator", T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
+    Power.HeatExchange.NTUHeatExchange HX_vaporising(config=HX_config, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
           rotation=0,
           origin={-20,0})));
@@ -299,13 +295,14 @@ package HeatExchangers
             extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
     WaterSteam.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
 
-
   equation
     // Definitions
     Q_cold = cold_side_heating.Q_in;
     Q_hot = hot_side_vaporising.Q_in;
     T_cold_in = cold_side_heating.T_in;
+    T_cold_out = cold_side_heating.T_out;
     T_hot_in = hot_side_vaporising.T_in;
+    T_hot_out = hot_side_vaporising.T_out;
     Tsat = cold_side_heating.T_out;
     h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
     h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
@@ -328,7 +325,6 @@ package HeatExchangers
         cold_side_heating.h_out = cold_side_heating.h_in; // case when water enters the evaporator and is already in gas phase.
     end if;
 
-
     /* Vaporising */
     // Energy balance
     hot_side_vaporising.W + cold_side_vaporising.W = 0;
@@ -344,13 +340,8 @@ package HeatExchangers
     HX_vaporising.Q_hot = Q_hot;
     HX_vaporising.T_cold_in = Tsat;//cold_side_vaporising.T_in;
     HX_vaporising.T_hot_in = hot_side_vaporising.T_in;
-    HX_vaporising.Cp_cold = 1000000;// not supposed to be used because Cp(fluid changing phase) = infinite
-    HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);// fg inlet Cp (Cp_hot_min + Cp_hot_max)/2;
-
-
-    //Cp_hot_max=MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);// fg inlet Cp
-    //state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side_vaporising.P_in, hot_side_vaporising.T_in + nominal_hot_side_temperature_rise,hot_side_vaporising.Xi_in);
-    //Cp_hot_min =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
+    HX_vaporising.Cp_cold = 10000000;// not supposed to be used because Cp(fluid changing phase) = infinite
+    HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
 
     connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
@@ -383,5 +374,5 @@ package HeatExchangers
             color={28,108,200},
             thickness=1,
             smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
-  end Evaporator_2phases_outlet;
+  end Evaporator_without_flashTank;
 end HeatExchangers;

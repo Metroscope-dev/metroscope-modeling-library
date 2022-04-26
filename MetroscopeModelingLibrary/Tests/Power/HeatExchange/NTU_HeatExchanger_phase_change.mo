@@ -1,9 +1,12 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
-model NTU_HeatExchange_evaporator
+model NTU_HeatExchanger_phase_change
+
   extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
 
-  MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "evaporator");
+  MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "phase_change");
+
 equation
+
     NTUHeatExchange.Kth = 1000;
     NTUHeatExchange.S = 100;
 
@@ -17,5 +20,7 @@ equation
     NTUHeatExchange.T_hot_in = 273.15 + 200;
     NTUHeatExchange.Cp_hot = 3;
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
-end NTU_HeatExchange_evaporator;
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}})),
+                Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)));
+end NTU_HeatExchanger_phase_change;
