@@ -12,7 +12,7 @@ model Evaporator_direct
   input Real T_cold_source(start = 201, min = 130, nominal = 150) "degC";
 
    // Parameters
-  parameter String QCp_max_side = "hot";
+  //parameter String QCp_max_side = "hot";
   parameter Units.Area S = 10;
   parameter Units.HeatExchangeCoefficient Kth = 8740;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
