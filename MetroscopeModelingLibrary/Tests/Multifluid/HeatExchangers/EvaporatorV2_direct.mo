@@ -2,18 +2,18 @@ within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model EvaporatorV2_direct
 
   // Boundary conditions
-  input Real P_hot_source(start=1.5, min=0, nominal=1) "barA";
+  input Real P_hot_source(start=1*1e5, min=1*1e5, nominal=1*1e5) "barA";
   input Units.MassFlowRate Q_hot_source(start=586) "kg/s";
-  input Real hot_source_h(start=600000) "J/kg";
+  input Real hot_source_h(start=494000) "J/kg";
 
-  input Real P_cold_source(start=3.5, min=1.5, nominal=3.5) "barA";
-  input Units.MassFlowRate Q_cold_source(start=11) "kg/s";
-  input Real T_cold_source(start = 201, min = 130, nominal = 150) "degC";
+  input Real P_cold_source(start=3.5*1e5, min=1.5*1e5, nominal=3.5*1e5) "barA";
+  input Units.MassFlowRate Q_cold_source(start=96) "kg/s";
+  input Real T_cold_source(start = 132+273.15, min = 130+273.15, nominal = 150+273.15) "degC";
 
      // Parameters
   //parameter String QCp_max_side = "hot";
   parameter Units.Area S = 10;
-  parameter Units.HeatExchangeCoefficient Kth = 8740;
+  parameter Units.HeatExchangeCoefficient Kth = 102000;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
   parameter Units.FrictionCoefficient Kfr_cold = 1;
   //parameter Units.Temperature nominal_hot_side_temperature_rise = 3;
@@ -32,12 +32,12 @@ model EvaporatorV2_direct
         origin={-14,70})));
 equation
   hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
-  hot_source.P_out = P_hot_source * 1e5;
+  hot_source.P_out = P_hot_source;
   hot_source.h_out = hot_source_h;
   hot_source.Q_out = - Q_hot_source;
 
-  cold_source.P_out = P_cold_source *1e5;
-  cold_source.T_out = 273.15 + T_cold_source;
+  cold_source.P_out = P_cold_source;
+  cold_source.T_out =  T_cold_source;
   cold_source.Q_out = - Q_cold_source;
 
 
