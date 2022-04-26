@@ -29,7 +29,7 @@ model Reheater
   Units.SpecificEnthalpy h_liq_sat(start=1e5);
   Units.Temperature Tsat;
 
-  parameter String HX_config_condensing="condenser_counter_current";
+  parameter String HX_config_condensing="phase_change";
   parameter String HX_config_subcooling="monophasic_cross_current"; // In subcooling zone, there is only the bottom part of the U-shaped tubes, so it is considered as cross current.
   parameter String QCp_max_side_subcooling = "cold";
 

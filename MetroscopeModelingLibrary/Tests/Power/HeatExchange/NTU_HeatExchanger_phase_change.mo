@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
-model NTU_HeatExchanger_condenser_counter_current
+model NTU_HeatExchanger_phase_change
 
   extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
 
-  MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "condenser_counter_current");
+  MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "phase_change");
 
 equation
 
@@ -23,4 +23,4 @@ equation
     annotation (Placement(transformation(extent={{-10,-10},{10,10}})),
                 Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
-end NTU_HeatExchanger_condenser_counter_current;
+end NTU_HeatExchanger_phase_change;

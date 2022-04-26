@@ -90,10 +90,10 @@ equation
     end if;
 
 
-  elseif config == "condenser_counter_current" then
+    elseif config == "phase_change" then
 
-    QCpMAX = Q_hot*Cp_hot;
-    QCpMIN = Q_cold*Cp_cold;
+    QCpMAX = 10000000;// not supposed to be used because Cp(fluid changing phase) = infinite
+    QCpMIN = Q_hot*Cp_hot;
 
     epsilon = 1 - exp(-NTU);
 
@@ -106,7 +106,7 @@ equation
     epsilon = 0;
   end if;
 
-  assert(config=="condenser_counter_current" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser_counter_current'");
+  assert(config == "phase_change" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser_counter_current'");
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(
