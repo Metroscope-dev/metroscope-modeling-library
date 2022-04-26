@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid;
 package Machines
   extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestPackageIcon;
-  model CombustionChamber_direct
+  model CombustionChamber
     extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
     import MetroscopeModelingLibrary.Units;
 
@@ -45,5 +45,5 @@ package Machines
     connect(combustionChamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33},{2.77556e-16,-33}}, color={213,213,0}));
     connect(combustionChamber.inlet, source_air.C_out) annotation (Line(points={{-10,0},{-33,0}}, color={95,95,95}));
     connect(combustionChamber.outlet, sink_exhaust.C_in) annotation (Line(points={{10,0},{33,0}}, color={95,95,95}));
-  end CombustionChamber_direct;
+  end CombustionChamber;
 end Machines;

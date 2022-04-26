@@ -7,15 +7,16 @@ model Pipe_reverse
   input Units.SpecificEnthalpy source_h(start=1e6);
   input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
   input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
-  input Units.DifferentialHeight delta_z(start=1) "m";
 
-  // Input: Observables
+  // Parameters
+  parameter Units.DifferentialHeight delta_z = 1 "m";
+
+  // Input for calibration
   input Units.DifferentialPressure DP(start=0.5e5) "Pa";
 
-  // Output: Component parameters
+  // Calibrated Parameters
   output Units.FrictionCoefficient Kfr;
 
-  // Components
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -26,16 +27,19 @@ model Pipe_reverse
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.DeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,30},{10,50}})));
 equation
+
   // Boundary conditions
   source.h_out = source_h;
   source.P_out = source_P;
   source.Q_out = source_Q;
+
+  // Parameters
   pipe.delta_z = delta_z;
 
-  // Input: Observables
+  // Inputs for calibration
   DP_sensor.DP = DP;
 
-  // Output: Component parameters
+  // Calibrated parameter
   pipe.Kfr = Kfr;
   connect(sink.C_in, pipe.C_out) annotation (Line(points={{85,0},{16.5,0}}, color={28,108,200}));
   connect(pipe.C_in, source.C_out) annotation (Line(points={{-16.5,0},{-85,0}}, color={28,108,200}));

@@ -4,11 +4,10 @@ model StodolaTurbine_reverse
 
   // Boundary conditions
   input Units.Pressure source_P(start=20e5);
-  //input Units.Temperature source_T(start=20 + 273.15);
   input Units.SpecificEnthalpy source_h(start=2.7718e6);
   input Units.NegativeMassFlowRate source_Q(start=-100);
 
-  // Calibration observables
+  // Inputs for calibration
   input Real stodolaTurbine_P_out(start=15, unit="bar", nominal=15, min=0) "bar";
   input Real stodolaTurbine_W_out(start=2.6, unit="MW", nominal=100, min=0) "MW";
 
@@ -36,7 +35,7 @@ equation
   stodolaTurbine.Cst = stodolaTurbine_Cst;
   stodolaTurbine.eta_is = stodolaTurbine_eta_is;
 
-  // Calibration observables
+  // Inputs for calibration
   stodolaTurbine_P_out_sensor.P_barA = stodolaTurbine_P_out;
   stodolaTurbine_W_out_sensor.W_MW = stodolaTurbine_W_out;
   connect(stodolaTurbine.C_in, source.C_out) annotation (Line(points={{-10,0},{-51,0}}, color={28,108,200}));

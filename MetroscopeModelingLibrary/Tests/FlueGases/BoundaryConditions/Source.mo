@@ -17,8 +17,5 @@ equation
 
   source.Xi_out = {0.768,0.232,0.0,0.0,0.0};
 
-  assert(abs(source.P_out - sink.P_in) < 1e-5, "Pressure should be the same from source to sink");
-  assert(abs(source.h_out - sink.h_in) < 1e-5, "Enthalpy should be the same from source to sink");
-  assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");
   connect(source.C_out, sink.C_in) annotation (Line(points={{-23,0},{23,0}}, color={95,95,95}));
 end Source;

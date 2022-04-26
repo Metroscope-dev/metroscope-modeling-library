@@ -31,13 +31,11 @@ model Superheater_reverse
 
   MultiFluid.HeatExchangers.Superheater superheater(QCp_max_side=QCp_max_side)
                                                                               annotation (Placement(transformation(extent={{-36,-34},{34,34}})));
-  WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(
-        transformation(
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={10,42})));
-  WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(
-        transformation(
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-12,-70})));
