@@ -14,7 +14,7 @@ model AirCompressor
   Inputs.InputReal tau(start=15, min = 1) "Compression rate";
   Inputs.InputReal eta_is(start=0.8, min=0, max=1) "Nominal isentropic efficiency";
 
-  Units.SpecificEnthalpy His(start=1e6) "Isentropic compression outlet enthalpy";
+  Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
   Units.Power Wmech;
@@ -27,7 +27,7 @@ equation
   tau = P_out/P_in;
 
   /* Fluid specific enthalpy after the expansion */
-  (h_out-h_in)*eta_is = His - h_in;
+  (h_out-h_in)*eta_is = h_is - h_in;
 
   /* Mechanical power from the turbine */
   Wmech = - Q*(h_in - h_out);
@@ -35,7 +35,7 @@ equation
 
   /* Isentropic compression */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in));
-  His = Medium.specificEnthalpy(state_is);
+  h_is = Medium.specificEnthalpy(state_is);
 
 
   annotation (

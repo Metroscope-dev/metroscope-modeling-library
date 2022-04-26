@@ -128,5 +128,4 @@ equation
   Q_in*h_in + Q_out*h_out = - W; // W = (Qh) out of component - (Qh) into component
   Q_in*Xi_in + Q_out*Xi_out = - DXi; // W = (QXi) out of component - (QXi) into component
 
-  //assert(Q_in > 1e-5, "Q_in is almost null");
 end PartialTransportModel;
