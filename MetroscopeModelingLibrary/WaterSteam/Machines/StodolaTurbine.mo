@@ -19,12 +19,13 @@ model StodolaTurbine
   Units.Area area_nz(start=1) "Nozzle area";
   Units.Velocity u_out(start=0);
 
-  Units.MassFraction x_in(start=1); // ok
+  Units.MassFraction x_in(start=1);
   Units.MassFraction x_inner(start=0.9);
   Units.MassFraction xm(start=0.95);
 
-  Units.SpecificEnthalpy Hre(start=2.6e6);
-  Units.SpecificEnthalpy His(start=2.6e6); // ok
+  Units.SpecificEnthalpy h_real(start=2.6e6); // Enthalpy after real decompression
+  Units.SpecificEnthalpy h_is(start=2.6e6); // Enthalpy after isentropic decompression
+  Medium.ThermodynamicState state_is; // Thermodynamic state after isentropic decompression
 
   // Liq/Vap enthalpies
   Units.SpecificEnthalpy h_vap_in(start=1e6);
@@ -32,8 +33,7 @@ model StodolaTurbine
   Units.SpecificEnthalpy h_liq_in(start=1e6);
   Units.SpecificEnthalpy h_liq_out(start=1e6);
 
-  Medium.ThermodynamicState state_is; // ok
-  //Units.OutletPower Wmech;
+
 
   Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 equation
@@ -42,14 +42,14 @@ equation
 
   // Isentropic expansion
   state_is = Medium.setState_psX(P_out, Medium.specificEntropy(state_in));
-  His = Medium.specificEnthalpy(state_is);
+  h_is = Medium.specificEnthalpy(state_is);
 
   // Fluid specific enthalpy after the expansion
-  Hre - h_in = xm*eta_is*(His - h_in);
+  h_real - h_in = xm*eta_is*(h_is - h_in);
 
   // Nozzle outlet
   u_out = Q/(rho_out*area_nz);
-  h_out - Hre = (1 - eta_nz)*u_out^2/2;
+  h_out - h_real = (1 - eta_nz)*u_out^2/2;
 
   // Mechanical power produced by the turbine
   W = C_W_out.W;
@@ -61,7 +61,7 @@ equation
 
   h_vap_out = Medium.dewEnthalpy(Medium.setSat_p(P_out));
   h_liq_out = Medium.bubbleEnthalpy(Medium.setSat_p(P_out));
-  x_inner = min((Hre - h_liq_out)/(h_vap_out - h_liq_out), 1);
+  x_inner = min((h_real - h_liq_out)/(h_vap_out - h_liq_out), 1);
 
   xm = (x_in + x_inner)/2;
   annotation (

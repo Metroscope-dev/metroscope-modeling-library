@@ -15,7 +15,7 @@ model GasTurbine
   Real eta_is(start=0.8, min=0, max=1) "Nominal isentropic efficiency";
   Inputs.InputReal eta_mech(start=1, min=0, max=1) "Nominal mechanical efficiency";
 
-  Units.SpecificEnthalpy His(start=1e6) "Isentropic compression outlet enthalpy";
+  Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
   Units.Power Wmech;
@@ -29,7 +29,7 @@ equation
   tau = P_in/P_out;
 
   /* Fluid specific enthalpy after the expansion */
-  h_out-h_in = eta_is*(His-h_in);
+  h_out-h_in = eta_is*(h_is-h_in);
 
   /* Mechanical power produced by the turbine */
   Wmech = - C_W_out.W;
@@ -38,7 +38,7 @@ equation
 
   /* Isentropic  expansion */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi_out);
-  His = Medium.specificEnthalpy(state_is);
+  h_is = Medium.specificEnthalpy(state_is);
 
   annotation (
     Diagram(coordinateSystem(
