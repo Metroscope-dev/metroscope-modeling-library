@@ -167,9 +167,9 @@ package HeatExchangers
     HX_vaporising.S = S_vaporising;
     HX_vaporising.Q_cold = Q_cold;
     HX_vaporising.Q_hot = Q_hot;
-    HX_vaporising.T_cold_in = Tsat;//cold_side_vaporising.T_in;
+    HX_vaporising.T_cold_in = Tsat;
     HX_vaporising.T_hot_in = hot_side_vaporising.T_in;
-    HX_vaporising.Cp_cold = 10000000;// not supposed to be used because Cp(fluid changing phase) = infinite
+    HX_vaporising.Cp_cold = 0; // Not used by NTU method in evaporator mode
     HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
     connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
