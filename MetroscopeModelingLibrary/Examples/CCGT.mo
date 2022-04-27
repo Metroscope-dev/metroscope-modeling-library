@@ -446,4 +446,128 @@ package CCGT
             thickness=1,
             smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
   end Evaporator_noRecirculation_reverse;
+
+  model Evaporator_withRecirculation_direct
+                // Boundary conditions
+    input Real P_hot_source(start=1*1e5, min=1*1e5, nominal=1*1e5);
+    input Units.MassFlowRate Q_hot_source(start=586);
+    input Real hot_source_h(start=494000);
+
+    input Real P_cold_source(start=3.5*1e5, min=1.5*1e5, nominal=3.5*1e5);
+    input Units.MassFlowRate Q_cold_source(start=96);
+    input Real T_cold_source(start = 132+273.15, min = 130+273.15, nominal = 150+273.15);
+
+     // Parameters
+    parameter Units.Area S = 10;
+    parameter Units.HeatExchangeCoefficient Kth= 102000;
+    parameter Units.FrictionCoefficient Kfr_hot = 0;
+    parameter Units.FrictionCoefficient Kfr_cold = 1;
+
+    MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent={{-38,-36},{40,36}})));
+    WaterSteam.Volumes.FlashTank flashTank annotation (Placement(transformation(extent={{-18,46},
+              {16,80}})));
+    WaterSteam.BoundaryConditions.Sink cold_liquid_sink annotation (Placement(transformation(extent={{54,38},
+              {74,58}})));
+    WaterSteam.BoundaryConditions.Sink cold_steam_sink annotation (Placement(transformation(extent={{54,70},
+              {74,90}})));
+    FlueGases.BoundaryConditions.Source                           hot_source annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
+    WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-10,-10},
+              {10,10}},
+          rotation=270,
+          origin={-30,88})));
+    FlueGases.BoundaryConditions.Sink                           hot_sink annotation (Placement(transformation(extent={{54,-10},{74,10}})));
+    WaterSteam.BaseClasses.IsoHFlowModel isoHFlowModel annotation (Placement(
+          transformation(
+          extent={{-6,-6},{6,6}},
+          rotation=90,
+          origin={-58,56})));
+  equation
+
+    hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+    hot_source.P_out = P_hot_source;
+    hot_source.h_out = hot_source_h;
+    hot_source.Q_out = - Q_hot_source;
+
+    cold_source.P_out = P_cold_source;
+    cold_source.T_out =  T_cold_source;
+    cold_source.Q_out = - Q_cold_source;
+
+    evaporator.S_vaporising = S;
+    evaporator.Kth = Kth;
+    evaporator.Kfr_hot = Kfr_hot;
+    evaporator.Kfr_cold = Kfr_cold;
+
+    // Extraction of the non-vaporized liquid in the evaporator
+    cold_liquid_sink.Q_in = (1-evaporator.x_steam_out)*evaporator.cold_side_vaporising.Q_in;
+
+
+    connect(evaporator.C_hot_in, hot_source.C_out) annotation (Line(points={{-26.3,-0.72},{-55.65,-0.72},{-55.65,0},{-85,0}}, color={95,95,95}));
+    connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{28.3,-0.72},{45.65,-0.72},{45.65,0},{59,0}}, color={95,95,95}));
+    connect(evaporator.C_cold_out, isoHFlowModel.C_in) annotation (Line(points={{-10.7,
+            25.2},{-10.7,42},{-58,42},{-58,50}}, color={28,108,200}));
+    connect(isoHFlowModel.C_out, flashTank.C_in) annotation (Line(points={{-58,62},
+            {-58,69.8},{-18,69.8}}, color={28,108,200}));
+    connect(cold_source.C_out, flashTank.C_in) annotation (Line(points={{-30,83},{
+            -30,70},{-28,70},{-28,69.8},{-18,69.8}}, color={28,108,200}));
+    connect(flashTank.C_hot_steam, cold_steam_sink.C_in) annotation (Line(points={
+            {16,69.8},{16,68},{48,68},{48,80},{59,80}}, color={28,108,200}));
+    connect(cold_liquid_sink.C_in, flashTank.C_hot_liquid)
+      annotation (Line(points={{59,48},{16,48},{16,56.2}}, color={28,108,200}));
+    connect(flashTank.C_hot_liquid, evaporator.C_cold_in) annotation (Line(points=
+           {{16,56.2},{16,25.2},{12.7,25.2}}, color={28,108,200}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+          Ellipse(
+            extent={{-40,76},{-4,40}},
+            lineColor={0,0,0},
+            fillColor={170,213,255},
+            fillPattern=FillPattern.Solid),
+          Polygon(
+            points={{-40,54},{-30,42},{-14,42},{-8,50},{-6,56},{-6,58},{-34,60},{-38,58},{-38,54},{-40,54}},
+            lineColor={28,108,200},
+            lineThickness=1,
+            smooth=Smooth.Bezier,
+            fillColor={28,108,200},
+            fillPattern=FillPattern.Solid),
+          Ellipse(
+            extent={{-36,56},{-34,54}},
+            lineThickness=1,
+            fillColor={170,213,255},
+            fillPattern=FillPattern.Solid,
+            pattern=LinePattern.None,
+            lineColor={0,0,0}),
+          Ellipse(
+            extent={{-32,58},{-28,54}},
+            lineThickness=1,
+            fillColor={170,213,255},
+            fillPattern=FillPattern.Solid,
+            pattern=LinePattern.None,
+            lineColor={0,0,0}),
+          Ellipse(
+            extent={{-32,52},{-30,50}},
+            lineThickness=1,
+            fillColor={170,213,255},
+            fillPattern=FillPattern.Solid,
+            pattern=LinePattern.None,
+            lineColor={0,0,0}),
+            Rectangle(
+            extent={{-60,40},{78,-60}},
+            lineColor={0,0,0},
+            fillColor={215,215,215},
+            fillPattern=FillPattern.Solid),
+          Line(
+            points={{40,40},{40,-12},{10,-62},{-22,-10},{-22,54}},
+            color={28,108,200},
+            thickness=1,
+            smooth=Smooth.Bezier),
+          Line(
+            points={{36,40},{36,-12},{6,-62},{-26,-10},{-26,54}},
+            color={28,108,200},
+            thickness=1,
+            smooth=Smooth.Bezier),
+          Line(
+            points={{44,40},{44,-12},{14,-62},{-18,-10},{-18,54}},
+            color={28,108,200},
+            thickness=1,
+            smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  end Evaporator_withRecirculation_direct;
 end CCGT;
