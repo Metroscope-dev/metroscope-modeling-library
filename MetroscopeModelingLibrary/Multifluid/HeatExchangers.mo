@@ -221,4 +221,48 @@ package HeatExchangers
             pattern=LinePattern.Dot,
             smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
   end Evaporator;
+
+  model FuelHeater
+    Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
+    Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
+    WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{20,60},{40,80}}), iconTransformation(extent={{20,60},{40,80}})));
+    WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
+    Power.HeatExchange.NTUHeatExchange HX(
+      config="monophasic_cross_current",
+      QCp_max_side=QCp_max_side,
+      T_cold_in_0=T_cold_in_0)                                                                                                  annotation (Placement(transformation(
+          extent={{-10,10},{10,-10}},
+          rotation=0,
+          origin={10,14})));
+    WaterSteam.BaseClasses.IsoPFlowModel hot_side(
+      Q_0=Q_cold_0,
+      T_in_0=T_cold_in_0,
+      P_in_0=P_cold_in_0) annotation (Placement(transformation(
+          extent={{10,10},{-10,-10}},
+          rotation=0,
+          origin={10,28})));
+    WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=90,
+          origin={-32,44})));
+    Fuel.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
+    Fuel.BaseClasses.IsoPFlowModel isoPFlowModel annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+  equation
+    connect(hot_side_pipe.C_out, C_hot_out) annotation (Line(points={{-32,54},{-32,60},{-30,60},{-30,70}}, color={28,108,200}));
+    connect(hot_side_pipe.C_in, hot_side.C_out) annotation (Line(points={{-32,34},{-32,28},{0,28}}, color={28,108,200}));
+    connect(hot_side.C_in, C_hot_in) annotation (Line(points={{20,28},{30,28},{30,70}}, color={28,108,200}));
+    connect(pipe.C_in, C_cold_in) annotation (Line(points={{-52,0},{-70,0}}, color={213,213,0}));
+    connect(pipe.C_out, isoPFlowModel.C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
+    connect(isoPFlowModel.C_out, C_cold_out) annotation (Line(points={{20,0},{70,0}}, color={213,213,0}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+            Rectangle(
+            extent={{-70,50},{70,-50}},
+            lineColor={0,0,0},
+            fillColor={226,230,140},
+            fillPattern=FillPattern.Solid), Line(
+            points={{30,66},{30,-60},{10,-60},{10,64},{-10,64},{-10,-60},{-30,-60},{-30,66}},
+            color={28,108,200},
+            smooth=Smooth.Bezier,
+            thickness=1)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  end FuelHeater;
 end HeatExchangers;
