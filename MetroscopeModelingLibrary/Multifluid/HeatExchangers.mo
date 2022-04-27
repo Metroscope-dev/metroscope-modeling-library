@@ -29,7 +29,7 @@ package HeatExchangers
 
       // Vaporisation
       Inputs.InputHeatExchangeCoefficient Kth;
-      parameter String HX_config="phase_change";
+      parameter String HX_config="evaporator";
 
       Units.Power W_vaporising;
       Units.MassFraction x_steam_out(start=0.7); // Steam mass fraction at water outlet

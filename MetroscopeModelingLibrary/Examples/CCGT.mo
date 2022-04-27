@@ -352,11 +352,11 @@ package CCGT
     FlueGases.BoundaryConditions.Source                           hot_source annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
     WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{72,30},{52,50}})));
     FlueGases.BoundaryConditions.Sink                           hot_sink annotation (Placement(transformation(extent={{54,-10},{74,10}})));
-    Sensors.WaterSteam.WaterPressureSensor                           P_cold_out_sensor annotation (Placement(transformation(extent={{-58,60},{-74,44}})));
-    Sensors.WaterSteam.WaterFlowSensor                           Q_cold_liquid_out annotation (Placement(transformation(extent={{8,-8},{-8,8}},
+    Sensors.WaterSteam.PressureSensor                                P_cold_out_sensor annotation (Placement(transformation(extent={{-58,60},{-74,44}})));
+    Sensors.WaterSteam.FlowSensor                                Q_cold_liquid_out annotation (Placement(transformation(extent={{8,-8},{-8,8}},
           rotation=90,
           origin={-50,-36})));
-    Sensors.FlueGases.FlueGasesPressureSensor                           P_hot_out_sensor  annotation (Placement(transformation(extent={{44,-4},{52,4}})));
+    Sensors.FlueGases.PressureSensor                                    P_hot_out_sensor  annotation (Placement(transformation(extent={{44,-4},{52,4}})));
   equation
 
       // Boundary conditions

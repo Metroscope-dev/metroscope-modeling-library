@@ -16,7 +16,7 @@ model DryReheater
 
   Units.Power W_deheating;
   Units.Power W_condensing;
-  parameter String HX_config="phase_change";
+  parameter String HX_config="condenser";
 
   Units.PositiveMassFlowRate Q_cold(
     start=Q_cold_0,

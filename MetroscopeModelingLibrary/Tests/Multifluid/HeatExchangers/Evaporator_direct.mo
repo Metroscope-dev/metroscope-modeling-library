@@ -20,11 +20,13 @@ model Evaporator_direct
   MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent={{-50,-56},{50,58}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-78,-10},{-58,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{70,-10},{90,10}})));
-  WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source
+                                       cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={14,70})));
-  WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink
+                                     cold_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-14,70})));
