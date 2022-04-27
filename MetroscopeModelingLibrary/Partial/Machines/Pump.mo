@@ -48,7 +48,7 @@ equation
   if adiabatic_compression then
     W = 0;
   else
-    W/Q = Constants.g*hn/rh;
+    h_out-h_in = Constants.g*hn/rh;
   end if;
 
   // Reduced rotational speed
