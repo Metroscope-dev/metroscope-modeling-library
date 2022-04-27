@@ -24,10 +24,12 @@ model Evaporator_reverse
   input Real x_steam_out(start = 0.14);
 
   MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent={{-48,-50},{56,52}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.WaterPressureSensor P_cold_out_sensor annotation (Placement(transformation(extent={{-64,40},{-76,52}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlueGasesPressureSensor P_hot_out_sensor  annotation (Placement(transformation(extent={{60,-4},{68,4}})));
-  WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{62,46},{42,66}})));
-  WaterSteam.BoundaryConditions.Sink cold_steam_sink annotation (Placement(transformation(extent={{-78,36},{-98,56}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor      P_cold_out_sensor annotation (Placement(transformation(extent={{-64,40},{-76,52}})));
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor          P_hot_out_sensor  annotation (Placement(transformation(extent={{60,-4},{68,4}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source
+                                       cold_source annotation (Placement(transformation(extent={{62,46},{42,66}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink
+                                     cold_steam_sink annotation (Placement(transformation(extent={{-78,36},{-98,56}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-82,-10},{-62,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{78,-10},{98,10}})));
 equation

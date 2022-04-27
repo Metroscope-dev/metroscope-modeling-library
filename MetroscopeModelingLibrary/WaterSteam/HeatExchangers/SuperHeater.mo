@@ -14,7 +14,7 @@ model Superheater
 
   // Condensation
   Units.Power W_condensing;
-  parameter String HX_config="phase_change";
+  parameter String HX_config="condenser";
   Inputs.InputArea S;
   Units.HeatExchangeCoefficient Kth;
   Units.SpecificEnthalpy h_vap_sat_hot(start=2e6);
