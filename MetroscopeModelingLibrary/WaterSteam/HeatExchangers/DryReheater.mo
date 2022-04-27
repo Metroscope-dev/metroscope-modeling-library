@@ -119,7 +119,7 @@ equation
   HX_condensing.T_cold_in = cold_side_condensing.T_in;
   HX_condensing.T_hot_in = Tsat;
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
-  HX_condensing.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side_condensing.state_in);
+  HX_condensing.Cp_hot = 0; // Not used by NTU method in condenser mode
 
   connect(cold_side_deheating.C_out, C_cold_out) annotation (Line(
       points={{96,-34},{144,-34},{144,0},{160,0}},

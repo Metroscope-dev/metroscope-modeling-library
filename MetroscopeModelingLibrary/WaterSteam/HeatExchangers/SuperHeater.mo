@@ -157,7 +157,7 @@ equation
   HX_condensing.T_cold_in = Tsat_cold;
   HX_condensing.T_hot_in = Tsat_hot;
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
-  HX_condensing.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side_condensing.state_in);
+  HX_condensing.Cp_hot = 0; // Not used by NTU method in condenser mode
 
   /* Vaporising on cold side, condensation on hot side*/
 
