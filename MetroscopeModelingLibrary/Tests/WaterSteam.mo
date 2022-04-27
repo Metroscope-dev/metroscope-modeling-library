@@ -1139,7 +1139,7 @@ package WaterSteam
         // Parameters
       parameter Units.Area S = 100;
       parameter Units.Height water_height = 1;
-      parameter Units.Pressure C_incond = 0;
+      parameter Real C_incond = 0;
       parameter Units.Pressure P_offset = 0;
       parameter Units.FrictionCoefficient Kfr_cold = 1;
       parameter Units.VolumeFlowRate Qv_cold = 3.82;
