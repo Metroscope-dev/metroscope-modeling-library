@@ -35,27 +35,26 @@ partial model hrsg_monophasic_HX
   WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(
           extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=Q_cold_0)) annotation (Placement(transformation(
-          extent={{-40,-80},{-20,-60}}),
-                                       iconTransformation(extent={{-40,-80},{-20,-60}})));
-  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(extent={{-56,-10},{-36,10}})));
+          extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
+  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(extent={{-50,-18},{-30,2}})));
   Power.HeatExchange.NTUHeatExchange HX(config="monophasic_cross_current", QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={10,-18})));
+        rotation=0,
+        origin={4,10})));
   FlueGases.BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0) annotation (Placement(
         transformation(
         extent={{10,-10},{-10,10}},
-        rotation=90,
-        origin={-10,-20})));
+        rotation=180,
+        origin={2,-10})));
   WaterSteam.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0,T_in_0=T_cold_in_0,P_in_0=P_cold_in_0) annotation (Placement(
         transformation(
         extent={{10,10},{-10,-10}},
-        rotation=90,
-        origin={32,-16})));
+        rotation=0,
+        origin={6,24})));
   WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0,T_in_0=T_cold_in_0) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
+        extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={32,-58})));
+        origin={-40,38})));
 
   // Intermediate variables
 protected
@@ -108,15 +107,19 @@ equation
 
 
 
-  connect(hot_side.C_out, C_hot_out) annotation (Line(points={{-10,-30},{-10,-32},{70,-32},{70,0}},
+  connect(hot_side.C_out, C_hot_out) annotation (Line(points={{12,-10},{54,-10},{54,0},{70,0}},
                        color={95,95,95}));
   connect(C_hot_in,hot_side_pipe. C_in)
-    annotation (Line(points={{-70,0},{-56,0}},           color={95,95,95}));
+    annotation (Line(points={{-70,0},{-54,0},{-54,-8},{-50,-8}},
+                                                         color={95,95,95}));
   connect(hot_side_pipe.C_out,hot_side. C_in)
-    annotation (Line(points={{-36,0},{-10,0},{-10,-10}},color={95,95,95}));
-  connect(cold_side.C_out, cold_side_pipe.C_in) annotation (Line(points={{32,-26},{32,-48}}, color={28,108,200}));
-  connect(cold_side_pipe.C_out, C_cold_out) annotation (Line(points={{32,-68},{32,-70},{-30,-70}}, color={28,108,200}));
-  connect(cold_side.C_in, C_cold_in) annotation (Line(points={{32,-6},{32,56},{30,56},{30,70}}, color={28,108,200}));
+    annotation (Line(points={{-30,-8},{-28,-8},{-28,-10},{-8,-10}},
+                                                        color={95,95,95}));
+  connect(cold_side.C_out, cold_side_pipe.C_in) annotation (Line(points={{-4,24},{-34,24},{-34,22},{-40,22},{-40,28}},
+                                                                                             color={28,108,200}));
+  connect(cold_side_pipe.C_out, C_cold_out) annotation (Line(points={{-40,48},{-40,56},{-30,56},{-30,70}},
+                                                                                                   color={28,108,200}));
+  connect(cold_side.C_in, C_cold_in) annotation (Line(points={{16,24},{30,24},{30,70}},         color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-68,50},{70,-50}},
