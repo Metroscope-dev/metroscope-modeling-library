@@ -8,18 +8,20 @@ partial model hrsg_monophasic_HX
   Inputs.InputHeatExchangeCoefficient Kth;
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputFrictionCoefficient Kfr_hot;
-  Inputs.InputTemperature T_cold_in;
-  Inputs.InputTemperature T_hot_in;
+  Inputs.InputTemperature nominal_cold_side_temperature_rise; // water reference temperature rise based on H&MB diagramm values
+  Inputs.InputTemperature nominal_hot_side_temperature_rise; // flue gases reference temperature rise based on H&MB diagramm values
 
   parameter String QCp_max_side = "hot";
   // Warning :
   // QCp_max_side = cold only for EC LP (aka condensate preheater)
   // Otherwise, flue gases usually correspond to QCp_max_side
-  Units.Temperature nominal_cold_side_temperature_rise; // water reference temperature rise based on H&MB diagramm values
-  Units.Temperature nominal_hot_side_temperature_rise; // flue gases reference temperature rise based on H&MB diagramm values
   Units.Power W;
   Units.MassFlowRate Q_cold;
   Units.MassFlowRate Q_hot;
+  Units.Temperature T_cold_in;
+  Units.Temperature T_hot_in;
+  Units.Temperature T_cold_out;
+  Units.Temperature T_hot_out;
 
     // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
@@ -69,8 +71,10 @@ equation
   // Definitions
   Q_cold =cold_side.Q_in;
   Q_hot =hot_side.Q_in;
-  T_cold_in =cold_side.T_in;
-  T_hot_in =hot_side.T_in;
+  T_cold_in = cold_side.T_in;
+  T_cold_out = cold_side.T_out;
+  T_hot_in = hot_side.T_in;
+  T_hot_out = hot_side.T_out;
   cold_side.W = W;
 
   // Energy balance
@@ -126,8 +130,8 @@ equation
           lineColor={0,0,0},
           fillColor={215,215,215},
           fillPattern=FillPattern.Solid), Line(
-          points={{30,70},{30,-76},{0,-76},{0,72},{-30,72},{-30,-72}},
+          points={{30,66},{30,-60},{10,-60},{10,64},{-10,64},{-10,-60},{-30,-60},{-30,66}},
           color={0,0,0},
-          thickness=1,
-          smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+          smooth=Smooth.Bezier,
+          thickness=1)}),          Diagram(coordinateSystem(preserveAspectRatio=false)));
 end hrsg_monophasic_HX;
