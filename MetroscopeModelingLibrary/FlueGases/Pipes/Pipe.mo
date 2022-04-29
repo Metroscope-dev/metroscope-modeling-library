@@ -1,6 +1,5 @@
 within MetroscopeModelingLibrary.FlueGases.Pipes;
 model Pipe
-  extends MetroscopeModelingLibrary.Icons.Pipes.FlueGasesPipeIcon;
   package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
   extends Partial.Pipes.Pipe(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
@@ -10,7 +9,11 @@ model Pipe
     Icon(coordinateSystem(
         preserveAspectRatio=true,
         extent={{-100,-100},{100,100}},
-        grid={2,2}), graphics={           Text(
+        grid={2,2}), graphics={Rectangle(
+          extent={{-100,30},{100,-30}},
+          lineColor={95,95,95},
+          fillColor={95,95,95},
+          fillPattern=FillPattern.Solid), Text(
           extent={{-12,14},{16,-14}},
           lineColor={0,0,255},
           fillColor={95,95,95},
