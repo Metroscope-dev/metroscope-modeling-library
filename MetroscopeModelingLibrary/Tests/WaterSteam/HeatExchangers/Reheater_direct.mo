@@ -12,7 +12,7 @@ model Reheater_direct
 
   // Parameters
   parameter Units.Area S_tot = 100;
-  parameter Units.Area level = 0.3;
+  parameter Units.Fraction level = 0.3;
   parameter Units.HeatExchangeCoefficient Kth_cond = 61e3;
   parameter Units.HeatExchangeCoefficient Kth_subc = 8e3;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
