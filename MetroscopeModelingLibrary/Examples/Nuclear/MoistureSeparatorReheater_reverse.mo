@@ -28,19 +28,19 @@ model MoistureSeparatorReheater_reverse
   WaterSteam.BoundaryConditions.Sink drains_1_sink annotation (Placement(transformation(extent={{70,-30},{90,-10}})));
   WaterSteam.BoundaryConditions.Source cold_steam_source annotation (Placement(transformation(extent={{-78,-70},{-58,-50}})));
   WaterSteam.BoundaryConditions.Sink superheated_steam_sink annotation (Placement(transformation(extent={{72,70},{92,90}})));
-  WaterSteam.HeatExchangers.SuperHeater superheater_1 annotation (Placement(transformation(extent={{-16,-28},{16,-12}})));
+  WaterSteam.HeatExchangers.Superheater superheater_1 annotation (Placement(transformation(extent={{-16,-28},{16,-12}})));
   WaterSteam.BoundaryConditions.Sink vent_1_sink annotation (Placement(transformation(extent={{70,-50},{90,-30}})));
-  Sensors.WaterSteam.WaterTemperatureSensor inter_superheater_T_sensor annotation (Placement(transformation(
+  Sensors.WaterSteam.TemperatureSensor inter_superheater_T_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,8})));
-  Sensors.WaterSteam.WaterPressureSensor drains_1_P_sensor annotation (Placement(transformation(extent={{40,-30},{60,-10}})));
-  WaterSteam.HeatExchangers.SuperHeater superheater_2 annotation (Placement(transformation(extent={{-16,28},{16,44}})));
+  Sensors.WaterSteam.PressureSensor drains_1_P_sensor annotation (Placement(transformation(extent={{40,-30},{60,-10}})));
+  WaterSteam.HeatExchangers.Superheater superheater_2 annotation (Placement(transformation(extent={{-16,28},{16,44}})));
   WaterSteam.BoundaryConditions.Sink drains_2_sink annotation (Placement(transformation(extent={{68,26},{88,46}})));
   WaterSteam.BoundaryConditions.Sink vent_2_sink annotation (Placement(transformation(extent={{68,6},{88,26}})));
-  Sensors.WaterSteam.WaterPressureSensor drains_2_P_sensor annotation (Placement(transformation(extent={{38,26},{58,46}})));
+  Sensors.WaterSteam.PressureSensor drains_2_P_sensor annotation (Placement(transformation(extent={{38,26},{58,46}})));
   WaterSteam.BoundaryConditions.Source hot_steam_source_2 annotation (Placement(transformation(extent={{-78,26},{-58,46}})));
-  Sensors.WaterSteam.WaterTemperatureSensor superheated_steam_T_sensor annotation (Placement(transformation(
+  Sensors.WaterSteam.TemperatureSensor superheated_steam_T_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,62})));
