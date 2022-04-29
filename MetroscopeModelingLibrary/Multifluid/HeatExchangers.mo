@@ -300,6 +300,7 @@ package HeatExchangers
     // Power Exchange
     HX.W = W;
     HX.S = S;
+    HX.Kth = Kth;
     HX.Q_cold = Q_cold;
     HX.Q_hot = Q_hot;
     HX.T_cold_in = T_cold_in;
