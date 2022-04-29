@@ -48,15 +48,15 @@ model Superheater
   Units.Percentage closed_vent(min = 0, max= 100); // Vent closing percentage
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 500;
+  parameter Units.MassFlowRate Q_cold_0 = 1300;
   parameter Units.MassFlowRate Q_hot_0 = 50;
   parameter Units.Temperature T_hot_in_0 = 273.15 + 220;
-  parameter Units.Temperature T_cold_in_0 = 273.15 + 100;
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 200;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
-  Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-170,-8},{-150,12}}), iconTransformation(extent={{-170,-8},{-150,12}})));
+  Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-170,-10},{-150,10}}),iconTransformation(extent={{-170,-10},{-150,10}})));
   Connectors.Outlet C_hot_out(Q(start=-Q_hot_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
-  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{-12,70},{8,90}}), iconTransformation(extent={{-12,70},{8,90}})));
+  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}),iconTransformation(extent={{-10,70},{10,90}})));
 
   Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -65,7 +65,7 @@ model Superheater
   Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-132,2})));
+        origin={-130,0})));
   BaseClasses.IsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{-16,-16},{16,16}},
         rotation=270,
@@ -173,7 +173,7 @@ equation
   end if;
 
   connect(cold_side_deheating.C_out, C_cold_out) annotation (Line(
-      points={{39,60},{38,60},{38,66},{-2,66},{-2,80}},
+      points={{39,60},{38,60},{38,66},{0,66},{0,80}},
       color={28,108,200},
       thickness=1));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
@@ -181,11 +181,11 @@ equation
       color={28,108,200},
       thickness=1));
   connect(C_hot_in, hot_side_pipe.C_in) annotation (Line(
-      points={{-160,2},{-142,2}},
+      points={{-160,0},{-140,0}},
       color={238,46,47},
       thickness=1));
   connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
-      points={{-122,2},{-80,2},{-80,66},{-34,66},{-34,60}},
+      points={{-120,0},{-80,0},{-80,66},{-34,66},{-34,60}},
       color={238,46,47},
       thickness=1));
 
@@ -196,7 +196,7 @@ equation
       thickness=1));
 
   connect(C_hot_in, C_hot_in)
-    annotation (Line(points={{-160,2},{-160,2}}, color={28,108,200}));
+    annotation (Line(points={{-160,0},{-160,0}}, color={28,108,200}));
   connect(cold_side_pipe.C_out, cold_side_vaporising.C_in)
     annotation (Line(points={{26,-64},{39,-64},{39,-60}},
                                                     color={28,108,200},
