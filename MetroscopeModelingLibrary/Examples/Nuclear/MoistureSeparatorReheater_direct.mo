@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Examples.Nuclear;
-model MoistureSeparatorReheater_reverse
+model MoistureSeparatorReheater_direct
   // Initialization parameters
   parameter Units.PositiveMassFlowRate Q_cold_0 = 660 "kg/s";
   parameter Units.PositiveMassFlowRate Q_hot_1_0 = 33 "kg/s";
@@ -25,16 +25,16 @@ model MoistureSeparatorReheater_reverse
   parameter Units.Fraction steam_dryer_x_steam_out = 0.99;
 
   // Inputs for calibration
-  input Real inter_superheater_T(start=234, min=0, nominal = 200) "degC";
-  input Real superheated_steam_T(start=260, min=0, nominal = 200) "degC";
-  input Real drains_pressure_1(start=39.1, min=0, nominal = 60) "barA";
-  input Real drains_pressure_2(start=66.1, min=0, nominal = 60) "barA";
+  output Real inter_superheater_T;
+  output Real superheated_steam_T;
+  output Real drains_pressure_1;
+  output Real drains_pressure_2;
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth_1;
-  output Units.FrictionCoefficient Kfr_hot_1;
-  output Units.HeatExchangeCoefficient Kth_2;
-  output Units.FrictionCoefficient Kfr_hot_2;
+  parameter Units.HeatExchangeCoefficient Kth_1 = 16598.75;
+  parameter Units.FrictionCoefficient Kfr_hot_1 = 407.23242;
+  parameter Units.HeatExchangeCoefficient Kth_2 = 10967.985;
+  parameter Units.FrictionCoefficient Kfr_hot_2 = 2683.7976;
 
   // Components
   WaterSteam.BoundaryConditions.Source hot_steam_source_1(Q_out(start=-Q_hot_1_0)) annotation (Placement(transformation(extent={{-80,-30},{-60,-10}})));
@@ -205,4 +205,4 @@ equation
           radius=10,
           origin={-119,-42},
           rotation=90)}),                                        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-160,-140},{160,140}})));
-end MoistureSeparatorReheater_reverse;
+end MoistureSeparatorReheater_direct;

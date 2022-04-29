@@ -48,10 +48,10 @@ model Superheater
   Units.Percentage closed_vent(min = 0, max= 100); // Vent closing percentage
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 500;
+  parameter Units.MassFlowRate Q_cold_0 = 1300;
   parameter Units.MassFlowRate Q_hot_0 = 50;
   parameter Units.Temperature T_hot_in_0 = 273.15 + 220;
-  parameter Units.Temperature T_cold_in_0 = 273.15 + 100;
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 200;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-170,-10},{-150,10}}),iconTransformation(extent={{-170,-10},{-150,10}})));
