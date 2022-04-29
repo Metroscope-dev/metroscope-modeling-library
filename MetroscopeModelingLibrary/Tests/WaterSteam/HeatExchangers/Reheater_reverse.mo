@@ -12,7 +12,7 @@ model Reheater_reverse
 
   // Component Parameters
   parameter Units.Area S_tot = 100;
-  parameter Units.Area level = 0.3;
+  parameter Units.Fraction level = 0.3;
 
   parameter Units.FrictionCoefficient Kfr_hot = 0;
 
