@@ -4,3 +4,5 @@ Superheater_direct
 Superheater_reverse
 Evaporator_direct
 Evaporator_reverse
+FuelHeater_direct
+FuelHeater_reverse
