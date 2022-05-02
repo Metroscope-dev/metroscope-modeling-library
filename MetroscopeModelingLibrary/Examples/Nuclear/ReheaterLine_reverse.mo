@@ -1,15 +1,15 @@
 within MetroscopeModelingLibrary.Examples.Nuclear;
 model ReheaterLine_reverse
   // Boundary conditions
-  input Real main_steam_source_1_P(start=30);
-  input Real main_steam_source_2_P(start=50);
-  input Units.SpecificEnthalpy main_steam_source_1_h(start=2.7e6);
-  input Units.SpecificEnthalpy main_steam_source_2_h(start=2.8e6);
+  input Real main_steam_source_1_P(start=15.7) "barA";
+  input Real main_steam_source_2_P(start=26.4) "barA";
+  input Units.SpecificEnthalpy main_steam_source_1_h(start=1.829e6);
+  input Units.SpecificEnthalpy main_steam_source_2_h(start=1.661e6);
 
-  input Real reheaters_P_cold_in(start=50);
-  input Units.PositiveMassFlowRate reheaters_Q_cold_in(start=50);
-  input Real reheaters_T_cold_in(start=200);
-  input Real drains_sink_P(start=40);
+  input Real reheaters_P_cold_in(start=83.4) "barA";
+  input Units.PositiveMassFlowRate reheaters_Q_cold_in(start=1682);
+  input Real reheaters_T_cold_in(start=150.6);
+  input Real drains_sink_P(start=4.78);
 
   // Component parameters
   parameter Units.Area S_tot = 100;
@@ -37,29 +37,25 @@ model ReheaterLine_reverse
   output Real reheaters_T_cold_out;
 
   // Observables used for calibration
-  input Real reheater_1A_T_cold_out(start=200);
-  input Real reheater_1B_T_cold_out(start=200);
-  input Real reheater_2A_T_cold_out(start=200);
-  input Real reheater_2B_T_cold_out(start=200);
+  input Real reheater_1A_T_cold_out(start=197.7);
+  input Real reheater_1B_T_cold_out(start=197.7);
+  input Real reheater_2A_T_cold_out(start=224.2);
+  input Real reheater_2B_T_cold_out(start=224.2);
 
-  input Real reheater_1A_drains_T(start=200);
-  input Real reheater_1B_drains_T(start=200);
-  input Real reheater_2A_drains_T(start=200);
-  input Real reheater_2B_drains_T(start=200);
+  input Real reheater_1A_drains_T(start=156.2);
+  input Real reheater_1B_drains_T(start=156.2);
+  input Real reheater_2A_drains_T(start=202.8);
+  input Real reheater_2B_drains_T(start=202.8);
 
   input Units.Percentage reheater_1A_drains_valve_opening_sensor_opening(start=50) "%";
   input Units.Percentage reheater_1B_drains_valve_opening_sensor_opening(start=50) "%";
   input Units.Percentage reheater_2A_drains_valve_opening_sensor_opening(start=50) "%";
   input Units.Percentage reheater_2B_drains_valve_opening_sensor_opening(start=50) "%";
 
-  WaterSteam.HeatExchangers.Reheater reheater_1A
-    annotation (Placement(transformation(extent={{76,52},{44,68}})));
-  WaterSteam.HeatExchangers.Reheater reheater_1B
-    annotation (Placement(transformation(extent={{76,-68},{44,-52}})));
-  WaterSteam.HeatExchangers.Reheater reheater_2A
-    annotation (Placement(transformation(extent={{-44,52},{-76,68}})));
-  WaterSteam.HeatExchangers.Reheater reheater_2B
-    annotation (Placement(transformation(extent={{-44,-68},{-76,-52}})));
+  WaterSteam.HeatExchangers.Reheater reheater_1A annotation (Placement(transformation(extent={{76,52},{44,68}})));
+  WaterSteam.HeatExchangers.Reheater reheater_1B annotation (Placement(transformation(extent={{76,-68},{44,-52}})));
+  WaterSteam.HeatExchangers.Reheater reheater_2A annotation (Placement(transformation(extent={{-44,52},{-76,68}})));
+  WaterSteam.HeatExchangers.Reheater reheater_2B annotation (Placement(transformation(extent={{-44,-68},{-76,-52}})));
   WaterSteam.Pipes.ControlValve reheater_2A_drains_valve annotation (Placement(transformation(extent={{-36,18},{-26,30}})));
   Sensors.Outline.OpeningSensor reheater_2A_drains_valve_opening_sensor annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
@@ -272,56 +268,56 @@ equation
   connect(reheater_2B_T_cold_out_sensor.C_out, reheaters_T_cold_out_sensor.C_in) annotation (Line(points={{-130,-60},{-139,-60},{-139,0},{-148,0}}, color={28,108,200}));
   connect(reheater_2A.C_cold_out, reheater_2A_T_cold_out_sensor.C_in) annotation (Line(points={{-76,60},{-110,60}}, color={28,108,200}));
   connect(reheater_2A_T_cold_out_sensor.C_out, reheaters_T_cold_out_sensor.C_in) annotation (Line(points={{-130,60},{-140,60},{-140,0},{-148,0}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-220,-160},{220,160}}), graphics={
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}}),   graphics={
         Polygon(
-          points={{158,78},{158,58},{158,-64.5},{158,-82},{118,-82},{-12,-82},{-162,-82},{-162,78},{-12,78},{118,78},{158,78}},
+          points={{160,80},{160,60},{160,-62.5},{160,-80},{120,-80},{-10,-80},{-160,-80},{-160,80},{-10,80},{120,80},{160,80}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
         Polygon(
-          points={{104,58},{104,36},{104,-44},{104,-64},{84,-64},{-8,-64},{-136,-64},{-136,58},{-4,58},{84,58},{104,58}},
+          points={{106,60},{106,38},{106,-42},{106,-62},{86,-62},{-6,-62},{-134,-62},{-134,60},{-2,60},{86,60},{106,60}},
           smooth=Smooth.Bezier,
           lineThickness=1,
           fillColor={205,225,255},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None),
         Polygon(
-          points={{130,-20},{142,-20},{142,-50},{140,-62},{84,-64},{-8,-64},{-118,-64},{-140,-20},{-122,-20},{-6,-22},{116,-20},{130,-20}},
+          points={{132,-18},{144,-18},{144,-48},{142,-60},{86,-62},{-6,-62},{-116,-62},{-138,-18},{-120,-18},{-4,-20},{118,-18},{132,-18}},
           smooth=Smooth.Bezier,
           lineThickness=1,
           fillColor={35,138,255},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None),
         Polygon(
-          points={{116,40},{124,42},{124,-46},{116,-46},{106,-46},{-8,-46},{-116,-46},{-118,40},{-4,40},{108,40},{116,40}},
+          points={{118,42},{126,44},{126,-44},{118,-44},{108,-44},{-6,-44},{-114,-44},{-116,42},{-2,42},{110,42},{118,42}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Polygon(
-          points={{124,46},{130,46},{130,-52},{122,-52},{110,-52},{0,-52},{-122,-52},{-122,46},{0,46},{110,46},{124,46}},
+          points={{126,48},{132,48},{132,-50},{124,-50},{112,-50},{2,-50},{-120,-50},{-120,48},{2,48},{112,48},{126,48}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Polygon(
-          points={{104,28},{110,28},{110,-34},{102,-34},{90,-34},{-24,-34},{-122,-34},{-120,26},{-22,28},{90,28},{104,28}},
+          points={{106,30},{112,30},{112,-32},{104,-32},{92,-32},{-22,-32},{-120,-32},{-118,28},{-20,30},{92,30},{106,30}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Polygon(
-          points={{112,34},{118,34},{118,-38},{110,-40},{100,-40},{-12,-40},{-122,-42},{-126,32},{-14,34},{98,34},{112,34}},
+          points={{114,36},{120,36},{120,-36},{112,-38},{102,-38},{-10,-38},{-120,-40},{-124,34},{-12,36},{100,36},{114,36}},
           lineColor={28,108,200},
           smooth=Smooth.Bezier,
           lineThickness=1),
         Rectangle(
-          extent={{152,48},{102,-68}},
+          extent={{154,50},{104,-66}},
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None),
         Rectangle(
-          extent={{148,58},{102,22}},
+          extent={{150,60},{104,24}},
           pattern=LinePattern.None,
           lineThickness=1,
           fillColor={157,166,218},
@@ -329,7 +325,7 @@ equation
           lineColor={0,0,0},
           radius=10),
         Rectangle(
-          extent={{148,48},{100,14}},
+          extent={{150,50},{102,16}},
           pattern=LinePattern.None,
           lineThickness=1,
           fillColor={157,166,218},
@@ -337,7 +333,7 @@ equation
           lineColor={0,0,0},
           radius=0),
         Rectangle(
-          extent={{120,58},{100,36}},
+          extent={{122,60},{102,38}},
           pattern=LinePattern.None,
           lineThickness=1,
           fillColor={157,166,218},
@@ -352,7 +348,7 @@ equation
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
           radius=10,
-          origin={123,-44},
+          origin={125,-42},
           rotation=90),
         Rectangle(
           extent={{10.5,-11.5},{-10.5,11.5}},
@@ -362,7 +358,7 @@ equation
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
           radius=0,
-          origin={112.5,-53.5},
+          origin={114.5,-51.5},
           rotation=90),
         Rectangle(
           extent={{14,-23},{-14,23}},
@@ -372,6 +368,7 @@ equation
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0},
           radius=0,
-          origin={123,-34},
-          rotation=90)}),                                                                        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-220,-160},{220,160}})));
+          origin={125,-32},
+          rotation=90)}),
+        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-220,-160},{220,160}})));
 end ReheaterLine_reverse;
