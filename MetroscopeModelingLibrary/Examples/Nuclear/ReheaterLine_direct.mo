@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Examples.Nuclear;
-model ReheaterLine_reverse
+model ReheaterLine_direct
   // Boundary conditions
   input Real main_steam_source_1_P(start=15.7) "barA";
   input Real main_steam_source_2_P(start=26.4) "barA";
@@ -21,36 +21,36 @@ model ReheaterLine_reverse
   parameter Units.FrictionCoefficient reheater_2B_Kfr_cold = 120;
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient reheater_1A_Kth_cond;
-  output Units.HeatExchangeCoefficient reheater_1B_Kth_cond;
-  output Units.HeatExchangeCoefficient reheater_2A_Kth_cond;
-  output Units.HeatExchangeCoefficient reheater_2B_Kth_cond;
-  output Units.HeatExchangeCoefficient reheater_1A_Kth_subc;
-  output Units.HeatExchangeCoefficient reheater_1B_Kth_subc;
-  output Units.HeatExchangeCoefficient reheater_2A_Kth_subc;
-  output Units.HeatExchangeCoefficient reheater_2B_Kth_subc;
+  parameter Units.HeatExchangeCoefficient reheater_1A_Kth_cond = 142694.38;
+  parameter Units.HeatExchangeCoefficient reheater_1B_Kth_cond = 142694.38;
+  parameter Units.HeatExchangeCoefficient reheater_2A_Kth_cond = 128084.8;
+  parameter Units.HeatExchangeCoefficient reheater_2B_Kth_cond = 128084.8;
+  parameter Units.HeatExchangeCoefficient reheater_1A_Kth_subc = 122580.32;
+  parameter Units.HeatExchangeCoefficient reheater_1B_Kth_subc = 122580.32;
+  parameter Units.HeatExchangeCoefficient reheater_2A_Kth_subc = 38013.305;
+  parameter Units.HeatExchangeCoefficient reheater_2B_Kth_subc = 38013.305;
 
-  output Units.Cv reheater_1A_drains_valve_cvmax;
-  output Units.Cv reheater_1B_drains_valve_cvmax;
-  output Units.Cv reheater_2A_drains_valve_cvmax;
-  output Units.Cv reheater_2B_drains_valve_cvmax;
+  parameter Units.Cv reheater_1A_drains_valve_cvmax = 1177.3293;
+  parameter Units.Cv reheater_1B_drains_valve_cvmax = 1177.3293;
+  parameter Units.Cv reheater_2A_drains_valve_cvmax = 459.99002;
+  parameter Units.Cv reheater_2B_drains_valve_cvmax = 459.99002;
   output Real reheaters_T_cold_out;
 
   // Observables used for calibration
-  input Real reheater_1A_T_cold_out(start=197.7);
-  input Real reheater_1B_T_cold_out(start=197.7);
-  input Real reheater_2A_T_cold_out(start=224.2);
-  input Real reheater_2B_T_cold_out(start=224.2);
+  output Real reheater_1A_T_cold_out;
+  output Real reheater_1B_T_cold_out;
+  output Real reheater_2A_T_cold_out;
+  output Real reheater_2B_T_cold_out;
 
-  input Real reheater_1A_drains_T(start=156.2);
-  input Real reheater_1B_drains_T(start=156.2);
-  input Real reheater_2A_drains_T(start=202.8);
-  input Real reheater_2B_drains_T(start=202.8);
+  output Real reheater_1A_drains_T;
+  output Real reheater_1B_drains_T;
+  output Real reheater_2A_drains_T;
+  output Real reheater_2B_drains_T;
 
-  input Units.Percentage reheater_1A_drains_valve_opening_sensor_opening(start=50) "%";
-  input Units.Percentage reheater_1B_drains_valve_opening_sensor_opening(start=50) "%";
-  input Units.Percentage reheater_2A_drains_valve_opening_sensor_opening(start=50) "%";
-  input Units.Percentage reheater_2B_drains_valve_opening_sensor_opening(start=50) "%";
+  output Units.Percentage reheater_1A_drains_valve_opening_sensor_opening;
+  output Units.Percentage reheater_1B_drains_valve_opening_sensor_opening;
+  output Units.Percentage reheater_2A_drains_valve_opening_sensor_opening;
+  output Units.Percentage reheater_2B_drains_valve_opening_sensor_opening;
 
   WaterSteam.HeatExchangers.Reheater reheater_1A annotation (Placement(transformation(extent={{76,52},{44,68}})));
   WaterSteam.HeatExchangers.Reheater reheater_1B annotation (Placement(transformation(extent={{76,-68},{44,-52}})));
@@ -371,4 +371,4 @@ equation
           origin={125,-32},
           rotation=90)}),
         Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-220,-160},{220,160}})));
-end ReheaterLine_reverse;
+end ReheaterLine_direct;
