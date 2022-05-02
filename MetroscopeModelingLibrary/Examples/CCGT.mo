@@ -517,55 +517,55 @@ package CCGT
            {{16,56.2},{16,25.2},{12.7,25.2}}, color={28,108,200}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Ellipse(
-            extent={{-40,76},{-4,40}},
+            extent={{-18,76},{18,40}},
             lineColor={0,0,0},
             fillColor={170,213,255},
             fillPattern=FillPattern.Solid),
           Polygon(
-            points={{-40,54},{-30,42},{-14,42},{-8,50},{-6,56},{-6,58},{-34,60},{-38,58},{-38,54},{-40,54}},
+            points={{-18,54},{-8,42},{8,42},{14,50},{16,56},{16,58},{-12,60},{-16,58},{-16,54},{-18,54}},
             lineColor={28,108,200},
             lineThickness=1,
             smooth=Smooth.Bezier,
             fillColor={28,108,200},
             fillPattern=FillPattern.Solid),
           Ellipse(
-            extent={{-36,56},{-34,54}},
+            extent={{-14,56},{-12,54}},
             lineThickness=1,
             fillColor={170,213,255},
             fillPattern=FillPattern.Solid,
             pattern=LinePattern.None,
             lineColor={0,0,0}),
           Ellipse(
-            extent={{-32,58},{-28,54}},
+            extent={{-10,58},{-6,54}},
             lineThickness=1,
             fillColor={170,213,255},
             fillPattern=FillPattern.Solid,
             pattern=LinePattern.None,
             lineColor={0,0,0}),
           Ellipse(
-            extent={{-32,52},{-30,50}},
+            extent={{-10,52},{-8,50}},
             lineThickness=1,
             fillColor={170,213,255},
             fillPattern=FillPattern.Solid,
             pattern=LinePattern.None,
             lineColor={0,0,0}),
             Rectangle(
-            extent={{-60,40},{78,-60}},
+            extent={{-60,40},{80,-60}},
             lineColor={0,0,0},
             fillColor={215,215,215},
             fillPattern=FillPattern.Solid),
           Line(
-            points={{40,40},{40,-12},{10,-62},{-22,-10},{-22,54}},
+            points={{-14,50},{-28,30},{-28,-16},{-6,-46},{8,-46},{20,-16},{18,20},{4,46}},
             color={28,108,200},
             thickness=1,
             smooth=Smooth.Bezier),
           Line(
-            points={{36,40},{36,-12},{6,-62},{-26,-10},{-26,54}},
+            points={{-10,50},{-24,30},{-24,-16},{-2,-46},{12,-46},{24,-16},{22,20},{8,46}},
             color={28,108,200},
             thickness=1,
             smooth=Smooth.Bezier),
           Line(
-            points={{44,40},{44,-12},{14,-62},{-18,-10},{-18,54}},
+            points={{-14,54},{-32,32},{-32,-14},{-10,-44},{4,-44},{16,-14},{14,22},{0,48}},
             color={28,108,200},
             thickness=1,
             smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
