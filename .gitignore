@@ -11,6 +11,7 @@
 *.c
 *.
 *.exe
+*.mat
 
 #OpenModelica result files
 *.o
@@ -20,10 +21,6 @@
 *.libs
 *.makefile
 *.log
-
-#Pycharm
-.idea/
-
 
 #backup files
 *.bak-*
