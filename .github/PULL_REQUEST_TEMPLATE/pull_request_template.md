@@ -17,6 +17,7 @@ You can also fill these out after creating the PR, but make sure to **check them
 
 - [ ] I have added the appropriate tags, reviewers, projects and linked issues to this PR
 - [ ] I have performed a self-review of my own code
+- [ ] **I have checked that my changes do not bring any retrocompatibility issue comparing to [MML3-DTG-v2](https://github.com/Metroscope-dev/metroscope-modeling-library/releases/tag/MML3-DTG-v2) version**
 - [ ] Existing tests pass (including Metroscopia !).
 - [ ] I have added/updated tests that prove my development works and does not break anything.
 - [ ] I have made corresponding changes or additions to the documentation
