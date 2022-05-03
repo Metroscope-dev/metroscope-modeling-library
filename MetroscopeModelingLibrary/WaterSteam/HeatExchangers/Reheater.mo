@@ -25,8 +25,8 @@ model Reheater
   Inputs.InputHeatExchangeCoefficient Kth_subc;
   Units.Power W_subcooling;
 
-  Units.SpecificEnthalpy h_vap_sat(start=2e6);
-  Units.SpecificEnthalpy h_liq_sat(start=1e5);
+  Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0);
+  Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0);
   Units.Temperature Tsat;
 
   parameter String HX_config_condensing="condenser";
@@ -36,9 +36,9 @@ model Reheater
   Units.PositiveMassFlowRate Q_cold(start=Q_cold_0, nominal=Q_cold_0);
   Units.PositiveMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
-  Units.Temperature T_cold_out;
-  Units.Temperature T_hot_in;
-  Units.Temperature T_hot_out(start=T_hot_in_0);
+  Units.Temperature T_cold_out(start=T_cold_out_0);
+  Units.Temperature T_hot_in(start=T_hot_in_0);
+  Units.Temperature T_hot_out(start=T_hot_out_0);
 
   // Failure modes
   parameter Boolean faulty = false;
@@ -48,45 +48,102 @@ model Reheater
   // Initialization parameters
   parameter Units.PositiveMassFlowRate Q_cold_0=500;
   parameter Units.PositiveMassFlowRate Q_hot_0=50;
-  parameter Units.Temperature T_hot_in_0 = 273.15 + 200;
+  parameter Units.Pressure P_cold_in_0 = 10e5;
+  parameter Units.Pressure P_cold_out_0 = 9e5;
+  parameter Units.Pressure P_hot_in_0 = 11e5;
+  parameter Units.Pressure P_hot_out_0 = 11e5;
   parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
+  parameter Units.Temperature T_cold_out_0 = 273.15 + 100;
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 200;
+  parameter Units.Temperature T_hot_out_0 = 273.15 + 150;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 2e5;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 7e5;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 2.9e6;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 6e5;
 
-  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
-  Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
-  Connectors.Outlet C_hot_out(Q(start=-Q_hot_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
-  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
+  Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0))
+                                                annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
+  Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0))
+                                              annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
+  Connectors.Outlet C_hot_out(Q(start=-Q_hot_0),
+    P(start=P_hot_out_0),
+    h_outflow(start=h_hot_out_0))                annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0),
+    h_outflow(start=h_cold_out_0))                 annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
 
-  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, delta_z_0=0) annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
-  Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, delta_z_0=0) annotation (Placement(transformation(
+  Pipes.Pipe cold_side_pipe(
+    P_in_0=P_cold_in_0,
+    P_out_0=P_cold_out_0,   Q_0=Q_cold_0,
+    T_0=T_cold_in_0,
+    h_0=h_cold_in_0)                      annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
+  Pipes.Pipe hot_side_pipe(
+    P_in_0=P_hot_in_0,
+    P_out_0=P_hot_out_0,   Q_0=Q_hot_0,
+    T_0=T_hot_in_0,
+    h_0=h_hot_in_0)                     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,56})));
-  BaseClasses.IsoPFlowModel hot_side_deheating(Q_0=Q_hot_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side_deheating(
+    T_in_0=T_hot_in_0,
+    T_out_0=T_hot_in_0,
+    h_in_0=h_hot_in_0,
+    h_out_0=h_vap_sat_0,                       Q_0=Q_hot_0,
+    P_0=P_hot_out_0)                                        annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
         origin={101,19})));
-  BaseClasses.IsoPFlowModel cold_side_deheating(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{80,-58},{128,-10}})));
-  BaseClasses.IsoPFlowModel hot_side_condensing(Q_0=Q_hot_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel cold_side_deheating(
+    T_in_0=T_cold_out_0,
+    T_out_0=T_cold_out_0,
+    h_in_0=h_cold_out_0,
+    h_out_0=h_cold_out_0,                       Q_0=Q_cold_0,
+    P_0=P_cold_out_0)                                         annotation (Placement(transformation(extent={{80,-58},{128,-10}})));
+  BaseClasses.IsoPFlowModel hot_side_condensing(
+    T_in_0=T_hot_in_0,
+    T_out_0=T_hot_in_0,
+    h_in_0=h_vap_sat_0,
+    h_out_0=h_liq_sat_0,                        Q_0=Q_hot_0,
+    P_0=P_hot_out_0)                                         annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
         origin={23,19})));
-  BaseClasses.IsoPFlowModel cold_side_condensing(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{0,-58},{48,-10}})));
+  BaseClasses.IsoPFlowModel cold_side_condensing(
+    T_in_0=0.5*(T_cold_in_0 + T_cold_out_0),
+    T_out_0=T_cold_out_0,
+    h_in_0=0.5*(h_cold_in_0 + h_cold_out_0),
+    h_out_0=h_cold_out_0,                        Q_0=Q_cold_0,
+    P_0=P_cold_out_0)                                          annotation (Placement(transformation(extent={{0,-58},{48,-10}})));
   Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config_condensing, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
                                                    T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={24,-6})));
-  BaseClasses.IsoPFlowModel hot_side_subcooling(Q_0=Q_hot_0) annotation (Placement(transformation(
+        origin={24,-10})));
+  BaseClasses.IsoPFlowModel hot_side_subcooling(
+    T_in_0=T_hot_in_0,
+    T_out_0=T_hot_out_0,
+    h_in_0=h_liq_sat_0,
+    h_out_0=h_hot_out_0,                        Q_0=Q_hot_0,
+    P_0=P_hot_out_0)                                         annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
         origin={-55,19})));
-  BaseClasses.IsoPFlowModel cold_side_subcooling(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-78,-58},{-30,-10}})));
+  BaseClasses.IsoPFlowModel cold_side_subcooling(
+    T_in_0=T_cold_in_0,
+    T_out_0=0.5*(T_cold_in_0 + T_cold_out_0),
+    h_in_0=h_cold_in_0,
+    h_out_0=0.5*(h_cold_in_0 + h_cold_out_0),    Q_0=Q_cold_0,
+    P_0=P_cold_out_0)                                          annotation (Placement(transformation(extent={{-78,-58},{-30,-10}})));
   Power.HeatExchange.NTUHeatExchange HX_subcooling(config=HX_config_subcooling, QCp_max_side=QCp_max_side_subcooling, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
                                                    T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0)
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-54,-6})));
+        origin={-54,-10})));
+protected
+  parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
+  parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
+
 equation
 
   // Failure modes
@@ -318,5 +375,16 @@ equation
           radius=0,
           origin={-123,-34},
           rotation=90)}),                                        Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}})));
+        coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}}), graphics={
+                                   Text(
+          extent={{-6,10},{54,-2}},
+          textColor={28,108,200},
+          textString="Condensing"),
+                  Text(
+          extent={{72,10},{132,-2}},
+          textColor={28,108,200},
+          textString="Deheating"), Text(
+          extent={{-84,10},{-24,-2}},
+          textColor={28,108,200},
+          textString="Subcooling")}));
 end Reheater;

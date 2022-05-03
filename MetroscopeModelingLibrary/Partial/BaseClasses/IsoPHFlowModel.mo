@@ -1,18 +1,18 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
-  extends FlowModel(Qv_in_0=Qv_0, Qv_out_0=-Qv_0, P_in_0=P_0, P_out_0=P_0, T_in_0=T_0, T_out_0=T_0) annotation(IconMap(primitivesVisible=primitivesVisible));
+  extends FlowModel(P_in_0=P_0, P_out_0=P_0, T_in_0=T_0, T_out_0=T_0, h_in_0=h_0, h_out_0=h_0) annotation(IconMap(primitivesVisible=primitivesVisible));
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters
-  parameter Units.PositiveVolumeFlowRate Qv_0=100;
   parameter Units.Pressure P_0 = 1e5;
   parameter Units.Temperature T_0 = 300;
+  parameter Units.SpecificEnthalpy h_0=5e5;
 
   // Input Quantities
-  Units.PositiveVolumeFlowRate Qv(start=Qv_0, nominal=Qv_0) "Component volume flow rate";
-                                                                                       // No volume flow rate variation in IsoPHFlowModel
+  Units.PositiveVolumeFlowRate Qv "Component volume flow rate";
   Units.SpecificEnthalpy h "Enthalpy of the fluid into the component";
   Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
+
 equation
   // Input Quantities
   P = P_in;
