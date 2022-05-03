@@ -27,24 +27,36 @@ model LiqLiqHX
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
+  parameter Units.Pressure P_cold_in_0 = 10e5;
+  parameter Units.Pressure P_cold_out_0 = 9e5;
+  parameter Units.Pressure P_hot_in_0 = 5e5;
+  parameter Units.Pressure P_hot_out_0 = 4e5;
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
+  parameter Units.Temperature T_cold_out_0 = 273.15 + 100;
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 150;
+  parameter Units.Temperature T_hot_out_0 = 273.15 + 100;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 5e5;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 5e5;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 5e5;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 5e5;
 
 
-  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
-  Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
-  Connectors.Outlet C_hot_out(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
-  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
+  Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
+  Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
+  Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=P_hot_out_0), h_outflow(start=h_hot_out_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start=h_cold_out_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
 
 
-  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
-  Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0) annotation (Placement(transformation(
+  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, P_in_0 = P_cold_in_0, P_out_0 = P_cold_out_0, h_0 = h_cold_in_0, T_0 = T_cold_in_0) annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
+  Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, P_in_0 = P_hot_in_0, P_out_0 = P_hot_out_0, h_0 = h_hot_in_0, T_0 = T_hot_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,52})));
-  BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0, P_0 = P_hot_out_0, h_in_0 = h_hot_in_0, h_out_0 = h_hot_out_0, T_in_0 = T_hot_in_0, T_out_0 = T_hot_out_0) annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
         origin={-1,21})));
-  BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
+  BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, P_0 = P_cold_out_0, h_in_0 = h_cold_in_0, h_out_0 = h_cold_out_0, T_in_0 = T_cold_in_0, T_out_0 = T_cold_out_0) annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
   Power.HeatExchange.NTUHeatExchange HX(config=HX_config, QCp_max_side = QCp_max_side) annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},

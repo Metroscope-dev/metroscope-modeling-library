@@ -9,36 +9,30 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   // Temperatures
   parameter Units.Temperature T_in_0 = 300;
   parameter Units.Temperature T_out_0 = 300;
-  // Mass Flow Rate
-  parameter Units.PositiveMassFlowRate Q_in_0=100;
-  parameter Units.NegativeMassFlowRate Q_out_0=-100;
-  parameter Units.VolumeFlowRate Qv_in_0 = Q_in_0/1000;
-  parameter Units.VolumeFlowRate Qv_out_0 = Q_out_0/1000;
-  parameter Units.MassFlowRate DM_0 = - Q_out_0 - Q_in_0;
   // Pressure
   parameter Units.Pressure P_in_0 = 1e5;
   parameter Units.Pressure P_out_0 = 1e5;
   parameter Units.DifferentialPressure DP_0 = P_out_0 - P_in_0;
-  // Mass fractions
-  parameter Units.MassFraction Xi_in_0[Medium.nXi] = zeros(Medium.nXi);
-  parameter Units.MassFraction Xi_out_0[Medium.nXi] = Xi_in_0;
+  // Enthalpy
+  parameter Units.SpecificEnthalpy h_in_0 = 5e5;
+  parameter Units.SpecificEnthalpy h_out_0 = 5e5;
   // ------ Input Quantities ------
   // Enthalpies
-  Units.SpecificEnthalpy h_in "Inlet specific enthalpy";
-  Units.SpecificEnthalpy h_out "Outlet specific enthalpy";
+  Units.SpecificEnthalpy h_in(start=h_in_0) "Inlet specific enthalpy";
+  Units.SpecificEnthalpy h_out(start=h_out_0) "Outlet specific enthalpy";
   Units.SpecificEnthalpy hm "Average specific enthalpy";
   // Mass flow rate
-  Units.PositiveMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
-  Units.NegativeMassFlowRate Q_out(start=Q_out_0) "Outlet Mass flow rate";
-  Units.PositiveMassFlowRate Qm(start=(Q_in_0 + Q_out_0)/2) "Mean Mass flow rate";
+  Units.PositiveMassFlowRate Q_in "Inlet Mass flow rate";
+  Units.NegativeMassFlowRate Q_out "Outlet Mass flow rate";
+  Units.PositiveMassFlowRate Qm "Mean Mass flow rate";
   // Pressures
   Units.Pressure P_in(start=P_in_0) "Inlet Pressure";
   Units.Pressure P_out(start=P_out_0) "Outlet Pressure";
   Units.Pressure Pm(start=(P_in_0 + P_out_0)/2) "Average fluid pressure";
   // Mass fractions
-  Units.MassFraction Xi_in[Medium.nXi](start=Xi_in_0) "Inlet species mass fraction";
-  Units.MassFraction Xi_out[Medium.nXi](start=Xi_out_0) "Outlet species mass fraction";
-  Units.MassFraction Xim[Medium.nXi](start=Xi_in_0) "Outlet species mass fraction";
+  Units.MassFraction Xi_in[Medium.nXi] "Inlet species mass fraction";
+  Units.MassFraction Xi_out[Medium.nXi] "Outlet species mass fraction";
+  Units.MassFraction Xim[Medium.nXi] "Outlet species mass fraction";
   //extends PartialTransportXi(redeclare package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium);
 
   // ------ Computed Quantities ------
@@ -48,9 +42,9 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Units.Density rhom "Average Fluid density";
 
   // Volumic flow rates
-  Units.PositiveVolumeFlowRate Qv_in(start=Qv_in_0) "inlet volume flow rate";
-  Units.NegativeVolumeFlowRate Qv_out(start=Qv_out_0) "outlet volume flow rate";
-  Units.PositiveVolumeFlowRate Qvm(start=(Qv_in_0 + Qv_out_0)/2) "Mean volume flow rate";
+  Units.PositiveVolumeFlowRate Qv_in "inlet volume flow rate";
+  Units.NegativeVolumeFlowRate Qv_out "outlet volume flow rate";
+  Units.PositiveVolumeFlowRate Qvm "Mean volume flow rate";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";
@@ -62,18 +56,18 @@ partial model PartialTransportModel "Basic fluid transport brick for all compone
   Medium.ThermodynamicState state_out;
 
   // ------ Conservation variables ------
-  Units.MassFlowRate DM(nominal=0, start=DM_0); // Mass Loss
+  Units.MassFlowRate DM(nominal=0); // Mass Loss
   Units.DifferentialPressure DP(nominal=DP_0, start=DP_0); // Pressure Loss
   Units.Power W(nominal=0, start=0); // Heat Loss
   Units.MassFraction DXi[Medium.nXi] "species mass fraction variation in component";
 
   // ------ Connectors ------
   replaceable Partial.Connectors.FluidInlet C_in(
-    Q(start=Q_in_0, nominal=Q_in_0),
+    Q,
     P(start=P_in_0, nominal=P_in_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   replaceable Partial.Connectors.FluidOutlet C_out(
-    Q(start=Q_out_0, nominal=Q_out_0),
+    Q,
     P(start=P_out_0, nominal=P_out_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
 equation

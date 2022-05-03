@@ -7,15 +7,15 @@ partial model IsoPHFlowSimplifiedModel
 
   // Initialization parameters
   parameter Units.PositiveMassFlowRate Q_0=100;
-  parameter Units.MassFraction Xi_0[Medium.nXi] = zeros(Medium.nXi);
   parameter Units.Pressure P_0 = 1e5;
+  parameter Units.SpecificEnthalpy h_0 = 5e5;
   Medium.ThermodynamicState state;
 
   // Input Quantity
   Units.PositiveMassFlowRate Q(start=Q_0, nominal=Q_0) "Component mass flow rate";
-  Units.MassFraction Xi[Medium.nXi](start=Xi_0) "Component mass fractions";
+  Units.MassFraction Xi[Medium.nXi] "Component mass fractions";
   Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
-  Units.SpecificEnthalpy h "Enthalpy of the fluid into the component";
+  Units.SpecificEnthalpy h(start=h_0) "Enthalpy of the fluid into the component";
 
 
   replaceable Connectors.FluidInlet C_in(Q(start=Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));

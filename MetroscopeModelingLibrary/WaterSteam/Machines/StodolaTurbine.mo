@@ -6,8 +6,8 @@ model StodolaTurbine
     Q_0=1500,
     P_in_0=60e5,
     P_out_0=55e5,
-    h_in(start=2.7e6),
-    h_out(start=2.6e6),
+    h_in_0 = 2.7e6,
+    h_out_0= 2.6e6,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
