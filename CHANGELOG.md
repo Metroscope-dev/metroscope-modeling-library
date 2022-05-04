@@ -7,16 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
+### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
  - Fixed TurbineLine examples in [PR#218](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/218)
  - Fixed [#214](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/214): `.mat` files are ignored by default, but can still be added manually, [PR#215](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/215)
 
-### Changed
+### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+ - Ordered nuclear examples into subpackages called with power plant system names, [PR#219](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/219)
 
-### Added
+### Added <!--Make sure to add a link to the PR and issues related to your change-->
  - Added Example/ReheaterLine, direct and reverse, [PR#216](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/216)
 
-### Removed
+### Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
 ## MML3-DTG-V2

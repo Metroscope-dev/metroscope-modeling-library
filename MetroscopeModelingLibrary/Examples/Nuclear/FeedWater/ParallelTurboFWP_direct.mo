@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Examples.Nuclear;
+within MetroscopeModelingLibrary.Examples.Nuclear.FeedWater;
 model ParallelTurboFWP_direct
   import MetroscopeModelingLibrary.Units;
 
