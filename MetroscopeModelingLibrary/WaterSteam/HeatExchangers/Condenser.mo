@@ -9,7 +9,7 @@ model Condenser
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputArea S;
   Units.HeatExchangeCoefficient Kth;
-  Units.VolumeFlowRate Qv_cold_in(start=Q_cold_in/1e3);
+  Units.VolumeFlowRate Qv_cold_in(start=Q_cold_0/1e3);
 
   parameter String QCp_max_side = "cold";
 
@@ -42,6 +42,8 @@ model Condenser
   parameter Units.Pressure P_cold_out_0 = 4e5;
   parameter Units.Temperature T_cold_in_0 = 273.15 + 15;
   parameter Units.Temperature T_cold_out_0 = 273.15 + 25;
+  parameter Units.Temperature T_hot_in_0 = Tsat_0;
+  parameter Units.Temperature T_hot_out_0 = Tsat_0;
   parameter Units.SpecificEnthalpy h_cold_in_0 = 0.5e5;
   parameter Units.SpecificEnthalpy h_cold_out_0 = 1e5;
   parameter Units.SpecificEnthalpy h_hot_in_0 = 2e6;
