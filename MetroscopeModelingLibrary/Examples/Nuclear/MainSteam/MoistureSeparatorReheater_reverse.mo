@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Examples.Nuclear;
+within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
 model MoistureSeparatorReheater_reverse
   // Initialization parameters
   parameter Units.PositiveMassFlowRate Q_cold_0 = 660 "kg/s";

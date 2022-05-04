@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Examples.Nuclear;
+within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
 model TurbineLine_direct
   import MetroscopeModelingLibrary.Units;
 
@@ -96,7 +96,6 @@ model TurbineLine_direct
   Power.BoundaryConditions.Sink powerSink annotation (Placement(transformation(extent={{122,30},{142,50}})));
   Power.Machines.Generator generator annotation (Placement(transformation(extent={{68,28},{108,52}})));
   Sensors.Power.PowerSensor W_tot_sensor annotation (Placement(transformation(extent={{108,34},{120,46}})));
-
 
 equation
   // Boundary conditions

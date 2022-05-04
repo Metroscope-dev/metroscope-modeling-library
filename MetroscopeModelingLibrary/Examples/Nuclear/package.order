@@ -1,11 +1,3 @@
 MetroscopiaNPP
-TurbineLine_direct
-TurbineLine_reverse
-ParallelTurboFWP_direct
-ParallelTurboFWP_reverse
-FlashTank_Reheater
-LoopSteamGenerator
-MoistureSeparatorReheater_reverse
-MoistureSeparatorReheater_direct
-ReheaterLine_reverse
-ReheaterLine_direct
+MainSteam
+FeedWater

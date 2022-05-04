@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Examples.Nuclear;
+within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
 model LoopSteamGenerator
 
   // Boundary conditions
@@ -10,8 +10,6 @@ model LoopSteamGenerator
 
   // Parameters
   parameter Real vapor_fraction = 0.99;
-
-
 
   WaterSteam.HeatExchangers.SteamGenerator steamGenerator annotation (Placement(transformation(extent={{-100,-38},{-60,38}})));
   Sensors.WaterSteam.PressureSensor steam_pressure_sensor annotation (Placement(transformation(extent={{-68,50},{-48,70}})));
@@ -40,8 +38,6 @@ equation
 
   // Hypothesis
   steamGenerator.P_purge = steamGenerator.steam_pressure;
-
-
 
   connect(pressureCut.C_out, feedwater_pressure_sensor.C_in) annotation (Line(points={{-10,-60},{80,-60},{80,0},{70,0}}, color={28,108,200}));
   connect(steamGenerator.steam_outlet, steam_pressure_sensor.C_in) annotation (Line(points={{-80,38},{-80,60},{-68,60}}, color={28,108,200},

@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Examples.Nuclear;
+within MetroscopeModelingLibrary.Examples.Nuclear.FeedWater;
 model ReheaterLine_reverse
   // Boundary conditions
   input Real main_steam_source_1_P(start=15.7) "barA";
@@ -183,7 +183,6 @@ equation
       reheater_1B_drains_valve_opening_sensor.Opening_pc = reheater_1B_drains_valve_opening_sensor_opening;
       reheater_1B_drains_T_sensor.T_degC = reheater_1B_drains_T;
       reheater_1B_T_cold_out_sensor.T_degC = reheater_1B_T_cold_out;
-
 
   // Reheaters 2
     // Boundary conditions
