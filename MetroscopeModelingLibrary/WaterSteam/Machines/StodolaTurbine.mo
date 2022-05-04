@@ -19,9 +19,9 @@ model StodolaTurbine
   Units.Area area_nz(start=1) "Nozzle area";
   Units.Velocity u_out(start=0);
 
-  Units.MassFraction x_in(start=1);
-  Units.MassFraction x_inner(start=0.9);
-  Units.MassFraction xm(start=0.95);
+  Units.MassFraction x_in(start=x_in_0);
+  Units.MassFraction x_inner(start=x_inner_0);
+  Units.MassFraction xm(start=xm_0);
 
   Units.SpecificEnthalpy h_real(start=2.6e6); // Enthalpy after real decompression
   Units.SpecificEnthalpy h_is(start=2.6e6); // Enthalpy after isentropic decompression
@@ -33,9 +33,20 @@ model StodolaTurbine
   Units.SpecificEnthalpy h_liq_in(start=1e6);
   Units.SpecificEnthalpy h_liq_out(start=1e6);
 
+  // Initialization parameters
+  parameter Units.MassFraction x_inner_0 = min((h_out_0 - h_liq_out_0)/(h_vap_out_0 - h_liq_out_0), 1);
+  parameter Units.MassFraction xm_0 = (x_inner_0 + x_in_0)/2;
+  parameter Units.MassFraction x_in_0 = min((h_in_0 - h_liq_in_0)/(h_vap_in_0 - h_liq_in_0), 1);
+
 
 
   Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
+protected
+  parameter Units.SpecificEnthalpy h_vap_in_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
+  parameter Units.SpecificEnthalpy h_liq_in_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
+  parameter Units.SpecificEnthalpy h_vap_out_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
+  parameter Units.SpecificEnthalpy h_liq_out_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
+
 equation
   // Stodola's ellipse law
   Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));

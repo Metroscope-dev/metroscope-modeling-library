@@ -5,9 +5,7 @@ model SteamDryer
 
   import MetroscopeModelingLibrary.Units;
 
-  // Initialization parameters
-  parameter Units.Pressure P_0 = 10e5;
-  parameter Units.PositiveMassFlowRate Q_in_0=500;
+
 
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0); // Saturated liquid enthalpy
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0); // Saturated steam enthalpy
@@ -16,13 +14,34 @@ model SteamDryer
   Units.PositiveMassFlowRate Q_in(start=Q_in_0);
                                               // Inlet mass flow rate
 
-  Units.MassFraction x_steam_out; // Steam mass fraction at steam outlet
+  Units.MassFraction x_steam_out(start=1); // Steam mass fraction at steam outlet
+
+  // Initialization parameters
+  parameter Units.Pressure P_0 = 10e5;
+  parameter Units.Temperature T_0 = 273.15 + 180;
+  parameter Units.SpecificEnthalpy h_in_0 = 2e6;
+  parameter Units.PositiveMassFlowRate Q_in_0=500;
+  parameter Units.PositiveMassFlowRate Q_liq_0 = 0.5*Q_in_0;
+  parameter Units.PositiveMassFlowRate Q_vap_0 = Q_in_0 - Q_liq_0;
+
 
   Connectors.Inlet C_in(P(start=P_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
-  Connectors.Outlet C_hot_steam(P(start=P_0), Q(start=-Q_in_0/2)) annotation (Placement(transformation(extent={{90,30},{110,50}})));
-  Connectors.Outlet C_hot_liquid(P(start=P_0), Q(start=-Q_in_0/2)) annotation (Placement(transformation(extent={{90,-50},{110,-30}})));
-  BaseClasses.IsoPFlowModel steam_phase(P_0=P_0, Q_0=Q_in_0/2) annotation (Placement(transformation(extent={{26,30},{46,50}})));
-  BaseClasses.IsoPFlowModel liquid_phase(P_0=P_0, Q_0=Q_in_0/2) annotation (Placement(transformation(extent={{26,-50},{46,-30}})));
+  Connectors.Outlet C_hot_steam(P(start=P_0), Q(start=-Q_vap_0),
+    h_outflow(start=h_vap_sat_0))                                 annotation (Placement(transformation(extent={{90,30},{110,50}})));
+  Connectors.Outlet C_hot_liquid(P(start=P_0), Q(start=-Q_liq_0),
+    h_outflow(start=h_liq_sat_0))                                  annotation (Placement(transformation(extent={{90,-50},{110,-30}})));
+  BaseClasses.IsoPFlowModel steam_phase(
+    T_in_0=T_0,
+    T_out_0=T_0,
+    h_in_0=h_in_0,
+    h_out_0=h_vap_sat_0,                P_0=P_0,
+    Q_0=Q_vap_0)                                               annotation (Placement(transformation(extent={{26,30},{46,50}})));
+  BaseClasses.IsoPFlowModel liquid_phase(
+    T_in_0=T_0,
+    T_out_0=T_0,
+    h_in_0=h_in_0,
+    h_out_0=h_liq_sat_0,                 P_0=P_0,
+    Q_0=Q_liq_0)                                                annotation (Placement(transformation(extent={{26,-50},{46,-30}})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
