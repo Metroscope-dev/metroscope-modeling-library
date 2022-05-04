@@ -24,9 +24,9 @@ model DryReheater
     min=1e-5);
   Units.PositiveMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
-  Units.Temperature T_cold_out;
+  Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
-  Units.Temperature T_hot_out;
+  Units.Temperature T_hot_out(start=T_hot_out_0);
 
   // Failure modes
   parameter Boolean faulty = false;

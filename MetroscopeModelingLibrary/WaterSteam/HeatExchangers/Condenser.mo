@@ -9,24 +9,24 @@ model Condenser
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputArea S;
   Units.HeatExchangeCoefficient Kth;
-  Units.VolumeFlowRate Qv_cold_in;
+  Units.VolumeFlowRate Qv_cold_in(start=Q_cold_in/1e3);
 
   parameter String QCp_max_side = "cold";
 
   Units.Power W;
   Units.MassFlowRate Q_cold(start=Q_cold_0);
   Units.MassFlowRate Q_hot(start=Q_hot_0);
-  Units.Temperature T_cold_in;
-  Units.Temperature T_cold_out;
-  Units.Temperature T_hot_in;
-  Units.Temperature T_hot_out;
+  Units.Temperature T_cold_in(start=T_cold_in_0);
+  Units.Temperature T_cold_out(start=T_cold_out_0);
+  Units.Temperature T_hot_in(start=T_hot_in_0);
+  Units.Temperature T_hot_out(start=T_hot_out_0);
 
   Units.Pressure P_tot(start=Psat_0, nominal=Psat_0);
   Units.Pressure Psat(start=Psat_0, nominal=Psat_0);
-  Units.Temperature Tsat;
+  Units.Temperature Tsat(start=Tsat_0);
   Units.Pressure P_incond(start=0.001e5);
   Inputs.InputReal C_incond(unit="mol/m3", min=0) "Incondensable molar concentration";
-  Inputs.InputPressure P_offset "Offset correction for ideal gas law";
+  Inputs.InputPressure P_offset(start=0) "Offset correction for ideal gas law";
   constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
 
     // Failure modes

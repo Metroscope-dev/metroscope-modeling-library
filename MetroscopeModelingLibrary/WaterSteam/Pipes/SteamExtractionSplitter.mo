@@ -13,6 +13,7 @@ model SteamExtractionSplitter
   parameter Units.Pressure P_0 = 71e5;
   parameter Units.Temperature T_0 = 500;
   parameter Units.SpecificEnthalpy h_0 = 2.5e6;
+  parameter Units.MassFraction x_0 = min((h_0 - h_liq_sat_0)/(h_vap_sat_0 - h_liq_sat_0), 1);
 
   // Variables
   Units.PositiveMassFlowRate Q_in(start=Q_in_0) "Inlet Mass flow rate";
@@ -20,9 +21,9 @@ model SteamExtractionSplitter
   Units.SpecificEnthalpy h_in(start=h_0) "Inlet specific enthalpy";
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0) "Enthalpy of saturated water";
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0) "Enthalpy of saturated vapor";
-  Units.MassFraction x_ext_out(start=0.95) "Vapor mass fraction at extraction outlet (0 <= x_ext_out <= x_in)";
-  Units.MassFraction x_main_out(start=0.95) "Vapor mass fraction at main outlet";
-  Units.MassFraction x_in(start=0.95) "Vapor mass fraction at inlet";
+  Units.MassFraction x_ext_out(start=x_0) "Vapor mass fraction at extraction outlet (0 <= x_ext_out <= x_in)";
+  Units.MassFraction x_main_out(start=x_0) "Vapor mass fraction at main outlet";
+  Units.MassFraction x_in(start=x_0) "Vapor mass fraction at inlet";
 
   Inputs.InputFraction alpha(start=1) "Extraction paramater";
 
