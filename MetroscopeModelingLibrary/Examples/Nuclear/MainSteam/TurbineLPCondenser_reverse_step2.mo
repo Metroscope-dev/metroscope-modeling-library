@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
-model TurbineLPCondenser
+model TurbineLPCondenser_reverse_step2
   import MetroscopeModelingLibrary.Units;
 
   // Boundary conditions
@@ -15,8 +15,8 @@ model TurbineLPCondenser
 
   // Hypothesis on component parameters
   // Turbines
-  parameter Units.Yield LP_turbines_eta_nz = 1;
-  parameter Units.Area LP_turbines_area_nz = 1;
+  parameter Units.Area LP_turbines_area_nz = 12; // pi*turbine_R**2 - pi*rotor_R**2, with turbine_R = 2m, rotor_R = 0.35m
+  parameter Units.Yield LP_turbines_eta_is = 0.9;
 
   // Extraction splitters
   parameter Units.Fraction LP_turbine1_ext_alpha = 1;
@@ -48,20 +48,23 @@ model TurbineLPCondenser
   output Units.Cst LP_turbine2_Cst;
   output Units.Cst LP_turbine3_Cst;
 
-  output Units.Yield LP_turbines_eta_is;
+  output Units.Yield LP_turbine3_eta_nz;
 
   output Units.HeatExchangeCoefficient condenser_Kth;
 
   // Components
   // Boundary conditions
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-180,-10},{-160,10}})));
-  Sensors.WaterSteam.PressureSensor source_P_sensor annotation (Placement(transformation(extent={{-160,-10},{-140,10}})));
-  Sensors.WaterSteam.FlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-134,-10},{-114,10}})));
+  Sensors.WaterSteam.PressureSensor source_P_sensor(Q_0=1150)
+                                                    annotation (Placement(transformation(extent={{-160,-10},{-140,10}})));
+  Sensors.WaterSteam.FlowSensor source_Q_sensor(Q_0=1150)
+                                                annotation (Placement(transformation(extent={{-134,-10},{-114,10}})));
 
   // Turbines
   WaterSteam.Machines.StodolaTurbine LP_turbine1(
     P_in_0=1500000,
     P_out_0=600000,
+    h_in_0=2.9e6,
     Q_0=1150)                                    annotation (Placement(transformation(extent={{-106,-10},{-86,10}})));
   WaterSteam.Machines.StodolaTurbine LP_turbine2(
     P_in_0=600000,
@@ -107,7 +110,9 @@ model TurbineLPCondenser
   Power.Machines.Generator generator annotation (Placement(transformation(extent={{68,28},{108,52}})));
   Sensors.Power.PowerSensor W_tot_sensor annotation (Placement(transformation(extent={{108,34},{120,46}})));
   // Condenser
-  WaterSteam.HeatExchangers.Condenser condenser(faulty=false) annotation (Placement(transformation(extent={{114,-60.6667},{146,-34}})));
+  WaterSteam.HeatExchangers.Condenser condenser(faulty=false,
+    Psat_0=5000,
+    P_cold_in_0=500000)                                       annotation (Placement(transformation(extent={{114,-60.6667},{146,-34}})));
   WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
@@ -134,7 +139,7 @@ equation
   LP_turbine1.eta_is = LP_turbines_eta_is;
 
   // Hypothesis : no nozzle
-  LP_turbine1.eta_nz = LP_turbines_eta_nz;
+  LP_turbine1.eta_nz = 1;
   LP_turbine1.area_nz = LP_turbines_area_nz;
 
   // Extraction 1
@@ -146,7 +151,7 @@ equation
   LP_turbine2.eta_is = LP_turbines_eta_is;
 
   // Hypothesis : no nozzle
-  LP_turbine2.eta_nz = LP_turbines_eta_nz;
+  LP_turbine2.eta_nz = 1;
   LP_turbine2.area_nz = LP_turbines_area_nz;
 
   // Extraction 2
@@ -158,12 +163,11 @@ equation
   LP_turbine3.eta_is = LP_turbines_eta_is;
 
   // Hypothesis : no nozzle
-  LP_turbine3.eta_nz = LP_turbines_eta_nz;
+  LP_turbine3.eta_nz = LP_turbine3_eta_nz;
   LP_turbine3.area_nz = LP_turbines_area_nz;
 
   // Generator
-  //W_tot_sensor.W_MW = W_tot; // Calibrates LP_turbines_eta_is
-  LP_turbines_eta_is = 0.9;
+  W_tot_sensor.W_MW = W_tot; // Calibrates LP_turbines_eta_is
   // Hypothesis
   generator.eta = generator_eta;
 
@@ -209,47 +213,47 @@ equation
   connect(condenser.C_hot_in, condenser_Psat_sensor.C_out) annotation (Line(points={{130,-34},{130,0},{100,0}},      color={28,108,200}));
   connect(cooling_source.C_out, cooling_source_T_sensor.C_in) annotation (Line(points={{55,-42},{60,-42}}, color={28,108,200}));
   connect(cooling_source_T_sensor.C_out, cooling_source_P_sensor.C_in) annotation (Line(points={{80,-42},{86,-42}}, color={28,108,200}));
-  connect(condenser.C_cold_in, cooling_source_P_sensor.C_out) annotation (Line(points={{113.36,-41.4074},{112.68,-41.4074},{112.68,-42},{106,-42}}, color={28,108,200}));
-  connect(sink.C_in, condenser.C_hot_out) annotation (Line(points={{130,-97},{130,-61.2593}}, color={28,108,200}));
-  connect(condenser.C_cold_out, cooling_sink_T_sensor.C_in) annotation (Line(points={{146,-49.7037},{149,-49.7037},{149,-50},{150,-50}}, color={28,108,200}));
+  connect(condenser.C_cold_in, cooling_source_P_sensor.C_out) annotation (Line(points={{114,-42.8889},{112.68,-42.8889},{112.68,-42},{106,-42}},    color={28,108,200}));
+  connect(sink.C_in, condenser.C_hot_out) annotation (Line(points={{130,-97},{130,-60.6667}}, color={28,108,200}));
+  connect(condenser.C_cold_out, cooling_sink_T_sensor.C_in) annotation (Line(points={{146,-48.8148},{149,-48.8148},{149,-50},{150,-50}}, color={28,108,200}));
   connect(cooling_sink.C_in, cooling_sink_T_sensor.C_out) annotation (Line(points={{175,-50},{170,-50}}, color={28,108,200}));
-  annotation (Diagram(coordinateSystem(extent={{-180,-140},{160,140}})), Icon(coordinateSystem(extent={{-180,-140},{160,140}}), graphics={
+  annotation (Diagram(coordinateSystem(extent={{-180,-140},{200,140}})), Icon(coordinateSystem(extent={{-100,-100},{100,100}}), graphics={
                                Polygon(
-          points={{-104,62},{-104,42},{-104,-38},{-104,-58},{-84,-64},{76,-98},{96,-98},{96,-78},{96,79.539},{96,102},{76,102},{-84,70},{-104,62}},
+          points={{-100,60},{-100,40},{-100,-40},{-100,-60},{-80,-66},{80,-100},{100,-100},{100,-80},{100,77.539},{100,100},{80,100},{-80,68},{-100,60}},
           lineColor={63,81,181},
           lineThickness=0.5,
           smooth=Smooth.Bezier),
                                Polygon(
-          points={{-96,60},{-96,42},{-96,-38},{-96,-52},{-78,-58},{68,-88},{88,-92},{88,-70},{88,72},{88,94},{68,92},{-76,64},{-96,60}},
+          points={{-92,58},{-92,40},{-92,-40},{-92,-54},{-74,-60},{72,-90},{92,-94},{92,-72},{92,70},{92,92},{72,90},{-72,62},{-92,58}},
           lineThickness=0.5,
           smooth=Smooth.Bezier,
           fillColor={207,211,237},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None),
         Line(
-          points={{62,88},{62,-84}},
+          points={{66,86},{66,-86}},
           color={157,166,218},
           thickness=0.5,
           smooth=Smooth.Bezier),
         Line(
-          points={{18,80},{18,-76}},
+          points={{22,78},{22,-78}},
           color={157,166,218},
           thickness=0.5,
           smooth=Smooth.Bezier),
         Line(
-          points={{-24,70},{-24,-66}},
+          points={{-20,68},{-20,-68}},
           color={157,166,218},
           thickness=0.5,
           smooth=Smooth.Bezier),
         Line(
-          points={{-64,62},{-64,-56}},
+          points={{-60,60},{-60,-58}},
           color={157,166,218},
           thickness=0.5,
           smooth=Smooth.Bezier),
         Rectangle(
-          extent={{70,4},{-80,0}},
+          extent={{74,2},{-76,-2}},
           lineThickness=0.5,
           fillColor={157,166,218},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None)}));
-end TurbineLPCondenser;
+end TurbineLPCondenser_reverse_step2;
