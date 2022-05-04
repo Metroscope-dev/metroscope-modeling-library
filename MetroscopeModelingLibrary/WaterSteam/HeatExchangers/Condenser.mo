@@ -9,24 +9,24 @@ model Condenser
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputArea S;
   Units.HeatExchangeCoefficient Kth;
-  Units.VolumeFlowRate Qv_cold_in;
+  Units.VolumeFlowRate Qv_cold_in(start=Q_cold_in/1e3);
 
   parameter String QCp_max_side = "cold";
 
   Units.Power W;
   Units.MassFlowRate Q_cold(start=Q_cold_0);
   Units.MassFlowRate Q_hot(start=Q_hot_0);
-  Units.Temperature T_cold_in;
-  Units.Temperature T_cold_out;
-  Units.Temperature T_hot_in;
-  Units.Temperature T_hot_out;
+  Units.Temperature T_cold_in(start=T_cold_in_0);
+  Units.Temperature T_cold_out(start=T_cold_out_0);
+  Units.Temperature T_hot_in(start=T_hot_in_0);
+  Units.Temperature T_hot_out(start=T_hot_out_0);
 
   Units.Pressure P_tot(start=Psat_0, nominal=Psat_0);
   Units.Pressure Psat(start=Psat_0, nominal=Psat_0);
-  Units.Temperature Tsat;
+  Units.Temperature Tsat(start=Tsat_0);
   Units.Pressure P_incond(start=0.001e5);
   Inputs.InputReal C_incond(unit="mol/m3", min=0) "Incondensable molar concentration";
-  Inputs.InputPressure P_offset "Offset correction for ideal gas law";
+  Inputs.InputPressure P_offset(start=0) "Offset correction for ideal gas law";
   constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
 
     // Failure modes
@@ -35,34 +35,69 @@ model Condenser
   Real air_intake(unit="mol/m3", min=0); // Air intake
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 3820;
-  parameter Units.MassFlowRate Q_hot_0 = 150;
+  parameter Units.MassFlowRate Q_cold_0 = 5000;
+  parameter Units.MassFlowRate Q_hot_0 = 1000;
   parameter Units.Pressure Psat_0 = 0.19e5;
+  parameter Units.Pressure P_cold_in_0 = 5e5;
+  parameter Units.Pressure P_cold_out_0 = 4e5;
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 15;
+  parameter Units.Temperature T_cold_out_0 = 273.15 + 25;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 0.5e5;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 1e5;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 2e6;
 
-  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-114,40},{-94,60}}), iconTransformation(extent={{-114,40},{-94,60}})));
+
+  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=Psat_0, nominal=Psat_0)) annotation (Placement(transformation(extent={{-10,90},{10,110}}), iconTransformation(extent={{-10,90},{10,110}})));
-  Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=Psat_0, nominal=Psat_0)) annotation (Placement(transformation(extent={{-10,-94},{10,-74}}), iconTransformation(extent={{-10,-94},{10,-74}})));
-  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0)) annotation (Placement(transformation(extent={{90,-16},{110,4}}), iconTransformation(extent={{90,-16},{110,4}})));
+  Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=Psat_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0))
+                                                   annotation (Placement(transformation(extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
 
-  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-82,40},{-62,60}})));
-  BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0, P_0=Psat_0) annotation (Placement(transformation(
+  Pipes.Pipe cold_side_pipe(
+    P_in_0=P_cold_in_0,
+    P_out_0=P_cold_out_0,   Q_0=Q_cold_0,
+    T_0=T_cold_in_0,
+    h_0=h_cold_in_0)                      annotation (Placement(transformation(extent={{-80,30},{-60,50}})));
+  BaseClasses.IsoPFlowModel hot_side(
+    T_in_0=Tsat_0,
+    T_out_0=Tsat_0,
+    h_in_0=h_hot_in_0,
+    h_out_0=h_liq_sat_0,             Q_0=Q_hot_0, P_0=Psat_0) annotation (Placement(transformation(
         extent={{-24,-24},{24,24}},
         rotation=180,
         origin={0,22})));
-  BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-24,-30},{24,18}})));
+  BaseClasses.IsoPFlowModel cold_side(
+    T_in_0=T_cold_in_0,
+    T_out_0=T_cold_out_0,
+    h_in_0=h_cold_in_0,
+    h_out_0=h_cold_out_0,             Q_0=Q_cold_0,
+    P_0=P_cold_out_0)                               annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
   Pipes.Pipe water_height_pipe(
     Q_0=Q_hot_0,
     P_in_0=Psat_0,
     P_out_0=Psat_0,
+    T_0=Tsat_0,
+    h_0=h_liq_sat_0,
     h(start=2.46e5)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,-46})));
-  BaseClasses.IsoHFlowModel incondensables_in annotation (Placement(transformation(extent={{8,62},{28,82}})));
-  BaseClasses.IsoHFlowModel incondensables_out annotation (Placement(transformation(
+  BaseClasses.IsoHFlowModel incondensables_in(P_in_0=Psat_0, P_out_0=Psat_0,
+    Q_0=Q_hot_0,
+    T_0=Tsat_0,
+    h_0=h_hot_in_0)                           annotation (Placement(transformation(extent={{8,62},{28,82}})));
+  BaseClasses.IsoHFlowModel incondensables_out(P_in_0=Psat_0, P_out_0=Psat_0,
+    Q_0=Q_hot_0,
+    T_0=Tsat_0,
+    h_0=h_liq_sat_0)                           annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,-18})));
+
+protected
+  parameter Units.SpecificEnthalpy h_liq_sat_0 = Water.bubbleEnthalpy(Water.setSat_p(Psat_0));
+  parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
+
 equation
 
   // Failure modes
@@ -112,23 +147,23 @@ equation
 
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
-      points={{-62,50},{-36,50},{-36,-6},{-24,-6}},
+      points={{-60,40},{-52,40},{-52,0},{-24,0}},
       color={28,108,200},
       thickness=1));
   connect(cold_side.C_out, C_cold_out) annotation (Line(
-      points={{24,-6},{100,-6}},
+      points={{24,0},{100,0}},
       color={28,108,200},
       thickness=1));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
-      points={{-82,50},{-104,50}},
+      points={{-80,40},{-100,40}},
       color={28,108,200},
       thickness=1));
   connect(water_height_pipe.C_out, C_hot_out) annotation (Line(
-      points={{-40,-56},{-40,-60},{0,-60},{0,-84}},
+      points={{-40,-56},{-40,-60},{0,-60},{0,-80}},
       color={238,46,47},
       thickness=1));
   connect(C_cold_out, C_cold_out)
-    annotation (Line(points={{100,-6},{100,-6}}, color={28,108,200}));
+    annotation (Line(points={{100,0},{100,0}},   color={28,108,200}));
   connect(hot_side.C_in, incondensables_in.C_out) annotation (Line(
       points={{24,22},{34,22},{34,72},{28,72}},
       color={238,46,47},
