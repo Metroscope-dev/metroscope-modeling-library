@@ -17,7 +17,7 @@ model Condenser_direct
   parameter Units.FrictionCoefficient Kfr_cold = 1;
   parameter Units.VolumeFlowRate Qv_cold = 3.82;
   parameter Units.Pressure P_offset = 0;
-  parameter Units.Pressure C_incond = 0;
+  parameter Real C_incond = 0;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cooling_sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
