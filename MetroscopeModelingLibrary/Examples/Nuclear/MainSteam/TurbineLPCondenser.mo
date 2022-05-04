@@ -40,7 +40,7 @@ model TurbineLPCondenser
   input Real condenser_Psat(start=50.8, nominal=20, unit="mbar", min=0, max=200) "mbar";
   input Real cooling_sink_T(start=25, nominal=20, unit="degC", min=0, max=200) "degC";
 
-  input Real W_tot(start=150) "MW";
+  input Real W_tot(start=760) "MW";
 
   // Calibrated parameters
   // Turbines
@@ -59,9 +59,16 @@ model TurbineLPCondenser
   Sensors.WaterSteam.FlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-134,-10},{-114,10}})));
 
   // Turbines
-  WaterSteam.Machines.StodolaTurbine LP_turbine1 annotation (Placement(transformation(extent={{-106,-10},{-86,10}})));
-  WaterSteam.Machines.StodolaTurbine LP_turbine2 annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
-  WaterSteam.Machines.StodolaTurbine LP_turbine3 annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  WaterSteam.Machines.StodolaTurbine LP_turbine1(
+    P_in_0=1500000,
+    P_out_0=600000,
+    Q_0=1150)                                    annotation (Placement(transformation(extent={{-106,-10},{-86,10}})));
+  WaterSteam.Machines.StodolaTurbine LP_turbine2(
+    P_in_0=600000,
+    P_out_0=150000,
+    Q_0=1150)                                    annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
+  WaterSteam.Machines.StodolaTurbine LP_turbine3(P_in_0=150000, P_out_0=5080)
+                                                 annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 
   // Extractions
   WaterSteam.Pipes.SteamExtractionSplitter LP_turbine1_ext annotation (Placement(transformation(extent={{-76,-10},{-56,8}})));
@@ -155,8 +162,8 @@ equation
   LP_turbine3.area_nz = LP_turbines_area_nz;
 
   // Generator
-  W_tot_sensor.W_MW = W_tot; // Calibrates LP_turbines_eta_is
-  //LP_turbines_eta_is = 0.9;
+  //W_tot_sensor.W_MW = W_tot; // Calibrates LP_turbines_eta_is
+  LP_turbines_eta_is = 0.9;
   // Hypothesis
   generator.eta = generator_eta;
 
