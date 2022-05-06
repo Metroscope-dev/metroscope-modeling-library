@@ -9,12 +9,10 @@ package CCGT
 
         // Air source
         input MetroscopeModelingLibrary.Units.Pressure P_source_air(start=1) "bar";
-        input MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_source_air(start=500)
-        "kg/s";
+        input MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_source_air(start=500) "kg/s";
         input Real T_source_air(start=24) "degC";
         // Fuel source
-        input MetroscopeModelingLibrary.Units.Pressure P_fuel_source(start=30)
-        "bar";
+        input MetroscopeModelingLibrary.Units.Pressure P_fuel_source(start=30) "bar";
         input Real T_fuel_source(start=156);
         // Circulating water circuit
         input Real P_circulating_water_in(start=5, min=0, nominal=5) "barA";
@@ -89,58 +87,38 @@ package CCGT
       // Calibrated parameters (input used for calibration in comment)
 
         // Gas Turbine
-        output MetroscopeModelingLibrary.Units.FrictionCoefficient Filter_Kfr;
-                                                     // Filter outlet pressure
+        output MetroscopeModelingLibrary.Units.FrictionCoefficient Filter_Kfr; // Filter outlet pressure
         output Real compression_rate; // Air compressor outlet pressure
         output Real compressor_eta_is; // Air compressor outlet temperature
         output Real turbine_eta_is; // Gas turbine power output
         // Economizer
-        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Eco_Kth;
-                                                      // Economizer water outlet temperature
-        output MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_hot;
-                                                      // Gas turbine outlet pressure
-        output MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_cold;
-                                                       // Economizer water outlet pressure
+        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Eco_Kth; // Economizer water outlet temperature
+        output MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_hot; // Gas turbine outlet pressure
+        output MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_cold; // Economizer water outlet pressure
         // Evaporator
-        output MetroscopeModelingLibrary.Units.Cv Evap_CV_Cvmax;
-                                       // Evaporator control valve opening
-        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Evap_Kth;
-                                                       // Extraction pump mass flow rate
+        output MetroscopeModelingLibrary.Units.Cv Evap_CV_Cvmax; // Evaporator control valve opening
+        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Evap_Kth; // Extraction pump mass flow rate
         // High Pressure Superheater 1
-        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH1_Kth;
-                                                        // HP superheater outlet temperature
-        output MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH1_Kfr_cold;
-                                                         // HP superheater inlet pressure
+        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH1_Kth; // HP superheater outlet temperature
+        output MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH1_Kfr_cold; // HP superheater inlet pressure
         // High Pressure Superheater 2
-        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH2_Kth;
-                                                        // De-superheater mass flow rate
-        output MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH2_Kfr_cold;
-                                                         // HP superheater inlet pressure
+        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH2_Kth; // De-superheater mass flow rate
+        output MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH2_Kfr_cold; // HP superheater inlet pressure
         // De-superheater
-        output MetroscopeModelingLibrary.Units.Cv deSH_CV_Cvmax;
-                                       // Desuperheater control valve opening
+        output MetroscopeModelingLibrary.Units.Cv deSH_CV_Cvmax; // Desuperheater control valve opening
         // Reheater
-        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth;
-                                                      // LP superheater outlet temperature
-        output MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold;
-                                                       // LP superheater inlet pressure
+        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth; // LP superheater outlet temperature
+        output MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold; // LP superheater inlet pressure
         // High Pressure Steam Turbine
-        output MetroscopeModelingLibrary.Units.Cv HPST_CV_Cvmax;
-                                       // HP superheater outlet pressure
-        output MetroscopeModelingLibrary.Units.Cst HPST_Cst;
-                                   // HP steam turbine inlet pressure
-        output MetroscopeModelingLibrary.Units.Yield ST_eta_is;
-                                      // Power output
+        output MetroscopeModelingLibrary.Units.Cv HPST_CV_Cvmax; // HP superheater outlet pressure
+        output MetroscopeModelingLibrary.Units.Cst HPST_Cst; // HP steam turbine inlet pressure
+        output MetroscopeModelingLibrary.Units.Yield ST_eta_is; // Power output
         // Low Pressure Steam Turbine
-        output MetroscopeModelingLibrary.Units.Cv LPST_CV_Cvmax;
-                                       // Low pressure superheater outlet pressure
-        output MetroscopeModelingLibrary.Units.Cst LPST_Cst;
-                                   // LP steam turbine inlet pressure
+        output MetroscopeModelingLibrary.Units.Cv LPST_CV_Cvmax; // Low pressure superheater outlet pressure
+        output MetroscopeModelingLibrary.Units.Cst LPST_Cst; // LP steam turbine inlet pressure
         // Condenser
-        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth;
-                                                       // Condensation pressure
-        output MetroscopeModelingLibrary.Units.VolumeFlowRate Qv_cond_cold;
-                                                  // Circulating water outlet temperature
+        output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth; // Condensation pressure
+        output MetroscopeModelingLibrary.Units.VolumeFlowRate Qv_cond_cold; // Circulating water outlet temperature
         // Exctraction Pump
         output Real pump_a3; // Exctraction pump outlet pressure
         output Real pump_b3; // Exctraction pump outlet temperature
@@ -150,8 +128,8 @@ package CCGT
         output Real pumpRec_CV_Cvmax; // Recirculation control valve opening
 
         // Observables of interest
-        output MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_fuel_source;
-                                                         // Observable: controlled by the gas turbine outlet temperature 10.5
+
+        output MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_fuel_source; // Observable: controlled by the gas turbine outlet temperature 10.5
         output Real T_flue_gas_sink; // Observable
         output Real Q_pumpRec_out; // Observable: controlled by the economizer input temperature
         output Real turbine_compression_rate; // Observable of interest
@@ -638,11 +616,10 @@ package CCGT
       connect(evaporator.C_cold_in, T_w_eco_out_sensor.C_out) annotation (Line(
             points={{-8.3,-4.575},{-8.3,8},{2,8}},                 color={28,108,200}));
       connect(condenser.C_cold_out, T_circulating_water_out_sensor.C_in)
-        annotation (Line(points={{72,157.934},{74,157.934},{74,158},{78,158},{78,
-              176},{86,176}},
+        annotation (Line(points={{72,157.934},{74,157.934},{74,158},{78,158},{78,176},{86,176}},
                         color={28,108,200}));
-      connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{52,144.067},
-              {52,131},{109,131}},color={28,108,200}));
+      connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{52,144.067},{52,131},{109,131}},
+                                  color={28,108,200}));
       connect(powerSource.C_out, pump.C_power)
         annotation (Line(points={{116,145.2},{116,138.56}},
                                                        color={244,125,35}));
@@ -731,8 +708,8 @@ package CCGT
           Line(points={{120,48.5455},{126,48.5455}},                         color={
               28,108,200}));
       connect(Q_pumpRec_out_sensor.C_out, pumpRec_controlValve.C_in)
-        annotation (Line(points={{150,48.5455},{154,48.5455},{154,48.5455},{157,
-              48.5455}},                                     color={28,108,200}));
+        annotation (Line(points={{150,48.5455},{154,48.5455},{154,48.5455},{157,48.5455}},
+                                                             color={28,108,200}));
       connect(flue_gas_sink.C_in, P_flue_gas_sink_sensor.C_out)
         annotation (Line(points={{222,193},{222,178}}, color={95,95,95}));
       connect(sink.C_in, W_ST_out_sensor.C_out)
@@ -765,8 +742,8 @@ package CCGT
           points={{20,227.44},{20,256},{56.08,256}},
           color={244,125,35},
           smooth=Smooth.Bezier));
-      connect(pumpRec_controlValve.C_out, loopBreaker.C_in) annotation (Line(points={{170,
-              48.5455},{174,48.5455},{174,50},{182,50},{182,38}},   color={28,108,200}));
+      connect(pumpRec_controlValve.C_out, loopBreaker.C_in) annotation (Line(points={{170,48.5455},{174,48.5455},{174,50},{182,50},{182,38}},
+                                                                    color={28,108,200}));
       connect(pumpRec.C_out, T_pumpRec_out_sensor.C_in) annotation (Line(points={{101,
               48.5455},{110,48.5455}},             color={28,108,200}));
       connect(AirFilter.C_out, P_filter_out_sensor.C_in)
@@ -789,8 +766,8 @@ package CCGT
         annotation (Line(points={{-165,113.9},{-165,102.182}}, color={0,0,127}));
       connect(Q_deSH_sensor.C_in, loopBreaker.C_in) annotation (Line(points={{-132,92},
               {182,92},{182,38}}, color={28,108,200}));
-      connect(Q_deSH_sensor.C_out, deSH_controlValve.C_in) annotation (Line(points={{-144,92},
-              {-152,92},{-152,92},{-158.75,92}},           color={28,108,200}));
+      connect(Q_deSH_sensor.C_out, deSH_controlValve.C_in) annotation (Line(points={{-144,92},{-152,92},{-152,92},{-158.75,92}},
+                                                           color={28,108,200}));
       connect(deSH_controlValve.C_out, HPsuperheater2.C_cold_in) annotation (Line(
             points={{-171.25,92},{-230,92},{-230,8},{-263,8},{-263,-5}}, color={28,108,
               200}));
@@ -1278,8 +1255,8 @@ package CCGT
       MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor T_flue_gas_sink_sensor
         annotation (Placement(transformation(
             extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={222,156})));
+            rotation=0,
+            origin={176,-26})));
       MetroscopeModelingLibrary.FlueGases.Pipes.Filter AirFilter
         annotation (Placement(transformation(extent={{-576,-36},{-556,-16}})));
       MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor
@@ -1549,11 +1526,9 @@ package CCGT
       connect(evaporator.C_cold_in, T_w_eco_out_sensor.C_out) annotation (Line(
             points={{-8.3,-4.575},{-8.3,8},{2,8}},                 color={28,108,200}));
       connect(condenser.C_cold_out, T_circulating_water_out_sensor.C_in)
-        annotation (Line(points={{72,157.934},{74,157.934},{74,158},{78,158},{
-              78,176},{86,176}},
+        annotation (Line(points={{72,157.934},{74,157.934},{74,158},{78,158},{78,176},{86,176}},
                         color={28,108,200}));
-      connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{52,
-              144.067},{52,131},{109,131}},
+      connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{52,144.067},{52,131},{109,131}},
                                   color={28,108,200}));
       connect(powerSource.C_out, pump.C_power)
         annotation (Line(points={{116,145.2},{116,138.56}},
@@ -1643,8 +1618,8 @@ package CCGT
           Line(points={{120,48.5455},{126,48.5455}},                         color={
               28,108,200}));
       connect(Q_pumpRec_out_sensor.C_out, pumpRec_controlValve.C_in)
-        annotation (Line(points={{150,48.5455},{154,48.5455},{154,48.5455},{157,
-              48.5455}},                                     color={28,108,200}));
+        annotation (Line(points={{150,48.5455},{154,48.5455},{154,48.5455},{157,48.5455}},
+                                                             color={28,108,200}));
       connect(flue_gas_sink.C_in, P_flue_gas_sink_sensor.C_out)
         annotation (Line(points={{222,193},{222,178}}, color={95,95,95}));
       connect(sink.C_in, W_ST_out_sensor.C_out)
@@ -1677,13 +1652,8 @@ package CCGT
           points={{20,227.44},{20,256},{56.08,256}},
           color={244,125,35},
           smooth=Smooth.Bezier));
-      connect(P_flue_gas_sink_sensor.C_in, T_flue_gas_sink_sensor.C_out)
-        annotation (Line(points={{222,166},{222,162}}, color={95,95,95}));
-      connect(T_flue_gas_sink_sensor.C_in, economiser.C_hot_out) annotation (Line(
-            points={{222,150},{222,-26.5},{123.3,-26.5}},                color={95,95,
-              95}));
-      connect(pumpRec_controlValve.C_out, loopBreaker.C_in) annotation (Line(points={{170,
-              48.5455},{174,48.5455},{174,50},{182,50},{182,38}},   color={28,108,200}));
+      connect(pumpRec_controlValve.C_out, loopBreaker.C_in) annotation (Line(points={{170,48.5455},{174,48.5455},{174,50},{182,50},{182,38}},
+                                                                    color={28,108,200}));
       connect(pumpRec.C_out, T_pumpRec_out_sensor.C_in) annotation (Line(points={{101,
               48.5455},{110,48.5455}},             color={28,108,200}));
       connect(AirFilter.C_out, P_filter_out_sensor.C_in)
@@ -1706,8 +1676,8 @@ package CCGT
         annotation (Line(points={{-165,113.9},{-165,102.182}}, color={0,0,127}));
       connect(Q_deSH_sensor.C_in, loopBreaker.C_in) annotation (Line(points={{-132,92},
               {182,92},{182,38}}, color={28,108,200}));
-      connect(Q_deSH_sensor.C_out, deSH_controlValve.C_in) annotation (Line(points={{-144,92},
-              {-152,92},{-152,92},{-158.75,92}},           color={28,108,200}));
+      connect(Q_deSH_sensor.C_out, deSH_controlValve.C_in) annotation (Line(points={{-144,92},{-152,92},{-152,92},{-158.75,92}},
+                                                           color={28,108,200}));
       connect(deSH_controlValve.C_out, HPsuperheater2.C_cold_in) annotation (Line(
             points={{-171.25,92},{-230,92},{-230,8},{-263,8},{-263,-5}}, color={28,108,
               200}));
@@ -1723,6 +1693,8 @@ package CCGT
               200}));
       connect(Evap_controlValve.Opening, Evap_opening_sensor.Opening)
         annotation (Line(points={{35,18.1822},{35,33.9}}, color={0,0,127}));
+      connect(T_flue_gas_sink_sensor.C_in, economiser.C_hot_out) annotation (Line(points={{170,-26},{123.3,-26},{123.3,-26.5}}, color={95,95,95}));
+      connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{182,-26},{222,-26},{222,166}}, color={95,95,95}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},
                 {260,280}})),                                     Diagram(
             coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},{260,280}}),
@@ -1832,7 +1804,7 @@ package CCGT
               fillColor={244,237,30},
               fillPattern=FillPattern.Solid),
             Rectangle(
-              extent={{214,164},{230,148}},
+              extent={{168,-18},{184,-34}},
               lineColor={0,0,0},
               pattern=LinePattern.None,
               fillColor={244,237,30},
