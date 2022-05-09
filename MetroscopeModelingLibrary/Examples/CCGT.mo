@@ -3,17 +3,17 @@ package CCGT
   package MetroscopiaCCGT
 
     model MetroscopiaCCGT_causality_reverse
-      extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+
 
       // Boundary conditions
 
         // Air source
-        input MetroscopeModelingLibrary.Units.Pressure P_source_air(start=1) "bar";
-        input MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_source_air(start=500) "kg/s";
+        input Real P_source_air(start=1) "bar";
+        input MetroscopeModelingLibrary.Units.MassFlowRate Q_source_air(start=500) "kg/s";
         input Real T_source_air(start=24) "degC";
         // Fuel source
-        input MetroscopeModelingLibrary.Units.Pressure P_fuel_source(start=30) "bar";
-        input Real T_fuel_source(start=156);
+        input Real P_fuel_source(start=30) "bar";
+        input Real T_fuel_source(start=156) "degC";
         // Circulating water circuit
         input Real P_circulating_water_in(start=5, min=0, nominal=5) "barA";
         input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
@@ -24,10 +24,10 @@ package CCGT
 
         // Gas Turbine
         parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV=48130e3;
-        parameter Real GT_h_out = 1e6; // This enthalpy corresponds to T = 640°C at 1.1 bar 1e6
+        parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy GT_h_out = 1e6; // This enthalpy corresponds to T = 640°C at 1.1 bar
         // Economizer
         parameter String Eco_QCp_max_side = "hot";
-        parameter Real T_w_eco_in = 85; // Controlled by the economizer recirculation pump flow rate
+        parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
         // Evaporator
         parameter Real Evap_x_steam_out=1;
         parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Evap_Kfr_cold=0;
@@ -62,14 +62,13 @@ package CCGT
         input Real P_w_HPSH2_out(start=114, min=0, nominal=114) "barA";
         // De-superheater
         input Real deSH_opening(start=0.15);
-        input Real Q_deSH(start=2);
+        input Real Q_deSH(start=2) "kg/s";
         // Reheater
         input Real T_w_ReH_out(start = 350, min = 0, nominal = 350) "degC";
         input Real P_w_ReH_out(start=9, min=0, nominal=9) "barA";
         // High Pressure Steam Turbine
-        input Real P_ST_in(start=113);
-        input Real P_ST_out(start=10);
-        //input Real P_ST_out(start=10, unit="bar", nominal=10, min=0) "bar";
+        input Real P_ST_in(start=113) "barA";
+        input Real P_ST_out(start=10) "barA";
         input Real W_ST_out(start=65, unit="MW", nominal=65, min=0) "MW";
         input Real P_LPST_in(start=8, min=0, nominal=4.9) "bar";
         // Condenser
@@ -78,7 +77,7 @@ package CCGT
         // Extraction Pump
         input Real P_pump_out(start=170) "barA";
         input Real T_pump_out(start=35) "degC";
-        input Real Q_pump_out(start=50);
+        input Real Q_pump_out(start=50) "kg/s";
         // Recirculation Pump
         input Real P_pumpRec_out(start=180) "barA";
         input Real T_pumpRec_out(start=324) "degC";
@@ -125,11 +124,11 @@ package CCGT
         // Recirculation pump
         output Real pumpRec_a3; // Recirculation pump outlet pressure
         output Real pumpRec_b3; // Recirculation pump outlet temperature
-        output Real pumpRec_CV_Cvmax; // Recirculation control valve opening
+        output MetroscopeModelingLibrary.Units.Cv pumpRec_CV_Cvmax; // Recirculation control valve opening
 
         // Observables of interest
 
-        output MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_fuel_source; // Observable: controlled by the gas turbine outlet temperature 10.5
+        output MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_fuel_source; // Observable: controlled by the gas turbine outlet temperature
         output Real T_flue_gas_sink; // Observable
         output Real Q_pumpRec_out; // Observable: controlled by the economizer input temperature
         output Real turbine_compression_rate; // Observable of interest
@@ -914,17 +913,17 @@ package CCGT
     end MetroscopiaCCGT_causality_reverse;
 
     model MetroscopiaCCGT_causality_direct
-      extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+
 
       // Boundary conditions
 
         // Air source
-        input MetroscopeModelingLibrary.Units.Pressure P_source_air(start=1) "bar";
-        input MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_source_air(start=500) "kg/s";
+        input Real P_source_air(start=1) "bar";
+        input MetroscopeModelingLibrary.Units.MassFlowRate Q_source_air(start=500) "kg/s";
         input Real T_source_air(start=24) "degC";
         // Fuel source
-        input MetroscopeModelingLibrary.Units.Pressure P_fuel_source(start=30) "bar";
-        input Real T_fuel_source(start=156);
+        input Real P_fuel_source(start=30) "bar";
+        input Real T_fuel_source(start=156) "degC";
         // Circulating water circuit
         input Real P_circulating_water_in(start=5, min=0, nominal=5) "barA";
         input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
@@ -935,10 +934,10 @@ package CCGT
 
         // Gas Turbine
         parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV=48130e3;
-        parameter Real turbine_T_out = 640;
+        parameter Real turbine_T_out = 640 "degC";
         // Economizer
         parameter String Eco_QCp_max_side = "hot";
-        parameter Real T_w_eco_in = 85; // Controlled by the economizer recirculation pump flow rate
+        parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
         // Evaporator
         parameter Real Evap_x_steam_out=1;
         parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Evap_Kfr_cold=0;
@@ -952,7 +951,7 @@ package CCGT
         parameter Real LPST_opening = 1;
         parameter Real HPST_opening = 1;
 
-      // Observables used for calibration
+      // Observables
 
         // Gas Turbine
         output Real P_filter_out;
@@ -960,9 +959,12 @@ package CCGT
         output Real compressor_T_out;
         output Real W_GT;
         output Real turbine_P_out;
+        output MetroscopeModelingLibrary.Units.MassFlowRate Q_fuel_source; // Controlled by the gas turbine outlet temperature 10.5
+        output Real turbine_compression_rate;
         // Economizer
         output Real P_w_eco_out;
         output Real T_w_eco_out;
+        output Real T_flue_gas_sink;
         // Evaporator
         output Real Evap_opening;
         output Real P_w_evap_out;
@@ -993,6 +995,11 @@ package CCGT
         output Real P_pumpRec_out;
         output Real T_pumpRec_out;
         output Real pumpRec_opening;
+        output Real Q_pumpRec_out; // Controlled by the economizer input temperature
+
+
+
+
 
       // Calibrated parameters (input used for calibration in comment)
 
@@ -1037,12 +1044,8 @@ package CCGT
         parameter Real pumpRec_b3 = 0.6881236; // Recirculation pump outlet temperature
         parameter Real pumpRec_CV_Cvmax = 52.329174; // Recirculation control valve opening
 
-      // Observables of interest
 
-        output MetroscopeModelingLibrary.Units.NegativeMassFlowRate Q_fuel_source; // Controlled by the gas turbine outlet temperature 10.5
-        output Real T_flue_gas_sink;
-        output Real Q_pumpRec_out; // Controlled by the economizer input temperature
-        output Real turbine_compression_rate;
+
 
       MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
           QCp_max_side=Eco_QCp_max_side)
@@ -1780,35 +1783,6 @@ package CCGT
               fillColor={0,140,72},
               fillPattern=FillPattern.Solid,
               lineColor={0,0,0}),
-            Rectangle(
-              extent={{-580,140},{-560,120}},
-              lineColor={0,0,0},
-              pattern=LinePattern.None,
-              fillColor={244,237,30},
-              fillPattern=FillPattern.Solid),
-            Text(
-              extent={{-552,138},{-420,122}},
-              textColor={0,0,0},
-              horizontalAlignment=TextAlignment.Left,
-              textString="Observables not used for calibration"),
-            Rectangle(
-              extent={{-450,-40},{-436,-54}},
-              lineColor={0,0,0},
-              pattern=LinePattern.None,
-              fillColor={244,237,30},
-              fillPattern=FillPattern.Solid),
-            Rectangle(
-              extent={{138,56},{152,42}},
-              lineColor={0,0,0},
-              pattern=LinePattern.None,
-              fillColor={244,237,30},
-              fillPattern=FillPattern.Solid),
-            Rectangle(
-              extent={{168,-18},{184,-34}},
-              lineColor={0,0,0},
-              pattern=LinePattern.None,
-              fillColor={244,237,30},
-              fillPattern=FillPattern.Solid),
             Rectangle(
               extent={{-290,42},{-274,26}},
               pattern=LinePattern.None,
