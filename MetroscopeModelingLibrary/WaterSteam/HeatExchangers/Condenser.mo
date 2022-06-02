@@ -47,6 +47,8 @@ model Condenser
   parameter Units.SpecificEnthalpy h_cold_in_0 = 0.5e5;
   parameter Units.SpecificEnthalpy h_cold_out_0 = 1e5;
   parameter Units.SpecificEnthalpy h_hot_in_0 = 2e6;
+  parameter Units.SpecificEnthalpy h_liq_sat_0 = Water.bubbleEnthalpy(Water.setSat_p(Psat_0));
+  parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
 
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
@@ -95,10 +97,6 @@ model Condenser
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,-18})));
-
-protected
-  parameter Units.SpecificEnthalpy h_liq_sat_0 = Water.bubbleEnthalpy(Water.setSat_p(Psat_0));
-  parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
 
 equation
 
