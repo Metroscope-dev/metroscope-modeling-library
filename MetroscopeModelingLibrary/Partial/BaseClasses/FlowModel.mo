@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model FlowModel "Basic fluid transport brick for all components"
-
+  extends MetroscopeModelingLibrary.Icons.BaseClasses.BaseClassIcon;
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
@@ -29,12 +29,11 @@ partial model FlowModel "Basic fluid transport brick for all components"
   Units.Pressure P_in(start=P_in_0) "Inlet Pressure";
   Units.Pressure P_out(start=P_out_0) "Outlet Pressure";
   // Mass fractions
-  Units.MassFraction Xi_in[Medium.nXi] "Inlet species mass fraction";
-  Units.MassFraction Xi_out[Medium.nXi] "Outlet species mass fraction";
+  Units.MassFraction Xi[Medium.nXi] "Species mass fraction";
 
   // ------ Computed Quantities ------
   // Densities
-  Units.Density rho "Fluid density";
+  Units.Density rho(start=1) "Fluid density";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";
@@ -72,16 +71,16 @@ equation
   P_out = C_out.P;
 
   // Mass Fractions
-  Xi_in = inStream(C_in.Xi_outflow);
-  Xi_out = C_out.Xi_outflow;
+  Xi = inStream(C_in.Xi_outflow);
+  Xi = C_out.Xi_outflow;
 
   // No flow reversal in stream connector
   C_in.h_outflow = 0; // Never used arbitrary value
   C_in.Xi_outflow = zeros(Medium.nXi); // No flow reversal
 
   // ------ States ------
-  state_in = Medium.setState_phX(P_in, h_in, Xi_in);
-  state_out = Medium.setState_phX(P_out, h_out, Xi_out);
+  state_in = Medium.setState_phX(P_in, h_in, Xi);
+  state_out = Medium.setState_phX(P_out, h_out, Xi);
 
   // ------ Computed Quantities ------
   // Temperatures

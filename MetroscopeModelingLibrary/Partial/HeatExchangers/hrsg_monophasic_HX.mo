@@ -102,11 +102,11 @@ equation
   // For more details about this hypothesis, please refer the Economiser page of the MML documentation.
 
   Cp_cold_min =MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in); // water steam inlet Cp
-  state_cold_out = MetroscopeModelingLibrary.Media.WaterSteamMedium.setState_pTX(cold_side.P_in, cold_side.T_in + nominal_cold_side_temperature_rise,cold_side.Xi_in);
+  state_cold_out = MetroscopeModelingLibrary.Media.WaterSteamMedium.setState_pTX(cold_side.P_in, cold_side.T_in + nominal_cold_side_temperature_rise,cold_side.Xi);
   Cp_cold_max= MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out); // water steam outlet Cp
 
   Cp_hot_max=MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in);// fg inlet Cp
-  state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side.P_in, hot_side.T_in + nominal_hot_side_temperature_rise,hot_side.Xi_in);
+  state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side.P_in, hot_side.T_in + nominal_hot_side_temperature_rise,hot_side.Xi);
   Cp_hot_min =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
 
 
