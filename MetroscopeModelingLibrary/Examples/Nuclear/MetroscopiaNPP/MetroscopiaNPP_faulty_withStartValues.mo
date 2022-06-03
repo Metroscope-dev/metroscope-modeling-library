@@ -1,3 +1,4 @@
+within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
 model MetroscopiaNPP_faulty_withStartValues
   extends MetroscopiaNPP_faulty(
 CW_P_in(start=3.0),

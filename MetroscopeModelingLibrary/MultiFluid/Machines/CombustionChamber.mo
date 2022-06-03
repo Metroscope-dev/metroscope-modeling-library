@@ -45,7 +45,7 @@ model CombustionChamber
   // Constants
   constant Units.AtomicMass m_C = Constants.m_C "Carbon atomic mass";
   constant Units.AtomicMass m_H = Constants.m_H "Hydrogen atomic mass";
-  constant Units.AtomicMass m_O= Constants.m_O "Oxygen atomic mass";
+  constant Units.AtomicMass m_O = Constants.m_O "Oxygen atomic mass";
 
   constant Units.MolecularMass m_CH4 = m_C + m_H*4;
   constant Units.MolecularMass m_C2H6 = m_C*2 + m_H*6;
@@ -55,7 +55,7 @@ model CombustionChamber
   constant Units.MolecularMass m_H2O = m_H*2 + m_O;
 
   // Initialization parameters
-  parameter Units.SpecificEnthalpy h_in_air_0;
+  parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
 
   FlueGases.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   FlueGases.Connectors.Outlet outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));
@@ -69,8 +69,8 @@ model CombustionChamber
 equation
 
   // Definitions
-  Q_air = sink_air.Q;
-  Q_fuel = sink_fuel.Q;
+  Q_air = sink_air.Q_in;
+  Q_fuel = sink_fuel.Q_in;
   Q_exhaust = - source_exhaust.Q_out;
 
   h_in_air = sink_air.h_in;

@@ -33,7 +33,7 @@ partial model FlowModel "Basic fluid transport brick for all components"
 
   // ------ Computed Quantities ------
   // Densities
-  Units.Density rho(start=1) "Fluid density";
+  Units.Density rho "Fluid density";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";
