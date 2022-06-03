@@ -69,8 +69,8 @@ model CombustionChamber
 equation
 
   // Definitions
-  Q_air = sink_air.Q_in;
-  Q_fuel = sink_fuel.Q_in;
+  Q_air = sink_air.Q;
+  Q_fuel = sink_fuel.Q;
   Q_exhaust = - source_exhaust.Q_out;
 
   h_in_air = sink_air.h_in;
