@@ -18,7 +18,6 @@ model StodolaTurbine
   Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
   Units.Area area_nz(start=1) "Nozzle area";
   Units.Velocity u_out(start=0);
-  Units.Density rho_out(start=7);
 
   Units.MassFraction x_in(start=x_in_0);
   Units.MassFraction x_inner(start=x_inner_0);
@@ -39,6 +38,8 @@ model StodolaTurbine
   parameter Units.MassFraction xm_0 = (x_inner_0 + x_in_0)/2;
   parameter Units.MassFraction x_in_0 = min((h_in_0 - h_liq_in_0)/(h_vap_in_0 - h_liq_in_0), 1);
 
+
+
   Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 protected
   parameter Units.SpecificEnthalpy h_vap_in_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
@@ -58,7 +59,6 @@ equation
   h_real - h_in = xm*eta_is*(h_is - h_in);
 
   // Nozzle outlet
-  rho_out = Medium.density(state_out);
   u_out = Q/(rho_out*area_nz);
   h_out - h_real = (1 - eta_nz)*u_out^2/2;
 

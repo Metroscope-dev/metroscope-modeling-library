@@ -14,6 +14,7 @@ equation
   moist_air_FlowSensor.Q = 100;
 
   assert(abs(moist_air_Sink.Q_in + moist_air_Source.Q_out) <= 1e-5, "In IsoPHFlowModel, DM should be 0");
+  assert(abs(moist_air_Sink.Qv_in + moist_air_Source.Qv_out) <= 1e-5, "In IsoPHFlowModel, DV should be 0");
   assert(abs(moist_air_Source.P_out - moist_air_Sink.P_in) <= 1e-5, "In IsoPHFlowModel, DP should be 0");
   assert(abs(moist_air_Sink.Q_in*moist_air_Sink.h_in + moist_air_Source.Q_out*moist_air_Source.h_out) <= 1e-5, "In IsoPHFlowModel, W should be 0");
   connect(moist_air_IsoPHFlowModel.C_out, moist_air_Sink.C_in) annotation (Line(points={{51,0},{57.2,0},{57.2,0},{76,0}},             color={85,170,255}));
