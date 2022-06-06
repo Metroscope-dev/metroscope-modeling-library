@@ -26,7 +26,7 @@ equation
 
 
   P = C_in.P;
-  Q_in = steam_phase.Q + steam_phase.Q;
+  Q_in = steam_phase.Q_in + steam_phase.Q_out;
 
   steam_phase.h_out = x_out * h_vap_sat + (1-x_out)*h_liq_sat;
   liquid_phase.h_out = h_liq_sat;

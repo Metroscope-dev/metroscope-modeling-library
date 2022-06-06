@@ -167,8 +167,8 @@ equation
   end if;
 
   // Definitions
-  Q_cold = cold_side_condensing.Q;
-  Q_hot = hot_side_pipe.Q;
+  Q_cold = cold_side_condensing.Q_in;
+  Q_hot = hot_side_pipe.Q_in;
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side_deheating.T_out;
   T_hot_in = hot_side_pipe.T_in;

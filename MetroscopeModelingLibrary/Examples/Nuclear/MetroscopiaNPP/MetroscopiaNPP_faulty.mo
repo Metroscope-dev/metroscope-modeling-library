@@ -75,13 +75,13 @@ equation
   bypass_LP_heater_drains_to_condenser.Q = Failure_bypass_LP_heater_drains_to_condenser_Q + 1e-3;
   bypass_HP_heater_drains_to_condenser.Q = Failure_bypass_HP_heater_drains_to_condenser_Q + 1e-3;
 
-  connect(superheater_tube_rupture.C_in, superheater.C_hot_in) annotation (Line(points={{46,149},{30,149},{30,112},{56,112}},     color={217,67,180}));
+  connect(superheater_tube_rupture.C_in, superheater.C_hot_in) annotation (Line(points={{46,149},{30,149},{30,112.2},{56,112.2}}, color={217,67,180}));
   connect(bypass_HP_turbine_to_condenser.C_out, bypass_HP_control_valve_to_condenser.C_out) annotation (Line(points={{-113,42},{-113,32},{-147,32},{-147,42}}, color={217,67,180}));
   connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,42},{-113,32},{320,32},{320,100},{392.5,100},{392.5,74}},
                                                                                                                                                          color={217,67,180}));
   connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139,100},{140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{392.5,74}},
                                                                                                                                                                                     color={217,67,180}));
-  connect(superheater_tube_rupture.C_out, superheater.C_cold_out) annotation (Line(points={{64,149},{72,149},{72,130},{72,130},{72,120}},     color={217,67,180}));
+  connect(superheater_tube_rupture.C_out, superheater.C_cold_out) annotation (Line(points={{64,149},{72,149},{72,130},{71.8,130},{71.8,120}}, color={217,67,180}));
   connect(bypass_superheater_to_condenser.C_in, superheater_control_valve.C_out) annotation (Line(points={{-113,134},{-113,112.182},{-126,112.182}}, color={217,67,180}));
   connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,152},{-112,152},{-112,192},{392.5,192},{392.5,74}},
                                                                                                                                                     color={217,67,180}));

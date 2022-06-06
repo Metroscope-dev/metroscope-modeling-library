@@ -78,8 +78,8 @@ model Evaporator
 
 equation
   // Definitions
-  Q_cold = cold_side_heating.Q;
-  Q_hot = hot_side_vaporising.Q;
+  Q_cold = cold_side_heating.Q_in;
+  Q_hot = hot_side_vaporising.Q_in;
   T_cold_in = cold_side_heating.T_in;
   T_cold_out = cold_side_heating.T_out;
   T_hot_in = hot_side_vaporising.T_in;

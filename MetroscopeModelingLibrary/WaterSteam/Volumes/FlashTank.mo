@@ -42,7 +42,7 @@ equation
 
   // Definitions
   P = C_in.P;
-  Q_in = steam_phase.Q + liquid_phase.Q;
+  Q_in = steam_phase.Q_in + liquid_phase.Q_in;
 
   // Saturation at both outlets
   steam_phase.h_out = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P));
