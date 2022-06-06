@@ -10,6 +10,8 @@ partial model Pump
   import MetroscopeModelingLibrary.Units.Inputs;
   import MetroscopeModelingLibrary.Constants;
 
+  Units.PositiveVolumeFlowRate Qv_in(start=1);
+
   Real VRotn(start=1400, min=0, nominal=2000) "Nominal rotational speed";
   Inputs.InputReal a1(start=-88.67) "x^2 coef. of the pump characteristics hn = f(vol_flow) (s2/m5)";
   Inputs.InputReal a2(start=0) "x coef. of the pump characteristics hn = f(vol_flow) (s/m2)";
@@ -43,7 +45,8 @@ partial model Pump
         rotation=-90,
         origin={0,108})));
 equation
-  DP = rhom*Constants.g*hn;
+  Qv_in = Q / Medium.density(state_in);
+  DP = rho*Constants.g*hn;
 
   if adiabatic_compression then
     W = 0;
@@ -63,5 +66,5 @@ equation
   Wm = W/rm; // Wm is positive since it is the power produced by the pump
 
   // Hydraulic power
-  Wh = Qv_in*DP / rh;
+  Wh = Qv_in * DP / rh;
 end Pump;
