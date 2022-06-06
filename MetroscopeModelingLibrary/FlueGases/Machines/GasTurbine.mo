@@ -37,7 +37,7 @@ equation
   Wmech = eta_mech*Q*(h_in - h_out) - Wcompressor;
 
   /* Isentropic  expansion */
-  state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi_out);
+  state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);
   h_is = Medium.specificEnthalpy(state_is);
 
   annotation (

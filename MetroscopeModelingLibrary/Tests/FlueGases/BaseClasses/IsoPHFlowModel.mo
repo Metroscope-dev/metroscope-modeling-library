@@ -13,7 +13,6 @@ equation
   source.Xi_out = {0.768,0.232,0.0,0.0,0.0};
 
   assert(abs(sink.Q_in + source.Q_out) <= 1e-5, "In IsoPHFlowModel, DM should be 0");
-  assert(abs(sink.Qv_in + source.Qv_out) <= 1e-5, "In IsoPHFlowModel, DV should be 0");
   assert(abs(source.P_out - sink.P_in) <= 1e-5, "In IsoPHFlowModel, DP should be 0");
   assert(abs(sink.Q_in*sink.h_in + source.Q_out*source.h_out) <= 1e-5, "In IsoPHFlowModel, W should be 0");
   connect(source.C_out, isoPHFlowModel.C_in) annotation (Line(points={{-74.5,0},{-23,0}}, color={95,95,95}));

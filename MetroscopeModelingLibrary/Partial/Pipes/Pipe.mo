@@ -10,8 +10,8 @@ partial model Pipe
   Units.DifferentialPressure DP_f "Singular pressure loss";
   Units.DifferentialPressure DP_z "Singular pressure loss";
 equation
-  DP_f = -Kfr * Q^2 / rhom;
-  DP_z = -rhom * Constants.g * delta_z;
+  DP_f = -Kfr * Q^2 / rho;
+  DP_z = -rho * Constants.g * delta_z;
 
   DP = DP_f + DP_z;
   annotation (
