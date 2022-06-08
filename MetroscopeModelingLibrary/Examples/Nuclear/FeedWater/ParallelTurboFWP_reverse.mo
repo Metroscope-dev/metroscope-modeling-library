@@ -142,7 +142,7 @@ equation
   FWP1.a3 = FWP1_a3;
   // fixed parameters
   FWP1.VRotn = 4300;
-  FWP1.rm = 0.85;
+  FWP1.rm = 1; // No conversion on turbopumps, so no yield
   FWP1.rhmin = 0.20;
   FWP1.b2 = 0;
   FWP1.b1 = 0;
@@ -157,7 +157,7 @@ equation
   FWP2.a3 = FWP2_a3;
   // fixed parameters
   FWP2.VRotn = 4500;
-  FWP2.rm = 0.85;
+  FWP2.rm = 1; // No conversion on turbopumps, so no yield
   FWP2.rhmin = 0.20;
   FWP2.b2 = 0;
   FWP2.b1 = 0;
