@@ -25,8 +25,8 @@ model MoistureSeparatorReheater_reverse
   parameter Units.Fraction steam_dryer_x_steam_out = 0.99;
 
   // Inputs for calibration
-  input Real inter_superheater_T(start=234, min=0, nominal = 200) "degC";
-  input Real superheated_steam_T(start=260, min=0, nominal = 200) "degC";
+  input Real inter_superheater_T(start=235, min=0, nominal = 200) "degC";
+  input Real superheated_steam_T(start=260.3, min=0, nominal = 200) "degC";
   input Real drains_pressure_1(start=39.1, min=0, nominal = 60) "barA";
   input Real drains_pressure_2(start=66.1, min=0, nominal = 60) "barA";
 
@@ -89,6 +89,8 @@ equation
   drains_2_P_sensor.P_barA = drains_pressure_2;
   inter_superheater_T_sensor.T_degC = inter_superheater_T;
   superheated_steam_T_sensor.T_degC = superheated_steam_T;
+  //inter_superheater_T_sensor.h = 2.8821e6;
+  //superheated_steam_T_sensor.h = 2.9435e6;
 
   // Calibrated parameters
   superheater_1.Kth = Kth_1;
