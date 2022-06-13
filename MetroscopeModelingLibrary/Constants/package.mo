@@ -13,6 +13,7 @@ package Constants "Stores all constants used in MML"
   final constant Real Pa_to_barA(unit="bar/Pa") = 1e-5;
   final constant Real Pa_to_mbar(unit="mbar/Pa") = 1e-2;
   final constant Real Pa_to_psi(unit="1/Pa") = 0.000145038;
+  final constant Real Pa_to_inHg(unit="1/Pa") = 0.0002953006;
   final constant Real P0_barG_in_barA(unit="bar") = 1;
 
   // Mass flow conversions
