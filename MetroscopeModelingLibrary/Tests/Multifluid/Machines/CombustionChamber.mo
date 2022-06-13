@@ -10,7 +10,7 @@ model CombustionChamber
 
   input Units.Pressure P_fuel(start = 30e5);
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
-  input Units.NegativeMassFlowRate Q_fuel(start=15);
+  input Units.PositiveMassFlowRate Q_fuel(start=15);
 
   // Parameters
   parameter Units.SpecificEnthalpy LHV = 48130e3;
