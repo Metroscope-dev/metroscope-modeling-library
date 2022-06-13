@@ -1,16 +1,16 @@
 within MetroscopeModelingLibrary.Tests.Sensors.MoistAir;
-model MoistAirDeltaPressureSensor
-  extends Modelica.Icons.Example;
+model DeltaPressureSensor
+  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
   input Units.SpecificEnthalpy source_h(start=1e3) "J/kg";
-  input Units.OutletMassFlowRate source_Q(start=-100) "kg/s";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
-  MetroscopeModelingLibrary.Sensors.MoistAir.MoistAirDeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,10},{10,30}})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSource source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.MoistAirSink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
-  MetroscopeModelingLibrary.MoistAir.BaseClasses.MoistAirIsoHFlowModel MoistAirIsoHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.Sensors.MoistAir.DeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,10},{10,30}})));
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoHFlowModel MoistAirIsoHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
 equation
   source.h_out = source_h;
   source.Q_out = source_Q;
@@ -26,4 +26,4 @@ equation
   connect(source.C_out, MoistAirIsoHFlowModel.C_in) annotation (Line(points={{-43,0},{-10,0}}, color={28,108,200}));
   connect(MoistAirIsoHFlowModel.C_out, sink.C_in) annotation (Line(points={{10,0},{43,0}}, color={28,108,200}));
   connect(DP_sensor.C_in, MoistAirIsoHFlowModel.C_in) annotation (Line(points={{-10,20},{-20,20},{-20,0},{-10,0}}, color={28,108,200}));
-end MoistAirDeltaPressureSensor;
+end DeltaPressureSensor;
