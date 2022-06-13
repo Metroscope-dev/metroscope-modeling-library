@@ -16,6 +16,7 @@ package FuelMedium
            Modelica.Media.IdealGases.Common.FluidData.CO2},
          substanceNames = {"Methane","Ethane","Propane","N-Butane,","Nitrogen","Carbondioxide"},
          reference_X={0.92,0.048,0.005,0.002,0.015,0.01}) annotation(IconMap(primitivesVisible=false));
+
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},

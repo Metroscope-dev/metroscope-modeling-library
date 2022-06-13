@@ -14,6 +14,7 @@ package FlueGasesMedium
                     Modelica.Media.IdealGases.Common.FluidData.SO2},
     substanceNames={"Nitrogen","Oxygen","Water","Carbondioxide","Sulfurdioxide"},
     reference_X={0.768,0.232,0.0,0.0,0.0}) annotation(IconMap(primitivesVisible=false));
+
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
