@@ -17,6 +17,7 @@ equation
 
   assert(abs(P_sensor.P_barA - 1) < 1e-5, "P_sensor should detect 1 barA");
   assert(abs(P_sensor.P_barG) < 1e-5, "P_sensor should detect 0 barG");
+  assert(abs(P_sensor.P_inHg - 29.530058647) < 1e-5, "P_sensor should detect 0 barG");
   assert(abs(source.P_out - sink.P_in) < 1e-5, "Pressure should be the same from source to sink");
   assert(abs(source.h_out - sink.h_in) < 1e-5, "Enthalpy should be the same from source to sink");
   assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");

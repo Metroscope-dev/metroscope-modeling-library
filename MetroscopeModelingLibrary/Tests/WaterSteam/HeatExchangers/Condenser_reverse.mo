@@ -75,15 +75,15 @@ equation
   connect(turbine_outlet.C_out, P_cond_sensor.C_in) annotation (Line(points={{-8.88178e-16,
           41},{0,41},{0,30},{1,30}}, color={28,108,200}));
   connect(condenser.C_cold_out, circulating_water_T_out_sensor.C_in)
-    annotation (Line(points={{16,-1.42222},{16,-1},{24,-1}}, color={28,108,200}));
+    annotation (Line(points={{16,-0.888889},{16,-1},{24,-1}},color={28,108,200}));
   connect(condensate_temperature_sensor.C_in, condenser.C_hot_out) annotation (
-      Line(points={{-1,-16},{0,-16},{0,-8.35556}}, color={28,108,200}));
+      Line(points={{-1,-16},{0,-16},{0,-8}},       color={28,108,200}));
   connect(condensate_temperature_sensor.C_out, condensate_sink.C_in)
     annotation (Line(points={{-1,-26},{-1,-32.5},{8.88178e-16,-32.5},{8.88178e-16,
           -39}}, color={28,108,200}));
   connect(circulating_water_P_out_sensor.C_in, circulating_water_T_out_sensor.C_out)
     annotation (Line(points={{40,-1},{34,-1}}, color={28,108,200}));
-  connect(condenser.C_cold_in, cooling_source.C_out) annotation (Line(points={{-16.64,3.55556},{-34,3.55556},{-34,4},{-51,4}}, color={28,108,200}));
+  connect(condenser.C_cold_in, cooling_source.C_out) annotation (Line(points={{-16,2.66667},{-34,2.66667},{-34,4},{-51,4}},    color={28,108,200}));
   connect(circulating_water_P_out_sensor.C_out, cooling_sink.C_in) annotation (Line(points={{50,-1},{57.5,-1},{57.5,0},{65,0}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,80}})),

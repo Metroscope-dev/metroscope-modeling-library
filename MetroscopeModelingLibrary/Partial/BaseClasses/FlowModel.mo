@@ -53,7 +53,7 @@ partial model FlowModel "Basic fluid transport brick for all components"
     P(start=P_in_0, nominal=P_in_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   replaceable Partial.Connectors.FluidOutlet C_out(
-    Q(start=Q_0),
+    Q(start=-Q_0),
     P(start=P_out_0, nominal=P_out_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
 equation
