@@ -17,22 +17,22 @@ model StodolaTurbine
   Inputs.InputYield eta_is(start=0.8) "Nominal isentropic efficiency";
   Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
   Units.Area area_nz(start=1) "Nozzle area";
-  Units.Velocity u_out(start=0);
+  Units.Velocity u_out(start=100);
   Units.Density rho_out(start=7);
 
   Units.MassFraction x_in(start=x_in_0);
   Units.MassFraction x_inner(start=x_inner_0);
   Units.MassFraction xm(start=xm_0);
 
-  Units.SpecificEnthalpy h_real(start=2.6e6); // Enthalpy after real decompression
-  Units.SpecificEnthalpy h_is(start=2.6e6); // Enthalpy after isentropic decompression
+  Units.SpecificEnthalpy h_real(start=h_out_0); // Enthalpy after real decompression
+  Units.SpecificEnthalpy h_is(start=h_out_0/0.8); // Enthalpy after isentropic decompression
   Medium.ThermodynamicState state_is; // Thermodynamic state after isentropic decompression
 
   // Liq/Vap enthalpies
-  Units.SpecificEnthalpy h_vap_in(start=1e6);
-  Units.SpecificEnthalpy h_vap_out(start=1e6);
-  Units.SpecificEnthalpy h_liq_in(start=1e6);
-  Units.SpecificEnthalpy h_liq_out(start=1e6);
+  Units.SpecificEnthalpy h_vap_in(start=h_vap_in_0);
+  Units.SpecificEnthalpy h_vap_out(start=h_vap_out_0);
+  Units.SpecificEnthalpy h_liq_in(start=h_liq_in_0);
+  Units.SpecificEnthalpy h_liq_out(start=h_liq_out_0);
 
   // Initialization parameters
   parameter Units.MassFraction x_inner_0 = min((h_out_0 - h_liq_out_0)/(h_vap_out_0 - h_liq_out_0), 1);

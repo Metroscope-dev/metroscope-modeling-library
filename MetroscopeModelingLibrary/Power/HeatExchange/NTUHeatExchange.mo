@@ -38,12 +38,12 @@ model NTUHeatExchange
   Units.Fraction Cr(start=Cr_0);
   Units.Fraction epsilon(start=epsilon_0);
   Units.Power W_max(start=W_max_0);
-protected
+
   parameter Real QCpMIN_0(unit="W/K") = if QCp_max_side == "hot" then Q_cold_0 * Cp_cold_0 else Q_hot_0 * Cp_hot_0;
   parameter Real QCpMAX_0(unit="W/K") = if QCp_max_side == "cold" then Q_cold_0 * Cp_cold_0 else Q_hot_0 * Cp_hot_0;
   parameter Real NTU_0(unit="1") = Kth_0*S_0/QCpMIN_0;
   parameter Units.Fraction Cr_0 = QCpMIN_0 / QCpMAX_0;
-  parameter Units.Fraction epsilon_0 = 2/(1 + Cr_0 + sqrt(1+Cr_0^2)* (1+exp(-NTU_0*(1+Cr_0^2)^0.5))/(1-exp(-NTU_0*(1+Cr_0^2)^0.5)));
+  parameter Units.Fraction epsilon_0 = 0.9;
   parameter Units.Power W_max_0 = QCpMIN_0*(T_hot_in_0 - T_cold_in_0);
   parameter Units.Power W_0 = epsilon_0*W_max_0;
 equation
