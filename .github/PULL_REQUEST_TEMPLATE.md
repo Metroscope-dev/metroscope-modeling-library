@@ -5,9 +5,9 @@ If it fixes a bug or resolves a feature request, be sure to link to that issue (
 
 ## Type of change
 
-- [ ] Bugfix (non-breaking change which fixes an issue)
+- [ ] Bugfix (non-breaking change which fixes a bug/issue)
 - [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Refactoring (non-breaking change which reorganizes code)
 - [ ] Release & Version Update (when cumulative changes justify a release)
 - [ ] Documentation Update
 
@@ -15,11 +15,24 @@ If it fixes a bug or resolves a feature request, be sure to link to that issue (
 
 You can also fill these out after creating the PR, but make sure to **check them all before submitting your PR for review**.
 
+GitHub checks:
+
 - [ ] I have added the appropriate tags, reviewers, projects and linked issues to this PR
+- [ ] I have checked for conflicts with target branch, and merged/rebased in consequence
+
+Model development checks:
+
 - [ ] I have performed a self-review of my own code
 - [ ] **I have checked that my changes do not bring any retrocompatibility issue comparing to [MML3-DTG-v2](https://github.com/Metroscope-dev/metroscope-modeling-library/releases/tag/MML3-DTG-v2) version**
 - [ ] Existing tests pass (including Metroscopia !).
 - [ ] I have added/updated tests that prove my development works and does not break anything.
+
+Library checks:
+
+- [ ] I have checked in the file explorer that I am not adding duplicate file/folder/package (due to renaming or moving file/package)
+- [ ] I have checked that the packages I upload are stored as separate files
+
+Documentation checks:
+
 - [ ] I have made corresponding changes or additions to the documentation
 - [ ] I have added corresponding entries to the [Changelog](../CHANGELOG.md)
-- [ ] I have checked for conflicts with target branch, and merged/rebased in consequence
