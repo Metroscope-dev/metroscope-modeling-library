@@ -18,8 +18,8 @@ partial model IsoPHFlowSimplifiedModel
   Units.SpecificEnthalpy h(start=h_0) "Enthalpy of the fluid into the component";
 
 
-  replaceable Connectors.FluidInlet C_in(Q(start=Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
-  replaceable Connectors.FluidOutlet C_out(Q(start=-Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+  replaceable Connectors.FluidInlet C_in(Q(start=Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-158,-28},{-102,28}}), iconTransformation(extent={{-158,-28},{-102,28}})));
+  replaceable Connectors.FluidOutlet C_out(Q(start=-Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{102,-30},{160,28}}), iconTransformation(extent={{102,-30},{160,28}})));
 equation
   P = C_in.P;
   Q = C_in.Q;
@@ -28,6 +28,7 @@ equation
 
   state = Medium.setState_phX(P, h, Xi);
 
-  connect(C_in, C_out) annotation (Line(points={{-100,0},{100,0}}, color={95,95,95}));
+  connect(C_in, C_out) annotation (Line(points={{-130,3.55271e-15},{-6,3.55271e-15},{-6,-1},{131,-1}},
+                                                                   color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end IsoPHFlowSimplifiedModel;
