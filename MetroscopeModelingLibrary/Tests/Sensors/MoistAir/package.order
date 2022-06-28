@@ -1,4 +1,5 @@
-MoistAirTemperatureSensor
-MoistAirFlowSensor
-MoistAirPressureSensor
-MoistAirDeltaPressureSensor
+TemperatureSensor
+FlowSensor
+FlowSensor_faulty
+PressureSensor
+DeltaPressureSensor
