@@ -13,10 +13,12 @@ model FlowSensor
 equation
   source.P_out = source_P;
   source.h_out = source_h;
-  source_Q_sensor.Q = source_Q;
+  source.Q_out = - source_Q;
   source.relative_humidity = 0.1;
 
-  assert(abs(source_Q_sensor.Q - 100) < 1e-5, "T_sensor should detect 25 deg C");
+  if not source_Q_sensor.faulty then // To avoid breaking FlowSensor_faulty test
+    assert(abs(source_Q_sensor.Q - 100) < 1e-5, "Q_sensor should detect 100 kg/s");
+  end if;
   assert(abs(source.P_out - sink.P_in) < 1e-5, "Pressure should be the same from source to sink");
   assert(abs(source.h_out - sink.h_in) < 1e-5, "Enthalpy should be the same from source to sink");
   assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");
