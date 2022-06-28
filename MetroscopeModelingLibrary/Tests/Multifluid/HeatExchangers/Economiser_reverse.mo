@@ -87,7 +87,7 @@ equation
     annotation (Line(points={{23.5,0},{40,0}}, color={95,95,95}));
   connect(hot_sink.C_in, P_hot_out_sensor.C_out)
     annotation (Line(points={{65,0},{48,0}}, color={95,95,95}));
-  connect(P_cold_out_sensor.C_in, economiser.C_cold_out) annotation (Line(points={{-12,-34},{-12,-28.9},{-11.5,-28.9},{-11.5,-23.8}}, color={28,108,200}));
+  connect(P_cold_out_sensor.C_in, economiser.C_cold_out) annotation (Line(points={{-12,-34},{-12,-28.9},{-11.5,-28.9},{-11.5,23.8}},  color={28,108,200}));
   connect(cold_source.C_out, economiser.C_cold_in) annotation (Line(points={{10,37},{9.5,37},{9.5,23.8}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
