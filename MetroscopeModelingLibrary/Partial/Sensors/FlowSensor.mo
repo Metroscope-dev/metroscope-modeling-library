@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model FlowSensor
-  extends Partial.BaseClasses.IsoPHFlowSimplifiedModel annotation(IconMap(primitivesVisible=false));
+  extends BaseSensor(                                  faulty_flow_rate=faulty) annotation(IconMap(primitivesVisible=false));
   extends MetroscopeModelingLibrary.Icons.Sensors.InlineSensorIcon;
   extends MetroscopeModelingLibrary.Icons.Sensors.FlowIcon;
 
@@ -12,6 +12,9 @@ partial model FlowSensor
   Units.VolumeFlowRate Qv(start=Qv_0, nominal=Qv_0);
   Real Q_th(start=Q_0*Constants.kgs_to_th, nominal=Q_0*Constants.kgs_to_th); // Flow rate in tons per hour
   Real Q_lbs(start=Q_0*Constants.kgs_to_lbs, nominal=Q_0*Constants.kgs_to_lbs); // Flow rate in pounds per second;
+
+  // Failure modes
+  parameter Boolean faulty = false;
 equation
   Qv = Q / Medium.density(state);
   Q_th = Q * Constants.kgs_to_th;
