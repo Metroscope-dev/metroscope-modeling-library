@@ -16,10 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Fixed [#214](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/214): `.mat` files are ignored by default, but can still be added manually, [PR#215](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/215)
 
 ### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+ - Moved `Partial/BaseClasses/IsoPHSimplifiedFlowModel.mo` to `Partial/Sensors/BaseSensor.mo` [PR #245](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/245)
  - Replaced `PartialTransportModel` by `FlowModel` and removed `Xi_in`, `Xi_out`, `Q_in`, `Q_out`, `Qv_in`, `Qv_out`, `Qvm`, `rho_in`, `rho_out`, `rhom`, `DM`. Added `rho` instead of `rhom`, [PR#233](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/233)
  - Ordered nuclear examples into subpackages called with power plant system names, [PR#219](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/219)
 
 ### Added <!--Make sure to add a link to the PR and issues related to your change-->
+ - Added `mass_flow_rate_bias` fault in `BaseSensor`, to be able to declare faulty `FlowSensor` [PR #245](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/245)
  - Added `Mlb/h` unit in flow sensor [PR #240](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/240)
  - Added LP turbine with nozzle and condenser example [PR#224](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/224)
  - Added propagation of start values for water steam components, [PR#220](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/220)

@@ -5,7 +5,8 @@ model MetroscopiaNPP_faulty
     superheater(faulty=true),
     condenser(faulty=true),
     LP_heater(faulty=true),
-    HP_heater(faulty=true));
+    HP_heater(faulty=true),
+    Q_feedwater_sensor(faulty=true));
 
   import MetroscopeModelingLibrary.Units;
 
@@ -17,6 +18,7 @@ model MetroscopiaNPP_faulty
   input Real Failure_LP_heater_fouling(start=0);
   input Real Failure_HP_heater_fouling(start=0);
   input Real Failure_water_level_rise(start=0);
+  input Real Failure_mass_flow_bias(start=0);
 
   // Leaks
   input Real Failure_bypass_HP_control_valve_to_condenser_Q(start=0);
@@ -46,6 +48,9 @@ model MetroscopiaNPP_faulty
   WaterSteam.Pipes.Leak bypass_LP_heater_drains_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={277,-141})));
   WaterSteam.Pipes.Leak bypass_HP_heater_drains_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-16,-144})));
 equation
+  // Mass flow bias
+  Q_feedwater_sensor.mass_flow_rate_bias = Failure_mass_flow_bias;
+
   // Superheater
   superheater.fouling = Failure_superheater_fouling;
   superheater.closed_vent = Failure_superheater_closed_vent;
