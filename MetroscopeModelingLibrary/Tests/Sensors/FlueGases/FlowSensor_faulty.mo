@@ -4,7 +4,7 @@ model FlowSensor_faulty
 
   Units.MassFlowRate Failure_mass_flow_rate_bias(start=0);
 equation
-  Failure_mass_flow_rate_bias = - 50 * (1 - time) + 50 * time; // bias of -50 means that real flow = measured flow - 50
+  Failure_mass_flow_rate_bias = 0 + 50 * time; // bias of -50 means that real flow = measured flow - 50
   source_Q_sensor.mass_flow_rate_bias = Failure_mass_flow_rate_bias;
 
   connect(source_Q_sensor.C_in, source.C_out) annotation (Line(points={{-10,0},{-43,0}}, color={28,108,200}));
