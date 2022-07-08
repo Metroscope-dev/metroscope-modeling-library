@@ -67,7 +67,7 @@ equation
   T_cold_out =cold_side.T_out;
   T_hot_in =hot_side.T_in;
   T_hot_out =hot_side.T_out;
-  hot_side.W = W;
+  hot_side.W = -W;
 
   // Energy balance
   cold_side.W + hot_side.W = 0;
