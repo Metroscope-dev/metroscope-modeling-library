@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial;
-partial package Machines
+package Machines
 
 annotation (Icon(graphics={
         Rectangle(

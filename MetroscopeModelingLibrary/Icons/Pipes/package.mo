@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons;
-partial package Pipes
+package Pipes
   extends Icons.PackageIcon;
 
 
