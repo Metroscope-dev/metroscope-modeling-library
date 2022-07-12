@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Icons;
-partial package Connectors
+package Connectors
   extends Icons.PackageIcon;
 
 annotation (Icon(graphics={

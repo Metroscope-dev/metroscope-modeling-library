@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial;
-partial package HeatExchangers
+package HeatExchangers
 
   annotation (Icon(graphics={
       Rectangle(
