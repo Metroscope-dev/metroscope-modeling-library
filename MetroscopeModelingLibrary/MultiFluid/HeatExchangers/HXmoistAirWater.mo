@@ -61,12 +61,12 @@ model HXmoistAirWater
   WaterSteam.Connectors.Outlet C_hot_out(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,-60},{10,-40}}), iconTransformation(extent={{-10,-60},{10,-40}})));
 equation
       // Definitions
-  Q_cold =cold_side.Q;
-  Q_hot =hot_side.Q;
-  T_cold_in =cold_side.T_in;
-  T_cold_out =cold_side.T_out;
-  T_hot_in =hot_side.T_in;
-  T_hot_out =hot_side.T_out;
+  Q_cold = cold_side.Q;
+  Q_hot = hot_side.Q;
+  T_cold_in = cold_side.T_in;
+  T_cold_out = cold_side.T_out;
+  T_hot_in = hot_side.T_in;
+  T_hot_out = hot_side.T_out;
   hot_side.W = -W;
 
   // Energy balance
