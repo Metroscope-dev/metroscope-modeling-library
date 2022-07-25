@@ -69,11 +69,11 @@ protected
 
 equation
   // Definitions
-  Q_cold =cold_side.Q;
-  Q_hot =hot_side.Q;
-  T_cold_in = cold_side.T_in;
+  Q_cold = cold_side.Q;
+  Q_hot = hot_side.Q;
+  T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side.T_out;
-  T_hot_in = hot_side.T_in;
+  T_hot_in = hot_side_pipe.T_in;
   T_hot_out = hot_side.T_out;
   cold_side.W = W;
 
@@ -81,9 +81,9 @@ equation
   hot_side.W + cold_side.W = 0;
 
   // Pressure losses
-  cold_side_pipe.delta_z=0;
+  cold_side_pipe.delta_z = 0;
   cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z=0;
+  hot_side_pipe.delta_z = 0;
   hot_side_pipe.Kfr = Kfr_hot;
 
   // Power Exchange
@@ -101,13 +101,13 @@ equation
   // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise of the H&MB diagram.
   // For more details about this hypothesis, please refer the Economiser page of the MML documentation.
 
-  Cp_cold_min =MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in); // water steam inlet Cp
+  Cp_cold_min = MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in); // water steam inlet Cp
   state_cold_out = MetroscopeModelingLibrary.Media.WaterSteamMedium.setState_pTX(cold_side.P_in, cold_side.T_in + nominal_cold_side_temperature_rise,cold_side.Xi);
-  Cp_cold_max= MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out); // water steam outlet Cp
+  Cp_cold_max = MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out); // water steam outlet Cp
 
-  Cp_hot_max=MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in);// fg inlet Cp
+  Cp_hot_max = MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in);// fg inlet Cp
   state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side.P_in, hot_side.T_in + nominal_hot_side_temperature_rise,hot_side.Xi);
-  Cp_hot_min =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
+  Cp_hot_min = MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
 
 
 
