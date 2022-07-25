@@ -52,11 +52,11 @@ model Evaporator
     P_in_0=P_cold_in_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
-        origin={-20,20})));
+        origin={-18,20})));
   WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={42,34})));
+        origin={40,40})));
   FlueGases.BaseClasses.IsoPFlowModel hot_side_heating(Q_0=Q_hot_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=180,
@@ -67,7 +67,7 @@ model Evaporator
     P_in_0=P_cold_in_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
-        origin={20,20})));
+        origin={16,20})));
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(
           extent={{-80,-12},{-60,8}}),  iconTransformation(extent={{-80,-12},{-60,8}})));
   FlueGases.Connectors.Outlet C_hot_out(Q(start=Q_hot_0)) annotation (Placement(transformation(
@@ -80,18 +80,18 @@ equation
   // Definitions
   Q_cold = cold_side_heating.Q;
   Q_hot = hot_side_vaporising.Q;
-  T_cold_in = cold_side_heating.T_in;
+  T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side_heating.T_out;
-  T_hot_in = hot_side_vaporising.T_in;
+  T_hot_in = hot_side_pipe.T_in;
   T_hot_out = hot_side_vaporising.T_out;
   Tsat = cold_side_heating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
 
     // Pressure losses
-  cold_side_pipe.delta_z=0;
+  cold_side_pipe.delta_z = 0;
   cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z=0;
+  hot_side_pipe.delta_z = 0;
   hot_side_pipe.Kfr = Kfr_hot;
 
   /* heating*/
@@ -125,14 +125,15 @@ equation
   HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
   connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
-  connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{30,70},{30,58},{42,58},{42,44}},
+  connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{30,70},{30,50},{40,50}},
                                                                                      color={28,108,200}));
   connect(hot_side_pipe.C_in,C_hot_in)  annotation (Line(points={{-58,-20},{-70,-20},{-70,-2}}, color={95,95,95}));
-  connect(cold_side_vaporising.C_in,cold_side_heating. C_out) annotation (Line(points={{-10,20},{10,20}}, color={28,108,200}));
-  connect(cold_side_pipe.C_out,cold_side_heating. C_in) annotation (Line(points={{42,24},{42,20},{30,20}}, color={28,108,200}));
+  connect(cold_side_vaporising.C_in,cold_side_heating. C_out) annotation (Line(points={{-8,20},{6,20}},   color={28,108,200}));
+  connect(cold_side_pipe.C_out,cold_side_heating. C_in) annotation (Line(points={{40,30},{40,20},{26,20}}, color={28,108,200}));
   connect(hot_side_vaporising.C_out,hot_side_heating. C_in) annotation (Line(points={{-10,-20},{10,-20}}, color={95,95,95}));
   connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,-20},{70,-20},{70,-2}}, color={95,95,95}));
-  connect(cold_side_vaporising.C_out, C_cold_out) annotation (Line(points={{-30,20},{-30,20},{-30,70}}, color={28,108,200}));
+  connect(cold_side_vaporising.C_out, C_cold_out) annotation (Line(points={{-28,20},{-40,20},{-40,40},{-30,40},{-30,70}},
+                                                                                                        color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-68,50},{70,-50}},
