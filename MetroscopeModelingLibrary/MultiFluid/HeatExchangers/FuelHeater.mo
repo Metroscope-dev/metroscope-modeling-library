@@ -50,19 +50,19 @@ model FuelHeater
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
+  Fuel.Pipes.Pipe cold_side_pipe annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
+  Fuel.BaseClasses.IsoPFlowModel cold_side annotation (Placement(transformation(extent={{0,-10},{20,10}})));
   WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-14,-24})));
-  Fuel.Pipes.Pipe cold_side_pipe annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
-  Fuel.BaseClasses.IsoPFlowModel cold_side annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+        origin={40,44})));
 equation
     // Definitions
   Q_cold = cold_side.Q;
   Q_hot = hot_side.Q;
-  T_cold_in = cold_side.T_in;
+  T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side.T_out;
-  T_hot_in = hot_side.T_in;
+  T_hot_in = hot_side_pipe.T_in;
   T_hot_out = hot_side.T_out;
   cold_side.W = W;
 
@@ -85,12 +85,12 @@ equation
   HX.T_hot_in = T_hot_in;
   HX.Cp_cold = FuelMedium.specificHeatCapacityCp(cold_side.state_in);
   HX.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side.state_in);
-  connect(hot_side_pipe.C_out, C_hot_out) annotation (Line(points={{-14,-34},{-14,-70},{-40,-70}},       color={28,108,200}));
-  connect(hot_side_pipe.C_in, hot_side.C_out) annotation (Line(points={{-14,-14},{-14,28},{0,28}},color={28,108,200}));
-  connect(hot_side.C_in, C_hot_in) annotation (Line(points={{20,28},{40,28},{40,70}}, color={28,108,200}));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{-52,0},{-70,0}}, color={213,213,0}));
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
   connect(cold_side.C_out, C_cold_out) annotation (Line(points={{20,0},{70,0}}, color={213,213,0}));
+  connect(hot_side.C_in, hot_side_pipe.C_out) annotation (Line(points={{20,28},{40,28},{40,34}}, color={28,108,200}));
+  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(points={{40,54},{40,70}}, color={28,108,200}));
+  connect(hot_side.C_out, C_hot_out) annotation (Line(points={{0,28},{-20,28},{-20,-40},{-40,-40},{-40,-70}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-70,50},{70,-50}},
