@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial;
-partial package Pipes
+package Pipes
 
   annotation (Icon(graphics={
         Rectangle(
