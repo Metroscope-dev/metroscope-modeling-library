@@ -2,3 +2,4 @@ NTU_HeatExchanger_shell_and_tubes
 NTU_HeatExchanger_monophasic_cross_current
 NTU_HeatExchanger_condenser
 NTU_HeatExchanger_evaporator
+LMTD_HeatExchange_monophasic_counter_current

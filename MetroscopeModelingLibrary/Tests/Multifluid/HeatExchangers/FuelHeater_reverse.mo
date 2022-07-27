@@ -2,14 +2,14 @@ within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model FuelHeater_reverse
   extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
   // Boundary conditions
-  input Real P_hot_source(start=20, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_hot_source(start=50) "kg/s";
-  input Real T_hot_source(start=50) "J/kg";
+  input Real P_hot_source(start=47, min=0, nominal=10) "barA";
+  input Units.MassFlowRate Q_hot_source(start=8) "kg/s";
+  input Real T_hot_source(start=230) "J/kg";
 
-  input Real P_cold_source(start=20, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_cold_source(start=100) "kg/s";
-  //input Real T_cold_source(start = 50, min = 0, nominal = 50) "degC";
-  input Units.SpecificEnthalpy h_cold_source(start=1e6) "J/kg";
+  input Real P_cold_source(start=30, min=0, nominal=10) "barA";
+  input Units.MassFlowRate Q_cold_source(start=12) "kg/s";
+  input Real T_cold_source(start = 30, min = 0, nominal = 50) "degC";
+  //input Units.SpecificEnthalpy h_cold_source(start=1e6) "J/kg";
   // Parameters
   parameter String QCp_max_side = "hot";
   parameter Units.Area S = 100;
@@ -20,9 +20,10 @@ model FuelHeater_reverse
   output Units.FrictionCoefficient Kfr_cold;
 
     // Calibration inputs
-  input Real P_cold_out(start = 19, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
-  input Real P_hot_out(start = 50, min = 0, nominal = 10) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
-  input Real T_hot_out(start = 55, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
+  input Real P_cold_out(start = 30, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
+  input Real P_hot_out(start = 47, min = 0, nominal = 10) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
+  //input Real T_hot_out(start = 80, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
+  input Real T_cold_out(start = 200, nominal = 200);
 
   MultiFluid.HeatExchangers.FuelHeater fuelHeater(QCp_max_side = QCp_max_side) annotation (Placement(transformation(extent={{-38,-34},{38,34}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(
@@ -47,11 +48,11 @@ model FuelHeater_reverse
 equation
   // Boundary conditions
   hot_source.P_out = P_hot_source * 1e5;
-  hot_source.T_out = T_hot_source;
+  hot_source.T_out = T_hot_source+273.15;
   hot_source.Q_out = - Q_hot_source;
   cold_source.P_out = P_cold_source *1e5;
-  //cold_source.T_out = 273.15 + T_cold_source;
-  cold_source.h_out = h_cold_source;
+  cold_source.T_out = 273.15 + T_cold_source;
+  //cold_source.h_out = h_cold_source;
   cold_source.Q_out = - Q_cold_source;
   cold_source.Xi_out = {0.92,0.048,0.005,0.002,0.015,0.01};
 
@@ -59,7 +60,8 @@ equation
   fuelHeater.S = S;
 
     // Inputs for calibration
-  T_hot_out_sensor.T_degC = T_hot_out;
+  //T_hot_out_sensor.T_degC = T_hot_out;
+  cold_sink.T_in = T_cold_out +273.15;
   P_cold_out_sensor.P_barA = P_cold_out;
   P_hot_out_sensor.P_barA = P_hot_out;
 
