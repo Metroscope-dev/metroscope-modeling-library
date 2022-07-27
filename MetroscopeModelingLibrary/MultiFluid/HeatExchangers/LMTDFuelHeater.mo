@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
-model FuelHeater
+model LMTDFuelHeater
+
   extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
   package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
@@ -11,8 +12,6 @@ model FuelHeater
   Inputs.InputFrictionCoefficient Kfr_hot;
 
   // Heating
-  parameter String QCp_max_side = "hot";
-  parameter String HX_config = "monophasic_cross_current";
   Inputs.InputArea S;
   Inputs.InputHeatExchangeCoefficient Kth;
   Units.Power W;
@@ -26,20 +25,15 @@ model FuelHeater
   Units.Temperature T_hot_out;
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 500;
-  parameter Units.MassFlowRate Q_hot_0 = 50;
-  parameter Units.Temperature T_hot_in_0 = 76 + 273.15;
-  parameter Units.Pressure P_hot_in_0 = 18 *1e5;
+  parameter Units.MassFlowRate Q_cold_0 = 12;
+  parameter Units.MassFlowRate Q_hot_0 = 8.6;
+  parameter Units.Temperature T_cold_in_0 = 29.5 + 273.15;
+  parameter Units.Temperature T_hot_in_0 = 230 +273.15;
+  parameter Units.Pressure P_cold_in_0 = 29.7 *1e5;
+  parameter Units.Pressure P_hot_in_0 = 47 *1e5;
 
-  Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
-  Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
-  WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{30,60},{50,80}}), iconTransformation(extent={{30,60},{50,80}})));
-  WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{-50,-80},{-30,-60}}),
-                                                                                                           iconTransformation(extent={{-50,-80},{-30,-60}})));
-  Power.HeatExchange.NTUHeatExchange HX(
-    config=HX_config,
-    QCp_max_side=QCp_max_side,
-    T_hot_in_0=T_hot_in_0)                                                                                                  annotation (Placement(transformation(
+  Power.HeatExchange.LMTDHeatExchange HX(
+    T_cold_in_0=T_cold_in_0)                                                                                                  annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={10,14})));
@@ -56,6 +50,11 @@ model FuelHeater
         origin={-14,-24})));
   Fuel.Pipes.Pipe cold_side_pipe annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
   Fuel.BaseClasses.IsoPFlowModel cold_side annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+  Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
+  Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
+  WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{30,60},{50,80}}), iconTransformation(extent={{30,60},{50,80}})));
+  WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{-50,-80},{-30,-60}}),
+                                                                                                           iconTransformation(extent={{-50,-80},{-30,-60}})));
 equation
     // Definitions
   Q_cold = cold_side.Q;
@@ -79,18 +78,16 @@ equation
   HX.W = W;
   HX.S = S;
   HX.Kth = Kth;
-  HX.Q_cold = Q_cold;
-  HX.Q_hot = Q_hot;
   HX.T_cold_in = T_cold_in;
   HX.T_hot_in = T_hot_in;
-  HX.Cp_cold = FuelMedium.specificHeatCapacityCp(cold_side.state_in);
-  HX.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side.state_in);
-  connect(hot_side_pipe.C_out, C_hot_out) annotation (Line(points={{-14,-34},{-14,-70},{-40,-70}},       color={28,108,200}));
-  connect(hot_side_pipe.C_in, hot_side.C_out) annotation (Line(points={{-14,-14},{-14,28},{0,28}},color={28,108,200}));
-  connect(hot_side.C_in, C_hot_in) annotation (Line(points={{20,28},{40,28},{40,70}}, color={28,108,200}));
-  connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{-52,0},{-70,0}}, color={213,213,0}));
-  connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
-  connect(cold_side.C_out, C_cold_out) annotation (Line(points={{20,0},{70,0}}, color={213,213,0}));
+  HX.T_cold_out = T_cold_out;
+  HX.T_hot_out = T_hot_out;
+  connect(hot_side_pipe.C_out,C_hot_out)  annotation (Line(points={{-14,-34},{-14,-70},{-40,-70}},       color={28,108,200}));
+  connect(hot_side_pipe.C_in,hot_side. C_out) annotation (Line(points={{-14,-14},{-14,28},{0,28}},color={28,108,200}));
+  connect(hot_side.C_in,C_hot_in)  annotation (Line(points={{20,28},{40,28},{40,70}}, color={28,108,200}));
+  connect(cold_side_pipe.C_in,C_cold_in)  annotation (Line(points={{-52,0},{-70,0}}, color={213,213,0}));
+  connect(cold_side_pipe.C_out,cold_side. C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
+  connect(cold_side.C_out,C_cold_out)  annotation (Line(points={{20,0},{70,0}}, color={213,213,0}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-70,50},{70,-50}},
@@ -100,7 +97,5 @@ equation
           points={{40,66},{40,-60},{20,-60},{20,64},{0,64},{0,-60},{-20,-60},{-20,65.6309},{-40,66},{-40,-66}},
           color={28,108,200},
           thickness=1,
-          smooth=Smooth.Bezier),
-        Line(points={{122,-56}}, color={102,44,145})}),
-                          Diagram(coordinateSystem(preserveAspectRatio=false)));
-end FuelHeater;
+          smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+end LMTDFuelHeater;
