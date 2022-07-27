@@ -8,7 +8,7 @@ partial model IsoHFlowModel
   parameter Units.SpecificEnthalpy h_0 = 5e5;
 
   // Input Quantity
-  Units.SpecificEnthalpy h "Enthalpy of the fluid into the component";
+  Units.SpecificEnthalpy h(start=h_0) "Enthalpy of the fluid into the component";
 equation
   // Input Quantity
   h = h_in;
