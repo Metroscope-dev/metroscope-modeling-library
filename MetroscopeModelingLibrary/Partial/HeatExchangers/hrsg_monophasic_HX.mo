@@ -31,7 +31,7 @@ partial model hrsg_monophasic_HX
   parameter Real h_hot_in_0 = 6e5;
 
 
-  FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0),h_outflow(start=h_hot_in_0)) annotation (Placement(transformation(
+  FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(
           extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
   FlueGases.Connectors.Outlet C_hot_out(Q(start=Q_hot_0),h_outflow(start=h_hot_in_0)) annotation (Placement(transformation(
           extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
@@ -39,7 +39,7 @@ partial model hrsg_monophasic_HX
           extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=Q_cold_0)) annotation (Placement(transformation(
           extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
-  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0,h_in_0=h_hot_in_0) annotation (Placement(transformation(extent={{-50,-18},{-30,2}})));
+  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0,h_0=h_hot_in_0) annotation (Placement(transformation(extent={{-50,-18},{-30,2}})));
   Power.HeatExchange.NTUHeatExchange HX(config="monophasic_cross_current", QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
