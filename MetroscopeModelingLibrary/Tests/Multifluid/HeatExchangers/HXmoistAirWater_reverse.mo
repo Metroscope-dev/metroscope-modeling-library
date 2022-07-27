@@ -36,7 +36,7 @@ model HXmoistAirWater_reverse
     cold_side(
     h_in(           start =  9e3)))                                                                 annotation (Placement(transformation(extent={{-26,18},{22,-22}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-30,-96},{-10,-76}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{4,64},{24,84}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{12,64},{32,84}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(Q_out(start=-700))
                                                                            annotation (Placement(transformation(extent={{-90,-12},{-70,8}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{72,-12},{92,8}})));
@@ -85,8 +85,10 @@ equation
 
   connect(hot_source.C_out, hXmoistAirWater.C_hot_in) annotation (Line(points={{-15,-86},{-2,-86},{-2,-16}}, color={28,108,200}));
   connect(hXmoistAirWater.C_cold_in, cold_source.C_out) annotation (Line(points={{-18.8,-2},{-75,-2}}, color={85,170,255}));
-  connect(P_hot_out_sensor.C_in, hXmoistAirWater.C_hot_out) annotation (Line(points={{-5.55112e-16,24},{0,8},{-2,8}}, color={28,108,200}));
-  connect(hot_sink.C_in, T_hot_out_sensor.C_out) annotation (Line(points={{9,74},{0,74},{5.55112e-16,70}}, color={28,108,200}));
+  connect(P_hot_out_sensor.C_in, hXmoistAirWater.C_hot_out) annotation (Line(points={{-5.55112e-16,24},{-2,8},{-2,12}},
+                                                                                                                      color={28,108,200}));
+  connect(hot_sink.C_in, T_hot_out_sensor.C_out) annotation (Line(points={{17,74},{5.55112e-16,74},{5.55112e-16,70}},
+                                                                                                           color={28,108,200}));
   connect(T_hot_out_sensor.C_in, P_hot_out_sensor.C_out) annotation (Line(points={{-5.55112e-16,50},{-5.55112e-16,47},{5.55112e-16,47},{5.55112e-16,44}}, color={28,108,200}));
   connect(hXmoistAirWater.C_cold_out, P_cold_out_sensor.C_in) annotation (Line(points={{14.8,-2},{48,-2}}, color={85,170,255}));
   connect(P_cold_out_sensor.C_out, cold_sink.C_in) annotation (Line(points={{68,-2},{77,-2}}, color={85,170,255}));
