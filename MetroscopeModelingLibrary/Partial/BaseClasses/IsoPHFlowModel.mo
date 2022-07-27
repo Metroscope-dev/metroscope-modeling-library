@@ -9,7 +9,7 @@ partial model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
   parameter Units.SpecificEnthalpy h_0=5e5;
 
   // Input Quantities
-  Units.SpecificEnthalpy h "Enthalpy of the fluid into the component";
+  Units.SpecificEnthalpy h(start=h_0) "Enthalpy of the fluid into the component";
   Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
 
 equation
