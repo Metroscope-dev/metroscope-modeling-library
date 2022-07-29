@@ -68,11 +68,11 @@ equation
   fuelHeater.Kfr_hot = Kfr_hot;
   fuelHeater.Kfr_cold = Kfr_cold;
 
-  connect(fuelHeater.C_hot_in, hot_source.C_out) annotation (Line(points={{11.4,23.8},{12,23.8},{12,45}}, color={28,108,200}));
+  connect(fuelHeater.C_hot_in, hot_source.C_out) annotation (Line(points={{15.2,23.8},{12,23.8},{12,45}}, color={28,108,200}));
   connect(fuelHeater.C_cold_in, cold_source.C_out) annotation (Line(points={{-26.6,0},{-51,0}}, color={213,213,0}));
   connect(fuelHeater.C_cold_out, P_cold_out_sensor.C_in) annotation (Line(points={{26.6,0},{46,0}}, color={213,213,0}));
   connect(cold_sink.C_in, P_cold_out_sensor.C_out) annotation (Line(points={{79,0},{66,0}}, color={213,213,0}));
-  connect(fuelHeater.C_hot_out, T_hot_out_sensor.C_in) annotation (Line(points={{-11.4,23.8},{-11.4,27.9},{-12,27.9},{-12,32}}, color={28,108,200}));
+  connect(fuelHeater.C_hot_out, T_hot_out_sensor.C_in) annotation (Line(points={{-15.2,-23.8},{-15.2,27.9},{-12,27.9},{-12,32}},color={28,108,200}));
   connect(T_hot_out_sensor.C_out, P_hot_out_sensor.C_in) annotation (Line(points={{-12,52},{-12,58}}, color={28,108,200}));
   connect(hot_sink.C_in, P_hot_out_sensor.C_out) annotation (Line(points={{-12,85},{-12,78}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
