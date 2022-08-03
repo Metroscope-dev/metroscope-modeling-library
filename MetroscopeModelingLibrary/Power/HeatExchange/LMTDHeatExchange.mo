@@ -8,13 +8,11 @@ model LMTDHeatExchange
   parameter Units.Temperature T_cold_in_0 = 273.15 + 100 "Init parameter for Cold mass flow rate at the inlet";
   parameter Units.Temperature T_hot_out_0 = 273.15 + 200 "Init parameter for Hot mass flow rate at the outlet";
   parameter Units.Temperature T_cold_out_0 = 273.15 + 100 "Init parameter for Cold mass flow rate at the outlet";
-  parameter Units.Area S_0 = 100 "init parameter for Heat exchange surface";
-  parameter Units.HeatExchangeCoefficient Kth_0 = 5000 "init parameter for Heat exchange coefficient";
 
   /* Exchanger configuration and parameters */
   //parameter String config = "LMTD_monophasic_counter_current"; No need for parameter as long as there is only one configuration !!
-  Inputs.InputArea S(start=S_0) "Heat exchange surface";
-  Inputs.InputHeatExchangeCoefficient Kth(start=Kth_0) "Heat exchange coefficient";
+  Inputs.InputArea S(start=100) "Heat exchange surface";
+  Inputs.InputHeatExchangeCoefficient Kth(start=1900) "Heat exchange coefficient";
 
   /* Exchanger output */
   Units.Power W(start=1e4);
@@ -26,8 +24,8 @@ model LMTDHeatExchange
   Inputs.InputTemperature T_cold_out(start=T_cold_out_0) "Temperature, cold side, at the outlet";
 
   // intermediate variables
-  Real dT_a(start = 15);
-  Real dT_b(start=1);
+  Units.DifferentialTemperature dT_a(start = 15);
+  Units.DifferentialTemperature dT_b(start=1);
 equation
 
    dT_a = T_hot_in - T_cold_out;

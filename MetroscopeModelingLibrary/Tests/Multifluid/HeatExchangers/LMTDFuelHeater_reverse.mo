@@ -21,8 +21,8 @@ model LMTDFuelHeater_reverse
     // Calibration inputs
   input Real P_cold_out(start = 30, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
   input Real P_hot_out(start = 47, min = 0, nominal = 10) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
-  //input Real T_hot_out(start = 80, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
-  input Real T_cold_out(start = 200, nominal = 200);
+  input Real T_cold_out(start = 200, nominal = 200)
+                                                   "degC";// Outlet temperature on cold side, to calibrate Kth
   MultiFluid.HeatExchangers.LMTDFuelHeater
                                        lMTDFuelHeater                          annotation (Placement(transformation(extent={{-36,-34},{40,34}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(
