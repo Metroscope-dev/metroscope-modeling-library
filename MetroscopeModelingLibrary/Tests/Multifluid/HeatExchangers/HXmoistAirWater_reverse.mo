@@ -4,15 +4,15 @@ model HXmoistAirWater_reverse
 
  // Boundary conditions
   input Real P_hot_source(start=3, min=0, nominal=10) "barA";
-  //input Units.MassFlowRate Q_hot_source(start=0.05) "kg/s";
-  input Real T_hot_source(start=36, nominal = 40, unit="degC");
+  input Units.MassFlowRate Q_hot_source(start=31.4) "kg/s";
+  input Real T_hot_source(start=9.03, nominal = 40, unit="degC");
 
-  input Real P_cold_source(start=1, min=0, nominal=10) "barA";
+  input Real P_cold_source(start=0.985, min=0, nominal=10) "barA";
   input Units.MassFlowRate Q_cold_source(start=700) "kg/s";
-  input Real T_cold_source(start = 0.44, nominal = 10,unit="degC");
+  input Real T_cold_source(start = 6.44, nominal = 10,unit="degC");
   //input Real h_cold_source(start = 9e3, min = 0, nominal = 10e4) "degC";
-  input Real T_cold_sink(  start = 7.54, nominal = 10, unit= "degC");
-  input Real moistAir_relative_humidity( start=0, nominal=1) "%";
+  //input Real T_cold_sink(  start = 7.54, nominal = 10, unit= "degC");
+  //input Real moistAir_relative_humidity( start=0.55, nominal=1) "%";
 
   // Parameters
   parameter String QCp_max_side = "cold";
@@ -24,9 +24,9 @@ model HXmoistAirWater_reverse
   output Units.FrictionCoefficient Kfr_cold;
 
   // Calibration inputs
-  input Real P_cold_out(start = 1, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
-  input Real P_hot_out(start = 3, min = 0, nominal = 10) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
-  input Real T_hot_out(start = 23, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
+  input Real P_cold_out(start = 0.9, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
+  input Real P_hot_out(start = 2.8, min = 0, nominal = 10) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
+  input Real T_hot_out(start = 7.8, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
 
 
   MultiFluid.HeatExchangers.HXmoistAirWater hXmoistAirWater(QCp_max_side = QCp_max_side,
@@ -61,14 +61,14 @@ equation
   // Boundary conditions
   hot_source.P_out = P_hot_source * 1e5;
   hot_source.T_out = T_hot_source +273.15;
-  //hot_source.Q_out = - Q_hot_source;
+  hot_source.Q_out = - Q_hot_source;
 
   cold_source.P_out = P_cold_source *1e5;
   cold_source.T_out = 273.15 + T_cold_source;
-  cold_sink.T_in = 273.25 + T_cold_sink;
+  //cold_sink.T_in = 273.25 + T_cold_sink;
   //cold_source.h_out = h_cold_source;
   cold_source.Q_out = - Q_cold_source;
-  cold_source.relative_humidity = moistAir_relative_humidity;
+  cold_source.relative_humidity = 55/100; //moistAir_relative_humidity;
 
     // Parameters
   hXmoistAirWater.S = S;
