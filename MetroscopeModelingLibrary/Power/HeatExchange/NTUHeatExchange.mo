@@ -79,13 +79,13 @@ equation
       /* QCpMAX is associated to the mixed fluid, shell side, considered as hot side */
       QCpMAX = Q_hot*Cp_hot;
       QCpMIN = Q_cold*Cp_cold;
-      assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+      assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.warning);
       epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
     else
       /* QCpMAX is associated to the unmixed fluid, tube side, considered as cold side */
       QCpMIN = Q_hot*Cp_hot;
       QCpMAX = Q_cold*Cp_cold;
-      assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+      assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.warning);
       epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
     end if;
 
