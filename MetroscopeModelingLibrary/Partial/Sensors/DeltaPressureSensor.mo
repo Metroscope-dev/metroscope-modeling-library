@@ -9,7 +9,7 @@ partial model DeltaPressureSensor
   Units.DifferentialPressure DP(start=DP_0, nominal=DP_0);
   Real DP_bar(unit="bar", start=DP_0*Constants.Pa_to_barA);   // Pressure difference in bar
   Real DP_mbar(unit="mbar", start=DP_0*Constants.Pa_to_mbar); // Pressure difference in mbar
-  Real DP_psi(start=DP_0*Constants.Pa_to_psi); // Pressure difference in PSI
+  Real DP_psi(start=DP_0*Constants.Pa_to_psiA); // Pressure difference in PSI
 
   replaceable Partial.Connectors.FluidInlet C_in(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   replaceable Partial.Connectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}})));
@@ -28,5 +28,5 @@ equation
   DP = C_out.P - C_in.P;
   DP_bar = DP * Constants.Pa_to_barA;
   DP_mbar = DP * Constants.Pa_to_mbar;
-  DP_psi = DP * Constants.Pa_to_psi;
+  DP_psi = DP * Constants.Pa_to_psiA;
 end DeltaPressureSensor;

@@ -4,9 +4,10 @@ T0_degC_in_degF
 degC_to_degF
 Pa_to_barA
 Pa_to_mbar
-Pa_to_psi
+Pa_to_psiA
 Pa_to_inHg
 P0_barG_in_barA
+P0_psiG_in_psiA
 kgs_to_th
 kgs_to_lbs
 kgs_to_Mlbh
