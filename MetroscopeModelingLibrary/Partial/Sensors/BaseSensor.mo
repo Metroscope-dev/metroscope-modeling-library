@@ -34,6 +34,7 @@ equation
 
   state = Medium.setState_phX(P, h, Xi);
 
+  assert(Q > 0, "One inline sensor is connected the wrong way (you have connected the outlet as if it was its inlet and vice versa)");
   connect(C_in, C_out) annotation (Line(points={{-100,0},{100,0}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end BaseSensor;
