@@ -94,5 +94,5 @@ equation
   P_out - P_in = DP;
   Q * (h_out - h_in) = W;
 
-  assert(Q > 0, "One component is connected the wrong way (you have connected the outlet as if it was its inlet and vice versa)");
+  assert(Q > 0, "Wrong flow sign. Common causes : outlet connected as if it was inlet and vice versa, or Positive/NegativeMassflowrate misuse. Recall : inlet flow is positive, outlet is negatve");
 end FlowModel;
