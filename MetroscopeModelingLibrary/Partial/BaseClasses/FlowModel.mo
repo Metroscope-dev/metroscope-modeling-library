@@ -94,4 +94,5 @@ equation
   P_out - P_in = DP;
   Q * (h_out - h_in) = W;
 
+  assert(Q > 0, "One component is connected the wrong way (you have connected the outlet as if it was its inlet and vice versa)");
 end FlowModel;
