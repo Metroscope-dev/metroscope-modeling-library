@@ -5,8 +5,8 @@ model SteamExtractionSplitter_reverse
   // Boundary conditions
   input Units.SpecificEnthalpy h_source(start=2.65e6);
   input Units.Pressure source_P(start=2.64e5) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-1000) "kg/s";
-  input Units.PositiveMassFlowRate extracted_Q(start=100) "kg/s";
+  input Units.MassFlowRate source_Q(start=2000) "kg/s";
+  input Units.MassFlowRate extracted_Q(start=100) "kg/s";
 
   // Input: Observables
   input Units.SpecificEnthalpy main_h_out(start=2.67e6);
