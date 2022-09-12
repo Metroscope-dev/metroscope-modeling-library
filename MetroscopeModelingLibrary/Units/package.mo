@@ -3,7 +3,6 @@ package Units
   extends Modelica.Icons.Package;
    import Modelica.Units.SI;
 
-                       // For Non used variables, needed in power connector for local balance
   annotation(Icon(graphics={
       Polygon(
         fillColor = {128,128,128},
