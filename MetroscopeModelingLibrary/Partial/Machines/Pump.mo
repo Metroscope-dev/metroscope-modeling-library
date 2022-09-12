@@ -37,7 +37,7 @@ partial model Pump
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={0,-120})));
-  Power.Connectors.Inlet C_power "Electrical alimentation of the pump" annotation (Placement(transformation(
+  Power.Connectors.Inlet C_power(not_used = 0) "Electrical alimentation of the pump" annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=-90,
         origin={0,108}), iconTransformation(

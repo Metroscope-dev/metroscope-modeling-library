@@ -7,8 +7,8 @@ model Generator
   Units.NegativePower W_elec "Electrical power produced by the generator";
   Units.PositivePower W_mech "Mechanical power received by the generator";
 
-  Connectors.Inlet C_in annotation (Placement(transformation(extent={{-72,-10},{-52,10}}), iconTransformation(extent={{-72,-10},{-52,10}})));
-  Connectors.Outlet C_out(not_used = 0) annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
+  Connectors.Inlet C_in(not_used = 0) annotation (Placement(transformation(extent={{-72,-10},{-52,10}}), iconTransformation(extent={{-72,-10},{-52,10}})));
+  Connectors.Outlet C_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
 equation
   W_mech = C_in.W;
   W_elec + W_mech*eta = 0;
