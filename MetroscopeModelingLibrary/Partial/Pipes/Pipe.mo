@@ -12,7 +12,7 @@ partial model Pipe
 
   // Failure modes
   parameter Boolean faulty = false;
-  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+  Units.Percentage fouling(min = 0); // Fouling percentage
 
 equation
 
@@ -21,7 +21,7 @@ equation
     fouling = 0;
   end if;
 
-  DP_f = - (1+ fouling/100)  * Kfr * Q^2 / rho; //
+  DP_f = - (1+ fouling/100)  * Kfr * Q^2 / rho;
   DP_z = -rho * Constants.g * delta_z;
 
   DP = DP_f + DP_z;
