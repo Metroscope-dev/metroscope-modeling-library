@@ -9,8 +9,19 @@ partial model Pipe
   Inputs.InputDifferentialHeight delta_z(nominal=5) "Height difference between outlet and inlet";
   Units.DifferentialPressure DP_f "Singular pressure loss";
   Units.DifferentialPressure DP_z "Singular pressure loss";
+
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+
 equation
-  DP_f = -Kfr * Q^2 / rho;
+
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
+  DP_f = - (1+ fouling/100)  * Kfr * Q^2 / rho; //
   DP_z = -rho * Constants.g * delta_z;
 
   DP = DP_f + DP_z;
