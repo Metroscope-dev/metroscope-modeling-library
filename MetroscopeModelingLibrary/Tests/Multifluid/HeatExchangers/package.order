@@ -1,9 +1,13 @@
 Economiser_direct
 Economiser_reverse
+Economiser_faulty
 Superheater_direct
 Superheater_reverse
+Superheater_faulty
 Evaporator_direct
 Evaporator_reverse
+Evaporator_faulty
 FuelHeater_direct
 FuelHeater_reverse
+FuelHeater_faulty
 HXmoistAirWater_reverse
