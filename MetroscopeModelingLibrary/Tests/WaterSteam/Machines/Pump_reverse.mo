@@ -3,9 +3,9 @@ model Pump_reverse
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=2e5);
-  input Units.Temperature source_T(start=20 + 273.15);
-  input Units.NegativeMassFlowRate source_Q(start=-100);
+  input Units.Pressure source_P(start=2.3e5);
+  input Units.Temperature source_T(start=7.8 + 273.15);
+  input Units.NegativeMassFlowRate source_Q(start=-30);
 
   // Component parameters
   parameter Real pump_VRot = 1400;
@@ -22,8 +22,8 @@ model Pump_reverse
   output Real pump_b3;
 
   // Calibration inputs
-  input Units.Pressure pump_P_out(start=6e5);
-  input Units.Temperature pump_T_out(start=20 + 273.15);
+  input Units.Pressure pump_P_out(start=2.31e5);
+  input Units.Temperature pump_T_out(start=7.801+ 273.15);
 
   .MetroscopeModelingLibrary.WaterSteam.Machines.Pump pump annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={-30,0})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-10,-10},{10,10}}, origin={-70,0})));

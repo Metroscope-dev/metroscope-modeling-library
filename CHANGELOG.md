@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+ - Fixed [#273](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/273), steam extraction splitter'`x` are lower than 1 [PR#275](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/275)
  - Fixed `IsoHFlowModel` and `IsoPHFlowModel` now use `h_0` as `h` start value with [PR #265]([url](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/265))
  - Fixed `NTU HX` test configuration name for `shell_and_tubes` test, [PR #239](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/239)
  - Fixed superheater and multifluid case issues [#230](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/230) in [PR#231](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/231)
@@ -22,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Ordered nuclear examples into subpackages called with power plant system names, [PR#219](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/219)
 
 ### Added <!--Make sure to add a link to the PR and issues related to your change-->
+ - Added `psiA` and `psiG` distinction in pressure sensor [PR#252](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/252)
  - Added `LMTDHeatExchange`function, `LMTDfuelHeater`component and reverse unit test. [PR #266](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/266)
  - Added`HXmoistAirWater` component and reverse unit test, [PR #250](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/250) 
  - Added flue gases enthalpy start value to `hrsg_monophasic_HX`, [PR #264](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/264)
