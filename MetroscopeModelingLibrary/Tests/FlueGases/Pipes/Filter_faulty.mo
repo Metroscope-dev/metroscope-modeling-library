@@ -7,7 +7,7 @@ model Filter_faulty
 equation
 
   // Failure input
-  Failure_fouling = 0 + 10*time;
+  Failure_fouling = 0 + 1*time;
 
   // Failure definition
   filter.fouling = Failure_fouling;
