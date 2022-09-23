@@ -10,13 +10,8 @@ model Pump_direct
 
   // Component parameters
   parameter Real pump_VRotn = 1400;
-  parameter Real pump_rm = 0.85;
-  parameter Real pump_a1 = -88.67;
-  parameter Real pump_a2 = 0;
   parameter Real pump_a3 = 43.15;
-  parameter Real pump_b1 = -3.7751;
-  parameter Real pump_b2 = 3.61;
-  parameter Real pump_b3 = -0.0075464;
+  parameter Real pump_b3 = 0.8;
   parameter Units.Yield pump_rhmin = 0.20;
 
   .MetroscopeModelingLibrary.WaterSteam.Machines.Pump pump annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
@@ -39,12 +34,12 @@ equation
 
   // Component parameters
   pump.VRotn = pump_VRotn;
-  pump.rm = pump_rm;
-  pump.a1 = pump_a1;
-  pump.a2 = pump_a2;
+  pump.rm = 0.85;
+  pump.a1 = 0;
+  pump.a2 = 0;
   pump.a3 = pump_a3;
-  pump.b1 = pump_b1;
-  pump.b2 = pump_b2;
+  pump.b1 = 0;
+  pump.b2 = 0;
   pump.b3 = pump_b3;
   pump.rhmin = pump_rhmin;
 
