@@ -24,6 +24,10 @@ model LMTDFuelHeater
   Units.Temperature T_hot_in;
   Units.Temperature T_hot_out;
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 12;
   parameter Units.MassFlowRate Q_hot_0 = 8.6;
@@ -61,6 +65,11 @@ model LMTDFuelHeater
   WaterSteam.Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=P_hot_out_0), h_outflow(start=h_hot_out_0)) annotation (Placement(transformation(extent={{-50,-80},{-30,-60}}),
                                                                                                            iconTransformation(extent={{-50,-80},{-30,-60}})));
 equation
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
     // Definitions
   Q_cold = cold_side.Q;
   Q_hot = hot_side.Q;
@@ -82,7 +91,7 @@ equation
   // Power Exchange
   HX.W = W;
   HX.S = S;
-  HX.Kth = Kth;
+  HX.Kth = Kth*(1-fouling/100);
   HX.T_cold_in = T_cold_in;
   HX.T_hot_in = T_hot_in;
   HX.T_cold_out = T_cold_out;
