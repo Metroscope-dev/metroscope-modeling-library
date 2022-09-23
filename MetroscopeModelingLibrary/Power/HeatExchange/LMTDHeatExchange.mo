@@ -24,15 +24,15 @@ model LMTDHeatExchange
   Inputs.InputTemperature T_cold_out(start=T_cold_out_0) "Temperature, cold side, at the outlet";
 
   // intermediate variables
-  Units.DifferentialTemperature dT_a(start = 15);
-  Units.DifferentialTemperature dT_b(start=1);
+  Units.DifferentialTemperature DT_a(start = T_hot_in_0 - T_cold_out_0);
+  Units.DifferentialTemperature DT_b(start = T_hot_out_0 - T_cold_in_0);
 equation
-
-   dT_a = T_hot_in - T_cold_out;
-   dT_b = T_hot_out - T_cold_in;
+   // Counter-current configuration. (Also correct for cross-current since the likely correction coefficient can be considered as absorbed by Kth)
+   DT_a = T_hot_in - T_cold_out;
+   DT_b = T_hot_out - T_cold_in;
 
    // Log mean equation written in an exponential way
-   0 = - dT_a + dT_b * exp(Kth*S*(dT_a - dT_b)/W);
+   0 = - DT_a + DT_b * exp(Kth*S*(DT_a - DT_b)/W);
 
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
