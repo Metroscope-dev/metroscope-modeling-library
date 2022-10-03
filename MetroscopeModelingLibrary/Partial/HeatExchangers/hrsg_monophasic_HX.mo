@@ -25,7 +25,7 @@ partial model hrsg_monophasic_HX
 
     // Failure modes
   parameter Boolean faulty = false;
-  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+  Units.Percentage fouling; // Fouling percentage
 
     // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;

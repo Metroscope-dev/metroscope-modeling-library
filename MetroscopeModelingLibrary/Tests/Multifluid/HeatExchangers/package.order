@@ -10,4 +10,5 @@ Evaporator_faulty
 FuelHeater_direct
 FuelHeater_reverse
 FuelHeater_faulty
+LMTDFuelHeater_reverse
 HXmoistAirWater_reverse
