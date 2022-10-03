@@ -4,10 +4,10 @@ model LMTDHeatExchange
   import MetroscopeModelingLibrary.Units;
 
   // Initialization parameters
-  parameter Units.Temperature T_hot_in_0 = 273.15 + 200 "Init parameter for Hot mass flow rate at the inlet";
-  parameter Units.Temperature T_cold_in_0 = 273.15 + 100 "Init parameter for Cold mass flow rate at the inlet";
-  parameter Units.Temperature T_hot_out_0 = 273.15 + 200 "Init parameter for Hot mass flow rate at the outlet";
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 100 "Init parameter for Cold mass flow rate at the outlet";
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 200 "Init parameter for Hot temperature at the inlet";
+  parameter Units.Temperature T_cold_in_0 = 273.15 + 30 "Init parameter for Cold temperature at the inlet";
+  parameter Units.Temperature T_hot_out_0 = 273.15 + 90 "Init parameter for Hot temperature at the outlet";
+  parameter Units.Temperature T_cold_out_0 = 273.15 + 100 "Init parameter for Cold temperature at the outlet";
 
   /* Exchanger configuration and parameters */
   //parameter String config = "LMTD_monophasic_counter_current"; No need for parameter as long as there is only one configuration !!

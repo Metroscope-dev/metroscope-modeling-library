@@ -26,7 +26,7 @@ model LMTDFuelHeater
 
   // Failure modes
   parameter Boolean faulty = false;
-  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+  Units.Percentage fouling; // Fouling percentage
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 12;
@@ -39,17 +39,17 @@ model LMTDFuelHeater
   parameter Units.Pressure P_cold_out_0 = 29.7 *1e5;
   parameter Units.Pressure P_hot_in_0 = 47 *1e5;
   parameter Units.Pressure P_hot_out_0 = 47 *1e5;
-  parameter Real h_hot_in_0 = 2e4;
-  parameter Real h_hot_out_0 = 1e4;
-  parameter Real h_cold_in_0 = 6e5;
-  parameter Real h_cold_out_0 = 1e6;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 2e4;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 1e4;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 6e5;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 1e6;
 
   Power.HeatExchange.LMTDHeatExchange HX(
     T_cold_in_0=T_cold_in_0,T_hot_in_0=T_hot_in_0,T_cold_out_0=T_cold_out_0,T_hot_out_0=T_hot_out_0)                                                                                                  annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={10,14})));
-  WaterSteam.BaseClasses.IsoPFlowModel hot_side(Q_0=Q_cold_0, P_0 = P_cold_out_0, h_in_0 = h_cold_in_0, h_out_0 = h_cold_out_0, T_in_0 = T_cold_in_0, T_out_0 = T_cold_out_0) annotation (Placement(transformation(
+  WaterSteam.BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0, P_0 = P_hot_out_0, h_in_0 = h_hot_in_0, h_out_0 = h_hot_out_0, T_in_0 = T_hot_in_0, T_out_0 = T_hot_out_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
@@ -58,11 +58,11 @@ model LMTDFuelHeater
         rotation=90,
         origin={-14,-24})));
   Fuel.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, P_in_0 = P_cold_in_0, P_out_0 = P_cold_out_0, h_0 = h_cold_in_0, T_0 = T_cold_in_0) annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
-  Fuel.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_hot_0, P_0 = P_hot_out_0, h_in_0 = h_hot_in_0, h_out_0 = h_hot_out_0, T_in_0 = T_hot_in_0, T_out_0 = T_hot_out_0) annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+  Fuel.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, P_0 = P_cold_out_0, h_in_0 = h_cold_in_0, h_out_0 = h_cold_out_0, T_in_0 = T_cold_in_0, T_out_0 = T_cold_out_0) annotation (Placement(transformation(extent={{0,-10},{20,10}})));
   Fuel.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
   Fuel.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start=h_cold_out_0)) annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
   WaterSteam.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(extent={{30,60},{50,80}}), iconTransformation(extent={{30,60},{50,80}})));
-  WaterSteam.Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=P_hot_out_0), h_outflow(start=h_hot_out_0)) annotation (Placement(transformation(extent={{-50,-80},{-30,-60}}),
+  WaterSteam.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start=h_hot_out_0)) annotation (Placement(transformation(extent={{-50,-80},{-30,-60}}),
                                                                                                            iconTransformation(extent={{-50,-80},{-30,-60}})));
 equation
   // Failure modes
@@ -97,10 +97,10 @@ equation
   HX.T_cold_out = T_cold_out;
   HX.T_hot_out = T_hot_out;
   connect(hot_side_pipe.C_out,C_hot_out)  annotation (Line(points={{-14,-34},{-14,-70},{-40,-70}},       color={28,108,200}));
-  connect(hot_side_pipe.C_in,hot_side. C_out) annotation (Line(points={{-14,-14},{-14,28},{0,28}},color={28,108,200}));
+  connect(hot_side_pipe.C_in,hot_side.C_out) annotation (Line(points={{-14,-14},{-14,28},{0,28}},color={28,108,200}));
   connect(hot_side.C_in,C_hot_in)  annotation (Line(points={{20,28},{40,28},{40,70}}, color={28,108,200}));
   connect(cold_side_pipe.C_in,C_cold_in)  annotation (Line(points={{-52,0},{-70,0}}, color={213,213,0}));
-  connect(cold_side_pipe.C_out,cold_side. C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
+  connect(cold_side_pipe.C_out,cold_side.C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
   connect(cold_side.C_out,C_cold_out)  annotation (Line(points={{20,0},{70,0}}, color={213,213,0}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
