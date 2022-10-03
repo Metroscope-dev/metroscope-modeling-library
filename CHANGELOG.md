@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## MML-v3.0-beta
+
 ### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
  - Fixed [#282](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/282) with [#287](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/287), by setting min and max in Positive/Negative MassFlowRate to 0, as it was an unnecessary protection.
  - Fixed [#273](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/273), steam extraction splitter'`x` are lower than 1 [PR#275](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/275)
