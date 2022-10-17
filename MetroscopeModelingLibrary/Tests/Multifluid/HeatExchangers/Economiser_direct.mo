@@ -53,7 +53,7 @@ equation
 
   connect(economiser.C_cold_in, cold_source.C_out) annotation (Line(points={{1,7},{0,7},{0,30},{10,30},{10,39}}, color={28,108,200}));
   connect(economiser.C_hot_out, hot_sink.C_in) annotation (Line(points={{5,0},{63,0}}, color={95,95,95}));
-  connect(economiser.C_cold_out, cold_sink.C_in) annotation (Line(points={{-5,-7},{-5,-41},{-12,-41}}, color={28,108,200}));
+  connect(economiser.C_cold_out, cold_sink.C_in) annotation (Line(points={{-5,7},{-5,-41},{-12,-41}},  color={28,108,200}));
   connect(economiser.C_hot_in, hot_source.C_out) annotation (Line(points={{-9,0},{-49,0}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},

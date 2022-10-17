@@ -31,6 +31,10 @@ model Evaporator
     Units.Temperature T_cold_out;
     Units.Temperature T_hot_out;
 
+    // Failure modes
+    parameter Boolean faulty = false;
+    Units.Percentage fouling; // Fouling percentage
+
     // Initialization parameters
     parameter Units.MassFlowRate Q_cold_0 = 500;
     parameter Units.MassFlowRate Q_hot_0 = 50;
@@ -77,6 +81,11 @@ model Evaporator
   WaterSteam.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
 
 equation
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
   // Definitions
   Q_cold = cold_side_heating.Q;
   Q_hot = hot_side_vaporising.Q;
@@ -115,7 +124,7 @@ equation
   cold_side_vaporising.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
 
   HX_vaporising.W = W_vaporising;
-  HX_vaporising.Kth = Kth;
+  HX_vaporising.Kth = Kth*(1-fouling/100);
   HX_vaporising.S = S_vaporising;
   HX_vaporising.Q_cold = Q_cold;
   HX_vaporising.Q_hot = Q_hot;
