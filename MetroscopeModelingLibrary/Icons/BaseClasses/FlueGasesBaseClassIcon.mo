@@ -5,5 +5,8 @@ partial record FlueGasesBaseClassIcon "should be extended in flue gases base cla
           lineColor={95,95,95},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          lineThickness=1)}));
+          lineThickness=1), Text(
+          extent={{-66,24},{66,-24}},
+          textColor={95,95,95},
+          textString="%name")}));
 end FlueGasesBaseClassIcon;
