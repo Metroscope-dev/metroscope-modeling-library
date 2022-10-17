@@ -4,5 +4,5 @@ connector Inlet
   import MetroscopeModelingLibrary.Units;
 
   flow Units.PositivePower W;
-  Units.NotUsed not_used "not used effort variable to balance the connector";
+  Units.NotUsed dummy "not used effort variable to balance the connector";
 end Inlet;
