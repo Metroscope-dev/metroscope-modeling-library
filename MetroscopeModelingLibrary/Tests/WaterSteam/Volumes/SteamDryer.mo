@@ -24,10 +24,10 @@ equation
   // Component parameters
   steamDryer.x_steam_out = x_steam_out;
 
-  connect(steamDryer.C_in, source.C_out) annotation (Line(points={{-32,12.1818},{-32,12},{-65,12}},
+  connect(steamDryer.C_in, source.C_out) annotation (Line(points={{-32,16},{-32,12},{-65,12}},
                                             color={28,108,200}));
-  connect(steamDryer.C_hot_steam, steam_sink.C_in) annotation (Line(points={{28,12.1818},{28,12},{61,12}},
+  connect(steamDryer.C_out_steam, steam_sink.C_in) annotation (Line(points={{28,16},{28,12},{61,12}},
                                                   color={28,108,200}));
-  connect(steamDryer.C_hot_liquid, liquid_sink.C_in) annotation (Line(points={{28,-9.63636},{28,-8},{52,-8},{52,-40},{61,-40}},
+  connect(steamDryer.C_out_liquid, liquid_sink.C_in) annotation (Line(points={{28,-8},{28,-8},{52,-8},{52,-40},{61,-40}},
                                                       color={28,108,200}));
 end SteamDryer;
