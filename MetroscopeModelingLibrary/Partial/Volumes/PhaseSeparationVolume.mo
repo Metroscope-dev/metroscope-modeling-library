@@ -23,11 +23,11 @@ partial model PhaseSeparationVolume
   Units.MassFraction x_steam_out(start=1); // Steam mass fraction at steam outlet
 
   WaterSteam.Connectors.Inlet C_in(P(start=P_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
-  WaterSteam.Connectors.Outlet C_out_steam(
+  WaterSteam.Connectors.Outlet C_steam_out(
     P(start=P_0),
     Q(start=-Q_vap_0),
     h_outflow(start=h_vap_sat_0)) annotation (Placement(transformation(extent={{90,30},{110,50}})));
-  WaterSteam.Connectors.Outlet C_out_liquid(
+  WaterSteam.Connectors.Outlet C_liquid_out(
     P(start=P_0),
     Q(start=-Q_liq_0),
     h_outflow(start=h_liq_sat_0)) annotation (Placement(transformation(extent={{90,-50},{110,-30}})));
@@ -47,15 +47,15 @@ equation
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
 
   // Balances
-  C_out_steam.Q * C_out_steam.h_outflow = C_out_liquid.Q * C_out_liquid.h_outflow;  // Energy balance
-  Q_in +C_out_steam.Q  +C_out_liquid.Q  = 0; // Mass balance
+  C_steam_out.Q *C_steam_out.h_outflow  =C_liquid_out.Q  *C_liquid_out.h_outflow;   // Energy balance
+  Q_in +C_steam_out.Q  +C_liquid_out.Q   = 0; // Mass balance
 
   // Outlet
-  C_out_steam.P = P;
-  C_out_liquid.P = P;
+  C_steam_out.P = P;
+  C_liquid_out.P = P;
 
-  C_out_steam.h_outflow = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
-  C_out_liquid.h_outflow = h_liq_sat;
+  C_steam_out.h_outflow = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
+  C_liquid_out.h_outflow = h_liq_sat;
 
   annotation (Icon(graphics={
         Rectangle(

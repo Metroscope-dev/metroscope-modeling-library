@@ -17,6 +17,6 @@ equation
   source.h_out = h_source;
 
   connect(source.C_out, flashTank.C_in) annotation (Line(points={{-65,12},{-32,12}}, color={28,108,200}));
-  connect(flashTank.C_out_steam, steam_sink.C_in) annotation (Line(points={{28,12},{61,12}}, color={28,108,200}));
-  connect(flashTank.C_out_liquid, liquid_sink.C_in) annotation (Line(points={{28,-12},{61,-12}}, color={28,108,200}));
+  connect(flashTank.C_steam_out, steam_sink.C_in) annotation (Line(points={{28,12},{61,12}}, color={28,108,200}));
+  connect(flashTank.C_liquid_out, liquid_sink.C_in) annotation (Line(points={{28,-12},{61,-12}}, color={28,108,200}));
 end FlashTank;

@@ -108,8 +108,8 @@ equation
   connect(superheater_2.C_cold_out, superheated_steam_T_sensor.C_in) annotation (Line(points={{0,48},{-5.55112e-16,48},{-5.55112e-16,54}},              color={28,108,200}));
   connect(superheated_steam_T_sensor.C_out, superheated_steam_sink.C_in) annotation (Line(points={{0,74},{0,80},{75,80}}, color={28,108,200}));
   connect(cold_steam_source.C_out, steam_dryer.C_in) annotation (Line(points={{-65,-60},{-56.5,-60},{-56.5,-60.1983},{-45.5,-60.1983}}, color={28,108,200}));
-  connect(steam_dryer.C_out_steam, superheater_1.C_cold_in) annotation (Line(points={{-10.5,-60.1983},{0,-60.1983},{0,-28}}, color={28,108,200}));
-  connect(steam_dryer.C_out_liquid, dryer_liq_sink.C_in) annotation (Line(points={{-10.5,-75.8016},{-10.5,-74},{-10,-74},{-10,-86},{75,-86}},  color={28,108,200}));
+  connect(steam_dryer.C_steam_out, superheater_1.C_cold_in) annotation (Line(points={{-10.5,-60.1983},{0,-60.1983},{0,-28}}, color={28,108,200}));
+  connect(steam_dryer.C_liquid_out, dryer_liq_sink.C_in) annotation (Line(points={{-10.5,-75.8016},{-10.5,-74},{-10,-74},{-10,-86},{75,-86}},  color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-140},{160,140}}), graphics={
         Polygon(
           points={{-156,80},{-156,60},{-156,-62.5},{-156,-80},{-116,-80},{14,-80},{164,-80},{164,80},{14,80},{-116,80},{-156,80}},

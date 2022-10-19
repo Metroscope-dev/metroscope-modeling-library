@@ -1907,11 +1907,11 @@ state_out(
 T(start=484.00012),
 h(start=2778769.0))),
 x_steam_out(start=0.99),
-C_out_steam(
+C_steam_out(
 P(start=1939992.1),
 Q(start=-1059.7411),
 h_outflow(start=2778769.0)),
-C_out_liquid(
+C_liquid_out(
 P(start=1939992.1),
 Q(start=-53.48533),
 h_outflow(start=901605.6))),

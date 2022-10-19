@@ -2696,11 +2696,11 @@ h(start=2778769.2),
 p(start=1940000.0),
 phase(start=0))),
 x_steam_out(start=0.99),
-C_out_steam(
+C_steam_out(
 P(start=1940000.0),
 Q(start=-1059.745),
 h_outflow(start=2778769.2)),
-C_out_liquid(
+C_liquid_out(
 P(start=1940000.0),
 Q(start=-53.485546),
 h_outflow(start=901606.56))),
