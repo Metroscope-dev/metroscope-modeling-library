@@ -90,8 +90,8 @@ equation
   connect(reheater_to_flash_tank_DP.C_out, flashTank.C_in) annotation (Line(points={{-12.5,10},{-78,10},{-78,-14.6}}, color={63,81,181}));
   connect(feed_water_pump.C_out, feed_water_sink.C_in) annotation (Line(points={{-69,-80},{-99,-80},{-99,30},{-115,30}}, color={63,81,181}));
   connect(flash_tank_to_reheater_DP.C_out, dry_reheater.C_hot_in) annotation (Line(points={{73,55.5},{50,55.5},{50,38}}, color={63,81,181}));
-  connect(flashTank.C_hot_liquid, feed_water_pump.C_in) annotation (Line(points={{-36,-31.4},{-36,-30},{-28,-30},{-28,-80},{-51,-80}}, color={28,108,200}));
-  connect(flashTank.C_hot_steam, flash_tank_to_reheater_DP.C_in) annotation (Line(points={{-36,-14.6},{112,-14.6},{112,55.5},{100,55.5}}, color={28,108,200}));
+  connect(flashTank.C_out_liquid, feed_water_pump.C_in) annotation (Line(points={{-36,-31.4},{-36,-30},{-28,-30},{-28,-80},{-51,-80}}, color={28,108,200}));
+  connect(flashTank.C_out_steam, flash_tank_to_reheater_DP.C_in) annotation (Line(points={{-36,-14.6},{112,-14.6},{112,55.5},{100,55.5}}, color={28,108,200}));
   connect(feed_water_pump.VRot, feed_water_pump_VRot_sensor.VRot) annotation (Line(points={{-60,-90.8},{-60,-101.84}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-140,-140},{140,140}})), Icon(coordinateSystem(extent={{-140,-140},{140,140}}), graphics={
         Rectangle(

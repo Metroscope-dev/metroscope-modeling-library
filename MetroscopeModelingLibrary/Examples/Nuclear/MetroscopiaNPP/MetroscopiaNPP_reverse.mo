@@ -40,7 +40,7 @@ model MetroscopiaNPP_reverse
     input Real LP_reheater_drains_control_valve_opening(start=0.15);
     // Feedwater pump
     input Real HP_pump_P_out(start=59, unit="bar", min=0, nominal=70) "barA";
-    input Real HP_pump_T_out(start=80, unit="degC", min=0, nominal=20) "degC";
+    input Real HP_pump_T_out(start=84, unit="degC", min=0, nominal=20) "degC";
     // HP Reheater
     input Real HP_heater_P_out(start=58, min=0, nominal=50) "bar";
     input Real HP_heater_T_out(start=210, min=0, nominal=100) "degC";
@@ -311,7 +311,7 @@ equation
   // Feedwater pump
 
     // Quantities definitions
-    HP_pump_T_out_sensor.T_degC = HP_pump_T_out;
+    HP_pump_T_out_sensor.T_degC = feedwater_pump.T_in + 3 + 273.15;
     HP_pump_P_out_sensor.P_barA = HP_pump_P_out;
 
     // Parameters
@@ -363,8 +363,8 @@ equation
   connect(HPT_1.C_W_out, generator.C_in) annotation (Line(points={{-61,78.72},{-54,78.72},{-54,168},{315.6,168}},     color={244,125,35}));
   connect(HPT_1.C_in, HPT_P_in_sensor.C_out) annotation (Line(points={{-79,72},{-94,72}},           color={28,108,200}));
   connect(HPT_P_out_sensor.C_in, HPT_2.C_out) annotation (Line(points={{26,72},{9,72}},            color={28,108,200}));
-  connect(steam_dryer.C_in, HPT_P_out_sensor.C_out) annotation (Line(points={{56,91.2727},{56,92},{46,92},{46,72},{38,72}},        color={28,108,200}));
-  connect(superheater.C_cold_in, steam_dryer.C_hot_steam) annotation (Line(points={{72,104},{72,91.2727}},              color={28,108,200}));
+  connect(steam_dryer.C_in, HPT_P_out_sensor.C_out) annotation (Line(points={{56,92.4182},{56,92},{46,92},{46,72},{38,72}},        color={28,108,200}));
+  connect(superheater.C_cold_in,steam_dryer.C_out_steam)  annotation (Line(points={{72,104},{72,92.4182}},              color={28,108,200}));
   connect(superheater.C_hot_out, superheater_drains_P_sensor.C_in) annotation (Line(points={{88,112},{100,112}}, color={28,108,200}));
   connect(superheater_T_out_sensor.C_in,superheater. C_cold_out) annotation (Line(points={{88,130},{72,130},{72,120}},         color={28,108,200}));
   connect(superheater_control_valve.C_in, HP_control_valve.C_in) annotation (Line(points={{-136,112.182},{-136,112},{-158,112},{-158,72},{-135,72}},    color={28,108,200}));
@@ -390,7 +390,7 @@ equation
   connect(LPT1.C_out, LP_extract.C_in) annotation (Line(points={{169,130},{185.4,130}},                                 color={28,108,200}));
   connect(LPT2.C_in, LP_extract.C_main_out) annotation (Line(points={{221,130},{206.6,130}},                                 color={28,108,200}));
   connect(deaerator_inlet_pipe.C_in, LP_heater_T_out_sensor.C_out) annotation (Line(points={{186,-70},{206,-70}}, color={28,108,200}));
-  connect(steam_dryer.C_hot_liquid, steam_dryer_liq_out_pipe.C_in) annotation (Line(points={{72,84.7273},{72,-34},{142,-34},{142,-40}},
+  connect(steam_dryer.C_out_liquid, steam_dryer_liq_out_pipe.C_in) annotation (Line(points={{72,85.2182},{72,-34},{142,-34},{142,-40}},
                                                                                                                                      color={28,108,200}));
   connect(deaerator_inlet_pipe.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{166,-70},{114,-70}}, color={28,108,200}));
   connect(steam_dryer_liq_out_pipe.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{142,-60},{142,-70},{114,-70}}, color={28,108,200}));
