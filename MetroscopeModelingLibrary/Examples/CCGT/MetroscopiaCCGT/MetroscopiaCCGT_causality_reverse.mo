@@ -202,11 +202,6 @@ model MetroscopiaCCGT_causality_reverse
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_pump_out_sensor
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={155,
             131})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source powerSource
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={116,150})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.LoopBreaker loopBreaker
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -287,11 +282,6 @@ model MetroscopiaCCGT_causality_reverse
         extent={{-7,-7},{7,7}},
         origin={94,48.5455},
         rotation=0)));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source pumpRec_powerSource
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={94,66})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_pumpRec_out_sensor
     annotation (Placement(transformation(
         extent={{5,-5},{-5,5}},
@@ -615,9 +605,6 @@ equation
                     color={28,108,200}));
   connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{52,144.778},{52,131},{109,131}},
                               color={28,108,200}));
-  connect(powerSource.C_out, pump.C_power)
-    annotation (Line(points={{116,145.2},{116,138.56}},
-                                                   color={244,125,35}));
   connect(HPsuperheater1.C_cold_in, P_w_evap_out_sensor.C_out) annotation (Line(
         points={{-147,-5},{-147,8},{-46,8}},  color={28,108,200}));
   connect(evaporator.C_cold_out, P_w_evap_out_sensor.C_in) annotation (Line(
@@ -679,9 +666,6 @@ equation
         points={{142,131},{150,131}},             color={28,108,200}));
   connect(P_pump_out_sensor.C_out, Q_pump_out_sensor.C_in) annotation (Line(
         points={{160,131},{166,131}},             color={28,108,200}));
-  connect(pumpRec.C_power, pumpRec_powerSource.C_out)
-    annotation (Line(points={{94,56.1055},{94,61.2}},
-                                                    color={244,125,35}));
   connect(P_pumpRec_out_sensor.C_out, Q_pumpRec_out_sensor.C_in)
     annotation (Line(points={{136,48.5455},{140,48.5455}},
                                                color={28,108,200}));

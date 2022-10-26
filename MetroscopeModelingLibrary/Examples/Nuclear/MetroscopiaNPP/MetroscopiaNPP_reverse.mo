@@ -117,7 +117,6 @@ model MetroscopiaNPP_reverse
     WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{-10,-10},{10,10}},rotation=0,origin={460,60})));
     WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{290,57.7778},{310,77.7778}})));
     WaterSteam.Machines.Pump extraction_pump(P_in_0=6980) annotation (Placement(transformation(extent={{380,-78},{364,-62}})));
-    Power.BoundaryConditions.Source LP_pump_Wm_source annotation (Placement(transformation(extent={{-10,-10},{10,10}},rotation=270,origin={372,-46})));
   Sensors.WaterSteam.TemperatureSensor extraction_pump_T_out_sensor annotation (Placement(transformation(extent={{350,-77},{336,-63}})));
   Sensors.WaterSteam.PressureSensor extraction_pump_P_out_sensor annotation (Placement(transformation(extent={{7,-7},{-7,7}}, origin={315,-70})));
     WaterSteam.HeatExchangers.DryReheater LP_heater annotation (Placement(transformation(extent={{284,-78},{252,-62}})));
@@ -129,7 +128,6 @@ model MetroscopiaNPP_reverse
     WaterSteam.Pipes.PressureCut steam_dryer_liq_out_pipe annotation (Placement(transformation(extent={{10,-10},{-10,10}},rotation=90,origin={142,-50})));
     WaterSteam.Pipes.Pipe deaerator_outlet_pipe annotation (Placement(transformation(extent={{114,-80},{94,-60}})));
     WaterSteam.Machines.Pump feedwater_pump(P_in_0=600000, P_out_0=5900000) annotation (Placement(transformation(extent={{62,-78},{46,-62}})));
-    Power.BoundaryConditions.Source HP_pump_Wm_source annotation (Placement(transformation(extent={{-10,-10},{10,10}},rotation=270,origin={54,-46})));
   Sensors.WaterSteam.TemperatureSensor HP_pump_T_out_sensor annotation (Placement(transformation(extent={{30,-77},{16,-63}})));
   Sensors.WaterSteam.PressureSensor HP_pump_P_out_sensor annotation (Placement(transformation(extent={{7,-7},{-7,7}}, origin={-3,-70})));
     WaterSteam.HeatExchangers.Reheater HP_heater(Q_cold_0=1500, Q_hot_0=50) annotation (Placement(transformation(extent={{-24,-78},{-56,-62}})));
@@ -376,7 +374,6 @@ equation
   connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74}},
                                                                                                            color={28,108,200}));
   connect(superheater_T_out_sensor.C_out, LPT1.C_in) annotation (Line(points={{100,130},{151,130}},                             color={28,108,200}));
-  connect(extraction_pump.C_power, LP_pump_Wm_source.C_out) annotation (Line(points={{372,-61.36},{372,-50.8}}, color={244,125,35}));
   connect(extraction_pump.C_out, extraction_pump_T_out_sensor.C_in) annotation (Line(points={{364,-70},{350,-70}}, color={28,108,200}));
   connect(extraction_pump_T_out_sensor.C_out,extraction_pump_P_out_sensor. C_in) annotation (Line(points={{336,-70},{322,-70}}, color={28,108,200}));
   connect(condenser.C_hot_out, extraction_pump.C_in) annotation (Line(points={{392.5,48.2222},{392.5,-70},{380,-70}},
@@ -394,7 +391,6 @@ equation
                                                                                                                                      color={28,108,200}));
   connect(deaerator_inlet_pipe.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{166,-70},{114,-70}}, color={28,108,200}));
   connect(steam_dryer_liq_out_pipe.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{142,-60},{142,-70},{114,-70}}, color={28,108,200}));
-  connect(feedwater_pump.C_power, HP_pump_Wm_source.C_out) annotation (Line(points={{54,-61.36},{54,-50.8}}, color={244,125,35}));
   connect(feedwater_pump.C_out, HP_pump_T_out_sensor.C_in) annotation (Line(points={{46,-70},{30,-70}}, color={28,108,200}));
   connect(HP_pump_T_out_sensor.C_out, HP_pump_P_out_sensor.C_in) annotation (Line(points={{16,-70},{4,-70}},  color={28,108,200}));
   connect(feedwater_pump.C_in, deaerator_outlet_pipe.C_out) annotation (Line(points={{62,-70},{94,-70}}, color={28,108,200}));
