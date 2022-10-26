@@ -20,7 +20,7 @@ equation
     NTUHeatExchange.T_hot_in = 273.15 + 150;
     NTUHeatExchange.Cp_hot = 4.2;
 
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}})),
-                Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+    annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)), 
+        Diagram(coordinateSystem(preserveAspectRatio=false)));
 end NTU_HeatExchanger_shell_and_tubes;
