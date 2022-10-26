@@ -78,6 +78,8 @@ model ParallelTurboFWP_reverse
   Sensors.WaterSteam.TemperatureSensor FWPs_T_out_sensor annotation (Placement(transformation(extent={{-84,-67},{-98,-53}})));
   Sensors.WaterSteam.PressureSensor FWPs_P_out_sensor annotation (Placement(transformation(extent={{-64,-67},{-78,-53}})));
   Sensors.WaterSteam.FlowSensor FWP1_Q_in_sensor annotation (Placement(transformation(extent={{38,-97},{24,-83}})));
+  Power.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{80,42},{100,62}})));
+  Power.BoundaryConditions.Sink sink1 annotation (Placement(transformation(extent={{78,98},{98,118}})));
 equation
   // Boundary conditions
   // STs source
@@ -134,6 +136,7 @@ equation
   FWPs_P_out_sensor.P_barA = FWPs_P_out;
 
   // FWP1
+  FWP1.Wm = ST1.W;
   // Observables used for calibration
   FWP1_Q_in_sensor.Q = FWP1_Q_in;
   FWP1_VRot_sensor.VRot = FWP1_VRot;
@@ -150,6 +153,7 @@ equation
   FWP1.a1 = -172;
 
   // FWP2
+  FWP2.Wm = ST2.W;
   // Observables used for calibration
   FWP2_VRot_sensor.VRot = FWP2_VRot;
   // Calibrated parameters
@@ -170,10 +174,6 @@ equation
   connect(ST2_CV.Opening, ST2_CV_opening_sensor.Opening) annotation (Line(points={{-10,49.8182},{-10,44.08}}, color={0,0,127}));
   connect(FWP1.C_out, FWP2.C_out) annotation (Line(points={{-30,-90},{-40,-90},{-40,-30},{-30,-30}},
                                                                                                    color={28,108,200}));
-  connect(ST2.C_W_out, FWP2.C_power) annotation (Line(points={{52,51.6},{62,51.6},{62,-8},{-20,-8},{-20,-19.2}},
-                                                                                                               color={244,125,35}));
-  connect(ST1.C_W_out, FWP1.C_power) annotation (Line(points={{52,108.4},{160,108.4},{160,-120},{-20,-120},{-20,-100.8}},
-                                                                                                                        color={244,125,35}));
   connect(STs_source.C_out, STs_CV_Q_in_sensor.C_in) annotation (Line(points={{-113,80},{-76,80}}, color={28,108,200}));
   connect(STs_CV_Q_in_sensor.C_out, ST2_CV.C_in) annotation (Line(points={{-62,80},{-36,80},{-36,60},{-16,60}}, color={28,108,200}));
   connect(FWP1.VRot, FWP1_VRot_sensor.VRot) annotation (Line(points={{-20,-78},{-20,-70},{-7.65,-70}}, color={0,0,127}));
@@ -190,6 +190,8 @@ equation
   connect(FWPs_source.C_out, FWP1_Q_in_sensor.C_in) annotation (Line(points={{113,-60},{60,-60},{60,-90},{38,-90}}, color={28,108,200}));
   connect(FWP1_Q_in_sensor.C_out, FWP1.C_in) annotation (Line(points={{24,-90},{-10,-90}}, color={28,108,200}));
   connect(FWP2.C_in, FWP1_Q_in_sensor.C_in) annotation (Line(points={{-10,-30},{60,-30},{60,-90},{38,-90}}, color={28,108,200}));
+  connect(ST2.C_W_out, sink.C_in) annotation (Line(points={{52,51.6},{52,50},{76,50},{76,52},{85,52}}, color={244,125,35}));
+  connect(ST1.C_W_out, sink1.C_in) annotation (Line(points={{52,108.4},{67.5,108.4},{67.5,108},{83,108}}, color={244,125,35}));
   annotation (Diagram(coordinateSystem(extent={{-140,-140},{140,140}})), Icon(coordinateSystem(extent={{-140,-140},{140,140}}), graphics={
         Ellipse(
           extent={{-100,100},{100,-100}},
