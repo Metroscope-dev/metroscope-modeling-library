@@ -32,8 +32,8 @@ model FuelHeater
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
-  parameter Units.Temperature T_cold_in_0 = 76 + 273.15;
-  parameter Units.Pressure P_cold_in_0 = 18 *1e5;
+  parameter Units.Temperature T_hot_in_0 = 76 + 273.15;
+  parameter Units.Pressure P_hot_in_0 = 18 *1e5;
 
   Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
   Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
@@ -43,18 +43,18 @@ model FuelHeater
   Power.HeatExchange.NTUHeatExchange HX(
     config=HX_config,
     QCp_max_side=QCp_max_side,
-    T_cold_in_0=T_cold_in_0)                                                                                                  annotation (Placement(transformation(
+    T_hot_in_0=T_hot_in_0)                                                                                                  annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={10,14})));
   WaterSteam.BaseClasses.IsoPFlowModel hot_side(
-    Q_0=Q_cold_0,
-    T_in_0=T_cold_in_0,
-    P_in_0=P_cold_in_0) annotation (Placement(transformation(
+    Q_0=Q_hot_0,
+    T_in_0=T_hot_in_0,
+    P_in_0=P_hot_in_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
-  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, T_in_0=T_hot_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-14,-24})));

@@ -20,7 +20,7 @@ equation
     NTUHeatExchange.T_hot_in = 273.15 + 180;
     NTUHeatExchange.Cp_hot = 1e10; // the hot fluid is condensing : Cp is infinite.
 
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}})),
-                Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+    annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)), 
+        Diagram(coordinateSystem(preserveAspectRatio=false)));
 end NTU_HeatExchanger_condenser;
