@@ -3,15 +3,15 @@ model Pump_direct
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=2e5);
-  input Units.Temperature source_T(start=20 + 273.15);
-  input Units.NegativeMassFlowRate source_Q(start=-100);
+  input Units.Pressure source_P(start=20e5);
+  input Units.Temperature source_T(start= 150 + 273.15);
+  input Units.NegativeMassFlowRate source_Q(start=-1000);
   input Real pump_VRot(start=1400);
 
   // Component parameters
   parameter Real pump_VRotn = 1400;
-  parameter Real pump_a3 = 43.15;
-  parameter Real pump_b3 = 0.8;
+  parameter Real pump_a3 = 444;
+  parameter Real pump_b3 = 0.93;
   parameter Units.Yield pump_rhmin = 0.20;
 
   .MetroscopeModelingLibrary.WaterSteam.Machines.Pump pump annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
