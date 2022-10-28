@@ -23,6 +23,10 @@ partial model hrsg_monophasic_HX
   Units.Temperature T_cold_out;
   Units.Temperature T_hot_out;
 
+    // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage fouling; // Fouling percentage
+
     // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
@@ -69,6 +73,11 @@ protected
   MetroscopeModelingLibrary.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
 
 equation
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
   // Definitions
   Q_cold =cold_side.Q;
   Q_hot =hot_side.Q;
@@ -89,7 +98,7 @@ equation
 
   // Power Exchange
   HX.W = W;
-  HX.Kth =  Kth;
+  HX.Kth =  Kth*(1-fouling/100);
   HX.S = S;
   HX.Q_cold = Q_cold;
   HX.Q_hot = Q_hot;

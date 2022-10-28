@@ -48,7 +48,8 @@ equation
 
   connect(fuelHeater.C_cold_in, cold_source.C_out) annotation (Line(points={{-35,0},{-63,0}}, color={213,213,0}));
   connect(fuelHeater.C_cold_out, cold_sink.C_in) annotation (Line(points={{35,0},{65,0}}, color={213,213,0}));
-  connect(fuelHeater.C_hot_out, hot_sink.C_in) annotation (Line(points={{-15,33.6},{-14,33.6},{-14,57}}, color={28,108,200}));
-  connect(fuelHeater.C_hot_in, hot_source.C_out) annotation (Line(points={{15,33.6},{16,33.6},{16,57}}, color={28,108,200}));
+  connect(fuelHeater.C_hot_out, hot_sink.C_in) annotation (Line(points={{-20,-33.6},{-14,-33.6},{-14,57}},
+                                                                                                         color={28,108,200}));
+  connect(fuelHeater.C_hot_in, hot_source.C_out) annotation (Line(points={{20,33.6},{16,33.6},{16,57}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end FuelHeater_direct;
