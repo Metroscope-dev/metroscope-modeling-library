@@ -11,8 +11,6 @@ model airCooledCondenser
   Units.HeatExchangeCoefficient Kth;
   Units.VolumeFlowRate Qv_cold(start=Qv_cold_0);
 
-  parameter String QCp_max_side = "cold";
-
   Units.Power W;
   Units.MassFlowRate Q_cold(start=Q_cold_0);
   Units.MassFlowRate Q_hot(start=Q_hot_0);
