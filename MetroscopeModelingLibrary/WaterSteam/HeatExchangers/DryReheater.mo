@@ -18,11 +18,16 @@ model DryReheater
   Units.Power W_condensing;
   parameter String HX_config="condenser";
 
-  Units.PositiveMassFlowRate Q_cold(
+  Units.PositiveMassFlowRate Q_cold_in(
     start=Q_cold_0,
     nominal=Q_cold_0,
     min=1e-5);
-  Units.PositiveMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
+  Units.PositiveMassFlowRate Q_hot_in(start=Q_hot_0, nominal=Q_hot_0);
+  Units.PositiveMassFlowRate Q_cold_out(
+    start=Q_cold_0,
+    nominal=Q_cold_0,
+    min=1e-5);
+  Units.PositiveMassFlowRate Q_hot_out(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
@@ -31,6 +36,8 @@ model DryReheater
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+  Units.MassFlowRate separating_plate_leak; // Separating plate leak
+  Units.MassFlowRate tube_rupture_leak; // Tube rupture leak : cold water leaks and mixes with the condensed steam
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
@@ -100,6 +107,13 @@ model DryReheater
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-60,0})));
+  Pipes.Leak tube_rupture annotation (Placement(transformation(extent={{-96,-26},{-76,-6}})));
+  BaseClasses.IsoPHFlowModel final_mix_hot annotation (Placement(transformation(extent={{-64,-76},{-44,-56}})));
+  BaseClasses.IsoPHFlowModel final_mix annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={144,-18})));
+  Pipes.Leak separating_plate annotation (Placement(transformation(extent={{-98,-64},{-78,-44}})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
@@ -108,11 +122,15 @@ equation
   // Failure modes
   if not faulty then
     fouling = 0;
+    separating_plate_leak = 0;
+    tube_rupture_leak = 0;
   end if;
 
   // Definitions
-  Q_cold = cold_side_condensing.Q;
-  Q_hot = hot_side_deheating.Q;
+  Q_cold_in = C_cold_in.Q;
+  Q_hot_in = C_hot_in.Q;
+  Q_cold_out = C_cold_out.Q;
+  Q_hot_out = C_hot_out.Q;
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side_deheating.T_out;
   T_hot_in = hot_side_pipe.T_in;
@@ -161,10 +179,11 @@ equation
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
   HX_condensing.Cp_hot = 0; // Not used by NTU method in condenser mode
 
-  connect(cold_side_deheating.C_out, C_cold_out) annotation (Line(
-      points={{96,-34},{144,-34},{144,0},{160,0}},
-      color={28,108,200},
-      thickness=1));
+  // Internal leaks
+  separating_plate.Q = 1e-5 + separating_plate_leak;
+  tube_rupture.Q = 1e-5 + tube_rupture_leak;
+
+
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
       points={{-140,0},{-162,0}},
       color={28,108,200},
@@ -181,21 +200,37 @@ equation
       points={{48,19},{48,20},{-36,20},{-36,21}},
       color={238,46,47},
       thickness=1));
-  connect(hot_side_condensing.C_out, C_hot_out) annotation (Line(
-      points={{-82,21},{-84,21},{-84,22},{-104,22},{-104,-66},{0,-66},{0,-80}},
-      color={238,46,47},
-      thickness=1));
 
-  connect(cold_side_condensing.C_in, cold_side_pipe.C_out) annotation (Line(
-      points={{-82,-34},{-114,-34},{-114,0},{-120,0}},
-      color={28,108,200},
-      thickness=1));
   connect(cold_side_condensing.C_out, cold_side_deheating.C_in) annotation (
       Line(
       points={{-34,-34},{48,-34}},
       color={28,108,200},
       thickness=1));
 
+  connect(separating_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-98,-54},{-114,-54},{-114,0},{-120,0}}, color={28,108,200}));
+  connect(separating_plate.C_out, final_mix.C_in) annotation (Line(points={{-78,-54},{144,-54},{144,-28}}, color={28,108,200}));
+  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-76,-16},{-72,-16},{-72,-4},{-104,-4},{-104,-66},{-64,-66}}, color={217,67,180}));
+  connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-96,-16},{-114,-16},{-114,0},{-120,0}}, color={217,67,180}));
+  connect(hot_side_condensing.C_out, final_mix_hot.C_in) annotation (Line(
+      points={{-82,21},{-84,21},{-84,22},{-104,22},{-104,-66},{-64,-66}},
+      color={238,46,47},
+      thickness=1));
+  connect(final_mix_hot.C_out, C_hot_out) annotation (Line(
+      points={{-44,-66},{0,-66},{0,-80}},
+      color={238,46,47},
+      thickness=1));
+  connect(cold_side_condensing.C_in, cold_side_pipe.C_out) annotation (Line(
+      points={{-82,-34},{-114,-34},{-114,0},{-120,0}},
+      color={28,108,200},
+      thickness=1));
+  connect(cold_side_deheating.C_out, final_mix.C_in) annotation (Line(
+      points={{96,-34},{144,-34},{144,-28}},
+      color={28,108,200},
+      thickness=1));
+  connect(final_mix.C_out, C_cold_out) annotation (Line(
+      points={{144,-8},{144,0},{160,0}},
+      color={28,108,200},
+      thickness=1));
   annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
                    graphics={
         Polygon(
