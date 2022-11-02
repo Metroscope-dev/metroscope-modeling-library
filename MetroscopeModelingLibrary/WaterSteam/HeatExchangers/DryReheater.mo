@@ -109,7 +109,7 @@ model DryReheater
         origin={-60,0})));
   Pipes.Leak tube_rupture annotation (Placement(transformation(extent={{-96,-26},{-76,-6}})));
   BaseClasses.IsoPHFlowModel final_mix_hot annotation (Placement(transformation(extent={{-64,-76},{-44,-56}})));
-  BaseClasses.IsoPHFlowModel final_mix annotation (Placement(transformation(
+  BaseClasses.IsoPHFlowModel final_mix_cold annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={144,-18})));
@@ -132,9 +132,9 @@ equation
   Q_cold_out = C_cold_out.Q;
   Q_hot_out = C_hot_out.Q;
   T_cold_in = cold_side_pipe.T_in;
-  T_cold_out = cold_side_deheating.T_out;
+  T_cold_out =final_mix_cold.T_out;
   T_hot_in = hot_side_pipe.T_in;
-  T_hot_out = hot_side_condensing.T_out;
+  T_hot_out = final_mix_hot.T_out;
   Tsat = hot_side_deheating.T_out;
 
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
@@ -172,8 +172,8 @@ equation
   HX_condensing.W = W_condensing;
   HX_condensing.Kth = Kth*(1-fouling/100);
   HX_condensing.S = S_condensing;
-  HX_condensing.Q_cold = Q_cold;
-  HX_condensing.Q_hot = Q_hot;
+  HX_condensing.Q_cold = cold_side_condensing.Q;
+  HX_condensing.Q_hot = hot_side_condensing.Q;
   HX_condensing.T_cold_in = cold_side_condensing.T_in;
   HX_condensing.T_hot_in = Tsat;
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
@@ -208,7 +208,7 @@ equation
       thickness=1));
 
   connect(separating_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-98,-54},{-114,-54},{-114,0},{-120,0}}, color={28,108,200}));
-  connect(separating_plate.C_out, final_mix.C_in) annotation (Line(points={{-78,-54},{144,-54},{144,-28}}, color={28,108,200}));
+  connect(separating_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-78,-54},{144,-54},{144,-28}}, color={28,108,200}));
   connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-76,-16},{-72,-16},{-72,-4},{-104,-4},{-104,-66},{-64,-66}}, color={217,67,180}));
   connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-96,-16},{-114,-16},{-114,0},{-120,0}}, color={217,67,180}));
   connect(hot_side_condensing.C_out, final_mix_hot.C_in) annotation (Line(
@@ -223,11 +223,11 @@ equation
       points={{-82,-34},{-114,-34},{-114,0},{-120,0}},
       color={28,108,200},
       thickness=1));
-  connect(cold_side_deheating.C_out, final_mix.C_in) annotation (Line(
+  connect(cold_side_deheating.C_out, final_mix_cold.C_in) annotation (Line(
       points={{96,-34},{144,-34},{144,-28}},
       color={28,108,200},
       thickness=1));
-  connect(final_mix.C_out, C_cold_out) annotation (Line(
+  connect(final_mix_cold.C_out, C_cold_out) annotation (Line(
       points={{144,-8},{144,0},{160,0}},
       color={28,108,200},
       thickness=1));

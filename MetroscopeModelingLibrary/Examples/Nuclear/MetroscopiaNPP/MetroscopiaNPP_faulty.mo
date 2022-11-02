@@ -59,7 +59,7 @@ equation
   // LP reheater
   LP_heater.fouling = Failure_LP_heater_fouling;
   LP_heater.tube_rupture_leak = Failure_LP_heater_tube_rupture_Q;
-  LP_heater.separator_plate_leak = Failure_LP_heater_separator_plate_rupture_Q;
+  LP_heater.separating_plate_leak = Failure_LP_heater_separator_plate_rupture_Q;
 
   // HP reheater
   HP_heater.fouling = Failure_HP_heater_fouling;
@@ -72,8 +72,6 @@ equation
   bypass_HP_turbine_to_condenser.Q = Failure_bypass_HP_turbine_to_condenser_Q + 1e-3;
   bypass_LP_turbine_to_condenser.Q = Failure_bypass_LP_turbine_to_condenser_Q + 1e-3;
   superheater_tube_rupture.Q = Failure_superheater_tube_rupture_Q + 1e-3;
-  LP_heater_tube_rupture.Q = Failure_LP_heater_tube_rupture_Q + 1e-3;
-  LP_heater_spearator_plate_rupture.Q = Failure_LP_heater_spearator_plate_rupture_Q + 1e-3;
   bypass_superheater_to_condenser.Q = Failure_bypass_superheater_to_condenser_Q + 1e-3;
   bypass_HP_turbine_ext_to_condenser.Q = Failure_bypass_HP_turbine_ext_to_condenser_Q + 1e-3;
   bypass_LP_heater_drains_to_condenser.Q = Failure_bypass_LP_heater_drains_to_condenser_Q + 1e-3;
