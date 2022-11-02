@@ -35,8 +35,8 @@ model Reheater
 
   Units.PositiveMassFlowRate Q_cold_in(start=Q_cold_0, nominal=Q_cold_0);
   Units.PositiveMassFlowRate Q_hot_in(start=Q_hot_0, nominal=Q_hot_0);
-  Units.PositiveMassFlowRate Q_cold_out(start=Q_cold_0, nominal=Q_cold_0); // Should be equal to Q_cold_in if no internal leaks
-  Units.PositiveMassFlowRate Q_hot_out(start=Q_hot_0, nominal=Q_hot_0); // Should be equal to Q_hot_in if no internal leaks
+  Units.NegativeMassFlowRate Q_cold_out(start=Q_cold_0, nominal=Q_cold_0); // Should be equal to Q_cold_in if no internal leaks
+  Units.NegativeMassFlowRate Q_hot_out(start=Q_hot_0, nominal=Q_hot_0); // Should be equal to Q_hot_in if no internal leaks
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
@@ -168,8 +168,8 @@ equation
   // Definitions
   Q_cold_in = C_cold_in.Q;
   Q_hot_in = C_hot_in.Q;
-  Q_cold_out = -C_cold_out.Q;
-  Q_hot_out = -C_hot_out.Q;
+  Q_cold_out = C_cold_out.Q;
+  Q_hot_out = C_hot_out.Q;
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out =final_mix_cold.T_out;
                                 // A IsoPHFlowModel is necessary to have a full thermodynamic state with temperature calculation at the cold outlet
