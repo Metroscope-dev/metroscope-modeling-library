@@ -2,6 +2,8 @@ within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model Pump_direct
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
+  /* This unit test is representative of a feedwater pump of a nuclear power plant. */
+
   // Boundary conditions
   input Units.Pressure source_P(start=20e5);
   input Units.Temperature source_T(start= 150 + 273.15);

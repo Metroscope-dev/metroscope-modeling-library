@@ -2,14 +2,16 @@ within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model StodolaTurbine_reverse
   extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
 
+ /* This unit test is representative of the first stage of a HP turbine of a nuclear power plant. */
+
   // Boundary conditions
-  input Units.Pressure source_P(start=20e5);
-  input Units.SpecificEnthalpy source_h(start=2.7718e6);
-  input Units.NegativeMassFlowRate source_Q(start=-100);
+  input Units.Pressure source_P(start=60e5);
+  input Units.SpecificEnthalpy source_h(start=2.8e6);
+  input Units.NegativeMassFlowRate source_Q(start=-2000);
 
   // Inputs for calibration
-  input Real stodolaTurbine_P_out(start=15, unit="bar", nominal=15, min=0) "bar";
-  input Real stodolaTurbine_W_out(start=2.6, unit="MW", nominal=100, min=0) "MW";
+  input Real stodolaTurbine_P_out(start=30, unit="bar", nominal=15, min=0) "bar";
+  Real stodolaTurbine_W_out(start=2.6, unit="MW", nominal=100, min=0) "MW";
 
   // Calibrated parameters
   output Units.Cst stodolaTurbine_Cst;
@@ -30,6 +32,8 @@ equation
   // Component parameters
   stodolaTurbine.area_nz = 1;
   stodolaTurbine.eta_nz = 1;
+
+  stodolaTurbine.h_out = 2.68e6;
 
   // Calibrated parameters
   stodolaTurbine.Cst = stodolaTurbine_Cst;
