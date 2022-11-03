@@ -3,9 +3,6 @@ partial model Pump
   extends BaseClasses.FlowModel(P_out_0=10e5) annotation(IconMap(primitivesVisible=false));
   extends MetroscopeModelingLibrary.Icons.Machines.PumpIcon;
 
-  parameter Boolean adiabatic_compression=false
-    "true: compression at constant enthalpy - false: compression with varying enthalpy";
-
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
   import MetroscopeModelingLibrary.Constants;
@@ -45,26 +42,22 @@ partial model Pump
         rotation=-90,
         origin={0,108})));
 equation
-  Qv_in = Q / Medium.density(state_in);
-  DP = rho*Constants.g*hn;
-
-  if adiabatic_compression then
-    W = 0;
-  else
-    h_out-h_in = Constants.g*hn/rh;
-  end if;
-
-  // Reduced rotational speed
-  R = VRot/VRotn;
+  // internal variables
+  Qv_in = Q / rho; // Volumic flow rate
+  R = VRot/VRotn; // Reduced rotational speed
 
   // Pump characteristics
   hn = a1*Qv_in^2 + a2*Qv_in*R + a3*R^2;
   rh = noEvent(max(if (R > 1e-5) then b1*Qv_in^2/R^2 + b2*Qv_in/R + b3 else b3, rhmin));
+
+  // Outlet variation
+  DP = rho*Constants.g*hn;
+  h_out-h_in = Constants.g*hn/rh;
 
   // Mechanical power
   Wm = C_power.W; // C_power.W is positive since it is power fed to the component
   Wm = W/rm; // Wm is positive since it is the power produced by the pump
 
   // Hydraulic power
-  Wh = Qv_in * DP / rh;
+  Wh = Qv_in * DP / rh; // = Qv_in*rho * g*hn/rh = Q * (h_out - h_in) = W
 end Pump;
