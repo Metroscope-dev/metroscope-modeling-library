@@ -14,7 +14,7 @@ equation
   Failure_fouling = 0 + 10*time;
   Failure_water_level_rise = 0 - 0.1*time;
   Failure_separating_plate_leak =  0 + 10*time;
-  Failure_tube_rupture_leak = 0 + 10*time;
+  Failure_tube_rupture_leak = 0 + 5*time;
 
   // Failure definition
   reheater.fouling = Failure_fouling;
