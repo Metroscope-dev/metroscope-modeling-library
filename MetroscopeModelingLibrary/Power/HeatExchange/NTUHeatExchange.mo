@@ -77,8 +77,7 @@ equation
 
   elseif config == "monophasic_cross_current" then
 
-  /* This is a monophasic shell and tube heat exchanger with cross current flow, which is equivalent
-  to saying there is one tube pass, as opposed to the two tube passes of U-shaped tubes.
+  /* This is a monophasic heat exchanger with cross current flow
   In this configuration, one fluid is mixed and the other is unmixed.
   It is necessary to identify if the mixed fluid is the "hot" fluid or the "cold" fluid.
   By default, the mixed fluid is the "hot" fluid, which is the general case in a CCGT, however, for other cases,
