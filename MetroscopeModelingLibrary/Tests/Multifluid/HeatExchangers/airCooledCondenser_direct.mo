@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
-model airCooledCondenser_direct
+model AirCooledCondenser_direct
 
   extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
 
@@ -21,7 +21,7 @@ model airCooledCondenser_direct
   parameter Units.HeatExchangeCoefficient Kth=29;
   parameter Units.FrictionCoefficient Kfr_hot=0;
 
-  //Input for calibration
+  //Sensor for calibration
   output Real T_cond(start=41.5) "degC";
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
@@ -31,50 +31,25 @@ model airCooledCondenser_direct
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-68})));
+        origin={0,-66})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(h_out(start=36462.457))
-    annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
+    annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink(h_in(start=60317.96))
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
 
-  MultiFluid.HeatExchangers.airCooledCondenser airCooledCondenser
+  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser
     annotation (Placement(transformation(extent={{-16,-16},{16,20}})));
-  MetroscopeModelingLibrary.Sensors.MoistAir.PressureSensor
-    coolingAir_in_P_sensor
-    annotation (Placement(transformation(extent={{-75,-5},{-65,5}})));
-  MetroscopeModelingLibrary.Sensors.MoistAir.TemperatureSensor
-    coolingAir_in_T_sensor
-    annotation (Placement(transformation(extent={{-55,-5},{-45,5}})));
-  MetroscopeModelingLibrary.Sensors.MoistAir.FlowSensor coolinAir_Q_in_sensor
-    annotation (Placement(transformation(extent={{-35,-5},{-25,5}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor
-    annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=270,
-        origin={0,-26})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_cond_sensor
-    annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=270,
-        origin={0,-38})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cond_sensor
-    annotation (Placement(transformation(
-        extent={{-4.75,-4.75},{4.75,4.75}},
-        rotation=270,
-        origin={-0.75,-53.25})));
 equation
 
   //Hot source
-
   turbine_outlet.h_out = h_turbine;
-  Q_cond_sensor.Q = Q_turbine;
+  turbine_outlet.Q_out = -Q_turbine;
 
   //Cold source
-  coolingAir_in_P_sensor.P_barA = P_cold_source;
-
- //cold_source.h_out=h_cold_source;
-  coolingAir_in_T_sensor.T_degC =  T_cold_source;
+  cold_source.P_out = P_cold_source*1e5;
+  cold_source.T_out =  T_cold_source+273.15;
   cold_source.relative_humidity = cold_source_relative_humidity;
+
   //ACC
     // Parameters
   airCooledCondenser.S = S;
@@ -85,34 +60,19 @@ equation
   airCooledCondenser.Kth = Kth;
   airCooledCondenser.Kfr_hot = Kfr_hot;
 
-    // Inputs for calibration
-    T_cond_sensor.T_degC = T_cond;
+    // Observable for calibration
+  condensate_sink.T_in = T_cond+273.15;
 
-  connect(cold_source.C_out, coolingAir_in_P_sensor.C_in) annotation (Line(
-        points={{-85,0},{-75,0}},                       color={85,170,255}));
-  connect(coolingAir_in_P_sensor.C_out,coolingAir_in_T_sensor. C_in)
-    annotation (Line(points={{-65,0},{-55,0}},   color={85,170,255}));
-  connect(coolingAir_in_T_sensor.C_out, coolinAir_Q_in_sensor.C_in)
-    annotation (Line(points={{-45,0},{-35,0}},   color={85,170,255}));
-  connect(airCooledCondenser.C_cold_in, coolinAir_Q_in_sensor.C_out)
-    annotation (Line(points={{-14.4,0},{-25,0}}, color={85,170,255}));
-  connect(airCooledCondenser.C_hot_out, P_cond_sensor.C_in) annotation (Line(
-        points={{-4.44089e-16,-14},{-4.44089e-16,-21},{4.44089e-16,-21},{4.44089e-16,
-          -22}}, color={28,108,200}));
-  connect(Q_cond_sensor.C_in, P_cond_sensor.C_out) annotation (Line(points={{
-          7.77156e-16,-34},{7.77156e-16,-30},{-7.77156e-16,-30}},        color={
-          28,108,200}));
-  connect(Q_cond_sensor.C_out, T_cond_sensor.C_in) annotation (Line(points={{
-          -7.21645e-16,-42},{-7.21645e-16,-48.5},{-0.75,-48.5}},
-                                           color={28,108,200}));
-  connect(condensate_sink.C_in, T_cond_sensor.C_out) annotation (Line(points={{
-          9.4369e-16,-63},{9.4369e-16,-58},{-0.75,-58}},
-                                           color={28,108,200}));
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{14.4,0},{59,0}}, color={85,170,255}));
   connect(airCooledCondenser.C_hot_in, turbine_outlet.C_out)
     annotation (Line(points={{0.32,18},{0,18},{0,43}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},
-            {80,60}})), Diagram(coordinateSystem(preserveAspectRatio=false,
-          extent={{-100,-80},{80,60}})));
-end airCooledCondenser_direct;
+  connect(airCooledCondenser.C_hot_out, condensate_sink.C_in)
+    annotation (Line(points={{0,-14},{0,-61}}, color={28,108,200}));
+  connect(airCooledCondenser.C_cold_in, cold_source.C_out)
+    annotation (Line(points={{-14.4,0},{-53,0}}, color={85,170,255}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+            -100},{100,100}})),
+                        Diagram(coordinateSystem(preserveAspectRatio=false,
+          extent={{-100,-100},{100,100}})));
+end AirCooledCondenser_direct;

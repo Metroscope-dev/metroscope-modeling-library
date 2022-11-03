@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
-model airCooledCondenser
+model AirCooledCondenser
   package Water = MetroscopeModelingLibrary.Media.WaterSteamMedium;
   package MoistAir = MetroscopeModelingLibrary.Media.MoistAirMedium;
 
@@ -426,4 +426,4 @@ equation
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid)}),                      Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
-end airCooledCondenser;
+end AirCooledCondenser;

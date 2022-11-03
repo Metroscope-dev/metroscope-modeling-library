@@ -12,6 +12,6 @@ FuelHeater_reverse
 FuelHeater_faulty
 LMTDFuelHeater_reverse
 HXmoistAirWater_reverse
-airCooledCondenser_reverse
-airCooledCondenser_direct
-airCooledCondenser_faulty
+AirCooledCondenser_reverse
+AirCooledCondenser_direct
+AirCooledCondenser_faulty
