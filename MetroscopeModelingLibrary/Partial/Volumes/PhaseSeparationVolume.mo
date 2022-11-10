@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial.Volumes;
-partial model PhaseSeparationVolume
+model PhaseSeparationVolume
 
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
 
@@ -38,7 +38,6 @@ protected
 equation
   // Inlet
   C_in.h_outflow = 0;
-  //C_in.Xi_outflow = zeros(WaterSteamMedium.nXi);
 
   // Definitions
   P = C_in.P;
@@ -47,8 +46,8 @@ equation
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
 
   // Balances
-  C_steam_out.Q *C_steam_out.h_outflow  =C_liquid_out.Q  *C_liquid_out.h_outflow;   // Energy balance
-  Q_in +C_steam_out.Q  +C_liquid_out.Q   = 0; // Mass balance
+  Q_in * inStream(C_in.h_outflow) + C_steam_out.Q * C_steam_out.h_outflow = C_liquid_out.Q * C_liquid_out.h_outflow; // Energy balance
+  Q_in + C_steam_out.Q + C_liquid_out.Q = 0; // Mass balance
 
   // Outlet
   C_steam_out.P = P;
