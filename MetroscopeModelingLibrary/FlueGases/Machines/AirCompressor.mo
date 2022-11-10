@@ -20,7 +20,7 @@ model AirCompressor
   Units.Power Wmech;
 
 
-  Power.Connectors.Inlet C_W_in annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
+  Power.Connectors.Inlet C_W_in(dummy = 0) annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}}))); // can't set the dummy variable in the compressor because it already sets the power
 equation
 
   /* Compression ratio */

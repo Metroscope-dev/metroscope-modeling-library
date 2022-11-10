@@ -39,7 +39,8 @@ model StodolaTurbine
   parameter Units.MassFraction xm_0 = (x_inner_0 + x_in_0)/2;
   parameter Units.MassFraction x_in_0 = min((h_in_0 - h_liq_in_0)/(h_vap_in_0 - h_liq_in_0), 1);
 
-  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
+  Inputs.InputNotUsed dummy; // To keep local balance
+  Power.Connectors.Outlet C_W_out(dummy = dummy) annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 protected
   parameter Units.SpecificEnthalpy h_vap_in_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
   parameter Units.SpecificEnthalpy h_liq_in_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in_0));

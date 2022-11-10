@@ -21,8 +21,11 @@ model GasTurbine
   Units.Power Wmech;
   Units.Power Wcompressor;
 
-  Power.Connectors.Outlet C_W_compressor annotation (Placement(transformation(extent={{-110,90},{-90,110}}), iconTransformation(extent={{-110,90},{-90,110}})));
-  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
+
+  Inputs.InputNotUsed dummy_compressor; // To keep local balance
+  Inputs.InputNotUsed dummy_out; // To keep local balance
+  Power.Connectors.Outlet C_W_compressor(dummy = dummy_compressor) annotation (Placement(transformation(extent={{-110,90},{-90,110}}), iconTransformation(extent={{-110,90},{-90,110}})));
+  Power.Connectors.Outlet C_W_out(dummy = dummy_out) annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
 equation
 
   /* Compression ratio */
