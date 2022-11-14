@@ -15,7 +15,18 @@ equation
   source.h_out = source_h;
   source.Q_out = source_Q;
 
-  source.Xi_out = {0.92,0.048,0.005,0.002,0.015,0.01};
+  // Mass fraction as input
+  // source.Xi_out = {0.92,0.048,0.005,0.002,0.015,0.01};
+
+  // Molar fraction as input
+  source.X_molar_fuel_CH4=0.92;
+  source.X_molar_fuel_C2H6=0.048;
+  source.X_molar_fuel_C3H8=0.005;
+  source.X_molar_fuel_C4H10_n_butane=0.002;
+  source.X_molar_fuel_N2=0.015;
+  source.X_molar_fuel_CO2=0.01;
+
+
 
   connect(source.C_out, sink.C_in) annotation (Line(points={{-23,0},{23,0}}, color={95,95,95}));
 end Source;
