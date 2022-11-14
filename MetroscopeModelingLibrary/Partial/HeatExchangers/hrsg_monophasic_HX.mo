@@ -15,6 +15,9 @@ partial model hrsg_monophasic_HX
   // Warning :
   // QCp_max_side = cold only for EC LP (aka condensate preheater)
   // Otherwise, flue gases usually correspond to QCp_max_side
+  parameter String config = "monophasic_cross_current";
+  parameter String mixed_fluid = "hot";
+
   Units.Power W;
   Units.MassFlowRate Q_cold;
   Units.MassFlowRate Q_hot;
@@ -22,6 +25,10 @@ partial model hrsg_monophasic_HX
   Units.Temperature T_hot_in;
   Units.Temperature T_cold_out;
   Units.Temperature T_hot_out;
+
+    // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage fouling; // Fouling percentage
 
     // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
@@ -40,7 +47,7 @@ partial model hrsg_monophasic_HX
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=Q_cold_0)) annotation (Placement(transformation(
           extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
   FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0,h_0=h_hot_in_0) annotation (Placement(transformation(extent={{-50,-18},{-30,2}})));
-  Power.HeatExchange.NTUHeatExchange HX(config="monophasic_cross_current", QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX(config=config, mixed_fluid=mixed_fluid, QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={4,10})));
@@ -69,6 +76,11 @@ protected
   MetroscopeModelingLibrary.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
 
 equation
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
   // Definitions
   Q_cold =cold_side.Q;
   Q_hot =hot_side.Q;
@@ -89,7 +101,7 @@ equation
 
   // Power Exchange
   HX.W = W;
-  HX.Kth =  Kth;
+  HX.Kth =  Kth*(1-fouling/100);
   HX.S = S;
   HX.Q_cold = Q_cold;
   HX.Q_hot = Q_hot;

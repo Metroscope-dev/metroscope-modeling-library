@@ -52,12 +52,12 @@ equation
   extractedFlow.W + mainFlow.W = 0;
 
   // Saturation
-  x_ext_out = alpha * x_in;
+  extractedFlow.h_out - h_liq_sat = alpha * (h_in - h_liq_sat);
 
   // Mass Fractions Computation
-  x_in = (h_in - h_liq_sat) / (h_vap_sat - h_liq_sat);
-  x_main_out = (mainFlow.h_out - h_liq_sat) / (h_vap_sat - h_liq_sat);
-  x_ext_out = (extractedFlow.h_out - h_liq_sat) / (h_vap_sat - h_liq_sat);
+  x_in = min(1, (h_in - h_liq_sat) / (h_vap_sat - h_liq_sat));
+  x_main_out = min(1, (mainFlow.h_out - h_liq_sat) / (h_vap_sat - h_liq_sat));
+  x_ext_out = min(1, (extractedFlow.h_out - h_liq_sat) / (h_vap_sat - h_liq_sat));
   connect(extractedFlow.C_in, mainFlow.C_in) annotation (Line(points={{1.77636e-15,-18.5},{1.77636e-15,0},{35,0}},       color={28,108,200}));
   connect(extractedFlow.C_out, C_ext_out) annotation (Line(points={{-2.10942e-15,-41.5},{-2.10942e-15,-54},{0,-54},{0,-64}},
                                                                                                                  color={28,108,200}));

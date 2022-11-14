@@ -25,11 +25,15 @@ model FuelHeater
   Units.Temperature T_hot_in;
   Units.Temperature T_hot_out;
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
   parameter Units.MassFlowRate Q_hot_0 = 50;
-  parameter Units.Temperature T_cold_in_0 = 76 + 273.15;
-  parameter Units.Pressure P_cold_in_0 = 18 *1e5;
+  parameter Units.Temperature T_hot_in_0 = 76 + 273.15;
+  parameter Units.Pressure P_hot_in_0 = 18 *1e5;
 
   Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
   Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
@@ -39,24 +43,30 @@ model FuelHeater
   Power.HeatExchange.NTUHeatExchange HX(
     config=HX_config,
     QCp_max_side=QCp_max_side,
-    T_cold_in_0=T_cold_in_0)                                                                                                  annotation (Placement(transformation(
+    T_hot_in_0=T_hot_in_0)                                                                                                  annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={10,14})));
   WaterSteam.BaseClasses.IsoPFlowModel hot_side(
-    Q_0=Q_cold_0,
-    T_in_0=T_cold_in_0,
-    P_in_0=P_cold_in_0) annotation (Placement(transformation(
+    Q_0=Q_hot_0,
+    T_in_0=T_hot_in_0,
+    P_in_0=P_hot_in_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
-  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, T_in_0=T_hot_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-14,-24})));
   Fuel.Pipes.Pipe cold_side_pipe annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
   Fuel.BaseClasses.IsoPFlowModel cold_side annotation (Placement(transformation(extent={{0,-10},{20,10}})));
 equation
+
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
     // Definitions
   Q_cold = cold_side.Q;
   Q_hot = hot_side.Q;
@@ -78,7 +88,7 @@ equation
   // Power Exchange
   HX.W = W;
   HX.S = S;
-  HX.Kth = Kth;
+  HX.Kth = Kth*(1-fouling/100);
   HX.Q_cold = Q_cold;
   HX.Q_hot = Q_hot;
   HX.T_cold_in = T_cold_in;

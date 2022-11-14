@@ -17,6 +17,7 @@ model NTUHeatExchange
   /* Exchanger configuration and parameters */
   parameter String config = "shell_and_tubes_two_passes";
   parameter String QCp_max_side = "cold";
+  parameter String mixed_fluid = "hot"; // Used for the case of a cross-current HX, where the exchange equations depends if QCpMAX is mixed or not
   Inputs.InputArea S(start=S_0) "Heat exchange surface";
   Inputs.InputHeatExchangeCoefficient Kth(start=Kth_0) "Heat exchange coefficient";
 
@@ -39,8 +40,8 @@ model NTUHeatExchange
   Units.Fraction epsilon(start=epsilon_0);
   Units.Power W_max(start=W_max_0);
 
-  parameter Real QCpMIN_0(unit="W/K") = if QCp_max_side == "hot" then Q_cold_0 * Cp_cold_0 else Q_hot_0 * Cp_hot_0;
-  parameter Real QCpMAX_0(unit="W/K") = if QCp_max_side == "cold" then Q_cold_0 * Cp_cold_0 else Q_hot_0 * Cp_hot_0;
+  parameter Real QCpMIN_0(unit="W/K") = if QCp_max_side == "hot" then Q_cold_0 * Cp_cold_0 elseif QCp_max_side == "cold" then Q_hot_0 * Cp_hot_0 else min(Q_cold_0 * Cp_cold_0,Q_hot_0 * Cp_hot_0);
+  parameter Real QCpMAX_0(unit="W/K") = if QCp_max_side == "cold" then Q_cold_0 * Cp_cold_0 elseif QCp_max_side == "hot" then Q_hot_0 * Cp_hot_0 else max(Q_cold_0 * Cp_cold_0,Q_hot_0 * Cp_hot_0);
   parameter Real NTU_0(unit="1") = Kth_0*S_0/QCpMIN_0;
   parameter Units.Fraction Cr_0 = QCpMIN_0 / QCpMAX_0;
   parameter Units.Fraction epsilon_0 = 0.9;
@@ -61,9 +62,13 @@ equation
     if QCp_max_side == "hot" then
       QCpMAX = Q_hot*Cp_hot;
       QCpMIN = Q_cold*Cp_cold;
-    else
+    elseif QCp_max_side == "cold" then
       QCpMIN = Q_hot*Cp_hot;
       QCpMAX = Q_cold*Cp_cold;
+    else
+      /* If QCpMAX is not predefined */
+      QCpMIN = min(Q_hot*Cp_hot,Q_cold*Cp_cold);
+      QCpMAX = max(Q_hot*Cp_hot,Q_cold*Cp_cold);
     end if;
     assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
 
@@ -72,23 +77,94 @@ equation
 
   elseif config == "monophasic_cross_current" then
 
-  /* This is a monophasic shell and tube heat exchanger with cross current flow, which is equivalent
-  to saying there is one tube pass, as opposed to the two tube passes of U-shaped tubes */
+  /* This is a monophasic heat exchanger with cross current flow
+  In this configuration, one fluid is mixed and the other is unmixed.
+  It is necessary to identify if the mixed fluid is the "hot" fluid or the "cold" fluid.
+  By default, the mixed fluid is the "hot" fluid, which is the general case in a CCGT, however, for other cases,
+  the parameter mixed_fluid can be modified */
 
-    if QCp_max_side == "hot" then
-      /* QCpMAX is associated to the mixed fluid, shell side, considered as hot side */
-      QCpMAX = Q_hot*Cp_hot;
-      QCpMIN = Q_cold*Cp_cold;
-      assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
-      epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+    if mixed_fluid == "hot" then
+
+      if QCp_max_side == "hot" then
+        // QCpMAX is associated to the mixed fluid
+        QCpMAX = Q_hot*Cp_hot;
+        QCpMIN = Q_cold*Cp_cold;
+        assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+        epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+      elseif QCp_max_side == "cold" then
+        // QCpMAX is associated to the unmixed fluid
+        QCpMIN = Q_hot*Cp_hot;
+        QCpMAX = Q_cold*Cp_cold;
+        assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+        epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+      else
+        /* If QCpMAX is not predefined
+           Identify QCpMAX
+           QCpMAX is associated to the cold fluid */
+        if Q_hot*Cp_hot<Q_cold*Cp_cold then
+          QCpMIN = Q_hot*Cp_hot;
+          QCpMAX = Q_cold*Cp_cold;
+          // QCpMAX is associated to the unmixed fluid
+          epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+        else
+          // QCpMAX is associated to the hot fluid
+          QCpMAX = Q_hot*Cp_hot;
+          QCpMIN = Q_cold*Cp_cold;
+          // QCpMAX is associated to the mixed fluid
+          epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+        end if;
+      end if;
+
     else
-      /* QCpMAX is associated to the unmixed fluid, tube side, considered as cold side */
-      QCpMIN = Q_hot*Cp_hot;
-      QCpMAX = Q_cold*Cp_cold;
-      assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
-      epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+        // The mixed fluid is associated to the cold side
+      if QCp_max_side == "hot" then
+        // QCpMAX is associated to the unmixed fluid
+        QCpMAX = Q_hot*Cp_hot;
+        QCpMIN = Q_cold*Cp_cold;
+        assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+        epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+      elseif QCp_max_side == "cold" then
+        // QCpMAX is associated to the mixed fluid
+        QCpMIN = Q_hot*Cp_hot;
+        QCpMAX = Q_cold*Cp_cold;
+        assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+        epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+      else
+        /* If QCpMAX is not predefined
+           Identify QCpMAX
+           QCpMAX is associated to the cold fluid */
+        if Q_hot*Cp_hot<Q_cold*Cp_cold then
+          QCpMIN = Q_hot*Cp_hot;
+          QCpMAX = Q_cold*Cp_cold;
+          // QCpMAX is associated to the mixed fluid
+          epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+        else
+          // QCpMAX is associated to the hot fluid
+          QCpMAX = Q_hot*Cp_hot;
+          QCpMIN = Q_cold*Cp_cold;
+          // QCpMAX is associated to the unmixed fluid
+          epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+        end if;
+      end if;
     end if;
 
+  elseif config == "monophasic_counter_current" then
+
+  /* This is a simple monophasic heat exchanger with a counter-flow configuration */
+
+    if QCp_max_side == "hot" then
+      QCpMAX = Q_hot*Cp_hot;
+      QCpMIN = Q_cold*Cp_cold;
+    elseif QCp_max_side == "cold" then
+      QCpMIN = Q_hot*Cp_hot;
+      QCpMAX = Q_cold*Cp_cold;
+    else
+      QCpMIN = min(Q_hot*Cp_hot,Q_cold*Cp_cold);
+      QCpMAX = max(Q_hot*Cp_hot,Q_cold*Cp_cold);
+    end if;
+    assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
+
+    epsilon = (1-exp(-NTU*(1-Cr)))/(1-Cr*exp(-NTU*(1-Cr)));
 
     elseif config == "evaporator" then
 
@@ -113,7 +189,9 @@ equation
     epsilon = 0;
   end if;
 
-  assert(config == "evaporator" or config == "condenser" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser_counter_current'");
+  assert(config == "evaporator" or config == "condenser" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current" or config=="monophasic_counter_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser', 'evaporator', 'monophasic_cross_current', or 'monophasic_counter_current'", AssertionLevel.error);
+  assert(mixed_fluid == "hot" or mixed_fluid == "cold", "mixed_fluid parameter of NTUHeatExchange should be 'hot' or 'cold'", AssertionLevel.error);
+
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(
