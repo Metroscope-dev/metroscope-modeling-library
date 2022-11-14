@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
 model MetroscopiaNPP_faulty
 
-  extends MetroscopiaNPP_direct(
+  extends MetroscopiaNPP_direct_withStartValues(
     superheater(faulty=true),
     condenser(faulty=true),
     LP_heater(faulty=true),
