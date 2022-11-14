@@ -12,8 +12,10 @@ model CombustionChamber
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
   input Units.PositiveMassFlowRate Q_fuel(start=15);
 
+  //input Units.SpecificEnthalpy LHV(start=48130e3);
+
   // Parameters
-  parameter Units.SpecificEnthalpy LHV = 48130e3;
+  parameter String HV_source = "calculated";
   parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
 
   MultiFluid.Machines.CombustionChamber combustionChamber annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
@@ -37,7 +39,8 @@ equation
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.LHV = LHV;
+  combustionChamber.HV_source = HV_source;
+  //combustionChamber.LHV_input = LHV;
   combustionChamber.DP = combustion_chamber_pressure_loss;
 
   connect(combustionChamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33},{2.77556e-16,-33}}, color={213,213,0}));
