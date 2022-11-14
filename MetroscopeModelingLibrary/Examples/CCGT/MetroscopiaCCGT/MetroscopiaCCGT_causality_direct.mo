@@ -612,10 +612,6 @@ equation
                                                    color={28,108,200}));
   connect(evaporator.C_hot_out, economiser.C_hot_in) annotation (Line(points={{3.3,
           -26.355},{51,-26.355},{51,-26.5},{82.7,-26.5}},color={95,95,95}));
-  connect(gasTurbine.C_W_compressor, airCompressor.C_W_in) annotation (Line(
-      points={{-414,-10},{-414,16},{-496,16},{-496,-12}},
-      color={244,125,35},
-      smooth=Smooth.Bezier));
   connect(gasTurbine.C_out, turbine_T_out_sensor.C_in)
     annotation (Line(points={{-382,-26},{-370,-26}}, color={95,95,95}));
   connect(turbine_P_out_sensor.C_in, turbine_T_out_sensor.C_out)
@@ -761,6 +757,10 @@ equation
     annotation (Line(points={{35,18.1822},{35,33.9}}, color={0,0,127}));
   connect(T_flue_gas_sink_sensor.C_in, economiser.C_hot_out) annotation (Line(points={{170,-26},{123.3,-26},{123.3,-26.5}}, color={95,95,95}));
   connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{182,-26},{222,-26},{222,166}}, color={95,95,95}));
+  connect(gasTurbine.W_compressor, airCompressor.W_in) annotation (Line(
+      points={{-414,-16.4},{-414,-16},{-414,16},{-496.14,16},{-496.14,-17.74}},
+      color={0,0,127},
+      smooth=Smooth.Bezier));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},
             {260,280}})),                                     Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},{260,280}}),

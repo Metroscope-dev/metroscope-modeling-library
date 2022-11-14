@@ -21,7 +21,7 @@ model GasTurbine
   Units.Power Wmech;
 
   Inputs.InputNotUsed dummy; // To keep local balance
-  Modelica.Blocks.Interfaces.RealInput W_compressor annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput W_compressor "Declared as Input because the power is defined by the compressor" annotation (Placement(transformation(
         extent={{-21,-21},{21,21}},
         rotation=180,
         origin={-92,100}), iconTransformation(

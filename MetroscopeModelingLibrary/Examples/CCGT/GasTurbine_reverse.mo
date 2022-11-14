@@ -10,7 +10,7 @@ model GasTurbine_reverse
 
   input Units.Pressure P_fuel(start = 30e5);
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
-  input Units.NegativeMassFlowRate Q_fuel(start=15);
+  input Units.NegativeMassFlowRate Q_fuel(start=-15);
 
   // Parameters
   parameter Units.SpecificEnthalpy LHV = 48130e3;
@@ -57,7 +57,7 @@ equation
 
   source_fuel.P_out = P_fuel;
   source_fuel.h_out = h_fuel;
-  source_fuel.Q_out = - Q_fuel;
+  source_fuel.Q_out = Q_fuel;
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
@@ -78,8 +78,8 @@ equation
   gasTurbine.eta_is = turbine_eta_is;
 
   connect(source_air.C_out, airCompressor.C_in) annotation (Line(points={{-93,0},{-84,0}}, color={95,95,95}));
-  connect(airCompressor.C_W_in, gasTurbine.C_W_compressor) annotation (Line(
-      points={{-64,10},{-64,22},{30,22},{30,10}},
+  connect(airCompressor.W_in, gasTurbine.W_compressor) annotation (Line(
+      points={{-64.1,5.9},{-64.1,22},{30,22},{30,6}},
       color={244,125,35},
       smooth=Smooth.Bezier));
   connect(combustionChamber.inlet1,source_fuel. C_out) annotation (Line(points={{0,-10},{0,-33}},                   color={213,213,0}));

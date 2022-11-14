@@ -59,8 +59,8 @@ equation
       points={{50,10},{50,10},{50,40},{71,40}},
       color={244,125,35},
       smooth=Smooth.Bezier));
-  connect(airCompressor.C_W_in, gasTurbine.C_W_compressor) annotation (Line(
-      points={{-34,10},{-34,26},{30,26},{30,10}},
+  connect(airCompressor.W_in, gasTurbine.W_compressor) annotation (Line(
+      points={{-34.1,5.9},{-34.1,26},{30,26},{30,6}},
       color={244,125,35},
       smooth=Smooth.Bezier));
   connect(combustionChamber.inlet1,source_fuel. C_out) annotation (Line(points={{0,-10},{0,-33}},                   color={213,213,0}));
