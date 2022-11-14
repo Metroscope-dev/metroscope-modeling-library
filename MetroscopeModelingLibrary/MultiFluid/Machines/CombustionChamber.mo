@@ -8,10 +8,11 @@ model CombustionChamber
   Units.PositiveMassFlowRate Q_fuel;
   Units.PositiveMassFlowRate Q_exhaust;
 
-  Inputs.InputDifferentialPressure DP;
+  Units.DifferentialPressure DP;
 
   Units.Power Wth;
-  Inputs.InputSpecificEnthalpy LHV;
+  Units.SpecificEnthalpy LHV;
+  Units.SpecificEnthalpy HHV;
   Units.SpecificEnthalpy h_in_air(start=h_in_air_0);
   Units.SpecificEnthalpy h_in_fuel;
   Units.SpecificEnthalpy h_exhaust;
@@ -44,7 +45,7 @@ model CombustionChamber
 
   // Heating values
     // Identify the source of the heating value: "LHV_input" or "HHV_input" or "calculated"
-    parameter String HV_source = "LHV_input";
+    parameter String HV_source = "calculated";
     // Given higher and lower heating values
     Real HHV_input;
     Real LHV_input;
@@ -147,16 +148,23 @@ equation
 
   // Heating values
   // Calculations
-  LHV_calculated = (lhv_mass_CH4*X_fuel_CH4 + lhv_molar_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
-  HHV_calculated = (hhv_mass_CH4*X_fuel_CH4 + hhv_molar_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
+  LHV_calculated = (lhv_mass_CH4*X_fuel_CH4 + lhv_molar_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane);
+  HHV_calculated = (hhv_mass_CH4*X_fuel_CH4 + hhv_molar_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane);
 
   if HV_source == "LHV_input" then
     LHV = LHV_input;
   elseif HV_source == "HHV_input" then
-    LHV = HHV_input*LHV_calculated/HHV_calculated;
-  else
+    HHV = HHV_input;
+  elseif HV_source == "calculated" then
     LHV = LHV_calculated;
+    LHV_input = LHV;
+  else
+    LHV = 0;
   end if;
+  assert(HV_source == "LHV_input" or HV_source == "HHV_input" or HV_source == "calculated", "HV_source should be: 'LHV_input', 'HHV_input' or 'calculated'", AssertionLevel.error);
+
+  LHV = HHV*LHV_calculated/HHV_calculated;
+  LHV_input = HHV_input*LHV_calculated/HHV_calculated;
 
   // Chemical balance
   // quantity of reactants in fuel
