@@ -16,13 +16,11 @@ model AirCompressor
 
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
-
-  Units.Power Wmech;
-
-
-  Power.Connectors.Inlet C_W_in(dummy = 0) annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}}))); // can't set the dummy variable in the compressor because it already sets the power
+  Modelica.Blocks.Interfaces.RealOutput W_in "Declared as RealOutput because it the needed power is defined by the compressor itself" annotation (Placement(transformation(extent={{108,52},{72,88}}), iconTransformation(
+        extent={{13,-13},{-13,13}},
+        rotation=0,
+        origin={99,59})));
 equation
-
   /* Compression ratio */
   tau = P_out/P_in;
 
@@ -30,8 +28,7 @@ equation
   (h_out-h_in)*eta_is = h_is - h_in;
 
   /* Mechanical power from the turbine */
-  Wmech = - Q*(h_in - h_out);
-  C_W_in.W =  Wmech;
+  W_in = - Q*(h_in - h_out);
 
   /* Isentropic compression */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in));

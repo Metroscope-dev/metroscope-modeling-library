@@ -16,10 +16,6 @@ model AirCompressor_direct
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-48,-10},{-28,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{28,-10},{48,10}})));
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor annotation (Placement(transformation(extent={{-8,-10},{12,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source turbine_power_source annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={38,40})));
 equation
 
   source.P_out = source_P;
@@ -34,8 +30,4 @@ equation
 
   connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-33,0},{-8,0}}, color={95,95,95}));
   connect(airCompressor.C_out, sink.C_in) annotation (Line(points={{12,0},{33,0}}, color={95,95,95}));
-  connect(turbine_power_source.C_out, airCompressor.C_W_in) annotation (Line(
-      points={{33.2,40},{12,40},{12,10}},
-      color={244,125,35},
-      smooth=Smooth.Bezier));
 end AirCompressor_direct;

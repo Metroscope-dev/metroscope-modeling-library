@@ -24,10 +24,6 @@ model AirCompressor_reverse
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-48,-10},{-28,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink(h_in(start=h_out_compressor_0)) annotation (Placement(transformation(extent={{68,-10},{88,10}})));
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(h_out(start=h_out_compressor_0)) annotation (Placement(transformation(extent={{-8,-10},{12,10}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source turbine_power_source annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={38,40})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor annotation (Placement(transformation(extent={{18,-10},{38,10}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor compressor_P_out_sensor annotation (Placement(transformation(extent={{46,-10},{66,10}})));
 equation
@@ -47,10 +43,6 @@ equation
   airCompressor.eta_is = eta_is;
 
   connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-33,0},{-8,0}}, color={95,95,95}));
-  connect(turbine_power_source.C_out, airCompressor.C_W_in) annotation (Line(
-      points={{33.2,40},{12,40},{12,10}},
-      color={244,125,35},
-      smooth=Smooth.Bezier));
   connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{12,0},{18,0}}, color={95,95,95}));
   connect(compressor_T_out_sensor.C_out, compressor_P_out_sensor.C_in) annotation (Line(points={{38,0},{46,0}}, color={95,95,95}));
   connect(compressor_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{66,0},{73,0}}, color={95,95,95}));
