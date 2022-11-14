@@ -1,6 +1,5 @@
 within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_faulty_withStartValues
-  import MetroscopiaCCGT_faulty;
   extends MetroscopiaCCGT_faulty(
     AirFilter(
       C_in(

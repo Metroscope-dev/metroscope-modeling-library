@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Added Example/ReheaterLine, direct and reverse, [PR#216](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/216)
 
 ### Removed <!--Make sure to add a link to the PR and issues related to your change-->
-
+ - Removed `adiabatic_compression` parameter in `Pump`, since it was not used [288](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/288) : [PR #289](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/289)
 
 ## MML3-DTG-V2
 
