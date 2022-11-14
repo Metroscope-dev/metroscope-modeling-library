@@ -43,8 +43,8 @@ model CombustionChamber
   Units.MassFraction X_fuel_O(start=0) "O mass fraction in the fuel";
 
   // Heating values
-    // Identify the source of the heating value: "input" ot "calculated"
-    parameter String HV_source = "input";
+    // Identify the source of the heating value: "LHV_input" or "HHV_input" or "calculated"
+    parameter String HV_source = "LHV_input";
     // Given higher and lower heating values
     Real HHV_input;
     Real LHV_input;
@@ -144,6 +144,19 @@ equation
   // Energy balance
   Wth = Q_fuel * LHV;
   Q_exhaust * h_exhaust = Q_air * h_in_air + Q_fuel * h_in_fuel + Wth;
+
+  // Heating values
+  // Calculations
+  LHV_calculated = (lhv_mass_CH4*X_fuel_CH4 + lhv_molar_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
+  HHV_calculated = (hhv_mass_CH4*X_fuel_CH4 + hhv_molar_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
+
+  if HV_source == "LHV_input" then
+    LHV = LHV_input;
+  elseif HV_source == "HHV_input" then
+    LHV = HHV_input*LHV_calculated/HHV_calculated;
+  else
+    LHV = LHV_calculated;
+  end if;
 
   // Chemical balance
   // quantity of reactants in fuel
