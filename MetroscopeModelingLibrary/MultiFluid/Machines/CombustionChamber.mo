@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.MultiFluid.Machines;
+﻿within MetroscopeModelingLibrary.MultiFluid.Machines;
 model CombustionChamber
 
   import MetroscopeModelingLibrary.Units;
@@ -42,6 +42,16 @@ model CombustionChamber
   Units.MassFraction X_fuel_H(start=0.2) "H mass fraction in the fuel";
   Units.MassFraction X_fuel_O(start=0) "O mass fraction in the fuel";
 
+  // Heating values
+    // Identify the source of the heating value: "input" ot "calculated"
+    parameter String HV_source = "input";
+    // Given higher and lower heating values
+    Real HHV_input;
+    Real LHV_input;
+    // Calculated higher and lower heating values
+    Real HHV_calculated;
+    Real LHV_calculated;
+
   // Constants
   constant Units.AtomicMass m_C = Constants.m_C "Carbon atomic mass";
   constant Units.AtomicMass m_H = Constants.m_H "Hydrogen atomic mass";
@@ -49,10 +59,38 @@ model CombustionChamber
 
   constant Units.MolecularMass m_CH4 = m_C + m_H*4;
   constant Units.MolecularMass m_C2H6 = m_C*2 + m_H*6;
-  constant Units.MolecularMass m_C3H8 = m_C*3 + m_H*9;
+  constant Units.MolecularMass m_C3H8 = m_C*3 + m_H*8;
   constant Units.MolecularMass m_C4H10 = m_C*4 + m_H*10;
   constant Units.MolecularMass m_CO2 = m_C + m_O*2;
   constant Units.MolecularMass m_H2O = m_H*2 + m_O;
+
+  // Ideal calorific value on molar basis (kJ/mol) of relevant components based on ISO6976 at 25°C
+    // Methane CH4
+    constant Real hhv_molar_CH4 = 891.51 "kJ/mol";
+    constant Real lhv_molar_CH4 = 802.69 "kJ/mol";
+    // Ethane C2H6
+    constant Real hhv_molar_C2H6 = 1562.06 "kJ/mol";
+    constant Real lhv_molar_C2H6 = 1428.83 "kJ/mol";
+    // Propane C3H8
+    constant Real hhv_molar_C3H8 = 2220.99 "kJ/mol";
+    constant Real lhv_molar_C3H8 = 2043.35 "kJ/mol";
+    // n-Butane C4H10
+    constant Real hhv_molar_C4H10 = 2879.63 "kJ/mol";
+    constant Real lhv_molar_C4H10 = 2657.58 "kJ/mol";
+
+  // Ideal calorific value on molar basis (MJ/kg): conversion using each component's molecular mass
+    // Methane CH4
+    constant Real hhv_mass_CH4 = hhv_molar_CH4/m_CH4 "MJ/kg";
+    constant Real lhv_mass_CH4 = lhv_molar_CH4/m_CH4 "MJ/kg";
+    // Ethane C2H6
+    constant Real hhv_mass_C2H6 = hhv_molar_C2H6/m_C2H6 "MJ/kg";
+    constant Real lhv_mass_C2H6 = lhv_molar_C2H6/m_C2H6 "MJ/kg";
+    // Propane C3H8
+    constant Real hhv_mass_C3H8 = hhv_molar_C3H8/m_C3H8 "MJ/kg";
+    constant Real lhv_mass_C3H8 = lhv_molar_C3H8/m_C3H8 "MJ/kg";
+    // n-Butane C4H10
+    constant Real hhv_mass_C4H10 = hhv_molar_C4H10/m_C4H10 "MJ/kg";
+    constant Real lhv_mass_C4H10 = lhv_molar_C4H10/m_C4H10 "MJ/kg";
 
   // Initialization parameters
   parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
