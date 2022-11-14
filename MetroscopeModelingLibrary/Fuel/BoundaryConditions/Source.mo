@@ -19,20 +19,20 @@ model Source
   Real amN2 "H2O molecular mass";
 
   // Fuel composition
-  Units.MassFraction X_fuel_CH4(start=0.848);
-  Units.MassFraction X_fuel_C2H6(start=0.083);
-  Units.MassFraction X_fuel_C3H8(start=0.0126);
-  Units.MassFraction X_fuel_C4H10_n_butane(start=0.00668);
-  Units.MassFraction X_fuel_N2(start=0.024);
-  Units.MassFraction X_fuel_CO2(start=0.025);
+  Units.MassFraction X_CH4(start=0.848);
+  Units.MassFraction X_C2H6(start=0.083);
+  Units.MassFraction X_C3H8(start=0.0126);
+  Units.MassFraction X_C4H10_n_butane(start=0.00668);
+  Units.MassFraction X_N2(start=0.024);
+  Units.MassFraction X_CO2(start=0.025);
 
   // Mole fractions
-  Real X_molar_fuel_CH4(start=0.92);
-  Real X_molar_fuel_C2H6(start=0.048);
-  Real X_molar_fuel_C3H8(start=0.005);
-  Real X_molar_fuel_C4H10_n_butane(start=0.002);
-  Real X_molar_fuel_N2(start=0.015);
-  Real X_molar_fuel_CO2(start=0.01);
+  Real X_molar_CH4(start=0.92);
+  Real X_molar_C2H6(start=0.048);
+  Real X_molar_C3H8(start=0.005);
+  Real X_molar_C4H10_n_butane(start=0.002);
+  Real X_molar_N2(start=0.015);
+  Real X_molar_CO2(start=0.01);
 
   // Mean molecular mass
   Real mean_molecular_mass(start=17);
@@ -49,22 +49,22 @@ equation
 
 
   // Composition mass fraction
-  X_fuel_CH4 = Xi_out[1]; // methane
-  X_fuel_C2H6 = Xi_out[2]; // ethane
-  X_fuel_C3H8=  Xi_out[3]; // propane
-  X_fuel_C4H10_n_butane=  Xi_out[4]; // butane
-  X_fuel_N2=  Xi_out[5]; // nitrogen
-  X_fuel_CO2=  Xi_out[6]; // carbon dioxyde
+  X_CH4 = Xi_out[1]; // methane
+  X_C2H6 = Xi_out[2]; // ethane
+  X_C3H8 = Xi_out[3]; // propane
+  X_C4H10_n_butane = Xi_out[4]; // butane
+  X_N2 = Xi_out[5]; // nitrogen
+  X_CO2 = Xi_out[6]; // carbon dioxyde
 
   // Mean Molecular Mass: this gives the correct results only if the molar fraction is given as an input, if the mass fraction is given, this quantity is useless
-  mean_molecular_mass = X_molar_fuel_CH4*amCH4 + X_molar_fuel_C2H6*amC2H6 + X_molar_fuel_C3H8*amC3H8 + X_molar_fuel_C4H10_n_butane*amC4H10 + X_molar_fuel_N2*amN2 + X_molar_fuel_CO2*amCO2;
+  mean_molecular_mass = X_molar_CH4*amCH4 + X_molar_C2H6*amC2H6 + X_molar_C3H8*amC3H8 + X_molar_C4H10_n_butane*amC4H10 + X_molar_N2*amN2 + X_molar_CO2*amCO2;
 
   // Mass and mole fraction relation
-  X_molar_fuel_CH4 = X_fuel_CH4/amCH4 * mean_molecular_mass;
-  X_molar_fuel_C2H6 = X_fuel_C2H6/amC2H6 * mean_molecular_mass;
-  X_molar_fuel_C3H8 = X_fuel_C3H8/amC3H8 * mean_molecular_mass;
-  X_molar_fuel_C4H10_n_butane = X_fuel_C4H10_n_butane/amC4H10 * mean_molecular_mass;
-  X_molar_fuel_N2 = X_fuel_N2/amN2 * mean_molecular_mass;
-  X_molar_fuel_CO2 = X_fuel_CO2/amCO2 * mean_molecular_mass;
+  X_molar_CH4 = X_CH4/amCH4 * mean_molecular_mass;
+  X_molar_C2H6 = X_C2H6/amC2H6 * mean_molecular_mass;
+  X_molar_C3H8 = X_C3H8/amC3H8 * mean_molecular_mass;
+  X_molar_C4H10_n_butane = X_C4H10_n_butane/amC4H10 * mean_molecular_mass;
+  X_molar_N2 = X_N2/amN2 * mean_molecular_mass;
+  X_molar_CO2 = X_CO2/amCO2 * mean_molecular_mass;
 
 end Source;

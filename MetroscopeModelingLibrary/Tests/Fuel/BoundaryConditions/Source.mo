@@ -19,12 +19,12 @@ equation
   // source.Xi_out = {0.92,0.048,0.005,0.002,0.015,0.01};
 
   // Molar fraction as input
-  source.X_molar_fuel_CH4=0.92;
-  source.X_molar_fuel_C2H6=0.048;
-  source.X_molar_fuel_C3H8=0.005;
-  source.X_molar_fuel_C4H10_n_butane=0.002;
-  source.X_molar_fuel_N2=0.015;
-  source.X_molar_fuel_CO2=0.01;
+  source.X_molar_CH4=0.92;
+  source.X_molar_C2H6=0.048;
+  source.X_molar_C3H8=0.005;
+  source.X_molar_C4H10_n_butane=0.002;
+  source.X_molar_N2=0.015;
+  source.X_molar_CO2=0.01;
 
 
 
