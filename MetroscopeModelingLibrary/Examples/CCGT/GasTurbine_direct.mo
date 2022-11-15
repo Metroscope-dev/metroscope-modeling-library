@@ -20,13 +20,15 @@ model GasTurbine_direct
   parameter Real turbine_compression_rate = 17;
   parameter Real turbine_eta_is = 0.9;
   parameter Real eta_mech = 0.99;
+  parameter String HV_source = "LHV_input";
+  parameter Real combustionChamber_eta = 0.9999;
 
   FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
   FlueGases.Machines.AirCompressor                           airCompressor annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
   FlueGases.BoundaryConditions.Sink sink_exhaust annotation (Placement(transformation(extent={{66,-10},{86,10}})));
   FlueGases.Machines.GasTurbine                              gasTurbine    annotation (Placement(transformation(extent={{30,-10},{50,10}})));
   Power.BoundaryConditions.Sink                           sink_power annotation (Placement(transformation(extent={{66,30},{86,50}})));
-  MultiFluid.Machines.CombustionChamber combustionChamber annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustionChamber(HV_source=HV_source) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   Fuel.BoundaryConditions.Source                           source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -45,8 +47,9 @@ equation
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.LHV = LHV;
+  combustionChamber.LHV_input = LHV;
   combustionChamber.DP = combustion_chamber_pressure_loss;
+  combustionChamber.eta = combustionChamber_eta;
   airCompressor.tau = compression_rate;
   airCompressor.eta_is = compressor_eta_is;
   gasTurbine.tau = turbine_compression_rate;

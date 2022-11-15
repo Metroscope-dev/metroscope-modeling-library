@@ -11,8 +11,9 @@ model CombustionChamber
   Units.DifferentialPressure DP;
 
   Units.Power Wth;
-  Units.SpecificEnthalpy LHV;
-  Units.SpecificEnthalpy HHV;
+
+  Inputs.InputYield eta(start=0.999) "Combustion chamber efficiency";
+
   Units.SpecificEnthalpy h_in_air(start=h_in_air_0);
   Units.SpecificEnthalpy h_in_fuel;
   Units.SpecificEnthalpy h_exhaust;
@@ -44,14 +45,19 @@ model CombustionChamber
   Units.MassFraction X_fuel_O(start=0) "O mass fraction in the fuel";
 
   // Heating values
+  Units.SpecificEnthalpy HHV "J/kg";
+  Units.SpecificEnthalpy LHV "J/kg";
     // Identify the source of the heating value: "LHV_input" or "HHV_input" or "calculated"
+    // "LHV_input" is chosen when the LHV is directly given by the power plant
+    // "HHV_input" is chosen when the HHV is directly given by the power plant
+    // "calculated" is chosen when neither the LHV nor the HHV are given by the plant -> the component calculates them from the composition
     parameter String HV_source = "calculated";
     // Given higher and lower heating values
-    Real HHV_input;
-    Real LHV_input;
+    Units.SpecificEnthalpy HHV_input; // Used when "HV_source = HHV_input" to use the HHV given by the plant data
+    Units.SpecificEnthalpy LHV_input; // Used when "HV_source = LHV_input" to use the LHV given by the plant data
     // Calculated higher and lower heating values
-    Real HHV_calculated;
-    Real LHV_calculated;
+    Units.SpecificEnthalpy HHV_calculated; // Returns the calculated value of the HHV from to the composition
+    Units.SpecificEnthalpy LHV_calculated; // Returns the calculated value of the LHV from to the composition
 
   // Constants
   constant Units.AtomicMass m_C = Constants.m_C "Carbon atomic mass";
@@ -143,38 +149,42 @@ equation
   sink_air.P_in - source_exhaust.P_out = DP;
 
   // Energy balance
-  Wth = Q_fuel * LHV;
-  Q_exhaust * h_exhaust = Q_air * h_in_air + Q_fuel * h_in_fuel + Wth;
+  Wth = eta*Q_fuel*LHV;
+  Q_exhaust*h_exhaust = Q_air*h_in_air + Q_fuel*h_in_fuel + Wth;
 
   // Heating values
   // Calculations
-  LHV_calculated = (lhv_mass_CH4*X_fuel_CH4 + lhv_molar_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane);
-  HHV_calculated = (hhv_mass_CH4*X_fuel_CH4 + hhv_molar_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane);
-
+  LHV_calculated = (lhv_mass_CH4*X_fuel_CH4 + lhv_mass_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
+  HHV_calculated = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
+  // HV_source conditions
   if HV_source == "LHV_input" then
-    LHV = LHV_input;
+    LHV = LHV_input; // LHV is directly used from the given data
+    HHV = HHV_calculated; // HHV is not needed for energy estimation, however, it should return a value (the calculated value) for balance
+    HHV_input = HHV; // Not needed, just for balance
   elseif HV_source == "HHV_input" then
     HHV = HHV_input;
+    LHV = HHV*LHV_calculated/HHV_calculated; // Assuming the given HHV is more accurate than the calculated one, the LHV is deduced from it according to the composition
+    LHV_input = LHV; // Not needed, just for balance
   elseif HV_source == "calculated" then
     LHV = LHV_calculated;
-    LHV_input = LHV;
+    HHV = HHV_calculated;
+    LHV_input = LHV; // Not needed, just for balance
+    HHV_input = HHV; // Not needed, just for balance
   else
     LHV = 0;
   end if;
   assert(HV_source == "LHV_input" or HV_source == "HHV_input" or HV_source == "calculated", "HV_source should be: 'LHV_input', 'HHV_input' or 'calculated'", AssertionLevel.error);
 
-  LHV = HHV*LHV_calculated/HHV_calculated;
-  LHV_input = HHV_input*LHV_calculated/HHV_calculated;
 
   // Chemical balance
-  // quantity of reactants in fuel
-  Q_fuel*X_fuel_C  = m_C* (Q_fuel*X_fuel_CH4/m_CH4 + 2*Q_fuel*X_fuel_C2H6/m_C2H6 + 3*Q_fuel*X_fuel_C3H8/m_C3H8 + 4*Q_fuel*X_fuel_C4H10_n_butane/m_C4H10 + Q_fuel*X_fuel_CO2/m_CO2);
+  // Quantity of reactants in fuel
+  Q_fuel*X_fuel_C  = m_C*(Q_fuel*X_fuel_CH4/m_CH4 + 2*Q_fuel*X_fuel_C2H6/m_C2H6 + 3*Q_fuel*X_fuel_C3H8/m_C3H8 + 4*Q_fuel*X_fuel_C4H10_n_butane/m_C4H10 + Q_fuel*X_fuel_CO2/m_CO2);
   Q_fuel*X_fuel_H  = m_H*(4*Q_fuel*X_fuel_CH4/m_CH4 + 6*Q_fuel*X_fuel_C2H6/m_C2H6 + 8*Q_fuel*X_fuel_C3H8/m_C3H8 + 10*Q_fuel*X_fuel_C4H10_n_butane/m_C4H10);
   Q_fuel*X_fuel_O = 2*m_O*Q_fuel*X_fuel_CO2/m_CO2;
 
   /* Mass balance for all species */
   - Q_exhaust * X_out_N2  + Q_air * X_in_N2  + Q_fuel*X_fuel_N2= 0; //Hyp: the NOx creation is negligible
-  - Q_exhaust * X_out_O2  + Q_air * X_in_O2  + Q_fuel*X_fuel_O = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H);
+  - Q_exhaust * X_out_O2  + Q_air * X_in_O2  + Q_fuel*X_fuel_O*0.5 = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H); // Warning: balance was not correct (Q_fuel*X_fuel_O)
   - Q_exhaust * X_out_H2O + Q_air * X_in_H2O = -Q_fuel*(0.5*X_fuel_H/m_H)*m_H2O;
   - Q_exhaust * X_out_CO2 + Q_air * X_in_CO2 = -Q_fuel*X_fuel_C*m_CO2/m_C;
   - Q_exhaust * X_out_SO2 + Q_air * X_in_SO2 = 0; //Hyp: No S in fuel
