@@ -178,9 +178,9 @@ equation
 
   // Chemical balance
   // Quantity of reactants in fuel
-  Q_fuel*X_fuel_C  = m_C*(Q_fuel*X_fuel_CH4/m_CH4 + 2*Q_fuel*X_fuel_C2H6/m_C2H6 + 3*Q_fuel*X_fuel_C3H8/m_C3H8 + 4*Q_fuel*X_fuel_C4H10_n_butane/m_C4H10 + Q_fuel*X_fuel_CO2/m_CO2);
-  Q_fuel*X_fuel_H  = m_H*(4*Q_fuel*X_fuel_CH4/m_CH4 + 6*Q_fuel*X_fuel_C2H6/m_C2H6 + 8*Q_fuel*X_fuel_C3H8/m_C3H8 + 10*Q_fuel*X_fuel_C4H10_n_butane/m_C4H10);
-  Q_fuel*X_fuel_O = 2*m_O*Q_fuel*X_fuel_CO2/m_CO2;
+  X_fuel_C  = m_C*(X_fuel_CH4/m_CH4 + 2*X_fuel_C2H6/m_C2H6 + 3*X_fuel_C3H8/m_C3H8 + 4*X_fuel_C4H10_n_butane/m_C4H10 + X_fuel_CO2/m_CO2);
+  X_fuel_H  = m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10);
+  X_fuel_O = 2*m_O*X_fuel_CO2/m_CO2;
 
   /* Mass balance for all species */
   - Q_exhaust * X_out_N2  + Q_air * X_in_N2  + Q_fuel*X_fuel_N2= 0; //Hyp: the NOx creation is negligible
