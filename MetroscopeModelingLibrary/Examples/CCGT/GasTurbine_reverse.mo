@@ -16,6 +16,8 @@ model GasTurbine_reverse
   parameter Units.SpecificEnthalpy LHV = 48130e3;
   parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
   parameter Real eta_mech = 0.99;
+  parameter String HV_source = "LHV_input";
+  parameter Real combustionChamber_eta = 0.9999;
 
   // Inputs for calibration
   input Real compressor_P_out(start = 16) "barA";
@@ -38,7 +40,7 @@ model GasTurbine_reverse
   FlueGases.Machines.GasTurbine                              gasTurbine(eta_is(
         start=0.73), eta_mech(start=0.9))                                  annotation (Placement(transformation(extent={{30,-10},{50,10}})));
   Power.BoundaryConditions.Sink                           sink_power annotation (Placement(transformation(extent={{88,30},{108,50}})));
-  MultiFluid.Machines.CombustionChamber combustionChamber annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustionChamber(HV_source=HV_source) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   Fuel.BoundaryConditions.Source                           source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -61,8 +63,9 @@ equation
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.LHV = LHV;
+  combustionChamber.LHV_input = LHV;
   combustionChamber.DP = combustion_chamber_pressure_loss;
+  combustionChamber.eta = combustionChamber_eta;
   gasTurbine.eta_mech = eta_mech;
 
   // Inputs for calibration

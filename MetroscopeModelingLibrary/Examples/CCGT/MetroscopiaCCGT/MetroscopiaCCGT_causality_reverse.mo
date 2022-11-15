@@ -21,6 +21,8 @@ model MetroscopiaCCGT_causality_reverse
     // Gas Turbine
     parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV=48130e3;
     parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy GT_h_out = 1e6; // This enthalpy corresponds to T = 640°C at 1.1 bar
+    parameter String HV_source = "LHV_input";
+    parameter Real combustionChamber_eta = 0.9999;
     // Economizer
     parameter String Eco_QCp_max_side = "hot";
     parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
@@ -227,7 +229,7 @@ model MetroscopiaCCGT_causality_reverse
     annotation (Placement(transformation(extent={{-414,-42},{-382,-10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink_power
     annotation (Placement(transformation(extent={{-332,24},{-312,44}})));
-  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber
+  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber(HV_source=HV_source)
     annotation (Placement(transformation(extent={{-452,-36},{-432,-16}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel(h_out(
         start=0.9e6)) annotation (Placement(transformation(
@@ -406,8 +408,9 @@ equation
 
     // Combustion chamber
       // Parameters
-      combustionChamber.LHV = LHV;
+      combustionChamber.LHV_input = LHV;
       combustionChamber.DP = 0.1e5;
+      combustionChamber.eta = combustionChamber_eta;
 
     // Gas Turbine
       // Quantities definition
