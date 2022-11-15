@@ -51,7 +51,7 @@ model CombustionChamber
     // "LHV_input" is chosen when the LHV is directly given by the power plant
     // "HHV_input" is chosen when the HHV is directly given by the power plant
     // "calculated" is chosen when neither the LHV nor the HHV are given by the plant -> the component calculates them from the composition
-    parameter String HV_source = "calculated";
+    parameter String HV_source = "LHV_input";
     // Given higher and lower heating values
     Units.SpecificEnthalpy HHV_input; // Used when "HV_source = HHV_input" to use the HHV given by the plant data
     Units.SpecificEnthalpy LHV_input; // Used when "HV_source = LHV_input" to use the LHV given by the plant data
