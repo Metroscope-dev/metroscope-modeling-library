@@ -12,7 +12,7 @@ model CombustionChamber
 
   Units.Power Wth;
 
-  Inputs.InputYield eta(start=0.999) "Combustion chamber efficiency";
+  Inputs.InputYield eta(start=0.99457) "Combustion chamber efficiency"; // The value given is found in performance document of GE
 
   Units.SpecificEnthalpy h_in_air(start=h_in_air_0);
   Units.SpecificEnthalpy h_in_fuel;
