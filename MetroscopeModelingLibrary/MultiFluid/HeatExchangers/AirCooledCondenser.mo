@@ -34,8 +34,8 @@ model AirCooledCondenser
   Real air_intake(unit="mol/m3", min=0); // Air intake
 
   // Initialization parameters
-  parameter Units.VolumeFlowRate Qv_cold_0 = 364*5;
-  parameter Units.MassFlowRate Q_cold_0 = 364*5*1.292;
+  parameter Units.VolumeFlowRate Qv_cold_0 = 1800;
+  parameter Units.MassFlowRate Q_cold_0 = 1800*1.292;
   parameter Units.MassFlowRate Q_hot_0 = 21;
   parameter Units.Pressure Psat_0 = 0.19e5;
   parameter Units.Pressure P_cold_in_0 = 1.002e5;

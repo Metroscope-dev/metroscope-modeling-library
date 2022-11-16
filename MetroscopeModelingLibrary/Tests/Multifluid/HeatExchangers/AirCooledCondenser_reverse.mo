@@ -4,10 +4,10 @@ model AirCooledCondenser_reverse
   extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
 
   //Boundary Conditions
-  input Units.MassFlowRate Q_turbine(start=21.03) "kg/s";
+  input Units.MassFlowRate Q_turbine(start=21) "kg/s";
   input Units.SpecificEnthalpy h_turbine(start=2399e3) "J/kg";
 
-  input Units.MassFlowRate Q_cold(start=437*5) "kg/s";
+  input Units.MassFlowRate Q_cold(start=1800) "kg/s";
   input Real P_cold_source(start=1.002,nominal=1.002) "barA";
   input Real T_cold_source(start=16) "degC";
   input Units.Fraction cold_source_relative_humidity=0.80 "1";
@@ -15,14 +15,14 @@ model AirCooledCondenser_reverse
    // Parameters
   parameter Units.Pressure P_offset = 0;
   parameter Real C_incond = 0;
-  parameter Units.Area S = 129500 "m2";
+  parameter Units.Area S = 130000 "m2";
 
   // Calibrated parameters
   output Units.HeatExchangeCoefficient Kth;
   parameter Units.FrictionCoefficient Kfr_hot=0;
 
   //Sensor for calibration
-  input Real T_cond(start=41.5) "degC";
+  input Real T_cond(start=44) "degC";
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
