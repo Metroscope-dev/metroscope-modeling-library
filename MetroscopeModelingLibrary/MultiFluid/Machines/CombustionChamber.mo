@@ -4,16 +4,19 @@ model CombustionChamber
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
 
+  // Media flows
   Units.PositiveMassFlowRate Q_air;
   Units.PositiveMassFlowRate Q_fuel;
   Units.PositiveMassFlowRate Q_exhaust;
 
-  Units.DifferentialPressure DP;
+  // Performance parameters
+  Inputs.InputDifferentialPressure DP;
+  Inputs.InputYield eta(start=0.99457); // The value given is found in performance document of GE
 
-  Units.Power Wth;
+  // Power released by the combustion
+  Inputs.InputPower Wth;
 
-  Inputs.InputYield eta(start=0.99457) "Combustion chamber efficiency"; // The value given is found in performance document of GE
-
+  // Enthalpies at each connector
   Units.SpecificEnthalpy h_in_air(start=h_in_air_0);
   Units.SpecificEnthalpy h_in_fuel;
   Units.SpecificEnthalpy h_exhaust;
@@ -45,19 +48,9 @@ model CombustionChamber
   Units.MassFraction X_fuel_O(start=0) "O mass fraction in the fuel";
 
   // Heating values
-  Units.SpecificEnthalpy HHV "J/kg";
-  Units.SpecificEnthalpy LHV "J/kg";
-    // Identify the source of the heating value: "LHV_input" or "HHV_input" or "calculated"
-    // "LHV_input" is chosen when the LHV is directly given by the power plant
-    // "HHV_input" is chosen when the HHV is directly given by the power plant
-    // "calculated" is chosen when neither the LHV nor the HHV are given by the plant -> the component calculates them from the composition
-    parameter String HV_source = "LHV_input";
-    // Given higher and lower heating values
-    Units.SpecificEnthalpy HHV_input; // Used when "HV_source = HHV_input" to use the HHV given by the plant data
-    Units.SpecificEnthalpy LHV_input; // Used when "HV_source = LHV_input" to use the LHV given by the plant data
-    // Calculated higher and lower heating values
-    Units.SpecificEnthalpy HHV_calculated; // Returns the calculated value of the HHV from to the composition
-    Units.SpecificEnthalpy LHV_calculated; // Returns the calculated value of the LHV from to the composition
+  Units.SpecificEnthalpy HHV = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg";
+  Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10)*1e4 "J/kg";
+  Units.SpecificEnthalpy HHV_calc "J/kg"; // Used when LHV is given as an input
 
   // Constants
   constant Units.AtomicMass m_C = Constants.m_C "Carbon atomic mass";
@@ -71,33 +64,19 @@ model CombustionChamber
   constant Units.MolecularMass m_CO2 = m_C + m_O*2;
   constant Units.MolecularMass m_H2O = m_H*2 + m_O;
 
-  // Ideal calorific value on molar basis (kJ/mol) of relevant components based on ISO6976 at 25°C
-    // Methane CH4
-    constant Real hhv_molar_CH4 = 891.51 "kJ/mol";
-    constant Real lhv_molar_CH4 = 802.69 "kJ/mol";
-    // Ethane C2H6
-    constant Real hhv_molar_C2H6 = 1562.06 "kJ/mol";
-    constant Real lhv_molar_C2H6 = 1428.83 "kJ/mol";
-    // Propane C3H8
-    constant Real hhv_molar_C3H8 = 2220.99 "kJ/mol";
-    constant Real lhv_molar_C3H8 = 2043.35 "kJ/mol";
-    // n-Butane C4H10
-    constant Real hhv_molar_C4H10 = 2879.63 "kJ/mol";
-    constant Real lhv_molar_C4H10 = 2657.58 "kJ/mol";
-
-  // Ideal calorific value on molar basis (MJ/kg): conversion using each component's molecular mass
-    // Methane CH4
-    constant Real hhv_mass_CH4 = hhv_molar_CH4/m_CH4 "MJ/kg";
-    constant Real lhv_mass_CH4 = lhv_molar_CH4/m_CH4 "MJ/kg";
-    // Ethane C2H6
-    constant Real hhv_mass_C2H6 = hhv_molar_C2H6/m_C2H6 "MJ/kg";
-    constant Real lhv_mass_C2H6 = lhv_molar_C2H6/m_C2H6 "MJ/kg";
-    // Propane C3H8
-    constant Real hhv_mass_C3H8 = hhv_molar_C3H8/m_C3H8 "MJ/kg";
-    constant Real lhv_mass_C3H8 = lhv_molar_C3H8/m_C3H8 "MJ/kg";
-    // n-Butane C4H10
-    constant Real hhv_mass_C4H10 = hhv_molar_C4H10/m_C4H10 "MJ/kg";
-    constant Real lhv_mass_C4H10 = lhv_molar_C4H10/m_C4H10 "MJ/kg";
+  // Ideal calorific value on molar basis (kJ/mol) of relevant components based on ISO6976 at 25°C and conversion to mass basis (MJ/kg)
+  // Methane CH4
+  constant Real hhv_molar_CH4 = 891.51 "kJ/mol";
+  constant Real hhv_mass_CH4 = hhv_molar_CH4/m_CH4 "MJ/kg";
+  // Ethane C2H6
+  constant Real hhv_molar_C2H6 = 1562.06 "kJ/mol";
+  constant Real hhv_mass_C2H6 = hhv_molar_C2H6/m_C2H6 "MJ/kg";
+  // Propane C3H8
+  constant Real hhv_molar_C3H8 = 2220.99 "kJ/mol";
+  constant Real hhv_mass_C3H8 = hhv_molar_C3H8/m_C3H8 "MJ/kg";
+  // n-Butane C4H10
+  constant Real hhv_molar_C4H10 = 2879.63 "kJ/mol";
+  constant Real hhv_mass_C4H10 = hhv_molar_C4H10/m_C4H10 "MJ/kg";
 
   // Initialization parameters
   parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
@@ -152,29 +131,8 @@ equation
   Wth = eta*Q_fuel*LHV;
   Q_exhaust*h_exhaust = Q_air*h_in_air + Q_fuel*h_in_fuel + Wth;
 
-  // Heating values
-  // Calculations
-  LHV_calculated = (lhv_mass_CH4*X_fuel_CH4 + lhv_mass_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
-  HHV_calculated = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
-  // HV_source conditions
-  if HV_source == "LHV_input" then
-    LHV = LHV_input; // LHV is directly used from the given data
-    HHV = HHV_calculated; // HHV is not needed for energy estimation, however, it should return a value (the calculated value) for balance
-    HHV_input = HHV; // Not needed, just for balance
-  elseif HV_source == "HHV_input" then
-    HHV = HHV_input;
-    LHV = HHV*LHV_calculated/HHV_calculated; // Assuming the given HHV is more accurate than the calculated one, the LHV is deduced from it according to the composition
-    LHV_input = LHV; // Not needed, just for balance
-  elseif HV_source == "calculated" then
-    LHV = LHV_calculated;
-    HHV = HHV_calculated;
-    LHV_input = LHV; // Not needed, just for balance
-    HHV_input = HHV; // Not needed, just for balance
-  else
-    LHV = 0;
-  end if;
-  assert(HV_source == "LHV_input" or HV_source == "HHV_input" or HV_source == "calculated", "HV_source should be: 'LHV_input', 'HHV_input' or 'calculated'", AssertionLevel.error);
-
+  // HHV calculation if LHV is given as an input
+  HHV_calc = LHV + 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10) *1e4 "J/kg";
 
   // Chemical balance
   // Quantity of reactants in fuel
@@ -182,9 +140,9 @@ equation
   X_fuel_H  = m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10);
   X_fuel_O = 2*m_O*X_fuel_CO2/m_CO2;
 
-  /* Mass balance for all species */
+  // Mass balance for all species
   - Q_exhaust * X_out_N2  + Q_air * X_in_N2  + Q_fuel*X_fuel_N2= 0; //Hyp: the NOx creation is negligible
-  - Q_exhaust * X_out_O2  + Q_air * X_in_O2  + Q_fuel*X_fuel_O*0.5 = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H); // Warning: balance was not correct (Q_fuel*X_fuel_O)
+  - Q_exhaust * X_out_O2  + Q_air * X_in_O2  + Q_fuel*X_fuel_O*0.5 = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H);
   - Q_exhaust * X_out_H2O + Q_air * X_in_H2O = -Q_fuel*(0.5*X_fuel_H/m_H)*m_H2O;
   - Q_exhaust * X_out_CO2 + Q_air * X_in_CO2 = -Q_fuel*X_fuel_C*m_CO2/m_C;
   - Q_exhaust * X_out_SO2 + Q_air * X_in_SO2 = 0; //Hyp: No S in fuel

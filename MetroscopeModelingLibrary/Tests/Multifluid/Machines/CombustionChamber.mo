@@ -12,13 +12,12 @@ model CombustionChamber
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
   input Units.PositiveMassFlowRate Q_fuel(start=15);
 
-  input Units.SpecificEnthalpy LHV_plant(start=48130e3);
+  input Units.SpecificEnthalpy LHV_plant(start=47276868);
 
   // Parameters
-  parameter String HV_source = "LHV_input";
   parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
 
-  MultiFluid.Machines.CombustionChamber combustionChamber(HV_source=HV_source) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -42,8 +41,8 @@ equation
   source_fuel.X_molar_C4H10_n_butane=0.002;
   source_fuel.X_molar_N2=0.015;
   source_fuel.X_molar_CO2=0.01;
+
   // Parameters
-  combustionChamber.LHV_input = LHV_plant;
   combustionChamber.DP = combustion_chamber_pressure_loss;
   combustionChamber.eta = 0.999;
 

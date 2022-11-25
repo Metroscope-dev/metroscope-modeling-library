@@ -10,13 +10,12 @@ model GasTurbine_reverse
 
   input Units.Pressure P_fuel(start = 30e5);
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
-  input Units.NegativeMassFlowRate Q_fuel(start=15);
+  input Units.NegativeMassFlowRate Q_fuel(start=-15);
 
   // Parameters
-  parameter Units.SpecificEnthalpy LHV = 48130e3;
+  input Units.SpecificEnthalpy LHV_plant( start=48130e3);
   parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
   parameter Real eta_mech = 0.99;
-  parameter String HV_source = "LHV_input";
   parameter Real combustionChamber_eta = 0.9999;
 
   // Inputs for calibration
@@ -40,7 +39,7 @@ model GasTurbine_reverse
   FlueGases.Machines.GasTurbine                              gasTurbine(eta_is(
         start=0.73), eta_mech(start=0.9))                                  annotation (Placement(transformation(extent={{30,-10},{50,10}})));
   Power.BoundaryConditions.Sink                           sink_power annotation (Placement(transformation(extent={{88,30},{108,50}})));
-  MultiFluid.Machines.CombustionChamber combustionChamber(HV_source=HV_source) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   Fuel.BoundaryConditions.Source                           source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -59,11 +58,10 @@ equation
 
   source_fuel.P_out = P_fuel;
   source_fuel.h_out = h_fuel;
-  source_fuel.Q_out = - Q_fuel;
+  source_fuel.Q_out = Q_fuel;
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.LHV_input = LHV;
   combustionChamber.DP = combustion_chamber_pressure_loss;
   combustionChamber.eta = combustionChamber_eta;
   gasTurbine.eta_mech = eta_mech;
