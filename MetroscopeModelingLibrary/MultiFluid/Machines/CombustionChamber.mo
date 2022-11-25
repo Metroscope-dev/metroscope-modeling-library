@@ -50,7 +50,6 @@ model CombustionChamber
   // Heating values
   Units.SpecificEnthalpy HHV = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg";
   Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10)*1e4 "J/kg";
-  Units.SpecificEnthalpy HHV_calc "J/kg"; // Used when LHV is given as an input
 
   // Constants
   constant Units.AtomicMass m_C = Constants.m_C "Carbon atomic mass";
@@ -130,9 +129,6 @@ equation
   // Energy balance
   Wth = eta*Q_fuel*LHV;
   Q_exhaust*h_exhaust = Q_air*h_in_air + Q_fuel*h_in_fuel + Wth;
-
-  // HHV calculation if LHV is given as an input
-  HHV_calc = LHV + 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10) *1e4 "J/kg";
 
   // Chemical balance
   // Quantity of reactants in fuel
