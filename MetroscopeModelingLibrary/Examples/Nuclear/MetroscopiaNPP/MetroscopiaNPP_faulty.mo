@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
 model MetroscopiaNPP_faulty
 
-  extends MetroscopiaNPP_direct(
+  extends MetroscopiaNPP_direct_withStartValues(
     superheater(faulty=true),
     condenser(faulty=true),
     LP_heater(faulty=true),
@@ -78,20 +78,22 @@ equation
   bypass_HP_heater_drains_to_condenser.Q = Failure_bypass_HP_heater_drains_to_condenser_Q + 1e-3;
 
   connect(superheater_tube_rupture.C_in, superheater.C_hot_in) annotation (Line(points={{46,149},{30,149},{30,112},{56,112}},     color={217,67,180}));
-  connect(bypass_HP_turbine_to_condenser.C_out, bypass_HP_control_valve_to_condenser.C_out) annotation (Line(points={{-113,42},{-113,32},{-147,32},{-147,42}}, color={217,67,180}));
-  connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,42},{-113,32},{320,32},{320,100},{392.5,100},{392.5,74}},
-                                                                                                                                                         color={217,67,180}));
-  connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139,100},{140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{392.5,74}},
-                                                                                                                                                                                    color={217,67,180}));
-  connect(superheater_tube_rupture.C_out, superheater.C_cold_out) annotation (Line(points={{64,149},{72,149},{72,130},{72,130},{72,120}},     color={217,67,180}));
-  connect(bypass_superheater_to_condenser.C_in, superheater_control_valve.C_out) annotation (Line(points={{-113,134},{-113,112.182},{-126,112.182}}, color={217,67,180}));
-  connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,152},{-112,152},{-112,192},{392.5,192},{392.5,74}},
-                                                                                                                                                    color={217,67,180}));
-  connect(bypass_HP_turbine_ext_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-2,49},{4,49},{4,32},{320,32},{320,100},{392.5,100},{392.5,74}},
+  connect(bypass_HP_turbine_to_condenser.C_out, bypass_HP_control_valve_to_condenser.C_out) annotation (Line(points={{-112.82,42},{-112.82,32},{-146.82,32},{-146.82,42}},
                                                                                                                                                                color={217,67,180}));
-  connect(bypass_LP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{277,-150},{278,-150},{278,-162},{472,-162},{472,100},{392.5,100},{392.5,74}},
+  connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-112.82,42},{-112.82,32},{320,32},{320,100},{392.5,100},{392.5,74}},
+                                                                                                                                                         color={217,67,180}));
+  connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139.18,100},{140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{392.5,74}},
+                                                                                                                                                                                    color={217,67,180}));
+  connect(superheater_tube_rupture.C_out, superheater.C_cold_out) annotation (Line(points={{64,149.18},{72,149.18},{72,130},{72,130},{72,120}},
+                                                                                                                                              color={217,67,180}));
+  connect(bypass_superheater_to_condenser.C_in, superheater_control_valve.C_out) annotation (Line(points={{-113,134},{-113,112.182},{-126,112.182}}, color={217,67,180}));
+  connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-112.82,152},{-112,152},{-112,192},{392.5,192},{392.5,74}},
+                                                                                                                                                    color={217,67,180}));
+  connect(bypass_HP_turbine_ext_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-2,49.18},{4,49.18},{4,32},{320,32},{320,100},{392.5,100},{392.5,74}},
+                                                                                                                                                               color={217,67,180}));
+  connect(bypass_LP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{277.18,-150},{278,-150},{278,-162},{472,-162},{472,100},{392.5,100},{392.5,74}},
                                                                                                                                                                                 color={217,67,180}));
-  connect(bypass_HP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-16,-153},{-16,-162},{472,-162},{472,100},{392.5,100},{392.5,74}},
+  connect(bypass_HP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-15.82,-153},{-15.82,-162},{472,-162},{472,100},{392.5,100},{392.5,74}},
                                                                                                                                                                      color={217,67,180}));
   connect(bypass_LP_turbine_to_condenser.C_in, LPT1.C_in) annotation (Line(points={{139,118},{140,118},{140,130},{151,130}}, color={217,67,180}));
   connect(bypass_HP_turbine_ext_to_condenser.C_in, HP_extract_P_sensor.C_in) annotation (Line(points={{-20,49},{-28,49},{-28,58},{-40,58},{-40,54}}, color={28,108,200}));
