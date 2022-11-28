@@ -55,11 +55,11 @@ equation
   connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{28.3,-0.72},{45.65,-0.72},{45.65,0},{59,0}}, color={95,95,95}));
   connect(cold_source.C_out, flashTank.C_in) annotation (Line(points={{-28,83},{
           -28,69.8},{-18,69.8}},                   color={28,108,200}));
-  connect(flashTank.C_hot_steam, cold_steam_sink.C_in) annotation (Line(points={
+  connect(flashTank.C_steam_out, cold_steam_sink.C_in) annotation (Line(points={
           {16,69.8},{16,68},{48,68},{48,80},{59,80}}, color={28,108,200}));
-  connect(cold_liquid_sink.C_in, flashTank.C_hot_liquid)
+  connect(cold_liquid_sink.C_in,flashTank.C_liquid_out)
     annotation (Line(points={{59,48},{16,48},{16,56.2}}, color={28,108,200}));
-  connect(flashTank.C_hot_liquid, evaporator.C_cold_in) annotation (Line(points=
+  connect(flashTank.C_liquid_out, evaporator.C_cold_in) annotation (Line(points=
          {{16,56.2},{16,25.2},{12.7,25.2}}, color={28,108,200}));
   connect(evaporator.C_cold_out, pressureCut.C_in) annotation (Line(points={{-10.7,
           25.2},{-46,25.2},{-46,34}}, color={28,108,200}));

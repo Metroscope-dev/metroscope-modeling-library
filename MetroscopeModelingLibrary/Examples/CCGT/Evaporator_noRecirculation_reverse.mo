@@ -63,8 +63,8 @@ equation
   connect(evaporator.C_hot_out, P_hot_out_sensor.C_in) annotation (Line(points={{28.3,-0.72},{36.15,-0.72},{36.15,0},{44,0}}, color={95,95,95}));
   connect(hot_sink.C_in, P_hot_out_sensor.C_out) annotation (Line(points={{59,0},{52,0}}, color={95,95,95}));
   connect(cold_liquid_sink.C_in, Q_cold_liquid_out.C_out) annotation (Line(points={{-83,-52},{-50,-52},{-50,-44}}, color={28,108,200}));
-  connect(flashTank.C_hot_liquid, Q_cold_liquid_out.C_in) annotation (Line(points={{-46,44},{-50,44},{-50,-28}}, color={28,108,200}));
-  connect(flashTank.C_hot_steam, P_cold_out_sensor.C_in) annotation (Line(points={{-46,52},{-58,52}}, color={28,108,200}));
+  connect(flashTank.C_liquid_out, Q_cold_liquid_out.C_in) annotation (Line(points={{-46,44},{-50,44},{-50,-28}}, color={28,108,200}));
+  connect(flashTank.C_steam_out, P_cold_out_sensor.C_in) annotation (Line(points={{-46,52},{-58,52}}, color={28,108,200}));
   connect(cold_steam_sink.C_in, P_cold_out_sensor.C_out) annotation (Line(points={{-85,52},{-74,52}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(
