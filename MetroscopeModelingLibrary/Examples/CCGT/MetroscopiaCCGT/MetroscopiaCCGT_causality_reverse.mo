@@ -10,6 +10,7 @@ model MetroscopiaCCGT_causality_reverse
     // Fuel source
     input Real P_fuel_source(start=30) "bar";
     input Real T_fuel_source(start=156) "degC";
+    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
     // Circulating water circuit
     input Real P_circulating_water_in(start=5, min=0, nominal=5) "barA";
     input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
@@ -19,7 +20,6 @@ model MetroscopiaCCGT_causality_reverse
   // Parameters
 
     // Gas Turbine
-    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3);
     parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy GT_h_out = 1e6; // This enthalpy corresponds to T = 640°C at 1.1 bar
     parameter Real combustionChamber_eta = 0.9999;
     // Economizer

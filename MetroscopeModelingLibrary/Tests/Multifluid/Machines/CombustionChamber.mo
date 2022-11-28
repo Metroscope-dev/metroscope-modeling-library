@@ -12,7 +12,7 @@ model CombustionChamber
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
   input Units.PositiveMassFlowRate Q_fuel(start=15);
 
-  input Units.SpecificEnthalpy LHV_plant(start=47276868);
+  input Units.SpecificEnthalpy LHV_plant(start=47276868) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
   parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
