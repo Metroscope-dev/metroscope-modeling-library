@@ -15,11 +15,11 @@ model MetroscopiaCCGT_causality_direct
     input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
     // Flue gas sink
     input Real P_flue_gas_sink(start=1, min=0, nominal=1) "barA";
+    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
 
     // Gas Turbine
-    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3);
     parameter Real turbine_T_out = 640 "degC";
     parameter Real combustionChamber_eta = 0.9999;
     // Economizer

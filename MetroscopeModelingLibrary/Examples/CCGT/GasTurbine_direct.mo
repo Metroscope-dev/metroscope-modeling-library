@@ -13,7 +13,7 @@ model GasTurbine_direct
   input Units.NegativeMassFlowRate Q_fuel(start=-15);
 
   // Parameters
-  input Units.SpecificEnthalpy LHV_plant(start = 48130e3);
+  input Units.SpecificEnthalpy LHV_plant(start = 48130e3) "Directly assigned in combustion chamber modifiers";
   parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
   parameter Real compression_rate = 17;
   parameter Real compressor_eta_is = 0.9;
