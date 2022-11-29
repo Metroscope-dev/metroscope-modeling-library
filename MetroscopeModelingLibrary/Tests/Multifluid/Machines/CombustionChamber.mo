@@ -17,7 +17,7 @@ model CombustionChamber
   // Parameters
   parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
 
-  MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)  annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,

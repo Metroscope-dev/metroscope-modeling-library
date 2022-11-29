@@ -1,8 +1,9 @@
-﻿within MetroscopeModelingLibrary.MultiFluid.Machines;
+within MetroscopeModelingLibrary.MultiFluid.Machines;
 model CombustionChamber
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Constants.*;
 
   // Media flows
   Units.PositiveMassFlowRate Q_air;
@@ -50,32 +51,6 @@ model CombustionChamber
   // Heating values
   Units.SpecificEnthalpy HHV = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg can be assigned in component modifiers";
   Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10)*1e4 "J/kg can be assigned in component modifiers";
-
-  // Constants
-  constant Units.AtomicMass m_C = Constants.m_C "Carbon atomic mass";
-  constant Units.AtomicMass m_H = Constants.m_H "Hydrogen atomic mass";
-  constant Units.AtomicMass m_O = Constants.m_O "Oxygen atomic mass";
-
-  constant Units.MolecularMass m_CH4 = m_C + m_H*4;
-  constant Units.MolecularMass m_C2H6 = m_C*2 + m_H*6;
-  constant Units.MolecularMass m_C3H8 = m_C*3 + m_H*8;
-  constant Units.MolecularMass m_C4H10 = m_C*4 + m_H*10;
-  constant Units.MolecularMass m_CO2 = m_C + m_O*2;
-  constant Units.MolecularMass m_H2O = m_H*2 + m_O;
-
-  // Ideal calorific value on molar basis (kJ/mol) of relevant components based on ISO6976 at 25°C and conversion to mass basis (MJ/kg)
-  // Methane CH4
-  constant Real hhv_molar_CH4 = 891.51 "kJ/mol";
-  constant Real hhv_mass_CH4 = hhv_molar_CH4/m_CH4 "MJ/kg";
-  // Ethane C2H6
-  constant Real hhv_molar_C2H6 = 1562.06 "kJ/mol";
-  constant Real hhv_mass_C2H6 = hhv_molar_C2H6/m_C2H6 "MJ/kg";
-  // Propane C3H8
-  constant Real hhv_molar_C3H8 = 2220.99 "kJ/mol";
-  constant Real hhv_mass_C3H8 = hhv_molar_C3H8/m_C3H8 "MJ/kg";
-  // n-Butane C4H10
-  constant Real hhv_molar_C4H10 = 2879.63 "kJ/mol";
-  constant Real hhv_mass_C4H10 = hhv_molar_C4H10/m_C4H10 "MJ/kg";
 
   // Initialization parameters
   parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
