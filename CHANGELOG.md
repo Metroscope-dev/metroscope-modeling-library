@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added <!--Make sure to add a link to the PR and issues related to your change-->
 
+### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### Removed <!--Make sure to add a link to the PR and issues related to your change-->
+
+
+## MML-v3.1 <!--Make sure to add a link to the PR and issues related to your change-->
+
+### Added <!--Make sure to add a link to the PR and issues related to your change-->
+
 - Added internal leaks in DryReheater, Reheater and SuperHeater [PR#306](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/306)
 - Added units in leaks [PR#314](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/314)
 - Added an air cooled condenser for CCGT modeling in [PR#305](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/305)
