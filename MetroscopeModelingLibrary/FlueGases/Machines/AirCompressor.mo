@@ -34,7 +34,7 @@ equation
   C_W_in.W =  Wmech;
 
   /* Isentropic compression */
-  state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in));
+  state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);
   h_is = Medium.specificEnthalpy(state_is);
 
 
