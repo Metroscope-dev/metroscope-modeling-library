@@ -371,7 +371,7 @@ state_in(
 T(start=920.1309)),
 state_out(
 T(start=920.1309)))),
-LHV(start=48130000.0),
+LHV_plant(start=48130000.0),
 LPST_control_valve(
 C_in(
 P(start=900000.0),

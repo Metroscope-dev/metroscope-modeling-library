@@ -15,12 +15,13 @@ model MetroscopiaCCGT_causality_direct
     input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
     // Flue gas sink
     input Real P_flue_gas_sink(start=1, min=0, nominal=1) "barA";
+    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
 
     // Gas Turbine
-    parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV=48130e3;
     parameter Real turbine_T_out = 640 "degC";
+    parameter Real combustionChamber_eta = 0.9999;
     // Economizer
     parameter String Eco_QCp_max_side = "hot";
     parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
@@ -224,7 +225,7 @@ model MetroscopiaCCGT_causality_direct
     annotation (Placement(transformation(extent={{-414,-42},{-382,-10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink_power
     annotation (Placement(transformation(extent={{-332,24},{-312,44}})));
-  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber
+  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)
     annotation (Placement(transformation(extent={{-452,-36},{-432,-16}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel(h_out(
         start=0.9e6)) annotation (Placement(transformation(
@@ -403,8 +404,8 @@ equation
 
     // Combustion chamber
       // Parameters
-      combustionChamber.LHV = LHV;
       combustionChamber.DP = 0.1e5;
+      combustionChamber.eta = combustionChamber_eta;
 
     // Gas Turbine
       // Quantities definition

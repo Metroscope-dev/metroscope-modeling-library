@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary;
+﻿within MetroscopeModelingLibrary;
 package Constants "Stores all constants used in MML"
   extends Modelica.Icons.Package;
   import MetroscopeModelingLibrary.Units;
@@ -28,10 +28,25 @@ package Constants "Stores all constants used in MML"
   final constant Units.AtomicMass m_O = 15.9994;
   final constant Units.MolecularMass m_CH4 = m_C + m_H*4;
   final constant Units.MolecularMass m_C2H6 = m_C*2 + m_H*6;
-  final constant Units.MolecularMass m_C3H8 = m_C*3 + m_H*9;
+  final constant Units.MolecularMass m_C3H8 = m_C*3 + m_H*8;
   final constant Units.MolecularMass m_C4H10 = m_C*4 + m_H*10;
   final constant Units.MolecularMass m_CO2 = m_C + m_O*2;
   final constant Units.MolecularMass m_H2O = m_H*2 + m_O;
+
+  // Heating values: based on ISO 6976 at 25°C
+  // Methane CH4
+  final constant Real hhv_molar_CH4 = 891.51 "kJ/mol";
+  final constant Real hhv_mass_CH4 = hhv_molar_CH4/m_CH4 "MJ/kg";
+  // Ethane C2H6
+  final constant Real hhv_molar_C2H6 = 1562.06 "kJ/mol";
+  final constant Real hhv_mass_C2H6 = hhv_molar_C2H6/m_C2H6 "MJ/kg";
+  // Propane C3H8
+  final constant Real hhv_molar_C3H8 = 2220.99 "kJ/mol";
+  final constant Real hhv_mass_C3H8 = hhv_molar_C3H8/m_C3H8 "MJ/kg";
+  // n-Butane C4H10
+  final constant Real hhv_molar_C4H10 = 2879.63 "kJ/mol";
+  final constant Real hhv_mass_C4H10 = hhv_molar_C4H10/m_C4H10 "MJ/kg";
+
 
   annotation (
   Icon(coordinateSystem(extent={{-100.0,-100.0},{100.0,100.0}}), graphics={
