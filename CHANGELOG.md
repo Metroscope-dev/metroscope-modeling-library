@@ -8,12 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
-- Fixed (no issue was assigned) `FlueGases.Machines.AirCompressor` Corrected the isentropic state by giving the correct composition
+- Fixed [PR#311](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/311) `FlueGases.Machines.AirCompressor` Corrected the isentropic state by giving the correct composition
 
 ### Changed
-- Modified `MultiFluid.Machines.CombustionChamber` can calculate HHV and LHV from the composition
-- Added `monophasic_counter_current` in `Power.HeatExchange.NTUHeatExchange` with the ability not to pre identify the Cpmax side
-- Modified `Fuel.BoundaryConditions.Source` to convert molar fraction to mass fraction
+- Modified `MultiFluid.Machines.CombustionChamber` [PR#310](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/310) can calculate HHV and LHV from the composition
+- Added `monophasic_counter_current` configuration in `Power.HeatExchange.NTUHeatExchange` [PR#304](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/304) with the ability not to pre identify the Cpmax side
+- Modified `Fuel.BoundaryConditions.Source` [PR#309](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/309) to convert molar fraction to mass fraction
 
 ## MML-v3.0-beta
 
