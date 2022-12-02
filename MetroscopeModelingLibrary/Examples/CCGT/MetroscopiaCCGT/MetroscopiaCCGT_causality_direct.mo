@@ -7,6 +7,7 @@ model MetroscopiaCCGT_causality_direct
     input Real P_source_air(start=1) "bar";
     input MetroscopeModelingLibrary.Units.MassFlowRate Q_source_air(start=500) "kg/s";
     input Real T_source_air(start=24) "degC";
+    input Real Relative_Humidity(start=0.5);
     // Fuel source
     input Real P_fuel_source(start=30) "bar";
     input Real T_fuel_source(start=156) "degC";
@@ -212,9 +213,6 @@ model MetroscopiaCCGT_causality_direct
         origin={182,28})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_pump_out_sensor
     annotation (Placement(transformation(extent={{166,126},{176,136}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source_air(h_out(
-        start=0.3e6))
-    annotation (Placement(transformation(extent={{-658,-36},{-638,-16}})));
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(h_out(
         start=7e5))
     annotation (Placement(transformation(extent={{-524,-40},{-496,-12}})));
@@ -368,6 +366,8 @@ model MetroscopiaCCGT_causality_direct
     annotation (Placement(transformation(extent={{41.25,5.4545},{28.75,19.455}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
+  MoistAir.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-704,-36},{-684,-16}})));
+  MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -377,7 +377,7 @@ equation
       P_source_air_sensor.P_barA = P_source_air;
       T_source_air_sensor.T_degC = T_source_air;
       Q_source_air_sensor.Q = Q_source_air;
-      source_air.Xi_out = {0.768,0.232,0.0,0.0,0.0};
+      source_air.relative_humidity=Relative_Humidity;
 
     // Fuel Source
       //  Quantities definition
@@ -745,8 +745,6 @@ equation
     annotation (Line(points={{-588,-26},{-576,-26}}, color={95,95,95}));
   connect(P_filter_out_sensor.C_out, airCompressor.C_in)
     annotation (Line(points={{-536,-26},{-524,-26}}, color={95,95,95}));
-  connect(P_source_air_sensor.C_in, source_air.C_out)
-    annotation (Line(points={{-636,-26},{-643,-26}}, color={95,95,95}));
   connect(HPsuperheater1.C_hot_in, HPsuperheater2.C_hot_out)
     annotation (Line(points={{-177,-26},{-251,-26}}, color={95,95,95}));
   connect(P_w_HPSH1_out_sensor.C_out, HPsuperheater2.C_cold_in) annotation (
@@ -778,9 +776,11 @@ equation
     annotation (Line(points={{35,18.1822},{35,33.9}}, color={0,0,127}));
   connect(T_flue_gas_sink_sensor.C_in, economiser.C_hot_out) annotation (Line(points={{170,-26},{123.3,-26},{123.3,-26.5}}, color={95,95,95}));
   connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{182,-26},{222,-26},{222,166}}, color={95,95,95}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},
-            {260,280}})),                                     Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},{260,280}}),
+  connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,-26},{-652,-26}}, color={95,95,95}));
+  connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-689,-26}}, color={85,170,255}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
+                                                              Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
         graphics={Rectangle(
           extent={{-324,18},{246,-72}},
           pattern=LinePattern.None,
@@ -833,21 +833,21 @@ equation
           fillColor={255,82,82},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None,
-          origin={-570,210},
+          origin={-690,230},
           rotation=360),
         Text(
-          extent={{-552,214},{-466,204}},
+          extent={{-672,234},{-586,224}},
           textColor={0,0,0},
           textString="Boundary Conditions",
           horizontalAlignment=TextAlignment.Left),
         Rectangle(
-          extent={{-580,180},{-560,160}},
+          extent={{-700,200},{-680,180}},
           pattern=LinePattern.None,
           fillColor={0,140,72},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0}),
         Text(
-          extent={{-552,176},{-466,166}},
+          extent={{-672,196},{-586,186}},
           textColor={0,0,0},
           textString="Parameters",
           horizontalAlignment=TextAlignment.Left),
