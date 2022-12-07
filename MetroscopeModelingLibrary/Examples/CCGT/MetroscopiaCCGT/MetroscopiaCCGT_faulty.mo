@@ -1,7 +1,6 @@
 within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
-  extends
-    MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT.MetroscopiaCCGT_causality_direct_withStartValues(
+  extends MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT.MetroscopiaCCGT_causality_direct_withStartValues(
     condenser(faulty=true),
     AirFilter(faulty=true),
     HPsuperheater1(faulty=true),
@@ -114,6 +113,6 @@ equation
   connect(bypass_HP_CV_to_condenser_leak.C_in, HPST_control_valve.C_in)
     annotation (Line(points={{-172,192},{-222,192},{-222,148},{-203.25,148}},
         color={217,67,180}));
-  annotation (Diagram(coordinateSystem(extent={{-680,-120},{260,340}})), Icon(
-        coordinateSystem(extent={{-680,-120},{260,340}})));
+  annotation (Diagram(coordinateSystem(extent={{-720,-120},{260,340}})), Icon(
+        coordinateSystem(extent={{-720,-120},{260,340}})));
 end MetroscopiaCCGT_faulty;
