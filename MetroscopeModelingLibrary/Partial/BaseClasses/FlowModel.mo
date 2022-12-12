@@ -33,7 +33,13 @@ partial model FlowModel "Basic fluid transport brick for all components"
 
   // ------ Computed Quantities ------
   // Densities
-  Units.Density rho "Fluid density";
+  Units.Density rho_in "Inlet density";
+  Units.Density rho_out "Outlet density";
+  Units.Density rho "Mean density";
+
+  // Volumetric flow rates
+  Units.PositiveVolumeFlowRate Qv_in "Inlet volumetric flow rate";
+  Units.NegativeVolumeFlowRate Qv_out "Outlet volumetric flow rate";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";
@@ -64,7 +70,6 @@ equation
 
   // Mass flow rate
   Q = C_in.Q;
-  Q = - C_out.Q;
 
   // Pressure
   P_in = C_in.P;
@@ -88,10 +93,17 @@ equation
   T_out = Medium.temperature(state_out);
 
   // Densities
-  rho = (Medium.density(state_in) + Medium.density(state_out))/2;
+  rho_in = Medium.density(state_in);
+  rho_out = Medium.density(state_out);
+  rho = (rho_in + rho_out)/2;
+
+  // Volumetric flow rates
+  Qv_in = Q/rho_in;
+  Qv_out = -Q/rho_out;
 
   // ------ Conservation equations ------
   P_out - P_in = DP;
   Q * (h_out - h_in) = W;
+  C_in.Q + C_out.Q = 0;
 
 end FlowModel;
