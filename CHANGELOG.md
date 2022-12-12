@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### Added <!--Make sure to add a link to the PR and issues related to your change-->
+- Added [PR#319](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/319) densities and volumetric flow rates in the `FlowModel`
 
 ### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 - Fixed [PR#318](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/318) `MoistAir_to_FlueGases` to have equal T between inlet and oulet.
