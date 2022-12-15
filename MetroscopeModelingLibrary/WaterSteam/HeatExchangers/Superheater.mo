@@ -263,7 +263,8 @@ equation
       color={28,108,200},
       thickness=1));
 
-  connect(tube_rupture.C_out, cold_side_deheating.C_out) annotation (Line(points={{14,38},{28,38},{28,62},{39,62},{39,60}}, color={217,67,180}));
+  connect(tube_rupture.C_out, cold_side_deheating.C_out) annotation (Line(points={{14,38.2},{28,38.2},{28,62},{39,62},{39,60}},
+                                                                                                                            color={217,67,180}));
   connect(tube_rupture.C_in, hot_side_deheating.C_in) annotation (Line(points={{-6,38},{-12,38},{-12,66},{-34,66},{-34,60}}, color={217,67,180}));
   connect(C_hot_in, C_hot_in)
     annotation (Line(points={{-160,0},{-160,0}}, color={28,108,200}));
