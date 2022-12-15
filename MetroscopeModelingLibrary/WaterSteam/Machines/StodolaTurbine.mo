@@ -18,7 +18,6 @@ model StodolaTurbine
   Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
   Units.Area area_nz(start=1) "Nozzle area";
   Units.Velocity u_out(start=100);
-  Units.Density rho_out(start=7);
 
   Units.MassFraction x_in(start=x_in_0);
   Units.MassFraction x_inner(start=x_inner_0);
@@ -58,7 +57,6 @@ equation
   h_real - h_in = xm*eta_is*(h_is - h_in);
 
   // Nozzle outlet
-  rho_out = Medium.density(state_out);
   u_out = Q/(rho_out*area_nz);
   h_out - h_real = (1 - eta_nz)*u_out^2/2;
 

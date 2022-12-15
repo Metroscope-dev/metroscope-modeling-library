@@ -21,6 +21,6 @@ equation
     NTUHeatExchange.Cp_hot = 4.2;
 
     annotation (
-        Icon(coordinateSystem(preserveAspectRatio=false)), 
+        Icon(coordinateSystem(preserveAspectRatio=false)),
         Diagram(coordinateSystem(preserveAspectRatio=false)));
 end NTU_HeatExchanger_shell_and_tubes;
