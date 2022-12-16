@@ -40,6 +40,7 @@ partial model FlowModel "Basic fluid transport brick for all components"
   // Volumetric flow rates
   Units.PositiveVolumeFlowRate Qv_in "Inlet volumetric flow rate";
   Units.NegativeVolumeFlowRate Qv_out "Outlet volumetric flow rate";
+  Units.PositiveVolumeFlowRate Qv "Mean volumetric flow rate";
 
   // Temperatures
   Units.Temperature T_in(start=T_in_0) "Fluid temperature";
@@ -77,7 +78,6 @@ equation
 
   // Mass Fractions
   Xi = inStream(C_in.Xi_outflow);
-  Xi = C_out.Xi_outflow;
 
   // No flow reversal in stream connector
   C_in.h_outflow = 0; // Never used arbitrary value
@@ -100,10 +100,12 @@ equation
   // Volumetric flow rates
   Qv_in = Q/rho_in;
   Qv_out = -Q/rho_out;
+  Qv = (Qv_in - Qv_out)/2;
 
   // ------ Conservation equations ------
   P_out - P_in = DP;
   Q * (h_out - h_in) = W;
   C_in.Q + C_out.Q = 0;
+  C_out.Xi_outflow = inStream(C_in.Xi_outflow);
 
 end FlowModel;

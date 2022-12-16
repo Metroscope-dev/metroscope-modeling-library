@@ -38,7 +38,6 @@ model MetroscopiaNPP_faulty
   WaterSteam.Pipes.Leak bypass_HP_control_valve_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-147,51})));
   WaterSteam.Pipes.Leak bypass_HP_turbine_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-113,51})));
   WaterSteam.Pipes.Leak bypass_LP_turbine_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={139,109})));
-  WaterSteam.Pipes.Leak superheater_tube_rupture annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=0,origin={55,149})));
   WaterSteam.Pipes.Leak bypass_superheater_to_condenser annotation (Placement(transformation(extent={{9,-9},{-9,9}},rotation=270,origin={-113,143})));
   WaterSteam.Pipes.Leak bypass_HP_turbine_ext_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=0,origin={-11,49})));
   WaterSteam.Pipes.Leak bypass_LP_heater_drains_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={277,-141})));
@@ -51,6 +50,7 @@ equation
   // Superheater
   superheater.fouling = Failure_superheater_fouling;
   superheater.closed_vent = Failure_superheater_closed_vent;
+  superheater.tube_rupture.Q = Failure_superheater_tube_rupture_Q + 1e-3;
 
   // Condenser
   condenser.fouling = Failure_condenser_fouling;
@@ -71,21 +71,17 @@ equation
   bypass_HP_control_valve_to_condenser.Q = Failure_bypass_HP_control_valve_to_condenser_Q + 1e-3;
   bypass_HP_turbine_to_condenser.Q = Failure_bypass_HP_turbine_to_condenser_Q + 1e-3;
   bypass_LP_turbine_to_condenser.Q = Failure_bypass_LP_turbine_to_condenser_Q + 1e-3;
-  superheater_tube_rupture.Q = Failure_superheater_tube_rupture_Q + 1e-3;
   bypass_superheater_to_condenser.Q = Failure_bypass_superheater_to_condenser_Q + 1e-3;
   bypass_HP_turbine_ext_to_condenser.Q = Failure_bypass_HP_turbine_ext_to_condenser_Q + 1e-3;
   bypass_LP_heater_drains_to_condenser.Q = Failure_bypass_LP_heater_drains_to_condenser_Q + 1e-3;
   bypass_HP_heater_drains_to_condenser.Q = Failure_bypass_HP_heater_drains_to_condenser_Q + 1e-3;
 
-  connect(superheater_tube_rupture.C_in, superheater.C_hot_in) annotation (Line(points={{46,149},{30,149},{30,112},{56,112}},     color={217,67,180}));
   connect(bypass_HP_turbine_to_condenser.C_out, bypass_HP_control_valve_to_condenser.C_out) annotation (Line(points={{-112.82,42},{-112.82,32},{-146.82,32},{-146.82,42}},
                                                                                                                                                                color={217,67,180}));
   connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-112.82,42},{-112.82,32},{320,32},{320,100},{392.5,100},{392.5,74}},
                                                                                                                                                          color={217,67,180}));
   connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139.18,100},{140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{392.5,74}},
                                                                                                                                                                                     color={217,67,180}));
-  connect(superheater_tube_rupture.C_out, superheater.C_cold_out) annotation (Line(points={{64,149.18},{72,149.18},{72,130},{72,130},{72,120}},
-                                                                                                                                              color={217,67,180}));
   connect(bypass_superheater_to_condenser.C_in, superheater_control_valve.C_out) annotation (Line(points={{-113,134},{-113,112.182},{-126,112.182}}, color={217,67,180}));
   connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-112.82,152},{-112,152},{-112,192},{392.5,192},{392.5,74}},
                                                                                                                                                     color={217,67,180}));

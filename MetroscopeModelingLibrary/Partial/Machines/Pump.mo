@@ -7,7 +7,6 @@ partial model Pump
   import MetroscopeModelingLibrary.Units.Inputs;
   import MetroscopeModelingLibrary.Constants;
 
-  Units.PositiveVolumeFlowRate Qv_in(start=1);
 
   Real VRotn(start=1400, min=0, nominal=2000) "Nominal rotational speed";
   Inputs.InputReal a1(start=0) "x^2 coef. of the pump characteristics hn = f(vol_flow) (s2/m5)";
@@ -43,12 +42,11 @@ partial model Pump
         origin={0,108})));
 equation
   // internal variables
-  Qv_in = Q / rho; // Volumic flow rate
   R = VRot/VRotn; // Reduced rotational speed
 
   // Pump characteristics
-  hn = a1*Qv_in^2 + a2*Qv_in*R + a3*R^2;
-  rh = noEvent(max(if (R > 1e-5) then b1*Qv_in^2/R^2 + b2*Qv_in/R + b3 else b3, rhmin));
+  hn = a1*Qv^2 + a2*Qv*R + a3*R^2;
+  rh = noEvent(max(if (R > 1e-5) then b1*Qv^2/R^2 + b2*Qv/R + b3 else b3, rhmin));
 
   // Outlet variation
   DP = rho*Constants.g*hn;
@@ -59,5 +57,5 @@ equation
   Wm = W/rm; // Wm is positive since it is the power produced by the pump
 
   // Hydraulic power
-  Wh = Qv_in * DP / rh; // = Qv_in*rho * g*hn/rh = Q * (h_out - h_in) = W
+  Wh = Qv * DP / rh; // = Qv*rho * g*hn/rh = Q * (h_out - h_in) = W
 end Pump;
