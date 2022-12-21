@@ -7,14 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Fixed [PR#326](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/326) pipe order and assigned temperatures of the `hrsg_monophasic_HX`. Model calibrated with previous version of the library should be recalibrated. The parameter `nominal_hot_side_temperature_rise` was changed to `nominal_hot_side_temperature_drop` and needs to be updated in the models. The default configuration of the HRSG HX is now `monophasic_counter_current`
+## MML-v3.2 <!--Make sure to add a link to the PR and issues related to your change-->
+
+### Fixed 
+- [PR#326](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/326) pipe order and assigned temperatures of the `hrsg_monophasic_HX`. Model calibrated with previous version of the library should be recalibrated. The parameter `nominal_hot_side_temperature_rise` was changed to `nominal_hot_side_temperature_drop` and needs to be updated in the models. The default configuration of the HRSG HX is now `monophasic_counter_current`
+- Fixed [PR#318](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/318) `MoistAir_to_FlueGases` to have equal T between inlet and oulet.
 
 ### Added <!--Make sure to add a link to the PR and issues related to your change-->
 - Added [PR#325](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/325) created Slide Valve and added a Flue Gases control valve.
 - Added [PR#319](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/319) densities and volumetric flow rates in the `FlowModel`
-
-### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
-- Fixed [PR#318](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/318) `MoistAir_to_FlueGases` to have equal T between inlet and oulet.
 
 ### Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Changed [PR#327](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/327) `fuelHeater` pipes location, HX_configuration. In order to harmonise it with other other HX. And to have converging unit test. + Breaking retrocompatibility change : new Cp calculation implies to give 2 more parameters `nominal_cold_side_temperature_rise` and `nominal_hot_side_temperature_drop`
