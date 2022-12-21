@@ -104,8 +104,8 @@ equation
   HX.S = S;
   HX.Q_cold = Q_cold;
   HX.Q_hot = Q_hot;
-  HX.T_cold_in = cold_side.T_in;
-  HX.T_hot_in = hot_side.T_in;
+  HX.T_cold_in = T_cold_in;
+  HX.T_hot_in = T_hot_in;
   HX.Cp_cold = (Cp_cold_min + Cp_cold_max)/2;
   HX.Cp_hot = (Cp_hot_min + Cp_hot_max)/2;
 
