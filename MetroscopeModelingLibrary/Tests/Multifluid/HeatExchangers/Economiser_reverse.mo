@@ -14,7 +14,7 @@ model Economiser_reverse
   parameter String QCp_max_side = "cold";
   parameter Units.Area S = 100;
   parameter Units.Temperature nominal_cold_side_temperature_rise = 20;
-  parameter Units.Temperature nominal_hot_side_temperature_rise = 10;
+  parameter Units.Temperature nominal_hot_side_temperature_drop = 10;
 
   // Calibrated parameters
   output Units.HeatExchangeCoefficient Kth;
@@ -63,7 +63,7 @@ equation
   // Parameters
   economiser.S = S;
   economiser.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  economiser.nominal_hot_side_temperature_rise = nominal_hot_side_temperature_rise;
+  economiser.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
     // Inputs for calibration
   T_cold_out_sensor.T_degC = T_cold_out;

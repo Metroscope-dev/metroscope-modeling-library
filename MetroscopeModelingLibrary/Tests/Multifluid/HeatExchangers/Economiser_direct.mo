@@ -19,7 +19,7 @@ model Economiser_direct
   parameter Units.FrictionCoefficient Kfr_cold = 20;
 
   parameter Units.Temperature nominal_cold_side_temperature_rise = 20;
-  parameter Units.Temperature nominal_hot_side_temperature_rise = 10;
+  parameter Units.Temperature nominal_hot_side_temperature_drop = 10;
 
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
@@ -49,7 +49,7 @@ equation
   economiser.Kfr_hot = Kfr_hot;
   economiser.Kfr_cold = Kfr_cold;
   economiser.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  economiser.nominal_hot_side_temperature_rise = nominal_hot_side_temperature_rise;
+  economiser.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
   connect(economiser.C_cold_in, cold_source.C_out) annotation (Line(points={{1,7},{0,7},{0,30},{10,30},{10,39}}, color={28,108,200}));
   connect(economiser.C_hot_out, hot_sink.C_in) annotation (Line(points={{5,0},{63,0}}, color={95,95,95}));

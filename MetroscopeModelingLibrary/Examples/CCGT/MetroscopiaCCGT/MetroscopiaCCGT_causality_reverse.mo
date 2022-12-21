@@ -440,7 +440,7 @@ equation
       // Parameters
       economiser.S = 100;
       economiser.nominal_cold_side_temperature_rise = 235;
-      economiser.nominal_hot_side_temperature_rise = 150;
+      economiser.nominal_hot_side_temperature_drop = 150;
       T_w_eco_in_sensor.T_degC = T_w_eco_in;
       // Calibrated parameters
       economiser.Kth = Eco_Kth;
@@ -467,7 +467,7 @@ equation
       // Parameters
       HPsuperheater1.S = 100;
       HPsuperheater1.nominal_cold_side_temperature_rise = 250;
-      HPsuperheater1.nominal_hot_side_temperature_rise = 180;
+      HPsuperheater1.nominal_hot_side_temperature_drop = 180;
       HPsuperheater1.Kfr_hot = 0;
       // Calibrated parameters
       HPsuperheater1.Kth = HPSH1_Kth;
@@ -479,7 +479,7 @@ equation
       // Parameters
       HPsuperheater2.S = 100;
       HPsuperheater2.nominal_cold_side_temperature_rise = 150;
-      HPsuperheater2.nominal_hot_side_temperature_rise = 180;
+      HPsuperheater2.nominal_hot_side_temperature_drop = 180;
       HPsuperheater2.Kfr_hot = 0;
       T_w_HPSH2_out_sensor.T_degC = T_w_HPSH2_out;
       // Calibrated parameters
@@ -500,7 +500,7 @@ equation
       // Parameters
       Reheater.S = 100;
       Reheater.nominal_cold_side_temperature_rise = 100;
-      Reheater.nominal_hot_side_temperature_rise = 180;
+      Reheater.nominal_hot_side_temperature_drop = 180;
       Reheater.Kfr_hot = 0;
       // Calibrated parameters
       Reheater.Kth = ReH_Kth;
