@@ -11,8 +11,10 @@ model FuelHeater_reverse
   input Real T_cold_source(start = 30, min = 0, nominal = 50) "degC";
   //input Units.SpecificEnthalpy h_cold_source(start=1e6) "J/kg";
   // Parameters
-  parameter String QCp_max_side = "hot";
+  parameter String QCp_max_side = "undefined"; // On fuel heater, QCp_hot may be close to QCp_cold
   parameter Units.Area S = 100;
+  parameter Units.Temperature nominal_cold_side_temperature_rise = 20;
+  parameter Units.Temperature nominal_hot_side_temperature_drop = 10;
 
   // Calibrated parameters
   output Units.HeatExchangeCoefficient Kth;
@@ -58,6 +60,8 @@ equation
 
   // Parameters
   fuelHeater.S = S;
+  fuelHeater.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
+  fuelHeater.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
     // Inputs for calibration
   T_hot_out_sensor.T_degC = T_hot_out;
