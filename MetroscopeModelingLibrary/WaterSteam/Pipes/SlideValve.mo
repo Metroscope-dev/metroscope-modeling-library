@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.WaterSteam.Pipes;
-model ControlValve
+model SlideValve
   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  extends Partial.Pipes.ControlValve(
+  extends Partial.Pipes.SlideValve(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium)
@@ -16,13 +16,13 @@ model ControlValve
           points={{40,102},{-40,102},{-40,118},{-38,136},{-32,146},{-20,156},{0,
               162},{20,156},{32,146},{38,134},{40,116},{40,102}},
           lineColor={0,0,255},
-          fillColor={28,108,200},
+          fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5),
         Polygon(
           points={{0,2},{40,102},{-40,102},{0,2}},
           lineColor={0,0,255},
-          fillColor={28,108,200},
+          fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5),
         Polygon(
@@ -61,4 +61,4 @@ model ControlValve
           lineColor={0,0,255},
           fillColor={127,255,0},
           fillPattern=FillPattern.Solid)}));
-end ControlValve;
+end SlideValve;
