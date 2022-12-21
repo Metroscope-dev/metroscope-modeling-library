@@ -8,3 +8,5 @@ HeatLoss
 PressureCut
 LoopBreaker
 Leak
+SlideValve_reverse
+SlideValve_direct
