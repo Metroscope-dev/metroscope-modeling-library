@@ -13,7 +13,7 @@ model FuelHeater
   Inputs.InputTemperature nominal_hot_side_temperature_drop; // flue gases reference temperature rise based on H&MB diagramm values
 
   // Heating
-  parameter String QCp_max_side = "hot";
+  parameter String QCp_max_side = "undefined";// On fuel heater, QCp_hot may be close to QCp_cold
   parameter String HX_config = "monophasic_counter_current";
   Inputs.InputArea S;
   Inputs.InputHeatExchangeCoefficient Kth;
