@@ -16,7 +16,7 @@ model Superheater_reverse
   parameter String QCp_max_side = "hot";
   parameter Units.Area S = 10;
   parameter Units.Temperature nominal_cold_side_temperature_rise = 140;
-  parameter Units.Temperature nominal_hot_side_temperature_rise = 3;
+  parameter Units.Temperature nominal_hot_side_temperature_drop = 3;
 
   // Calibrated parameters
   output Units.HeatExchangeCoefficient Kth;
@@ -63,7 +63,7 @@ equation
   // Parameters
   superheater.S = S;
   superheater.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  superheater.nominal_hot_side_temperature_rise = nominal_hot_side_temperature_rise;
+  superheater.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
     // Inputs for calibration
   T_cold_out_sensor.T_degC = T_cold_out;
@@ -86,7 +86,7 @@ equation
   connect(superheater.C_hot_out, P_hot_out_sensor.C_in) annotation (Line(points={{23.5,0},{40,0}}, color={95,95,95}));
   connect(hot_sink.C_in,P_hot_out_sensor. C_out)
     annotation (Line(points={{65,0},{48,0}}, color={95,95,95}));
-  connect(P_cold_out_sensor.C_in, superheater.C_cold_out) annotation (Line(points={{-12,-34},{-12,-28.9},{-11.5,-28.9},{-11.5,-23.8}}, color={28,108,200}));
+  connect(P_cold_out_sensor.C_in, superheater.C_cold_out) annotation (Line(points={{-12,-34},{-12,-28.9},{-11.5,-28.9},{-11.5,23.8}},  color={28,108,200}));
   connect(cold_source.C_out, superheater.C_cold_in) annotation (Line(points={{10,37},{9.5,37},{9.5,23.8}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Superheater_reverse;

@@ -19,7 +19,7 @@ model Superheater_direct
   parameter Units.FrictionCoefficient Kfr_cold = 1;
 
   parameter Units.Temperature nominal_cold_side_temperature_rise = 140;
-  parameter Units.Temperature nominal_hot_side_temperature_rise = 3;
+  parameter Units.Temperature nominal_hot_side_temperature_drop = 3;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -48,11 +48,11 @@ equation
   superheater.Kfr_hot = Kfr_hot;
   superheater.Kfr_cold = Kfr_cold;
   superheater.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  superheater.nominal_hot_side_temperature_rise = nominal_hot_side_temperature_rise;
+  superheater.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
   connect(superheater.C_cold_in, cold_source.C_out) annotation (Line(points={{3,7},{2,7},{2,30},{12,30},{12,39}}, color={28,108,200}));
   connect(superheater.C_hot_out, hot_sink.C_in) annotation (Line(points={{7,0},{65,0}}, color={95,95,95}));
-  connect(superheater.C_cold_out, cold_sink.C_in) annotation (Line(points={{-3,-7},{-3,-41},{-10,-41}}, color={28,108,200}));
+  connect(superheater.C_cold_out, cold_sink.C_in) annotation (Line(points={{-3,7},{-3,-41},{-10,-41}},  color={28,108,200}));
   connect(superheater.C_hot_in, hot_source.C_out) annotation (Line(points={{-7,0},{-47,0}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Superheater_direct;
