@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed [PR#318](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/318) `MoistAir_to_FlueGases` to have equal T between inlet and oulet.
 
 ### Changed <!--Make sure to add a link to the PR and issues related to your change-->
-- Changed [PR#327](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/327) `fuelHeater` pipes location, Cp calculation, HX_configuration. In order to harmonise it with other other HX. And to have converging unit test. 
+- Changed [PR#327](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/327) `fuelHeater` pipes location, HX_configuration. In order to harmonise it with other other HX. And to have converging unit test. + Breaking retrocompatibility change : new Cp calculation implies to give 2 more parameters `nominal_cold_side_temperature_rise` and `nominal_hot_side_temperature_drop`
 
 ### Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
