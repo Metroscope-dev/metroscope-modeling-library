@@ -8,12 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### Added
-- Added [PR#330](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/330) `HeatLoss` component for the `MoistAir` medium.
+- Added [PR#330](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/330) `HeatLoss` component for the `MoistAir` medium. Answers [issue#329](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/329).
 
 ## MML-v3.2 <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### Fixed 
-- [PR#326](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/326) pipe order and assigned temperatures of the `hrsg_monophasic_HX`. Model calibrated with previous version of the library should be recalibrated. The parameter `nominal_hot_side_temperature_rise` was changed to `nominal_hot_side_temperature_drop` and needs to be updated in the models. The default configuration of the HRSG HX is now `monophasic_counter_current`
+- [PR#326](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/326) pipe order and assigned temperatures of the `hrsg_monophasic_HX`. Model calibrated with previous version of the library should be recalibrated. The parameter `nominal_hot_side_temperature_rise` was changed to `nominal_hot_side_temperature_drop` and needs to be updated in the models. The default configuration of the HRSG HX is now `monophasic_counter_current`. Answers issues [#268](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/268) and [#254](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/254).
 - Fixed [PR#318](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/318) `MoistAir_to_FlueGases` to have equal T between inlet and oulet.
 
 ### Added <!--Make sure to add a link to the PR and issues related to your change-->
