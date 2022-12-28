@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
+## MML-v3.2.1 <!--Make sure to add a link to the PR and issues related to your change-->
+
 ### Added
 - [PR#331](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/331) replace control valves by slide valves at the steam turbines admission in CCGT Metroscopia.
 - Added [PR#330](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/330) `HeatLoss` component for the `MoistAir` medium. Answers [issue#329](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/329).
