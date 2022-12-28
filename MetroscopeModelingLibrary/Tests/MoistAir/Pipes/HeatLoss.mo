@@ -8,10 +8,6 @@ model HeatLoss
   input Units.Fraction source_relative_humidity(start=0.5) "1";
   input Units.Power W(start=5e6) "W";
 
-    // Parameters
-  parameter Units.FrictionCoefficient Kfr = 100;
-  parameter Units.Height delta_z = 0;
-
   MetroscopeModelingLibrary.MoistAir.Pipes.HeatLoss heat_loss annotation (Placement(transformation(extent={{-16,-16},{14,16}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{80,-10},{100,10}})));
