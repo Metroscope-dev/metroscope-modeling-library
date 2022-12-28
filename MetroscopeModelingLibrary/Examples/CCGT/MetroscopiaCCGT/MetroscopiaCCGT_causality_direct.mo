@@ -35,9 +35,6 @@ model MetroscopiaCCGT_causality_direct
     parameter Real T_w_HPSH2_out = 566.5 "degC"; // Controlled by the desuperheater mass flow rate
     // Low Pressure Superheater (resuperheater)
     parameter String ReH_QCp_max_side = "hot";
-    // Steam turbines control valves
-    parameter Real LPST_opening = 1;
-    parameter Real HPST_opening = 1;
 
   // Observables
 
@@ -111,11 +108,11 @@ model MetroscopiaCCGT_causality_direct
     parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth = 409.27203; // LP superheater outlet temperature
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold = 134.2858; // LP superheater inlet pressure
     // High Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cvmax = 6647.2905; // HP superheater outlet pressure
+    parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv = 6647.2905; // HP superheater outlet pressure
     parameter MetroscopeModelingLibrary.Units.Cst HPST_Cst = 6.038082e+07; // HP steam turbine inlet pressure
     parameter MetroscopeModelingLibrary.Units.Yield ST_eta_is = 0.8438316; // Power output
     // Low Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cvmax = 69310.586; // Low pressure superheater outlet pressure
+    parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv = 69310.586; // Low pressure superheater outlet pressure
     parameter MetroscopeModelingLibrary.Units.Cst LPST_Cst = 411424.22; // LP steam turbine inlet pressure
     // Condenser
     parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth = 93661.23; // Condensation pressure
@@ -163,7 +160,7 @@ model MetroscopiaCCGT_causality_direct
         extent={{-6,-6},{6,6}},
         rotation=180,
         origin={-208,8})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve HPST_control_valve
+  WaterSteam.Pipes.SlideValve                             HPST_control_valve
     annotation (Placement(transformation(extent={{-203.25,144.738},{-186.75,
             162.677}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_in_sensor
@@ -270,7 +267,7 @@ model MetroscopiaCCGT_causality_direct
         origin={3,159})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_circulating_water_in_sensor
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={19,159})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve LPST_control_valve
+  WaterSteam.Pipes.SlideValve                             LPST_control_valve
     annotation (Placement(transformation(extent={{-61.25,210.738},{-44.75,
             228.677}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_LPST_in_sensor
@@ -516,12 +513,11 @@ equation
         P_HPST_in_sensor.P_barA = P_ST_in;
         P_HPST_out_sensor.P_barA = P_ST_out;
         // Parameters
-        HPST_control_valve.Opening = HPST_opening;
         HPsteamTurbine.area_nz = 1;
         HPsteamTurbine.eta_nz = 1;
         HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
         // Calibrated Parameters
-        HPST_control_valve.Cvmax = HPST_CV_Cvmax;
+        HPST_control_valve.Cv = HPST_CV_Cv;
         HPsteamTurbine.Cst = HPST_Cst;
         HPsteamTurbine.eta_is = ST_eta_is;
 
@@ -529,11 +525,10 @@ equation
         // Quantities definition
         P_LPST_in_sensor.P_barA = P_LPST_in;
         // Parameters
-        LPST_control_valve.Opening = LPST_opening;
         LPsteamTurbine.area_nz = 1;
         LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
-        LPST_control_valve.Cvmax = LPST_CV_Cvmax;
+        LPST_control_valve.Cv = LPST_CV_Cv;
         LPsteamTurbine.Cst = LPST_Cst;
 
     // Condenser
