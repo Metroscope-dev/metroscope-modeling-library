@@ -824,29 +824,6 @@ equation
           origin={222,172},
           rotation=360),
         Rectangle(
-          extent={{-10,10},{10,-10}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={-690,230},
-          rotation=360),
-        Text(
-          extent={{-672,234},{-586,224}},
-          textColor={0,0,0},
-          textString="Boundary Conditions",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
-          extent={{-700,200},{-680,180}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Text(
-          extent={{-672,196},{-586,186}},
-          textColor={0,0,0},
-          textString="Parameters",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
           extent={{-372,-18},{-356,-34}},
           pattern=LinePattern.None,
           fillColor={0,140,72},
@@ -867,5 +844,96 @@ equation
         Text(
           extent={{-230,96},{-174,96}},
           textColor={28,108,200},
-          textString="Desuperheater")}));
+          textString="Desuperheater"),
+        Rectangle(
+          extent={{-10,10},{10,-10}},
+          fillColor={255,82,82},
+          fillPattern=FillPattern.Solid,
+          pattern=LinePattern.None,
+          origin={-670,250},
+          rotation=360),
+        Text(
+          extent={{-650,255},{-564,245}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Boundary Conditions",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,234},{-660,214}},
+          pattern=LinePattern.None,
+          fillColor={0,140,72},
+          fillPattern=FillPattern.Solid,
+          lineColor={0,0,0}),
+        Text(
+          extent={{-650,229},{-564,219}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Control Parameters",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,208},{-660,188}},
+          lineColor={0,0,0},
+          pattern=LinePattern.None,
+          fillColor={244,237,30},
+          fillPattern=FillPattern.Solid),
+        Text(
+          extent={{-650,206},{-476,190}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Observables not used for calibration"),
+        Line(
+          points={{-687,166},{-653,166}},
+          color={95,95,95},
+          thickness=0.5),
+        Text(
+          extent={{-634,171},{-548,161}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Flue Gas flow"),
+        Line(
+          points={{-687,134},{-653,134}},
+          color={238,46,47},
+          thickness=0.5),
+        Text(
+          extent={{-634,139},{-548,129}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="HP flow"),
+        Line(
+          points={{-687,120},{-653,120}},
+          color={244,125,35},
+          thickness=0.5),
+        Text(
+          extent={{-634,125},{-548,115}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="IP flow"),
+        Line(
+          points={{-687,106},{-653,106}},
+          color={244,237,30},
+          thickness=0.5),
+        Text(
+          extent={{-634,111},{-548,101}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="LP flow"),
+        Text(
+          extent={{-590,127},{-504,117}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=7,
+          textString="Solid Line: Liquid Phase
+Dashed Line: Vapor Phase"),
+        Text(
+          extent={{-614,151},{-528,141}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Water/Steam"),
+        Rectangle(extent={{-696,154},{-490,96}}, lineColor={0,0,0})}));
 end MetroscopiaCCGT_causality_direct;

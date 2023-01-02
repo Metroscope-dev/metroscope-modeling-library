@@ -778,9 +778,9 @@ equation
     annotation (Line(points={{176,-26},{222,-26},{222,166}}, color={95,95,95}));
   connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,-26},{-652,-26}}, color={95,95,95}));
   connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-693,-26}}, color={85,170,255}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},{260,280}})),
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
                                                               Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},{260,280}}),
+        coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
         graphics={Rectangle(
           extent={{-324,18},{246,-72}},
           pattern=LinePattern.None,
@@ -829,29 +829,6 @@ equation
           origin={222,172},
           rotation=360),
         Rectangle(
-          extent={{-10,10},{10,-10}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={-710,230},
-          rotation=360),
-        Text(
-          extent={{-692,234},{-606,224}},
-          textColor={0,0,0},
-          textString="Boundary Conditions",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
-          extent={{-720,200},{-700,180}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Text(
-          extent={{-692,196},{-606,186}},
-          textColor={0,0,0},
-          textString="Parameters",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
           extent={{-372,-18},{-356,-34}},
           pattern=LinePattern.None,
           fillColor={0,140,72},
@@ -863,17 +840,6 @@ equation
           fillColor={0,140,72},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0}),
-        Rectangle(
-          extent={{-720,160},{-700,140}},
-          lineColor={0,0,0},
-          pattern=LinePattern.None,
-          fillColor={244,237,30},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{-692,158},{-560,142}},
-          textColor={0,0,0},
-          horizontalAlignment=TextAlignment.Left,
-          textString="Observables not used for calibration"),
         Rectangle(
           extent={{-450,-40},{-436,-54}},
           lineColor={0,0,0},
@@ -901,5 +867,123 @@ equation
         Text(
           extent={{-230,96},{-174,96}},
           textColor={28,108,200},
-          textString="Desuperheater")}));
+          textString="Desuperheater"),
+        Rectangle(
+          extent={{-10,10},{10,-10}},
+          fillColor={255,82,82},
+          fillPattern=FillPattern.Solid,
+          pattern=LinePattern.None,
+          origin={-670,248},
+          rotation=360),
+        Text(
+          extent={{-650,253},{-564,243}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Boundary Conditions",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,232},{-660,212}},
+          pattern=LinePattern.None,
+          fillColor={0,140,72},
+          fillPattern=FillPattern.Solid,
+          lineColor={0,0,0}),
+        Text(
+          extent={{-650,227},{-564,217}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Control Parameters",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,206},{-660,186}},
+          lineColor={0,0,0},
+          pattern=LinePattern.None,
+          fillColor={244,237,30},
+          fillPattern=FillPattern.Solid),
+        Text(
+          extent={{-650,204},{-476,188}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Observables not used for calibration"),
+        Line(
+          points={{-687,164},{-653,164}},
+          color={95,95,95},
+          thickness=0.5),
+        Text(
+          extent={{-634,169},{-548,159}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Flue Gas flow"),
+        Line(
+          points={{-687,132},{-653,132}},
+          color={238,46,47},
+          thickness=0.5),
+        Text(
+          extent={{-634,137},{-548,127}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="HP flow"),
+        Line(
+          points={{-687,118},{-653,118}},
+          color={244,125,35},
+          thickness=0.5),
+        Text(
+          extent={{-634,123},{-548,113}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="IP flow"),
+        Line(
+          points={{-687,104},{-653,104}},
+          color={244,237,30},
+          thickness=0.5),
+        Text(
+          extent={{-634,109},{-548,99}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="LP flow"),
+        Text(
+          extent={{-590,125},{-504,115}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=7,
+          textString="Solid Line: Liquid Phase
+Dashed Line: Vapor Phase"),
+        Text(
+          extent={{-614,149},{-528,139}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Water/Steam"),
+        Rectangle(extent={{-696,152},{-490,94}}, lineColor={0,0,0}),
+                                          Text(
+          extent={{-306,-48},{-244,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Superheater 2"),    Text(
+          extent={{-186,-48},{-124,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Superheater 1"),    Text(
+          extent={{-104,-48},{-42,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Reheater"),         Text(
+          extent={{-48,-48},{14,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Evaporator"),       Text(
+          extent={{74,-52},{136,-58}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Economizer
+")}));
 end MetroscopiaCCGT_causality_reverse;
