@@ -61,10 +61,11 @@ model MetroscopiaCCGT_causality_reverse
     // Reheater
     input Real T_w_ReH_out(start = 350, min = 0, nominal = 350) "degC";
     input Real P_w_ReH_out(start=9, min=0, nominal=9) "barA";
-    // High Pressure Steam Turbine
+    // Steam Turbine
     input Real P_ST_in(start=113) "barA";
     input Real P_ST_out(start=10) "barA";
     input Real W_ST_out(start=65, unit="MW", nominal=65, min=0) "MW";
+    input Real T_HPST_out(start=255.5) "degC";
     input Real P_LPST_in(start=8, min=0, nominal=4.9) "bar";
     // Condenser
     input Real P_Cond(start=0.05, min=0, nominal=0.05) "bar";
@@ -106,7 +107,8 @@ model MetroscopiaCCGT_causality_reverse
     // High Pressure Steam Turbine
     output MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv; // HP superheater outlet pressure
     output MetroscopeModelingLibrary.Units.Cst HPST_Cst; // HP steam turbine inlet pressure
-    output MetroscopeModelingLibrary.Units.Yield ST_eta_is; // Power output
+    output MetroscopeModelingLibrary.Units.Yield HPST_eta_is; // HP steam turbine outlet temperature
+    output MetroscopeModelingLibrary.Units.Yield LPST_eta_is; // Power output
     // Low Pressure Steam Turbine
     output MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv; // Low pressure superheater outlet pressure
     output MetroscopeModelingLibrary.Units.Cst LPST_Cst; // LP steam turbine inlet pressure
@@ -368,6 +370,10 @@ model MetroscopiaCCGT_causality_reverse
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
   MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
   MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-708,-36},{-688,-16}})));
+  Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor annotation (Placement(transformation(
+        extent={{6,-6},{-6,6}},
+        rotation=180,
+        origin={-90,148})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -515,14 +521,14 @@ equation
         // Quantities definition
         P_HPST_in_sensor.P_barA = P_ST_in;
         P_HPST_out_sensor.P_barA = P_ST_out;
+        T_HPST_out_sensor.T_degC = T_HPST_out;
         // Parameters
         HPsteamTurbine.area_nz = 1;
         HPsteamTurbine.eta_nz = 1;
-        HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
         // Calibrated Parameters
         HPST_control_valve.Cv = HPST_CV_Cv;
         HPsteamTurbine.Cst = HPST_Cst;
-        HPsteamTurbine.eta_is = ST_eta_is;
+        HPsteamTurbine.eta_is = HPST_eta_is;
 
       // Low Pressure Level
         // Quantities definition
@@ -531,6 +537,7 @@ equation
         LPsteamTurbine.area_nz = 1;
         LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
+        LPsteamTurbine.eta_is = LPST_eta_is;
         LPST_control_valve.Cv = LPST_CV_Cv;
         LPsteamTurbine.Cst = LPST_Cst;
 
@@ -643,8 +650,6 @@ equation
   connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{40,214},
           {52,214},{52,176.778}},    color={28,108,200}));
 
-  connect(P_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={
-          {-102,148},{-63,148},{-63,-5}}, color={28,108,200}));
   connect(P_source_air_sensor.C_out, T_source_air_sensor.C_in)
     annotation (Line(points={{-624,-26},{-618,-26}}, color={95,95,95}));
   connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
@@ -778,6 +783,8 @@ equation
     annotation (Line(points={{176,-26},{222,-26},{222,166}}, color={95,95,95}));
   connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,-26},{-652,-26}}, color={95,95,95}));
   connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-693,-26}}, color={85,170,255}));
+  connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-102,148},{-96,148}}, color={28,108,200}));
+  connect(T_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={{-84,148},{-63,148},{-63,-5}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),

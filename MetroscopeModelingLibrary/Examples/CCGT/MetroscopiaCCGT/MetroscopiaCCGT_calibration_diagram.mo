@@ -322,7 +322,7 @@ model MetroscopiaCCGT_calibration_diagram
           fontName="Times New Roman",
           textString="Kfr Flue Gas"),
         Line(
-          points={{-352,-36},{-352,-80},{-302,-82}},
+          points={{-346,-38},{-352,-80},{-302,-82}},
           color={0,0,0},
           arrow={Arrow.Filled,Arrow.Filled},
           smooth=Smooth.Bezier)}));
