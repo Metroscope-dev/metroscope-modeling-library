@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
+### Added
+- [PR#338](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/338) Added the calibration diagram of Metroscopia CCGT.
+
 ## MML-v3.2.1 <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### Added
