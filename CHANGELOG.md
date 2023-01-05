@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
+### Added
+- Added water manifold in WaterSteam/Pipes [PR#341](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/341)
+
+### Fixed
+
+### Removed
+
 ## MML-v3.2.1 <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### Added
