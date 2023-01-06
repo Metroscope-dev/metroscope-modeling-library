@@ -64,9 +64,10 @@ model MetroscopiaCCGT_causality_direct
     // Reheater
     output Real T_w_ReH_out;
     output Real P_w_ReH_out;
-    // High Pressure Steam Turbine
+    // Steam Turbine
     output Real P_ST_in;
     output Real P_ST_out;
+    output Real T_HPST_out "degC";
     output Real W_ST_out;
     output Real P_LPST_in;
     // Condenser
@@ -110,7 +111,8 @@ model MetroscopiaCCGT_causality_direct
     // High Pressure Steam Turbine
     parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv = 6647.2905; // HP superheater outlet pressure
     parameter MetroscopeModelingLibrary.Units.Cst HPST_Cst = 6.038082e+07; // HP steam turbine inlet pressure
-    parameter MetroscopeModelingLibrary.Units.Yield ST_eta_is = 0.8438316; // Power output
+    parameter MetroscopeModelingLibrary.Units.Yield HPST_eta_is = 0.8438316; // HP steam turbine outlet temperature
+    parameter MetroscopeModelingLibrary.Units.Yield LPST_eta_is = 0.8438316; // Power output
     // Low Pressure Steam Turbine
     parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv = 69310.586; // Low pressure superheater outlet pressure
     parameter MetroscopeModelingLibrary.Units.Cst LPST_Cst = 411424.22; // LP steam turbine inlet pressure
@@ -365,6 +367,10 @@ model MetroscopiaCCGT_causality_direct
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
   MoistAir.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-704,-36},{-684,-16}})));
   MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
+  Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor annotation (Placement(transformation(
+        extent={{6,-6},{-6,6}},
+        rotation=180,
+        origin={-90,148})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -512,14 +518,15 @@ equation
         // Quantities definition
         P_HPST_in_sensor.P_barA = P_ST_in;
         P_HPST_out_sensor.P_barA = P_ST_out;
+        T_HPST_out_sensor.T_degC = T_HPST_out;
         // Parameters
         HPsteamTurbine.area_nz = 1;
         HPsteamTurbine.eta_nz = 1;
-        HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
+        //HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
         // Calibrated Parameters
         HPST_control_valve.Cv = HPST_CV_Cv;
         HPsteamTurbine.Cst = HPST_Cst;
-        HPsteamTurbine.eta_is = ST_eta_is;
+        HPsteamTurbine.eta_is = HPST_eta_is;
 
       // Low Pressure Level
         // Quantities definition
@@ -528,6 +535,7 @@ equation
         LPsteamTurbine.area_nz = 1;
         LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
+        LPsteamTurbine.eta_is = LPST_eta_is;
         LPST_control_valve.Cv = LPST_CV_Cv;
         LPsteamTurbine.Cst = LPST_Cst;
 
@@ -640,8 +648,6 @@ equation
   connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{40,214},
           {52,214},{52,176.778}},    color={28,108,200}));
 
-  connect(P_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={
-          {-102,148},{-63,148},{-63,-5}}, color={28,108,200}));
   connect(P_source_air_sensor.C_out, T_source_air_sensor.C_in)
     annotation (Line(points={{-624,-26},{-618,-26}}, color={95,95,95}));
   connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
@@ -773,6 +779,8 @@ equation
   connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{182,-26},{222,-26},{222,166}}, color={95,95,95}));
   connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,-26},{-652,-26}}, color={95,95,95}));
   connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-689,-26}}, color={85,170,255}));
+  connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-102,148},{-96,148}}, color={28,108,200}));
+  connect(T_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={{-84,148},{-63,148},{-63,-5}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
@@ -824,29 +832,6 @@ equation
           origin={222,172},
           rotation=360),
         Rectangle(
-          extent={{-10,10},{10,-10}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={-690,230},
-          rotation=360),
-        Text(
-          extent={{-672,234},{-586,224}},
-          textColor={0,0,0},
-          textString="Boundary Conditions",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
-          extent={{-700,200},{-680,180}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Text(
-          extent={{-672,196},{-586,186}},
-          textColor={0,0,0},
-          textString="Parameters",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
           extent={{-372,-18},{-356,-34}},
           pattern=LinePattern.None,
           fillColor={0,140,72},
@@ -867,5 +852,96 @@ equation
         Text(
           extent={{-230,96},{-174,96}},
           textColor={28,108,200},
-          textString="Desuperheater")}));
+          textString="Desuperheater"),
+        Rectangle(
+          extent={{-10,10},{10,-10}},
+          fillColor={255,82,82},
+          fillPattern=FillPattern.Solid,
+          pattern=LinePattern.None,
+          origin={-670,250},
+          rotation=360),
+        Text(
+          extent={{-650,255},{-564,245}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Boundary Conditions",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,234},{-660,214}},
+          pattern=LinePattern.None,
+          fillColor={0,140,72},
+          fillPattern=FillPattern.Solid,
+          lineColor={0,0,0}),
+        Text(
+          extent={{-650,229},{-564,219}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Control Parameters",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,208},{-660,188}},
+          lineColor={0,0,0},
+          pattern=LinePattern.None,
+          fillColor={244,237,30},
+          fillPattern=FillPattern.Solid),
+        Text(
+          extent={{-650,206},{-476,190}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Observables not used for calibration"),
+        Line(
+          points={{-687,166},{-653,166}},
+          color={95,95,95},
+          thickness=0.5),
+        Text(
+          extent={{-634,171},{-548,161}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Flue Gas flow"),
+        Line(
+          points={{-687,134},{-653,134}},
+          color={238,46,47},
+          thickness=0.5),
+        Text(
+          extent={{-634,139},{-548,129}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="HP flow"),
+        Line(
+          points={{-687,120},{-653,120}},
+          color={244,125,35},
+          thickness=0.5),
+        Text(
+          extent={{-634,125},{-548,115}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="IP flow"),
+        Line(
+          points={{-687,106},{-653,106}},
+          color={244,237,30},
+          thickness=0.5),
+        Text(
+          extent={{-634,111},{-548,101}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="LP flow"),
+        Text(
+          extent={{-590,127},{-504,117}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=7,
+          textString="Solid Line: Liquid Phase
+Dashed Line: Vapor Phase"),
+        Text(
+          extent={{-614,151},{-528,141}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Water/Steam"),
+        Rectangle(extent={{-696,154},{-490,96}}, lineColor={0,0,0})}));
 end MetroscopiaCCGT_causality_direct;
