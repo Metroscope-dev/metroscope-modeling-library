@@ -10,6 +10,8 @@ partial model SlideValve
 equation
   /* Pressure loss */
   DP*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
+
+  assert(DP <0, "The outlet pressure of the valve is higher than the inlet pressure", AssertionLevel.warning);
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=true,
