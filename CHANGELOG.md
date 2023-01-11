@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR#346](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/346) adds inlet and outlet connectors to abstract sensors to be able to put them in the line, to avoid mapping mistakes. Closes [issue#284](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/284)
 
 ### Fixed
+- [PR#347](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/347) Modification of the pressure drop equation of a valve so it can simulate the conditions where the pressure at the outlet is higher than the pressure at the inlet. No impact on models.
 
 ### Removed
 

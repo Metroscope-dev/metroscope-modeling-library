@@ -9,7 +9,7 @@ partial model SlideValve
 
 equation
   /* Pressure loss */
-  DP*Cv^2 = -1.733e12*Q^2/rho^2;
+  DP*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=true,
