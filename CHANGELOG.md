@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added water manifold in WaterSteam/Pipes [PR#341](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/341)
 
 ### Fixed
+- [PR#347](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/347) Modification of the pressure drop equation of a valve so it can simulate the conditions where the pressure at the outlet is higher than the pressure at the inlet. No impact on models.
 
 ### Removed
 
