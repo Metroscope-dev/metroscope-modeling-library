@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR#338](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/338) Added the calibration diagram of Metroscopia CCGT.
 - Added water manifold in WaterSteam/Pipes [PR#341](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/341)
 
+### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+- [PR#346](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/346) adds inlet and outlet connectors to abstract sensors to be able to put them in the line, to avoid mapping mistakes. Closes [issue#284](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/284)
+
 ### Fixed
 
 ### Removed
