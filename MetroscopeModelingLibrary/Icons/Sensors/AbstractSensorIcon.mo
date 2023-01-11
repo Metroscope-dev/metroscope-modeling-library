@@ -10,7 +10,7 @@ partial record AbstractSensorIcon "should be extended in partial base classes"
           lineThickness=0.5),
         Line(points={{0,-132},{0,-100}}, color={0,0,0}),
         Polygon(
-          points={{-10,-128},{0,-148},{10,-128},{0,-132},{-10,-128}},
+          points={{-10,-114},{0,-134},{10,-114},{0,-118},{-10,-114}},
           lineColor={0,0,0},
           fillColor={0,0,0},
           fillPattern=FillPattern.Solid)}));
