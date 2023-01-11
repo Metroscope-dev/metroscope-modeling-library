@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Sensors.Abstract;
 model TemperatureSensor
-  extends MetroscopeModelingLibrary.Icons.Sensors.AbstractSensorIcon;
+  extends MetroscopeModelingLibrary.Partial.Sensors.BaseAbstractSensor;
   extends MetroscopeModelingLibrary.Icons.Sensors.TemperatureIcon;
 end TemperatureSensor;
