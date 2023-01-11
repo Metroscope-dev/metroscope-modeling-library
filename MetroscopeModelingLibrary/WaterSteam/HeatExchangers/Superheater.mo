@@ -31,11 +31,16 @@ model Superheater
   Units.PositiveMassFlowRate Q_vent_faulty(start=Q_vent_0);
 
   // Definitions
-  Units.PositiveMassFlowRate Q_cold(
+  Units.PositiveMassFlowRate Q_cold_in(
     start=Q_cold_0,
     nominal=Q_cold_0,
     min=1e-5);
-  Units.PositiveMassFlowRate Q_hot(start=Q_hot_0, nominal=Q_hot_0);
+  Units.PositiveMassFlowRate Q_hot_in(start=Q_hot_0, nominal=Q_hot_0);
+  Units.NegativeMassFlowRate Q_cold_out(
+    start=Q_cold_0,
+    nominal=Q_cold_0,
+    max=1e-5);
+  Units.NegativeMassFlowRate Q_hot_out(start=Q_hot_0, nominal=Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
@@ -46,6 +51,7 @@ model Superheater
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
   Units.Percentage closed_vent(min = 0, max= 100); // Vent closing percentage
+  Units.MassFlowRate tube_rupture_leak; // Tube rupture leak mass flow rate
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 1300;
@@ -154,6 +160,8 @@ model Superheater
     h_outflow(start=h_vap_sat_0))
                            annotation (Placement(transformation(extent={{150,-88},{170,-68}})));
 
+  Pipes.Leak tube_rupture annotation (Placement(transformation(extent={{-6,28},{14,48}})));
+  BaseClasses.IsoPHFlowModel final_mix_cold annotation (Placement(transformation(extent={{24,52},{4,72}})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
@@ -164,13 +172,16 @@ equation
   if not faulty then
     fouling = 0;
     closed_vent = 0;
+    tube_rupture_leak = 0;
   end if;
 
   // Definitions
-  Q_cold = cold_side_condensing.Q;
-  Q_hot = hot_side_pipe.Q;
+  Q_cold_in = C_cold_in.Q;
+  Q_hot_in = C_hot_in.Q;
+  Q_cold_out = C_cold_out.Q;
+  Q_hot_out = C_hot_out.Q;
   T_cold_in = cold_side_pipe.T_in;
-  T_cold_out = cold_side_deheating.T_out;
+  T_cold_out = final_mix_cold.T_out;
   T_hot_in = hot_side_pipe.T_in;
   T_hot_out = hot_side_vaporising.T_out;
   W_tot = W_deheating + W_condensing + W_vaporising;
@@ -214,8 +225,8 @@ equation
   HX_condensing.W = W_condensing;
   HX_condensing.Kth = Kth * (1 - fouling/100);
   HX_condensing.S = S;
-  HX_condensing.Q_cold = Q_cold;
-  HX_condensing.Q_hot = Q_hot - Q_vent;
+  HX_condensing.Q_cold = cold_side_condensing.Q;
+  HX_condensing.Q_hot = hot_side_condensing.Q;
   HX_condensing.T_cold_in = Tsat_cold;
   HX_condensing.T_hot_in = Tsat_hot;
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
@@ -234,20 +245,15 @@ equation
       cold_side_vaporising.h_out = cold_side_vaporising.h_in;
   end if;
 
-  connect(cold_side_deheating.C_out, C_cold_out) annotation (Line(
-      points={{39,60},{38,60},{38,66},{0,66},{0,80}},
-      color={28,108,200},
-      thickness=1));
+  // Internal leaks
+  tube_rupture.Q = 1e-5 + tube_rupture_leak;
+
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
       points={{6,-64},{0,-64},{0,-80}},
       color={28,108,200},
       thickness=1));
   connect(C_hot_in, hot_side_pipe.C_in) annotation (Line(
       points={{-160,0},{-140,0}},
-      color={238,46,47},
-      thickness=1));
-  connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
-      points={{-120,0},{-80,0},{-80,66},{-34,66},{-34,60}},
       color={238,46,47},
       thickness=1));
 
@@ -257,6 +263,9 @@ equation
       color={28,108,200},
       thickness=1));
 
+  connect(tube_rupture.C_out, cold_side_deheating.C_out) annotation (Line(points={{14,38.2},{28,38.2},{28,62},{39,62},{39,60}},
+                                                                                                                            color={217,67,180}));
+  connect(tube_rupture.C_in, hot_side_deheating.C_in) annotation (Line(points={{-6,38},{-12,38},{-12,66},{-34,66},{-34,60}}, color={217,67,180}));
   connect(C_hot_in, C_hot_in)
     annotation (Line(points={{-160,0},{-160,0}}, color={28,108,200}));
   connect(cold_side_pipe.C_out, cold_side_vaporising.C_in)
@@ -279,6 +288,18 @@ equation
   connect(hot_side_deheating.C_out, hot_side_condensing.C_in) annotation (Line(
       points={{-34,28},{-34,18}},
       color={238,46,47},
+      thickness=1));
+  connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
+      points={{-120,0},{-80,0},{-80,66},{-34,66},{-34,60}},
+      color={238,46,47},
+      thickness=1));
+  connect(final_mix_cold.C_out, C_cold_out) annotation (Line(
+      points={{4,62},{0,62},{0,80}},
+      color={28,108,200},
+      thickness=1));
+  connect(final_mix_cold.C_in, cold_side_deheating.C_out) annotation (Line(
+      points={{24,62},{39,62},{39,60}},
+      color={28,108,200},
       thickness=1));
   annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
                    graphics={

@@ -7,9 +7,11 @@ model MetroscopiaCCGT_causality_reverse
     input Real P_source_air(start=1) "bar";
     input MetroscopeModelingLibrary.Units.MassFlowRate Q_source_air(start=500) "kg/s";
     input Real T_source_air(start=24) "degC";
+    input Real Relative_Humidity(start=0.5);
     // Fuel source
     input Real P_fuel_source(start=30) "bar";
     input Real T_fuel_source(start=156) "degC";
+    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
     // Circulating water circuit
     input Real P_circulating_water_in(start=5, min=0, nominal=5) "barA";
     input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
@@ -19,8 +21,8 @@ model MetroscopiaCCGT_causality_reverse
   // Parameters
 
     // Gas Turbine
-    parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV=48130e3;
     parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy GT_h_out = 1e6; // This enthalpy corresponds to T = 640°C at 1.1 bar
+    parameter Real combustionChamber_eta = 0.9999;
     // Economizer
     parameter String Eco_QCp_max_side = "hot";
     parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
@@ -33,9 +35,6 @@ model MetroscopiaCCGT_causality_reverse
     parameter Real T_w_HPSH2_out = 566.5 "degC"; // Controlled by the desuperheater mass flow rate
     // Low Pressure Superheater (resuperheater)
     parameter String ReH_QCp_max_side = "hot";
-    // Steam turbines control valves
-    parameter Real LPST_opening = 1;
-    parameter Real HPST_opening = 1;
 
   // Observables used for calibration
 
@@ -62,10 +61,11 @@ model MetroscopiaCCGT_causality_reverse
     // Reheater
     input Real T_w_ReH_out(start = 350, min = 0, nominal = 350) "degC";
     input Real P_w_ReH_out(start=9, min=0, nominal=9) "barA";
-    // High Pressure Steam Turbine
+    // Steam Turbine
     input Real P_ST_in(start=113) "barA";
     input Real P_ST_out(start=10) "barA";
     input Real W_ST_out(start=65, unit="MW", nominal=65, min=0) "MW";
+    input Real T_HPST_out(start=255.5) "degC";
     input Real P_LPST_in(start=8, min=0, nominal=4.9) "bar";
     // Condenser
     input Real P_Cond(start=0.05, min=0, nominal=0.05) "bar";
@@ -105,11 +105,12 @@ model MetroscopiaCCGT_causality_reverse
     output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth; // LP superheater outlet temperature
     output MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold; // LP superheater inlet pressure
     // High Pressure Steam Turbine
-    output MetroscopeModelingLibrary.Units.Cv HPST_CV_Cvmax; // HP superheater outlet pressure
+    output MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv; // HP superheater outlet pressure
     output MetroscopeModelingLibrary.Units.Cst HPST_Cst; // HP steam turbine inlet pressure
-    output MetroscopeModelingLibrary.Units.Yield ST_eta_is; // Power output
+    output MetroscopeModelingLibrary.Units.Yield HPST_eta_is; // HP steam turbine outlet temperature
+    output MetroscopeModelingLibrary.Units.Yield LPST_eta_is; // Power output
     // Low Pressure Steam Turbine
-    output MetroscopeModelingLibrary.Units.Cv LPST_CV_Cvmax; // Low pressure superheater outlet pressure
+    output MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv; // Low pressure superheater outlet pressure
     output MetroscopeModelingLibrary.Units.Cst LPST_Cst; // LP steam turbine inlet pressure
     // Condenser
     output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth; // Condensation pressure
@@ -164,7 +165,7 @@ model MetroscopiaCCGT_causality_reverse
         extent={{-6,-6},{6,6}},
         rotation=180,
         origin={-208,8})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve HPST_control_valve
+  WaterSteam.Pipes.SlideValve                             HPST_control_valve
     annotation (Placement(transformation(extent={{-203.25,144.738},{-186.75,
             162.677}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_in_sensor
@@ -214,9 +215,6 @@ model MetroscopiaCCGT_causality_reverse
         origin={182,28})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_pump_out_sensor
     annotation (Placement(transformation(extent={{166,126},{176,136}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source_air(h_out(
-        start=0.3e6))
-    annotation (Placement(transformation(extent={{-658,-36},{-638,-16}})));
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(h_out(
         start=7e5))
     annotation (Placement(transformation(extent={{-524,-40},{-496,-12}})));
@@ -227,7 +225,7 @@ model MetroscopiaCCGT_causality_reverse
     annotation (Placement(transformation(extent={{-414,-42},{-382,-10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink_power
     annotation (Placement(transformation(extent={{-332,24},{-312,44}})));
-  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber
+  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)
     annotation (Placement(transformation(extent={{-452,-36},{-432,-16}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel(h_out(
         start=0.9e6)) annotation (Placement(transformation(
@@ -274,7 +272,7 @@ model MetroscopiaCCGT_causality_reverse
         origin={3,159})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_circulating_water_in_sensor
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={19,159})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve LPST_control_valve
+  WaterSteam.Pipes.SlideValve                             LPST_control_valve
     annotation (Placement(transformation(extent={{-61.25,210.738},{-44.75,
             228.677}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_LPST_in_sensor
@@ -370,6 +368,12 @@ model MetroscopiaCCGT_causality_reverse
     annotation (Placement(transformation(extent={{41.25,5.4545},{28.75,19.455}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
+  MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
+  MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-708,-36},{-688,-16}})));
+  Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor annotation (Placement(transformation(
+        extent={{6,-6},{-6,6}},
+        rotation=180,
+        origin={-90,148})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -379,7 +383,7 @@ equation
       P_source_air_sensor.P_barA = P_source_air;
       T_source_air_sensor.T_degC = T_source_air;
       Q_source_air_sensor.Q = Q_source_air;
-      source_air.Xi_out = {0.768,0.232,0.0,0.0,0.0};
+      source_air.relative_humidity=Relative_Humidity;
 
     // Fuel Source
       //  Quantities definition
@@ -406,8 +410,8 @@ equation
 
     // Combustion chamber
       // Parameters
-      combustionChamber.LHV = LHV;
       combustionChamber.DP = 0.1e5;
+      combustionChamber.eta = combustionChamber_eta;
 
     // Gas Turbine
       // Quantities definition
@@ -439,7 +443,7 @@ equation
       // Parameters
       economiser.S = 100;
       economiser.nominal_cold_side_temperature_rise = 235;
-      economiser.nominal_hot_side_temperature_rise = 150;
+      economiser.nominal_hot_side_temperature_drop = 150;
       T_w_eco_in_sensor.T_degC = T_w_eco_in;
       // Calibrated parameters
       economiser.Kth = Eco_Kth;
@@ -466,7 +470,7 @@ equation
       // Parameters
       HPsuperheater1.S = 100;
       HPsuperheater1.nominal_cold_side_temperature_rise = 250;
-      HPsuperheater1.nominal_hot_side_temperature_rise = 180;
+      HPsuperheater1.nominal_hot_side_temperature_drop = 180;
       HPsuperheater1.Kfr_hot = 0;
       // Calibrated parameters
       HPsuperheater1.Kth = HPSH1_Kth;
@@ -478,7 +482,7 @@ equation
       // Parameters
       HPsuperheater2.S = 100;
       HPsuperheater2.nominal_cold_side_temperature_rise = 150;
-      HPsuperheater2.nominal_hot_side_temperature_rise = 180;
+      HPsuperheater2.nominal_hot_side_temperature_drop = 180;
       HPsuperheater2.Kfr_hot = 0;
       T_w_HPSH2_out_sensor.T_degC = T_w_HPSH2_out;
       // Calibrated parameters
@@ -499,7 +503,7 @@ equation
       // Parameters
       Reheater.S = 100;
       Reheater.nominal_cold_side_temperature_rise = 100;
-      Reheater.nominal_hot_side_temperature_rise = 180;
+      Reheater.nominal_hot_side_temperature_drop = 180;
       Reheater.Kfr_hot = 0;
       // Calibrated parameters
       Reheater.Kth = ReH_Kth;
@@ -517,25 +521,24 @@ equation
         // Quantities definition
         P_HPST_in_sensor.P_barA = P_ST_in;
         P_HPST_out_sensor.P_barA = P_ST_out;
+        T_HPST_out_sensor.T_degC = T_HPST_out;
         // Parameters
-        HPST_control_valve.Opening = HPST_opening;
         HPsteamTurbine.area_nz = 1;
         HPsteamTurbine.eta_nz = 1;
-        HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
         // Calibrated Parameters
-        HPST_control_valve.Cvmax = HPST_CV_Cvmax;
+        HPST_control_valve.Cv = HPST_CV_Cv;
         HPsteamTurbine.Cst = HPST_Cst;
-        HPsteamTurbine.eta_is = ST_eta_is;
+        HPsteamTurbine.eta_is = HPST_eta_is;
 
       // Low Pressure Level
         // Quantities definition
         P_LPST_in_sensor.P_barA = P_LPST_in;
         // Parameters
-        LPST_control_valve.Opening = LPST_opening;
         LPsteamTurbine.area_nz = 1;
         LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
-        LPST_control_valve.Cvmax = LPST_CV_Cvmax;
+        LPsteamTurbine.eta_is = LPST_eta_is;
+        LPST_control_valve.Cv = LPST_CV_Cv;
         LPsteamTurbine.Cst = LPST_Cst;
 
     // Condenser
@@ -647,8 +650,6 @@ equation
   connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{40,214},
           {52,214},{52,176.778}},    color={28,108,200}));
 
-  connect(P_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={
-          {-102,148},{-63,148},{-63,-5}}, color={28,108,200}));
   connect(P_source_air_sensor.C_out, T_source_air_sensor.C_in)
     annotation (Line(points={{-624,-26},{-618,-26}}, color={95,95,95}));
   connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
@@ -747,8 +748,6 @@ equation
     annotation (Line(points={{-588,-26},{-576,-26}}, color={95,95,95}));
   connect(P_filter_out_sensor.C_out, airCompressor.C_in)
     annotation (Line(points={{-536,-26},{-524,-26}}, color={95,95,95}));
-  connect(P_source_air_sensor.C_in, source_air.C_out)
-    annotation (Line(points={{-636,-26},{-643,-26}}, color={95,95,95}));
   connect(HPsuperheater1.C_hot_in, HPsuperheater2.C_hot_out)
     annotation (Line(points={{-177,-26},{-251,-26}}, color={95,95,95}));
   connect(P_w_HPSH1_out_sensor.C_out, HPsuperheater2.C_cold_in) annotation (
@@ -782,9 +781,13 @@ equation
         points={{123.3,-26.5},{123.3,-26},{164,-26}}, color={95,95,95}));
   connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in)
     annotation (Line(points={{176,-26},{222,-26},{222,166}}, color={95,95,95}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},
-            {260,280}})),                                     Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},{260,280}}),
+  connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,-26},{-652,-26}}, color={95,95,95}));
+  connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-693,-26}}, color={85,170,255}));
+  connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-102,148},{-96,148}}, color={28,108,200}));
+  connect(T_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={{-84,148},{-63,148},{-63,-5}}, color={28,108,200}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
+                                                              Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
         graphics={Rectangle(
           extent={{-324,18},{246,-72}},
           pattern=LinePattern.None,
@@ -833,29 +836,6 @@ equation
           origin={222,172},
           rotation=360),
         Rectangle(
-          extent={{-10,10},{10,-10}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={-570,210},
-          rotation=360),
-        Text(
-          extent={{-552,214},{-466,204}},
-          textColor={0,0,0},
-          textString="Boundary Conditions",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
-          extent={{-580,180},{-560,160}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Text(
-          extent={{-552,176},{-466,166}},
-          textColor={0,0,0},
-          textString="Parameters",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
           extent={{-372,-18},{-356,-34}},
           pattern=LinePattern.None,
           fillColor={0,140,72},
@@ -867,17 +847,6 @@ equation
           fillColor={0,140,72},
           fillPattern=FillPattern.Solid,
           lineColor={0,0,0}),
-        Rectangle(
-          extent={{-580,140},{-560,120}},
-          lineColor={0,0,0},
-          pattern=LinePattern.None,
-          fillColor={244,237,30},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{-552,138},{-420,122}},
-          textColor={0,0,0},
-          horizontalAlignment=TextAlignment.Left,
-          textString="Observables not used for calibration"),
         Rectangle(
           extent={{-450,-40},{-436,-54}},
           lineColor={0,0,0},
@@ -905,5 +874,123 @@ equation
         Text(
           extent={{-230,96},{-174,96}},
           textColor={28,108,200},
-          textString="Desuperheater")}));
+          textString="Desuperheater"),
+        Rectangle(
+          extent={{-10,10},{10,-10}},
+          fillColor={255,82,82},
+          fillPattern=FillPattern.Solid,
+          pattern=LinePattern.None,
+          origin={-670,248},
+          rotation=360),
+        Text(
+          extent={{-650,253},{-564,243}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Boundary Conditions",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,232},{-660,212}},
+          pattern=LinePattern.None,
+          fillColor={0,140,72},
+          fillPattern=FillPattern.Solid,
+          lineColor={0,0,0}),
+        Text(
+          extent={{-650,227},{-564,217}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Control Parameters",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,206},{-660,186}},
+          lineColor={0,0,0},
+          pattern=LinePattern.None,
+          fillColor={244,237,30},
+          fillPattern=FillPattern.Solid),
+        Text(
+          extent={{-650,204},{-476,188}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Observables not used for calibration"),
+        Line(
+          points={{-687,164},{-653,164}},
+          color={95,95,95},
+          thickness=0.5),
+        Text(
+          extent={{-634,169},{-548,159}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Flue Gas flow"),
+        Line(
+          points={{-687,132},{-653,132}},
+          color={238,46,47},
+          thickness=0.5),
+        Text(
+          extent={{-634,137},{-548,127}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="HP flow"),
+        Line(
+          points={{-687,118},{-653,118}},
+          color={244,125,35},
+          thickness=0.5),
+        Text(
+          extent={{-634,123},{-548,113}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="IP flow"),
+        Line(
+          points={{-687,104},{-653,104}},
+          color={244,237,30},
+          thickness=0.5),
+        Text(
+          extent={{-634,109},{-548,99}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="LP flow"),
+        Text(
+          extent={{-590,125},{-504,115}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=7,
+          textString="Solid Line: Liquid Phase
+Dashed Line: Vapor Phase"),
+        Text(
+          extent={{-614,149},{-528,139}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Water/Steam"),
+        Rectangle(extent={{-696,152},{-490,94}}, lineColor={0,0,0}),
+                                          Text(
+          extent={{-306,-48},{-244,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Superheater 2"),    Text(
+          extent={{-186,-48},{-124,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Superheater 1"),    Text(
+          extent={{-104,-48},{-42,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Reheater"),         Text(
+          extent={{-48,-48},{14,-54}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Evaporator"),       Text(
+          extent={{74,-52},{136,-58}},
+          textColor={0,0,0},
+          textStyle={TextStyle.Bold},
+          fontSize=6,
+          textString="Economizer
+")}));
 end MetroscopiaCCGT_causality_reverse;

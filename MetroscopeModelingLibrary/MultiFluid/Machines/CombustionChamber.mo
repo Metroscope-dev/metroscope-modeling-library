@@ -3,15 +3,21 @@ model CombustionChamber
 
   import MetroscopeModelingLibrary.Units;
   import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Constants.*;
 
+  // Media flows
   Units.PositiveMassFlowRate Q_air;
   Units.PositiveMassFlowRate Q_fuel;
   Units.PositiveMassFlowRate Q_exhaust;
 
+  // Performance parameters
   Inputs.InputDifferentialPressure DP;
+  Inputs.InputYield eta(start=0.99457); // The value given is found in performance document of GE
 
-  Units.Power Wth;
-  Inputs.InputSpecificEnthalpy LHV;
+  // Power released by the combustion
+  Inputs.InputPower Wth;
+
+  // Enthalpies at each connector
   Units.SpecificEnthalpy h_in_air(start=h_in_air_0);
   Units.SpecificEnthalpy h_in_fuel;
   Units.SpecificEnthalpy h_exhaust;
@@ -42,17 +48,9 @@ model CombustionChamber
   Units.MassFraction X_fuel_H(start=0.2) "H mass fraction in the fuel";
   Units.MassFraction X_fuel_O(start=0) "O mass fraction in the fuel";
 
-  // Constants
-  constant Units.AtomicMass m_C = Constants.m_C "Carbon atomic mass";
-  constant Units.AtomicMass m_H = Constants.m_H "Hydrogen atomic mass";
-  constant Units.AtomicMass m_O = Constants.m_O "Oxygen atomic mass";
-
-  constant Units.MolecularMass m_CH4 = m_C + m_H*4;
-  constant Units.MolecularMass m_C2H6 = m_C*2 + m_H*6;
-  constant Units.MolecularMass m_C3H8 = m_C*3 + m_H*9;
-  constant Units.MolecularMass m_C4H10 = m_C*4 + m_H*10;
-  constant Units.MolecularMass m_CO2 = m_C + m_O*2;
-  constant Units.MolecularMass m_H2O = m_H*2 + m_O;
+  // Heating values
+  Units.SpecificEnthalpy HHV = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg can be assigned in component modifiers";
+  Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10)*1e4 "J/kg can be assigned in component modifiers";
 
   // Initialization parameters
   parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
@@ -104,18 +102,18 @@ equation
   sink_air.P_in - source_exhaust.P_out = DP;
 
   // Energy balance
-  Wth = Q_fuel * LHV;
-  Q_exhaust * h_exhaust = Q_air * h_in_air + Q_fuel * h_in_fuel + Wth;
+  Wth = eta*Q_fuel*LHV;
+  Q_exhaust*h_exhaust = Q_air*h_in_air + Q_fuel*h_in_fuel + Wth;
 
   // Chemical balance
-  // quantity of reactants in fuel
-  Q_fuel*X_fuel_C  = m_C* (Q_fuel*X_fuel_CH4/m_CH4 + 2*Q_fuel*X_fuel_C2H6/m_C2H6 + 3*Q_fuel*X_fuel_C3H8/m_C3H8 + 4*Q_fuel*X_fuel_C4H10_n_butane/m_C4H10 + Q_fuel*X_fuel_CO2/m_CO2);
-  Q_fuel*X_fuel_H  = m_H*(4*Q_fuel*X_fuel_CH4/m_CH4 + 6*Q_fuel*X_fuel_C2H6/m_C2H6 + 8*Q_fuel*X_fuel_C3H8/m_C3H8 + 10*Q_fuel*X_fuel_C4H10_n_butane/m_C4H10);
-  Q_fuel*X_fuel_O = 2*m_O*Q_fuel*X_fuel_CO2/m_CO2;
+  // Quantity of reactants in fuel
+  X_fuel_C  = m_C*(X_fuel_CH4/m_CH4 + 2*X_fuel_C2H6/m_C2H6 + 3*X_fuel_C3H8/m_C3H8 + 4*X_fuel_C4H10_n_butane/m_C4H10 + X_fuel_CO2/m_CO2);
+  X_fuel_H  = m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10);
+  X_fuel_O = 2*m_O*X_fuel_CO2/m_CO2;
 
-  /* Mass balance for all species */
+  // Mass balance for all species
   - Q_exhaust * X_out_N2  + Q_air * X_in_N2  + Q_fuel*X_fuel_N2= 0; //Hyp: the NOx creation is negligible
-  - Q_exhaust * X_out_O2  + Q_air * X_in_O2  + Q_fuel*X_fuel_O = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H);
+  - Q_exhaust * X_out_O2  + Q_air * X_in_O2  + Q_fuel*X_fuel_O*0.5 = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H);
   - Q_exhaust * X_out_H2O + Q_air * X_in_H2O = -Q_fuel*(0.5*X_fuel_H/m_H)*m_H2O;
   - Q_exhaust * X_out_CO2 + Q_air * X_in_CO2 = -Q_fuel*X_fuel_C*m_CO2/m_C;
   - Q_exhaust * X_out_SO2 + Q_air * X_in_SO2 = 0; //Hyp: No S in fuel

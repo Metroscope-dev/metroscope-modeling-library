@@ -1,7 +1,9 @@
 SteamExtractionSplitter
 Pipe
 ControlValve
+SlideValve
 HeatLoss
 Leak
 PressureCut
 LoopBreaker
+Manifold

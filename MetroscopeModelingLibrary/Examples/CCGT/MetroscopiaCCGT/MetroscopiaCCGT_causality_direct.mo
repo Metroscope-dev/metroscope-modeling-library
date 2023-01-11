@@ -7,6 +7,7 @@ model MetroscopiaCCGT_causality_direct
     input Real P_source_air(start=1) "bar";
     input MetroscopeModelingLibrary.Units.MassFlowRate Q_source_air(start=500) "kg/s";
     input Real T_source_air(start=24) "degC";
+    input Real Relative_Humidity(start=0.5);
     // Fuel source
     input Real P_fuel_source(start=30) "bar";
     input Real T_fuel_source(start=156) "degC";
@@ -15,12 +16,13 @@ model MetroscopiaCCGT_causality_direct
     input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
     // Flue gas sink
     input Real P_flue_gas_sink(start=1, min=0, nominal=1) "barA";
+    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
 
     // Gas Turbine
-    parameter MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV=48130e3;
     parameter Real turbine_T_out = 640 "degC";
+    parameter Real combustionChamber_eta = 0.9999;
     // Economizer
     parameter String Eco_QCp_max_side = "hot";
     parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
@@ -33,9 +35,6 @@ model MetroscopiaCCGT_causality_direct
     parameter Real T_w_HPSH2_out = 566.5 "degC"; // Controlled by the desuperheater mass flow rate
     // Low Pressure Superheater (resuperheater)
     parameter String ReH_QCp_max_side = "hot";
-    // Steam turbines control valves
-    parameter Real LPST_opening = 1;
-    parameter Real HPST_opening = 1;
 
   // Observables
 
@@ -65,9 +64,10 @@ model MetroscopiaCCGT_causality_direct
     // Reheater
     output Real T_w_ReH_out;
     output Real P_w_ReH_out;
-    // High Pressure Steam Turbine
+    // Steam Turbine
     output Real P_ST_in;
     output Real P_ST_out;
+    output Real T_HPST_out "degC";
     output Real W_ST_out;
     output Real P_LPST_in;
     // Condenser
@@ -88,36 +88,37 @@ model MetroscopiaCCGT_causality_direct
     // Gas Turbine
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Filter_Kfr = 0.04432005;// Filter outlet pressure
     parameter Real compression_rate = 18.88889; // Air compressor outlet pressure
-    parameter Real compressor_eta_is = 0.88200104; // Air compressor outlet temperature
-    parameter Real turbine_eta_is = 0.8269205; // Gas turbine power output
+    parameter Real compressor_eta_is = 0.878675; // Air compressor outlet temperature
+    parameter Real turbine_eta_is = 0.8304104; // Gas turbine power output
     // Economizer
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Eco_Kth = 3403.8103; // Economizer water outlet temperature
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_hot = 0.018985651; // Gas turbine outlet pressure
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Eco_Kth = 3168.2764; // Economizer water outlet temperature
+    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_hot = 0.022388678; // Gas turbine outlet pressure
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_cold = 973146.4; // Economizer water outlet pressure
     // Evaporator
     parameter MetroscopeModelingLibrary.Units.Cv Evap_CV_Cvmax = 539.1173; // Evaporator control valve opening
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Evap_Kth = 3279.242; // Extraction pump mass flow rate
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Evap_Kth = 3383.7917; // Extraction pump mass flow rate
     // High Pressure Superheater 1
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH1_Kth = 1181.761; // HP superheater outlet temperature
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH1_Kth = 1181.753; // HP superheater outlet temperature
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH1_Kfr_cold = 7030.31; // HP superheater inlet pressure
     // High Pressure Superheater 2
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH2_Kth = 1661.5535; // De-superheater mass flow rate
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH2_Kth = 1662.3014; // De-superheater mass flow rate
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH2_Kfr_cold = 2538.3271; // HP superheater inlet pressure
     // De-superheater
     parameter MetroscopeModelingLibrary.Units.Cv deSH_CV_Cvmax = 7.7502966; // Desuperheater control valve opening
     // Reheater
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth = 401.69955; // LP superheater outlet temperature
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth = 409.27203; // LP superheater outlet temperature
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold = 134.2858; // LP superheater inlet pressure
     // High Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cvmax = 6647.2905; // HP superheater outlet pressure
-    parameter MetroscopeModelingLibrary.Units.Cst HPST_Cst = 60400000.0; // HP steam turbine inlet pressure
-    parameter MetroscopeModelingLibrary.Units.Yield ST_eta_is = 0.8438316; // Power output
+    parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv = 6647.2905; // HP superheater outlet pressure
+    parameter MetroscopeModelingLibrary.Units.Cst HPST_Cst = 6.038082e+07; // HP steam turbine inlet pressure
+    parameter MetroscopeModelingLibrary.Units.Yield HPST_eta_is = 0.8438316; // HP steam turbine outlet temperature
+    parameter MetroscopeModelingLibrary.Units.Yield LPST_eta_is = 0.8438316; // Power output
     // Low Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cvmax = 69310.586; // Low pressure superheater outlet pressure
+    parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv = 69310.586; // Low pressure superheater outlet pressure
     parameter MetroscopeModelingLibrary.Units.Cst LPST_Cst = 411424.22; // LP steam turbine inlet pressure
     // Condenser
     parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth = 93661.23; // Condensation pressure
-    parameter MetroscopeModelingLibrary.Units.VolumeFlowRate Qv_cond_cold = 2.7321725; // Circulating water outlet temperature
+    parameter MetroscopeModelingLibrary.Units.VolumeFlowRate Qv_cond_cold = 2.7349906; // Circulating water outlet temperature
     // Exctraction Pump
     parameter Real pump_a3 = 1735.4259; // Exctraction pump outlet pressure
     parameter Real pump_b3 = 0.70563865; // Exctraction pump outlet temperature
@@ -161,7 +162,7 @@ model MetroscopiaCCGT_causality_direct
         extent={{-6,-6},{6,6}},
         rotation=180,
         origin={-208,8})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve HPST_control_valve
+  WaterSteam.Pipes.SlideValve                             HPST_control_valve
     annotation (Placement(transformation(extent={{-203.25,144.738},{-186.75,
             162.677}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_in_sensor
@@ -211,9 +212,6 @@ model MetroscopiaCCGT_causality_direct
         origin={182,28})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_pump_out_sensor
     annotation (Placement(transformation(extent={{166,126},{176,136}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source_air(h_out(
-        start=0.3e6))
-    annotation (Placement(transformation(extent={{-658,-36},{-638,-16}})));
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(h_out(
         start=7e5))
     annotation (Placement(transformation(extent={{-524,-40},{-496,-12}})));
@@ -224,7 +222,7 @@ model MetroscopiaCCGT_causality_direct
     annotation (Placement(transformation(extent={{-414,-42},{-382,-10}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink_power
     annotation (Placement(transformation(extent={{-332,24},{-312,44}})));
-  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber
+  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)
     annotation (Placement(transformation(extent={{-452,-36},{-432,-16}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel(h_out(
         start=0.9e6)) annotation (Placement(transformation(
@@ -271,7 +269,7 @@ model MetroscopiaCCGT_causality_direct
         origin={3,159})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_circulating_water_in_sensor
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={19,159})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve LPST_control_valve
+  WaterSteam.Pipes.SlideValve                             LPST_control_valve
     annotation (Placement(transformation(extent={{-61.25,210.738},{-44.75,
             228.677}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_LPST_in_sensor
@@ -367,6 +365,12 @@ model MetroscopiaCCGT_causality_direct
     annotation (Placement(transformation(extent={{41.25,5.4545},{28.75,19.455}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
+  MoistAir.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-704,-36},{-684,-16}})));
+  MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
+  Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor annotation (Placement(transformation(
+        extent={{6,-6},{-6,6}},
+        rotation=180,
+        origin={-90,148})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -376,7 +380,7 @@ equation
       P_source_air_sensor.P_barA = P_source_air;
       T_source_air_sensor.T_degC = T_source_air;
       Q_source_air_sensor.Q = Q_source_air;
-      source_air.Xi_out = {0.768,0.232,0.0,0.0,0.0};
+      source_air.relative_humidity=Relative_Humidity;
 
     // Fuel Source
       //  Quantities definition
@@ -403,8 +407,8 @@ equation
 
     // Combustion chamber
       // Parameters
-      combustionChamber.LHV = LHV;
       combustionChamber.DP = 0.1e5;
+      combustionChamber.eta = combustionChamber_eta;
 
     // Gas Turbine
       // Quantities definition
@@ -436,7 +440,7 @@ equation
       // Parameters
       economiser.S = 100;
       economiser.nominal_cold_side_temperature_rise = 235;
-      economiser.nominal_hot_side_temperature_rise = 150;
+      economiser.nominal_hot_side_temperature_drop = 150;
       T_w_eco_in_sensor.T_degC = T_w_eco_in;
       // Calibrated parameters
       economiser.Kth = Eco_Kth;
@@ -463,7 +467,7 @@ equation
       // Parameters
       HPsuperheater1.S = 100;
       HPsuperheater1.nominal_cold_side_temperature_rise = 250;
-      HPsuperheater1.nominal_hot_side_temperature_rise = 180;
+      HPsuperheater1.nominal_hot_side_temperature_drop = 180;
       HPsuperheater1.Kfr_hot = 0;
       // Calibrated parameters
       HPsuperheater1.Kth = HPSH1_Kth;
@@ -475,7 +479,7 @@ equation
       // Parameters
       HPsuperheater2.S = 100;
       HPsuperheater2.nominal_cold_side_temperature_rise = 150;
-      HPsuperheater2.nominal_hot_side_temperature_rise = 180;
+      HPsuperheater2.nominal_hot_side_temperature_drop = 180;
       HPsuperheater2.Kfr_hot = 0;
       T_w_HPSH2_out_sensor.T_degC = T_w_HPSH2_out;
       // Calibrated parameters
@@ -496,7 +500,7 @@ equation
       // Parameters
       Reheater.S = 100;
       Reheater.nominal_cold_side_temperature_rise = 100;
-      Reheater.nominal_hot_side_temperature_rise = 180;
+      Reheater.nominal_hot_side_temperature_drop = 180;
       Reheater.Kfr_hot = 0;
       // Calibrated parameters
       Reheater.Kth = ReH_Kth;
@@ -514,25 +518,25 @@ equation
         // Quantities definition
         P_HPST_in_sensor.P_barA = P_ST_in;
         P_HPST_out_sensor.P_barA = P_ST_out;
+        T_HPST_out_sensor.T_degC = T_HPST_out;
         // Parameters
-        HPST_control_valve.Opening = HPST_opening;
         HPsteamTurbine.area_nz = 1;
         HPsteamTurbine.eta_nz = 1;
-        HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
+        //HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
         // Calibrated Parameters
-        HPST_control_valve.Cvmax = HPST_CV_Cvmax;
+        HPST_control_valve.Cv = HPST_CV_Cv;
         HPsteamTurbine.Cst = HPST_Cst;
-        HPsteamTurbine.eta_is = ST_eta_is;
+        HPsteamTurbine.eta_is = HPST_eta_is;
 
       // Low Pressure Level
         // Quantities definition
         P_LPST_in_sensor.P_barA = P_LPST_in;
         // Parameters
-        LPST_control_valve.Opening = LPST_opening;
         LPsteamTurbine.area_nz = 1;
         LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
-        LPST_control_valve.Cvmax = LPST_CV_Cvmax;
+        LPsteamTurbine.eta_is = LPST_eta_is;
+        LPST_control_valve.Cv = LPST_CV_Cv;
         LPsteamTurbine.Cst = LPST_Cst;
 
     // Condenser
@@ -644,8 +648,6 @@ equation
   connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{40,214},
           {52,214},{52,176.778}},    color={28,108,200}));
 
-  connect(P_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={
-          {-102,148},{-63,148},{-63,-5}}, color={28,108,200}));
   connect(P_source_air_sensor.C_out, T_source_air_sensor.C_in)
     annotation (Line(points={{-624,-26},{-618,-26}}, color={95,95,95}));
   connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
@@ -744,8 +746,6 @@ equation
     annotation (Line(points={{-588,-26},{-576,-26}}, color={95,95,95}));
   connect(P_filter_out_sensor.C_out, airCompressor.C_in)
     annotation (Line(points={{-536,-26},{-524,-26}}, color={95,95,95}));
-  connect(P_source_air_sensor.C_in, source_air.C_out)
-    annotation (Line(points={{-636,-26},{-643,-26}}, color={95,95,95}));
   connect(HPsuperheater1.C_hot_in, HPsuperheater2.C_hot_out)
     annotation (Line(points={{-177,-26},{-251,-26}}, color={95,95,95}));
   connect(P_w_HPSH1_out_sensor.C_out, HPsuperheater2.C_cold_in) annotation (
@@ -777,9 +777,13 @@ equation
     annotation (Line(points={{35,18.1822},{35,33.9}}, color={0,0,127}));
   connect(T_flue_gas_sink_sensor.C_in, economiser.C_hot_out) annotation (Line(points={{170,-26},{123.3,-26},{123.3,-26.5}}, color={95,95,95}));
   connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{182,-26},{222,-26},{222,166}}, color={95,95,95}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},
-            {260,280}})),                                     Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},{260,280}}),
+  connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,-26},{-652,-26}}, color={95,95,95}));
+  connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-689,-26}}, color={85,170,255}));
+  connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-102,148},{-96,148}}, color={28,108,200}));
+  connect(T_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={{-84,148},{-63,148},{-63,-5}}, color={28,108,200}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
+                                                              Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
         graphics={Rectangle(
           extent={{-324,18},{246,-72}},
           pattern=LinePattern.None,
@@ -828,29 +832,6 @@ equation
           origin={222,172},
           rotation=360),
         Rectangle(
-          extent={{-10,10},{10,-10}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={-570,210},
-          rotation=360),
-        Text(
-          extent={{-552,214},{-466,204}},
-          textColor={0,0,0},
-          textString="Boundary Conditions",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
-          extent={{-580,180},{-560,160}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Text(
-          extent={{-552,176},{-466,166}},
-          textColor={0,0,0},
-          textString="Parameters",
-          horizontalAlignment=TextAlignment.Left),
-        Rectangle(
           extent={{-372,-18},{-356,-34}},
           pattern=LinePattern.None,
           fillColor={0,140,72},
@@ -871,5 +852,96 @@ equation
         Text(
           extent={{-230,96},{-174,96}},
           textColor={28,108,200},
-          textString="Desuperheater")}));
+          textString="Desuperheater"),
+        Rectangle(
+          extent={{-10,10},{10,-10}},
+          fillColor={255,82,82},
+          fillPattern=FillPattern.Solid,
+          pattern=LinePattern.None,
+          origin={-670,250},
+          rotation=360),
+        Text(
+          extent={{-650,255},{-564,245}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Boundary Conditions",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,234},{-660,214}},
+          pattern=LinePattern.None,
+          fillColor={0,140,72},
+          fillPattern=FillPattern.Solid,
+          lineColor={0,0,0}),
+        Text(
+          extent={{-650,229},{-564,219}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          textString="Control Parameters",
+          fontSize=8),
+        Rectangle(
+          extent={{-680,208},{-660,188}},
+          lineColor={0,0,0},
+          pattern=LinePattern.None,
+          fillColor={244,237,30},
+          fillPattern=FillPattern.Solid),
+        Text(
+          extent={{-650,206},{-476,190}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Observables not used for calibration"),
+        Line(
+          points={{-687,166},{-653,166}},
+          color={95,95,95},
+          thickness=0.5),
+        Text(
+          extent={{-634,171},{-548,161}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Flue Gas flow"),
+        Line(
+          points={{-687,134},{-653,134}},
+          color={238,46,47},
+          thickness=0.5),
+        Text(
+          extent={{-634,139},{-548,129}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="HP flow"),
+        Line(
+          points={{-687,120},{-653,120}},
+          color={244,125,35},
+          thickness=0.5),
+        Text(
+          extent={{-634,125},{-548,115}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="IP flow"),
+        Line(
+          points={{-687,106},{-653,106}},
+          color={244,237,30},
+          thickness=0.5),
+        Text(
+          extent={{-634,111},{-548,101}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="LP flow"),
+        Text(
+          extent={{-590,127},{-504,117}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=7,
+          textString="Solid Line: Liquid Phase
+Dashed Line: Vapor Phase"),
+        Text(
+          extent={{-614,151},{-528,141}},
+          textColor={0,0,0},
+          horizontalAlignment=TextAlignment.Left,
+          fontSize=8,
+          textString="Water/Steam"),
+        Rectangle(extent={{-696,154},{-490,96}}, lineColor={0,0,0})}));
 end MetroscopiaCCGT_causality_direct;
