@@ -108,4 +108,5 @@ equation
   C_in.Q + C_out.Q = 0;
   C_out.Xi_outflow = inStream(C_in.Xi_outflow);
 
+  assert(Q > 0, "Wrong flow sign. Common causes : outlet connected as if it was inlet and vice versa, or Positive/NegativeMassflowrate misuse. Recall : inlet flow is positive, outlet is negatve", AssertionLevel.warning);
 end FlowModel;
