@@ -20,8 +20,8 @@ model DryReheater
 
   Units.PositiveMassFlowRate Q_cold_in(start=Q_cold_0, nominal=Q_cold_0);
   Units.PositiveMassFlowRate Q_hot_in(start=Q_hot_0, nominal=Q_hot_0);
-  Units.NegativeMassFlowRate Q_cold_out(start=Q_cold_0, nominal=Q_cold_0);
-  Units.NegativeMassFlowRate Q_hot_out(start=Q_hot_0, nominal=Q_hot_0);
+  Units.NegativeMassFlowRate Q_cold_out(start=-Q_cold_0, nominal=-Q_cold_0);
+  Units.NegativeMassFlowRate Q_hot_out(start=-Q_hot_0, nominal=-Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
@@ -202,8 +202,10 @@ equation
       thickness=1));
 
   connect(separating_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-98,-54},{-114,-54},{-114,0},{-120,0}}, color={28,108,200}));
-  connect(separating_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-78,-54},{144,-54},{144,-28}}, color={28,108,200}));
-  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-76,-16},{-72,-16},{-72,-4},{-104,-4},{-104,-66},{-64,-66}}, color={217,67,180}));
+  connect(separating_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-78,-53.8},{144,-53.8},{144,-28}},
+                                                                                                                color={28,108,200}));
+  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-76,-15.8},{-72,-15.8},{-72,-4},{-104,-4},{-104,-66},{-64,-66}},
+                                                                                                                                         color={217,67,180}));
   connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-96,-16},{-114,-16},{-114,0},{-120,0}}, color={217,67,180}));
   connect(hot_side_condensing.C_out, final_mix_hot.C_in) annotation (Line(
       points={{-82,21},{-84,21},{-84,22},{-104,22},{-104,-66},{-64,-66}},

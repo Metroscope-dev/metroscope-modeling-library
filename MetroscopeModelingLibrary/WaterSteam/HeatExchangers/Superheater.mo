@@ -37,10 +37,10 @@ model Superheater
     min=1e-5);
   Units.PositiveMassFlowRate Q_hot_in(start=Q_hot_0, nominal=Q_hot_0);
   Units.NegativeMassFlowRate Q_cold_out(
-    start=Q_cold_0,
-    nominal=Q_cold_0,
+    start=-Q_cold_0,
+    nominal=-Q_cold_0,
     max=1e-5);
-  Units.NegativeMassFlowRate Q_hot_out(start=Q_hot_0, nominal=Q_hot_0);
+  Units.NegativeMassFlowRate Q_hot_out(start=-Q_hot_0, nominal=-Q_hot_0);
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
