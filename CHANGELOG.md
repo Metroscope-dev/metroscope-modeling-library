@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
+- Fix start values of outlet flows in heater with internal leaks [PR#349](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/349)
 
 ## MML-v3.2.2
 

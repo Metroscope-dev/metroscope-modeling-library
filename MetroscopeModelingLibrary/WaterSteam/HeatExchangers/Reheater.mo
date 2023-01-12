@@ -35,8 +35,8 @@ model Reheater
 
   Units.PositiveMassFlowRate Q_cold_in(start=Q_cold_0, nominal=Q_cold_0);
   Units.PositiveMassFlowRate Q_hot_in(start=Q_hot_0, nominal=Q_hot_0);
-  Units.NegativeMassFlowRate Q_cold_out(start=Q_cold_0, nominal=Q_cold_0); // Should be equal to Q_cold_in if no internal leaks
-  Units.NegativeMassFlowRate Q_hot_out(start=Q_hot_0, nominal=Q_hot_0); // Should be equal to Q_hot_in if no internal leaks
+  Units.NegativeMassFlowRate Q_cold_out(start=-Q_cold_0, nominal=-Q_cold_0); // Should be equal to Q_cold_in if no internal leaks
+  Units.NegativeMassFlowRate Q_hot_out(start=-Q_hot_0, nominal=-Q_hot_0); // Should be equal to Q_hot_in if no internal leaks
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
@@ -283,7 +283,8 @@ equation
       points={{144,-8},{144,0},{160,0}},
       color={28,108,200},
       thickness=1));
-  connect(separating_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-90,-68},{144,-68},{144,-28}}, color={217,67,180}));
+  connect(separating_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-90,-67.8},{144,-67.8},{144,-28}},
+                                                                                                                color={217,67,180}));
   connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-94,-14},{-114,-14},{-114,0},{-120,0}}, color={217,67,180}));
   connect(cold_side_subcooling.C_in, cold_side_pipe.C_out) annotation (Line(
       points={{-78,-34},{-114,-34},{-114,0},{-120,0}},
@@ -291,7 +292,8 @@ equation
       thickness=1));
   connect(final_mix_hot.C_out, C_hot_out) annotation (Line(points={{-38,-62},{0,-62},{0,-80}}, color={238,46,47},
       thickness=1));
-  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-74,-14},{-66,-14},{-66,-6},{-102,-6},{-102,-62},{-58,-62}}, color={217,67,180}));
+  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-74,-13.8},{-66,-13.8},{-66,-6},{-102,-6},{-102,-62},{-58,-62}},
+                                                                                                                                         color={217,67,180}));
   connect(hot_side_subcooling.C_out, final_mix_hot.C_in) annotation (Line(
       points={{-78,19},{-78,18},{-102,18},{-102,-62},{-58,-62}},
       color={255,0,0},
