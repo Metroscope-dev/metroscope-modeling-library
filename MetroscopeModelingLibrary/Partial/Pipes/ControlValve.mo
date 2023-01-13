@@ -21,7 +21,6 @@ equation
   /* Cv as a function of the valve position */
   Cv = Opening*Cvmax;
 
-  assert(DP <0, "The outlet pressure of the valve is higher than the inlet pressure", AssertionLevel.warning);
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=true,

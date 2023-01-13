@@ -118,7 +118,7 @@ equation
   Cp_cold_max= FuelMedium.specificHeatCapacityCp(state_cold_out); // fuel steam outlet Cp
 
   Cp_hot_max=WaterSteamMedium.specificHeatCapacityCp(hot_side.state_in);// fg inlet Cp
-  state_hot_out = WaterSteamMedium.setState_pTX(hot_side.P_in, hot_side.T_in + nominal_hot_side_temperature_drop,hot_side.Xi);
+  state_hot_out = WaterSteamMedium.setState_pTX(hot_side.P_in, hot_side.T_in - nominal_hot_side_temperature_drop,hot_side.Xi);
   Cp_hot_min =WaterSteamMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{-52,0},{-70,0}}, color={213,213,0}));
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
