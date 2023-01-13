@@ -91,22 +91,22 @@ model MetroscopiaCCGT_causality_direct
     parameter Real compressor_eta_is = 0.878675; // Air compressor outlet temperature
     parameter Real turbine_eta_is = 0.8304104; // Gas turbine power output
     // Economizer
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Eco_Kth = 3168.2764; // Economizer water outlet temperature
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Eco_Kth = 3104.9373; // Economizer water outlet temperature
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_hot = 0.022388678; // Gas turbine outlet pressure
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_cold = 973146.4; // Economizer water outlet pressure
     // Evaporator
     parameter MetroscopeModelingLibrary.Units.Cv Evap_CV_Cvmax = 539.1173; // Evaporator control valve opening
     parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Evap_Kth = 3383.7917; // Extraction pump mass flow rate
     // High Pressure Superheater 1
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH1_Kth = 1181.753; // HP superheater outlet temperature
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH1_Kth = 1213.6362; // HP superheater outlet temperature
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH1_Kfr_cold = 7030.31; // HP superheater inlet pressure
     // High Pressure Superheater 2
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH2_Kth = 1662.3014; // De-superheater mass flow rate
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH2_Kth = 1673.8336; // De-superheater mass flow rate
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH2_Kfr_cold = 2538.3271; // HP superheater inlet pressure
     // De-superheater
     parameter MetroscopeModelingLibrary.Units.Cv deSH_CV_Cvmax = 7.7502966; // Desuperheater control valve opening
     // Reheater
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth = 409.27203; // LP superheater outlet temperature
+    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth = 410.44293; // LP superheater outlet temperature
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold = 134.2858; // LP superheater inlet pressure
     // High Pressure Steam Turbine
     parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv = 6647.2905; // HP superheater outlet pressure

@@ -118,7 +118,7 @@ equation
   Cp_cold_max= MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out); // water steam outlet Cp
 
   Cp_hot_max=MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in);// fg inlet Cp
-  state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side.P_in, hot_side.T_in + nominal_hot_side_temperature_drop,hot_side.Xi);
+  state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side.P_in, hot_side.T_in - nominal_hot_side_temperature_drop,hot_side.Xi);
   Cp_hot_min =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
 
   connect(cold_side.C_in, cold_side_pipe.C_out) annotation (Line(points={{16,24},{30,24},{30,32}}, color={28,108,200}));
