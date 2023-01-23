@@ -6,7 +6,6 @@ partial model SlideValve
   import MetroscopeModelingLibrary.Constants;
 
   Inputs.InputCv Cv(start=1e4) "Cv of the valve";
-  Units.Cv Cvmax(start=1e4) "Maximum Cv";
 
   parameter Boolean faulty = false;
   Real opening_fault; // Valve not fully opened
@@ -18,10 +17,8 @@ equation
   end if;
 
   /* Pressure loss */
-  DP*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
+  DP*(1 - opening_fault)^2*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
 
-  /* Cv as a function of the valve position */
-  Cv = (1 - opening_fault)*Cvmax;
 
   annotation (
     Icon(coordinateSystem(

@@ -109,12 +109,12 @@ model MetroscopiaCCGT_causality_direct
     parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth = 410.44293; // LP superheater outlet temperature
     parameter MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold = 134.2858; // LP superheater inlet pressure
     // High Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cvmax = 6647.2905; // HP superheater outlet pressure
+    parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv = 6647.2905; // HP superheater outlet pressure
     parameter MetroscopeModelingLibrary.Units.Cst HPST_Cst = 6.038082e+07; // HP steam turbine inlet pressure
     parameter MetroscopeModelingLibrary.Units.Yield HPST_eta_is = 0.8438316; // HP steam turbine outlet temperature
     parameter MetroscopeModelingLibrary.Units.Yield LPST_eta_is = 0.8438316; // Power output
     // Low Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cvmax = 69310.586; // Low pressure superheater outlet pressure
+    parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv = 69310.586; // Low pressure superheater outlet pressure
     parameter MetroscopeModelingLibrary.Units.Cst LPST_Cst = 411424.22; // LP steam turbine inlet pressure
     // Condenser
     parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth = 93661.23; // Condensation pressure
@@ -524,7 +524,7 @@ equation
         HPsteamTurbine.eta_nz = 1;
         //HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
         // Calibrated Parameters
-        HPST_control_valve.Cvmax = HPST_CV_Cvmax;
+        HPST_control_valve.Cv = HPST_CV_Cv;
         HPsteamTurbine.Cst = HPST_Cst;
         HPsteamTurbine.eta_is = HPST_eta_is;
 
@@ -536,7 +536,7 @@ equation
         LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
         LPsteamTurbine.eta_is = LPST_eta_is;
-        LPST_control_valve.Cvmax = LPST_CV_Cvmax;
+        LPST_control_valve.Cv = LPST_CV_Cv;
         LPsteamTurbine.Cst = LPST_Cst;
 
     // Condenser

@@ -14,7 +14,7 @@ model SlideValve_direct
   input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   // Calibrated parameter
-  parameter Units.Cv Cvmax = 11e3;
+  parameter Units.Cv Cv = 11e3;
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-68,-9.99996},{-48,9.99996}})));
@@ -32,7 +32,7 @@ equation
   source.Q_out = source_Q;
 
   // Calibrated Parameters
-  slide_valve.Cvmax = Cvmax;
+  slide_valve.Cv = Cv;
 
   connect(slide_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}}, color={28,108,200}));
   connect(slide_valve.C_out, sink.C_in) annotation (Line(points={{16.5,-1.81818e-06},{34.75,-1.81818e-06},{34.75,0},{53,0}}, color={28,108,200}));

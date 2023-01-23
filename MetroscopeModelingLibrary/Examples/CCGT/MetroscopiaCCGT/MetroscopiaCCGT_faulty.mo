@@ -79,7 +79,7 @@ equation
   bypass_HP_CV_to_condenser_leak.Q = Failure_bypass_HP_CV_to_condenser_leak_Q+1E-3;
   bypass_IP_turbine_to_condenser_leak.Q = Failure_bypass_IP_turbine_to_condenser_leak_Q+1E-3;
   bypass_IP_CV_to_condenser_leak.Q = Failure_bypass_IP_CV_to_condenser_leak_Q+1E-3;
-  HPST_control_valve.opening_fault = Failure_HPST_CV_opening_fault;
+  HPST_control_valve.opening_fault = Failure_HPST_CV_opening_fault + 0.2*time;
 
   //Gas turbine
   AirFilter.fouling = Failure_AirFilter_fouling;

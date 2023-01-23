@@ -17,7 +17,7 @@ model SlideValve_reverse
   input Units.Pressure outlet_pressure(start=9e5) "Pa";
 
   // Calibrated parameter
-  output Units.Cv Cvmax "Cvmax";
+  output Units.Cv Cv "Cv";
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-68,-9.99996},{-48,9.99996}})));
@@ -39,7 +39,7 @@ equation
   outlet_pressure_sensor.P = outlet_pressure;
 
   // Calibrated Parameters
-  slide_valve.Cvmax = Cvmax;
+  slide_valve.Cv = Cv;
 
   connect(slide_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}}, color={28,108,200}));
   connect(slide_valve.C_out, outlet_pressure_sensor.C_in) annotation (Line(points={{16.5,-1.81818e-06},{22,-1.81818e-06},{22,0},{26,0}}, color={28,108,200}));
