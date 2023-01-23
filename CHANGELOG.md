@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+[PR#356](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/356) Added an  `opening_fault` in the `SlideValve` component to model slight decrease in the valve opening. This is a breaking change for models v3.2.0 of later and containing slide valves: `Cv` should be replaced by `Cvmax`.
+
 ### Changed
 
 ### Fixed
