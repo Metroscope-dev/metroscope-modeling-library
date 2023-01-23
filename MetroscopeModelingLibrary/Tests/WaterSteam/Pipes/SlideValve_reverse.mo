@@ -17,7 +17,7 @@ model SlideValve_reverse
   input Units.Pressure outlet_pressure(start=9e5) "Pa";
 
   // Calibrated parameter
-  output Units.Cv Cv "Cvmax";
+  output Units.Cv Cvmax "Cvmax";
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-68,-9.99996},{-48,9.99996}})));
@@ -26,7 +26,7 @@ model SlideValve_reverse
         rotation=0,
         origin={58,-6.10623e-16})));
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.SlideValve    control_valve annotation (Placement(transformation(extent={{-16.5,-5.93938},{16.5,26.7272}})));
+  MetroscopeModelingLibrary.WaterSteam.Pipes.SlideValve slide_valve annotation (Placement(transformation(extent={{-16.5,-5.93938},{16.5,26.7272}})));
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor outlet_pressure_sensor annotation (Placement(transformation(extent={{26,-10},{46,10}})));
 equation
@@ -39,9 +39,9 @@ equation
   outlet_pressure_sensor.P = outlet_pressure;
 
   // Calibrated Parameters
-  control_valve.Cv = Cv;
+  slide_valve.Cvmax = Cvmax;
 
-  connect(control_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}},color={28,108,200}));
-  connect(control_valve.C_out, outlet_pressure_sensor.C_in) annotation (Line(points={{16.5,-1.81818e-06},{22,-1.81818e-06},{22,0},{26,0}}, color={28,108,200}));
+  connect(slide_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}}, color={28,108,200}));
+  connect(slide_valve.C_out, outlet_pressure_sensor.C_in) annotation (Line(points={{16.5,-1.81818e-06},{22,-1.81818e-06},{22,0},{26,0}}, color={28,108,200}));
   connect(sink.C_in, outlet_pressure_sensor.C_out) annotation (Line(points={{53,0},{46,0}}, color={28,108,200}));
 end SlideValve_reverse;

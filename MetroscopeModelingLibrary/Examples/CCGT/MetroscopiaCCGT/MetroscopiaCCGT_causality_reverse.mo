@@ -105,12 +105,12 @@ model MetroscopiaCCGT_causality_reverse
     output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth; // LP superheater outlet temperature
     output MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold; // LP superheater inlet pressure
     // High Pressure Steam Turbine
-    output MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv; // HP superheater outlet pressure
+    output MetroscopeModelingLibrary.Units.Cv HPST_CV_Cvmax; // HP superheater outlet pressure
     output MetroscopeModelingLibrary.Units.Cst HPST_Cst; // HP steam turbine inlet pressure
     output MetroscopeModelingLibrary.Units.Yield HPST_eta_is; // HP steam turbine outlet temperature
     output MetroscopeModelingLibrary.Units.Yield LPST_eta_is; // Power output
     // Low Pressure Steam Turbine
-    output MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv; // Low pressure superheater outlet pressure
+    output MetroscopeModelingLibrary.Units.Cv LPST_CV_Cvmax; // Low pressure superheater outlet pressure
     output MetroscopeModelingLibrary.Units.Cst LPST_Cst; // LP steam turbine inlet pressure
     // Condenser
     output MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth; // Condensation pressure
@@ -526,7 +526,7 @@ equation
         HPsteamTurbine.area_nz = 1;
         HPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
-        HPST_control_valve.Cv = HPST_CV_Cv;
+        HPST_control_valve.Cvmax = HPST_CV_Cvmax;
         HPsteamTurbine.Cst = HPST_Cst;
         HPsteamTurbine.eta_is = HPST_eta_is;
 
@@ -538,7 +538,7 @@ equation
         LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
         LPsteamTurbine.eta_is = LPST_eta_is;
-        LPST_control_valve.Cv = LPST_CV_Cv;
+        LPST_control_valve.Cvmax = LPST_CV_Cvmax;
         LPsteamTurbine.Cst = LPST_Cst;
 
     // Condenser

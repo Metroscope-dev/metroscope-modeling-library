@@ -7,26 +7,30 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
     HPsuperheater2(faulty=true),
     Reheater(faulty=true),
     evaporator(faulty=true),
-    economiser(faulty=true));
+    economiser(faulty=true),
+    HPST_control_valve(faulty=true));
 
-//Heat exchangers failures
-  input Real Reheater_fouling(start=0);
-  input Real evaporator_fouling(start=0);
-  input Real HPsuperheater1_fouling(start=0);
-  input Real HPsuperheater2_fouling(start=0);
-  input Real economiser_fouling(start=0);
-  input Real condenser_fouling(start=0);
-  input Real condenser_air_intake(start=0);
+  // Heat exchangers failures
+  input Real Failure_Reheater_fouling(start=0);
+  input Real Failure_evaporator_fouling(start=0);
+  input Real Failure_HPsuperheater1_fouling(start=0);
+  input Real Failure_HPsuperheater2_fouling(start=0);
+  input Real Failure_economiser_fouling(start=0);
+  input Real Failure_condenser_fouling(start=0);
+  input Real Failure_condenser_air_intake(start=0);
 
-//Leaks
-  input Real bypass_HP_turbine_to_condenser_leak_Q(start=0);
-  input Real bypass_HP_CV_to_condenser_leak_Q(start=0);
-  input Real bypass_IP_turbine_to_condenser_leak_Q(start=0);
-  input Real bypass_IP_CV_to_condenser_leak_Q(start=0);
-  input Real deSH_controlValve_leak_Q(start=0);
+  // Leaks
+  input Real Failure_bypass_HP_turbine_to_condenser_leak_Q(start=0);
+  input Real Failure_bypass_HP_CV_to_condenser_leak_Q(start=0);
+  input Real Failure_bypass_IP_turbine_to_condenser_leak_Q(start=0);
+  input Real Failure_bypass_IP_CV_to_condenser_leak_Q(start=0);
+  input Real Failure_deSH_controlValve_leak_Q(start=0);
 
-//Gas turbine failures
-  input Real AirFilter_fouling;
+  // Gas turbine failures
+  input Real Failure_AirFilter_fouling;
+
+  // Steam turbine
+  input Real Failure_HPST_CV_opening_fault(start=0);
 
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_turbine_to_condenser_leak
     annotation (Placement(transformation(
@@ -56,28 +60,29 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
 equation
 
   //Condenser
-  condenser.fouling=condenser_fouling;
-  condenser.air_intake=condenser_air_intake;
+  condenser.fouling = Failure_condenser_fouling;
+  condenser.air_intake = Failure_condenser_air_intake;
 
   //Reheater
-  Reheater.fouling=Reheater_fouling;
-  evaporator.fouling=evaporator_fouling;
+  Reheater.fouling = Failure_Reheater_fouling;
+  evaporator.fouling = Failure_evaporator_fouling;
   //economiser
-  economiser.fouling=economiser_fouling;
+  economiser.fouling = Failure_economiser_fouling;
 
   //Superheater
-  HPsuperheater1.fouling=HPsuperheater1_fouling;
-  HPsuperheater2.fouling=HPsuperheater2_fouling;
-  deSH_controlValve_leak.Q = deSH_controlValve_leak_Q + 1E-3;
+  HPsuperheater1.fouling = Failure_HPsuperheater1_fouling;
+  HPsuperheater2.fouling = Failure_HPsuperheater2_fouling;
+  deSH_controlValve_leak.Q = Failure_deSH_controlValve_leak_Q + 1E-3;
 
   //Steam Turbines
-  bypass_HP_turbine_to_condenser_leak.Q=bypass_HP_turbine_to_condenser_leak_Q+1E-3;
-  bypass_HP_CV_to_condenser_leak.Q=bypass_HP_CV_to_condenser_leak_Q+1E-3;
-  bypass_IP_turbine_to_condenser_leak.Q=bypass_IP_turbine_to_condenser_leak_Q+1E-3;
-  bypass_IP_CV_to_condenser_leak.Q=bypass_IP_CV_to_condenser_leak_Q+1E-3;
+  bypass_HP_turbine_to_condenser_leak.Q = Failure_bypass_HP_turbine_to_condenser_leak_Q+1E-3;
+  bypass_HP_CV_to_condenser_leak.Q = Failure_bypass_HP_CV_to_condenser_leak_Q+1E-3;
+  bypass_IP_turbine_to_condenser_leak.Q = Failure_bypass_IP_turbine_to_condenser_leak_Q+1E-3;
+  bypass_IP_CV_to_condenser_leak.Q = Failure_bypass_IP_CV_to_condenser_leak_Q+1E-3;
+  HPST_control_valve.opening_fault = Failure_HPST_CV_opening_fault;
 
   //Gas turbine
-  AirFilter.fouling=AirFilter_fouling;
+  AirFilter.fouling = Failure_AirFilter_fouling;
 
   connect(P_HPST_in_sensor.C_in, HPST_control_valve.C_out) annotation (Line(
         points={{-180,148},{-183.375,148},{-183.375,148},{-186.75,148}}, color={
