@@ -30,7 +30,7 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
   input Real Failure_AirFilter_fouling;
 
   // Steam turbine
-  input Real Failure_HPST_CV_opening_fault(start=0);
+  input Real Failure_HPST_CV_closed_valve(start=0);
 
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_turbine_to_condenser_leak
     annotation (Placement(transformation(
@@ -79,7 +79,7 @@ equation
   bypass_HP_CV_to_condenser_leak.Q = Failure_bypass_HP_CV_to_condenser_leak_Q+1E-3;
   bypass_IP_turbine_to_condenser_leak.Q = Failure_bypass_IP_turbine_to_condenser_leak_Q+1E-3;
   bypass_IP_CV_to_condenser_leak.Q = Failure_bypass_IP_CV_to_condenser_leak_Q+1E-3;
-  HPST_control_valve.opening_fault = Failure_HPST_CV_opening_fault + 0.2*time;
+  HPST_control_valve.closed_valve = Failure_HPST_CV_closed_valve;
 
   //Gas turbine
   AirFilter.fouling = Failure_AirFilter_fouling;
