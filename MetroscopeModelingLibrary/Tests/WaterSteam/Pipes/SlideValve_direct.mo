@@ -23,7 +23,7 @@ model SlideValve_direct
         rotation=0,
         origin={58,-6.10623e-16})));
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.SlideValve    control_valve annotation (Placement(transformation(extent={{-16.5,-5.93938},{16.5,26.7272}})));
+  MetroscopeModelingLibrary.WaterSteam.Pipes.SlideValve slide_valve annotation (Placement(transformation(extent={{-16.5,-5.93938},{16.5,26.7272}})));
 
 equation
   // Boundary conditions
@@ -32,8 +32,8 @@ equation
   source.Q_out = source_Q;
 
   // Calibrated Parameters
-  control_valve.Cv = Cv;
+  slide_valve.Cv = Cv;
 
-  connect(control_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}},color={28,108,200}));
-  connect(control_valve.C_out, sink.C_in) annotation (Line(points={{16.5,-1.81818e-06},{34.75,-1.81818e-06},{34.75,0},{53,0}}, color={28,108,200}));
+  connect(slide_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}}, color={28,108,200}));
+  connect(slide_valve.C_out, sink.C_in) annotation (Line(points={{16.5,-1.81818e-06},{34.75,-1.81818e-06},{34.75,0},{53,0}}, color={28,108,200}));
 end SlideValve_direct;

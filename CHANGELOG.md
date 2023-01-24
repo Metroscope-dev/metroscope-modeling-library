@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 [PR#355](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/355) added `PressureCut` and `Leak` components for the flue gases medium.
 
+[PR#356](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/356) Added an  `opening_fault` in the `SlideValve` component to model slight decrease in the valve opening.
+
 ### Changed
 
 ### Fixed
