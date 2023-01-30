@@ -22,11 +22,17 @@ partial model PressureSensor
               start=P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA); // Relative (gauge) pressure in psi
   Real P_inHg(nominal=P_0*Constants.Pa_to_inHg,
              start=P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
+  Real P_MPa(nominal=P_0*Constants.Pa_to_MPa,
+             start=P_0*Constants.Pa_to_MPa); // Absolute pressure in inches of mercury
+  Real P_kPa(nominal=P_0*Constants.Pa_to_kPa,
+             start=P_0*Constants.Pa_to_kPa); // Absolute pressure in inches of mercury
 equation
   P * Constants.Pa_to_barA = P_barA;
   P * Constants.Pa_to_mbar = P_mbar;
   P * Constants.Pa_to_psiA = P_psiA;
   P * Constants.Pa_to_inHg = P_inHg;
+  P * Constants.Pa_to_MPa = P_MPa;
+  P * Constants.Pa_to_kPa = P_kPa;
   P_barA = P_barG + Constants.P0_barG_in_barA;
   P_psiA = P_psiG + Constants.P0_psiG_in_psiA;
 end PressureSensor;
