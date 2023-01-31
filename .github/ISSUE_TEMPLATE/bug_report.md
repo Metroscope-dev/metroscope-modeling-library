@@ -2,27 +2,17 @@
 name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
-labels: bug
-assignees: ""
+labels: "\U0001F41Bbug"
+assignees: ''
+
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+### What is your problem ?
 
-**To Reproduce**
-Steps to reproduce the behavior and dummy data :
+### What should happen ?
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### Do you have anything to add ? <!--- If applicable, add screenshots to help explain your problem (make sure you attach no sensitive data). -->
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem (make sure you attach no sensitive data).
+### What is your setup ? <!--- If any, detail your specific setup -->
 
-**Configuration (please complete the following information):**
-
-- OS: [e.g. Windows10]
-- Version of `MML`:
-- Software used : [e.g Dymola 2022/OpenModelica 1.18.1]
-
-**Additional context**
-Add any other context about the problem here.
+- Version of `MML` :
