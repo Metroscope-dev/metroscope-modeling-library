@@ -7,7 +7,6 @@
 ## Usage
 
 - When creating a Digital Twin (also called model or even `Parametrization` in license file), you should only use official releases of `Metroscope Modeling Library`. Official releases can be downloaded from [here](https://github.com/Metroscope-dev/metroscope-modeling-library/releases).
-- In your model, you should add a line in `annotation`, containing the following : `uses(MetroscopeModelingLibrary(version(="3.0.1"))` in which you replace the version number (`"3.0.1"`) by the one you use. That way you will get a warning if you use your model with a wrong version of the library.
 
 ## Reporting a bug
 
