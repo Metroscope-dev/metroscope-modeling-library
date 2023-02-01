@@ -17,6 +17,6 @@ You can also fill these out after creating the PR, but make sure to **check them
 - [ ] I have performed a self-review of my own code
 - [ ] I have checked that all existing tests pass.
 - [ ] I have added/updated tests that prove my development works and does not break anything.
-- [ ] I have made corresponding changes or additions to the documentation (in Notion documentation)
+- [ ] I have made corresponding changes or additions to the documentation (in [Notion documentation](https://www.notion.so/metroscope/Metroscope-Modeling-Library-Documentation-MML3-WIP-50c8703c294446059d3b4a70d6ae4a71))
 - [ ] I have added corresponding entries to the [Changelog](../CHANGELOG.md)
 - [ ] I have checked for conflicts with target branch, and merged/rebased in consequence
