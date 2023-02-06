@@ -8,7 +8,7 @@ partial model SlideValve
   Inputs.InputCv Cv(start=1e4) "Cv of the valve";
 
   parameter Boolean faulty = false;
-  Real closed_valve; // Valve not fully opened
+  Units.Percentage closed_valve; // Valve not fully opened
 
 equation
     // Failure modes
@@ -17,7 +17,7 @@ equation
   end if;
 
   /* Pressure loss */
-  DP*(1 - closed_valve)^2*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
+  DP*(1 - closed_valve/100)^2*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
 
 
   annotation (
