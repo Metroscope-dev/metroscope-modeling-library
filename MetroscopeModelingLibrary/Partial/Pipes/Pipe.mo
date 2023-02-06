@@ -12,7 +12,7 @@ partial model Pipe
 
   // Failure modes
   parameter Boolean faulty = false;
-  Real fouling; // Fouling coefficient
+  Units.Percentage fouling; // Fouling coefficient
 
 equation
 

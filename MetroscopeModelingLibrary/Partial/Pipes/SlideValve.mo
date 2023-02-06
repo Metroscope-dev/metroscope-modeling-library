@@ -8,7 +8,7 @@ partial model SlideValve
   Inputs.InputCv Cv(start=1e4) "Cv of the valve";
 
   parameter Boolean faulty = false;
-  Real closed_valve; // Valve not fully opened
+  Units.Percentage closed_valve; // Valve not fully opened
 
 equation
     // Failure modes
