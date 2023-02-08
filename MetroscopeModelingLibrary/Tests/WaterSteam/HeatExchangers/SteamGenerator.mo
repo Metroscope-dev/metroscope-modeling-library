@@ -1,14 +1,14 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model SteamGenerator
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.Pressure P_steam(start=70e5) "Pa";
-  input Units.PositiveMassFlowRate Q_feedwater(start=500) "kg/s";
-  input Units.Pressure P_feedwater(start=80e5) "Pa";
-  input Units.Temperature T_feedwater(start=225+273.15) "K";
-  input Units.PositiveMassFlowRate Q_purge(start=1) "kg/s";
+  input Utilities.Units.Pressure P_steam(start=70e5) "Pa";
+  input Utilities.Units.PositiveMassFlowRate Q_feedwater(start=500) "kg/s";
+  input Utilities.Units.Pressure P_feedwater(start=80e5) "Pa";
+  input Utilities.Units.Temperature T_feedwater(start=225 + 273.15) "K";
+  input Utilities.Units.PositiveMassFlowRate Q_purge(start=1) "kg/s";
 
   // Parameters
   input Real vapor_fraction(start=0.99);

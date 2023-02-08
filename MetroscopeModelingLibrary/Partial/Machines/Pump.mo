@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Partial.Machines;
 partial model Pump
   extends BaseClasses.FlowModel(P_out_0=10e5) annotation(IconMap(primitivesVisible=false));
-  extends MetroscopeModelingLibrary.Icons.Machines.PumpIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Machines.PumpIcon;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Constants;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
 
   Real VRotn(start=1400, min=0, nominal=2000) "Nominal rotational speed";
@@ -50,7 +50,7 @@ equation
 
   // Outlet variation
   DP = rho*Constants.g*hn;
-  h_out-h_in = Constants.g*hn/rh;
+  h_out-h_in =Constants.g *hn/rh;
 
   // Mechanical power
   Wm = C_power.W; // C_power.W is positive since it is power fed to the component

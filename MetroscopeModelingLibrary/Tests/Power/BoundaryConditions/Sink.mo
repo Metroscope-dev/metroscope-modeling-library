@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Power.BoundaryConditions;
 model Sink
-  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditinos
   input Units.PositivePower sink_W(start=1e6) "W";

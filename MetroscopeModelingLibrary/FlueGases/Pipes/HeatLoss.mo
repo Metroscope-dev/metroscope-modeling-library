@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.Pipes;
 model HeatLoss
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
   extends Partial.Pipes.HeatLoss(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,

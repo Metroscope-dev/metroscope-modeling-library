@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Sensors.WaterSteam;
 model FlowSensor
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  extends MetroscopeModelingLibrary.Icons.Sensors.WaterSensorIcon;
-  extends MetroscopeModelingLibrary.Icons.Sensors.FlowIcon;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.WaterSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.FlowIcon;
 
   extends Partial.Sensors.FlowSensor(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,

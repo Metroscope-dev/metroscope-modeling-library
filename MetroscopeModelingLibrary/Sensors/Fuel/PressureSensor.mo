@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Sensors.Fuel;
 model PressureSensor
-  package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
-  extends MetroscopeModelingLibrary.Icons.Sensors.FuelSensorIcon;
-  extends MetroscopeModelingLibrary.Icons.Sensors.PressureIcon;
+  package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.FuelSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.PressureIcon;
 
   extends Partial.Sensors.PressureSensor(
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,

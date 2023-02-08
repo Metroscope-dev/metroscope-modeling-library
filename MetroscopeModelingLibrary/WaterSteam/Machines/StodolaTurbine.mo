@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.Machines;
 model StodolaTurbine
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
     Q_0=1500,
@@ -11,39 +11,41 @@ model StodolaTurbine
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputCst Cst "Stodola's ellipse coefficient";
   Inputs.InputYield eta_is(start=0.8) "Nominal isentropic efficiency";
   Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
-  Units.Area area_nz(start=1) "Nozzle area";
-  Units.Velocity u_out(start=100);
+  Utilities.Units.Area area_nz(start=1) "Nozzle area";
+  Utilities.Units.Velocity u_out(start=100);
 
-  Units.MassFraction x_in(start=x_in_0);
-  Units.MassFraction x_inner(start=x_inner_0);
-  Units.MassFraction xm(start=xm_0);
+  Utilities.Units.MassFraction x_in(start=x_in_0);
+  Utilities.Units.MassFraction x_inner(start=x_inner_0);
+  Utilities.Units.MassFraction xm(start=xm_0);
 
-  Units.SpecificEnthalpy h_real(start=h_out_0); // Enthalpy after real decompression
-  Units.SpecificEnthalpy h_is(start=h_out_0/0.8); // Enthalpy after isentropic decompression
+  Utilities.Units.SpecificEnthalpy h_real(start=h_out_0);
+                                                // Enthalpy after real decompression
+  Utilities.Units.SpecificEnthalpy h_is(start=h_out_0/0.8);
+                                                  // Enthalpy after isentropic decompression
   Medium.ThermodynamicState state_is; // Thermodynamic state after isentropic decompression
 
   // Liq/Vap enthalpies
-  Units.SpecificEnthalpy h_vap_in(start=h_vap_in_0);
-  Units.SpecificEnthalpy h_vap_out(start=h_vap_out_0);
-  Units.SpecificEnthalpy h_liq_in(start=h_liq_in_0);
-  Units.SpecificEnthalpy h_liq_out(start=h_liq_out_0);
+  Utilities.Units.SpecificEnthalpy h_vap_in(start=h_vap_in_0);
+  Utilities.Units.SpecificEnthalpy h_vap_out(start=h_vap_out_0);
+  Utilities.Units.SpecificEnthalpy h_liq_in(start=h_liq_in_0);
+  Utilities.Units.SpecificEnthalpy h_liq_out(start=h_liq_out_0);
 
   // Initialization parameters
-  parameter Units.MassFraction x_inner_0 = min((h_out_0 - h_liq_out_0)/(h_vap_out_0 - h_liq_out_0), 1);
-  parameter Units.MassFraction xm_0 = (x_inner_0 + x_in_0)/2;
-  parameter Units.MassFraction x_in_0 = min((h_in_0 - h_liq_in_0)/(h_vap_in_0 - h_liq_in_0), 1);
+  parameter Utilities.Units.MassFraction x_inner_0=min((h_out_0 - h_liq_out_0)/(h_vap_out_0 - h_liq_out_0), 1);
+  parameter Utilities.Units.MassFraction xm_0=(x_inner_0 + x_in_0)/2;
+  parameter Utilities.Units.MassFraction x_in_0=min((h_in_0 - h_liq_in_0)/(h_vap_in_0 - h_liq_in_0), 1);
 
   Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
 protected
-  parameter Units.SpecificEnthalpy h_vap_in_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
-  parameter Units.SpecificEnthalpy h_liq_in_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
-  parameter Units.SpecificEnthalpy h_vap_out_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
-  parameter Units.SpecificEnthalpy h_liq_out_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
+  parameter Utilities.Units.SpecificEnthalpy h_vap_in_0=WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
+  parameter Utilities.Units.SpecificEnthalpy h_liq_in_0=WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
+  parameter Utilities.Units.SpecificEnthalpy h_vap_out_0=WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
+  parameter Utilities.Units.SpecificEnthalpy h_liq_out_0=WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
 
 equation
   // Stodola's ellipse law

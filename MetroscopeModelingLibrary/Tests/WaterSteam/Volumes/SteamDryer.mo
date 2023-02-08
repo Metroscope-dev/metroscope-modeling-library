@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Volumes;
 model SteamDryer
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary Conditions
-  input Units.Pressure P_source(start = 10e5) "Pa";
-  input Units.NegativeMassFlowRate Q_source(start=-500) "kg/s";
-  input Units.SpecificEnthalpy h_source(start=2e6) "J/kg";
+  input Utilities.Units.Pressure P_source(start=10e5) "Pa";
+  input Utilities.Units.NegativeMassFlowRate Q_source(start=-500) "kg/s";
+  input Utilities.Units.SpecificEnthalpy h_source(start=2e6) "J/kg";
 
   // Component parameters
   parameter Real x_steam_out = 0.9;

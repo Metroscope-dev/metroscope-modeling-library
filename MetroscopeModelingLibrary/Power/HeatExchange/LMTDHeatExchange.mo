@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Power.HeatExchange;
 model LMTDHeatExchange
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.Temperature T_hot_in_0 = 273.15 + 200 "Init parameter for Hot temperature at the inlet";

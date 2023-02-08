@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model Condenser
-  package Water = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputHeight water_height;
   Inputs.InputFrictionCoefficient Kfr_cold;

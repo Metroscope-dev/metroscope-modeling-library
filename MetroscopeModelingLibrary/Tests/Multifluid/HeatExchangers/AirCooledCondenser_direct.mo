@@ -1,25 +1,25 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model AirCooledCondenser_direct
 
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
 
   //Boundary Conditions
-  input Units.MassFlowRate Q_turbine(start=21) "kg/s";
-  input Units.SpecificEnthalpy h_turbine(start=2399e3) "J/kg";
+  input Utilities.Units.MassFlowRate Q_turbine(start=21) "kg/s";
+  input Utilities.Units.SpecificEnthalpy h_turbine(start=2399e3) "J/kg";
 
-  input Units.MassFlowRate Q_cold(start=1800) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold(start=1800) "kg/s";
   input Real P_cold_source(start=1.002,nominal=1.002) "barA";
   input Real T_cold_source(start=16) "degC";
-  input Units.Fraction cold_source_relative_humidity=0.80 "1";
+  input Utilities.Units.Fraction cold_source_relative_humidity=0.80 "1";
 
    // Parameters
-  parameter Units.Pressure P_offset = 0;
+  parameter Utilities.Units.Pressure P_offset=0;
   parameter Real C_incond = 0;
-  parameter Units.Area S = 130000 "m2";
+  parameter Utilities.Units.Area S=130000 "m2";
 
   // Calibrated parameters
-  parameter Units.HeatExchangeCoefficient Kth=30;
-  parameter Units.FrictionCoefficient Kfr_hot=0;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=30;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
 
   //Sensor for calibration
   output Real T_cond(start=44) "degC";

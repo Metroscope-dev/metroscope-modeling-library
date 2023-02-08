@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.MultiFluid.Machines;
 model CombustionChamber
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Constants.*;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Constants.*;
 
   // Media flows
   Units.PositiveMassFlowRate Q_air;

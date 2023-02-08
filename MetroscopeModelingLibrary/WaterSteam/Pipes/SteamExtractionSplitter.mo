@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.WaterSteam.Pipes;
 model SteamExtractionSplitter
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   import MetroscopeModelingLibrary.WaterSteam.Connectors;
 

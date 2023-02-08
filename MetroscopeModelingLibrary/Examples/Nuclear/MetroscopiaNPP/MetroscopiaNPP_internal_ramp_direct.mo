@@ -63,37 +63,37 @@ model MetroscopiaNPP_internal_ramp_direct
 
   // Calibrated parameters
     // HP turbines inlet control valve
-    parameter MetroscopeModelingLibrary.Units.Cv HP_control_valve_Cvmax = 1308860.5;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv HP_control_valve_Cvmax=1308860.5;
       // HP Turbines
-    parameter MetroscopeModelingLibrary.Units.Cst HPT1_Cst = 12399.9;
-    parameter MetroscopeModelingLibrary.Units.Cst HPT2_Cst = 9649.914;
-    parameter MetroscopeModelingLibrary.Units.Yield turbines_eta_is = 0.53308195;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst HPT1_Cst=12399.9;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst HPT2_Cst=9649.914;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Yield turbines_eta_is=0.53308195;
       // Superheater inlet control valve
-    parameter MetroscopeModelingLibrary.Units.Cv superheater_control_valve_Cvmax = 2646.496;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv superheater_control_valve_Cvmax=2646.496;
       // Superheater
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient superheater_Kfr_hot = 1049.6948;
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient superheater_Kth = 17193.303;
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient superheater_Kfr_hot=1049.6948;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient superheater_Kth=17193.303;
       // LP Turbines
-    parameter MetroscopeModelingLibrary.Units.Cst LPT1_Cst = 6242.8354;
-    parameter MetroscopeModelingLibrary.Units.Cst LPT2_Cst = 593.31573;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst LPT1_Cst=6242.8354;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst LPT2_Cst=593.31573;
       // Condenser
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient condenser_Kth = 1226857.0;
-    parameter MetroscopeModelingLibrary.Units.PositiveMassFlowRate condenser_Q_cold = 54232.63;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient condenser_Kth=1226857.0;
+  parameter MetroscopeModelingLibrary.Utilities.Units.PositiveMassFlowRate condenser_Q_cold=54232.63;
       // Extraction pump
     parameter Real extraction_pump_hn = 70.18653;
     parameter Real extraction_pump_rh = 0.86754465;
       // LP Heater
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient LP_heater_Kth = 11601.239;
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient LP_heater_Kfr_cold = 88.40482;
-    parameter MetroscopeModelingLibrary.Units.Cv LP_heater_drains_control_valve_Cvmax = 1517.0101;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient LP_heater_Kth=11601.239;
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient LP_heater_Kfr_cold=88.40482;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv LP_heater_drains_control_valve_Cvmax=1517.0101;
       // Feedwater pump
     parameter Real feedwater_pump_hn = 554.82806;
     parameter Real feedwater_pump_rh = 0.31775114;
       // HP Heater
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HP_heater_Kth_cond = 146448.02;
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HP_heater_Kth_subc = 184791.02;
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HP_heater_Kfr_cold = 43.30442;
-    parameter MetroscopeModelingLibrary.Units.Cv HP_heater_drains_control_valve_Cvmax = 2201.408;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient HP_heater_Kth_cond=146448.02;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient HP_heater_Kth_subc=184791.02;
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient HP_heater_Kfr_cold=43.30442;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv HP_heater_drains_control_valve_Cvmax=2201.408;
 
     MetroscopeModelingLibrary.WaterSteam.HeatExchangers.SteamGenerator steam_generator annotation (Placement(transformation(extent={{-192,-116},{-148,-24}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_feedwater_sensor annotation (Placement(transformation(extent={{-104,-77},{-118,-63}})));

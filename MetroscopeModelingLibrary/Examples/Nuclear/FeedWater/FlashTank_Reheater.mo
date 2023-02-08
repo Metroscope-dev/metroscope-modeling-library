@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.FeedWater;
 model FlashTank_Reheater
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
   parameter Units.MassFlowRate Q_cold_0 = 1000;
   parameter Units.MassFlowRate Q_hot_0 = 500;
 

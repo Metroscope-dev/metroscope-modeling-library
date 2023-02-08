@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.FeedWater;
 model ParallelTurboFWP_direct
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.Pressure STs_CV_P_in_0 = 30e5;

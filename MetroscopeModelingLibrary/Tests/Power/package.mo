@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests;
 package Power
-  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestPackageIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestPackageIcon;
 
 
 

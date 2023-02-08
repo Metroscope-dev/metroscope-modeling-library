@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model FlowModel "Basic fluid transport brick for all components"
-  extends MetroscopeModelingLibrary.Icons.BaseClasses.BaseClassIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.BaseClasses.BaseClassIcon;
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // ------ Initialization parameters ------
   // Temperatures

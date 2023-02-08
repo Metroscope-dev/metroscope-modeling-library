@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Partial.Pipes;
 partial model HeatLoss
   extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoPFlowModel annotation(IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputPower W_input(start=0);
 equation

@@ -8,7 +8,7 @@ model MetroscopiaNPP_faulty
     HP_heater(faulty=true),
     Q_feedwater_sensor(faulty=true));
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Heat exchangers failures
   input Real Failure_superheater_fouling(start=0);

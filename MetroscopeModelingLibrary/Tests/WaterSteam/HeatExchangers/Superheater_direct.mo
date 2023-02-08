@@ -1,21 +1,22 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Superheater_direct
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
   input Real P_hot_steam(start=60, min=0, nominal=11) "bar";
   input Real P_cold_steam(start=11, min=0, nominal=50) "bar";
-  input Units.PositiveMassFlowRate Q_cold(start=1300) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate Q_cold(start=1300) "kg/s";
   input Real h_cold_steam(start=2.75e6) "J/kg"; // slightly humid cold steam
   input Real h_hot_steam(start=2.8e6) "J/kg"; // slightly superheated hot steam
 
   // Parameters
-  parameter Units.Area S = 100;
-  parameter Units.HeatExchangeCoefficient Kth = 7e3;
-  parameter Units.FrictionCoefficient Kfr_cold = 0;
-  parameter Units.FrictionCoefficient Kfr_hot = 500; // About 1 bar of pressure loss in the reheater
-  parameter Units.PositiveMassFlowRate Q_vent=1;
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=7e3;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=0;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=500;
+                                                     // About 1 bar of pressure loss in the reheater
+  parameter Utilities.Units.PositiveMassFlowRate Q_vent=1;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_steam_source annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink drains_sink annotation (Placement(transformation(extent={{48,-10},{68,10}})));

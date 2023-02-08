@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam;
 package Volumes
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestPackageIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestPackageIcon;
 
 
 end Volumes;

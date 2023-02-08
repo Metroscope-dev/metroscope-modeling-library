@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Partial.HeatExchangers;
 partial model hrsg_monophasic_HX
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputArea S;
   Inputs.InputHeatExchangeCoefficient Kth;
@@ -67,12 +67,14 @@ partial model hrsg_monophasic_HX
 
   // Intermediate variables
 protected
-  MetroscopeModelingLibrary.Units.HeatCapacity Cp_cold_min;
-  MetroscopeModelingLibrary.Units.HeatCapacity Cp_cold_max;
-  MetroscopeModelingLibrary.Units.HeatCapacity Cp_hot_min;
-  MetroscopeModelingLibrary.Units.HeatCapacity Cp_hot_max;
-  MetroscopeModelingLibrary.Media.WaterSteamMedium.ThermodynamicState state_cold_out; // estimation of the water outlet thermodynamic state
-  MetroscopeModelingLibrary.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_min;
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_max;
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_min;
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_max;
+  MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.ThermodynamicState state_cold_out;
+                                                                                      // estimation of the water outlet thermodynamic state
+  MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.ThermodynamicState state_hot_out;
+                                                                                    // estimation of the flue gases outlet thermodynamic state
 
 equation
   // Failure modes
@@ -113,13 +115,23 @@ equation
   // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise of the H&MB diagram.
   // For more details about this hypothesis, please refer the Economiser page of the MML documentation.
 
-  Cp_cold_min =MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in); // water steam inlet Cp
-  state_cold_out = MetroscopeModelingLibrary.Media.WaterSteamMedium.setState_pTX(cold_side.P_in, cold_side.T_in + nominal_cold_side_temperature_rise,cold_side.Xi);
-  Cp_cold_max= MetroscopeModelingLibrary.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out); // water steam outlet Cp
+  Cp_cold_min =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in);
+                                                                                                            // water steam inlet Cp
+  state_cold_out =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.setState_pTX(
+    cold_side.P_in,
+    cold_side.T_in + nominal_cold_side_temperature_rise,
+    cold_side.Xi);
+  Cp_cold_max=MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out);
+                                                                                                        // water steam outlet Cp
 
-  Cp_hot_max=MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in);// fg inlet Cp
-  state_hot_out = MetroscopeModelingLibrary.Media.FlueGasesMedium.setState_pTX(hot_side.P_in, hot_side.T_in - nominal_hot_side_temperature_drop,hot_side.Xi);
-  Cp_hot_min =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
+  Cp_hot_max=MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in);
+                                                                                                       // fg inlet Cp
+  state_hot_out =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.setState_pTX(
+    hot_side.P_in,
+    hot_side.T_in - nominal_hot_side_temperature_drop,
+    hot_side.Xi);
+  Cp_hot_min =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);
+                                                                                                      // fg outlet Cp
 
   connect(cold_side.C_in, cold_side_pipe.C_out) annotation (Line(points={{16,24},{30,24},{30,32}}, color={28,108,200}));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{30,52},{30,70}}, color={28,108,200}));

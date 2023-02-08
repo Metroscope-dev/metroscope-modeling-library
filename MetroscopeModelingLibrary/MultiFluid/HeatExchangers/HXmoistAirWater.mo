@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model HXmoistAirWater
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // Pressure Losses
   Inputs.InputFrictionCoefficient Kfr_cold;

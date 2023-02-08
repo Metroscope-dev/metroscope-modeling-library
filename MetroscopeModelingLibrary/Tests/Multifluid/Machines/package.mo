@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.Tests.Multifluid;
 package Machines
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestPackageIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestPackageIcon;
 end Machines;

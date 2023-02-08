@@ -1,28 +1,28 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
 model MoistureSeparatorReheater_reverse
   // Initialization parameters
-  parameter Units.PositiveMassFlowRate Q_cold_0 = 660 "kg/s";
-  parameter Units.PositiveMassFlowRate Q_hot_1_0 = 33 "kg/s";
-  parameter Units.PositiveMassFlowRate Q_hot_2_0 = 23 "kg/s";
-  parameter Units.Temperature T_cold_in_1_0 = 202 + 273.15 "K";
-  parameter Units.Temperature T_cold_in_2_0 = 234 + 273.15 "K";
-  parameter Units.Temperature T_hot_in_1_0 = 249 + 273.15 "K";
-  parameter Units.Temperature T_hot_in_2_0 = 282 + 273.15 "K";
+  parameter Utilities.Units.PositiveMassFlowRate Q_cold_0=660 "kg/s";
+  parameter Utilities.Units.PositiveMassFlowRate Q_hot_1_0=33 "kg/s";
+  parameter Utilities.Units.PositiveMassFlowRate Q_hot_2_0=23 "kg/s";
+  parameter Utilities.Units.Temperature T_cold_in_1_0=202 + 273.15 "K";
+  parameter Utilities.Units.Temperature T_cold_in_2_0=234 + 273.15 "K";
+  parameter Utilities.Units.Temperature T_hot_in_1_0=249 + 273.15 "K";
+  parameter Utilities.Units.Temperature T_hot_in_2_0=282 + 273.15 "K";
 
   // Boundary conditions
   input Real P_hot_steam_1(start=39.4, min=0, nominal=11) "bar";
   input Real P_hot_steam_2(start=66.6, min=0, nominal=11) "bar";
   input Real P_cold_steam(start=16.25, min=0, nominal=15) "bar";
-  input Units.PositiveMassFlowRate Q_cold(start=Q_cold_0) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate Q_cold(start=Q_cold_0) "kg/s";
   input Real h_cold_steam(start=2.560e6) "J/kg";
   input Real h_hot_steam_1(start=2.696e6) "J/kg";
   input Real h_hot_steam_2(start=2.769e6) "J/kg";
 
   // Parameters
-  parameter Units.Area S = 100;
-  parameter Units.FrictionCoefficient Kfr_cold = 0;
-  parameter Units.PositiveMassFlowRate Q_vent=1;
-  parameter Units.Fraction steam_dryer_x_steam_out = 0.99;
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=0;
+  parameter Utilities.Units.PositiveMassFlowRate Q_vent=1;
+  parameter Utilities.Units.Fraction steam_dryer_x_steam_out=0.99;
 
   // Inputs for calibration
   input Real inter_superheater_T(start=235, min=0, nominal = 200) "degC";
@@ -31,10 +31,10 @@ model MoistureSeparatorReheater_reverse
   input Real drains_pressure_2(start=66.1, min=0, nominal = 60) "barA";
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth_1;
-  output Units.FrictionCoefficient Kfr_hot_1;
-  output Units.HeatExchangeCoefficient Kth_2;
-  output Units.FrictionCoefficient Kfr_hot_2;
+  output Utilities.Units.HeatExchangeCoefficient Kth_1;
+  output Utilities.Units.FrictionCoefficient Kfr_hot_1;
+  output Utilities.Units.HeatExchangeCoefficient Kth_2;
+  output Utilities.Units.FrictionCoefficient Kfr_hot_2;
 
   // Components
   WaterSteam.BoundaryConditions.Source hot_steam_source_1(Q_out(start=-Q_hot_1_0)) annotation (Placement(transformation(extent={{-80,-30},{-60,-10}})));

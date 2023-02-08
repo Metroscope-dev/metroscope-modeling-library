@@ -1,22 +1,22 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model LiqLiqHX_direct
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
   input Real P_hot_source(start=50, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_hot_source(start=50) "kg/s";
+  input Utilities.Units.MassFlowRate Q_hot_source(start=50) "kg/s";
   input Real T_hot_source(start = 100, min = 0, nominal = 50) "degC";
 
   input Real P_cold_source(start=20, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_cold_source(start=100) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold_source(start=100) "kg/s";
   input Real T_cold_source(start = 50, min = 0, nominal = 50) "degC";
 
     // Parameters
-  parameter Units.Area S = 100;
-  parameter Units.HeatExchangeCoefficient Kth = 500;
-  parameter Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Units.FrictionCoefficient Kfr_cold = 20;
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=500;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=20;
 
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));

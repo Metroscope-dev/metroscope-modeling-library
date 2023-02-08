@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model Leak
-  import MetroscopeModelingLibrary.Units;
-  extends Icons.Tests.FlueGasesTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  extends Utilities.Icons.Tests.FlueGasesTestIcon;
 
   // Boundary conditions
   input Units.SpecificEnthalpy source_h(start=0.5e6);

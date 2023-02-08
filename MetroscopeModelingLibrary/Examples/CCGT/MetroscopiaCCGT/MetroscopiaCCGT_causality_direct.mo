@@ -5,7 +5,7 @@ model MetroscopiaCCGT_causality_direct
 
     // Air source
     input Real P_source_air(start=1) "bar";
-    input MetroscopeModelingLibrary.Units.MassFlowRate Q_source_air(start=500) "kg/s";
+  input MetroscopeModelingLibrary.Utilities.Units.MassFlowRate Q_source_air(start=500) "kg/s";
     input Real T_source_air(start=24) "degC";
     input Real Relative_Humidity(start=0.5);
     // Fuel source
@@ -16,7 +16,7 @@ model MetroscopiaCCGT_causality_direct
     input Real T_circulating_water_in(start = 15, min = 0, nominal = 15) "degC";
     // Flue gas sink
     input Real P_flue_gas_sink(start=1, min=0, nominal=1) "barA";
-    input MetroscopeModelingLibrary.Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
+  input MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
 
@@ -28,7 +28,7 @@ model MetroscopiaCCGT_causality_direct
     parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
     // Evaporator
     parameter Real Evap_x_steam_out=1;
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Evap_Kfr_cold=0;
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient Evap_Kfr_cold=0;
     // High Pressure Superheater
     parameter String HPSH_QCp_max_side = "hot";
     // High Pressure Superheater 2
@@ -44,7 +44,8 @@ model MetroscopiaCCGT_causality_direct
     output Real compressor_T_out;
     output Real W_GT;
     output Real turbine_P_out;
-    output MetroscopeModelingLibrary.Units.MassFlowRate Q_fuel_source; // Controlled by the gas turbine outlet temperature 10.5
+  output MetroscopeModelingLibrary.Utilities.Units.MassFlowRate Q_fuel_source;
+                                                                       // Controlled by the gas turbine outlet temperature 10.5
     output Real turbine_compression_rate;
     // Economizer
     output Real P_w_eco_out;
@@ -86,39 +87,60 @@ model MetroscopiaCCGT_causality_direct
   // Calibrated parameters (input used for calibration in comment)
 
     // Gas Turbine
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Filter_Kfr = 0.04432005;// Filter outlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient Filter_Kfr=0.04432005;
+                                                                                          // Filter outlet pressure
     parameter Real compression_rate = 18.88889; // Air compressor outlet pressure
     parameter Real compressor_eta_is = 0.878675; // Air compressor outlet temperature
     parameter Real turbine_eta_is = 0.8304104; // Gas turbine power output
     // Economizer
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Eco_Kth = 3104.9373; // Economizer water outlet temperature
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_hot = 0.022388678; // Gas turbine outlet pressure
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient Eco_Kfr_cold = 973146.4; // Economizer water outlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient Eco_Kth=3104.9373;
+                                                                                           // Economizer water outlet temperature
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient Eco_Kfr_hot=0.022388678;
+                                                                                             // Gas turbine outlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient Eco_Kfr_cold=973146.4;
+                                                                                           // Economizer water outlet pressure
     // Evaporator
-    parameter MetroscopeModelingLibrary.Units.Cv Evap_CV_Cvmax = 539.1173; // Evaporator control valve opening
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Evap_Kth = 3383.7917; // Extraction pump mass flow rate
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv Evap_CV_Cvmax=539.1173;
+                                                                           // Evaporator control valve opening
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient Evap_Kth=3383.7917;
+                                                                                            // Extraction pump mass flow rate
     // High Pressure Superheater 1
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH1_Kth = 1213.6362; // HP superheater outlet temperature
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH1_Kfr_cold = 7030.31; // HP superheater inlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient HPSH1_Kth=1213.6362;
+                                                                                             // HP superheater outlet temperature
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient HPSH1_Kfr_cold=7030.31;
+                                                                                            // HP superheater inlet pressure
     // High Pressure Superheater 2
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HPSH2_Kth = 1673.8336; // De-superheater mass flow rate
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HPSH2_Kfr_cold = 2538.3271; // HP superheater inlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient HPSH2_Kth=1673.8336;
+                                                                                             // De-superheater mass flow rate
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient HPSH2_Kfr_cold=2538.3271;
+                                                                                              // HP superheater inlet pressure
     // De-superheater
-    parameter MetroscopeModelingLibrary.Units.Cv deSH_CV_Cvmax = 7.7502966; // Desuperheater control valve opening
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv deSH_CV_Cvmax=7.7502966;
+                                                                            // Desuperheater control valve opening
     // Reheater
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient ReH_Kth = 410.44293; // LP superheater outlet temperature
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient ReH_Kfr_cold = 134.2858; // LP superheater inlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient ReH_Kth=410.44293;
+                                                                                           // LP superheater outlet temperature
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient ReH_Kfr_cold=134.2858;
+                                                                                           // LP superheater inlet pressure
     // High Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv HPST_CV_Cv = 6647.2905; // HP superheater outlet pressure
-    parameter MetroscopeModelingLibrary.Units.Cst HPST_Cst = 6.038082e+07; // HP steam turbine inlet pressure
-    parameter MetroscopeModelingLibrary.Units.Yield HPST_eta_is = 0.8438316; // HP steam turbine outlet temperature
-    parameter MetroscopeModelingLibrary.Units.Yield LPST_eta_is = 0.8438316; // Power output
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv HPST_CV_Cv=6647.2905;
+                                                                         // HP superheater outlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst HPST_Cst=6.038082e+07;
+                                                                           // HP steam turbine inlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.Yield HPST_eta_is=0.8438316;
+                                                                             // HP steam turbine outlet temperature
+  parameter MetroscopeModelingLibrary.Utilities.Units.Yield LPST_eta_is=0.8438316;
+                                                                             // Power output
     // Low Pressure Steam Turbine
-    parameter MetroscopeModelingLibrary.Units.Cv LPST_CV_Cv = 69310.586; // Low pressure superheater outlet pressure
-    parameter MetroscopeModelingLibrary.Units.Cst LPST_Cst = 411424.22; // LP steam turbine inlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv LPST_CV_Cv=69310.586;
+                                                                         // Low pressure superheater outlet pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst LPST_Cst=411424.22;
+                                                                        // LP steam turbine inlet pressure
     // Condenser
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient Cond_Kth = 93661.23; // Condensation pressure
-    parameter MetroscopeModelingLibrary.Units.VolumeFlowRate Qv_cond_cold = 2.7349906; // Circulating water outlet temperature
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient Cond_Kth=93661.23;
+                                                                                           // Condensation pressure
+  parameter MetroscopeModelingLibrary.Utilities.Units.VolumeFlowRate Qv_cond_cold=2.7349906;
+                                                                                       // Circulating water outlet temperature
     // Exctraction Pump
     parameter Real pump_a3 = 1735.4259; // Exctraction pump outlet pressure
     parameter Real pump_b3 = 0.70563865; // Exctraction pump outlet temperature

@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model SlideValve_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   /* Note
   The slide valve is fully open, therefore the causality is different from a control valve.
@@ -9,15 +9,18 @@ model SlideValve_reverse
   */
 
   // Boundary conditions
-  input Units.SpecificEnthalpy source_h(start=1e6);
-  input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6);
+  input Utilities.Units.Pressure source_P(
+    start=10e5,
+    min=0,
+    nominal=10e5) "Pa";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   // Inputs for calibration
-  input Units.Pressure outlet_pressure(start=9e5) "Pa";
+  input Utilities.Units.Pressure outlet_pressure(start=9e5) "Pa";
 
   // Calibrated parameter
-  output Units.Cv Cv "Cv";
+  output Utilities.Units.Cv Cv "Cv";
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-68,-9.99996},{-48,9.99996}})));

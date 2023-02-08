@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Machines;
 model AirCompressor_reverse
-  extends Icons.Tests.FlueGasesTestIcon;
+  extends Utilities.Icons.Tests.FlueGasesTestIcon;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";

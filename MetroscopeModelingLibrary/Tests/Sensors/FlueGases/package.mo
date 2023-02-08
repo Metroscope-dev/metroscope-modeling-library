@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Sensors;
 package FlueGases
-    extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestPackageIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestPackageIcon;
 
 end FlueGases;

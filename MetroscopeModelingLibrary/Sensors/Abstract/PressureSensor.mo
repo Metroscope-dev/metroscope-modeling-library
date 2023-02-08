@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Sensors.Abstract;
 model PressureSensor
   extends MetroscopeModelingLibrary.Partial.Sensors.BaseAbstractSensor;
-  extends MetroscopeModelingLibrary.Icons.Sensors.PressureIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.PressureIcon;
 end PressureSensor;

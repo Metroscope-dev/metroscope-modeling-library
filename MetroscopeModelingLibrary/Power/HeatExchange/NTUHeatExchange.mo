@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Power.HeatExchange;
 model NTUHeatExchange
 
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_hot_0 = 50 "Init parameter for Hot mass flow rate at the inlet";

@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model ControlValve_direct
-  extends Icons.Tests.FlueGasesTestIcon;
+  extends Utilities.Icons.Tests.FlueGasesTestIcon;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
     // Boundary conditions
   input Units.Pressure source_P(start=10e5) "Pa";

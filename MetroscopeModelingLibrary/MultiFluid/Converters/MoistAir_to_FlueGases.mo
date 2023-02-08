@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MultiFluid.Converters;
 model MoistAir_to_FlueGases
 
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
   MoistAir.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));

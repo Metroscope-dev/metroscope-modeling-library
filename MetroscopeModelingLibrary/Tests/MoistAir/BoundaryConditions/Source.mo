@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.MoistAir.BoundaryConditions;
 model Source
-  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditinos
   input Units.Pressure source_P(start=1e5) "Pa";

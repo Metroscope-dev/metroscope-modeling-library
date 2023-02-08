@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.WaterSteam;
 package HeatExchangers
 
-  extends MetroscopeModelingLibrary.Icons.HeatExchangePackage;
+  extends MetroscopeModelingLibrary.Utilities.Icons.HeatExchangePackage;
 end HeatExchangers;

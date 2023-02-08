@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Evaporator
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
-   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-    import MetroscopeModelingLibrary.Units;
-    import MetroscopeModelingLibrary.Units.Inputs;
+  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+    import MetroscopeModelingLibrary.Utilities.Units;
+    import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
     // Pressure Losses
     Inputs.InputFrictionCoefficient Kfr_cold;
@@ -131,7 +131,7 @@ equation
   HX_vaporising.T_cold_in = Tsat;
   HX_vaporising.T_hot_in = hot_side_vaporising.T_in;
   HX_vaporising.Cp_cold = 0; // Not used by NTU method in evaporator mode
-  HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
+  HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
   connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
   connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{30,70},{30,58},{42,58},{42,44}},

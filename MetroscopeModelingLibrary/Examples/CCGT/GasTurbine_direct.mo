@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Examples.CCGT;
 model GasTurbine_direct
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";

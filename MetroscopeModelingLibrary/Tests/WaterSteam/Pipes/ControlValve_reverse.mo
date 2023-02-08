@@ -1,18 +1,21 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model ControlValve_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.SpecificEnthalpy source_h(start=1e6);
-  input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
-  input Units.Pressure sink_P(start=9e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6);
+  input Utilities.Units.Pressure source_P(
+    start=10e5,
+    min=0,
+    nominal=10e5) "Pa";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.Pressure sink_P(start=9e5) "Pa";
 
   // Inputs for calibration
   input Real opening(start=0.35);
 
   // Calibrated parameter
-  output Units.Cv Cvmax "Cvmax";
+  output Utilities.Units.Cv Cvmax "Cvmax";
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-68,-9.99996},{-48,9.99996}})));

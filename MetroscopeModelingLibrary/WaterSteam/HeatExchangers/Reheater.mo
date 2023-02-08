@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model Reheater
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputFrictionCoefficient Kfr_cold;
