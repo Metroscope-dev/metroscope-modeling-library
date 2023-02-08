@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.Machines;
 model CombustionChamber
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=17e5) "Pa";

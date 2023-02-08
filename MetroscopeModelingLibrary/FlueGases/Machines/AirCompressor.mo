@@ -6,10 +6,10 @@ model AirCompressor
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium) annotation (IconMap(primitivesVisible=false));
 
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputReal tau(start=15, min = 1) "Compression rate";
   Inputs.InputReal eta_is(start=0.8, min=0, max=1) "Nominal isentropic efficiency";

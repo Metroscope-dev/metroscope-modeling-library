@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests;
 package Multifluid
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestPackageIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestPackageIcon;
 
 
 end Multifluid;

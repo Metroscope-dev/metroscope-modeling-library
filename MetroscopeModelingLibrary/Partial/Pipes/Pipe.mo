@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Partial.Pipes;
 partial model Pipe
   extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoHFlowModel annotation(IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Constants;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
   Inputs.InputFrictionCoefficient Kfr(start=10) "Friction pressure loss coefficient";
   Inputs.InputDifferentialHeight delta_z(nominal=5) "Height difference between outlet and inlet";
@@ -22,7 +22,7 @@ equation
   end if;
 
   DP_f = - (1+ fouling/100)  * Kfr * Q^2 / rho;
-  DP_z = -rho * Constants.g * delta_z;
+  DP_z = -rho *Constants.g  * delta_z;
 
   DP = DP_f + DP_z;
   annotation (

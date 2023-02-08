@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.WaterSteam.Volumes;
 model SteamDryer
 
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
 
 

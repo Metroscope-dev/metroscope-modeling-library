@@ -1,12 +1,15 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model HeatLoss
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
-  input Units.Pressure source_P(start=2e5, min=0, nominal=2) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
-  input Units.Power W(start=1e5) "W";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
+  input Utilities.Units.Pressure source_P(
+    start=2e5,
+    min=0,
+    nominal=2) "Pa";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
+  input Utilities.Units.Power W(start=1e5) "W";
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(

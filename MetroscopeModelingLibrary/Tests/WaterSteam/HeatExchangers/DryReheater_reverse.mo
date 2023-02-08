@@ -1,26 +1,26 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model DryReheater_reverse
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
   input Real P_hot_source(start=11, min=0, nominal=11) "bar";
   input Real P_cold_source(start=50, min=0, nominal=50) "bar";
-  input Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
   input Real T_cold_in(start=50) "degC";
-  input Units.SpecificEnthalpy hot_source_h_out(start=2.9e6) "J/kg";
+  input Utilities.Units.SpecificEnthalpy hot_source_h_out(start=2.9e6) "J/kg";
 
   // Component Parameters
-  parameter Units.Area S = 100;
-  parameter Units.FrictionCoefficient Kfr_hot = 0;
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
 
   // Observables for calibration
   input Real P_cold_sink(start=49, min=0, nominal=50) "bar";
   input Real T_cold_sink(start=70, min=0, nominal=200) "degC";
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
-  output Units.FrictionCoefficient Kfr_cold;
+  output Utilities.Units.HeatExchangeCoefficient Kth;
+  output Utilities.Units.FrictionCoefficient Kfr_cold;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{68,-10},{88,10}})));

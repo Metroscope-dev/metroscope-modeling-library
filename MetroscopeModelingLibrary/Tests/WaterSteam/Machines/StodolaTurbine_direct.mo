@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model StodolaTurbine_direct
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=20e5);
-  input Units.SpecificEnthalpy source_h(start=2.7718e6);
-  input Units.NegativeMassFlowRate source_Q(start=-100);
+  input Utilities.Units.Pressure source_P(start=20e5);
+  input Utilities.Units.SpecificEnthalpy source_h(start=2.7718e6);
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100);
 
   .MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine stodolaTurbine annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));

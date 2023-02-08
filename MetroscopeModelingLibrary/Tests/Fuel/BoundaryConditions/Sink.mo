@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Fuel.BoundaryConditions;
 model Sink
-  extends MetroscopeModelingLibrary.Icons.Tests.FuelTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditinos
   input Units.Pressure sink_P(start=1e5) "Pa";

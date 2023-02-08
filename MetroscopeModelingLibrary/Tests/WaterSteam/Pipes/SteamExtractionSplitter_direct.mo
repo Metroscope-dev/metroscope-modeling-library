@@ -1,15 +1,15 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model SteamExtractionSplitter_direct
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.SpecificEnthalpy h_source(start=2.65e6);
-  input Units.Pressure source_P(start=2.64e5) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-1000) "kg/s";
-  input Units.PositiveMassFlowRate extracted_Q(start=100) "kg/s";
+  input Utilities.Units.SpecificEnthalpy h_source(start=2.65e6);
+  input Utilities.Units.Pressure source_P(start=2.64e5) "Pa";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-1000) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate extracted_Q(start=100) "kg/s";
 
   // Input: Component parameters
-  input Units.Fraction alpha(start=0.8);
+  input Utilities.Units.Fraction alpha(start=0.8);
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter annotation (Placement(transformation(extent={{-27,-26.6667},{27,21.3333}})));

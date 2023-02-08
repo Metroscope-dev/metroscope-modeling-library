@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model LiqLiqHX
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputFrictionCoefficient Kfr_cold;

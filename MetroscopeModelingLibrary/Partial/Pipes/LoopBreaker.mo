@@ -4,7 +4,7 @@ partial model LoopBreaker
   replaceable Connectors.FluidOutlet C_out annotation (Placement(transformation(extent={{90,-10},{110,10}})));
 
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
-  Units.Inputs.InputReal loop_flow_error;
+  Utilities.Units.Inputs.InputReal loop_flow_error;
 
 
 equation

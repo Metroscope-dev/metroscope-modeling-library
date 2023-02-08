@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.MoistAir.BaseClasses;
 model IsoPFlowModel
-  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";

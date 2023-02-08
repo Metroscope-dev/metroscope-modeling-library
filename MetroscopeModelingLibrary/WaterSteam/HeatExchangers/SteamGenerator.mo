@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model SteamGenerator
 
-  package Water = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   Inputs.InputMassFraction vapor_fraction;
   Inputs.InputPressure steam_pressure;

@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.BoundaryConditions;
 model Source
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";

@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model FlowSensor
   extends BaseSensor(faulty_flow_rate=faulty)                                   annotation(IconMap(primitivesVisible=false));
-  extends MetroscopeModelingLibrary.Icons.Sensors.InlineSensorIcon;
-  extends MetroscopeModelingLibrary.Icons.Sensors.FlowIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.FlowIcon;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Constants;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
   parameter Units.VolumeFlowRate Qv_0 = Q_0/1000;
 
@@ -18,7 +18,7 @@ partial model FlowSensor
   parameter Boolean faulty = false;
 equation
   Qv = Q / Medium.density(state);
-  Q_th = Q * Constants.kgs_to_th;
-  Q_lbs = Q * Constants.kgs_to_lbs;
-  Q_Mlbh = Q * Constants.kgs_to_Mlbh;
+  Q_th = Q *Constants.kgs_to_th;
+  Q_lbs = Q *Constants.kgs_to_lbs;
+  Q_Mlbh = Q *Constants.kgs_to_Mlbh;
 end FlowSensor;

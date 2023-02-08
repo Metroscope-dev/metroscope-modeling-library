@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Fuel.Pipes;
 model Pipe
-  package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
+  package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
   extends Partial.Pipes.Pipe(
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,

@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
 model NTU_HeatExchanger_evaporator
-    extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
 
   MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "evaporator");
 

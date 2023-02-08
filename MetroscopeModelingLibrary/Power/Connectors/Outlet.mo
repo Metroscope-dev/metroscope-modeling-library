@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Power.Connectors;
 connector Outlet
-  extends Icons.Connectors.PowerOutletIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends Utilities.Icons.Connectors.PowerOutletIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   flow Units.NegativePower W;
 end Outlet;

@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
 model TurbineLine_reverse
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Real source_P(start=67, unit="bar", nominal=20, min=0, max=200) "barA";

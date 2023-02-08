@@ -3,10 +3,10 @@ model LoopSteamGenerator
 
   // Boundary conditions
   input Real steam_pressure(start=70) "barA";
-  input Units.PositiveMassFlowRate feedwater_flow_rate(start = 500) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate feedwater_flow_rate(start=500) "kg/s";
   input Real feedwater_pressure(start=80) "barA";
   input Real feedwater_temperature(start=225) "degC";
-  input Units.PositiveMassFlowRate blowdown_flow_rate(start=10) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate blowdown_flow_rate(start=10) "kg/s";
 
   // Parameters
   parameter Real vapor_fraction = 0.99;

@@ -1,19 +1,19 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model StodolaTurbine_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=20e5);
-  input Units.SpecificEnthalpy source_h(start=2.7718e6);
-  input Units.NegativeMassFlowRate source_Q(start=-100);
+  input Utilities.Units.Pressure source_P(start=20e5);
+  input Utilities.Units.SpecificEnthalpy source_h(start=2.7718e6);
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100);
 
   // Inputs for calibration
   input Real stodolaTurbine_P_out(start=15, unit="bar", nominal=15, min=0) "bar";
   input Real stodolaTurbine_W_out(start=2.6, unit="MW", nominal=100, min=0) "MW";
 
   // Calibrated parameters
-  output Units.Cst stodolaTurbine_Cst;
-  output Units.Yield stodolaTurbine_eta_is;
+  output Utilities.Units.Cst stodolaTurbine_Cst;
+  output Utilities.Units.Yield stodolaTurbine_eta_is;
 
   .MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine stodolaTurbine annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));

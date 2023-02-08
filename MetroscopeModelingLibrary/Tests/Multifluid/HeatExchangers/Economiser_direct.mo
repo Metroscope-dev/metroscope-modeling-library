@@ -1,25 +1,25 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Economiser_direct
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
 
       // Boundary conditions
   input Real P_hot_source(start=50, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_hot_source(start=50) "kg/s";
+  input Utilities.Units.MassFlowRate Q_hot_source(start=50) "kg/s";
   input Real hot_source_h(start=0.7e6) "J/kg";
 
   input Real P_cold_source(start=20, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_cold_source(start=100) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold_source(start=100) "kg/s";
   input Real T_cold_source(start = 50, min = 0, nominal = 50) "degC";
 
   // Parameters
   parameter String QCp_max_side = "cold";
-  parameter Units.Area S = 100;
-  parameter Units.HeatExchangeCoefficient Kth = 500;
-  parameter Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Units.FrictionCoefficient Kfr_cold = 20;
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=500;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=20;
 
-  parameter Units.Temperature nominal_cold_side_temperature_rise = 20;
-  parameter Units.Temperature nominal_hot_side_temperature_drop = 10;
+  parameter Utilities.Units.Temperature nominal_cold_side_temperature_rise=20;
+  parameter Utilities.Units.Temperature nominal_hot_side_temperature_drop=10;
 
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(

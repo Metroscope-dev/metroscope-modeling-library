@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial.Connectors;
 partial connector FluidPort
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium model";
 
   replaceable flow Units.MassFlowRate Q constrainedby Units.MassFlowRate;

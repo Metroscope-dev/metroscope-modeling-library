@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.FlueGases;
 package Connectors
-  extends Icons.Connectors.FlueGasesConnectorsPackageIcon;
+  extends Utilities.Icons.Connectors.FlueGasesConnectorsPackageIcon;
 
 end Connectors;

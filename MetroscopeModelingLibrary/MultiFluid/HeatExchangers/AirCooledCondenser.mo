@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model AirCooledCondenser
-  package Water = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  package MoistAir = MetroscopeModelingLibrary.Media.MoistAirMedium;
+  package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  package MoistAir = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputArea S;

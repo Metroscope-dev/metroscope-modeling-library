@@ -1,24 +1,24 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Condenser_reverse
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
-  input Units.MassFlowRate Q_turbine(start=150) "kg/s";
-  input Units.SpecificEnthalpy h_turbine(start=1500e3);
+  input Utilities.Units.MassFlowRate Q_turbine(start=150) "kg/s";
+  input Utilities.Units.SpecificEnthalpy h_turbine(start=1500e3);
   input Real P_cold_source(start=5, min=0, nominal=10) "barA";
   input Real T_cold_source(start = 15, min = 0, nominal = 50) "degC";
 
     // Parameters
-  parameter Units.Area S = 100;
-  parameter Units.Height water_height = 1;
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.Height water_height=1;
   parameter Real C_incond = 0;
-  parameter Units.Pressure P_offset = 0;
-  parameter Units.FrictionCoefficient Kfr_cold = 1;
-  parameter Units.VolumeFlowRate Qv_cold = 3.82;
+  parameter Utilities.Units.Pressure P_offset=0;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=1;
+  parameter Utilities.Units.VolumeFlowRate Qv_cold=3.82;
 
     // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
+  output Utilities.Units.HeatExchangeCoefficient Kth;
 
     // Inputs for calibration
   input Real P_cond(start = 0.19e5) "Pa";

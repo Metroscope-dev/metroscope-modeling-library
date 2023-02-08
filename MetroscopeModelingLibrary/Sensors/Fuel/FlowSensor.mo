@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Sensors.Fuel;
 model FlowSensor
-  package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
-  extends MetroscopeModelingLibrary.Icons.Sensors.FuelSensorIcon;
-  extends MetroscopeModelingLibrary.Icons.Sensors.FlowIcon;
+  package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.FuelSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.FlowIcon;
 
   extends Partial.Sensors.FlowSensor(
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,

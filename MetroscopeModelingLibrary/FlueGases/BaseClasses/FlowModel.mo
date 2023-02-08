@@ -1,13 +1,13 @@
 within MetroscopeModelingLibrary.FlueGases.BaseClasses;
 model FlowModel
-  extends MetroscopeModelingLibrary.Icons.BaseClasses.FlueGasesBaseClassIcon;
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.BaseClasses.FlueGasesBaseClassIcon;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
   extends Partial.BaseClasses.FlowModel(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium) annotation (IconMap(primitivesVisible=false));
 
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   Inputs.InputPower W_input(start=0);
   Inputs.InputDifferentialPressure DP_input(start=0);
 equation

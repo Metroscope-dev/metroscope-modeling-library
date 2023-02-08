@@ -1,20 +1,20 @@
 within MetroscopeModelingLibrary.Tests.MoistAir.Pipes;
 model Pipe_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
       // Boundary conditions
-  input Units.Pressure source_P(start=10e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=1e4) "J/kg";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
-  input Units.Fraction source_relative_humidity(start=0.5) "1";
+  input Utilities.Units.Pressure source_P(start=10e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e4) "J/kg";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.Fraction source_relative_humidity(start=0.5) "1";
 
     // Parameters
-  parameter Units.Height delta_z = 1;
+  parameter Utilities.Units.Height delta_z=1;
 
   // Inputs for calibration
   input Real P_out(start=9) "barA";
 
   // Parameters for calibration
-  output Units.FrictionCoefficient Kfr;
+  output Utilities.Units.FrictionCoefficient Kfr;
 
   MetroscopeModelingLibrary.MoistAir.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));

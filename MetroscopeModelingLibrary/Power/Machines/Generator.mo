@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Power.Machines;
 model Generator
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputYield eta(start=0.998) "Generator's efficiency";
   Units.NegativePower W_elec "Electrical power produced by the generator";

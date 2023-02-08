@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.FlueGases.Pipes;
 model Pipe
-  extends MetroscopeModelingLibrary.Icons.Pipes.FlueGasesPipeIcon;
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Pipes.FlueGasesPipeIcon;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
   extends Partial.Pipes.Pipe(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,

@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model PressureCut
-  import MetroscopeModelingLibrary.Units;
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
   input Units.SpecificEnthalpy source_h(start=1e6);

@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Sensors.MoistAir;
 model PressureSensor
-  package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
-  extends MetroscopeModelingLibrary.Icons.Sensors.MoistAirSensorIcon;
-  extends MetroscopeModelingLibrary.Icons.Sensors.PressureIcon;
+  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.MoistAirSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.PressureIcon;
 
   extends Partial.Sensors.PressureSensor(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,

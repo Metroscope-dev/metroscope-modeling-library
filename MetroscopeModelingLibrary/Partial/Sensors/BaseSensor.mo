@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model BaseSensor
-  extends MetroscopeModelingLibrary.Icons.Sensors.InlineSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;
 
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.PositiveMassFlowRate Q_0=100;

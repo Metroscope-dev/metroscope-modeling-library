@@ -1,14 +1,14 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model HXmoistAirWater_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
 
  // Boundary conditions
   input Real P_hot_source(start=3, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_hot_source(start=31.4) "kg/s";
+  input Utilities.Units.MassFlowRate Q_hot_source(start=31.4) "kg/s";
   input Real T_hot_source(start=9.03, nominal = 40, unit="degC");
 
   input Real P_cold_source(start=0.985, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_cold_source(start=700) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold_source(start=700) "kg/s";
   input Real T_cold_source(start = 6.44, nominal = 10,unit="degC");
   //input Real h_cold_source(start = 9e3, min = 0, nominal = 10e4) "degC";
   //input Real T_cold_sink(  start = 7.54, nominal = 10, unit= "degC");
@@ -16,12 +16,12 @@ model HXmoistAirWater_reverse
 
   // Parameters
   parameter String QCp_max_side = "cold";
-  parameter Units.Area S = 100;
+  parameter Utilities.Units.Area S=100;
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
-  output Units.FrictionCoefficient Kfr_hot;
-  output Units.FrictionCoefficient Kfr_cold;
+  output Utilities.Units.HeatExchangeCoefficient Kth;
+  output Utilities.Units.FrictionCoefficient Kfr_hot;
+  output Utilities.Units.FrictionCoefficient Kfr_cold;
 
   // Calibration inputs
   input Real P_cold_out(start = 0.9, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold

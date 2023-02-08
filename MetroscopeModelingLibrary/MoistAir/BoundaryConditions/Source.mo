@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MoistAir.BoundaryConditions;
 model Source
-  extends MetroscopeModelingLibrary.Icons.BoundaryConditions.MoistAirSourceIcon;
-  package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.BoundaryConditions.MoistAirSourceIcon;
+  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   extends Partial.BoundaryConditions.FluidSource(redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out, redeclare package Medium =
         MoistAirMedium)                                                                                                                                           annotation (IconMap(primitivesVisible=false));
 

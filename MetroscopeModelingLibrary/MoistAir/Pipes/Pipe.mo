@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MoistAir.Pipes;
 model Pipe
-  extends MetroscopeModelingLibrary.Icons.Pipes.MoistAirPipeIcon;
-  package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Pipes.MoistAirPipeIcon;
+  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   extends Partial.Pipes.Pipe(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,

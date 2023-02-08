@@ -1,10 +1,11 @@
 within MetroscopeModelingLibrary.Sensors.Power;
 model PowerSensor
-  extends MetroscopeModelingLibrary.Icons.Sensors.PowerSensorIcon;
-  extends MetroscopeModelingLibrary.Icons.Sensors.PowerIcon;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.PowerSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.PowerIcon;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Units.Power W;  // Power in W
+  Utilities.Units.Power W;
+                  // Power in W
   Real W_MW(min=0, nominal=100, start=100); // Power in MW
 
   MetroscopeModelingLibrary.Power.Connectors.Inlet C_in annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));

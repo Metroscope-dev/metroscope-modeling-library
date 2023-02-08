@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.Tests.Fuel;
 package Pipes
-  extends MetroscopeModelingLibrary.Icons.Tests.FuelTestPackageIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestPackageIcon;
 end Pipes;

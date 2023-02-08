@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Power;
 package Connectors
-  extends Icons.Connectors.PowerConnectorsPackageIcon;
+  extends Utilities.Icons.Connectors.PowerConnectorsPackageIcon;
 
 end Connectors;

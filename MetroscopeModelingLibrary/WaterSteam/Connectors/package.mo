@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.WaterSteam;
 package Connectors
-  extends Icons.Connectors.WaterConnectorsPackageIcon;
+  extends Utilities.Icons.Connectors.WaterConnectorsPackageIcon;
 
 end Connectors;

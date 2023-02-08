@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Superheater
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   extends Partial.HeatExchangers.hrsg_monophasic_HX(QCp_max_side = "hot",T_cold_in_0=140 + 273.15,P_cold_in_0 = 3.5 *1e5, Q_cold_0= 11)
  annotation(IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   annotation (Icon(graphics={
           Rectangle(

@@ -1,19 +1,19 @@
 within MetroscopeModelingLibrary.Tests.Fuel.Pipes;
 model Pipe_reverse
-    extends MetroscopeModelingLibrary.Icons.Tests.FuelTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
     // Boundary conditions
-  input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.Pressure source_P(start=1e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
       // Parameters
-  parameter Units.Height delta_z = 1;
+  parameter Utilities.Units.Height delta_z=1;
 
   // Inputs for calibration
   input Real P_out(start=9) "barA";
 
   // Parameters for calibration
-  output Units.FrictionCoefficient Kfr;
+  output Utilities.Units.FrictionCoefficient Kfr;
 
   MetroscopeModelingLibrary.Fuel.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));

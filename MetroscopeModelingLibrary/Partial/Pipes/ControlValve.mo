@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Partial.Pipes;
 partial model ControlValve
   extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoHFlowModel annotation(IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Constants;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
   Inputs.InputCv Cvmax(start=1e4) "Maximum CV";
   Units.Cv Cv(start=1e4) "Cv";

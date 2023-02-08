@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Partial.BoundaryConditions;
 partial model FluidSink
-  extends MetroscopeModelingLibrary.Icons.BoundaryConditions.FluidSinkIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.BoundaryConditions.FluidSinkIcon;
   replaceable package Medium =
       MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // Input Quantities
   Units.SpecificEnthalpy h_in;

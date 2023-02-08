@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model IsoPFlowModel "Flow model with no pressure variation"
   extends FlowModel(P_in_0=P_0, P_out_0=P_0);
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // Initialization parameters
   parameter Units.Pressure P_0 = 1e5;

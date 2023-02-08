@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.Converters;
 model MoistAir_to_FlueGases
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditinos
   input Units.Pressure source_P(start=5e5) "Pa";

@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model FuelHeater
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // Pressure Losses
   Inputs.InputFrictionCoefficient Kfr_cold;

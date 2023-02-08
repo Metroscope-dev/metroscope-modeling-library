@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Power.Machines;
 model Generator_direct
-  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary Condition
   input Units.NegativePower source_W(start=-1e6);

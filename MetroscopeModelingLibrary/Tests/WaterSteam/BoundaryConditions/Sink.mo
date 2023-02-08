@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.BoundaryConditions;
 model Sink
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditinos
   input Units.Pressure sink_P(start=1e5) "Pa";

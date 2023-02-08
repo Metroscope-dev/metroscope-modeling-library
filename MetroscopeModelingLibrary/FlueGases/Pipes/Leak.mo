@@ -7,7 +7,7 @@ model Leak
   Real Q_Mlbh;
 
   // Dummy input for local balance:
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   Inputs.InputDifferentialPressure DP_input(start=0);
 
   Connectors.Inlet C_in annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));

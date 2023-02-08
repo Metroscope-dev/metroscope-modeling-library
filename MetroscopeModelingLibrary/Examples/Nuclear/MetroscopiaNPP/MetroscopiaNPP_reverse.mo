@@ -50,37 +50,55 @@ model MetroscopiaNPP_reverse
 
   // Calibrated parameters (input used for calibration in comment)
     // HP turbines inlet control valve
-    output Units.Cv HP_control_valve_Cvmax; // HP valve opening
+  output Utilities.Units.Cv HP_control_valve_Cvmax;
+                                            // HP valve opening
     // HP Turbines
-    output Units.Cst HPT1_Cst; // HP turbine inlet pressure
-    output Units.Cst HPT2_Cst; // HP extract pressure
-    output Units.Yield turbines_eta_is; // Welec
+  output Utilities.Units.Cst HPT1_Cst;
+                               // HP turbine inlet pressure
+  output Utilities.Units.Cst HPT2_Cst;
+                               // HP extract pressure
+  output Utilities.Units.Yield turbines_eta_is;
+                                        // Welec
     // Superheater inlet control valve
-    output Units.Cv superheater_control_valve_Cvmax; // Superheater bleed pressure
+  output Utilities.Units.Cv superheater_control_valve_Cvmax;
+                                                     // Superheater bleed pressure
     // Superheater
-    output Units.FrictionCoefficient superheater_Kfr_hot; // Superheater drains pressure
-    output Units.HeatExchangeCoefficient superheater_Kth; // Superheater steam outlet temperature
+  output Utilities.Units.FrictionCoefficient superheater_Kfr_hot;
+                                                          // Superheater drains pressure
+  output Utilities.Units.HeatExchangeCoefficient superheater_Kth;
+                                                          // Superheater steam outlet temperature
     // LP Turbines
-    output Units.Cst LPT1_Cst; // HP turbine outlet pressure
-    output Units.Cst LPT2_Cst; // LP extract pressure
+  output Utilities.Units.Cst LPT1_Cst;
+                               // HP turbine outlet pressure
+  output Utilities.Units.Cst LPT2_Cst;
+                               // LP extract pressure
     // Condenser
-    output Units.HeatExchangeCoefficient condenser_Kth; // P cond
-    output Units.PositiveMassFlowRate condenser_Q_cold; // Circulating water outlet temperature
+  output Utilities.Units.HeatExchangeCoefficient condenser_Kth;
+                                                        // P cond
+  output Utilities.Units.PositiveMassFlowRate condenser_Q_cold;
+                                                        // Circulating water outlet temperature
     // Extraction pump
     output Real extraction_pump_hn; // Extraction pump outlet pressure
     output Real extraction_pump_rh; // Extraction pump outlet temperature
     // LP Heater
-    output Units.HeatExchangeCoefficient LP_heater_Kth; // LP heater outlet temperature
-    output Units.FrictionCoefficient LP_heater_Kfr_cold; // LP heater outlet pressure
-    output Units.Cv LP_heater_drains_control_valve_Cvmax; // LP heater drains valve opening
+  output Utilities.Units.HeatExchangeCoefficient LP_heater_Kth;
+                                                        // LP heater outlet temperature
+  output Utilities.Units.FrictionCoefficient LP_heater_Kfr_cold;
+                                                         // LP heater outlet pressure
+  output Utilities.Units.Cv LP_heater_drains_control_valve_Cvmax;
+                                                          // LP heater drains valve opening
     // Feedwater pump
     output Real feedwater_pump_hn; // Feedwater pump outlet pressure
     output Real feedwater_pump_rh; // Feedwater pump outlet temperature
     // HP Heater
-    output Units.HeatExchangeCoefficient HP_heater_Kth_cond; // HP heater outlet temperature
-    output Units.HeatExchangeCoefficient HP_heater_Kth_subc; // HP heater drains temperature
-    output Units.FrictionCoefficient HP_heater_Kfr_cold; // HP heater outlet pressure
-    output Units.Cv HP_heater_drains_control_valve_Cvmax; // HP heater drains valve opening
+  output Utilities.Units.HeatExchangeCoefficient HP_heater_Kth_cond;
+                                                             // HP heater outlet temperature
+  output Utilities.Units.HeatExchangeCoefficient HP_heater_Kth_subc;
+                                                             // HP heater drains temperature
+  output Utilities.Units.FrictionCoefficient HP_heater_Kfr_cold;
+                                                         // HP heater outlet pressure
+  output Utilities.Units.Cv HP_heater_drains_control_valve_Cvmax;
+                                                          // HP heater drains valve opening
 
     WaterSteam.HeatExchangers.SteamGenerator steam_generator annotation (Placement(transformation(extent={{-192,-116},{-148,-24}})));
   Sensors.WaterSteam.FlowSensor Q_feedwater_sensor annotation (Placement(transformation(extent={{-104,-77},{-118,-63}})));

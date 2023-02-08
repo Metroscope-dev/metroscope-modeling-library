@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MoistAir.BoundaryConditions;
 model Sink
-  extends MetroscopeModelingLibrary.Icons.BoundaryConditions.MoistAirSinkIcon;
-  package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.BoundaryConditions.MoistAirSinkIcon;
+  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   extends Partial.BoundaryConditions.FluidSink(redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in, redeclare package Medium =
         MoistAirMedium)                                                                                                                                       annotation (IconMap(primitivesVisible=
           false));

@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.Tests.Sensors.FlueGases;
 model FlowSensor_faulty
   extends FlowSensor(source_Q_sensor(faulty = true));
 
-  Units.MassFlowRate Failure_mass_flow_rate_bias(start=0);
+  Utilities.Units.MassFlowRate Failure_mass_flow_rate_bias(start=0);
 equation
   Failure_mass_flow_rate_bias = 0 + 50 * time; // bias of -50 means that real flow = measured flow - 50
   source_Q_sensor.mass_flow_rate_bias = Failure_mass_flow_rate_bias;

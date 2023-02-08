@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.MoistAir;
 package Connectors
-  extends Icons.Connectors.MoistAirConnectorsPackageIcon;
+  extends Utilities.Icons.Connectors.MoistAirConnectorsPackageIcon;
 end Connectors;

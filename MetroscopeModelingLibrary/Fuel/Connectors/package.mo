@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.Fuel;
 package Connectors
-  extends Icons.Connectors.FuelConnectorsPackageIcon;
+  extends Utilities.Icons.Connectors.FuelConnectorsPackageIcon;
 end Connectors;
