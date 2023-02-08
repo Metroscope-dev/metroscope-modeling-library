@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `MPa` and `kPa` pressure units in pressure sensors [PR#362](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/362), fixing [#361](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/361)
 
 ### Changed
+- Updated leak model so they use inheritance [PR#373](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/373)
 - [PR#368](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/368) the `fouling` fault in `Pipe` and `closed` fault in `SlideVale` are changed to percentage. The values given to those faults should be a percentage (%) and not a value less than 1 as before. Therefore, it is a breaking change for faulty models in prevous versions.
 
 ### Fixed
