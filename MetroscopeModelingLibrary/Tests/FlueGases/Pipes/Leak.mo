@@ -28,5 +28,5 @@ equation
   leak.Q = Q;
 
   connect(source.C_out, leak.C_in) annotation (Line(points={{-85,0},{-10,0}}, color={95,95,95}));
-  connect(leak.C_out, sink.C_in) annotation (Line(points={{10,0.2},{20,0.2},{20,0},{85,0}}, color={95,95,95}));
+  connect(leak.C_out, sink.C_in) annotation (Line(points={{10,0},{20,0},{20,0},{85,0}},     color={95,95,95}));
 end Leak;

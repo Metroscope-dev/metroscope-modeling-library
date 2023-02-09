@@ -15,7 +15,7 @@ model Leak
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak         leak        annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak leak annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
 equation
 
   // Boundary conditions
@@ -27,5 +27,5 @@ equation
   leak.Q = Q;
 
   connect(source.C_out, leak.C_in) annotation (Line(points={{-85,0},{-10,0}}, color={28,108,200}));
-  connect(leak.C_out, sink.C_in) annotation (Line(points={{10,0.2},{48,0.2},{48,0},{85,0}}, color={28,108,200}));
+  connect(leak.C_out, sink.C_in) annotation (Line(points={{10,0},{48,0},{48,0},{85,0}},     color={28,108,200}));
 end Leak;
