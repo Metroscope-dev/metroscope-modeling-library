@@ -53,5 +53,5 @@ model Leak
           extent={{18,-12},{42,-20}},
           lineColor={28,108,200},
           fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)));
+          fillPattern=FillPattern.Solid)}));
 end Leak;
