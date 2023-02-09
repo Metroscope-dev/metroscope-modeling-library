@@ -80,7 +80,7 @@ equation
   Xi = inStream(C_in.Xi_outflow);
 
   // No flow reversal in stream connector
-  C_in.h_outflow = 0; // Never used arbitrary value
+  C_in.h_outflow = 1e6; // Never used arbitrary value
   C_in.Xi_outflow = zeros(Medium.nXi); // No flow reversal
 
   // ------ States ------
