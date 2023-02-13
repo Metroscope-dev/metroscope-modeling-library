@@ -10,7 +10,7 @@ If it fixes an issue, mention the issue using closing key words ([how to do that
 - [ ] Bugfix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Refactoring change (non-breaking change which does not add functionality)
-- [ ] Release & Version Update (when cumulative changes justify a release)
+- [ ] Release & Version Update (resulting in a change of the version number in `package.mo`)
 
 
 ## Checklist
