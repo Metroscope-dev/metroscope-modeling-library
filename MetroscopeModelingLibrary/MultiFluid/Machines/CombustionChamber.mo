@@ -11,7 +11,8 @@ model CombustionChamber
   Units.PositiveMassFlowRate Q_exhaust;
 
   // Performance parameters
-  Inputs.InputDifferentialPressure DP;
+  //Inputs.Input
+  Inputs.InputFrictionCoefficient Kfr(start=0);
   Inputs.InputYield eta(start=0.99457); // The value given is found in performance document of GE
 
   // Power released by the combustion
@@ -64,6 +65,7 @@ model CombustionChamber
         origin={0,-22})));
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
   FlueGases.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
+  FlueGases.Pipes.Pipe PressureLoss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
 equation
 
   // Definitions
@@ -99,7 +101,9 @@ equation
   Q_exhaust = Q_air + Q_fuel;
 
   // Mechanical Balance
-  sink_air.P_in - source_exhaust.P_out = DP;
+  sink_air.P_in - source_exhaust.P_out = 0;
+  PressureLoss.delta_z = 0;
+  PressureLoss.Kfr = Kfr;
 
   // Energy balance
   Wth = eta*Q_fuel*LHV;
@@ -120,7 +124,8 @@ equation
 
   connect(sink_air.C_in, inlet) annotation (Line(points={{-27,0},{-100,0}}, color={95,95,95}));
   connect(sink_fuel.C_in, inlet1) annotation (Line(points={{-2.77556e-16,-27},{-2.77556e-16,-63.5},{0,-63.5},{0,-100}}, color={213,213,0}));
-  connect(source_exhaust.C_out, outlet) annotation (Line(points={{27,0},{100,0}}, color={95,95,95}));
+  connect(source_exhaust.C_out, PressureLoss.C_in) annotation (Line(points={{27,0},{46,0}}, color={95,95,95}));
+  connect(PressureLoss.C_out, outlet) annotation (Line(points={{66,0},{100,0}}, color={95,95,95}));
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

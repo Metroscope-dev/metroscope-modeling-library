@@ -15,7 +15,7 @@ model CombustionChamber
   input Units.SpecificEnthalpy LHV_plant(start=47276868) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
-  parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
+  parameter Units.FrictionCoefficient Kfr = 0.1;
 
   MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel annotation (Placement(transformation(
@@ -43,7 +43,7 @@ equation
   source_fuel.X_molar_CO2=0.01;
 
   // Parameters
-  combustionChamber.DP = combustion_chamber_pressure_loss;
+  combustionChamber.Kfr = Kfr;
   combustionChamber.eta = 0.999;
 
   connect(combustionChamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33},{2.77556e-16,-33}}, color={213,213,0}));

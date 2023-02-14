@@ -14,7 +14,7 @@ model GasTurbine_direct
 
   // Parameters
   input Units.SpecificEnthalpy LHV_plant(start = 48130e3) "Directly assigned in combustion chamber modifiers";
-  parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
+  parameter Units.FrictionCoefficient Kfr = 0.1;
   parameter Real compression_rate = 17;
   parameter Real compressor_eta_is = 0.9;
   parameter Real turbine_compression_rate = 17;
@@ -46,7 +46,7 @@ equation
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.DP = combustion_chamber_pressure_loss;
+  combustionChamber.Kfr = Kfr;
   combustionChamber.eta = combustionChamber_eta;
   airCompressor.tau = compression_rate;
   airCompressor.eta_is = compressor_eta_is;
