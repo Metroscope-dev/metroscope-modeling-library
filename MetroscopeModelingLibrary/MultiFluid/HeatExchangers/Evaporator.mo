@@ -90,9 +90,9 @@ equation
   Q_cold = cold_side_heating.Q;
   Q_hot = hot_side_vaporising.Q;
   T_cold_in = cold_side_heating.T_in;
-  T_cold_out = cold_side_heating.T_out;
+  T_cold_out = cold_side_vaporising.T_out;
   T_hot_in = hot_side_vaporising.T_in;
-  T_hot_out = hot_side_vaporising.T_out;
+  T_hot_out = hot_side_heating.T_out;
   Tsat = cold_side_heating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
