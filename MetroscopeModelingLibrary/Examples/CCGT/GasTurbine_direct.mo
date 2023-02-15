@@ -46,7 +46,7 @@ equation
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.Kfr = combustionChamber_Kfr;
+  combustionChamber.Kfr = combustion_chamber_Kfr;
   combustionChamber.eta = combustionChamber_eta;
   airCompressor.tau = compression_rate;
   airCompressor.eta_is = compressor_eta_is;
