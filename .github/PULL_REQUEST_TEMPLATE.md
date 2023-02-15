@@ -7,11 +7,15 @@ If it fixes an issue, mention the issue using closing key words ([how to do that
 
 ## Type of change <!--- replace `[ ]` by `[x]` to render checkboxes properly -->
 
-- [ ] Bugfix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Refactoring change (non-breaking change which does not add functionality)
-- [ ] Release & Version Update (resulting in a change of the version number in `package.mo`)
+- [ ] Bugfix
+- [ ] New feature
+- [ ] Refactoring change
+- [ ] Release & Version Update (don't forget to change the version number in `package.mo`)
 
+Will it break anything in previous models ?
+
+- [ ] Breaking change (If yes, make sure to point it out in the changelog)
+- [ ] Non-Breaking change
 
 ## Checklist
 
