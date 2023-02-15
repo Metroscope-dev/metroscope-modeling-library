@@ -14,7 +14,7 @@ model GasTurbine_reverse
 
   // Parameters
   input Units.SpecificEnthalpy LHV_plant( start=48130e3) "Directly assigned in combustion chamber modifiers";
-  parameter Units.FrictionCoefficient Kfr = 0.1;
+  parameter Units.FrictionCoefficient combustion_chamber_Kfr = 0.1;
   parameter Real eta_mech = 0.99;
   parameter Real combustionChamber_eta = 0.9999;
 
@@ -62,7 +62,7 @@ equation
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.Kfr = Kfr;
+  combustionChamber.Kfr = combustionChamber_Kfr;
   combustionChamber.eta = combustionChamber_eta;
   gasTurbine.eta_mech = eta_mech;
 
