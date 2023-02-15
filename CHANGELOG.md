@@ -9,13 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## MML-v3.4.0
+
+### Added
+
 - Added a version number in root `package.mo`, to allow appropriate versioning in models, using `uses(MetroscopeModelingLibrary(version="3.1.0"))` annotation. [PR#364](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/364)
 - Added `MPa` and `kPa` pressure units in pressure sensors [PR#362](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/362), fixing [#361](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/361)
 
 ### Changed
 
 - Updated leak model so they use inheritance [PR#373](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/373)
-- Abstract sensors connectors are renamed `C_in` and `C_out` [PR#372](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/372)
+- Abstract sensors connectors are renamed `C_in` and `C_out`, breaking change for topological models [PR#372](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/372)
 - Changed default unused value for enthalpy in opposite flow direction to 1e6 [PR#374](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/374)
 - [PR#368](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/368) the `fouling` fault in `Pipe` and `closed` fault in `SlideVale` are changed to percentage. The values given to those faults should be a percentage (%) and not a value less than 1 as before. Therefore, it is a breaking change for faulty models in prevous versions.
 - [PR#377](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/377) the `DP` in the `CombustionChamber` model is replaced by a `Kfr` by adding a pipe. This is a breaking change for models using previous versions.
