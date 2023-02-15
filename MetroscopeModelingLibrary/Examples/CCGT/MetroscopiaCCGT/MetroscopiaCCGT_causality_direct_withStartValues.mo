@@ -1113,7 +1113,6 @@ model MetroscopiaCCGT_causality_direct_withStartValues
       h_out(start=63375.0),
       state_out(T(start=288.15), h(start=63375.0))),
     combustionChamber(
-      DP(start=10000.0),
       Q_air(start=500.0),
       Q_exhaust(start=510.5244),
       Q_fuel(start=10.524413),
