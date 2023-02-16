@@ -5,6 +5,7 @@ partial model FlowModel "Basic fluid transport brick for all components"
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
+  parameter Boolean use_homotopy = true;
   // ------ Initialization parameters ------
   // Temperatures
   parameter Units.Temperature T_in_0 = 300;
@@ -66,7 +67,11 @@ partial model FlowModel "Basic fluid transport brick for all components"
 equation
   // ------ Input Quantities ------
   // Enthalpies
-  h_in = inStream(C_in.h_outflow);
+  if use_homotopy then
+    h_in = homotopy(inStream(C_in.h_outflow), Medium.specificEnthalpy_pTX(P_in_0, T_in_0, Xi));
+  else
+    h_in = inStream(C_in.h_outflow);
+  end if;
   h_out = C_out.h_outflow;
 
   // Mass flow rate
