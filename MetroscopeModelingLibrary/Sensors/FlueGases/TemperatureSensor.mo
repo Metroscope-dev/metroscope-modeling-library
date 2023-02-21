@@ -7,5 +7,6 @@ model TemperatureSensor
   extends Partial.Sensors.TemperatureSensor(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
+    redeclare MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPHFlowModel isoPHFlowModel,
     redeclare package Medium = FlueGasesMedium) annotation (IconMap(primitivesVisible=false));
 end TemperatureSensor;

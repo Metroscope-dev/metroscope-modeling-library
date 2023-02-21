@@ -7,5 +7,6 @@ model FlowSensor
   extends Partial.Sensors.FlowSensor(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
+    redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel isoPHFlowModel,
     redeclare package Medium = MoistAirMedium) annotation (IconMap(primitivesVisible=false));
 end FlowSensor;
