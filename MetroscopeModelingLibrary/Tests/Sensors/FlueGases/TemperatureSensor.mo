@@ -14,7 +14,6 @@ equation
   source.P_out = source_P;
   source.Q_out = source_Q;
   source.h_out = source_h;
-  //T_sensor.T = 298.15; // does not initialize if set T_out instead of h_out
 
   source.Xi_out = {0.768,0.232,0.0,0.0,0.0};
 

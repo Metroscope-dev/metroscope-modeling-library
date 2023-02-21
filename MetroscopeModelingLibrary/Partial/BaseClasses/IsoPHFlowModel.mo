@@ -11,11 +11,13 @@ partial model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
   // Input Quantities
   Units.SpecificEnthalpy h(start=h_0) "Enthalpy of the fluid into the component";
   Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
+  Units.Temperature T(start=T_0) "Temperature of the fluid into the component";
 
 equation
   // Input Quantities
   P = P_in;
   h = h_in;
+  T = T_in;
 
   // Conservation equation
   DP = 0;
