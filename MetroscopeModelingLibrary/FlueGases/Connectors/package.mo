@@ -2,6 +2,7 @@ within MetroscopeModelingLibrary.FlueGases;
 package Connectors
   extends MetroscopeModelingLibrary.Utilities.Icons.PackageIcon;
 
+
   annotation (Icon(graphics={
         Rectangle(
           extent={{20,30},{78,-28}},
@@ -19,5 +20,4 @@ package Connectors
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid)}));
-
 end Connectors;

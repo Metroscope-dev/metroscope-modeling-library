@@ -7,5 +7,6 @@ model TemperatureSensor
   extends Partial.Sensors.TemperatureSensor(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
+    redeclare MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPHFlowModel isoPHFlowModel,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
 end TemperatureSensor;
