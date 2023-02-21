@@ -23,10 +23,8 @@ model StodolaTurbine
   Utilities.Units.MassFraction x_inner(start=x_inner_0);
   Utilities.Units.MassFraction xm(start=xm_0);
 
-  Utilities.Units.SpecificEnthalpy h_real(start=h_out_0);
-                                                // Enthalpy after real decompression
-  Utilities.Units.SpecificEnthalpy h_is(start=h_out_0/0.8);
-                                                  // Enthalpy after isentropic decompression
+  Utilities.Units.SpecificEnthalpy h_real(start=h_out_0); // Enthalpy after real decompression
+  Utilities.Units.SpecificEnthalpy h_is(start=h_out_0/0.8); // Enthalpy after isentropic decompression
   Medium.ThermodynamicState state_is; // Thermodynamic state after isentropic decompression
 
   // Liq/Vap enthalpies
