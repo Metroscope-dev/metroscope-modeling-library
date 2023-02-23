@@ -15,7 +15,7 @@ model TurboPump "turbine-driven pump"
   Inputs.InputYield b3(start=0.845) "Constant coef. of the pump efficiency characteristics rh = f(vol_flow) (s.u.)";
 
   Units.Yield rh(start=1) "Hydraulic efficiency";
-  Units.Yield rm(start=1) "Mechanical efficiency";
+  Inputs.InputYield rm(start=1) "Mechanical efficiency";
   Inputs.InputYield rhmin(start=0.2) "Minimal hydraulic efficiency";
   Units.Height hn(start=227.92888) "Pump head";
 
@@ -41,10 +41,10 @@ model TurboPump "turbine-driven pump"
   Connectors.Outlet C_pump_out annotation (Placement(transformation(extent={{-110,-150},{-90,-130}}), iconTransformation(extent={{-110,-150},{-90,-130}})));
   Connectors.Inlet C_turbine_in annotation (Placement(transformation(extent={{-70,50},{-50,70}}), iconTransformation(extent={{-70,50},{-50,70}})));
   Connectors.Outlet C_turbine_out annotation (Placement(transformation(extent={{90,250},{110,270}}), iconTransformation(extent={{90,250},{110,270}})));
-  Modelica.Blocks.Interfaces.RealInput pump_VRot "Pump rotational speed" annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput VRot "Pump rotational speed" annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
-        origin={0,-178}),iconTransformation(
+        origin={0,-178}), iconTransformation(
         extent={{-9,-9},{9,9}},
         rotation=90,
         origin={1,-249})));
@@ -81,8 +81,7 @@ equation
                                                                                                         color={28,108,200}));
   connect(C_turbine_in, turbine.C_in) annotation (Line(points={{-60,60},{-36,60},{-36,40},{-10,40}}, color={28,108,200}));
   connect(turbine.C_out, C_turbine_out) annotation (Line(points={{10,40},{46,40},{46,260},{100,260}}, color={28,108,200}));
-  connect(pump.VRot, pump_VRot) annotation (Line(points={{0,-132},{0,-178}},
-                                                                           color={0,0,127}));
+  connect(pump.VRot, VRot) annotation (Line(points={{0,-132},{0,-178}}, color={0,0,127}));
   connect(turbine.C_W_out, pump.C_power) annotation (Line(points={{10,31.6},{10,-104},{0,-104},{0,-109.2}}, color={244,125,35}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-260,-260},{260,260}}), graphics={
         Rectangle(
