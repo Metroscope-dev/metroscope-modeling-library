@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sensors now contain a flow model to ease convergence [PR#383](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/383)
 
 ### Fixed
+- Pipes now can have a unique flow direction according to the pressure difference direction [PR#385](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/385)
 
 ## MML-v3.4.0
 
