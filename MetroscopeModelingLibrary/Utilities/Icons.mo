@@ -632,7 +632,6 @@ package Icons
             fillPattern=FillPattern.Solid,
             points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}));
   end Tests;
-
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
