@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `kPa` and `MPa` units are splitted between gauge and absolute in pressure sensor [PR#391](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/391)
+
 ### Fixed
 
 ## MML-v3.4.1

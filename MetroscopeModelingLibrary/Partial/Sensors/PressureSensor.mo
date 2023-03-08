@@ -7,32 +7,30 @@ partial model PressureSensor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Real P_barA(unit="bar",
-              nominal=P_0*Constants.Pa_to_barA,
-              start=P_0*Constants.Pa_to_barA); // Absolute pressure in bar
-  Real P_barG(unit="bar",
-              nominal=P_0*Constants.Pa_to_barA -Constants.P0_barG_in_barA,
-              start=P_0*Constants.Pa_to_barA -Constants.P0_barG_in_barA);  // Relative (gauge) pressure in bar
-  Real P_mbar(unit="mbar",
-              nominal=Constants.Pa_to_mbar,
-              start=P_0*Constants.Pa_to_mbar); // Pressure in milibar
-  Real P_psiA(nominal=P_0*Constants.Pa_to_psiA,
-              start=P_0*Constants.Pa_to_psiA); // Absolute pressure in psi
-  Real P_psiG(nominal=P_0*Constants.Pa_to_psiA -Constants.P0_psiG_in_psiA,
-              start=P_0*Constants.Pa_to_psiA -Constants.P0_psiG_in_psiA);  // Relative (gauge) pressure in psi
-  Real P_inHg(nominal=P_0*Constants.Pa_to_inHg,
-             start=P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
-  Real P_MPa(nominal=P_0*Constants.Pa_to_MPa,
-             start=P_0*Constants.Pa_to_MPa); // Absolute pressure in inches of mercury
-  Real P_kPa(nominal=P_0*Constants.Pa_to_kPa,
-             start=P_0*Constants.Pa_to_kPa); // Absolute pressure in inches of mercury
+  Real P_barG(nominal = P_0*Constants.Pa_to_barA - Constants.P0_barG_in_barA, start = P_0*Constants.Pa_to_barA - Constants.P0_barG_in_barA); // Relative (gauge) pressure in bar
+  Real P_psiG(nominal = P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA, start = P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA); // Relative (gauge) pressure in psi
+  Real P_MPaG(nominal = P_0*Constants.Pa_to_MPaA - Constants.P0_MPaG_in_MPaA, start = P_0*Constants.Pa_to_MPaA - Constants.P0_MPaG_in_MPaA); // Relative (gauge) pressure in mega pascal
+  Real P_kPaG(nominal = P_0*Constants.Pa_to_kPaA - Constants.P0_kPaG_in_kPaA, start = P_0*Constants.Pa_to_kPaA - Constants.P0_kPaG_in_kPaA); // Relative (gauge) pressure in kilo pascal
+
+  Real P_barA(nominal = P_0*Constants.Pa_to_barA, start = P_0*Constants.Pa_to_barA, unit="bar"); // Absolute pressure in bar
+  Real P_psiA(nominal = P_0*Constants.Pa_to_psiA, start = P_0*Constants.Pa_to_psiA); // Absolute pressure in psi
+  Real P_MPaA(nominal = P_0*Constants.Pa_to_MPaA, start = P_0*Constants.Pa_to_MPaA); // Absolute pressure in mega pascal
+  Real P_kPaA(nominal = P_0*Constants.Pa_to_kPaA, start = P_0*Constants.Pa_to_kPaA); // Absolute pressure in kilo pascal
+
+  Real P_inHg(nominal = P_0*Constants.Pa_to_inHg, start = P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
+  Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
+
 equation
-  P *Constants.Pa_to_barA  = P_barA;
-  P *Constants.Pa_to_mbar  = P_mbar;
-  P *Constants.Pa_to_psiA  = P_psiA;
-  P *Constants.Pa_to_inHg  = P_inHg;
-  P *Constants.Pa_to_MPa  = P_MPa;
-  P *Constants.Pa_to_kPa  = P_kPa;
-  P_barA = P_barG +Constants.P0_barG_in_barA;
-  P_psiA = P_psiG +Constants.P0_psiG_in_psiA;
+  P_barA = P * Constants.Pa_to_barA;
+  P_psiA = P * Constants.Pa_to_psiA;
+  P_MPaA = P * Constants.Pa_to_MPaA;
+  P_kPaA = P * Constants.Pa_to_kPaA;
+
+  P_barG = P_barA - Constants.P0_barG_in_barA;
+  P_psiG = P_psiA - Constants.P0_psiG_in_psiA;
+  P_MPaG = P_MPaA - Constants.P0_MPaG_in_MPaA;
+  P_kPaG = P_kPaA - Constants.P0_kPaG_in_kPaA;
+
+  P_mbar = P * Constants.Pa_to_mbar;
+  P_inHg = P * Constants.Pa_to_inHg;
 end PressureSensor;
