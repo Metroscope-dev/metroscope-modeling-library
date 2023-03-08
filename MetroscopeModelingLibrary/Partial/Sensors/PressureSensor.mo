@@ -7,8 +7,8 @@ partial model PressureSensor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Real P_barG(nominal = P_0*Constants.Pa_to_barA - Constants.P0_barG_in_barA, start = P_0*Constants.Pa_to_barA - Constants.P0_barG_in_barA);  // Relative (gauge) pressure in bar
-  Real P_psiG(nominal = P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA, start = P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA);  // Relative (gauge) pressure in psi
+  Real P_barG(nominal = P_0*Constants.Pa_to_barA - Constants.P0_barG_in_barA, start = P_0*Constants.Pa_to_barA - Constants.P0_barG_in_barA); // Relative (gauge) pressure in bar
+  Real P_psiG(nominal = P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA, start = P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA); // Relative (gauge) pressure in psi
   Real P_MPaG(nominal = P_0*Constants.Pa_to_MPaA - Constants.P0_MPaG_in_MPaA, start = P_0*Constants.Pa_to_MPaA - Constants.P0_MPaG_in_MPaA); // Relative (gauge) pressure in mega pascal
   Real P_kPaG(nominal = P_0*Constants.Pa_to_kPaA - Constants.P0_kPaG_in_kPaA, start = P_0*Constants.Pa_to_kPaA - Constants.P0_kPaG_in_kPaA); // Relative (gauge) pressure in kilo pascal
 
