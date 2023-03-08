@@ -15,3 +15,4 @@ HXmoistAirWater_reverse
 AirCooledCondenser_reverse
 AirCooledCondenser_direct
 AirCooledCondenser_faulty
+AirCooledCondenser_NTU_reverse

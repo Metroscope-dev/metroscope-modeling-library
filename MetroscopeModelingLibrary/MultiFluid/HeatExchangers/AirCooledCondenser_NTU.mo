@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
-model AirCooledCondenser
+model AirCooledCondenser_NTU
   package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   package MoistAir = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
@@ -13,7 +13,7 @@ model AirCooledCondenser
   Units.HeatExchangeCoefficient Kth_subc;
   Inputs.InputFrictionCoefficient Kfr_hot;
 
-  Units.Power W;
+  Units.Power W_cond;
   Units.Power W_subc;
 
   Units.VolumeFlowRate Qv_cold(start=Qv_cold_0);
@@ -57,7 +57,7 @@ model AirCooledCondenser
   parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
 
   MetroscopeModelingLibrary.MoistAir.Connectors.Inlet
-                            C_cold_in(Q(start=Q_cold_0),P(start=P_cold_in_0)) annotation (
+                            C_cold_in(Q(start=Q_cold_0)) annotation (
       Placement(transformation(extent={{-100,-10},{-80,10}}),iconTransformation(
           extent={{-100,-10},{-80,10}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in(Q(start=
@@ -121,21 +121,21 @@ model AirCooledCondenser
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-54,76})));
-  Power.HeatExchange.LMTDHeatExchange heatExchange_condensing annotation (
-      Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-16,12})));
   WaterSteam.BaseClasses.IsoPFlowModel hot_side_subcooling
     annotation (Placement(transformation(extent={{22,18},{46,42}})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPFlowModel
     cold_side_subcooling
     annotation (Placement(transformation(extent={{20,-20},{44,4}})));
-  Power.HeatExchange.LMTDHeatExchange heatExchange_subcooling annotation (
+  Power.HeatExchange.NTUHeatExchange heatExchange_condensing annotation (
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={32,12})));
+        origin={-14,10})));
+  Power.HeatExchange.NTUHeatExchange heatExchange_subcooling annotation (
+      Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={34,12})));
 equation
 
   // Failure modes
@@ -155,13 +155,10 @@ equation
   T_cold_in = cold_side_condensing.T_in;
   T_cold_out = cold_side_subcooling.T_out;
 
-
-  cold_side_condensing.W = W;
+  cold_side_condensing.W = W_cond;
   cold_side_subcooling.W = W_subc;
 
   P_tot = incondensables_in.P_in;
-
-
 
   // Incondensables
   P_incond = P_offset + R * (C_incond + air_intake) * Tsat;  // Ideal gaz law
@@ -181,18 +178,18 @@ equation
 
     // Saturation
     Psat = hot_side_condensing.P_in;
-    Tsat = hot_side_condensing.T_in;
+    Tsat = hot_side_condensing.T_out;
     hot_side_condensing.h_out = Water.bubbleEnthalpy(Water.setSat_T(Tsat));
 
     // Heat Exchange
-    heatExchange_condensing.W = W;
+    heatExchange_condensing.config = "condenser";
+    heatExchange_condensing.W = W_cond;
     heatExchange_condensing.S = S;
     heatExchange_condensing.Kth = Kth*(1 - fouling/100);
     heatExchange_condensing.T_cold_in = T_cold_in;
     heatExchange_condensing.T_hot_in = T_hot_in;
-    heatExchange_condensing.T_cold_out = cold_side_condensing.T_out;
-    heatExchange_condensing.T_hot_out = hot_side_condensing.T_out;
-
+    heatExchange_condensing.Cp_cold = MoistAir.specificHeatCapacityCp(cold_side_condensing.state_in);
+    heatExchange_condensing.Cp_hot = 0; // Not used by NTU method in condenser mode
 
   /* Subcooling */
 
@@ -200,16 +197,14 @@ equation
     hot_side_subcooling.W + cold_side_subcooling.W = 0;
 
     // Heat exchange
+    heatExchange_subcooling.config = "monophasic_counter_current";
     heatExchange_subcooling.W = W_subc;
     heatExchange_subcooling.S = S_subc;
     heatExchange_subcooling.Kth = Kth_subc * (1-fouling/100);
     heatExchange_subcooling.T_cold_in = cold_side_subcooling.T_in;
-    heatExchange_subcooling.T_cold_out = T_cold_out;
     heatExchange_subcooling.T_hot_in = hot_side_subcooling.T_in;
-    heatExchange_subcooling.T_hot_out = T_hot_out;
-
-
-
+    heatExchange_subcooling.Cp_cold = MoistAir.specificHeatCapacityCp(cold_side_subcooling.state_in);
+    heatExchange_subcooling.Cp_hot = Water.specificHeatCapacityCp(hot_side_subcooling.state_in);
 
   connect(C_cold_out, C_cold_out)
     annotation (Line(points={{88,0},{88,0}},     color={28,108,200}));
@@ -472,4 +467,4 @@ equation
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid)}),                      Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
-end AirCooledCondenser;
+end AirCooledCondenser_NTU;
