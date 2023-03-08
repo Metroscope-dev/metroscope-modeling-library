@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model AirCooledCondenser_faulty
-  extends AirCooledCondenser_direct(airCooledCondenser(faulty=true));
+  extends AirCooledCondenser_direct(airCooledCondenser(subcooling=true, faulty=true));
 
   Real Failure_fouling(start=0);
   Real Failure_air_intake(start=0);

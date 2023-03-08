@@ -9,49 +9,50 @@ model AirCooledCondenser_reverse
 
   input Utilities.Units.MassFlowRate Q_cold(start=1800) "kg/s";
   input Real P_cold_source(start=1.002,nominal=1.002) "barA";
-  input Real T_cold_source(start=16) "degC";
+  input Real T_cold_source(start=10) "degC";
   input Utilities.Units.Fraction cold_source_relative_humidity=0.80 "1";
 
    // Parameters
   parameter Utilities.Units.Pressure P_offset=0;
   parameter Real C_incond = 0;
   parameter Utilities.Units.Area S = 130000 "m2";
-  parameter Utilities.Units.Area S_subc = 200 "m2";
+  parameter Utilities.Units.Area S_subc = 13000 "m2";
 
   // Calibrated parameters
   output Utilities.Units.HeatExchangeCoefficient Kth(start=30);
-  output Utilities.Units.HeatExchangeCoefficient Kth_subc(start=0);
+  output Utilities.Units.HeatExchangeCoefficient Kth_subc(start=10);
 
   parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
 
   //Sensor for calibration
-  input Real T_subc(start=42.3) "degC";
+  input Real T_subc(start=39) "degC";
   input Real P_cond(start=91) "mbarA";
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,50})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
+        origin={0,70})));
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink(h_in(start=175838.2)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-64})));
+        origin={0,-62})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(h_out(start=36462.457))
     annotation (Placement(transformation(extent={{-56,-10},{-36,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink
     annotation (Placement(transformation(extent={{34,-10},{54,10}})));
-  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser
+  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser(subcooling=true)
     annotation (Placement(transformation(extent={{-16,-16},{16,20}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cond_sensor
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor
+                                                              T_cond_sensor
     annotation (Placement(transformation(
-        extent={{-6.75,-6.75},{6.75,6.75}},
+        extent={{-7,-7},{7,7}},
         rotation=270,
-        origin={0,-46})));
+        origin={-1,-37})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor
     annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
-        origin={-1,33})));
+        origin={1,37})));
 equation
 
   //Hot source
@@ -80,19 +81,18 @@ equation
   P_cond_sensor.P_mbar  = P_cond;
 
 
-  connect(condensate_sink.C_in,T_cond_sensor. C_out) annotation (Line(points={{8.88178e-16,
-          -59},{8.88178e-16,-52.75},{-1.22125e-15,-52.75}},
-                                           color={28,108,200}));
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{14.4,0},{39,0}}, color={85,170,255}));
   connect(airCooledCondenser.C_cold_in, cold_source.C_out)
     annotation (Line(points={{-14.4,0},{-41,0}}, color={85,170,255}));
+  connect(airCooledCondenser.C_hot_out, T_cond_sensor.C_in)
+    annotation (Line(points={{0,-14},{0,-30},{-1,-30}}, color={28,108,200}));
+  connect(condensate_sink.C_in, T_cond_sensor.C_out) annotation (Line(points={{8.88178e-16,
+          -57},{0,-57},{0,-44},{-1,-44}}, color={28,108,200}));
   connect(turbine_outlet.C_out, P_cond_sensor.C_in) annotation (Line(points={{-8.88178e-16,
-          45},{0,45},{0,40},{-1,40}}, color={28,108,200}));
+          65},{0,65},{0,44},{1,44}}, color={28,108,200}));
   connect(airCooledCondenser.C_hot_in, P_cond_sensor.C_out) annotation (Line(
-        points={{0.32,18},{0,18},{0,26},{-1,26}}, color={28,108,200}));
-  connect(airCooledCondenser.C_hot_out, T_cond_sensor.C_in) annotation (Line(
-        points={{0,-14},{0,-39.25},{1.33227e-15,-39.25}}, color={28,108,200}));
+        points={{0.32,18},{0,18},{0,30},{1,30}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
                         Diagram(coordinateSystem(preserveAspectRatio=false,

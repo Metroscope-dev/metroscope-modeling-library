@@ -9,20 +9,24 @@ model AirCooledCondenser_direct
 
   input Utilities.Units.MassFlowRate Q_cold(start=1800) "kg/s";
   input Real P_cold_source(start=1.002,nominal=1.002) "barA";
-  input Real T_cold_source(start=16) "degC";
+  input Real T_cold_source(start=10) "degC";
   input Utilities.Units.Fraction cold_source_relative_humidity=0.80 "1";
 
    // Parameters
   parameter Utilities.Units.Pressure P_offset=0;
   parameter Real C_incond = 0;
   parameter Utilities.Units.Area S=130000 "m2";
+  parameter Utilities.Units.Area S_subc=13000 "m2";
+
 
   // Calibrated parameters
-  parameter Utilities.Units.HeatExchangeCoefficient Kth=30;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=21;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth_subc=6;
   parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
 
   //Sensor for calibration
-  output Real T_cond(start=44) "degC";
+  output Real P_cond(start=91) "mbar";
+  output Real T_subc(start=42) "degC";
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -37,11 +41,12 @@ model AirCooledCondenser_direct
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink(h_in(start=60317.96))
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
 
-  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser
+  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser(subcooling=true)
     annotation (Placement(transformation(extent={{-16,-16},{16,20}})));
 equation
 
   //Hot source
+  turbine_outlet.P_out = P_cond * 100;
   turbine_outlet.h_out = h_turbine;
   turbine_outlet.Q_out = -Q_turbine;
 
@@ -53,15 +58,18 @@ equation
   //ACC
     // Parameters
   airCooledCondenser.S = S;
+  airCooledCondenser.S_subc = S_subc;
   airCooledCondenser.Q_cold = Q_cold;
   airCooledCondenser.P_offset = P_offset;
   airCooledCondenser.C_incond = C_incond;
     // Calibrater parameter
   airCooledCondenser.Kth = Kth;
+  airCooledCondenser.Kth_subc = Kth_subc;
   airCooledCondenser.Kfr_hot = Kfr_hot;
 
     // Observable for calibration
-  condensate_sink.T_in = T_cond+273.15;
+  condensate_sink.T_in = T_subc+273.15;
+
 
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{14.4,0},{59,0}}, color={85,170,255}));
