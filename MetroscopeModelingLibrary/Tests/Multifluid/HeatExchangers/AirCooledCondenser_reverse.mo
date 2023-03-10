@@ -10,21 +10,21 @@ model AirCooledCondenser_reverse
   input Utilities.Units.MassFlowRate Q_cold(start=1800) "kg/s";
   input Real P_cold_source(start=1.002,nominal=1.002) "barA";
   input Real T_cold_source(start=10) "degC";
-  input Utilities.Units.Fraction cold_source_relative_humidity=0.80 "1";
+  input Utilities.Units.Fraction cold_source_relative_humidity = 0.80 "1";
 
    // Parameters
-  parameter Utilities.Units.Pressure P_offset=0;
+  parameter Utilities.Units.Pressure P_offset = 0;
   parameter Real C_incond = 0;
   parameter Utilities.Units.Area S = 130000 "m2";
   parameter Utilities.Units.Area S_subc = 13000 "m2";
 
   // Calibrated parameters
-  output Utilities.Units.HeatExchangeCoefficient Kth(start=30);
-  output Utilities.Units.HeatExchangeCoefficient Kth_subc(start=10);
+  output Utilities.Units.HeatExchangeCoefficient Kth(start=20);
+  output Utilities.Units.HeatExchangeCoefficient Kth_subc(start=6);
 
   parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
 
-  //Sensor for calibration
+  // Sensors for calibration
   input Real T_subc(start=39) "degC";
   input Real P_cond(start=91) "mbarA";
 
@@ -60,8 +60,8 @@ equation
   turbine_outlet.Q_out = - Q_turbine;
 
   //Cold source
-  cold_source.P_out = P_cold_source*1e5;
-  cold_source.T_out =  T_cold_source+273.15;
+  cold_source.P_out = P_cold_source * 1e5;
+  cold_source.T_out = T_cold_source + 273.15;
   cold_source.relative_humidity = cold_source_relative_humidity;
 
   //ACC
@@ -78,7 +78,7 @@ equation
 
     // Observable for calibration
   T_cond_sensor.T_degC = T_subc;
-  P_cond_sensor.P_mbar  = P_cond;
+  P_cond_sensor.P_mbar = P_cond;
 
 
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)

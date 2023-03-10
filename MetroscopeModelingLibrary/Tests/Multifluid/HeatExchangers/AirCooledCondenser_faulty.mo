@@ -8,7 +8,7 @@ model AirCooledCondenser_faulty
 equation
 
   // Failure input
-  Failure_fouling = 0 + 10*time;
+  Failure_fouling = 0 + 10 * time;
   Failure_air_intake = 0 + 1e-3 * time;
 
   // Failure definition
