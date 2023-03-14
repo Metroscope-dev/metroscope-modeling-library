@@ -7,40 +7,39 @@ model AirCooledCondenser_reverse
   input Utilities.Units.MassFlowRate Q_turbine(start=21) "kg/s";
   input Utilities.Units.SpecificEnthalpy h_turbine(start=2399e3) "J/kg";
 
-  input Utilities.Units.MassFlowRate Q_cold(start=1800) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold(start=18000) "kg/s";
   input Real P_cold_source(start=1.002,nominal=1.002) "barA";
   input Real T_cold_source(start=10) "degC";
-  input Utilities.Units.Fraction cold_source_relative_humidity = 0.80 "1";
+  input Utilities.Units.Fraction cold_source_relative_humidity(start=0.80) "1";
 
    // Parameters
   parameter Utilities.Units.Pressure P_offset = 0;
   parameter Real C_incond = 0;
-  parameter Utilities.Units.Area S = 130000 "m2";
-  parameter Utilities.Units.Area S_subc = 13000 "m2";
+  parameter Utilities.Units.Area S = 150000 "m2";
+  parameter Utilities.Units.Area S_subc = 15000 "m2";
 
   // Calibrated parameters
-  output Utilities.Units.HeatExchangeCoefficient Kth(start=20);
-  output Utilities.Units.HeatExchangeCoefficient Kth_subc(start=6);
-
-  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
+  output Utilities.Units.HeatExchangeCoefficient Kth(start=10);
+  output Utilities.Units.HeatExchangeCoefficient Kth_subc(start=1);
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
 
   // Sensors for calibration
-  input Real T_subc(start=39) "degC";
+  input Real T_subc(start=35) "degC";
   input Real P_cond(start=91) "mbarA";
 
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet(h_out(start=2399000)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,70})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink(h_in(start=175838.2)) annotation (Placement(transformation(
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink(h_in(start=146568.66)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-62})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(h_out(start=36462.457))
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(h_out(start=25400))
     annotation (Placement(transformation(extent={{-56,-10},{-36,10}})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink
-    annotation (Placement(transformation(extent={{34,-10},{54,10}})));
-  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser(subcooling=true)
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink(h_in(start=28028.451))    annotation (Placement(transformation(extent={{34,-10},{54,10}})));
+  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser(subcooling=true,cold_side_condensing(h_out(start=28243.033)),
+   cold_side_subcooling(h_out(start=25882.63)))
     annotation (Placement(transformation(extent={{-16,-16},{16,20}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor
                                                               T_cond_sensor
@@ -75,7 +74,6 @@ equation
   airCooledCondenser.Kth = Kth;
   airCooledCondenser.Kth_subc = Kth_subc;
   airCooledCondenser.Kfr_hot = Kfr_hot;
-
     // Observable for calibration
   T_cond_sensor.T_degC = T_subc;
   P_cond_sensor.P_mbar = P_cond;
@@ -84,7 +82,7 @@ equation
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{14.4,0},{39,0}}, color={85,170,255}));
   connect(airCooledCondenser.C_cold_in, cold_source.C_out)
-    annotation (Line(points={{-14.4,0},{-41,0}}, color={85,170,255}));
+    annotation (Line(points={{-14.08,0},{-41,0}},color={85,170,255}));
   connect(airCooledCondenser.C_hot_out, T_cond_sensor.C_in)
     annotation (Line(points={{0,-14},{0,-30},{-1,-30}}, color={28,108,200}));
   connect(condensate_sink.C_in, T_cond_sensor.C_out) annotation (Line(points={{8.88178e-16,

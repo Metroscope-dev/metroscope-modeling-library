@@ -7,41 +7,41 @@ model AirCooledCondenser_direct
   input Utilities.Units.MassFlowRate Q_turbine(start=21) "kg/s";
   input Utilities.Units.SpecificEnthalpy h_turbine(start=2399e3) "J/kg";
 
-  input Utilities.Units.MassFlowRate Q_cold(start=1800) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold(start=18000) "kg/s";
   input Real P_cold_source(start=1.002,nominal=1.002) "barA";
   input Real T_cold_source(start=10) "degC";
-  input Utilities.Units.Fraction cold_source_relative_humidity = 0.80 "1";
+  input Utilities.Units.Fraction cold_source_relative_humidity(start=0.80) "1";
 
    // Parameters
   parameter Utilities.Units.Pressure P_offset = 0;
   parameter Real C_incond = 0;
-  parameter Utilities.Units.Area S = 130000 "m2";
-  parameter Utilities.Units.Area S_subc = 13000 "m2";
-
+  parameter Utilities.Units.Area S = 150000 "m2";
+  parameter Utilities.Units.Area S_subc = 15000 "m2";
 
   // Calibrated parameters
-  parameter Utilities.Units.HeatExchangeCoefficient Kth = 21;
-  parameter Utilities.Units.HeatExchangeCoefficient Kth_subc = 6;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth = 9;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth_subc = 2;
   parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
 
   // Sensors for calibration
+  output Real T_subc(start=35) "degC";
   output Real P_cond(start=91) "mbar";
-  output Real T_subc(start=42) "degC";
 
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet(h_out(start=2399000)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,48})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
+        origin={0,52})));
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink(h_in(start=146568.66)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-66})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(h_out(start=36462.457))
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(h_out(start=25400))
     annotation (Placement(transformation(extent={{-68,-10},{-48,10}})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink(h_in(start=60317.96))
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink(h_in(start=28028.451))
     annotation (Placement(transformation(extent={{54,-10},{74,10}})));
 
-  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser(subcooling=true)
+  MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser(subcooling=true,cold_side_condensing(h_out(start=28243.033)),
+   cold_side_subcooling(h_out(start=25882.63)))
     annotation (Placement(transformation(extent={{-16,-16},{16,20}})));
 equation
 
@@ -66,7 +66,6 @@ equation
   airCooledCondenser.Kth = Kth;
   airCooledCondenser.Kth_subc = Kth_subc;
   airCooledCondenser.Kfr_hot = Kfr_hot;
-
     // Observable for calibration
   condensate_sink.T_in = T_subc + 273.15;
 
@@ -74,11 +73,13 @@ equation
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{14.4,0},{59,0}}, color={85,170,255}));
   connect(airCooledCondenser.C_hot_in, turbine_outlet.C_out)
-    annotation (Line(points={{0.32,18},{0,18},{0,43}}, color={28,108,200}));
+    annotation (Line(points={{0.32,18},{-8.88178e-16,18},{-8.88178e-16,47}},
+                                                       color={28,108,200}));
   connect(airCooledCondenser.C_hot_out, condensate_sink.C_in)
-    annotation (Line(points={{0,-14},{0,-61}}, color={28,108,200}));
+    annotation (Line(points={{0,-14},{0,-61},{8.88178e-16,-61}},
+                                               color={28,108,200}));
   connect(airCooledCondenser.C_cold_in, cold_source.C_out)
-    annotation (Line(points={{-14.4,0},{-53,0}}, color={85,170,255}));
+    annotation (Line(points={{-14.08,0},{-53,0}},color={85,170,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
                         Diagram(coordinateSystem(preserveAspectRatio=false,

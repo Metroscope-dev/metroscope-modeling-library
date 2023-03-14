@@ -7,14 +7,16 @@ model AirCooledCondenser
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputArea S;
+  Inputs.InputArea S_subc;
+
   Units.HeatExchangeCoefficient Kth;
+  Units.HeatExchangeCoefficient Kth_subc;
   Inputs.InputFrictionCoefficient Kfr_hot;
+
   Units.Power W;
+  Units.Power W_subc;
 
   parameter Boolean subcooling = false;
-  Inputs.InputArea S_subc;
-  Units.HeatExchangeCoefficient Kth_subc;
-  Units.Power W_subc;
 
   Units.VolumeFlowRate Qv_cold(start=Qv_cold_0);
   Units.MassFlowRate Q_cold(start=Q_cold_0);
@@ -28,8 +30,8 @@ model AirCooledCondenser
   Units.Pressure P_tot(start=Psat_0, nominal=Psat_0);
   Units.Pressure Psat(start=Psat_0, nominal=Psat_0);
   Units.Temperature Tsat(start=Tsat_0);
-  Units.Pressure P_incond(start=0.001e5);
 
+  Units.Pressure P_incond(start=0.001e5);
   Inputs.InputReal C_incond(unit="mol/m3", min=0) "Incondensable molar concentration";
   Inputs.InputPressure P_offset(start=0) "Offset correction for ideal gas law";
   constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
@@ -56,10 +58,11 @@ model AirCooledCondenser
   parameter Units.SpecificEnthalpy h_liq_sat_0 = Water.bubbleEnthalpy(Water.setSat_p(Psat_0));
   parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
 
+
   MetroscopeModelingLibrary.MoistAir.Connectors.Inlet
                             C_cold_in(Q(start=Q_cold_0),P(start=P_cold_in_0)) annotation (
       Placement(transformation(extent={{-100,-10},{-80,10}}),iconTransformation(
-          extent={{-100,-10},{-80,10}})));
+          extent={{-98,-10},{-78,10}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in(Q(start=
           Q_hot_0), P(start=Psat_0, nominal=Psat_0)) annotation (Placement(
         transformation(extent={{-10,-10},{10,10}},
@@ -88,15 +91,9 @@ model AirCooledCondenser
     P_0=Psat_0) annotation (Placement(transformation(
         extent={{14.5,-14.5},{-14.5,14.5}},
         rotation=180,
-        origin={-20,30})));
-  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPFlowModel cold_side_condensing(
-    T_in_0=T_cold_in_0,
-    T_out_0=T_cold_out_0,
-    h_in_0=h_cold_in_0,
-    h_out_0=h_cold_out_0,
-    Q_0=Q_cold_0,
-    P_0=P_cold_out_0)
-    annotation (Placement(transformation(extent={{-35,-15},{-5,15}})));
+        origin={0,30})));
+  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPFlowModel cold_side_condensing
+    annotation (Placement(transformation(extent={{-13.5,-13.5},{13.5,13.5}})));
   MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoHFlowModel incondensables_in(
     P_in_0=Psat_0,
     P_out_0=Psat_0,
@@ -125,17 +122,32 @@ model AirCooledCondenser
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-20,14})));
+        origin={0,10})));
   WaterSteam.BaseClasses.IsoPFlowModel hot_side_subcooling
     annotation (Placement(transformation(extent={{18,18},{42,42}})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPFlowModel
     cold_side_subcooling
-    annotation (Placement(transformation(extent={{18,-12},{42,12}})));
+    annotation (Placement(transformation(extent={{18,-26},{42,-2}})));
   Power.HeatExchange.LMTDHeatExchange heatExchange_subcooling annotation (
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={30,14})));
+        origin={30,10})));
+  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel
+                             final_mix_cold annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={66,0})));
+  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel fan(T_in_0=T_cold_in_0,
+    T_out_0=T_cold_out_0,
+    h_in_0=h_cold_in_0,
+    h_out_0=h_cold_out_0,
+    Q_0=Q_cold_0,
+    P_0=P_cold_out_0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-60,0})));
+  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoHFlowModel pressure_cut annotation (Placement(transformation(extent={{-11,-25},{11,-3}})));
 equation
   // Subcooling mode
   if not subcooling then
@@ -151,15 +163,14 @@ equation
 
   // Definition
 
-  Q_hot = hot_side_condensing.Q;
-  Q_cold = cold_side_condensing.Q;
-  Qv_cold = cold_side_condensing.Q/cold_side_condensing.rho;
+  Q_hot = hot_side_pipe.Q;
+  Q_cold = fan.Q;
+  Qv_cold = Q_cold / fan.rho;
 
-  T_hot_in = hot_side_pipe.T_in;
-  T_hot_out = hot_side_subcooling.T_out;
-  T_cold_in = cold_side_condensing.T_in;
-  T_cold_out = cold_side_subcooling.T_out;
-
+  T_hot_in = incondensables_in.T_in;
+  T_hot_out = incondensables_out.T_out;
+  T_cold_in = fan.T_in;
+  T_cold_out = final_mix_cold.T_out;
 
   cold_side_condensing.W = W;
   cold_side_subcooling.W = W_subc;
@@ -173,14 +184,18 @@ equation
   incondensables_in.DP = - P_incond;
   incondensables_out.DP = + P_incond;
 
+
+  // Flow in subcooling
+  cold_side_subcooling.Q = S_subc / (S_subc + S) * Q_cold + 1e-3;
+
+  // Pressure losses
+  hot_side_pipe.delta_z = 0;
+  hot_side_pipe.Kfr = Kfr_hot;
+
   /* Condensation */
 
     // Energy balance
     hot_side_condensing.W + cold_side_condensing.W = 0;
-
-    // Pressure losses
-    hot_side_pipe.delta_z = 0;
-    hot_side_pipe.Kfr = Kfr_hot;
 
     // Saturation
     Psat = hot_side_condensing.P_in;
@@ -190,10 +205,10 @@ equation
     // Heat Exchange
     heatExchange_condensing.W = W;
     heatExchange_condensing.S = S;
-    heatExchange_condensing.Kth = Kth*(1 - fouling/100);
-    heatExchange_condensing.T_cold_in = T_cold_in;
-    heatExchange_condensing.T_hot_in = T_hot_in;
+    heatExchange_condensing.Kth = Kth * (1 - fouling/100);
+    heatExchange_condensing.T_cold_in = cold_side_condensing.T_in;
     heatExchange_condensing.T_cold_out = cold_side_condensing.T_out;
+    heatExchange_condensing.T_hot_in = hot_side_condensing.T_in;
     heatExchange_condensing.T_hot_out = hot_side_condensing.T_out;
 
 
@@ -207,9 +222,9 @@ equation
     heatExchange_subcooling.S = S_subc;
     heatExchange_subcooling.Kth = Kth_subc * (1-fouling/100);
     heatExchange_subcooling.T_cold_in = cold_side_subcooling.T_in;
-    heatExchange_subcooling.T_cold_out = T_cold_out;
+    heatExchange_subcooling.T_cold_out = cold_side_subcooling.T_out;
     heatExchange_subcooling.T_hot_in = hot_side_subcooling.T_in;
-    heatExchange_subcooling.T_hot_out = T_hot_out;
+    heatExchange_subcooling.T_hot_out = hot_side_subcooling.T_out;
 
 
 
@@ -226,21 +241,22 @@ equation
   connect(hot_side_pipe.C_out, incondensables_in.C_in)
     annotation (Line(points={{-50,70},{-50,60}}, color={28,108,200}));
   connect(incondensables_in.C_out, hot_side_condensing.C_in)
-    annotation (Line(points={{-50,40},{-50,30},{-34.5,30}},
+    annotation (Line(points={{-50,40},{-50,30},{-14.5,30}},
                                                           color={28,108,200}));
   connect(incondensables_out.C_out, C_hot_out)
     annotation (Line(points={{0,-60},{0,-90}}, color={28,108,200}));
   connect(hot_side_condensing.C_out, hot_side_subcooling.C_in) annotation (Line(
-        points={{-5.5,30},{18,30}},                        color={28,108,200}));
+        points={{14.5,30},{18,30}},                        color={28,108,200}));
   connect(hot_side_subcooling.C_out, incondensables_out.C_in) annotation (Line(
-        points={{42,30},{62,30},{62,-40},{1.77636e-15,-40}},
+        points={{42,30},{52.5,30},{52.5,-32},{1.77636e-15,-32},{1.77636e-15,-40}},
         color={28,108,200}));
-  connect(cold_side_condensing.C_out, cold_side_subcooling.C_in) annotation (
-      Line(points={{-5,0},{18,0}},                  color={85,170,255}));
-  connect(cold_side_subcooling.C_out, C_cold_out) annotation (Line(points={{42,0},{90,0}},
-                                   color={85,170,255}));
-  connect(cold_side_condensing.C_in, C_cold_in)
-    annotation (Line(points={{-35,0},{-90,0}},           color={85,170,255}));
+  connect(final_mix_cold.C_out, C_cold_out) annotation (Line(points={{76,0},{90,0}}, color={85,170,255}));
+  connect(fan.C_in, C_cold_in) annotation (Line(points={{-70,0},{-90,0}},         color={85,170,255}));
+  connect(cold_side_subcooling.C_out, final_mix_cold.C_in) annotation (Line(points={{42,-14},{46,-14},{46,0},{56,0}}, color={85,170,255}));
+  connect(cold_side_condensing.C_out, final_mix_cold.C_in) annotation (Line(points={{13.5,0},{56,0}},color={85,170,255}));
+  connect(fan.C_out, pressure_cut.C_in) annotation (Line(points={{-50,0},{-33,0},{-33,-14},{-11,-14}}, color={85,170,255}));
+  connect(cold_side_subcooling.C_in, pressure_cut.C_out) annotation (Line(points={{18,-14},{11,-14}}, color={85,170,255}));
+  connect(cold_side_condensing.C_in, fan.C_out) annotation (Line(points={{-13.5,0},{-50,0}}, color={85,170,255}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},
             {100,100}}),                                        graphics={
         Ellipse(
