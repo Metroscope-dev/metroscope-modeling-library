@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.WaterSteam.Machines;
-model StodolaTurbine
+model SteamTurbineWithNozzle
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
@@ -40,7 +40,7 @@ model StodolaTurbine
   parameter Utilities.Units.MassFraction xm_0=(x_inner_0 + x_in_0)/2;
   parameter Utilities.Units.MassFraction x_in_0=min((h_in_0 - h_liq_in_0)/(h_vap_in_0 - h_liq_in_0), 1);
 
-  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,74},{110,94}}), iconTransformation(extent={{90,74},{110,94}})));
+  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{50,70},{70,90}}),  iconTransformation(extent={{50,70},{70,90}})));
 protected
   parameter Utilities.Units.SpecificEnthalpy h_vap_in_0=WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
   parameter Utilities.Units.SpecificEnthalpy h_liq_in_0=WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
@@ -84,25 +84,17 @@ equation
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2}), graphics={Polygon(
-          points={{-100,60},{-100,40},{-100,-40},{-100,-60},{-80,-66},{80,-100},
-              {100,-100},{100,-80},{100,77.5391},{100,100},{80,100},{-80,68},{
-              -100,60}},
+          points={{-100,60},{-100,40},{-100,-40},{-100,-60},{-80,-66},{26,-90},{66,-86},{66,-60},{66,60},{66,90},{36,88},{-80,68},{-100,60}},
           lineColor={63,81,181},
           lineThickness=0.5,
           smooth=Smooth.Bezier),
                                Polygon(
-          points={{-92,58},{-92,40},{-92,-40},{-92,-54},{-74,-60},{72,-90},{92,
-              -94},{92,-72},{92,70},{92,92},{72,90},{-72,62},{-92,58}},
+          points={{-92,58},{-92,40},{-92,-40},{-92,-54},{-74,-60},{20,-82},{60,-80},{60,-60},{60,60},{60,80},{22,80},{-72,62},{-92,58}},
           lineThickness=0.5,
           smooth=Smooth.Bezier,
           fillColor={207,211,237},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None),
-        Line(
-          points={{66,86},{66,-86}},
-          color={157,166,218},
-          thickness=0.5,
-          smooth=Smooth.Bezier),
         Line(
           points={{22,78},{22,-78}},
           color={157,166,218},
@@ -119,9 +111,15 @@ equation
           thickness=0.5,
           smooth=Smooth.Bezier),
         Rectangle(
-          extent={{74,2},{-76,-2}},
+          extent={{44,2},{-76,-2}},
           lineThickness=0.5,
           fillColor={157,166,218},
           fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None)}));
-end StodolaTurbine;
+          pattern=LinePattern.None),
+        Polygon(
+          points={{66,78},{100,40},{100,-40},{66,-74},{66,14},{66,78}},
+          lineColor={63,81,181},
+          lineThickness=0.5,
+          fillColor={207,211,237},
+          fillPattern=FillPattern.Solid)}));
+end SteamTurbineWithNozzle;
