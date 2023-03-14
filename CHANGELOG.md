@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### Added
+- Subcooling is added to the air cooled condenser componentent [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
 
 ### Changed
 - Sensors now contain a flow model to ease convergence [PR#383](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/383)
