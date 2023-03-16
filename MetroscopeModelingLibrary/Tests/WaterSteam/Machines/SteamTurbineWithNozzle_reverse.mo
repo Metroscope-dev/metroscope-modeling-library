@@ -3,12 +3,12 @@ model SteamTurbineWithNozzle_reverse
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Utilities.Units.Pressure source_P(start=20e5);
-  input Utilities.Units.SpecificEnthalpy source_h(start=2.7718e6);
-  input Utilities.Units.NegativeMassFlowRate source_Q(start=-500);
+  input Utilities.Units.Pressure source_P(start=0.2e5);
+  input Utilities.Units.SpecificEnthalpy source_h(start=2.328e6);
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-800);
 
   // Inputs for calibration
-  input Real turbine_W_out(start=80.295, unit="MW", nominal=100, min=0) "MW";
+  input Real turbine_W_out(start=108.1, unit="MW", nominal=100, min=0) "MW";
 
   // Calibrated parameters
   output Utilities.Units.Yield turbine_eta_nz;
@@ -27,8 +27,8 @@ equation
 
   // Turbine parameters
   turbine.area_nz = 25;
-  turbine.Cst = 30000;
-  turbine.eta_is = 0.8;
+  turbine.Cst = 2;
+  turbine.eta_is = 0.93;
 
   // Calibrated parameters
   turbine.eta_nz = turbine_eta_nz;
