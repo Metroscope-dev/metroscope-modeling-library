@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - SteamTurbineWithNozzle component to replace StodolaTurbine when there is a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - PressureCut component with the medium MoistAir [PR#398](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/398/commits)
+- AirCooledCondenser_with_subcooling component adding subcooling to the ACC model [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
+
 ### Changed
 - Stodola turbine has been renamed SteamTurbine and does not have a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - `kPa` and `MPa` units are splitted between gauge and absolute in pressure sensor [PR#391](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/391)
@@ -19,18 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## MML-v3.4.1
 
 ### Added
-- SteamTurbineWithNozzle component to replace StodolaTurbine when there is a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
-- PressureCut component with the medium MoistAir [PR#398](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/398/commits)
-### Changed
-- Stodola turbine has been renamed SteamTurbine and does not have a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
-- `kPa` and `MPa` units are splitted between gauge and absolute in pressure sensor [PR#391](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/391)
-
-### Fixed
-
-## MML-v3.4.1
-
-### Added
-- Subcooling is added to the air cooled condenser component [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
 
 ### Changed
 - Sensors now contain a flow model to ease convergence [PR#383](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/383)
