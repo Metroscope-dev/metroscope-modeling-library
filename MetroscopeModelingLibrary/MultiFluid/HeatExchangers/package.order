@@ -4,4 +4,5 @@ Evaporator
 FuelHeater
 LMTDFuelHeater
 HXmoistAirWater
+AirCooledCondenser_with_subcooling
 AirCooledCondenser
