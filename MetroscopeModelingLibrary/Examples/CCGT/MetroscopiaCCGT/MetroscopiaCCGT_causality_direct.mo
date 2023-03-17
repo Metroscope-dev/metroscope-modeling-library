@@ -172,8 +172,7 @@ model MetroscopiaCCGT_causality_direct
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-174,148})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine HPsteamTurbine
-    annotation (Placement(transformation(extent={{-160,132},{-126,164}})));
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine HPsteamTurbine annotation (Placement(transformation(extent={{-160,132},{-126,164}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_out_sensor
     annotation (Placement(transformation(extent={{-114,142},{-102,154}})));
   MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_ST_out_sensor
@@ -244,8 +243,7 @@ model MetroscopiaCCGT_causality_direct
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater Reheater(
       QCp_max_side=ReH_QCp_max_side)
     annotation (Placement(transformation(extent={{-102,-56},{-42,4}})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LPsteamTurbine
-    annotation (Placement(transformation(extent={{-14,198},{20,230}})));
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPsteamTurbine annotation (Placement(transformation(extent={{-14,198},{20,230}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_ReH_out_sensor
     annotation (Placement(transformation(
         extent={{6,-6},{-6,6}},
@@ -521,9 +519,6 @@ equation
         P_HPST_in_sensor.P_barA = P_ST_in;
         P_HPST_out_sensor.P_barA = P_ST_out;
         T_HPST_out_sensor.T_degC = T_HPST_out;
-        // Parameters
-        HPsteamTurbine.area_nz = 1;
-        HPsteamTurbine.eta_nz = 1;
         //HPsteamTurbine.eta_is = LPsteamTurbine.eta_is;
         // Calibrated Parameters
         HPST_control_valve.Cv = HPST_CV_Cv;
@@ -533,9 +528,6 @@ equation
       // Low Pressure Level
         // Quantities definition
         P_LPST_in_sensor.P_barA = P_LPST_in;
-        // Parameters
-        LPsteamTurbine.area_nz = 1;
-        LPsteamTurbine.eta_nz = 1;
         // Calibrated Parameters
         LPsteamTurbine.eta_is = LPST_eta_is;
         LPST_control_valve.Cv = LPST_CV_Cv;
@@ -614,7 +606,7 @@ equation
   connect(evaporator.C_cold_in, T_w_eco_out_sensor.C_out) annotation (Line(
         points={{-8.3,-4.575},{-8.3,8},{2,8}},                 color={28,108,200}));
   connect(condenser.C_cold_out, T_circulating_water_out_sensor.C_in)
-    annotation (Line(points={{72,159},{74,159},{74,158},{78,158},{78,176},{86,176}},
+    annotation (Line(points={{71.6,159},{74,159},{74,158},{78,158},{78,176},{86,176}},
                     color={28,108,200}));
   connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{52,144.778},{52,131},{109,131}},
                               color={28,108,200}));
@@ -647,15 +639,15 @@ equation
     annotation (Line(points={{-81,-5},{-80,-5},{-80,23}}, color={28,108,200}));
   connect(P_Cond_sensor.C_in, LPsteamTurbine.C_out)
     annotation (Line(points={{28,214},{20,214}},   color={28,108,200}));
-  connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{40,214},
-          {52,214},{52,176.778}},    color={28,108,200}));
+  connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{40,214},{52,214},{52,177.134}},
+                                     color={28,108,200}));
 
   connect(P_source_air_sensor.C_out, T_source_air_sensor.C_in)
     annotation (Line(points={{-624,-26},{-618,-26}}, color={95,95,95}));
   connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
     annotation (Line(points={{-606,-26},{-600,-26}}, color={95,95,95}));
   connect(condenser.C_cold_in, P_circulating_water_in_sensor.C_out) annotation (
-     Line(points={{32,166.111},{30,166.111},{30,159},{24,159}},       color={28,
+     Line(points={{32,159},{30,159},{30,159},{24,159}},               color={28,
           108,200}));
   connect(P_LPST_in_sensor.C_out, LPsteamTurbine.C_in)
     annotation (Line(points={{-22,214},{-14,214}},  color={28,108,200}));

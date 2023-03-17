@@ -44,7 +44,6 @@ equation
   turbine_outlet.Q_out = - Q_turbine;
   turbine_outlet.P_out = P_cond * 100;
 
-
   //Cold source
   cold_source.P_out = P_cold_source * 1e5;
   cold_source.T_out = T_cold_source + 273.15;

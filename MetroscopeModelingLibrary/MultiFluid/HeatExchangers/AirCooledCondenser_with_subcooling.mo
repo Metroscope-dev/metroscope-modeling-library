@@ -137,16 +137,7 @@ model AirCooledCondenser_with_subcooling
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={66,0})));
-  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel fan(T_in_0=T_cold_in_0,
-    T_out_0=T_cold_out_0,
-    h_in_0=h_cold_in_0,
-    h_out_0=h_cold_out_0,
-    Q_0=Q_cold_0,
-    P_0=P_cold_out_0) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-60,0})));
-  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoHFlowModel pressure_cut annotation (Placement(transformation(extent={{-11,-25},{11,-3}})));
+  MetroscopeModelingLibrary.MoistAir.Pipes.PressureCut         pressure_cut annotation (Placement(transformation(extent={{-11,-25},{11,-3}})));
 equation
 
   // Failure modes
@@ -158,12 +149,12 @@ equation
   // Definition
 
   Q_hot = hot_side_pipe.Q;
-  Q_cold = fan.Q;
-  Qv_cold = Q_cold / fan.rho;
+  Q_cold = cold_side_condensing.Q + cold_side_subcooling.Q;
+  Qv_cold = Q_cold / cold_side_condensing.rho;
 
   T_hot_in = incondensables_in.T_in;
   T_hot_out = incondensables_out.T_out;
-  T_cold_in = fan.T_in;
+  T_cold_in = cold_side_condensing.T_in;
   T_cold_out = final_mix_cold.T_out;
   W_tot = W_cond + W_subc;
   S_tot = S_cond + S_subc;
@@ -241,12 +232,11 @@ equation
         points={{42,30},{52.5,30},{52.5,-32},{1.77636e-15,-32},{1.77636e-15,-40}},
         color={28,108,200}));
   connect(final_mix_cold.C_out, C_cold_out) annotation (Line(points={{76,0},{90,0}}, color={85,170,255}));
-  connect(fan.C_in, C_cold_in) annotation (Line(points={{-70,0},{-90,0}},         color={85,170,255}));
   connect(cold_side_subcooling.C_out, final_mix_cold.C_in) annotation (Line(points={{42,-14},{46,-14},{46,0},{56,0}}, color={85,170,255}));
   connect(cold_side_condensing.C_out, final_mix_cold.C_in) annotation (Line(points={{13.5,0},{56,0}},color={85,170,255}));
-  connect(fan.C_out, pressure_cut.C_in) annotation (Line(points={{-50,0},{-33,0},{-33,-14},{-11,-14}}, color={85,170,255}));
   connect(cold_side_subcooling.C_in, pressure_cut.C_out) annotation (Line(points={{18,-14},{11,-14}}, color={85,170,255}));
-  connect(cold_side_condensing.C_in, fan.C_out) annotation (Line(points={{-13.5,0},{-50,0}}, color={85,170,255}));
+  connect(C_cold_in, cold_side_condensing.C_in) annotation (Line(points={{-90,0},{-13.5,0}}, color={85,170,255}));
+  connect(pressure_cut.C_in, cold_side_condensing.C_in) annotation (Line(points={{-11,-14},{-36,-14},{-36,0},{-13.5,0}}, color={85,170,255}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},
             {100,100}}),                                        graphics={
         Ellipse(
