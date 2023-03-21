@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial.Pipes;
 partial model Pipe
-  extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoHFlowModel(use_homotopy=false) annotation(IconMap(primitivesVisible=false));
+  extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoHFlowModel(use_homotopy=true) annotation(IconMap(primitivesVisible=false));
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;

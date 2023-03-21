@@ -80,7 +80,8 @@ model MetroscopiaNPP_direct
       parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient HP_heater_Kfr_cold=43.30442;
       parameter MetroscopeModelingLibrary.Utilities.Units.Cv HP_heater_drains_control_valve_Cvmax=2201.408;
 
-    MetroscopeModelingLibrary.WaterSteam.HeatExchangers.SteamGenerator steam_generator annotation (Placement(transformation(extent={{-192,-116},{-148,-24}})));
+    MetroscopeModelingLibrary.WaterSteam.HeatExchangers.SteamGenerator steam_generator(feedwater_inlet(P(start=58e5)))
+                                                                                       annotation (Placement(transformation(extent={{-192,-116},{-148,-24}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_feedwater_sensor(
     Q_0=1500,
     P_0=5800000,
@@ -273,12 +274,12 @@ model MetroscopiaNPP_direct
     h_hot_out_0=640e3)                                                        annotation (Placement(transformation(extent={{284,-78},{252,-62}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor LP_heater_T_out_sensor(
     Q_0=1060,
-    P_0=700000,
+    P_0=600000,
     h_0=272e3,
     T_0=338.15)                                                                         annotation (Placement(transformation(extent={{220,-77},{206,-63}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor LP_heater_P_out_sensor(
     Q_0=1060,
-    P_0=700000,
+    P_0=600000,
     h_0=272e3)                                                                       annotation (Placement(transformation(extent={{242,-77},{228,-63}})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve LP_reheater_drains_control_valve(
     P_in_0=500000,
@@ -610,7 +611,7 @@ equation
   connect(LPT1.C_W_out, generator.C_in) annotation (Line(points={{169,136.72},{188,136.72},{188,168},{315.6,168}},   color={244,125,35}));
   connect(LPT2.C_W_out, generator.C_in) annotation (Line(points={{239,136.72},{262,136.72},{262,168},{315.6,168}},   color={244,125,35}));
   connect(LPT2.C_out, P_cond_sensor.C_in) annotation (Line(points={{239,130},{286,130}},                             color={28,108,200}));
-  connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74}},
+  connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74.2864}},
                                                                                                            color={28,108,200}));
   connect(superheater_T_out_sensor.C_out, LPT1.C_in) annotation (Line(points={{100,130},{151,130}},                             color={28,108,200}));
   connect(extraction_pump.C_power, LP_pump_Wm_source.C_out) annotation (Line(points={{372,-61.36},{372,-50.8}}, color={244,125,35}));
@@ -653,10 +654,10 @@ equation
   connect(pressureCut.C_out, superheater_drains_pipe.C_in) annotation (Line(points={{114,86},{122,86},{122,40}}, color={28,108,200}));
   connect(cold_source.C_out, CW_T_in_sensor.C_in) annotation (Line(points={{305,67.7778},{305,67},{318,67}},                   color={28,108,200}));
   connect(CW_T_in_sensor.C_out, CW_P_in_sensor.C_in) annotation (Line(points={{332,67},{346,67}}, color={28,108,200}));
-  connect(CW_P_in_sensor.C_out, condenser.C_cold_in) annotation (Line(points={{360,67},{378,67},{378,65.4074},{377,65.4074}},    color={28,108,200}));
+  connect(CW_P_in_sensor.C_out, condenser.C_cold_in) annotation (Line(points={{360,67},{378,67},{378,59.679},{377,59.679}},      color={28,108,200}));
   connect(CW_T_out_sensor.C_out, cold_sink.C_in) annotation (Line(points={{437,60},{455,60}},                                 color={28,108,200}));
-  connect(condenser.C_cold_out, CW_T_out_sensor.C_in) annotation (Line(points={{408,59.679},{408,60},{423,60}},                    color={28,108,200}));
-  connect(LP_reheater_drains_control_valve.C_out, condenser.C_hot_in) annotation (Line(points={{298,-119.818},{400,-119.818},{400,-120},{500,-120},{500,100},{392.5,100},{392.5,74}},
+  connect(condenser.C_cold_out, CW_T_out_sensor.C_in) annotation (Line(points={{407.69,59.679},{407.69,60},{423,60}},              color={28,108,200}));
+  connect(LP_reheater_drains_control_valve.C_out, condenser.C_hot_in) annotation (Line(points={{298,-119.818},{400,-119.818},{400,-120},{500,-120},{500,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                                                   color={28,108,200}));
   connect(HP_reheater_drains_control_valve.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{16,-121.818},{78,-121.818},{78,-122},{142,-122},{142,-70},{114,-70}}, color={28,108,200}));
   connect(steam_generator.purge_outlet, Q_purge_sensor.C_in) annotation (Line(points={{-170,-115.233},{-170,-125}},             color={28,108,200}));
