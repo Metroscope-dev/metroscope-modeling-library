@@ -7,5 +7,6 @@ model TemperatureSensor
   extends Partial.Sensors.TemperatureSensor(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
+    redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,
     redeclare package Medium = MoistAirMedium) annotation (IconMap(primitivesVisible=false));
 end TemperatureSensor;

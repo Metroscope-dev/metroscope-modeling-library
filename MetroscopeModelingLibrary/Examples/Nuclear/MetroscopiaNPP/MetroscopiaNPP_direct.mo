@@ -81,15 +81,24 @@ model MetroscopiaNPP_direct
       parameter MetroscopeModelingLibrary.Utilities.Units.Cv HP_heater_drains_control_valve_Cvmax=2201.408;
 
     MetroscopeModelingLibrary.WaterSteam.HeatExchangers.SteamGenerator steam_generator annotation (Placement(transformation(extent={{-192,-116},{-148,-24}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_feedwater_sensor annotation (Placement(transformation(extent={{-104,-77},{-118,-63}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_feedwater_sensor(
+    Q_0=1500,
+    P_0=5800000,
+    h_0=0.9e6)                                                               annotation (Placement(transformation(extent={{-104,-77},{-118,-63}})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve HP_control_valve(
+    T_out_0=535.15,
     P_in_0=5000000,
     P_out_0=4850000,
+    h_in_0=2.8e6,
+    h_out_0=2.8e6,
     Q_0=1455,
     T_0=536.15,
     h_0=2.8e6)                                                                                            annotation (Placement(transformation(extent={{-135,69.8182},{-125,81.8182}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor HP_control_valve_opening_sensor annotation (Placement(transformation(extent={{-136,86},{-126,96}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HPT_P_in_sensor annotation (Placement(transformation(extent={{-106,66},{-94,78}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HPT_P_in_sensor(
+    Q_0=1455,
+    P_0=4850000,
+    h_0=2.8e6)                                                                annotation (Placement(transformation(extent={{-106,66},{-94,78}})));
     MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine HPT_1(
     T_in_0=535.15,
     T_out_0=608.85,
@@ -112,11 +121,17 @@ model MetroscopiaNPP_direct
     P_0=3100000,
     T_0=508.85,
     h_0=2.73e6)                                                                   annotation (Placement(transformation(extent={{-50,62},{-30,80}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HP_extract_P_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HP_extract_P_sensor(
+    Q_0=340,
+    P_0=3100000,
+    h_0=2.73e6)                                                                   annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
         origin={-40,47})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HPT_P_out_sensor annotation (Placement(transformation(extent={{26,66},{38,78}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HPT_P_out_sensor(
+    Q_0=1113,
+    P_0=1940000,
+    h_0=2.68e6)                                                                annotation (Placement(transformation(extent={{26,66},{38,78}})));
     MetroscopeModelingLibrary.WaterSteam.Volumes.SteamDryer steam_dryer(
     P_0=1940000,
     T_0=483.95,
@@ -138,19 +153,36 @@ model MetroscopiaNPP_direct
     h_cold_out_0=2.85e6,
     h_hot_in_0=2.8e6,
     h_hot_out_0=1.09e6)                                                         annotation (Placement(transformation(extent={{56,104},{88,120}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor superheater_drains_P_sensor annotation (Placement(transformation(extent={{100,106},{112,118}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor superheater_T_out_sensor annotation (Placement(transformation(extent={{88,124},{100,136}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor superheater_drains_P_sensor(
+    Q_0=44,
+    P_0=4000000,
+    h_0=1.09e6)                                                                           annotation (Placement(transformation(extent={{100,106},{112,118}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor superheater_T_out_sensor(
+    Q_0=1060,
+    P_0=1940000,
+    h_0=2.85e6,
+    T_0=501.15)                                                                           annotation (Placement(transformation(extent={{88,124},{100,136}})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve superheater_control_valve(
     P_in_0=5000000,
     P_out_0=4100000,
+    h_in_0=2.778e6,
+    h_out_0=2.778e6,
     Q_0=45,
     T_0=537.15,
     h_0=2.8e6)                                                                        annotation (Placement(transformation(extent={{-136,110},{-126,122}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor superheater_bleed_P_sensor annotation (Placement(transformation(extent={{-106,106.182},{-94,118.182}})));
-    MetroscopeModelingLibrary.WaterSteam.Pipes.PressureCut superheater_drains_pipe annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor superheater_bleed_P_sensor(
+    Q_0=45,
+    P_0=4100000,
+    h_0=2.778e6)                                                                         annotation (Placement(transformation(extent={{-106,106.182},{-94,118.182}})));
+    MetroscopeModelingLibrary.WaterSteam.Pipes.PressureCut superheater_drains_pipe(
+    P_in_0=4000000,
+    P_out_0=3100000,
+    Q_0=44,
+    T_0=525.15,
+    h_0=1.09e6)                                                                    annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={122,32})));
+        origin={122,30})));
     MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LPT1(
     T_in_0=501.15,
     T_out_0=425.15,
@@ -167,7 +199,10 @@ model MetroscopiaNPP_direct
     h_in_0=2.7e6,
     h_out_0=2.4e6,
     Q_0=1000)                                                         annotation (Placement(transformation(extent={{221,122},{239,138}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor LP_extract_P_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor LP_extract_P_sensor(
+    Q_0=55,
+    P_0=500000,
+    h_0=2.7e6)                                                                    annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
         origin={196,111})));
@@ -180,7 +215,10 @@ model MetroscopiaNPP_direct
     MetroscopeModelingLibrary.Power.BoundaryConditions.Sink powerSink annotation (Placement(transformation(extent={{362,158},{382,178}})));
     MetroscopeModelingLibrary.Power.Machines.Generator generator annotation (Placement(transformation(extent={{308,156},{348,180}})));
     MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_elec_sensor annotation (Placement(transformation(extent={{348,162},{360,174}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor annotation (Placement(transformation(extent={{286,124},{298,136}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor(
+    Q_0=1000,
+    P_0=6900,
+    h_0=2.4e6)                                                              annotation (Placement(transformation(extent={{286,124},{298,136}})));
     MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser(
     Q_cold_0=54000,
     Q_hot_0=1000,
@@ -209,8 +247,15 @@ model MetroscopiaNPP_direct
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={372,-46})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor extraction_pump_T_out_sensor annotation (Placement(transformation(extent={{350,-77},{336,-63}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor extraction_pump_P_out_sensor annotation (Placement(transformation(extent={{7,-7},{-7,7}}, origin={315,-70})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor extraction_pump_T_out_sensor(
+    Q_0=1060,
+    P_0=700000,
+    h_0=164e3,
+    T_0=312.15)                                                                               annotation (Placement(transformation(extent={{350,-77},{336,-63}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor extraction_pump_P_out_sensor(
+    Q_0=1060,
+    P_0=700000,
+    h_0=164e3)                                                                             annotation (Placement(transformation(extent={{7,-7},{-7,7}}, origin={315,-70})));
     MetroscopeModelingLibrary.WaterSteam.HeatExchangers.DryReheater LP_heater(
     Q_cold_0=1060,
     Q_hot_0=55,
@@ -226,8 +271,15 @@ model MetroscopiaNPP_direct
     h_cold_out_0=272e3,
     h_hot_in_0=2.7e6,
     h_hot_out_0=640e3)                                                        annotation (Placement(transformation(extent={{284,-78},{252,-62}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor LP_heater_T_out_sensor annotation (Placement(transformation(extent={{220,-77},{206,-63}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor LP_heater_P_out_sensor annotation (Placement(transformation(extent={{242,-77},{228,-63}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor LP_heater_T_out_sensor(
+    Q_0=1060,
+    P_0=700000,
+    h_0=272e3,
+    T_0=338.15)                                                                         annotation (Placement(transformation(extent={{220,-77},{206,-63}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor LP_heater_P_out_sensor(
+    Q_0=1060,
+    P_0=700000,
+    h_0=272e3)                                                                       annotation (Placement(transformation(extent={{242,-77},{228,-63}})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve LP_reheater_drains_control_valve(
     P_in_0=500000,
     P_out_0=6900,
@@ -241,7 +293,12 @@ model MetroscopiaNPP_direct
     Q_0=1060,
     T_0=338.15,
     h_0=272e3)                                                           annotation (Placement(transformation(extent={{186,-80},{166,-60}})));
-    MetroscopeModelingLibrary.WaterSteam.Pipes.PressureCut steam_dryer_liq_out_pipe annotation (Placement(transformation(
+    MetroscopeModelingLibrary.WaterSteam.Pipes.PressureCut steam_dryer_liq_out_pipe(
+    P_in_0=1940000,
+    P_out_0=1940000,
+    Q_0=50,
+    T_0=483.95,
+    h_0=901606.56)                                                                  annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={142,-50})));
@@ -263,8 +320,15 @@ model MetroscopiaNPP_direct
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={54,-46})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor HP_pump_T_out_sensor annotation (Placement(transformation(extent={{30,-77},{16,-63}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HP_pump_P_out_sensor annotation (Placement(transformation(extent={{7,-7},{-7,7}}, origin={-3,-70})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor HP_pump_T_out_sensor(
+    Q_0=1500,
+    P_0=5900000,
+    h_0=340e3,
+    T_0=353.15)                                                                       annotation (Placement(transformation(extent={{30,-77},{16,-63}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HP_pump_P_out_sensor(
+    Q_0=1500,
+    P_0=5900000,
+    h_0=340e3)                                                                     annotation (Placement(transformation(extent={{7,-7},{-7,7}}, origin={-3,-70})));
     MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Reheater HP_heater(Q_cold_0=1500,
     Q_hot_0=387,
     P_cold_in_0=5900000,
@@ -279,23 +343,53 @@ model MetroscopiaNPP_direct
     h_cold_out_0=0.9e6,
     h_hot_in_0=2.55e6,
     h_hot_out_0=379e3)                                                                                annotation (Placement(transformation(extent={{-24,-78},{-56,-62}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor HP_heater_T_out_sensor annotation (Placement(transformation(extent={{-84,-77},{-98,-63}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HP_heater_P_out_sensor annotation (Placement(transformation(extent={{-64,-77},{-78,-63}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor HP_heater_T_drains_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor HP_heater_T_out_sensor(
+    Q_0=1500,
+    P_0=5800000,
+    h_0=0.9e6)                                                                          annotation (Placement(transformation(extent={{-84,-77},{-98,-63}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HP_heater_P_out_sensor(
+    Q_0=1500,
+    P_0=5800000,
+    h_0=0.9e6)                                                                       annotation (Placement(transformation(extent={{-64,-77},{-78,-63}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor HP_heater_T_drains_sensor(
+    Q_0=387,
+    P_0=3100000,
+    h_0=379e3,
+    T_0=363.15)                                                                            annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,
         origin={-40,-98})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve HP_reheater_drains_control_valve annotation (Placement(transformation(extent={{6,-124},{16,-112}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor HP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{6,-108},{16,-98}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_steam_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_steam_sensor(
+    Q_0=1500,
+    P_0=5000000,
+    h_0=2.778e6)                                                             annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=90,
         origin={-170,10})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.PressureCut pressureCut annotation (Placement(transformation(extent={{94,76},{114,96}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor CW_T_in_sensor annotation (Placement(transformation(extent={{318,60},{332,74}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor CW_P_in_sensor annotation (Placement(transformation(extent={{346,60},{360,74}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor CW_T_out_sensor annotation (Placement(transformation(extent={{423,53},{437,67}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_purge_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.Pipes.PressureCut pressureCut(
+    P_in_0=4000000,
+    P_out_0=4000000,
+    Q_0=2,
+    T_0=525.15,
+    h_0=2.8e6)                                                       annotation (Placement(transformation(extent={{94,76},{114,96}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor CW_T_in_sensor(
+    Q_0=54000,
+    P_0=300000,
+    h_0=63e3,
+    T_0=288.15)                                                                 annotation (Placement(transformation(extent={{318,60},{332,74}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor CW_P_in_sensor(
+    Q_0=54000,
+    P_0=300000,
+    h_0=63e3)                                                                annotation (Placement(transformation(extent={{346,60},{360,74}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor CW_T_out_sensor(
+    Q_0=54000,
+    P_0=300000,
+    h_0=105e3,
+    T_0=298.15)                                                                  annotation (Placement(transformation(extent={{423,53},{437,67}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_purge_sensor(Q_0=5, h_0=1154502)
+                                                                         annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
         origin={-170,-132})));
@@ -546,8 +640,8 @@ equation
   connect(HP_heater_P_out_sensor.C_out, HP_heater_T_out_sensor.C_in) annotation (Line(points={{-78,-70},{-84,-70}},                             color={28,108,200}));
   connect(HP_heater_T_drains_sensor.C_in, HP_heater.C_hot_out) annotation (Line(points={{-40,-91},{-40,-78}}, color={28,108,200}));
   connect(HP_extract_P_sensor.C_out, HP_heater.C_hot_in) annotation (Line(points={{-40,40},{-40,-62}}, color={28,108,200}));
-  connect(superheater_drains_P_sensor.C_out, superheater_drains_pipe.C_in) annotation (Line(points={{112,112},{122,112},{122,42}}, color={28,108,200}));
-  connect(superheater_drains_pipe.C_out, HP_heater.C_hot_in) annotation (Line(points={{122,22},{122,16},{-40,16},{-40,-62}}, color={28,108,200}));
+  connect(superheater_drains_P_sensor.C_out, superheater_drains_pipe.C_in) annotation (Line(points={{112,112},{122,112},{122,40}}, color={28,108,200}));
+  connect(superheater_drains_pipe.C_out, HP_heater.C_hot_in) annotation (Line(points={{122,20},{122,16},{-40,16},{-40,-62}}, color={28,108,200}));
   connect(HP_heater_T_out_sensor.C_out, Q_feedwater_sensor.C_in) annotation (Line(points={{-98,-70},{-104,-70}}, color={28,108,200}));
   connect(HP_reheater_drains_control_valve.Opening, HP_reheater_drains_control_valve_opening_sensor.Opening) annotation (Line(points={{11,-113.091},{11,-108.1}}, color={0,0,127}));
   connect(HP_heater_T_drains_sensor.C_out, HP_reheater_drains_control_valve.C_in) annotation (Line(points={{-40,-105},{-40,-121.818},{6,-121.818}}, color={28,108,200}));
@@ -556,7 +650,7 @@ equation
   connect(steam_generator.steam_outlet, P_steam_sensor.C_in) annotation (Line(points={{-170,-24},{-170,3}},  color={28,108,200}));
   connect(P_steam_sensor.C_out, HP_control_valve.C_in) annotation (Line(points={{-170,17},{-170,72},{-135,72}},           color={28,108,200}));
   connect(superheater.C_vent, pressureCut.C_in) annotation (Line(points={{88,104.2},{88,86},{94,86}}, color={28,108,200}));
-  connect(pressureCut.C_out, superheater_drains_pipe.C_in) annotation (Line(points={{114,86},{122,86},{122,42}}, color={28,108,200}));
+  connect(pressureCut.C_out, superheater_drains_pipe.C_in) annotation (Line(points={{114,86},{122,86},{122,40}}, color={28,108,200}));
   connect(cold_source.C_out, CW_T_in_sensor.C_in) annotation (Line(points={{305,67.7778},{305,67},{318,67}},                   color={28,108,200}));
   connect(CW_T_in_sensor.C_out, CW_P_in_sensor.C_in) annotation (Line(points={{332,67},{346,67}}, color={28,108,200}));
   connect(CW_P_in_sensor.C_out, condenser.C_cold_in) annotation (Line(points={{360,67},{378,67},{378,65.4074},{377,65.4074}},    color={28,108,200}));

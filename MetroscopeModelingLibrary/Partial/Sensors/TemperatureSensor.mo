@@ -16,7 +16,7 @@ partial model TemperatureSensor
               start=(T_0 +Constants.T0_degC_in_K) *Constants.degC_to_degF +Constants.T0_degC_in_degF,
               nominal=(T_0 +Constants.T0_degC_in_K) *Constants.degC_to_degF +Constants.T0_degC_in_degF);   // Temperature in degF
 equation
-  T = Medium.temperature(state);
+  T =flow_model.T;
   T_degC +Constants.T0_degC_in_K  = T; // Conversion K to Celsius
   T_degF = T_degC*Constants.degC_to_degF +Constants.T0_degC_in_degF;   // Conversion Celsius to Farenheit
 end TemperatureSensor;
