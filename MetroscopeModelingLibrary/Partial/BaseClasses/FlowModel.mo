@@ -109,11 +109,7 @@ equation
 
   // ------ Conservation equations ------
   P_out - P_in = DP;
-  if use_homotopy then
-    W = homotopy(Q * (h_out - h_in), Q_0*(h_out - h_in));
-  else
-    Q * (h_out - h_in) = W;
-  end if;
+  Q * (h_out - h_in) = W;
   C_in.Q + C_out.Q = 0;
   C_out.Xi_outflow = inStream(C_in.Xi_outflow);
 

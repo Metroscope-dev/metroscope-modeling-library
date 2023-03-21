@@ -49,11 +49,7 @@ protected
 
 equation
   // Stodola's ellipse law
-  if use_homotopy then
-    Q = homotopy(sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in)), sqrt((P_in*P_in_0 - P_out*P_out_0)/(Cst*T_in_0*x_in_0)));
-  else
-    Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));
- end if;
+  Q = homotopy(sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in)), sqrt((P_in*P_in_0 - P_out*P_out_0)/(Cst*T_in_0*x_in_0)));
 
   // Isentropic expansion
   state_is = Medium.setState_psX(P_out, Medium.specificEntropy(state_in));
