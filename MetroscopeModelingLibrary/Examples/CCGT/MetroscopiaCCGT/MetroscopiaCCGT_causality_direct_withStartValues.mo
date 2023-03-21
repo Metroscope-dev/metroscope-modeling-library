@@ -89,7 +89,6 @@ model MetroscopiaCCGT_causality_direct_withStartValues
       h_liq_in(start=1462717.5),
       h_liq_out(start=762682.9),
       h_out(start=2955357.2),
-      h_real(start=2955357.2),
       h_vap_in(start=2700337.8),
       h_vap_out(start=2777119.5),
       rho(start=17.709682),
@@ -97,8 +96,7 @@ model MetroscopiaCCGT_causality_direct_withStartValues
       state_in(T(start=839.27313), h(start=3529789.0)),
       state_is(T(start=481.81647), h(start=2849046.8)),
       state_out(T(start=528.64996), h(start=2955357.2)),
-      x_in(start=1.0),
-      x_inner(start=1.0)),
+      x_in(start=1.0)),
     HPsuperheater1(
       C_cold_in(
         P(start=12000000.0),
@@ -373,7 +371,6 @@ model MetroscopiaCCGT_causality_direct_withStartValues
       h_liq_in(start=721017.9),
       h_liq_out(start=137765.12),
       h_out(start=2421463.8),
-      h_real(start=2421463.8),
       h_vap_in(start=2768302.2),
       h_vap_out(start=2560765.0),
       rho(start=1.4318787),
@@ -381,8 +378,7 @@ model MetroscopiaCCGT_causality_direct_withStartValues
       state_in(T(start=622.20447), h(start=3160163.2)),
       state_is(T(start=306.01938), h(start=2258843.2)),
       state_out(T(start=306.01807), h(start=2421463.8)),
-      x_in(start=1.0),
-      x_inner(start=0.94250876)),
+      x_in(start=1.0)),
     P_Cond(start=0.05),
     P_Cond_sensor(
       C_in(

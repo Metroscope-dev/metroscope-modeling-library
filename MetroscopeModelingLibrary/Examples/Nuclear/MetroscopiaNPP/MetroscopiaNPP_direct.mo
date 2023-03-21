@@ -99,22 +99,22 @@ model MetroscopiaNPP_direct
     Q_0=1455,
     P_0=4850000,
     h_0=2.8e6)                                                                annotation (Placement(transformation(extent={{-106,66},{-94,78}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine HPT_1(
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine HPT_1(
     T_in_0=535.15,
     T_out_0=608.85,
     P_in_0=4850000,
     P_out_0=3100000,
     h_in_0=2.8e6,
     h_out_0=2.7e6,
-    Q_0=1455)                                                          annotation (Placement(transformation(extent={{-79,64},{-61,80}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine HPT_2(
+    Q_0=1455) annotation (Placement(transformation(extent={{-79,64},{-61,80}})));
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine HPT_2(
     T_in_0=508.85,
     T_out_0=484.15,
     P_in_0=3100000,
     P_out_0=1940000,
     h_in_0=2.73e6,
     h_out_0=2.68e6,
-    Q_0=1113)                                                          annotation (Placement(transformation(extent={{-9,64},{9,80}})));
+    Q_0=1113) annotation (Placement(transformation(extent={{-9,64},{9,80}})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.SteamExtractionSplitter HP_extract(
     Q_in_0=1455,
     Q_ext_0=340,
@@ -183,22 +183,22 @@ model MetroscopiaNPP_direct
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={122,30})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LPT1(
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPT1(
     T_in_0=501.15,
     T_out_0=425.15,
     P_in_0=1940000,
     P_out_0=500000,
     h_in_0=2.85e6,
     h_out_0=2.7e6,
-    Q_0=1060)                                                         annotation (Placement(transformation(extent={{151,122},{169,138}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LPT2(
+    Q_0=1060) annotation (Placement(transformation(extent={{151,122},{169,138}})));
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPT2(
     T_in_0=425.15,
     T_out_0=312.05,
     P_in_0=500000,
     P_out_0=6900,
     h_in_0=2.7e6,
     h_out_0=2.4e6,
-    Q_0=1000)                                                         annotation (Placement(transformation(extent={{221,122},{239,138}})));
+    Q_0=1000) annotation (Placement(transformation(extent={{221,122},{239,138}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor LP_extract_P_sensor(
     Q_0=55,
     P_0=500000,
@@ -432,10 +432,6 @@ equation
     HPT_2.eta_is = turbines_eta_is;
 
     // Parameter
-    HPT_1.eta_nz = 1;
-    HPT_1.area_nz = 1;
-    HPT_2.eta_nz = 1;
-    HPT_2.area_nz = 1;
     HP_extract.alpha = 1;
 
   // Dryer - Superheater
@@ -471,10 +467,6 @@ equation
     LPT2.eta_is = turbines_eta_is;
 
     // Parameters
-    LPT1.eta_nz = 1;
-    LPT1.area_nz = 1;
-    LPT2.eta_nz = 1;
-    LPT2.area_nz = 1;
     LP_extract.alpha = 1;
 
   // Generator
@@ -610,7 +602,7 @@ equation
   connect(LPT1.C_W_out, generator.C_in) annotation (Line(points={{169,136.72},{188,136.72},{188,168},{315.6,168}},   color={244,125,35}));
   connect(LPT2.C_W_out, generator.C_in) annotation (Line(points={{239,136.72},{262,136.72},{262,168},{315.6,168}},   color={244,125,35}));
   connect(LPT2.C_out, P_cond_sensor.C_in) annotation (Line(points={{239,130},{286,130}},                             color={28,108,200}));
-  connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74}},
+  connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74.2864}},
                                                                                                            color={28,108,200}));
   connect(superheater_T_out_sensor.C_out, LPT1.C_in) annotation (Line(points={{100,130},{151,130}},                             color={28,108,200}));
   connect(extraction_pump.C_power, LP_pump_Wm_source.C_out) annotation (Line(points={{372,-61.36},{372,-50.8}}, color={244,125,35}));
@@ -653,10 +645,10 @@ equation
   connect(pressureCut.C_out, superheater_drains_pipe.C_in) annotation (Line(points={{114,86},{122,86},{122,40}}, color={28,108,200}));
   connect(cold_source.C_out, CW_T_in_sensor.C_in) annotation (Line(points={{305,67.7778},{305,67},{318,67}},                   color={28,108,200}));
   connect(CW_T_in_sensor.C_out, CW_P_in_sensor.C_in) annotation (Line(points={{332,67},{346,67}}, color={28,108,200}));
-  connect(CW_P_in_sensor.C_out, condenser.C_cold_in) annotation (Line(points={{360,67},{378,67},{378,65.4074},{377,65.4074}},    color={28,108,200}));
+  connect(CW_P_in_sensor.C_out, condenser.C_cold_in) annotation (Line(points={{360,67},{378,67},{378,59.679},{377,59.679}},      color={28,108,200}));
   connect(CW_T_out_sensor.C_out, cold_sink.C_in) annotation (Line(points={{437,60},{455,60}},                                 color={28,108,200}));
-  connect(condenser.C_cold_out, CW_T_out_sensor.C_in) annotation (Line(points={{408,59.679},{408,60},{423,60}},                    color={28,108,200}));
-  connect(LP_reheater_drains_control_valve.C_out, condenser.C_hot_in) annotation (Line(points={{298,-119.818},{400,-119.818},{400,-120},{500,-120},{500,100},{392.5,100},{392.5,74}},
+  connect(condenser.C_cold_out, CW_T_out_sensor.C_in) annotation (Line(points={{407.69,59.679},{407.69,60},{423,60}},              color={28,108,200}));
+  connect(LP_reheater_drains_control_valve.C_out, condenser.C_hot_in) annotation (Line(points={{298,-119.818},{400,-119.818},{400,-120},{500,-120},{500,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                                                   color={28,108,200}));
   connect(HP_reheater_drains_control_valve.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{16,-121.818},{78,-121.818},{78,-122},{142,-122},{142,-70},{114,-70}}, color={28,108,200}));
   connect(steam_generator.purge_outlet, Q_purge_sensor.C_in) annotation (Line(points={{-170,-115.233},{-170,-125}},             color={28,108,200}));
