@@ -24,10 +24,10 @@ model SteamTurbine
   Medium.ThermodynamicState state_is; // Thermodynamic state after isentropic decompression
 
   // Liq/Vap enthalpies
-  Utilities.Units.SpecificEnthalpy h_vap_in(start=h_vap_in_0);
-  Utilities.Units.SpecificEnthalpy h_vap_out(start=h_vap_out_0);
-  Utilities.Units.SpecificEnthalpy h_liq_in(start=h_liq_in_0);
-  Utilities.Units.SpecificEnthalpy h_liq_out(start=h_liq_out_0);
+  Utilities.Units.SpecificEnthalpy h_vap_sat_in(start=h_vap_in_0);
+  Utilities.Units.SpecificEnthalpy h_vap_sat_out(start=h_vap_out_0);
+  Utilities.Units.SpecificEnthalpy h_liq_sat_in(start=h_liq_in_0);
+  Utilities.Units.SpecificEnthalpy h_liq_sat_out(start=h_liq_out_0);
 
   // Initialization parameters
   parameter Utilities.Units.MassFraction x_out_0=min((h_out_0 - h_liq_out_0)/(h_vap_out_0 - h_liq_out_0), 1);
@@ -56,13 +56,13 @@ equation
   W = C_W_out.W;
 
   // Vapor fractions
-  h_vap_in = Medium.dewEnthalpy(Medium.setSat_p(P_in));
-  h_liq_in = Medium.bubbleEnthalpy(Medium.setSat_p(P_in));
-  x_in = min((h_in - h_liq_in)/(h_vap_in - h_liq_in), 1);
+  h_vap_sat_in = Medium.dewEnthalpy(Medium.setSat_p(P_in));
+  h_liq_sat_in = Medium.bubbleEnthalpy(Medium.setSat_p(P_in));
+  x_in =min((h_in - h_liq_sat_in)/(h_vap_sat_in - h_liq_sat_in), 1);
 
-  h_vap_out = Medium.dewEnthalpy(Medium.setSat_p(P_out));
-  h_liq_out = Medium.bubbleEnthalpy(Medium.setSat_p(P_out));
-  x_out = min((h_out - h_liq_out)/(h_vap_out - h_liq_out), 1);
+  h_vap_sat_out = Medium.dewEnthalpy(Medium.setSat_p(P_out));
+  h_liq_sat_out = Medium.bubbleEnthalpy(Medium.setSat_p(P_out));
+  x_out =min((h_out - h_liq_sat_out)/(h_vap_sat_out - h_liq_sat_out), 1);
 
   xm = (x_in + x_out)/2;
   annotation (
