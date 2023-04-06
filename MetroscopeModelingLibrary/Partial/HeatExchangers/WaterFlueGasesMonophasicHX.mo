@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial.HeatExchangers;
-partial model hrsg_monophasic_HX
+partial model WaterFlueGasesMonophasicHX
 
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
@@ -150,4 +150,4 @@ equation
           color={0,0,0},
           smooth=Smooth.Bezier,
           thickness=1)}),          Diagram(coordinateSystem(preserveAspectRatio=false)));
-end hrsg_monophasic_HX;
+end WaterFlueGasesMonophasicHX;
