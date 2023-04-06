@@ -40,7 +40,7 @@ equation
   cold_source.Q_out = -Q_cold;
 
   // Component parameters
-  reheater.S_tot = S_tot;
+  reheater.S = S_tot;
   reheater.Kth_cond = Kth_cond;
   reheater.Kth_subc = Kth_subc;
   reheater.Kfr_hot = Kfr_hot;

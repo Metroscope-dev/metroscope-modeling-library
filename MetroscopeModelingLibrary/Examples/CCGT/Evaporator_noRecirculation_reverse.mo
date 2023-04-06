@@ -45,7 +45,7 @@ equation
   cold_source.Q_out = - Q_cold_source;
 
   // Parameters
-  evaporator.S_vaporising = S;
+  evaporator.S = S;
 
   // Inputs for calibration
   Q_cold_liquid_out.Q = Q_cold_liq_out;

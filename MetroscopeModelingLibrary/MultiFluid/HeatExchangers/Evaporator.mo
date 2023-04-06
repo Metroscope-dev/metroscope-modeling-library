@@ -8,7 +8,7 @@ model Evaporator
     // Pressure Losses
     Inputs.InputFrictionCoefficient Kfr_cold;
     Inputs.InputFrictionCoefficient Kfr_hot;
-    Inputs.InputArea S_vaporising;
+    Inputs.InputArea S;
 
     // Heating
     Units.Power W_heating;
@@ -17,7 +17,7 @@ model Evaporator
     Inputs.InputHeatExchangeCoefficient Kth;
     parameter String HX_config="evaporator";
 
-    Units.Power W_vaporising;
+    Units.Power W_vap;
     Units.MassFraction x_steam_out(start=0.7); // Steam mass fraction at water outlet
     Units.SpecificEnthalpy h_vap_sat(start=2e6);
     Units.SpecificEnthalpy h_liq_sat(start=1e5);
@@ -118,14 +118,14 @@ equation
   /* Vaporising */
   // Energy balance
   hot_side_vaporising.W + cold_side_vaporising.W = 0;
-  cold_side_vaporising.W = W_vaporising;
+  cold_side_vaporising.W =W_vap;
 
   // Power Exchange
   cold_side_vaporising.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
 
-  HX_vaporising.W = W_vaporising;
+  HX_vaporising.W =W_vap;
   HX_vaporising.Kth = Kth*(1-fouling/100);
-  HX_vaporising.S = S_vaporising;
+  HX_vaporising.S =S;
   HX_vaporising.Q_cold = Q_cold;
   HX_vaporising.Q_hot = Q_hot;
   HX_vaporising.T_cold_in = Tsat;
