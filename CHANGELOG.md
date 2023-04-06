@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AirCooledCondenser_with_subcooling component adding subcooling to the ACC model [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
 
 ### Changed
+- Renamed internal variables of Steam Extraction Splitter (might break model with start values) [PR#401](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/401)
 - Stodola turbine has been renamed SteamTurbine and does not have a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - `kPa` and `MPa` units are splitted between gauge and absolute in pressure sensor [PR#391](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/391)
 
