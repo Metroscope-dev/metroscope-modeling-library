@@ -2,14 +2,14 @@ within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model Filter_faulty
   extends Filter_direct(filter(faulty=true));
 
-  Real Failure_fouling(start=0);
+  Real Fault_fouling(start=0);
 
 equation
 
   // Failure input
-  Failure_fouling = 0 + 1*time;
+  Fault_fouling = 0 + 1*time;
 
   // Failure definition
-  filter.fouling = Failure_fouling;
+  filter.fouling = Fault_fouling;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Filter_faulty;
