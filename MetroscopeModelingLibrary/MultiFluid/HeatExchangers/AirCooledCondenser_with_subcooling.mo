@@ -171,7 +171,7 @@ equation
   incondensables_out.DP = + P_incond;
 
   // Flow in subcooling
-  cold_side_subcooling.Q =S_subc/(S)*Q_cold + 1e-3;
+  cold_side_subcooling.Q = Q_cold * S_subc/S + 1e-3;
 
   // Pressure losses
   hot_side_pipe.delta_z = 0;
