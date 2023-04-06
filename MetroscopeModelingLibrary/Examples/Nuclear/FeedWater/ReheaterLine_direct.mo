@@ -157,7 +157,7 @@ equation
     main_steam_source_1.h_out = main_steam_source_1_h;
 
     // Component parameters 1A
-  reheater_1A.S = S_tot;
+      reheater_1A.S = S_tot;
       reheater_1A.Kfr_hot = Kfr_hot;
       reheater_1A.Kfr_cold = reheater_1A_Kfr_cold;
       reheater_1A.level = level;
