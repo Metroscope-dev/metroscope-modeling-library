@@ -8,22 +8,22 @@ model Reheater
   Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputFrictionCoefficient Kfr_cold;
 
-  Units.Power W_tot;
-  Inputs.InputArea S_tot;
+  Units.Power W;
+  Inputs.InputArea S;
   Inputs.InputFraction level(min= 0, max=1, start = 0.3);
 
   // Deheating
-  Units.Power W_deheating;
+  Units.Power W_deheat;
 
   // Condensation
   Units.Area S_cond;
   Units.HeatExchangeCoefficient Kth_cond;
-  Units.Power W_condensing;
+  Units.Power W_cond;
 
   // Subcooling
   Units.Area S_subc;
   Inputs.InputHeatExchangeCoefficient Kth_subc;
-  Units.Power W_subcooling;
+  Units.Power W_subc;
 
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0);
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0);
@@ -175,7 +175,7 @@ equation
                                 // A IsoPHFlowModel is necessary to have a full thermodynamic state with temperature calculation at the cold outlet
   T_hot_in = hot_side_pipe.T_in;
   T_hot_out = final_mix_hot.T_out;
-  W_tot = W_deheating + W_condensing + W_subcooling;
+  W = W_deheat + W_cond + W_subc;
 
   Tsat = hot_side_deheating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
@@ -190,7 +190,7 @@ equation
   /* Deheating */
   // Energy balance
   hot_side_deheating.W + cold_side_deheating.W = 0;
-  cold_side_deheating.W = W_deheating;
+  cold_side_deheating.W =W_deheat;
 
   // Power Exchange
   if hot_side_deheating.h_in > h_vap_sat then
@@ -200,18 +200,18 @@ equation
   end if;
 
   /* Water level */
-  S_tot = S_cond + S_subc;  // Deheating surface is neglected
-  S_subc = (level + water_level_rise) * S_tot;
+  S = S_cond + S_subc;      // Deheating surface is neglected
+  S_subc =(level + water_level_rise)*S;
 
   /* Condensing */
   // Energy Balance
   hot_side_condensing.W + cold_side_condensing.W = 0;
-  cold_side_condensing.W = W_condensing;
+  cold_side_condensing.W =W_cond;
 
   // Power Exchange
   hot_side_condensing.h_out = h_liq_sat;
 
-  HX_condensing.W = W_condensing;
+  HX_condensing.W =W_cond;
   HX_condensing.Kth = Kth_cond * (1-fouling/100);
   HX_condensing.S = S_cond;
   HX_condensing.Q_cold = cold_side_deheating.Q;
@@ -224,10 +224,10 @@ equation
   /* Subcooling */
   // Energy Balance
   hot_side_subcooling.W + cold_side_subcooling.W = 0;
-  cold_side_subcooling.W = W_subcooling;
+  cold_side_subcooling.W =W_subc;
 
   // Power exchange
-  HX_subcooling.W = W_subcooling;
+  HX_subcooling.W =W_subc;
   HX_subcooling.Kth = Kth_subc * (1-fouling/100);
   HX_subcooling.S = S_subc;
   HX_subcooling.Q_cold = cold_side_subcooling.Q;
@@ -283,7 +283,9 @@ equation
       points={{144,-8},{144,0},{160,0}},
       color={28,108,200},
       thickness=1));
+
   connect(partition_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-90,-68},{144,-68},{144,-28}}, color={217,67,180}));
+
   connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-94,-14},{-114,-14},{-114,0},{-120,0}}, color={217,67,180}));
   connect(cold_side_subcooling.C_in, cold_side_pipe.C_out) annotation (Line(
       points={{-78,-34},{-114,-34},{-114,0},{-120,0}},

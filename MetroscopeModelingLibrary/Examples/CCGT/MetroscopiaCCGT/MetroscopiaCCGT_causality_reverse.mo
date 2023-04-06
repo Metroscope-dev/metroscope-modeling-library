@@ -455,7 +455,7 @@ equation
       evaporator.x_steam_out = Evap_x_steam_out;
       Evap_opening_sensor.Opening = Evap_opening;
       // Parameters
-      evaporator.S_vaporising = 100;
+      evaporator.S = 100;
       evaporator.Kfr_hot = 0;
       // Calibrated parameters
       Evap_controlValve.Cvmax = Evap_CV_Cvmax;

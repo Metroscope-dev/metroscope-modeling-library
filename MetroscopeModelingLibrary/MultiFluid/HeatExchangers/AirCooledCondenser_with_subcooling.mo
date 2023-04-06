@@ -8,13 +8,13 @@ model AirCooledCondenser_with_subcooling
 
   Inputs.InputArea S_cond;
   Inputs.InputArea S_subc;
-  Inputs.InputArea S_tot;
+  Inputs.InputArea S;
 
   Units.HeatExchangeCoefficient Kth_cond;
   Units.HeatExchangeCoefficient Kth_subc;
   Inputs.InputFrictionCoefficient Kfr_hot;
 
-  Units.Power W_tot;
+  Units.Power W;
   Units.Power W_cond;
   Units.Power W_subc;
 
@@ -156,8 +156,8 @@ equation
   T_hot_out = incondensables_out.T_out;
   T_cold_in = cold_side_condensing.T_in;
   T_cold_out = final_mix_cold.T_out;
-  W_tot = W_cond + W_subc;
-  S_tot = S_cond + S_subc;
+  W = W_cond + W_subc;
+  S = S_cond + S_subc;
   cold_side_condensing.W = W_cond;
   cold_side_subcooling.W = W_subc;
 
@@ -171,7 +171,7 @@ equation
   incondensables_out.DP = + P_incond;
 
   // Flow in subcooling
-  cold_side_subcooling.Q = S_subc / (S_tot) * Q_cold + 1e-3;
+  cold_side_subcooling.Q = Q_cold * S_subc/S + 1e-3;
 
   // Pressure losses
   hot_side_pipe.delta_z = 0;

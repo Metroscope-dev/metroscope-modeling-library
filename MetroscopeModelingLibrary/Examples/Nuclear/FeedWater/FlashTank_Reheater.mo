@@ -56,7 +56,7 @@ equation
   drains_cooling_source.Q_out = -Q_hot_0;
 
   // Reheater
-  dry_reheater.S_condensing = 100;
+  dry_reheater.S = 100;
   dry_reheater.Kfr_hot = 1;
   dry_reheater.Kfr_cold = 1;
   dry_reheater.Kth = 1e5;

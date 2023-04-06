@@ -43,7 +43,7 @@ equation
   cold_source.T_out =  T_cold_source;
   cold_source.Q_out = - Q_cold_source;
 
-  evaporator.S_vaporising = S;
+  evaporator.S = S;
   evaporator.Kth = Kth;
   evaporator.Kfr_hot = Kfr_hot;
   evaporator.Kfr_cold = Kfr_cold;

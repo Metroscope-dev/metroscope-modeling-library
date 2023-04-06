@@ -46,7 +46,7 @@ equation
   cold_source.Q_out = -Q_cold;
 
   // Component parameters
-  dryReheater.S_condensing = S;
+  dryReheater.S = S;
   dryReheater.Kfr_hot = Kfr_hot;
 
   // Observables for calibration

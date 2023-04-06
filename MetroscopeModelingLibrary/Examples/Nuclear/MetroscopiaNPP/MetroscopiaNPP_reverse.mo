@@ -527,7 +527,7 @@ equation
     LP_reheater_drains_control_valve_opening_sensor.Opening = LP_reheater_drains_control_valve_opening;
 
     // Parameters
-    LP_heater.S_condensing = 100;
+    LP_heater.S = 100;
     LP_heater.Kfr_hot = 0;
 
     // Calibrated parameters
@@ -573,7 +573,7 @@ equation
     HP_reheater_drains_control_valve_opening_sensor.Opening = HP_reheater_drains_control_valve_opening;
 
     // Parameters
-    HP_heater.S_tot = 100;
+    HP_heater.S = 100;
     HP_heater.Kfr_hot = 0;
     HP_heater.level = 0.3;
 

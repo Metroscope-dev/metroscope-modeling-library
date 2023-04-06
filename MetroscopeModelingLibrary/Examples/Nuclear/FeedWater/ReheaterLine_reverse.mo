@@ -157,7 +157,7 @@ equation
     main_steam_source_1.h_out = main_steam_source_1_h;
 
     // Component parameters 1A
-      reheater_1A.S_tot = S_tot;
+      reheater_1A.S = S_tot;
       reheater_1A.Kfr_hot = Kfr_hot;
       reheater_1A.Kfr_cold = reheater_1A_Kfr_cold;
       reheater_1A.level = level;
@@ -171,7 +171,7 @@ equation
       reheater_1A_T_cold_out_sensor.T_degC = reheater_1A_T_cold_out;
 
     // Component parameters 1B
-      reheater_1B.S_tot = S_tot;
+      reheater_1B.S = S_tot;
       reheater_1B.Kfr_hot = Kfr_hot;
       reheater_1B.Kfr_cold = reheater_1B_Kfr_cold;
       reheater_1B.level = level;
@@ -190,7 +190,7 @@ equation
       main_steam_source_2.h_out = main_steam_source_2_h;
 
     // Component parameters 2A
-      reheater_2A.S_tot = S_tot;
+      reheater_2A.S = S_tot;
       reheater_2A.Kfr_hot = Kfr_hot;
       reheater_2A.Kfr_cold = reheater_2A_Kfr_cold;
       reheater_2A.level = level;
@@ -205,7 +205,7 @@ equation
       reheater_2A_T_cold_out_sensor.T_degC = reheater_2A_T_cold_out;
 
     // Component parameters 2B
-      reheater_2B.S_tot = S_tot;
+      reheater_2B.S = S_tot;
       reheater_2B.Kfr_hot = Kfr_hot;
       reheater_2B.Kfr_cold = reheater_2B_Kfr_cold;
       reheater_2B.level = level;

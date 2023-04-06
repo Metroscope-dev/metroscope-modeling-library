@@ -39,7 +39,7 @@ equation
   cold_source.Q_out = -Q_cold;
 
   // Component parameters
-  dryReheater.S_condensing = S;
+  dryReheater.S = S;
   dryReheater.Kth = Kth;
   dryReheater.Kfr_hot = Kfr_hot;
   dryReheater.Kfr_cold = Kfr_cold;
