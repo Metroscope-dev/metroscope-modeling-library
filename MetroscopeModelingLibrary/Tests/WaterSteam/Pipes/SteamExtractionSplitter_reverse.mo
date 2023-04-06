@@ -35,7 +35,7 @@ equation
   extraction_sink.Q_in = extracted_Q;
 
   // Input: Observables
-  steamExtractionSplitter.mainFlow.h_out = main_h_out;
+  steamExtractionSplitter.main_flow.h_out = main_h_out;
 
   // Output: Component parameters
   steamExtractionSplitter.alpha = alpha;
