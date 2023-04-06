@@ -497,7 +497,7 @@ equation
     HP_reheater_drains_control_valve_opening_sensor.Opening = HP_reheater_drains_control_valve_opening;
 
     // Parameters
-  HP_heater.S = 100;
+    HP_heater.S = 100;
     HP_heater.Kfr_hot = 0;
     HP_heater.level = 0.3;
 
