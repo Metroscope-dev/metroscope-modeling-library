@@ -46,7 +46,7 @@ model Reheater
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
   Units.Fraction water_level_rise;  // Water level rise (can be negative)
-  Units.MassFlowRate separating_plate_leak; // Separating plate leak
+  Units.MassFlowRate partition_plate_leak;  // Separating plate leak
   Units.MassFlowRate tube_rupture_leak; // Tube rupture leak : cold water leaks and mixes with the condensed steam
 
   // Initialization parameters
@@ -144,7 +144,7 @@ model Reheater
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-54,-10})));
-  Pipes.Leak separating_plate annotation (Placement(transformation(extent={{-110,-78},{-90,-58}})));
+  Pipes.Leak partition_plate annotation (Placement(transformation(extent={{-110,-78},{-90,-58}})));
   BaseClasses.IsoPHFlowModel final_mix_cold annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -161,7 +161,7 @@ equation
   if not faulty then
     fouling = 0;
     water_level_rise = 0;
-    separating_plate_leak = 0;
+    partition_plate_leak = 0;
     tube_rupture_leak = 0;
   end if;
 
@@ -239,7 +239,7 @@ equation
 
 
   // Internal leaks
-  separating_plate.Q = 1e-5 + separating_plate_leak;
+  partition_plate.Q = 1e-5 + partition_plate_leak;
   tube_rupture.Q = 1e-5 + tube_rupture_leak;
 
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
@@ -265,7 +265,7 @@ equation
       color={28,108,200},
       thickness=1));
 
-  connect(separating_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-110,-68},{-114,-68},{-114,0},{-120,0}}, color={217,67,180}));
+  connect(partition_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-110,-68},{-114,-68},{-114,0},{-120,0}}, color={217,67,180}));
   connect(hot_side_condensing.C_out, hot_side_subcooling.C_in) annotation (Line(
       points={{-3.55271e-15,19},{-32,19}},
       color={238,46,47},
@@ -283,8 +283,7 @@ equation
       points={{144,-8},{144,0},{160,0}},
       color={28,108,200},
       thickness=1));
-  connect(separating_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-90,-67.8},{144,-67.8},{144,-28}},
-                                                                                                                color={217,67,180}));
+  connect(partition_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-90,-68},{144,-68},{144,-28}}, color={217,67,180}));
   connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-94,-14},{-114,-14},{-114,0},{-120,0}}, color={217,67,180}));
   connect(cold_side_subcooling.C_in, cold_side_pipe.C_out) annotation (Line(
       points={{-78,-34},{-114,-34},{-114,0},{-120,0}},
@@ -292,8 +291,7 @@ equation
       thickness=1));
   connect(final_mix_hot.C_out, C_hot_out) annotation (Line(points={{-38,-62},{0,-62},{0,-80}}, color={238,46,47},
       thickness=1));
-  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-74,-13.8},{-66,-13.8},{-66,-6},{-102,-6},{-102,-62},{-58,-62}},
-                                                                                                                                         color={217,67,180}));
+  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-74,-14},{-66,-14},{-66,-6},{-102,-6},{-102,-62},{-58,-62}}, color={217,67,180}));
   connect(hot_side_subcooling.C_out, final_mix_hot.C_in) annotation (Line(
       points={{-78,19},{-78,18},{-102,18},{-102,-62},{-58,-62}},
       color={255,0,0},
