@@ -108,12 +108,8 @@ eta_is(start=0.53308195),
 h_in(start=2777829.8),
 h_in_0(start=2800000.0),
 h_is(start=2692036.5),
-h_liq_in(start=1145014.5),
-h_liq_out(start=1017003.56),
 h_out(start=2733235.8),
 h_out_0(start=2700000.0),
-h_vap_in(start=2795440.8),
-h_vap_out(start=2803283.8),
 rho(start=20.464697),
 rho_out(start=16.123663),
 state_in(
@@ -137,7 +133,15 @@ phase(start=0)),
 x_in(start=0.9893294),
 x_in_0(start=1.0),
 xm(start=0.9750575),
-xm_0(start=0.9710897)),
+xm_0(start=0.9710897),
+h_vap_sat_in(
+         start=2795440.8),
+h_vap_sat_out(
+          start=2803283.8),
+h_liq_sat_in(
+         start=1145014.5),
+h_liq_sat_out(
+          start=1017003.56)),
 HPT_2(
 C_W_out(
 W(start=-49711764.0)),
@@ -167,12 +171,8 @@ eta_is(start=0.53308195),
 h_in(start=2733235.8),
 h_in_0(start=2730000.0),
 h_is(start=2645207.5),
-h_liq_in(start=1017003.56),
-h_liq_out(start=901606.56),
 h_out(start=2688580.2),
 h_out_0(start=2680000.0),
-h_vap_in(start=2803283.8),
-h_vap_out(start=2797730.5),
 rho(start=13.229676),
 rho_out(start=10.33569),
 state_in(
@@ -196,7 +196,15 @@ phase(start=0)),
 x_in(start=0.96078557),
 x_in_0(start=0.9589742),
 xm(start=0.9516103),
-xm_0(start=0.94844204)),
+xm_0(start=0.94844204),
+h_vap_sat_in(
+         start=2803283.8),
+h_vap_sat_out(
+          start=2797730.5),
+h_liq_sat_in(
+         start=1017003.56),
+h_liq_sat_out(
+          start=901606.56)),
 HPT_P_in(start=48.5),
 HPT_P_in_sensor(
 C_in(
@@ -1102,12 +1110,8 @@ eta_is(start=0.53308195),
 h_in(start=2847865.0),
 h_in_0(start=2850000.0),
 h_is(start=2591521.2),
-h_liq_in(start=901606.56),
-h_liq_out(start=640185.3),
 h_out(start=2712371.0),
 h_out_0(start=2700000.0),
-h_vap_in(start=2797730.5),
-h_vap_out(start=2748107.5),
 rho(start=5.9698896),
 rho_out(start=2.7140071),
 state_in(
@@ -1131,7 +1135,15 @@ phase(start=0)),
 x_in(start=1.0),
 x_in_0(start=1.0),
 xm(start=0.9915233),
-xm_0(start=0.98858887)),
+xm_0(start=0.98858887),
+h_vap_sat_in(
+         start=2797730.5),
+h_vap_sat_out(
+          start=2748107.5),
+h_liq_sat_in(
+         start=901606.56),
+h_liq_sat_out(
+          start=640185.3)),
 LPT1_Cst(start=6242.8354),
 LPT2(
 C_W_out(
@@ -1162,12 +1174,8 @@ eta_is(start=0.53308195),
 h_in(start=2712371.0),
 h_in_0(start=2700000.0),
 h_is(start=2091288.9),
-h_liq_in(start=640185.3),
-h_liq_out(start=163142.9),
 h_out(start=2396153.0),
 h_out_0(start=2400000.0),
-h_vap_in(start=2748107.5),
-h_vap_out(start=2571660.8),
 rho(start=1.3832085),
 rho_out(start=0.05240978),
 state_in(
@@ -1191,7 +1199,15 @@ phase(start=0)),
 x_in(start=0.9830466),
 x_in_0(start=0.97717774),
 xm(start=0.9550885),
-xm_0(start=0.9530399)),
+xm_0(start=0.9530399),
+h_vap_sat_in(
+         start=2748107.5),
+h_vap_sat_out(
+          start=2571660.8),
+h_liq_sat_in(
+         start=640185.3),
+h_liq_sat_out(
+          start=163142.9)),
 LPT2_Cst(start=593.31573),
 LP_extract(
 C_ext_out(

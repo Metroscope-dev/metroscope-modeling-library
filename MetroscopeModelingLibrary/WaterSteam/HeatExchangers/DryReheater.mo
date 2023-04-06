@@ -31,7 +31,7 @@ model DryReheater
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
-  Units.MassFlowRate separating_plate_leak; // Separating plate leak
+  Units.MassFlowRate partition_plate_leak;  // Separating plate leak
   Units.MassFlowRate tube_rupture_leak; // Tube rupture leak : cold water leaks and mixes with the condensed steam
 
   // Initialization parameters
@@ -108,7 +108,7 @@ model DryReheater
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={144,-18})));
-  Pipes.Leak separating_plate annotation (Placement(transformation(extent={{-98,-64},{-78,-44}})));
+  Pipes.Leak partition_plate annotation (Placement(transformation(extent={{-98,-64},{-78,-44}})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
@@ -117,7 +117,7 @@ equation
   // Failure modes
   if not faulty then
     fouling = 0;
-    separating_plate_leak = 0;
+    partition_plate_leak = 0;
     tube_rupture_leak = 0;
   end if;
 
@@ -175,7 +175,7 @@ equation
   HX_condensing.Cp_hot = 0; // Not used by NTU method in condenser mode
 
   // Internal leaks
-  separating_plate.Q = 1e-5 + separating_plate_leak;
+  partition_plate.Q = 1e-5 + partition_plate_leak;
   tube_rupture.Q = 1e-5 + tube_rupture_leak;
 
   // Total power
@@ -205,8 +205,10 @@ equation
       color={28,108,200},
       thickness=1));
 
-  connect(separating_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-98,-54},{-114,-54},{-114,0},{-120,0}}, color={28,108,200}));
-  connect(separating_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-78,-54},{144,-54},{144,-28}}, color={28,108,200}));
+
+  connect(partition_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-98,-54},{-114,-54},{-114,0},{-120,0}}, color={28,108,200}));
+  connect(partition_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-78,-54},{144,-54},{144,-28}}, color={28,108,200}));
+
   connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-76,-16},{-72,-16},{-72,-4},{-104,-4},{-104,-66},{-64,-66}}, color={217,67,180}));
   connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-96,-16},{-114,-16},{-114,0},{-120,0}}, color={217,67,180}));
   connect(hot_side_condensing.C_out, final_mix_hot.C_in) annotation (Line(
