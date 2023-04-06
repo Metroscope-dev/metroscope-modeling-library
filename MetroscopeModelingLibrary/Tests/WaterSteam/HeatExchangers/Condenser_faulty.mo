@@ -3,17 +3,17 @@ model Condenser_faulty
   extends Condenser_direct(
       condenser(faulty = true));
 
-  Real Failure_fouling(start=0);
-  Real Failure_air_intake(start=0);
+  Real Fault_fouling(start=0);
+  Real Fault_air_intake(start=0);
 
 equation
 
   // Failure input
-  Failure_fouling = 0 + 10*time;
-  Failure_air_intake = 0 + 1e-3 * time;
+  Fault_fouling = 0 + 10*time;
+  Fault_air_intake = 0 + 1e-3 * time;
 
   // Failure definition
-  condenser.fouling = Failure_fouling;
-  condenser.air_intake = Failure_air_intake;
+  condenser.fouling = Fault_fouling;
+  condenser.air_intake = Fault_air_intake;
 
 end Condenser_faulty;
