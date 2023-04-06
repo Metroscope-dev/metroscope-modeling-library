@@ -16,7 +16,7 @@ package Constants "Stores all constants used in MML"
   final constant Real Pa_to_inHg(unit="1/Pa") = 0.0002953006;
   final constant Real Pa_to_kPaA(unit="1/Pa") = 0.001;
   final constant Real Pa_to_MPaA(unit="1/Pa") = 0.000001;
-  final constant Real P0_barG_in_barA(unit="bar") = 1;
+  final constant Real atmospheric_pressure_in_bar(unit="bar") = 1;
   final constant Real P0_psiG_in_psiA(unit="bar") = 14.50377377;
   final constant Real P0_kPaG_in_kPaA(unit="bar") = 100;
   final constant Real P0_MPaG_in_MPaA(unit="bar") = 0.1;
