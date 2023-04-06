@@ -171,7 +171,7 @@ equation
       reheater_1A_T_cold_out_sensor.T_degC = reheater_1A_T_cold_out;
 
     // Component parameters 1B
-  reheater_1B.S = S_tot;
+      reheater_1B.S = S_tot;
       reheater_1B.Kfr_hot = Kfr_hot;
       reheater_1B.Kfr_cold = reheater_1B_Kfr_cold;
       reheater_1B.level = level;
