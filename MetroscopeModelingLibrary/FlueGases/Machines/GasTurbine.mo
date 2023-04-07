@@ -18,11 +18,9 @@ model GasTurbine
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
-  Units.Power Wmech;
-  Units.Power Wcompressor;
+  Units.Power W_shaft;
 
-  Power.Connectors.Outlet C_W_compressor annotation (Placement(transformation(extent={{-110,90},{-90,110}}), iconTransformation(extent={{-110,90},{-90,110}})));
-  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
+  Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
 equation
 
   /* Compression ratio */
@@ -32,9 +30,8 @@ equation
   h_out-h_in = eta_is*(h_is-h_in);
 
   /* Mechanical power produced by the turbine */
-  Wmech = - C_W_out.W;
-  Wcompressor = - C_W_compressor.W;
-  Wmech = eta_mech*Q*(h_in - h_out) - Wcompressor;
+  W_shaft =-C_W_shaft.W;
+  W_shaft = eta_mech*Q*(h_in - h_out);
 
   /* Isentropic  expansion */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);

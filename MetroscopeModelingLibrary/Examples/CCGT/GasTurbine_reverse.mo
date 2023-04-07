@@ -78,14 +78,10 @@ equation
   gas_turbine.eta_is = turbine_eta_is;
 
   connect(source_air.C_out, air_compressor.C_in) annotation (Line(points={{-93,0},{-84,0}}, color={95,95,95}));
-  connect(air_compressor.C_W_in, gas_turbine.C_W_compressor) annotation (Line(
-      points={{-64,10},{-64,22},{30,22},{30,10}},
-      color={244,125,35},
-      smooth=Smooth.Bezier));
   connect(combustion_chamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33}}, color={213,213,0}));
   connect(combustion_chamber.outlet, gas_turbine.C_in) annotation (Line(points={{10,0},{30,0}}, color={95,95,95}));
   connect(sink_power.C_in, W_sensor.C_out) annotation (Line(points={{93,40},{83.8,40}}, color={244,125,35}));
-  connect(W_sensor.C_in, gas_turbine.C_W_out) annotation (Line(
+  connect(W_sensor.C_in, gas_turbine.C_W_shaft) annotation (Line(
       points={{64,40},{50,40},{50,10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
@@ -94,6 +90,10 @@ equation
   connect(air_compressor.C_out, compressor_P_out_sensor.C_in) annotation (Line(points={{-64,0},{-58,0}}, color={95,95,95}));
   connect(compressor_P_out_sensor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{-38,0},{-34,0}}, color={95,95,95}));
   connect(compressor_T_out_sensor.C_out, combustion_chamber.inlet) annotation (Line(points={{-14,0},{-10,0}}, color={95,95,95}));
+  connect(air_compressor.C_W_in, gas_turbine.C_W_shaft) annotation (Line(
+      points={{-64,10},{-64,22},{50,22},{50,10}},
+      color={244,125,35},
+      smooth=Smooth.Bezier));
     annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

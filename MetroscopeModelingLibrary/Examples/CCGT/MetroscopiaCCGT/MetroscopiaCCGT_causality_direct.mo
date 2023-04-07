@@ -623,10 +623,6 @@ equation
                                                    color={28,108,200}));
   connect(evaporator.C_hot_out, economiser.C_hot_in) annotation (Line(points={{3.3,
           -26.355},{51,-26.355},{51,-26.5},{82.7,-26.5}},color={95,95,95}));
-  connect(gasTurbine.C_W_compressor, airCompressor.C_W_in) annotation (Line(
-      points={{-414,-10},{-414,16},{-496,16},{-496,-12}},
-      color={244,125,35},
-      smooth=Smooth.Bezier));
   connect(gasTurbine.C_out, turbine_T_out_sensor.C_in)
     annotation (Line(points={{-382,-26},{-370,-26}}, color={95,95,95}));
   connect(turbine_P_out_sensor.C_in, turbine_T_out_sensor.C_out)
@@ -716,7 +712,7 @@ equation
     annotation (Line(points={{-352.8,34},{-346,34}}, color={244,125,35}));
   connect(W_GT_sensor.C_out, sink_power.C_in)
     annotation (Line(points={{-334.12,34},{-327,34}}, color={244,125,35}));
-  connect(GT_generator.C_in, gasTurbine.C_W_out) annotation (Line(
+  connect(GT_generator.C_in, gasTurbine.C_W_shaft) annotation (Line(
       points={{-373.92,34},{-382,34},{-382,-10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
@@ -775,6 +771,10 @@ equation
   connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-689,-26}}, color={85,170,255}));
   connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-102,148},{-96,148}}, color={28,108,200}));
   connect(T_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={{-84,148},{-63,148},{-63,-5}}, color={28,108,200}));
+  connect(airCompressor.C_W_in, gasTurbine.C_W_shaft) annotation (Line(
+      points={{-496,-12},{-496,8},{-382,8},{-382,-10}},
+      color={244,125,35},
+      smooth=Smooth.Bezier));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
