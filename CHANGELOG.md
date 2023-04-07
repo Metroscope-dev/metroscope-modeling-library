@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AirCooledCondenser_with_subcooling component adding subcooling to the ACC model [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
 
 ### Changed
+- Deleted compressor power inlet in gas turbine model and renamed `Wmech` into `W_shaft` [PR#409](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/409)
 - Renamed internal variables of HX : Reheater, DryReheater, SuperHeater, AirCooledCondenser_with_subcooling [PR#406](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/406)
 - Renamed internal variables of SteamTurbine and SteamTurbineWithNozzle, might break start values models [PR#404](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/404)
 - Renamed internal variables of Reheater and DryReheater, especially `separating_plate_leak` renamed in `partition_plate_leak` [PR#402](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
