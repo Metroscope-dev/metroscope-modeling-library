@@ -56,17 +56,17 @@ equation
 
   connect(source_air.C_out, air_compressor.C_in) annotation (Line(points={{-79,0},{-54,0}}, color={95,95,95}));
   connect(gas_turbine.C_out, sink_exhaust.C_in) annotation (Line(points={{50,0},{71,0}}, color={95,95,95}));
-  connect(gas_turbine.C_W_out, sink_power.C_in) annotation (Line(
+  connect(gas_turbine.C_W_shaft, sink_power.C_in) annotation (Line(
       points={{50,10},{50,10},{50,40},{71,40}},
-      color={244,125,35},
-      smooth=Smooth.Bezier));
-  connect(air_compressor.C_W_in, gas_turbine.C_W_compressor) annotation (Line(
-      points={{-34,10},{-34,26},{30,26},{30,10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
   connect(combustion_chamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33}}, color={213,213,0}));
   connect(combustion_chamber.outlet, gas_turbine.C_in) annotation (Line(points={{10,0},{30,0}}, color={95,95,95}));
   connect(combustion_chamber.inlet, air_compressor.C_out) annotation (Line(points={{-10,0},{-34,0}}, color={95,95,95}));
+  connect(air_compressor.C_W_in, gas_turbine.C_W_shaft) annotation (Line(
+      points={{-34,10},{-34,22},{50,22},{50,10}},
+      color={244,125,35},
+      smooth=Smooth.Bezier));
     annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
