@@ -51,8 +51,8 @@ partial model FlowModel "Basic fluid transport brick for all components"
   Medium.ThermodynamicState state_out;
 
   // ------ Conservation variables ------
-  Units.DifferentialPressure DP(nominal=DP_0, start=DP_0); // Pressure Loss
-  Units.Power W(nominal=0, start=0); // Heat Loss
+  Units.DifferentialPressure DP(nominal=P_in_0, start=DP_0); // Pressure Loss
+  Units.Power W(nominal=1e6, start=0); // Heat Loss
 
   // ------ Connectors ------
   replaceable Partial.Connectors.FluidInlet C_in(
