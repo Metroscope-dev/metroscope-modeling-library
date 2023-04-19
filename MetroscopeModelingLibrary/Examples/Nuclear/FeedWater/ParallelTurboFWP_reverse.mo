@@ -104,11 +104,11 @@ equation
 
   // ST1_CV // Hyp on CVs : same Cv (or same mass flow)
   // Calibrated  parameters
-  ST1_CV.Cvmax = STs_CVmax;
+  ST1_CV.Cv_max = STs_CVmax;
 
   // ST1_CV
   // Calibrated parameters
-  ST2_CV.Cvmax = STs_CVmax;
+  ST2_CV.Cv_max = STs_CVmax;
 
   // ST1
   // Observables used for calibration
@@ -139,7 +139,7 @@ equation
   // fixed parameters
   FWP1.VRotn = 4300;
   FWP1.rm = 1; // No conversion on turbopumps, so no yield
-  FWP1.rhmin = 0.20;
+  FWP1.rh_min = 0.20;
   FWP1.b2 = 0;
   FWP1.b1 = 0;
   FWP1.a2 = 0;
@@ -154,7 +154,7 @@ equation
   // fixed parameters
   FWP2.VRotn = 4500;
   FWP2.rm = 1; // No conversion on turbopumps, so no yield
-  FWP2.rhmin = 0.20;
+  FWP2.rh_min = 0.20;
   FWP2.b2 = 0;
   FWP2.b1 = 0;
   FWP2.a2 = 0;

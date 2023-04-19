@@ -38,7 +38,7 @@ equation
   sink.P_in = sink_P;
 
   // Parameters
-  control_valve.Cvmax = Cvmax;
+  control_valve.Cv_max = Cvmax;
 
   connect(control_valve.C_out, sink.C_in) annotation (Line(points={{16.5,-1.81818e-06},{34.75,-1.81818e-06},{34.75,0},{53,0}}, color={28,108,200}));
   connect(control_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}},color={28,108,200}));

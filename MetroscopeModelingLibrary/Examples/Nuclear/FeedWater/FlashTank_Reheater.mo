@@ -76,7 +76,7 @@ equation
   feed_water_pump.a2 = 0;
   feed_water_pump.b1 = 0;
   feed_water_pump.b2 = 0;
-  feed_water_pump.rhmin = 0.20;
+  feed_water_pump.rh_min = 0.20;
   feed_water_pump.rh = 1;
 
   connect(power_source.C_out, feed_water_pump.C_power) annotation (Line(points={{-60,-56.8},{-60,-70.28}}, color={244,125,35}));

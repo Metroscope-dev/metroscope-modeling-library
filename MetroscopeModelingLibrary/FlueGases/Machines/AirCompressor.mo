@@ -17,7 +17,7 @@ model AirCompressor
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
-  Units.Power Wmech;
+  Units.Power W_shaft;
 
 
   Power.Connectors.Inlet C_W_in annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
@@ -30,8 +30,8 @@ equation
   (h_out-h_in)*eta_is = h_is - h_in;
 
   /* Mechanical power from the turbine */
-  Wmech = - Q*(h_in - h_out);
-  C_W_in.W =  Wmech;
+  W_shaft = -Q*(h_in - h_out);
+  C_W_in.W =W_shaft;
 
   /* Isentropic compression */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);

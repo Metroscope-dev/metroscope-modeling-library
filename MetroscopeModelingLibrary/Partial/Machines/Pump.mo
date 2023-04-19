@@ -17,7 +17,7 @@ partial model Pump
   Inputs.InputYield b3(start=0.8) "Constant coef. of the pump efficiency characteristics rh = f(vol_flow) (s.u.)";
 
   Inputs.InputYield rm(start=0.85) "Product of the pump mechanical and electrical efficiencies";
-  Inputs.InputYield rhmin(start=0.20) "Minimum efficiency to avoid zero crossings";
+  Inputs.InputYield rh_min(start=0.20) "Minimum efficiency to avoid zero crossings";
 
   Units.Yield rh "Hydraulic efficiency";
   Units.Height hn(start=10) "Pump head";
@@ -46,7 +46,7 @@ equation
 
   // Pump characteristics
   hn = a1*Qv^2 + a2*Qv*R + a3*R^2;
-  rh = noEvent(max(if (R > 1e-5) then b1*Qv^2/R^2 + b2*Qv/R + b3 else b3, rhmin));
+  rh =noEvent(max(if (R > 1e-5) then b1*Qv^2/R^2 + b2*Qv/R + b3 else b3, rh_min));
 
   // Outlet variation
   DP = rho*Constants.g*hn;

@@ -427,7 +427,7 @@ equation
     HPT_P_out_sensor.P_barA = HPT_P_out;
 
     // Calibrated parameters
-    HP_control_valve.Cvmax = HP_control_valve_Cvmax;
+  HP_control_valve.Cv_max = HP_control_valve_Cvmax;
     HPT_1.Cst = HPT1_Cst;
     HPT_1.eta_is = turbines_eta_is;
     HPT_2.Cst = HPT2_Cst;
@@ -452,7 +452,7 @@ equation
     // Calibrated parameters
     superheater.Kfr_hot = superheater_Kfr_hot;
     superheater.Kth = superheater_Kth;
-    superheater_control_valve.Cvmax = superheater_control_valve_Cvmax;
+  superheater_control_valve.Cv_max = superheater_control_valve_Cvmax;
 
     // Hypothesis
     superheater_control_valve.Opening = 1;
@@ -513,7 +513,7 @@ equation
     extraction_pump.a2 = 0;
     extraction_pump.b1 = 0;
     extraction_pump.b2 = 0;
-    extraction_pump.rhmin = 0.2;
+  extraction_pump.rh_min = 0.2;
 
     // Calibrated parameters
     extraction_pump.hn = extraction_pump_hn;
@@ -533,7 +533,7 @@ equation
     // Calibrated parameters
     LP_heater.Kth = LP_heater_Kth;
     LP_heater.Kfr_cold = LP_heater_Kfr_cold;
-    LP_reheater_drains_control_valve.Cvmax = LP_heater_drains_control_valve_Cvmax;
+  LP_reheater_drains_control_valve.Cv_max = LP_heater_drains_control_valve_Cvmax;
 
 
   // Deaerator
@@ -557,7 +557,7 @@ equation
     feedwater_pump.a2 = 0;
     feedwater_pump.b1 = 0;
     feedwater_pump.b2 = 0;
-    feedwater_pump.rhmin = 0.2;
+  feedwater_pump.rh_min = 0.2;
 
     // Calibrated parameters
     feedwater_pump.hn = feedwater_pump_hn;
@@ -581,7 +581,7 @@ equation
     HP_heater.Kth_subc = HP_heater_Kth_subc;
     HP_heater.Kth_cond = HP_heater_Kth_cond;
     HP_heater.Kfr_cold = HP_heater_Kfr_cold;
-    HP_reheater_drains_control_valve.Cvmax = HP_heater_drains_control_valve_Cvmax;
+  HP_reheater_drains_control_valve.Cv_max = HP_heater_drains_control_valve_Cvmax;
 
 
   connect(HP_control_valve.C_out, HPT_P_in_sensor.C_in) annotation (Line(points={{-125,72},{-116,72},{-116,72},{-106,72}},                            color={28,108,200}));

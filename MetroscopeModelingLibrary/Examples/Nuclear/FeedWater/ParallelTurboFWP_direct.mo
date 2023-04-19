@@ -72,10 +72,10 @@ equation
 
   // Component parameters
   // ST1_CV // Hyp on CVs : same Cv (or same mass flow)
-  ST1_CV.Cvmax = STs_CVmax;
+  ST1_CV.Cv_max = STs_CVmax;
 
   // ST1_CV
-  ST2_CV.Cvmax = STs_CVmax;
+  ST2_CV.Cv_max = STs_CVmax;
 
   // ST1
   ST1.eta_is = ST1_eta_is;
@@ -88,7 +88,7 @@ equation
   // FWP1
   FWP1.VRotn = 4300;
   FWP1.rm = 1; // No conversion on turbopumps, so no yield
-  FWP1.rhmin = 0.20;
+  FWP1.rh_min = 0.20;
   FWP1.b3 = FWPs_b3;
   FWP1.b2 = 0;
   FWP1.b1 = 0;
@@ -99,7 +99,7 @@ equation
   // FWP2
   FWP2.VRotn = 4500;
   FWP2.rm = 1; // No conversion on turbopumps, so no yield
-  FWP2.rhmin = 0.20;
+  FWP2.rh_min = 0.20;
   FWP2.b3 = FWPs_b3;
   FWP2.b2 = 0;
   FWP2.b1 = 0;

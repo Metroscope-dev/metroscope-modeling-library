@@ -458,7 +458,7 @@ equation
       evaporator.S = 100;
       evaporator.Kfr_hot = 0;
       // Calibrated parameters
-      Evap_controlValve.Cvmax = Evap_CV_Cvmax;
+  Evap_controlValve.Cv_max = Evap_CV_Cvmax;
       evaporator.Kth = Evap_Kth;
       evaporator.Kfr_cold = Evap_Kfr_cold;
 
@@ -493,7 +493,7 @@ equation
       deSH_opening_sensor.Opening = deSH_opening;
       Q_deSH_sensor.Q = Q_deSH;
       // Calibrated parameters
-      deSH_controlValve.Cvmax = deSH_CV_Cvmax;
+  deSH_controlValve.Cv_max = deSH_CV_Cvmax;
 
     // Reheater
       // Quantities definition
@@ -563,7 +563,7 @@ equation
       pump.a2 = 0;
       pump.b1 = 0;
       pump.b2 = 0;
-      pump.rhmin = 0.0001;
+  pump.rh_min = 0.0001;
       // Calibrated parameters
       pump.a3 = pump_a3;
       pump.b3 = pump_b3;
@@ -582,11 +582,11 @@ equation
       pumpRec.a2 = 0;
       pumpRec.b1 = 0;
       pumpRec.b2 = 0;
-      pumpRec.rhmin = 0.0001;
+  pumpRec.rh_min = 0.0001;
       // Calibrated parameters
       pumpRec.a3 = pumpRec_a3;
       pumpRec.b3 = pumpRec_b3;
-      pumpRec_controlValve.Cvmax = pumpRec_CV_Cvmax;
+  pumpRec_controlValve.Cv_max = pumpRec_CV_Cvmax;
 
   connect(HPsuperheater1.C_cold_out, T_w_HPSH1_out_sensor.C_in) annotation (
      Line(points={{-165,-5},{-166,-5},{-166,8},{-178,8}}, color={28,108,200}));

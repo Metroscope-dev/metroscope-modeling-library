@@ -47,7 +47,7 @@ equation
   pump.a2 = 0;
   pump.b1 = 0;
   pump.b2 = 0;
-  pump.rhmin = 0.2;
+  pump.rh_min = 0.2;
 
   // Calibrated parameters
   pump.a3 = pump_a3;

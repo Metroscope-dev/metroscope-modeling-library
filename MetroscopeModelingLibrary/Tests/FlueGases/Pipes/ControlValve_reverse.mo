@@ -36,7 +36,7 @@ equation
   opening_sensor.Opening = opening;
 
   // Parameters
-  controlValve.Cvmax = Cvmax;
+  controlValve.Cv_max = Cvmax;
 
 
   connect(source.C_out, controlValve.C_in) annotation (Line(points={{-23,0},{-16,0},{-16,-0.363636},{-10,-0.363636}}, color={95,95,95}));
