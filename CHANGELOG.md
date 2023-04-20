@@ -12,8 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
-- Renamed parameter `rhmin` of pumps in `rh_min`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
-- Renamed parameter `Cvmax` of pumps in `Cv_max`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 
 ## MML-v3.5.0
 
@@ -23,7 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AirCooledCondenser_with_subcooling component adding subcooling to the ACC model [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
 
 ### Changed
-
+- Renamed parameter `rhmin` of pumps in `rh_min`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
+- Renamed parameter `Cvmax` of pumps in `Cv_max`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - Deleted compressor power inlet in gas turbine model and renamed `Wmech` into `W_shaft` [PR#409](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/409)
 - Renamed internal variables of HX : Reheater, DryReheater, SuperHeater, AirCooledCondenser_with_subcooling [PR#406](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/406)
 - Renamed internal variables of SteamTurbine and SteamTurbineWithNozzle, might break start values models [PR#404](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/404)
