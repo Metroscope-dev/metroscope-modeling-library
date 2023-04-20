@@ -164,7 +164,7 @@ equation
     // Calibrated parameters 1A
       reheater_1A.Kth_cond = reheater_1A_Kth_cond;
       reheater_1A.Kth_subc = reheater_1A_Kth_subc;
-      reheater_1A_drains_valve.Cvmax = reheater_1A_drains_valve_cvmax;
+  reheater_1A_drains_valve.Cv_max = reheater_1A_drains_valve_cvmax;
     // Quantities definition
       reheater_1A_drains_valve_opening_sensor.Opening_pc = reheater_1A_drains_valve_opening_sensor_opening;
       reheater_1A_drains_T_sensor.T_degC = reheater_1A_drains_T;
@@ -178,7 +178,7 @@ equation
     // Calibrated parameters 1B
       reheater_1B.Kth_cond = reheater_1B_Kth_cond;
       reheater_1B.Kth_subc = reheater_1B_Kth_subc;
-      reheater_1B_drains_valve.Cvmax = reheater_1B_drains_valve_cvmax;
+  reheater_1B_drains_valve.Cv_max = reheater_1B_drains_valve_cvmax;
     // Quantities definition
       reheater_1B_drains_valve_opening_sensor.Opening_pc = reheater_1B_drains_valve_opening_sensor_opening;
       reheater_1B_drains_T_sensor.T_degC = reheater_1B_drains_T;
@@ -198,7 +198,7 @@ equation
       reheater_2A.Kth_cond = reheater_2A_Kth_cond;
       //reheater_2A.Kth_cond = reheater_2B_Kth_cond;
       reheater_2A.Kth_subc = reheater_2A_Kth_subc;
-      reheater_2A_drains_valve.Cvmax = reheater_2A_drains_valve_cvmax;
+  reheater_2A_drains_valve.Cv_max = reheater_2A_drains_valve_cvmax;
     // Quantities definition
       reheater_2A_drains_valve_opening_sensor.Opening_pc = reheater_2A_drains_valve_opening_sensor_opening;
       reheater_2A_drains_T_sensor.T_degC = reheater_2A_drains_T;
@@ -212,7 +212,7 @@ equation
     // Calibrated parameters 2B
       reheater_2B.Kth_cond = reheater_2B_Kth_cond;
       reheater_2B.Kth_subc = reheater_2B_Kth_subc;
-      reheater_2B_drains_valve.Cvmax = reheater_2B_drains_valve_cvmax;
+  reheater_2B_drains_valve.Cv_max = reheater_2B_drains_valve_cvmax;
     // Quantities definition
       reheater_2B_drains_valve_opening_sensor.Opening_pc = reheater_2B_drains_valve_opening_sensor_opening;
       reheater_2B_drains_T_sensor.T_degC = reheater_2B_drains_T;

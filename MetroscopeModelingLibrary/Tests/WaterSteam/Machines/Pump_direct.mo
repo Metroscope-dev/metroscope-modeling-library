@@ -41,7 +41,7 @@ equation
   pump.b1 = 0;
   pump.b2 = 0;
   pump.b3 = pump_b3;
-  pump.rhmin = pump_rhmin;
+  pump.rh_min = pump_rhmin;
 
   connect(pump.C_in, source.C_out) annotation (Line(points={{-10,0},{-61,0}}, color={28,108,200}));
   connect(pump.C_out, sink.C_in) annotation (Line(points={{10,0},{71,0}}, color={28,108,200}));
