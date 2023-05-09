@@ -7,8 +7,8 @@ model MetroscopiaNPP_reverse
     input Real P_steam(start = 50, unit="bar", min=0, nominal=50) "barA"; // Steam generator steam pressure
     input Real CW_P_in(start = 3, unit="bar", min=0, nominal=5) "barA"; // Circulating Water inlet pressure
     input Real CW_T_in(start = 15, unit="degC", min=0, nominal=15) "degC"; // Circulating Water inlet temperature
-    input Real Q_feedwater(start=1500, unit="kg/s", min=0, nominal=1e3) "kg/s"; // Feedwater flow rate
     input Real Q_purge(start=5, unit = "kg/s", min=0) "kg/s"; // Steam generator blowdown flow
+    input Real thermal_power(start=2820, unit="MW", nominal = 1e3) "MW"; // Core thermal power
 
 
   // Observables used for calibration
@@ -47,6 +47,9 @@ model MetroscopiaNPP_reverse
     input Real HP_heater_T_drains(start=90, min=0, nominal=100) "degC";
     // HP reheater drains Control Valve
     input Real HP_reheater_drains_control_valve_opening(start=0.15);
+
+  // Other observables
+    output Real Q_feedwater(start=1500, unit="kg/s", min=0, nominal=1e3) "kg/s"; // Feedwater flow rate
 
   // Calibrated parameters (input used for calibration in comment)
     // HP turbines inlet control valve
@@ -403,6 +406,8 @@ model MetroscopiaNPP_reverse
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-142,-70})));
+  Power.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-238,-80},{-218,-60}})));
+  Sensors.Power.PowerSensor thermal_power_sensor annotation (Placement(transformation(extent={{-212,-78},{-196,-62}})));
 equation
 
   // SteamGenerator
@@ -411,6 +416,7 @@ equation
     P_steam_sensor.P_barA = P_steam;
     Q_feedwater_sensor.Q = Q_feedwater;
     Q_purge_sensor.Q = Q_purge;
+    thermal_power_sensor.W_MW = thermal_power;
 
     // Parameters
     steam_generator.vapor_fraction = 0.99;
@@ -661,5 +667,7 @@ equation
   connect(Q_feedwater_sensor.C_out, loopBreaker.C_in) annotation (Line(points={{-118,-70},{-132,-70}}, color={28,108,200}));
   connect(loopBreaker.C_out, steam_generator.feedwater_inlet) annotation (Line(points={{-152,-70},{-159,-70}}, color={28,108,200}));
   connect(Q_purge_sensor.C_out, sink.C_in) annotation (Line(points={{-170,-139},{-170,-145}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-200,-160},{520,200}})), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-200,-160},{520,200}})));
+  connect(steam_generator.C_thermal_power, thermal_power_sensor.C_out) annotation (Line(points={{-181,-70},{-196.16,-70}}, color={244,125,35}));
+  connect(thermal_power_sensor.C_in, source.C_out) annotation (Line(points={{-212,-70},{-223.2,-70}}, color={244,125,35}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-240,-160},{520,200}})), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-240,-160},{520,200}})));
 end MetroscopiaNPP_reverse;
