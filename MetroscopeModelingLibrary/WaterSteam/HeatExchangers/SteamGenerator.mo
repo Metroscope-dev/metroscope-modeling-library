@@ -45,7 +45,7 @@ equation
 
   // Fault modes
   if not faulty then
-    feed_water_flow_rate_measurement_bias = 0;
+    feed_water_flow_rate_measurement_bias = 0; // a bias of +5 kg/s means that 1005 kg/s is measured, while only 1000 kg/s actually go into the SG
   end if;
 
   // Steam mass fraction
