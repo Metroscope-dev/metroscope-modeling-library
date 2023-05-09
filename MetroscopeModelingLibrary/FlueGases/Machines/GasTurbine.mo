@@ -31,7 +31,7 @@ equation
 
   /* Mechanical power produced by the turbine */
   W_shaft = - C_W_shaft.W;
-  W_shaft = - eta_mech*Q*DH;
+  W_shaft = - eta_mech * W;
 
   /* Isentropic  expansion */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);
