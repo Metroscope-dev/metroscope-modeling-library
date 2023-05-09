@@ -10,9 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+
 - Steam generators now have power connectors for thermal power and embedded feedwater mass flow rate bias [PR#418](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/418)
+- Removed pumps power connector [PR#419]([url](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/419))
 
 ### Fixed
+
+- Power connectors are now balanced [PR#419]([url](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/419))
 
 ## MML-v3.5.0
 
