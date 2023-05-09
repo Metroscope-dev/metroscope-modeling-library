@@ -1017,7 +1017,6 @@ model MetroscopiaNPP_direct_withStartValues
         h(start=339635.1),
         p(start=5900000.0),
         phase(start=0))),
-    HP_pump_Wm_source(C_out(W(start=-30217902.0)), W_out(start=-30217902.0)),
     HP_reheater_drains_control_valve(
       C_in(
         P(start=3100000.0),
@@ -1711,7 +1710,6 @@ model MetroscopiaNPP_direct_withStartValues
         p(start=600000.0),
         phase(start=0))),
     LP_heater_drains_control_valve_Cvmax(start=1517.0101),
-    LP_pump_Wm_source(C_out(W(start=-989156.56)), W_out(start=-989156.56)),
     LP_reheater_drains_control_valve(
       C_in(
         P(start=500000.0),
@@ -2534,22 +2532,6 @@ model MetroscopiaNPP_direct_withStartValues
         d(start=20.3577),
         h(start=2777829.8),
         p(start=4000000.0),
-        phase(start=0))),
-    sink(
-      C_in(
-        P(start=5000000.0),
-        Q(start=5.0),
-        h_outflow(start=0.0)),
-      P_in(start=5000000.0),
-      Q_in(start=5.0),
-      Qv_in(start=0.0064317323),
-      T_in(start=537.072),
-      h_in(start=1154502.0),
-      state_in(
-        T(start=537.072),
-        d(start=777.39557),
-        h(start=1154502.0),
-        p(start=5000000.0),
         phase(start=0))),
     steam_dryer(
       C_hot_liquid(
