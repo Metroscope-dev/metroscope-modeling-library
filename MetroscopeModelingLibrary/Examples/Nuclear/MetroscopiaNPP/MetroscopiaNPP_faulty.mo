@@ -6,7 +6,7 @@ model MetroscopiaNPP_faulty
     condenser(faulty=true),
     LP_heater(faulty=true),
     HP_heater(faulty=true),
-    Q_feedwater_sensor(faulty=true));
+    steam_generator(faulty=true));
 
   import MetroscopeModelingLibrary.Utilities.Units;
 
@@ -45,7 +45,7 @@ model MetroscopiaNPP_faulty
 equation
 
   // Mass flow bias
-  Q_feedwater_sensor.mass_flow_rate_bias = Fault_mass_flow_bias;
+  steam_generator.feed_water_flow_rate_measurement_bias = Fault_mass_flow_bias;
 
   // Superheater
   superheater.fouling = Fault_superheater_fouling;
