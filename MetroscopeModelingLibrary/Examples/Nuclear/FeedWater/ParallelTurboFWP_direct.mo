@@ -110,8 +110,8 @@ equation
   FWP2.a1 = -172;
 
   // Pumps power
-  FWP1.W = ST1.W;
-  FWP2.W = ST2.W;
+  FWP1.W = -ST1.W;
+  FWP2.W = -ST2.W;
   connect(ST1.C_out, ST2.C_out) annotation (Line(points={{40,100},{70,100},{70,60},{40,60}}, color={28,108,200}));
   connect(STs_sink.C_in, ST2.C_out) annotation (Line(points={{113,80},{70,80},{70,60},{40,60}}, color={28,108,200}));
   connect(ST1_CV.C_in, ST2_CV.C_in) annotation (Line(points={{-16,100},{-36,100},{-36,60},{-16,60}}, color={28,108,200}));
