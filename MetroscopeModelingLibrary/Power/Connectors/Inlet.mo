@@ -4,6 +4,7 @@ connector Inlet
   import MetroscopeModelingLibrary.Utilities.Units;
 
   flow Units.PositivePower W;
+  Units.NotUsedVariable dummy(start=0);
   annotation (Icon(graphics={
         Rectangle(
           extent={{-100,100},{100,-100}},

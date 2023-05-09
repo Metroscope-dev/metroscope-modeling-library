@@ -26,7 +26,6 @@ equation
   source.Q_out = source_Q;
 
   // Turbine parameters
-  turbine.area_nz = 25;
   turbine.Cst = 2;
   turbine.eta_is = 0.93;
 

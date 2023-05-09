@@ -29,10 +29,6 @@ model Pump_reverse
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-30,-46})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source powerSource annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-30,42})));
 equation
   // Boundary conditions
   source.P_out = source_P;
@@ -62,5 +58,4 @@ equation
   connect(pump_T_out_sensor.C_out, pump_P_out_sensor.C_in) annotation (Line(points={{10,0},{30,0}}, color={28,108,200}));
   connect(pump_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{50,0},{75,0}}, color={28,108,200}));
   connect(pump.VRot, pump_VRot_sensor.VRot) annotation (Line(points={{-30,-12},{-30,-35.8}}, color={0,0,127}));
-  connect(pump.C_power, powerSource.C_out) annotation (Line(points={{-30,10.8},{-30,37.2}}, color={244,125,35}));
 end Pump_reverse;

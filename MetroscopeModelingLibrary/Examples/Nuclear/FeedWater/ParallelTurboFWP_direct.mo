@@ -50,6 +50,8 @@ model ParallelTurboFWP_direct
 
   WaterSteam.Machines.Pump FWP2(P_in_0=FWPs_P_in_0) annotation (Placement(transformation(extent={{-10,-40},{-30,-20}})));
   WaterSteam.Machines.Pump FWP1(P_in_0=FWPs_P_in_0) annotation (Placement(transformation(extent={{-10,-80},{-30,-100}})));
+  Power.BoundaryConditions.Sink sink1 annotation (Placement(transformation(extent={{74,110},{94,130}})));
+  Power.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{74,30},{94,50}})));
 equation
   // Boundary conditions
   // STs source
@@ -106,6 +108,10 @@ equation
   FWP2.a3 = FWP2_a3;
   FWP2.a2 = 0;
   FWP2.a1 = -172;
+
+  // Pumps power
+  FWP1.W = ST1.W;
+  FWP2.W = ST2.W;
   connect(ST1.C_out, ST2.C_out) annotation (Line(points={{40,100},{70,100},{70,60},{40,60}}, color={28,108,200}));
   connect(STs_sink.C_in, ST2.C_out) annotation (Line(points={{113,80},{70,80},{70,60},{40,60}}, color={28,108,200}));
   connect(ST1_CV.C_in, ST2_CV.C_in) annotation (Line(points={{-16,100},{-36,100},{-36,60},{-16,60}}, color={28,108,200}));
@@ -118,12 +124,10 @@ equation
                                                                                                    color={28,108,200}));
   connect(FWPs_source.C_out, FWP1.C_in) annotation (Line(points={{113,-60},{60,-60},{60,-90},{-10,-90}},color={28,108,200}));
   connect(FWPs_sink.C_in, FWP2.C_out) annotation (Line(points={{-113,-60},{-40,-60},{-40,-30},{-30,-30}},color={28,108,200}));
-  connect(ST2.C_W_out, FWP2.C_power) annotation (Line(points={{40,51.6},{62,51.6},{62,-8},{-20,-8},{-20,-19.2}},
-                                                                                                               color={244,125,35}));
-  connect(ST1.C_W_out, FWP1.C_power) annotation (Line(points={{40,108.4},{160,108.4},{160,-120},{-20,-120},{-20,-100.8}},
-                                                                                                                        color={244,125,35}));
   connect(ST1_CV.C_out, ST1.C_in) annotation (Line(points={{-4,100},{8,100},{8,100},{20,100}}, color={28,108,200}));
   connect(ST2.C_in, ST2_CV.C_out) annotation (Line(points={{20,60},{8,60},{8,60},{-4,60}}, color={28,108,200}));
+  connect(ST1.C_W_out,sink1. C_in) annotation (Line(points={{40,108.4},{40,120},{79,120}},            color={244,125,35}));
+  connect(ST2.C_W_out,sink. C_in) annotation (Line(points={{40,51.6},{40,40},{79,40}},                 color={244,125,35}));
   annotation (Diagram(coordinateSystem(extent={{-140,-140},{140,140}})), Icon(coordinateSystem(extent={{-140,-140},{140,140}}), graphics={
         Ellipse(
           extent={{-100,100},{100,-100}},

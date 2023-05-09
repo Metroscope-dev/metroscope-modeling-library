@@ -3,7 +3,7 @@ model Sink
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
 
   Utilities.Units.PositivePower W_in;
-  Connectors.Inlet C_in annotation (Placement(transformation(extent={{-60,-10},{-40,10}}), iconTransformation(extent={{-60,-10},{-40,10}})));
+  Connectors.Inlet C_in(dummy=0) annotation (Placement(transformation(extent={{-60,-10},{-40,10}}), iconTransformation(extent={{-60,-10},{-40,10}})));
 equation
   W_in = C_in.W;
   annotation (Icon(graphics={

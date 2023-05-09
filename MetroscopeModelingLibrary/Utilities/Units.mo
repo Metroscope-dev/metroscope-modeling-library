@@ -26,6 +26,7 @@ package Units
     connector InputPower = input Units.Power;
     connector InputPositivePower = input Units.PositivePower;
     connector InputNegativePower=input Units.NegativePower;
+    connector InputNotUsedVariable=input Units.NotUsedVariable;
     connector InputPressure = input Units.Pressure;
     connector InputSpecificEnthalpy = input Units.SpecificEnthalpy;
     connector InputReal = input Real;
@@ -79,6 +80,7 @@ package Units
   type MassFlowRate = SI.MassFlowRate(nominal=1e3);
   type PositiveMassFlowRate = SI.MassFlowRate(min=0, start=1e3, nominal=1e3);
   type NegativeMassFlowRate=SI.MassFlowRate(max=0, start=-1e3, nominal=-1e3);
+  type NotUsedVariable = Real(start=0, nominal=1, min=-1, max=1) "artefact for local balance in connectors with only flow variable";
   type MassFraction = SI.MassFraction;
   type Temperature = SI.Temperature(start=300, nominal=300) "in K";
   type Power = SI.Power(displayUnit="MW");

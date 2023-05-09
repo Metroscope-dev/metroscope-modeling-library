@@ -19,8 +19,8 @@ model GasTurbine
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
   Units.Power W_shaft;
-
-  Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
+  Inputs.InputNotUsedVariable dummy; // To keep local balance
+  Power.Connectors.Outlet C_W_shaft(dummy=dummy) annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
 equation
 
   /* Compression ratio */
