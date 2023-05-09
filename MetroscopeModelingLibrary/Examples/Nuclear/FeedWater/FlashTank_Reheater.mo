@@ -35,10 +35,6 @@ model FlashTank_Reheater
         rotation=0,
         origin={-60,-80})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe flash_tank_to_reheater_DP(Q_0=Q_hot_0/2) annotation (Placement(transformation(extent={{100,42},{73,69}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source power_source annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-60,-52})));
   Sensors.Outline.VRotSensor feed_water_pump_VRot_sensor annotation (Placement(transformation(
         extent={{-8,-8},{8,8}},
         rotation=180,
@@ -79,7 +75,6 @@ equation
   feed_water_pump.rh_min = 0.20;
   feed_water_pump.rh = 1;
 
-  connect(power_source.C_out, feed_water_pump.C_power) annotation (Line(points={{-60,-56.8},{-60,-70.28}}, color={244,125,35}));
   connect(turbine_extraction_source.C_out, dry_reheater.C_hot_in) annotation (Line(points={{50,73},{50,38}}, color={63,81,181}));
   connect(feed_water_source.C_out, dry_reheater.C_cold_in) annotation (Line(points={{95,30},{66.2,30}}, color={63,81,181}));
   connect(feed_water_sink.C_in, dry_reheater.C_cold_out) annotation (Line(points={{-115,30},{34,30}}, color={63,81,181}));
