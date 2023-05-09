@@ -53,6 +53,8 @@ partial model FlowModel "Basic fluid transport brick for all components"
   // ------ Conservation variables ------
   Units.DifferentialPressure DP(nominal=P_in_0, start=DP_0); // Pressure Loss
   Units.Power W(nominal=1e6, start=0); // Heat Loss
+  Units.DifferentialEnthalpy DH(start=h_out_0 - h_in_0);
+  Units.DifferentialTemperature DT(start=T_out_0 - T_in_0);
 
   // ------ Connectors ------
   replaceable Partial.Connectors.FluidInlet C_in(
@@ -105,6 +107,8 @@ equation
   // ------ Conservation equations ------
   P_out - P_in = DP;
   Q * (h_out - h_in) = W;
+  h_out - h_in = DH;
+  T_out - T_in = DT;
   C_in.Q + C_out.Q = 0;
   C_out.Xi_outflow = inStream(C_in.Xi_outflow);
 
