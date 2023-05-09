@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added DT and DH variables in flow model to simplify access to these variables [PR#421](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/421) fixing [#397](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/397)
+
 ### Changed
 - Steam generators now have power connectors for thermal power and embedded feedwater mass flow rate bias [PR#418](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/418)
 
