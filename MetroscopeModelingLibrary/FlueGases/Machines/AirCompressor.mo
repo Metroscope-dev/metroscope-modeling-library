@@ -27,11 +27,11 @@ equation
   tau = P_out/P_in;
 
   /* Fluid specific enthalpy after the expansion */
-  (h_out-h_in)*eta_is = h_is - h_in;
+  DH*eta_is = h_is - h_in;
 
   /* Mechanical power from the turbine */
-  W_shaft = -Q*(h_in - h_out);
-  C_W_in.W =W_shaft;
+  W_shaft = W;
+  C_W_in.W = W_shaft;
 
   /* Isentropic compression */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);

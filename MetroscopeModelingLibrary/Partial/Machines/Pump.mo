@@ -50,12 +50,12 @@ equation
 
   // Outlet variation
   DP = rho*Constants.g*hn;
-  h_out-h_in =Constants.g *hn/rh;
+  DH = Constants.g *hn/rh;
 
   // Mechanical power
   Wm = C_power.W; // C_power.W is positive since it is power fed to the component
   Wm = W/rm; // Wm is positive since it is the power produced by the pump
 
   // Hydraulic power
-  Wh = Qv * DP / rh; // = Qv*rho * g*hn/rh = Q * (h_out - h_in) = W
+  Wh = Qv * DP / rh; // = Qv*rho * g*hn/rh = Q * DH = W
 end Pump;
