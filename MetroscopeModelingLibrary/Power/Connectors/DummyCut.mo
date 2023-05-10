@@ -2,8 +2,12 @@ within MetroscopeModelingLibrary.Power.Connectors;
 model DummyCut "Component that sets leaves the dummy power connector variable free in both sides"
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputNotUsedVariable dummy; // To keep local balance
-  Outlet W_port(dummy=dummy, W=0) annotation (Placement(transformation(extent={{30,-10},{50,10}}), iconTransformation(extent={{30,-10},{50,10}})));
+  Inputs.InputNotUsedVariable dummy_out; // To keep local balance
+  Inputs.InputNotUsedVariable dummy_in; // To keep local balance
+  Outlet C_out(dummy=dummy_out) annotation (Placement(transformation(extent={{30,-10},{50,10}}), iconTransformation(extent={{30,-10},{50,10}})));
+  Inlet C_in(dummy=dummy_in) annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
+equation
+  C_in.W + C_out.W = 0;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           extent={{-40,30},{40,-30}},
