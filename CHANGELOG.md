@@ -9,9 +9,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added DT and DH variables in flow model to simplify access to these variables [PR#421](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/421) fixing [#397](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/397)
+- Added `assert` statements in heat exchangers power components [PR#420](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/420), fixing [#417](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/417)
+
 ### Changed
+- Steam generators now have power connectors for thermal power and embedded feedwater mass flow rate bias [PR#418](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/418)
 
 ### Fixed
+
+## MML-v3.5.0
+
+### Added
+- SteamTurbineWithNozzle component to replace StodolaTurbine when there is a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
+- PressureCut component with the medium MoistAir [PR#398](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/398/commits)
+- AirCooledCondenser_with_subcooling component adding subcooling to the ACC model [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
+
+### Changed
+- Renamed parameter `rhmin` of pumps in `rh_min`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
+- Renamed parameter `Cvmax` of pumps in `Cv_max`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
+- Deleted compressor power inlet in gas turbine model and renamed `Wmech` into `W_shaft` [PR#409](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/409)
+- Renamed internal variables of HX : Reheater, DryReheater, SuperHeater, AirCooledCondenser_with_subcooling [PR#406](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/406)
+- Renamed internal variables of SteamTurbine and SteamTurbineWithNozzle, might break start values models [PR#404](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/404)
+- Renamed internal variables of Reheater and DryReheater, especially `separating_plate_leak` renamed in `partition_plate_leak` [PR#402](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
+- Renamed internal variables of Steam Extraction Splitter (might break model with start values) [PR#401](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/401)
+- Stodola turbine has been renamed SteamTurbine and does not have a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
+- `kPa` and `MPa` units are splitted between gauge and absolute in pressure sensor [PR#391](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/391)
+
+### Fixed
+
+## MML-v3.4.1
+
+### Added
+
+### Changed
+- Sensors now contain a flow model to ease convergence [PR#383](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/383)
+
+### Fixed
+- Pipes now can have a unique flow direction according to the pressure difference direction [PR#385](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/385)
+
+## MML-v3.4.0
+
+### Added
+
+- Added a version number in root `package.mo`, to allow appropriate versioning in models, using `uses(MetroscopeModelingLibrary(version="3.1.0"))` annotation. [PR#364](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/364)
+- Added `MPa` and `kPa` pressure units in pressure sensors [PR#362](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/362), fixing [#361](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/361)
+
+### Changed
+
+- Updated leak model so they use inheritance [PR#373](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/373)
+- Abstract sensors connectors are renamed `C_in` and `C_out`, breaking change for topological models [PR#372](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/372)
+- Changed default unused value for enthalpy in opposite flow direction to 1e6 [PR#374](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/374)
+- [PR#368](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/368) the `fouling` fault in `Pipe` and `closed` fault in `SlideVale` are changed to percentage. The values given to those faults should be a percentage (%) and not a value less than 1 as before. Therefore, it is a breaking change for faulty models in prevous versions.
+- [PR#377](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/377) the `DP` in the `CombustionChamber` model is replaced by a `Kfr` by adding a pipe. This is a breaking change for models using previous versions.
+
+### Fixed
+- [PR#376](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/376) fixed the outlet temperatures of the evaporator.
+
+## MML-v3.3.1
+### Added
+
+- [PR#355](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/355) added `PressureCut` and `Leak` components for the flue gases medium.
+- [PR#356](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/356) Added an  `valve_closed` in the `SlideValve` component to model slight decrease in the valve opening.
 
 ## MML-v3.3.0
 

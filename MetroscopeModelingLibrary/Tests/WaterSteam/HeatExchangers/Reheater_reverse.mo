@@ -1,20 +1,20 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Reheater_reverse
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
   input Real P_hot_source(start=11, min=0, nominal=11) "bar";
   input Real P_cold_source(start=50, min=0, nominal=50) "bar";
-  input Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
   input Real T_cold_in(start=50) "degC";
-  input Units.SpecificEnthalpy hot_source_h_out(start=2.9e6) "J/kg";
+  input Utilities.Units.SpecificEnthalpy hot_source_h_out(start=2.9e6) "J/kg";
 
   // Component Parameters
-  parameter Units.Area S_tot = 100;
-  parameter Units.Fraction level = 0.3;
+  parameter Utilities.Units.Area S_tot=100;
+  parameter Utilities.Units.Fraction level=0.3;
 
-  parameter Units.FrictionCoefficient Kfr_hot = 0;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
 
   // Observables for calibration
   input Real P_cold_sink(start=49, min=0, nominal=50) "bar";
@@ -22,9 +22,9 @@ model Reheater_reverse
   input Real T_drains(start=80, min=0, nominal=200) "degC";
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth_cond;
-  output Units.FrictionCoefficient Kfr_cold;
-  output Units.HeatExchangeCoefficient Kth_subc;
+  output Utilities.Units.HeatExchangeCoefficient Kth_cond;
+  output Utilities.Units.FrictionCoefficient Kfr_cold;
+  output Utilities.Units.HeatExchangeCoefficient Kth_subc;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{68,-10},{88,10}})));
@@ -54,7 +54,7 @@ equation
   cold_source.Q_out = -Q_cold;
 
   // Component parameters
-  reheater.S_tot = S_tot;
+  reheater.S = S_tot;
   reheater.Kfr_hot = Kfr_hot;
   reheater.level = level;
 

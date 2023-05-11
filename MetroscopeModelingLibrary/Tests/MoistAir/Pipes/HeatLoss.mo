@@ -1,12 +1,12 @@
 within MetroscopeModelingLibrary.Tests.MoistAir.Pipes;
 model HeatLoss
-    extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
       // Boundary conditions
-  input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=4.5e4) "J/kg";
-  input Units.PositiveMassFlowRate source_Q(start=500) "kg/s";
-  input Units.Fraction source_relative_humidity(start=0.5) "1";
-  input Units.Power W(start=5e6) "W";
+  input Utilities.Units.Pressure source_P(start=1e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=4.5e4) "J/kg";
+  input Utilities.Units.PositiveMassFlowRate source_Q(start=500) "kg/s";
+  input Utilities.Units.Fraction source_relative_humidity(start=0.5) "1";
+  input Utilities.Units.Power W(start=5e6) "W";
 
   MetroscopeModelingLibrary.MoistAir.Pipes.HeatLoss heat_loss annotation (Placement(transformation(extent={{-16,-16},{14,16}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));

@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.WaterSteam.Pipes;
 model SteamExtractionSplitter
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   import MetroscopeModelingLibrary.WaterSteam.Connectors;
 
@@ -28,11 +28,23 @@ model SteamExtractionSplitter
   Inputs.InputFraction alpha(start=1) "Extraction paramater";
 
   // Components
-  BaseClasses.IsoPFlowModel extractedFlow(Q_0=Q_ext_0, P_0=P_0, T_in_0=T_0, T_out_0=T_0, h_in_0=0, h_out_0 = h_0) annotation (Placement(transformation(
+  BaseClasses.IsoPFlowModel extracted_flow(
+    Q_0=Q_ext_0,
+    P_0=P_0,
+    T_in_0=T_0,
+    T_out_0=T_0,
+    h_in_0=0,
+    h_out_0=h_0) annotation (Placement(transformation(
         extent={{-11.5,-10.5},{11.5,10.5}},
         rotation=270,
         origin={0,-30})));
-  BaseClasses.IsoPFlowModel mainFlow(Q_0=Q_main_0, P_0=P_0, T_in_0=T_0, T_out_0=T_0, h_in_0 = h_0, h_out_0=h_0) annotation (Placement(transformation(extent={{35,-27},{85,27}})));
+  BaseClasses.IsoPFlowModel main_flow(
+    Q_0=Q_main_0,
+    P_0=P_0,
+    T_in_0=T_0,
+    T_out_0=T_0,
+    h_in_0=h_0,
+    h_out_0=h_0) annotation (Placement(transformation(extent={{35,-27},{85,27}})));
 
   Connectors.Inlet C_in(Q(start=Q_in_0), P(start=P_0)) annotation (Placement(transformation(extent={{-120,-10},{-100,10}}), iconTransformation(extent={{-116,-10},{-96,10}})));
   Connectors.Outlet C_main_out(Q(start=-Q_main_0), P(start=P_0), h_outflow(start=h_0)) annotation (Placement(transformation(extent={{100,-10},{120,10}}), iconTransformation(extent={{96,-10},{116,10}})));
@@ -44,25 +56,24 @@ equation
   // Definition of all intermediate variables
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
-  Q_in = extractedFlow.Q + mainFlow.Q;
+  Q_in =extracted_flow.Q + main_flow.Q;
   P = C_in.P;
   h_in = inStream(C_in.h_outflow);
 
   //Energy balance
-  extractedFlow.W + mainFlow.W = 0;
+  extracted_flow.W + main_flow.W = 0;
 
   // Saturation
-  extractedFlow.h_out - h_liq_sat = alpha * (h_in - h_liq_sat);
+  extracted_flow.h_out - h_liq_sat = alpha*(h_in - h_liq_sat);
 
   // Mass Fractions Computation
   x_in = min(1, (h_in - h_liq_sat) / (h_vap_sat - h_liq_sat));
-  x_main_out = min(1, (mainFlow.h_out - h_liq_sat) / (h_vap_sat - h_liq_sat));
-  x_ext_out = min(1, (extractedFlow.h_out - h_liq_sat) / (h_vap_sat - h_liq_sat));
-  connect(extractedFlow.C_in, mainFlow.C_in) annotation (Line(points={{1.77636e-15,-18.5},{1.77636e-15,0},{35,0}},       color={28,108,200}));
-  connect(extractedFlow.C_out, C_ext_out) annotation (Line(points={{-2.10942e-15,-41.5},{-2.10942e-15,-54},{0,-54},{0,-64}},
-                                                                                                                 color={28,108,200}));
-  connect(C_main_out, mainFlow.C_out) annotation (Line(points={{110,0},{85,0}},                           color={28,108,200}));
-  connect(C_in, mainFlow.C_in) annotation (Line(points={{-110,0},{35,0}}, color={28,108,200}));
+  x_main_out =min(1, (main_flow.h_out - h_liq_sat)/(h_vap_sat - h_liq_sat));
+  x_ext_out =min(1, (extracted_flow.h_out - h_liq_sat)/(h_vap_sat - h_liq_sat));
+  connect(extracted_flow.C_in, main_flow.C_in) annotation (Line(points={{1.77636e-15,-18.5},{1.77636e-15,0},{35,0}}, color={28,108,200}));
+  connect(extracted_flow.C_out, C_ext_out) annotation (Line(points={{-2.10942e-15,-41.5},{-2.10942e-15,-54},{0,-54},{0,-64}}, color={28,108,200}));
+  connect(C_main_out, main_flow.C_out) annotation (Line(points={{110,0},{85,0}}, color={28,108,200}));
+  connect(C_in, main_flow.C_in) annotation (Line(points={{-110,0},{35,0}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},{100,80}}),
                          graphics={Polygon(
           points={{-100,20},{-100,-20},{-46,-20},{-8,-60},{10,-60},{-16,-20},{100,-20},{100,20},{-100,20}},

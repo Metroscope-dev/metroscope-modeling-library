@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
 model TurbineLPCondenser_reverse_step2
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Real source_P(start=15.5, unit="bar", nominal=20, min=0, max=200) "barA";
@@ -15,7 +15,7 @@ model TurbineLPCondenser_reverse_step2
 
   // Hypothesis on component parameters
   // Turbines
-  parameter Units.Area LP_turbines_area_nz = 12; // pi*turbine_R**2 - pi*rotor_R**2, with turbine_R = 2m, rotor_R = 0.35m
+  parameter Units.Area LP_turbine_area_nz = 12; // pi*turbine_R**2 - pi*rotor_R**2, with turbine_R = 2m, rotor_R = 0.35m
   parameter Units.Yield LP_turbines_eta_is = 0.9;
 
   // Extraction splitters
@@ -61,17 +61,17 @@ model TurbineLPCondenser_reverse_step2
                                                 annotation (Placement(transformation(extent={{-134,-10},{-114,10}})));
 
   // Turbines
-  WaterSteam.Machines.StodolaTurbine LP_turbine1(
+  WaterSteam.Machines.SteamTurbine LP_turbine1(
     P_in_0=1500000,
     P_out_0=600000,
     h_in_0=2.9e6,
-    Q_0=1150)                                    annotation (Placement(transformation(extent={{-106,-10},{-86,10}})));
-  WaterSteam.Machines.StodolaTurbine LP_turbine2(
+    Q_0=1150) annotation (Placement(transformation(extent={{-106,-10},{-86,10}})));
+  WaterSteam.Machines.SteamTurbine LP_turbine2(
     P_in_0=600000,
     P_out_0=150000,
-    Q_0=1150)                                    annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
-  WaterSteam.Machines.StodolaTurbine LP_turbine3(P_in_0=150000, P_out_0=5080)
-                                                 annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+    Q_0=1150) annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
+  WaterSteam.Machines.SteamTurbineWithNozzle
+                                   LP_turbine3(P_in_0=150000, P_out_0=5080) annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 
   // Extractions
   WaterSteam.Pipes.SteamExtractionSplitter LP_turbine1_ext annotation (Placement(transformation(extent={{-76,-10},{-56,8}})));
@@ -138,10 +138,6 @@ equation
   LP_turbine1.Cst = LP_turbine1_Cst;
   LP_turbine1.eta_is = LP_turbines_eta_is;
 
-  // Hypothesis : no nozzle
-  LP_turbine1.eta_nz = 1;
-  LP_turbine1.area_nz = LP_turbines_area_nz;
-
   // Extraction 1
   LP_turbine1_ext_P_sensor.P_barA = LP_turbine1_ext_P; // Calibrates LP_turbine1_Cst
   LP_turbine1_ext.alpha = LP_turbine1_ext_alpha;
@@ -149,10 +145,6 @@ equation
   // Turbine 2
   LP_turbine2.Cst = LP_turbine2_Cst;
   LP_turbine2.eta_is = LP_turbines_eta_is;
-
-  // Hypothesis : no nozzle
-  LP_turbine2.eta_nz = 1;
-  LP_turbine2.area_nz = LP_turbines_area_nz;
 
   // Extraction 2
   LP_turbine2_ext_P_sensor.P_barA = LP_turbine2_ext_P; // Calibrates LP_turbine2_Cst
@@ -164,7 +156,7 @@ equation
 
   // Hypothesis : no nozzle
   LP_turbine3.eta_nz = LP_turbine3_eta_nz;
-  LP_turbine3.area_nz = LP_turbines_area_nz;
+  LP_turbine3.area_nz = LP_turbine_area_nz;
 
   // Generator
   W_tot_sensor.W_MW = W_tot; // Calibrates LP_turbines_eta_is
@@ -195,7 +187,7 @@ equation
   connect(LP_turbine1_ext.C_main_out, LP_turbine2.C_in) annotation (Line(points={{-55.4,0},{-40,0}}, color={28,108,200}));
   connect(LP_turbine2.C_out, LP_turbine2_ext.C_in) annotation (Line(points={{-20,0},{-2.6,0}},  color={28,108,200}));
   connect(LP_turbine2_ext.C_main_out, LP_turbine3.C_in) annotation (Line(points={{18.6,0},{38,0}}, color={28,108,200}));
-  connect(LP_turbine3.C_W_out, generator.C_in) annotation (Line(points={{58,8.4},{68,8.4},{68,40},{75.6,40}},  color={244,125,35}));
+  connect(LP_turbine3.C_W_out, generator.C_in) annotation (Line(points={{54,8},{68,8},{68,40},{75.6,40}},      color={244,125,35}));
   connect(LP_turbine2.C_W_out, generator.C_in) annotation (Line(points={{-20,8.4},{-12,8.4},{-12,40},{75.6,40}},  color={244,125,35}));
   connect(LP_turbine1.C_W_out, generator.C_in) annotation (Line(points={{-86,8.4},{-74,8.4},{-74,40},{75.6,40}},   color={244,125,35}));
   connect(LP_turbine1_ext.C_ext_out, LP_turbine1_ext_P_sensor.C_in) annotation (Line(points={{-66,-6.8},{-66,-15}}, color={28,108,200}));
@@ -210,12 +202,13 @@ equation
   connect(LP_turbine2_ext_P_sensor.C_out, LP_turbine2_ext_Q_sensor.C_in) annotation (Line(points={{8,-35},{8,-40}}, color={28,108,200}));
   connect(LP_turbine2_ext_Q_sensor.C_out, LP_turbine2_ext_sink.C_in) annotation (Line(points={{8,-60},{8,-73}}, color={28,108,200}));
   connect(LP_turbine3.C_out, condenser_Psat_sensor.C_in) annotation (Line(points={{58,0},{80,0}}, color={28,108,200}));
-  connect(condenser.C_hot_in, condenser_Psat_sensor.C_out) annotation (Line(points={{130,-34},{130,0},{100,0}},      color={28,108,200}));
+  connect(condenser.C_hot_in, condenser_Psat_sensor.C_out) annotation (Line(points={{130,-33.7037},{130,0},{100,0}}, color={28,108,200}));
   connect(cooling_source.C_out, cooling_source_T_sensor.C_in) annotation (Line(points={{55,-42},{60,-42}}, color={28,108,200}));
   connect(cooling_source_T_sensor.C_out, cooling_source_P_sensor.C_in) annotation (Line(points={{80,-42},{86,-42}}, color={28,108,200}));
-  connect(condenser.C_cold_in, cooling_source_P_sensor.C_out) annotation (Line(points={{114,-42.8889},{112.68,-42.8889},{112.68,-42},{106,-42}},    color={28,108,200}));
+  connect(condenser.C_cold_in, cooling_source_P_sensor.C_out) annotation (Line(points={{114,-48.8148},{112.68,-48.8148},{112.68,-42},{106,-42}},    color={28,108,200}));
   connect(sink.C_in, condenser.C_hot_out) annotation (Line(points={{130,-97},{130,-60.6667}}, color={28,108,200}));
-  connect(condenser.C_cold_out, cooling_sink_T_sensor.C_in) annotation (Line(points={{146,-48.8148},{149,-48.8148},{149,-50},{150,-50}}, color={28,108,200}));
+  connect(condenser.C_cold_out, cooling_sink_T_sensor.C_in) annotation (Line(points={{145.68,-48.8148},{149,-48.8148},{149,-50},{150,-50}},
+                                                                                                                                         color={28,108,200}));
   connect(cooling_sink.C_in, cooling_sink_T_sensor.C_out) annotation (Line(points={{175,-50},{170,-50}}, color={28,108,200}));
   annotation (Diagram(coordinateSystem(extent={{-180,-140},{200,140}})), Icon(coordinateSystem(extent={{-100,-100},{100,100}}), graphics={
                                Polygon(

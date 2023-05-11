@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model SteamGenerator
 
-  package Water = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   Inputs.InputMassFraction vapor_fraction;
   Inputs.InputPressure steam_pressure;
@@ -14,7 +14,14 @@ model SteamGenerator
   Units.SpecificEnthalpy h_vap_sat;
   Units.SpecificEnthalpy h_liq_sat;
 
-  Units.Power thermal_power;
+  Units.PositiveMassFlowRate Q_feedwater_measured(start=1000, nominal=1000); // Measured feedwater mass flow rate
+  Units.PositiveMassFlowRate Q_steam(start=1000, nominal=1000);
+
+  Inputs.InputPower thermal_power;
+
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage feed_water_flow_rate_measurement_bias(min = 0, max=20, nominal=1); // Flow rate measurement bias
 
 
   Connectors.Inlet feedwater_inlet annotation (Placement(transformation(extent={{20,-10},{40,10}}), iconTransformation(extent={{20,-10},{40,10}})));
@@ -33,7 +40,13 @@ model SteamGenerator
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-82})));
+  Power.Connectors.Inlet C_thermal_power annotation (Placement(transformation(extent={{-40,-10},{-20,10}}), iconTransformation(extent={{-40,-10},{-20,10}})));
 equation
+
+  // Fault modes
+  if not faulty then
+    feed_water_flow_rate_measurement_bias = 0; // a bias of +5 kg/s means that 1005 kg/s is measured, while only 1000 kg/s actually go into the SG
+  end if;
 
   // Steam mass fraction
   steam_source.P_out = steam_pressure;
@@ -41,15 +54,21 @@ equation
   h_vap_sat= Water.dewEnthalpy(Water.setSat_p(steam_pressure));
   steam_source.h_out = vapor_fraction*h_vap_sat + (1 - vapor_fraction)*h_liq_sat;
 
+  // Mass flow rates definitions
+  Q_feedwater_measured = feedwater_sink.Q_in + feed_water_flow_rate_measurement_bias; // Note : feedwater_sink.Q_in is the actual flow going into the steam generator
+  Q_steam = - steam_source.Q_out;
+  Q_purge = -purge_source.Q_out;
+
   // Mass balance
-  steam_source.Q_out + purge_source.Q_out + feedwater_sink.Q_in = 0;
+  Q_steam = Q_feedwater_measured - Q_purge;
 
   // Power
-  thermal_power = -steam_source.Q_out*steam_source.h_out - feedwater_sink.Q_in*feedwater_sink.h_in - purge_source.Q_out*purge_source.h_out;
+  thermal_power = Q_steam*steam_source.h_out - Q_feedwater_measured*feedwater_sink.h_in + Q_purge*purge_source.h_out; // thermal power here refers to the estimation of thermal power so it corresponds to the measured feedwater flow rate
+  thermal_power = C_thermal_power.W;
 
   // Purge
   purge_source.h_out = Water.bubbleEnthalpy(Water.setSat_p(P_purge));
-  purge_source.Q_out = - Q_purge;
+
   purge_source.P_out = P_purge;
 
 

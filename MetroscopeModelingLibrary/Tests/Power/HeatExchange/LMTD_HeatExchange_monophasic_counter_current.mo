@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
 model LMTD_HeatExchange_monophasic_counter_current
-   extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
+   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
 
    MetroscopeModelingLibrary.Power.HeatExchange.LMTDHeatExchange LMTDHeatExchange;
 equation

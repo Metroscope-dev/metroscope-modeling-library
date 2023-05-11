@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Examples.CCGT;
 model GasTurbine_direct
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
@@ -14,7 +14,7 @@ model GasTurbine_direct
 
   // Parameters
   input Units.SpecificEnthalpy LHV_plant(start = 48130e3) "Directly assigned in combustion chamber modifiers";
-  parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
+  parameter Units.FrictionCoefficient combustion_chamber_Kfr = 0.1;
   parameter Real compression_rate = 17;
   parameter Real compressor_eta_is = 0.9;
   parameter Real turbine_compression_rate = 17;
@@ -23,11 +23,11 @@ model GasTurbine_direct
   parameter Real combustionChamber_eta = 0.9999;
 
   FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
-  FlueGases.Machines.AirCompressor                           airCompressor annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
+  FlueGases.Machines.AirCompressor air_compressor annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
   FlueGases.BoundaryConditions.Sink sink_exhaust annotation (Placement(transformation(extent={{66,-10},{86,10}})));
-  FlueGases.Machines.GasTurbine                              gasTurbine    annotation (Placement(transformation(extent={{30,-10},{50,10}})));
+  FlueGases.Machines.GasTurbine gas_turbine annotation (Placement(transformation(extent={{30,-10},{50,10}})));
   Power.BoundaryConditions.Sink                           sink_power annotation (Placement(transformation(extent={{66,30},{86,50}})));
-  MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustion_chamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   Fuel.BoundaryConditions.Source                           source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -46,27 +46,27 @@ equation
   source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
   // Parameters
-  combustionChamber.DP = combustion_chamber_pressure_loss;
-  combustionChamber.eta = combustionChamber_eta;
-  airCompressor.tau = compression_rate;
-  airCompressor.eta_is = compressor_eta_is;
-  gasTurbine.tau = turbine_compression_rate;
-  gasTurbine.eta_is = turbine_eta_is;
-  gasTurbine.eta_mech = eta_mech;
+  combustion_chamber.Kfr = combustion_chamber_Kfr;
+  combustion_chamber.eta = combustionChamber_eta;
+  air_compressor.tau = compression_rate;
+  air_compressor.eta_is = compressor_eta_is;
+  gas_turbine.tau = turbine_compression_rate;
+  gas_turbine.eta_is = turbine_eta_is;
+  gas_turbine.eta_mech = eta_mech;
 
-  connect(source_air.C_out, airCompressor.C_in) annotation (Line(points={{-79,0},{-54,0}}, color={95,95,95}));
-  connect(gasTurbine.C_out, sink_exhaust.C_in) annotation (Line(points={{50,0},{71,0}}, color={95,95,95}));
-  connect(gasTurbine.C_W_out,sink_power. C_in) annotation (Line(
+  connect(source_air.C_out, air_compressor.C_in) annotation (Line(points={{-79,0},{-54,0}}, color={95,95,95}));
+  connect(gas_turbine.C_out, sink_exhaust.C_in) annotation (Line(points={{50,0},{71,0}}, color={95,95,95}));
+  connect(gas_turbine.C_W_shaft, sink_power.C_in) annotation (Line(
       points={{50,10},{50,10},{50,40},{71,40}},
       color={244,125,35},
       smooth=Smooth.Bezier));
-  connect(airCompressor.C_W_in, gasTurbine.C_W_compressor) annotation (Line(
-      points={{-34,10},{-34,26},{30,26},{30,10}},
+  connect(combustion_chamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33}}, color={213,213,0}));
+  connect(combustion_chamber.outlet, gas_turbine.C_in) annotation (Line(points={{10,0},{30,0}}, color={95,95,95}));
+  connect(combustion_chamber.inlet, air_compressor.C_out) annotation (Line(points={{-10,0},{-34,0}}, color={95,95,95}));
+  connect(air_compressor.C_W_in, gas_turbine.C_W_shaft) annotation (Line(
+      points={{-34,10},{-34,22},{50,22},{50,10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
-  connect(combustionChamber.inlet1,source_fuel. C_out) annotation (Line(points={{0,-10},{0,-33}},                   color={213,213,0}));
-  connect(combustionChamber.outlet, gasTurbine.C_in) annotation (Line(points={{10,0},{30,0}}, color={95,95,95}));
-  connect(combustionChamber.inlet, airCompressor.C_out) annotation (Line(points={{-10,0},{-34,0}}, color={95,95,95}));
     annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

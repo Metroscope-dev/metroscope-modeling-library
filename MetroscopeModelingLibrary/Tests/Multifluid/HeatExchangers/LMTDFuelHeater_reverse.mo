@@ -1,22 +1,22 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model LMTDFuelHeater_reverse
-    extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   // Boundary conditions
   input Real P_hot_source(start=47, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_hot_source(start=8.6) "kg/s";
+  input Utilities.Units.MassFlowRate Q_hot_source(start=8.6) "kg/s";
   input Real T_hot_source(start=230) "J/kg";
 
   input Real P_cold_source(start=30, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_cold_source(start=12) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold_source(start=12) "kg/s";
   input Real T_cold_source(start = 30, min = 0, nominal = 50) "degC";
   //input Units.SpecificEnthalpy h_cold_source(start=1e6) "J/kg";
   // Parameters
-  parameter Units.Area S = 100;
+  parameter Utilities.Units.Area S=100;
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
-  output Units.FrictionCoefficient Kfr_hot;
-  output Units.FrictionCoefficient Kfr_cold;
+  output Utilities.Units.HeatExchangeCoefficient Kth;
+  output Utilities.Units.FrictionCoefficient Kfr_hot;
+  output Utilities.Units.FrictionCoefficient Kfr_cold;
 
     // Calibration inputs
   input Real P_cold_out(start = 30, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold

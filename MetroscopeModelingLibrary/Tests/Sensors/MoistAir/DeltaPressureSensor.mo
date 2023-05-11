@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Tests.Sensors.MoistAir;
 model DeltaPressureSensor
-  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=1e3) "J/kg";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.Pressure source_P(start=1e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=2e4) "J/kg";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.MoistAir.DeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,10},{10,30}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));

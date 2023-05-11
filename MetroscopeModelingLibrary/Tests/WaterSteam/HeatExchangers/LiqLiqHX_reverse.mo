@@ -1,24 +1,24 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model LiqLiqHX_reverse
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
   input Real P_hot_source(start=50, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_hot_source(start=50) "kg/s";
+  input Utilities.Units.MassFlowRate Q_hot_source(start=50) "kg/s";
   input Real T_hot_source(start = 100, min = 0, nominal = 50) "degC";
 
   input Real P_cold_source(start=20, min=0, nominal=10) "barA";
-  input Units.MassFlowRate Q_cold_source(start=100) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold_source(start=100) "kg/s";
   input Real T_cold_source(start = 50, min = 0, nominal = 50) "degC";
 
     // Parameters
-  parameter Units.Area S = 100;
+  parameter Utilities.Units.Area S=100;
 
     // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
-  output Units.FrictionCoefficient Kfr_hot;
-  output Units.FrictionCoefficient Kfr_cold;
+  output Utilities.Units.HeatExchangeCoefficient Kth;
+  output Utilities.Units.FrictionCoefficient Kfr_hot;
+  output Utilities.Units.FrictionCoefficient Kfr_cold;
 
     // Calibration inputs
   input Real P_cold_out(start = 19, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold

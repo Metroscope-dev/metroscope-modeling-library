@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.FeedWater;
 model ParallelTurboFWP_reverse
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.Pressure STs_CV_P_in_0 = 30e5;
@@ -51,8 +51,8 @@ model ParallelTurboFWP_reverse
   // STs
   Sensors.WaterSteam.PressureSensor ST1_P_in_sensor annotation (Placement(transformation(extent={{10,93.0001},{24,107}})));
   Sensors.WaterSteam.PressureSensor ST2_P_in_sensor annotation (Placement(transformation(extent={{10,53},{24,67}})));
-  WaterSteam.Machines.StodolaTurbine ST1(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{32,90.0002},{52,110}})));
-  WaterSteam.Machines.StodolaTurbine ST2(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{32,70},{52,50}})));
+  WaterSteam.Machines.SteamTurbine ST1(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{32,90.0002},{52,110}})));
+  WaterSteam.Machines.SteamTurbine ST2(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{32,70},{52,50}})));
   // STs CV
   WaterSteam.Pipes.ControlValve ST2_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,62.5455},{-4,48.5455}})));
   WaterSteam.Pipes.ControlValve ST1_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,97.4545},{-4,111.455}})));
@@ -104,18 +104,16 @@ equation
 
   // ST1_CV // Hyp on CVs : same Cv (or same mass flow)
   // Calibrated  parameters
-  ST1_CV.Cvmax = STs_CVmax;
+  ST1_CV.Cv_max = STs_CVmax;
 
   // ST1_CV
   // Calibrated parameters
-  ST2_CV.Cvmax = STs_CVmax;
+  ST2_CV.Cv_max = STs_CVmax;
 
   // ST1
   // Observables used for calibration
   ST1_P_in_sensor.P_barA = ST1_P_in;
   // Calibrated parameters
-  ST1.eta_nz = 1.0;
-  ST1.area_nz = 1.0;
   ST1.eta_is = ST1_eta_is;
   ST1.Cst = ST1_Cst;
 
@@ -123,8 +121,6 @@ equation
   // Observables used for calibration
   ST2_P_in_sensor.P_barA = ST2_P_in;
   // Calibrated parameters
-  ST2.eta_nz = 1.0;
-  ST2.area_nz = 1.0;
   ST2.eta_is = ST2_eta_is;
   ST2.Cst = ST2_Cst;
 
@@ -143,7 +139,7 @@ equation
   // fixed parameters
   FWP1.VRotn = 4300;
   FWP1.rm = 1; // No conversion on turbopumps, so no yield
-  FWP1.rhmin = 0.20;
+  FWP1.rh_min = 0.20;
   FWP1.b2 = 0;
   FWP1.b1 = 0;
   FWP1.a2 = 0;
@@ -158,7 +154,7 @@ equation
   // fixed parameters
   FWP2.VRotn = 4500;
   FWP2.rm = 1; // No conversion on turbopumps, so no yield
-  FWP2.rhmin = 0.20;
+  FWP2.rh_min = 0.20;
   FWP2.b2 = 0;
   FWP2.b1 = 0;
   FWP2.a2 = 0;

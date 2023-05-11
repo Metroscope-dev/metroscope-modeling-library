@@ -1,15 +1,24 @@
 within MetroscopeModelingLibrary.Partial.Pipes;
 partial model SlideValve
   extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoHFlowModel annotation(IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Constants;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
   Inputs.InputCv Cv(start=1e4) "Cv of the valve";
 
+  parameter Boolean faulty = false;
+  Units.Percentage closed_valve; // Valve not fully opened
+
 equation
+    // Failure modes
+  if not faulty then
+    closed_valve = 0;
+  end if;
+
   /* Pressure loss */
-  DP*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
+  DP*(1 - closed_valve/100)^2*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
+
 
   annotation (
     Icon(coordinateSystem(

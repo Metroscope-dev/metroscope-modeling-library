@@ -1,10 +1,10 @@
 within MetroscopeModelingLibrary.Tests.FlueGases;
 package BaseClasses
-  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestPackageIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestPackageIcon;
   model FlowModel
-    extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
 
-    import MetroscopeModelingLibrary.Units;
+    import MetroscopeModelingLibrary.Utilities.Units;
 
     // Boundary conditions
     input Units.Pressure source_P(start=10e5) "Pa";
@@ -35,9 +35,9 @@ package BaseClasses
   end FlowModel;
 
   model IsoPFlowModel
-    extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
 
-    import MetroscopeModelingLibrary.Units;
+    import MetroscopeModelingLibrary.Utilities.Units;
 
     // Boundary conditions
     input Units.Pressure source_P(start=10e5) "Pa";
@@ -68,9 +68,9 @@ package BaseClasses
   end IsoPFlowModel;
 
   model IsoHFlowModel
-    extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
 
-    import MetroscopeModelingLibrary.Units;
+    import MetroscopeModelingLibrary.Utilities.Units;
 
     // Boundary conditions
     input Units.Pressure source_P(start=10e5) "Pa";
@@ -101,9 +101,9 @@ package BaseClasses
   end IsoHFlowModel;
 
   model IsoPHFlowModel
-    extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
+    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
 
-    import MetroscopeModelingLibrary.Units;
+    import MetroscopeModelingLibrary.Utilities.Units;
 
     // Boundary conditions
     input Units.Pressure source_P(start=10e5) "Pa";

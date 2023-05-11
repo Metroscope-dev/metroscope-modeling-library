@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.FlueGases.Pipes;
 model ControlValve
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
   extends Partial.Pipes.ControlValve(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,

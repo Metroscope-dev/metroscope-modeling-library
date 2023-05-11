@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.WaterSteam.Pipes;
 model LoopBreaker
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   extends Partial.Pipes.LoopBreaker(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,

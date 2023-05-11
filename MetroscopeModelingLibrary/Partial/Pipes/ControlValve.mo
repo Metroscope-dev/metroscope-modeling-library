@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Partial.Pipes;
 partial model ControlValve
   extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoHFlowModel annotation(IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Constants;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Inputs.InputCv Cvmax(start=1e4) "Maximum CV (active if mode_caract=0)";
+  Inputs.InputCv Cv_max(start=1e4) "Maximum CV";
   Units.Cv Cv(start=1e4) "Cv";
   Modelica.Blocks.Interfaces.RealInput Opening(unit="1", min=0., max=1., nominal=0.5) annotation (Placement(
         transformation(extent={{-20,-20},{20,20}},
@@ -19,7 +19,7 @@ equation
   /* Pressure loss */
   DP*Cv*abs(Cv) = -1.733e12*Q^2/rho^2;
   /* Cv as a function of the valve position */
-  Cv = Opening*Cvmax;
+  Cv =Opening*Cv_max;
 
   annotation (
     Icon(coordinateSystem(

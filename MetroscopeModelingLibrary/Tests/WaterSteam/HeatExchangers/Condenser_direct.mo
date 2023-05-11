@@ -1,22 +1,22 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Condenser_direct
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
     // Boundary conditions
-  input Units.MassFlowRate Q_turbine(start=150) "kg/s";
-  input Units.SpecificEnthalpy h_turbine(start=1500e3);
+  input Utilities.Units.MassFlowRate Q_turbine(start=150) "kg/s";
+  input Utilities.Units.SpecificEnthalpy h_turbine(start=1500e3);
 
   input Real P_cold_source(start=5, min=0, nominal=10) "barA";
   input Real T_cold_source(start = 15, min = 0, nominal = 50) "degC";
 
     // Parameters
-  parameter Units.Area S = 100;
-  parameter Units.HeatExchangeCoefficient Kth = 50000;
-  parameter Units.Height water_height = 2;
-  parameter Units.FrictionCoefficient Kfr_cold = 1;
-  parameter Units.VolumeFlowRate Qv_cold = 3.82;
-  parameter Units.Pressure P_offset = 0;
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=50000;
+  parameter Utilities.Units.Height water_height=2;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=1;
+  parameter Utilities.Units.VolumeFlowRate Qv_cold=3.82;
+  parameter Utilities.Units.Pressure P_offset=0;
   parameter Real C_incond = 0;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));

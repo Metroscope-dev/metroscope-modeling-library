@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Sensors.FlueGases;
 model DeltaPressureSensor
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
-  extends MetroscopeModelingLibrary.Icons.Sensors.OutlineSensorIcon;
-  extends MetroscopeModelingLibrary.Icons.Sensors.DeltaPressureIcon;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.OutlineSensorIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.DeltaPressureIcon;
 
   extends Partial.Sensors.DeltaPressureSensor(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,

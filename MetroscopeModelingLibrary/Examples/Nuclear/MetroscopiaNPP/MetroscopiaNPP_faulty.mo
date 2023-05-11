@@ -6,33 +6,33 @@ model MetroscopiaNPP_faulty
     condenser(faulty=true),
     LP_heater(faulty=true),
     HP_heater(faulty=true),
-    Q_feedwater_sensor(faulty=true));
+    steam_generator(faulty=true));
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Heat exchangers failures
-  input Real Failure_superheater_fouling(start=0);
-  input Real Failure_superheater_closed_vent(start=0);
-  input Real Failure_condenser_fouling(start=0);
-  input Real Failure_condenser_air_intake(start=0);
-  input Real Failure_LP_heater_fouling(start=0);
-  input Real Failure_HP_heater_fouling(start=0);
-  input Real Failure_water_level_rise(start=0);
-  input Real Failure_mass_flow_bias(start=0);
-  input Real Failure_HP_heater_tube_rupture_Q(start=0);
-  input Real Failure_HP_heater_separator_plate_rupture_Q(start=0);
-  input Real Failure_LP_heater_tube_rupture_Q(start=0);
-  input Real Failure_LP_heater_separator_plate_rupture_Q(start=0);
+  input Real Fault_superheater_fouling(start=0);
+  input Real Fault_superheater_closed_vent(start=0);
+  input Real Fault_condenser_fouling(start=0);
+  input Real Fault_condenser_air_intake(start=0);
+  input Real Fault_LP_heater_fouling(start=0);
+  input Real Fault_HP_heater_fouling(start=0);
+  input Real Fault_water_level_rise(start=0);
+  input Real Fault_mass_flow_bias(start=0);
+  input Real Fault_HP_heater_tube_rupture_Q(start=0);
+  input Real Fault_HP_heater_partition_plate_rupture_Q(start=0);
+  input Real Fault_LP_heater_tube_rupture_Q(start=0);
+  input Real Fault_LP_heater_partition_plate_rupture_Q(start=0);
 
   // Leaks
-  input Real Failure_bypass_HP_control_valve_to_condenser_Q(start=0);
-  input Real Failure_bypass_HP_turbine_to_condenser_Q(start=0);
-  input Real Failure_bypass_LP_turbine_to_condenser_Q(start=0);
-  input Real Failure_superheater_tube_rupture_Q(start=0);
-  input Real Failure_bypass_superheater_to_condenser_Q(start=0);
-  input Real Failure_bypass_HP_turbine_ext_to_condenser_Q(start=0);
-  input Real Failure_bypass_LP_heater_drains_to_condenser_Q(start=0);
-  input Real Failure_bypass_HP_heater_drains_to_condenser_Q(start=0);
+  input Real Fault_bypass_HP_control_valve_to_condenser_Q(start=0);
+  input Real Fault_bypass_HP_turbine_to_condenser_Q(start=0);
+  input Real Fault_bypass_LP_turbine_to_condenser_Q(start=0);
+  input Real Fault_superheater_tube_rupture_Q(start=0);
+  input Real Fault_bypass_superheater_to_condenser_Q(start=0);
+  input Real Fault_bypass_HP_turbine_ext_to_condenser_Q(start=0);
+  input Real Fault_bypass_LP_heater_drains_to_condenser_Q(start=0);
+  input Real Fault_bypass_HP_heater_drains_to_condenser_Q(start=0);
 
   // Bypasses
   WaterSteam.Pipes.Leak bypass_HP_control_valve_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-147,51})));
@@ -45,51 +45,50 @@ model MetroscopiaNPP_faulty
 equation
 
   // Mass flow bias
-  Q_feedwater_sensor.mass_flow_rate_bias = Failure_mass_flow_bias;
+  steam_generator.feed_water_flow_rate_measurement_bias = Fault_mass_flow_bias;
 
   // Superheater
-  superheater.fouling = Failure_superheater_fouling;
-  superheater.closed_vent = Failure_superheater_closed_vent;
-  superheater.tube_rupture.Q = Failure_superheater_tube_rupture_Q + 1e-3;
+  superheater.fouling = Fault_superheater_fouling;
+  superheater.closed_vent = Fault_superheater_closed_vent;
+  superheater.tube_rupture.Q = Fault_superheater_tube_rupture_Q + 1e-3;
 
   // Condenser
-  condenser.fouling = Failure_condenser_fouling;
-  condenser.air_intake = Failure_condenser_air_intake;
+  condenser.fouling = Fault_condenser_fouling;
+  condenser.air_intake = Fault_condenser_air_intake;
 
   // LP reheater
-  LP_heater.fouling = Failure_LP_heater_fouling;
-  LP_heater.tube_rupture_leak = Failure_LP_heater_tube_rupture_Q;
-  LP_heater.separating_plate_leak = Failure_LP_heater_separator_plate_rupture_Q;
+  LP_heater.fouling = Fault_LP_heater_fouling;
+  LP_heater.tube_rupture_leak = Fault_LP_heater_tube_rupture_Q;
+  LP_heater.partition_plate_leak = Fault_LP_heater_partition_plate_rupture_Q;
 
   // HP reheater
-  HP_heater.fouling = Failure_HP_heater_fouling;
-  HP_heater.water_level_rise = Failure_water_level_rise;
-  HP_heater.tube_rupture_leak = Failure_LP_heater_tube_rupture_Q;
-  HP_heater.separating_plate_leak = Failure_LP_heater_separator_plate_rupture_Q;
+  HP_heater.fouling = Fault_HP_heater_fouling;
+  HP_heater.water_level_rise = Fault_water_level_rise;
+  HP_heater.tube_rupture_leak = Fault_LP_heater_tube_rupture_Q;
+  HP_heater.partition_plate_leak = Fault_LP_heater_partition_plate_rupture_Q;
 
   // Leaks
-  bypass_HP_control_valve_to_condenser.Q = Failure_bypass_HP_control_valve_to_condenser_Q + 1e-3;
-  bypass_HP_turbine_to_condenser.Q = Failure_bypass_HP_turbine_to_condenser_Q + 1e-3;
-  bypass_LP_turbine_to_condenser.Q = Failure_bypass_LP_turbine_to_condenser_Q + 1e-3;
-  bypass_superheater_to_condenser.Q = Failure_bypass_superheater_to_condenser_Q + 1e-3;
-  bypass_HP_turbine_ext_to_condenser.Q = Failure_bypass_HP_turbine_ext_to_condenser_Q + 1e-3;
-  bypass_LP_heater_drains_to_condenser.Q = Failure_bypass_LP_heater_drains_to_condenser_Q + 1e-3;
-  bypass_HP_heater_drains_to_condenser.Q = Failure_bypass_HP_heater_drains_to_condenser_Q + 1e-3;
+  bypass_HP_control_valve_to_condenser.Q = Fault_bypass_HP_control_valve_to_condenser_Q + 1e-3;
+  bypass_HP_turbine_to_condenser.Q = Fault_bypass_HP_turbine_to_condenser_Q + 1e-3;
+  bypass_LP_turbine_to_condenser.Q = Fault_bypass_LP_turbine_to_condenser_Q + 1e-3;
+  bypass_superheater_to_condenser.Q = Fault_bypass_superheater_to_condenser_Q + 1e-3;
+  bypass_HP_turbine_ext_to_condenser.Q = Fault_bypass_HP_turbine_ext_to_condenser_Q + 1e-3;
+  bypass_LP_heater_drains_to_condenser.Q = Fault_bypass_LP_heater_drains_to_condenser_Q + 1e-3;
+  bypass_HP_heater_drains_to_condenser.Q = Fault_bypass_HP_heater_drains_to_condenser_Q + 1e-3;
 
-  connect(bypass_HP_turbine_to_condenser.C_out, bypass_HP_control_valve_to_condenser.C_out) annotation (Line(points={{-112.82,42},{-112.82,32},{-146.82,32},{-146.82,42}},
-                                                                                                                                                               color={217,67,180}));
-  connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-112.82,42},{-112.82,32},{320,32},{320,100},{392.5,100},{392.5,74}},
+  connect(bypass_HP_turbine_to_condenser.C_out, bypass_HP_control_valve_to_condenser.C_out) annotation (Line(points={{-113,42},{-113,32},{-147,32},{-147,42}}, color={217,67,180}));
+  connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,42},{-113,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                          color={217,67,180}));
-  connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139.18,100},{140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{392.5,74}},
+  connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139,100},{140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                                                     color={217,67,180}));
   connect(bypass_superheater_to_condenser.C_in, superheater_control_valve.C_out) annotation (Line(points={{-113,134},{-113,112.182},{-126,112.182}}, color={217,67,180}));
-  connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-112.82,152},{-112,152},{-112,192},{392.5,192},{392.5,74}},
+  connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,152},{-112,152},{-112,192},{392.5,192},{392.5,74.2864}},
                                                                                                                                                     color={217,67,180}));
-  connect(bypass_HP_turbine_ext_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-2,49.18},{4,49.18},{4,32},{320,32},{320,100},{392.5,100},{392.5,74}},
+  connect(bypass_HP_turbine_ext_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-2,49},{4,49},{4,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                                color={217,67,180}));
-  connect(bypass_LP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{277.18,-150},{278,-150},{278,-162},{472,-162},{472,100},{392.5,100},{392.5,74}},
+  connect(bypass_LP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{277,-150},{278,-150},{278,-162},{472,-162},{472,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                                                 color={217,67,180}));
-  connect(bypass_HP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-15.82,-153},{-15.82,-162},{472,-162},{472,100},{392.5,100},{392.5,74}},
+  connect(bypass_HP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-16,-153},{-16,-162},{472,-162},{472,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                                      color={217,67,180}));
   connect(bypass_LP_turbine_to_condenser.C_in, LPT1.C_in) annotation (Line(points={{139,118},{140,118},{140,130},{151,130}}, color={217,67,180}));
   connect(bypass_HP_turbine_ext_to_condenser.C_in, HP_extract_P_sensor.C_in) annotation (Line(points={{-20,49},{-28,49},{-28,58},{-40,58},{-40,54}}, color={28,108,200}));

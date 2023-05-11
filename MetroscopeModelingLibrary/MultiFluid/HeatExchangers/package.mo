@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.MultiFluid;
 package HeatExchangers
-  extends MetroscopeModelingLibrary.Icons.HeatExchangePackage;
+  extends MetroscopeModelingLibrary.Utilities.Icons.HeatExchangePackage;
 
 
 

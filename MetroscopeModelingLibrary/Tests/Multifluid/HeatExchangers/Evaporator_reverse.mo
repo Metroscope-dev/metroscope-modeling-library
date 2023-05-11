@@ -1,22 +1,22 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Evaporator_reverse
-   extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
 
   input Real P_hot_source(start=1*1e5, min=1*1e5, nominal=1*1e5);
-  input Units.MassFlowRate Q_hot_source(start=586);
+  input Utilities.Units.MassFlowRate Q_hot_source(start=586);
   input Real hot_source_h(start=494000);
 
   input Real P_cold_source(start=3.5*1e5, min=1.5*1e5, nominal=3.5*1e5);
-  input Units.MassFlowRate Q_cold_source(start=96);
+  input Utilities.Units.MassFlowRate Q_cold_source(start=96);
   input Real T_cold_source(start = 132+273.15, min = 130+273.15, nominal = 150+273.15);
 
   // Parameters
-  parameter Units.Area S = 10;
+  parameter Utilities.Units.Area S=10;
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
-  output Units.FrictionCoefficient Kfr_hot;
-  output Units.FrictionCoefficient Kfr_cold;
+  output Utilities.Units.HeatExchangeCoefficient Kth;
+  output Utilities.Units.FrictionCoefficient Kfr_hot;
+  output Utilities.Units.FrictionCoefficient Kfr_cold;
 
   // Calibration inputs
   input Real P_cold_out(start = 19, min= 0, nominal = 10) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
@@ -44,7 +44,7 @@ equation
   cold_source.Q_out = - Q_cold_source;
 
   // Parameters
-  evaporator.S_vaporising = S;
+  evaporator.S = S;
 
   // Inputs for calibration
   P_cold_out_sensor.P_barA = P_cold_out;

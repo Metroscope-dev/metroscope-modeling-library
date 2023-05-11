@@ -1,20 +1,21 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model DryReheater_direct
 
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
   input Real P_hot_source(start=11, min=0, nominal=11) "bar";
   input Real P_cold_source(start=50, min=0, nominal=50) "bar";
-  input Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate Q_cold(start=500) "kg/s";
   input Real T_cold_in(start=50) "degC";
-  input Units.SpecificEnthalpy hot_source_h_out(start=2.5e6) "J/kg";
+  input Utilities.Units.SpecificEnthalpy hot_source_h_out(start=2.5e6) "J/kg";
 
   // Parameters
-  parameter Units.Area S = 100;
-  parameter Units.HeatExchangeCoefficient Kth = 50e3;
-  parameter Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Units.FrictionCoefficient Kfr_cold = 500; // About 1 bar of pressure loss in the reheater
+  parameter Utilities.Units.Area S=100;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=50e3;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=500;
+                                                      // About 1 bar of pressure loss in the reheater
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
@@ -38,7 +39,7 @@ equation
   cold_source.Q_out = -Q_cold;
 
   // Component parameters
-  dryReheater.S_condensing = S;
+  dryReheater.S = S;
   dryReheater.Kth = Kth;
   dryReheater.Kfr_hot = Kfr_hot;
   dryReheater.Kfr_cold = Kfr_cold;

@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Tests.Sensors.FlueGases;
 model TemperatureSensor
-  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.Pressure source_P(start=1e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor T_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
@@ -14,7 +14,6 @@ equation
   source.P_out = source_P;
   source.Q_out = source_Q;
   source.h_out = source_h;
-  //T_sensor.T = 298.15; // does not initialize if set T_out instead of h_out
 
   source.Xi_out = {0.768,0.232,0.0,0.0,0.0};
 

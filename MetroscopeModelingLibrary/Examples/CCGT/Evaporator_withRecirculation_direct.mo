@@ -2,18 +2,18 @@ within MetroscopeModelingLibrary.Examples.CCGT;
 model Evaporator_withRecirculation_direct
               // Boundary conditions
   input Real P_hot_source(start=1*1e5, min=1*1e5, nominal=1*1e5);
-  input Units.MassFlowRate Q_hot_source(start=586);
+  input Utilities.Units.MassFlowRate Q_hot_source(start=586);
   input Real hot_source_h(start=494000);
 
   input Real P_cold_source(start=3.5*1e5, min=1.5*1e5, nominal=3.5*1e5);
-  input Units.MassFlowRate Q_cold_source(start=96);
+  input Utilities.Units.MassFlowRate Q_cold_source(start=96);
   input Real T_cold_source(start = 132+273.15, min = 130+273.15, nominal = 150+273.15);
 
    // Parameters
-  parameter Units.Area S = 10;
-  parameter Units.HeatExchangeCoefficient Kth= 102000;
-  parameter Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Units.FrictionCoefficient Kfr_cold = 1;
+  parameter Utilities.Units.Area S=10;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth=102000;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold=1;
 
   MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent={{-38,-36},{40,36}})));
   WaterSteam.Volumes.FlashTank flashTank annotation (Placement(transformation(extent={{-18,46},
@@ -43,7 +43,7 @@ equation
   cold_source.T_out =  T_cold_source;
   cold_source.Q_out = - Q_cold_source;
 
-  evaporator.S_vaporising = S;
+  evaporator.S = S;
   evaporator.Kth = Kth;
   evaporator.Kfr_hot = Kfr_hot;
   evaporator.Kfr_cold = Kfr_cold;

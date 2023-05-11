@@ -3,37 +3,37 @@ model ReheaterLine_direct
   // Boundary conditions
   input Real main_steam_source_1_P(start=15.7) "barA";
   input Real main_steam_source_2_P(start=26.4) "barA";
-  input Units.SpecificEnthalpy main_steam_source_1_h(start=1.829e6);
-  input Units.SpecificEnthalpy main_steam_source_2_h(start=1.661e6);
+  input Utilities.Units.SpecificEnthalpy main_steam_source_1_h(start=1.829e6);
+  input Utilities.Units.SpecificEnthalpy main_steam_source_2_h(start=1.661e6);
 
   input Real reheaters_P_cold_in(start=83.4) "barA";
-  input Units.PositiveMassFlowRate reheaters_Q_cold_in(start=1682);
+  input Utilities.Units.PositiveMassFlowRate reheaters_Q_cold_in(start=1682);
   input Real reheaters_T_cold_in(start=150.6);
   input Real drains_sink_P(start=4.78);
 
   // Component parameters
-  parameter Units.Area S_tot = 100;
-  parameter Units.Fraction level = 0.3;
-  parameter Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Units.FrictionCoefficient reheater_1A_Kfr_cold = 120;
-  parameter Units.FrictionCoefficient reheater_1B_Kfr_cold = 120;
-  parameter Units.FrictionCoefficient reheater_2A_Kfr_cold = 120;
-  parameter Units.FrictionCoefficient reheater_2B_Kfr_cold = 120;
+  parameter Utilities.Units.Area S_tot=100;
+  parameter Utilities.Units.Fraction level=0.3;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
+  parameter Utilities.Units.FrictionCoefficient reheater_1A_Kfr_cold=120;
+  parameter Utilities.Units.FrictionCoefficient reheater_1B_Kfr_cold=120;
+  parameter Utilities.Units.FrictionCoefficient reheater_2A_Kfr_cold=120;
+  parameter Utilities.Units.FrictionCoefficient reheater_2B_Kfr_cold=120;
 
   // Calibrated parameters
-  parameter Units.HeatExchangeCoefficient reheater_1A_Kth_cond = 142694.38;
-  parameter Units.HeatExchangeCoefficient reheater_1B_Kth_cond = 142694.38;
-  parameter Units.HeatExchangeCoefficient reheater_2A_Kth_cond = 128084.8;
-  parameter Units.HeatExchangeCoefficient reheater_2B_Kth_cond = 128084.8;
-  parameter Units.HeatExchangeCoefficient reheater_1A_Kth_subc = 122580.32;
-  parameter Units.HeatExchangeCoefficient reheater_1B_Kth_subc = 122580.32;
-  parameter Units.HeatExchangeCoefficient reheater_2A_Kth_subc = 38013.305;
-  parameter Units.HeatExchangeCoefficient reheater_2B_Kth_subc = 38013.305;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_1A_Kth_cond=142694.38;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_1B_Kth_cond=142694.38;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_2A_Kth_cond=128084.8;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_2B_Kth_cond=128084.8;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_1A_Kth_subc=122580.32;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_1B_Kth_subc=122580.32;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_2A_Kth_subc=38013.305;
+  parameter Utilities.Units.HeatExchangeCoefficient reheater_2B_Kth_subc=38013.305;
 
-  parameter Units.Cv reheater_1A_drains_valve_cvmax = 1177.3293;
-  parameter Units.Cv reheater_1B_drains_valve_cvmax = 1177.3293;
-  parameter Units.Cv reheater_2A_drains_valve_cvmax = 459.99002;
-  parameter Units.Cv reheater_2B_drains_valve_cvmax = 459.99002;
+  parameter Utilities.Units.Cv reheater_1A_drains_valve_cvmax=1177.3293;
+  parameter Utilities.Units.Cv reheater_1B_drains_valve_cvmax=1177.3293;
+  parameter Utilities.Units.Cv reheater_2A_drains_valve_cvmax=459.99002;
+  parameter Utilities.Units.Cv reheater_2B_drains_valve_cvmax=459.99002;
   output Real reheaters_T_cold_out;
 
   // Observables used for calibration
@@ -47,10 +47,10 @@ model ReheaterLine_direct
   output Real reheater_2A_drains_T;
   output Real reheater_2B_drains_T;
 
-  output Units.Percentage reheater_1A_drains_valve_opening_sensor_opening;
-  output Units.Percentage reheater_1B_drains_valve_opening_sensor_opening;
-  output Units.Percentage reheater_2A_drains_valve_opening_sensor_opening;
-  output Units.Percentage reheater_2B_drains_valve_opening_sensor_opening;
+  output Utilities.Units.Percentage reheater_1A_drains_valve_opening_sensor_opening;
+  output Utilities.Units.Percentage reheater_1B_drains_valve_opening_sensor_opening;
+  output Utilities.Units.Percentage reheater_2A_drains_valve_opening_sensor_opening;
+  output Utilities.Units.Percentage reheater_2B_drains_valve_opening_sensor_opening;
 
   WaterSteam.HeatExchangers.Reheater reheater_1A annotation (Placement(transformation(extent={{76,52},{44,68}})));
   WaterSteam.HeatExchangers.Reheater reheater_1B annotation (Placement(transformation(extent={{76,-68},{44,-52}})));
@@ -157,28 +157,28 @@ equation
     main_steam_source_1.h_out = main_steam_source_1_h;
 
     // Component parameters 1A
-      reheater_1A.S_tot = S_tot;
+      reheater_1A.S = S_tot;
       reheater_1A.Kfr_hot = Kfr_hot;
       reheater_1A.Kfr_cold = reheater_1A_Kfr_cold;
       reheater_1A.level = level;
     // Calibrated parameters 1A
       reheater_1A.Kth_cond = reheater_1A_Kth_cond;
       reheater_1A.Kth_subc = reheater_1A_Kth_subc;
-      reheater_1A_drains_valve.Cvmax = reheater_1A_drains_valve_cvmax;
+  reheater_1A_drains_valve.Cv_max = reheater_1A_drains_valve_cvmax;
     // Quantities definition
       reheater_1A_drains_valve_opening_sensor.Opening_pc = reheater_1A_drains_valve_opening_sensor_opening;
       reheater_1A_drains_T_sensor.T_degC = reheater_1A_drains_T;
       reheater_1A_T_cold_out_sensor.T_degC = reheater_1A_T_cold_out;
 
     // Component parameters 1B
-      reheater_1B.S_tot = S_tot;
+      reheater_1B.S = S_tot;
       reheater_1B.Kfr_hot = Kfr_hot;
       reheater_1B.Kfr_cold = reheater_1B_Kfr_cold;
       reheater_1B.level = level;
     // Calibrated parameters 1B
       reheater_1B.Kth_cond = reheater_1B_Kth_cond;
       reheater_1B.Kth_subc = reheater_1B_Kth_subc;
-      reheater_1B_drains_valve.Cvmax = reheater_1B_drains_valve_cvmax;
+  reheater_1B_drains_valve.Cv_max = reheater_1B_drains_valve_cvmax;
     // Quantities definition
       reheater_1B_drains_valve_opening_sensor.Opening_pc = reheater_1B_drains_valve_opening_sensor_opening;
       reheater_1B_drains_T_sensor.T_degC = reheater_1B_drains_T;
@@ -190,7 +190,7 @@ equation
       main_steam_source_2.h_out = main_steam_source_2_h;
 
     // Component parameters 2A
-      reheater_2A.S_tot = S_tot;
+      reheater_2A.S = S_tot;
       reheater_2A.Kfr_hot = Kfr_hot;
       reheater_2A.Kfr_cold = reheater_2A_Kfr_cold;
       reheater_2A.level = level;
@@ -198,21 +198,21 @@ equation
       reheater_2A.Kth_cond = reheater_2A_Kth_cond;
       //reheater_2A.Kth_cond = reheater_2B_Kth_cond;
       reheater_2A.Kth_subc = reheater_2A_Kth_subc;
-      reheater_2A_drains_valve.Cvmax = reheater_2A_drains_valve_cvmax;
+  reheater_2A_drains_valve.Cv_max = reheater_2A_drains_valve_cvmax;
     // Quantities definition
       reheater_2A_drains_valve_opening_sensor.Opening_pc = reheater_2A_drains_valve_opening_sensor_opening;
       reheater_2A_drains_T_sensor.T_degC = reheater_2A_drains_T;
       reheater_2A_T_cold_out_sensor.T_degC = reheater_2A_T_cold_out;
 
     // Component parameters 2B
-      reheater_2B.S_tot = S_tot;
+      reheater_2B.S = S_tot;
       reheater_2B.Kfr_hot = Kfr_hot;
       reheater_2B.Kfr_cold = reheater_2B_Kfr_cold;
       reheater_2B.level = level;
     // Calibrated parameters 2B
       reheater_2B.Kth_cond = reheater_2B_Kth_cond;
       reheater_2B.Kth_subc = reheater_2B_Kth_subc;
-      reheater_2B_drains_valve.Cvmax = reheater_2B_drains_valve_cvmax;
+  reheater_2B_drains_valve.Cv_max = reheater_2B_drains_valve_cvmax;
     // Quantities definition
       reheater_2B_drains_valve_opening_sensor.Opening_pc = reheater_2B_drains_valve_opening_sensor_opening;
       reheater_2B_drains_T_sensor.T_degC = reheater_2B_drains_T;

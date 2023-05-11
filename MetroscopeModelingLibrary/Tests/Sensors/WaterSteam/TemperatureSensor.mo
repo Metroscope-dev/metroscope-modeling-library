@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Tests.Sensors.WaterSteam;
 model TemperatureSensor
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.Pressure source_P(start=1e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
@@ -13,9 +13,9 @@ model TemperatureSensor
 equation
   source.P_out = source_P;
   source.Q_out = source_Q;
-  T_sensor.T = 298.15;
+  source.h_out = source_h;
 
-  assert(abs(T_sensor.T_degC - 25) < 1e-5, "T_sensor should detect 25 deg C");
+  assert(abs(T_sensor.T_degC - 99.6) < 1e-1, "T_sensor should detect 99.6 degC");
   assert(abs(source.P_out - sink.P_in) < 1e-5, "Pressure should be the same from source to sink");
   assert(abs(source.h_out - sink.h_in) < 1e-5, "Enthalpy should be the same from source to sink");
   assert(abs(source.Q_out + sink.Q_in) < 1e-5, "MassFlowRate should be the same from source to sink");

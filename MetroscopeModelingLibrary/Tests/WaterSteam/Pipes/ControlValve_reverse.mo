@@ -1,18 +1,21 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model ControlValve_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.SpecificEnthalpy source_h(start=1e6);
-  input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
-  input Units.Pressure sink_P(start=9e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6);
+  input Utilities.Units.Pressure source_P(
+    start=10e5,
+    min=0,
+    nominal=10e5) "Pa";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+  input Utilities.Units.Pressure sink_P(start=9e5) "Pa";
 
   // Inputs for calibration
   input Real opening(start=0.35);
 
   // Calibrated parameter
-  output Units.Cv Cvmax "Cvmax";
+  output Utilities.Units.Cv Cvmax "Cvmax";
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-68,-9.99996},{-48,9.99996}})));
@@ -35,7 +38,7 @@ equation
   opening_sensor.Opening = opening;
 
   // Calibrated Parameters
-  control_valve.Cvmax = Cvmax;
+  control_valve.Cv_max = Cvmax;
 
   connect(control_valve.C_out, sink.C_in) annotation (Line(points={{16.5,-1.81818e-06},{34.75,-1.81818e-06},{34.75,0},{53,0}}, color={28,108,200}));
   connect(control_valve.C_in, source.C_out) annotation (Line(points={{-16.5,-1.81818e-06},{-34.75,-1.81818e-06},{-34.75,0},{-53,0}},color={28,108,200}));

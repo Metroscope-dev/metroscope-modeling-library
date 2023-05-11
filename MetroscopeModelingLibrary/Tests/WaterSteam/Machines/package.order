@@ -1,4 +1,6 @@
 Pump_direct
 Pump_reverse
-StodolaTurbine_direct
-StodolaTurbine_reverse
+SteamTurbine_direct
+SteamTurbine_reverse
+SteamTurbineWithNozzle_direct
+SteamTurbineWithNozzle_reverse

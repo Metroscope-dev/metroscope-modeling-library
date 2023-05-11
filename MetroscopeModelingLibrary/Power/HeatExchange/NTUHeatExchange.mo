@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Power.HeatExchange;
 model NTUHeatExchange
 
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_hot_0 = 50 "Init parameter for Hot mass flow rate at the inlet";
@@ -192,6 +192,7 @@ equation
 
   assert(config == "evaporator" or config == "condenser" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current" or config=="monophasic_counter_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser', 'evaporator', 'monophasic_cross_current', or 'monophasic_counter_current'", AssertionLevel.error);
   assert(mixed_fluid == "hot" or mixed_fluid == "cold", "mixed_fluid parameter of NTUHeatExchange should be 'hot' or 'cold'", AssertionLevel.error);
+  assert(W > 0, "Heat exchange is done in the wrong direction", AssertionLevel.warning);  // Ensure heat exchange is done in the correct direction
 
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={

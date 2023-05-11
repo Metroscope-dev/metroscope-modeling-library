@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MainSteam;
 model TurbineLine_direct
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Real source_P(start=67, unit="bar", nominal=20, min=0, max=200) "barA";
@@ -10,11 +10,6 @@ model TurbineLine_direct
   input Units.PositiveMassFlowRate ST1_ext_Q(start=67);
   input Units.PositiveMassFlowRate ST2_ext_Q(start=95);
   input Units.PositiveMassFlowRate ST3_ext_Q(start=140);
-
-  // Hypothesis on component parameters
-  // Turbines
-  parameter Units.Yield STs_eta_nz = 1;
-  parameter Units.Area STs_area_nz = 1;
 
   // Extraction splitters
   parameter Units.Fraction ST1_ext_alpha = 1;
@@ -47,9 +42,9 @@ model TurbineLine_direct
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{122,-10},{142,10}})));
 
   // Turbines
-  WaterSteam.Machines.StodolaTurbine ST1 annotation (Placement(transformation(extent={{-106,-10},{-86,10}})));
-  WaterSteam.Machines.StodolaTurbine ST2 annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
-  WaterSteam.Machines.StodolaTurbine ST3 annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  WaterSteam.Machines.SteamTurbine ST1 annotation (Placement(transformation(extent={{-106,-10},{-86,10}})));
+  WaterSteam.Machines.SteamTurbine ST2 annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
+  WaterSteam.Machines.SteamTurbine ST3 annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 
   // Extractions
   WaterSteam.Pipes.SteamExtractionSplitter ST1_ext annotation (Placement(transformation(extent={{-76,-10},{-56,8}})));
@@ -111,10 +106,6 @@ equation
   ST1.Cst = ST1_Cst;
   ST1.eta_is = STs_eta_is;
 
-  // Hypothesis : no nozzle
-  ST1.eta_nz = STs_eta_nz;
-  ST1.area_nz = STs_area_nz;
-
   // Extraction 1
   ST1_ext_P_sensor.P_barA = ST1_ext_P; // Calibrates ST1_Cst
   ST1_ext.alpha = ST1_ext_alpha;
@@ -123,10 +114,6 @@ equation
   ST2.Cst = ST2_Cst;
   ST2.eta_is = STs_eta_is;
 
-  // Hypothesis : no nozzle
-  ST2.eta_nz = STs_eta_nz;
-  ST2.area_nz = STs_area_nz;
-
   // Extraction 2
   ST2_ext_P_sensor.P_barA = ST2_ext_P; // Calibrates ST2_Cst
   ST2_ext.alpha = ST2_ext_alpha;
@@ -134,10 +121,6 @@ equation
   // Turbine 3
   ST3.Cst = ST3_Cst;
   ST3.eta_is = STs_eta_is;
-
-  // Hypothesis : no nozzle
-  ST3.eta_nz = STs_eta_nz;
-  ST3.area_nz = STs_area_nz;
 
   // Extraction 3
   ST3_ext_P_sensor.P_barA = ST3_ext_P; // Calibrates ST3_Cst

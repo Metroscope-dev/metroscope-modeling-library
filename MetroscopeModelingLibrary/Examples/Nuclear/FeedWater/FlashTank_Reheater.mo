@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.FeedWater;
 model FlashTank_Reheater
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
   parameter Units.MassFlowRate Q_cold_0 = 1000;
   parameter Units.MassFlowRate Q_hot_0 = 500;
 
@@ -56,7 +56,7 @@ equation
   drains_cooling_source.Q_out = -Q_hot_0;
 
   // Reheater
-  dry_reheater.S_condensing = 100;
+  dry_reheater.S = 100;
   dry_reheater.Kfr_hot = 1;
   dry_reheater.Kfr_cold = 1;
   dry_reheater.Kth = 1e5;
@@ -76,7 +76,7 @@ equation
   feed_water_pump.a2 = 0;
   feed_water_pump.b1 = 0;
   feed_water_pump.b2 = 0;
-  feed_water_pump.rhmin = 0.20;
+  feed_water_pump.rh_min = 0.20;
   feed_water_pump.rh = 1;
 
   connect(power_source.C_out, feed_water_pump.C_power) annotation (Line(points={{-60,-56.8},{-60,-70.28}}, color={244,125,35}));

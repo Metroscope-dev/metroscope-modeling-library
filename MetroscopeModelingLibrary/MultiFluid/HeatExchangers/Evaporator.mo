@@ -1,14 +1,14 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Evaporator
-  extends MetroscopeModelingLibrary.Icons.KeepingScaleIcon;
-   package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
-    import MetroscopeModelingLibrary.Units;
-    import MetroscopeModelingLibrary.Units.Inputs;
+  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+    import MetroscopeModelingLibrary.Utilities.Units;
+    import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
     // Pressure Losses
     Inputs.InputFrictionCoefficient Kfr_cold;
     Inputs.InputFrictionCoefficient Kfr_hot;
-    Inputs.InputArea S_vaporising;
+    Inputs.InputArea S;
 
     // Heating
     Units.Power W_heating;
@@ -17,7 +17,7 @@ model Evaporator
     Inputs.InputHeatExchangeCoefficient Kth;
     parameter String HX_config="evaporator";
 
-    Units.Power W_vaporising;
+    Units.Power W_vap;
     Units.MassFraction x_steam_out(start=0.7); // Steam mass fraction at water outlet
     Units.SpecificEnthalpy h_vap_sat(start=2e6);
     Units.SpecificEnthalpy h_liq_sat(start=1e5);
@@ -90,9 +90,9 @@ equation
   Q_cold = cold_side_heating.Q;
   Q_hot = hot_side_vaporising.Q;
   T_cold_in = cold_side_heating.T_in;
-  T_cold_out = cold_side_heating.T_out;
+  T_cold_out = cold_side_vaporising.T_out;
   T_hot_in = hot_side_vaporising.T_in;
-  T_hot_out = hot_side_vaporising.T_out;
+  T_hot_out = hot_side_heating.T_out;
   Tsat = cold_side_heating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
@@ -118,20 +118,20 @@ equation
   /* Vaporising */
   // Energy balance
   hot_side_vaporising.W + cold_side_vaporising.W = 0;
-  cold_side_vaporising.W = W_vaporising;
+  cold_side_vaporising.W =W_vap;
 
   // Power Exchange
   cold_side_vaporising.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
 
-  HX_vaporising.W = W_vaporising;
+  HX_vaporising.W =W_vap;
   HX_vaporising.Kth = Kth*(1-fouling/100);
-  HX_vaporising.S = S_vaporising;
+  HX_vaporising.S =S;
   HX_vaporising.Q_cold = Q_cold;
   HX_vaporising.Q_hot = Q_hot;
   HX_vaporising.T_cold_in = Tsat;
   HX_vaporising.T_hot_in = hot_side_vaporising.T_in;
   HX_vaporising.Cp_cold = 0; // Not used by NTU method in evaporator mode
-  HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
+  HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
   connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
   connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{30,70},{30,58},{42,58},{42,44}},

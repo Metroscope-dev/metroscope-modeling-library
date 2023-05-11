@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model FlowModel "Basic fluid transport brick for all components"
-  extends MetroscopeModelingLibrary.Icons.BaseClasses.BaseClassIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.BaseClasses.BaseClassIcon;
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // ------ Initialization parameters ------
   // Temperatures
@@ -51,8 +51,10 @@ partial model FlowModel "Basic fluid transport brick for all components"
   Medium.ThermodynamicState state_out;
 
   // ------ Conservation variables ------
-  Units.DifferentialPressure DP(nominal=DP_0, start=DP_0); // Pressure Loss
-  Units.Power W(nominal=0, start=0); // Heat Loss
+  Units.DifferentialPressure DP(nominal=P_in_0, start=DP_0); // Pressure Loss
+  Units.Power W(nominal=1e6, start=0); // Heat Loss
+  Units.DifferentialEnthalpy DH(start=h_out_0 - h_in_0);
+  Units.DifferentialTemperature DT(start=T_out_0 - T_in_0);
 
   // ------ Connectors ------
   replaceable Partial.Connectors.FluidInlet C_in(
@@ -80,7 +82,7 @@ equation
   Xi = inStream(C_in.Xi_outflow);
 
   // No flow reversal in stream connector
-  C_in.h_outflow = 0; // Never used arbitrary value
+  C_in.h_outflow = 1e6; // Never used arbitrary value
   C_in.Xi_outflow = zeros(Medium.nXi); // No flow reversal
 
   // ------ States ------
@@ -105,6 +107,8 @@ equation
   // ------ Conservation equations ------
   P_out - P_in = DP;
   Q * (h_out - h_in) = W;
+  h_out - h_in = DH;
+  T_out - T_in = DT;
   C_in.Q + C_out.Q = 0;
   C_out.Xi_outflow = inStream(C_in.Xi_outflow);
 

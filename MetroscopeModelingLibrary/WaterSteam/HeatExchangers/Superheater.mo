@@ -1,19 +1,19 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model Superheater
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // Pressure Losses
   Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputFrictionCoefficient Kfr_cold;
 
   // Deheating
-  Units.Power W_deheating;
+  Units.Power W_deheat;
 
   // Condensation
-  Units.Power W_condensing;
+  Units.Power W_cond;
   parameter String HX_config="condenser";
   Inputs.InputArea S;
   Units.HeatExchangeCoefficient Kth;
@@ -22,7 +22,7 @@ model Superheater
   Units.Temperature Tsat_hot;
 
   // Vaporising
-  Units.Power W_vaporising;
+  Units.Power W_vap;
   Units.SpecificEnthalpy h_vap_sat_cold(start=h_cold_in_0);
   Units.Temperature Tsat_cold;
 
@@ -45,7 +45,7 @@ model Superheater
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out(start=T_hot_out_0);
-  Units.Power W_tot;
+  Units.Power W;
 
   // Failure modes
   parameter Boolean faulty = false;
@@ -184,7 +184,7 @@ equation
   T_cold_out = final_mix_cold.T_out;
   T_hot_in = hot_side_pipe.T_in;
   T_hot_out = hot_side_vaporising.T_out;
-  W_tot = W_deheating + W_condensing + W_vaporising;
+  W = W_deheat + W_cond + W_vap;
 
   // Ventilation
   Q_vent_faulty = - C_vent.Q; // 1e-3 is used as a protection against zero flow in case the vent is totally closed
@@ -206,7 +206,7 @@ equation
 
   // Energy balance
   hot_side_deheating.W + cold_side_deheating.W = 0;
-  cold_side_deheating.W = W_deheating;
+  cold_side_deheating.W =W_deheat;
 
   // Power Exchange
   if hot_side_deheating.h_in > h_vap_sat_hot then
@@ -219,10 +219,10 @@ equation
 
   // Energy Balance
   hot_side_condensing.W + cold_side_condensing.W = 0;
-  cold_side_condensing.W = W_condensing;
+  cold_side_condensing.W =W_cond;
 
   // Power Exchange
-  HX_condensing.W = W_condensing;
+  HX_condensing.W =W_cond;
   HX_condensing.Kth = Kth * (1 - fouling/100);
   HX_condensing.S = S;
   HX_condensing.Q_cold = cold_side_condensing.Q;
@@ -235,7 +235,7 @@ equation
   /* Vaporising on cold side, condensation on hot side*/
 
   hot_side_vaporising.W + cold_side_vaporising.W = 0;
-  W_vaporising = cold_side_vaporising.W;
+  W_vap = cold_side_vaporising.W;
 
   hot_side_vaporising.h_out = h_liq_sat_hot; // Hot steam is completely condensed
 
@@ -263,8 +263,7 @@ equation
       color={28,108,200},
       thickness=1));
 
-  connect(tube_rupture.C_out, cold_side_deheating.C_out) annotation (Line(points={{14,38.2},{28,38.2},{28,62},{39,62},{39,60}},
-                                                                                                                            color={217,67,180}));
+  connect(tube_rupture.C_out, cold_side_deheating.C_out) annotation (Line(points={{14,38},{28,38},{28,62},{39,62},{39,60}}, color={217,67,180}));
   connect(tube_rupture.C_in, hot_side_deheating.C_in) annotation (Line(points={{-6,38},{-12,38},{-12,66},{-34,66},{-34,60}}, color={217,67,180}));
   connect(C_hot_in, C_hot_in)
     annotation (Line(points={{-160,0},{-160,0}}, color={28,108,200}));

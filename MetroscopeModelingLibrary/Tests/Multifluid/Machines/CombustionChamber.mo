@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.Machines;
 model CombustionChamber
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=17e5) "Pa";
@@ -15,9 +15,9 @@ model CombustionChamber
   input Units.SpecificEnthalpy LHV_plant(start=47276868) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
-  parameter Units.DifferentialPressure combustion_chamber_pressure_loss = 0.1e5;
+  parameter Units.FrictionCoefficient combustion_chamber_Kfr = 0.1;
 
-  MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustion_chamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -43,10 +43,10 @@ equation
   source_fuel.X_molar_CO2=0.01;
 
   // Parameters
-  combustionChamber.DP = combustion_chamber_pressure_loss;
-  combustionChamber.eta = 0.999;
+  combustion_chamber.Kfr = combustion_chamber_Kfr;
+  combustion_chamber.eta = 0.999;
 
-  connect(combustionChamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33},{2.77556e-16,-33}}, color={213,213,0}));
-  connect(combustionChamber.inlet, source_air.C_out) annotation (Line(points={{-10,0},{-33,0}}, color={95,95,95}));
-  connect(combustionChamber.outlet, sink_exhaust.C_in) annotation (Line(points={{10,0},{33,0}}, color={95,95,95}));
+  connect(combustion_chamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33},{2.77556e-16,-33}}, color={213,213,0}));
+  connect(combustion_chamber.inlet, source_air.C_out) annotation (Line(points={{-10,0},{-33,0}}, color={95,95,95}));
+  connect(combustion_chamber.outlet, sink_exhaust.C_in) annotation (Line(points={{10,0},{33,0}}, color={95,95,95}));
 end CombustionChamber;

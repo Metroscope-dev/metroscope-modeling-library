@@ -1,18 +1,18 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model SteamExtractionSplitter_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.SpecificEnthalpy h_source(start=2.65e6);
-  input Units.Pressure source_P(start=2.64e5) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-1000) "kg/s";
-  input Units.PositiveMassFlowRate extracted_Q(start=100) "kg/s";
+  input Utilities.Units.SpecificEnthalpy h_source(start=2.65e6);
+  input Utilities.Units.Pressure source_P(start=2.64e5) "Pa";
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-1000) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate extracted_Q(start=100) "kg/s";
 
   // Input: Observables
-  input Units.SpecificEnthalpy main_h_out(start=2.67e6);
+  input Utilities.Units.SpecificEnthalpy main_h_out(start=2.67e6);
 
   // Output: Component parameters
-  output Units.Fraction alpha;
+  output Utilities.Units.Fraction alpha;
 
   // Components
   .MetroscopeModelingLibrary.WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter annotation (Placement(transformation(extent={{-27,-26.6667},{27,21.3333}})));
@@ -35,7 +35,7 @@ equation
   extraction_sink.Q_in = extracted_Q;
 
   // Input: Observables
-  steamExtractionSplitter.mainFlow.h_out = main_h_out;
+  steamExtractionSplitter.main_flow.h_out = main_h_out;
 
   // Output: Component parameters
   steamExtractionSplitter.alpha = alpha;

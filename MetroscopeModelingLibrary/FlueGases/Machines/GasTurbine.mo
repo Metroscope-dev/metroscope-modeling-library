@@ -6,10 +6,10 @@ model GasTurbine
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium) annotation (IconMap(primitivesVisible=false));
 
-  package FlueGasesMedium = MetroscopeModelingLibrary.Media.FlueGasesMedium;
+  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputReal tau(start=15, min = 1) "Compression rate";
   Real eta_is(start=0.8, min=0, max=1) "Nominal isentropic efficiency";
@@ -18,23 +18,20 @@ model GasTurbine
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
-  Units.Power Wmech;
-  Units.Power Wcompressor;
+  Units.Power W_shaft;
 
-  Power.Connectors.Outlet C_W_compressor annotation (Placement(transformation(extent={{-110,90},{-90,110}}), iconTransformation(extent={{-110,90},{-90,110}})));
-  Power.Connectors.Outlet C_W_out annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
+  Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
 equation
 
   /* Compression ratio */
   tau = P_in/P_out;
 
   /* Fluid specific enthalpy after the expansion */
-  h_out-h_in = eta_is*(h_is-h_in);
+  DH = eta_is*(h_is - h_in);
 
   /* Mechanical power produced by the turbine */
-  Wmech = - C_W_out.W;
-  Wcompressor = - C_W_compressor.W;
-  Wmech = eta_mech*Q*(h_in - h_out) - Wcompressor;
+  W_shaft = - C_W_shaft.W;
+  W_shaft = - eta_mech * W;
 
   /* Isentropic  expansion */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);

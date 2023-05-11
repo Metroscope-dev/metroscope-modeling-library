@@ -23,7 +23,7 @@
 *.log
 
 #backup files
-*.bak-*
+*.bak*
 
 #others
 *.csv

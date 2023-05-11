@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model IsoHFlowModel
   extends FlowModel(T_in_0=T_0, T_out_0=T_0, h_in_0=h_0, h_out_0=h_0);
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.Temperature T_0 = 300;
@@ -14,7 +14,7 @@ equation
   h = h_in;
 
   // Conservation equation
-  h_in = h_out;
+  DH = 0;
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end IsoHFlowModel;

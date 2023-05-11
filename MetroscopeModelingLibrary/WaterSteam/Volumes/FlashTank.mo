@@ -1,9 +1,9 @@
 within MetroscopeModelingLibrary.WaterSteam.Volumes;
 model FlashTank
 
-  package WaterSteamMedium = MetroscopeModelingLibrary.Media.WaterSteamMedium;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.Pressure P_0 = 10e5;

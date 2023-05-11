@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model FuelHeater_direct
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
           // Boundary conditions
   input Real P_hot_source(start=47, min=0, nominal=10) "barA";

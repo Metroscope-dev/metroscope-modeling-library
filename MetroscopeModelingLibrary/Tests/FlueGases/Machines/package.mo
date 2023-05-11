@@ -1,4 +1,4 @@
 within MetroscopeModelingLibrary.Tests.FlueGases;
 package Machines
-extends Icons.Tests.FlueGasesTestPackageIcon;
+extends Utilities.Icons.Tests.FlueGasesTestPackageIcon;
 end Machines;

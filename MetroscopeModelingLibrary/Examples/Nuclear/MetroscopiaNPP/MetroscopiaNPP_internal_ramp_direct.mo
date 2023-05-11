@@ -63,37 +63,37 @@ model MetroscopiaNPP_internal_ramp_direct
 
   // Calibrated parameters
     // HP turbines inlet control valve
-    parameter MetroscopeModelingLibrary.Units.Cv HP_control_valve_Cvmax = 1308860.5;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv HP_control_valve_Cvmax=1308860.5;
       // HP Turbines
-    parameter MetroscopeModelingLibrary.Units.Cst HPT1_Cst = 12399.9;
-    parameter MetroscopeModelingLibrary.Units.Cst HPT2_Cst = 9649.914;
-    parameter MetroscopeModelingLibrary.Units.Yield turbines_eta_is = 0.53308195;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst HPT1_Cst=12399.9;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst HPT2_Cst=9649.914;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Yield turbines_eta_is=0.53308195;
       // Superheater inlet control valve
-    parameter MetroscopeModelingLibrary.Units.Cv superheater_control_valve_Cvmax = 2646.496;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv superheater_control_valve_Cvmax=2646.496;
       // Superheater
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient superheater_Kfr_hot = 1049.6948;
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient superheater_Kth = 17193.303;
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient superheater_Kfr_hot=1049.6948;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient superheater_Kth=17193.303;
       // LP Turbines
-    parameter MetroscopeModelingLibrary.Units.Cst LPT1_Cst = 6242.8354;
-    parameter MetroscopeModelingLibrary.Units.Cst LPT2_Cst = 593.31573;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst LPT1_Cst=6242.8354;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cst LPT2_Cst=593.31573;
       // Condenser
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient condenser_Kth = 1226857.0;
-    parameter MetroscopeModelingLibrary.Units.PositiveMassFlowRate condenser_Q_cold = 54232.63;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient condenser_Kth=1226857.0;
+  parameter MetroscopeModelingLibrary.Utilities.Units.PositiveMassFlowRate condenser_Q_cold=54232.63;
       // Extraction pump
     parameter Real extraction_pump_hn = 70.18653;
     parameter Real extraction_pump_rh = 0.86754465;
       // LP Heater
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient LP_heater_Kth = 11601.239;
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient LP_heater_Kfr_cold = 88.40482;
-    parameter MetroscopeModelingLibrary.Units.Cv LP_heater_drains_control_valve_Cvmax = 1517.0101;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient LP_heater_Kth=11601.239;
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient LP_heater_Kfr_cold=88.40482;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv LP_heater_drains_control_valve_Cvmax=1517.0101;
       // Feedwater pump
     parameter Real feedwater_pump_hn = 554.82806;
     parameter Real feedwater_pump_rh = 0.31775114;
       // HP Heater
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HP_heater_Kth_cond = 146448.02;
-    parameter MetroscopeModelingLibrary.Units.HeatExchangeCoefficient HP_heater_Kth_subc = 184791.02;
-    parameter MetroscopeModelingLibrary.Units.FrictionCoefficient HP_heater_Kfr_cold = 43.30442;
-    parameter MetroscopeModelingLibrary.Units.Cv HP_heater_drains_control_valve_Cvmax = 2201.408;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient HP_heater_Kth_cond=146448.02;
+  parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient HP_heater_Kth_subc=184791.02;
+  parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient HP_heater_Kfr_cold=43.30442;
+  parameter MetroscopeModelingLibrary.Utilities.Units.Cv HP_heater_drains_control_valve_Cvmax=2201.408;
 
     MetroscopeModelingLibrary.WaterSteam.HeatExchangers.SteamGenerator steam_generator annotation (Placement(transformation(extent={{-192,-116},{-148,-24}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_feedwater_sensor annotation (Placement(transformation(extent={{-104,-77},{-118,-63}})));
@@ -105,22 +105,22 @@ model MetroscopiaNPP_internal_ramp_direct
     h_0=2.8e6)                                                                                            annotation (Placement(transformation(extent={{-135,69.8182},{-125,81.8182}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor HP_control_valve_opening_sensor annotation (Placement(transformation(extent={{-136,86},{-126,96}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor HPT_P_in_sensor annotation (Placement(transformation(extent={{-106,66},{-94,78}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine HPT_1(
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine HPT_1(
     T_in_0=535.15,
     T_out_0=608.85,
     P_in_0=4850000,
     P_out_0=3100000,
     h_in_0=2.8e6,
     h_out_0=2.7e6,
-    Q_0=1455)                                                          annotation (Placement(transformation(extent={{-79,64},{-61,80}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine HPT_2(
+    Q_0=1455) annotation (Placement(transformation(extent={{-79,64},{-61,80}})));
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine HPT_2(
     T_in_0=508.85,
     T_out_0=484.15,
     P_in_0=3100000,
     P_out_0=1940000,
     h_in_0=2.73e6,
     h_out_0=2.68e6,
-    Q_0=1113)                                                          annotation (Placement(transformation(extent={{-9,64},{9,80}})));
+    Q_0=1113) annotation (Placement(transformation(extent={{-9,64},{9,80}})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.SteamExtractionSplitter HP_extract(
     Q_in_0=1455,
     Q_ext_0=340,
@@ -166,22 +166,22 @@ model MetroscopiaNPP_internal_ramp_direct
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={122,32})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LPT1(
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPT1(
     T_in_0=501.15,
     T_out_0=425.15,
     P_in_0=1940000,
     P_out_0=500000,
     h_in_0=2.85e6,
     h_out_0=2.7e6,
-    Q_0=1060)                                                         annotation (Placement(transformation(extent={{151,122},{169,138}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.StodolaTurbine LPT2(
+    Q_0=1060) annotation (Placement(transformation(extent={{151,122},{169,138}})));
+  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPT2(
     T_in_0=425.15,
     T_out_0=312.05,
     P_in_0=500000,
     P_out_0=6900,
     h_in_0=2.7e6,
     h_out_0=2.4e6,
-    Q_0=1000)                                                         annotation (Placement(transformation(extent={{221,122},{239,138}})));
+    Q_0=1000) annotation (Placement(transformation(extent={{221,122},{239,138}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor LP_extract_P_sensor annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
@@ -354,17 +354,13 @@ equation
     HPT_P_out_sensor.P_barA = HPT_P_out;
 
     // Calibrated parameters
-    HP_control_valve.Cvmax = HP_control_valve_Cvmax;
+  HP_control_valve.Cv_max = HP_control_valve_Cvmax;
     HPT_1.Cst = HPT1_Cst;
     HPT_1.eta_is = turbines_eta_is;
     HPT_2.Cst = HPT2_Cst;
     HPT_2.eta_is = turbines_eta_is;
 
     // Parameter
-    HPT_1.eta_nz = 1;
-    HPT_1.area_nz = 1;
-    HPT_2.eta_nz = 1;
-    HPT_2.area_nz = 1;
     HP_extract.alpha = 1;
 
   // Dryer - Superheater
@@ -383,7 +379,7 @@ equation
     // Calibrated parameters
     superheater.Kfr_hot = superheater_Kfr_hot;
     superheater.Kth = superheater_Kth;
-    superheater_control_valve.Cvmax = superheater_control_valve_Cvmax;
+  superheater_control_valve.Cv_max = superheater_control_valve_Cvmax;
 
     // Hypothesis
     superheater_control_valve.Opening = 1;
@@ -400,10 +396,6 @@ equation
     LPT2.eta_is = turbines_eta_is;
 
     // Parameters
-    LPT1.eta_nz = 1;
-    LPT1.area_nz = 1;
-    LPT2.eta_nz = 1;
-    LPT2.area_nz = 1;
     LP_extract.alpha = 1;
 
   // Generator
@@ -447,7 +439,7 @@ equation
     extraction_pump.a2 = 0;
     extraction_pump.b1 = 0;
     extraction_pump.b2 = 0;
-    extraction_pump.rhmin = 0.2;
+  extraction_pump.rh_min = 0.2;
 
     // Calibrated parameters
     extraction_pump.hn = extraction_pump_hn;
@@ -461,13 +453,13 @@ equation
     LP_reheater_drains_control_valve_opening_sensor.Opening = LP_reheater_drains_control_valve_opening;
 
     // Parameters
-    LP_heater.S_condensing = 100;
+    LP_heater.S = 100;
     LP_heater.Kfr_hot = 0;
 
     // Calibrated parameters
     LP_heater.Kth = LP_heater_Kth;
     LP_heater.Kfr_cold = LP_heater_Kfr_cold;
-    LP_reheater_drains_control_valve.Cvmax = LP_heater_drains_control_valve_Cvmax;
+  LP_reheater_drains_control_valve.Cv_max = LP_heater_drains_control_valve_Cvmax;
 
   // Deaerator
 
@@ -490,7 +482,7 @@ equation
     feedwater_pump.a2 = 0;
     feedwater_pump.b1 = 0;
     feedwater_pump.b2 = 0;
-    feedwater_pump.rhmin = 0.2;
+  feedwater_pump.rh_min = 0.2;
 
       // Calibrated parameters
     feedwater_pump.hn = feedwater_pump_hn;
@@ -505,7 +497,7 @@ equation
     HP_reheater_drains_control_valve_opening_sensor.Opening = HP_reheater_drains_control_valve_opening;
 
     // Parameters
-    HP_heater.S_tot = 100;
+    HP_heater.S = 100;
     HP_heater.Kfr_hot = 0;
     HP_heater.level = 0.3;
 
@@ -513,7 +505,7 @@ equation
     HP_heater.Kth_subc = HP_heater_Kth_subc;
     HP_heater.Kth_cond = HP_heater_Kth_cond;
     HP_heater.Kfr_cold = HP_heater_Kfr_cold;
-    HP_reheater_drains_control_valve.Cvmax = HP_heater_drains_control_valve_Cvmax;
+  HP_reheater_drains_control_valve.Cv_max = HP_heater_drains_control_valve_Cvmax;
 
   connect(HP_control_valve.C_out, HPT_P_in_sensor.C_in) annotation (Line(points={{-125,72},{-116,72},{-116,72},{-106,72}},                            color={28,108,200}));
   connect(HP_control_valve.Opening, HP_control_valve_opening_sensor.Opening) annotation (Line(points={{-130,80.7273},{-130,82},{-131,82},{-131,85.9}},
@@ -539,7 +531,7 @@ equation
   connect(LPT1.C_W_out, generator.C_in) annotation (Line(points={{169,136.72},{188,136.72},{188,168},{315.6,168}},   color={244,125,35}));
   connect(LPT2.C_W_out, generator.C_in) annotation (Line(points={{239,136.72},{262,136.72},{262,168},{315.6,168}},   color={244,125,35}));
   connect(LPT2.C_out, P_cond_sensor.C_in) annotation (Line(points={{239,130},{286,130}},                             color={28,108,200}));
-  connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74}},
+  connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74.2864}},
                                                                                                            color={28,108,200}));
   connect(superheater_T_out_sensor.C_out, LPT1.C_in) annotation (Line(points={{100,130},{151,130}},                             color={28,108,200}));
   connect(extraction_pump.C_power, LP_pump_Wm_source.C_out) annotation (Line(points={{372,-61.36},{372,-50.8}}, color={244,125,35}));
@@ -582,10 +574,10 @@ equation
   connect(pressureCut.C_out, superheater_drains_pipe.C_in) annotation (Line(points={{114,86},{122,86},{122,42}}, color={28,108,200}));
   connect(cold_source.C_out, CW_T_in_sensor.C_in) annotation (Line(points={{305,67.7778},{305,67},{318,67}},                   color={28,108,200}));
   connect(CW_T_in_sensor.C_out, CW_P_in_sensor.C_in) annotation (Line(points={{332,67},{346,67}}, color={28,108,200}));
-  connect(CW_P_in_sensor.C_out, condenser.C_cold_in) annotation (Line(points={{360,67},{378,67},{378,65.4074},{377,65.4074}},    color={28,108,200}));
+  connect(CW_P_in_sensor.C_out, condenser.C_cold_in) annotation (Line(points={{360,67},{378,67},{378,59.679},{377,59.679}},      color={28,108,200}));
   connect(CW_T_out_sensor.C_out, cold_sink.C_in) annotation (Line(points={{437,60},{455,60}},                                 color={28,108,200}));
-  connect(condenser.C_cold_out, CW_T_out_sensor.C_in) annotation (Line(points={{408,59.679},{408,60},{423,60}},                    color={28,108,200}));
-  connect(LP_reheater_drains_control_valve.C_out, condenser.C_hot_in) annotation (Line(points={{298,-119.818},{400,-119.818},{400,-120},{500,-120},{500,100},{392.5,100},{392.5,74}},
+  connect(condenser.C_cold_out, CW_T_out_sensor.C_in) annotation (Line(points={{407.69,59.679},{407.69,60},{423,60}},              color={28,108,200}));
+  connect(LP_reheater_drains_control_valve.C_out, condenser.C_hot_in) annotation (Line(points={{298,-119.818},{400,-119.818},{400,-120},{500,-120},{500,100},{392.5,100},{392.5,74.2864}},
                                                                                                                                                                                   color={28,108,200}));
   connect(HP_reheater_drains_control_valve.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{16,-121.818},{78,-121.818},{78,-122},{142,-122},{142,-70},{114,-70}}, color={28,108,200}));
   connect(steam_generator.purge_outlet, Q_purge_sensor.C_in) annotation (Line(points={{-170,-115.233},{-170,-125}},             color={28,108,200}));

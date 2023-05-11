@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.FlueGases;
 package Pipes
-  extends Icons.Tests.FlueGasesTestPackageIcon;
+  extends Utilities.Icons.Tests.FlueGasesTestPackageIcon;
 
 end Pipes;

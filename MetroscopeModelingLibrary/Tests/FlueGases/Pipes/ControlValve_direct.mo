@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model ControlValve_direct
-  extends Icons.Tests.FlueGasesTestIcon;
+  extends Utilities.Icons.Tests.FlueGasesTestIcon;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
     // Boundary conditions
   input Units.Pressure source_P(start=10e5) "Pa";
@@ -28,7 +28,7 @@ equation
   sink.P_in = sink_P;
 
   // Parameters
-  controlValve.Cvmax = Cvmax;
+  controlValve.Cv_max = Cvmax;
 
   connect(source.C_out, controlValve.C_in) annotation (Line(points={{-23,0},{-16,0},{-16,-0.363636},{-10,-0.363636}}, color={95,95,95}));
   connect(controlValve.C_out, sink.C_in) annotation (Line(points={{10,-0.363636},{16,-0.363636},{16,0},{23,0}}, color={95,95,95}));

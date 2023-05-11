@@ -3,10 +3,10 @@ model LoopSteamGenerator
 
   // Boundary conditions
   input Real steam_pressure(start=70) "barA";
-  input Units.PositiveMassFlowRate feedwater_flow_rate(start = 500) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate feedwater_flow_rate(start=500) "kg/s";
   input Real feedwater_pressure(start=80) "barA";
   input Real feedwater_temperature(start=225) "degC";
-  input Units.PositiveMassFlowRate blowdown_flow_rate(start=10) "kg/s";
+  input Utilities.Units.PositiveMassFlowRate blowdown_flow_rate(start=10) "kg/s";
 
   // Parameters
   parameter Real vapor_fraction = 0.99;
@@ -24,6 +24,7 @@ model LoopSteamGenerator
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-38,0})));
+  Power.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-126,-10},{-106,10}})));
 equation
 
   // Quantities definitions
@@ -58,7 +59,8 @@ equation
       thickness=1));
   connect(loopBreaker.C_in, feedwater_flow_rate_sensor.C_out) annotation (Line(points={{-28,-1.77636e-15},{-19,-1.77636e-15},{-19,0},{-10,0}}, color={28,108,200},
       thickness=1));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},{100,100}}), graphics={
+  connect(steamGenerator.C_thermal_power, source.C_out) annotation (Line(points={{-90,0},{-111.2,0}}, color={244,125,35}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,-80},{100,100}}), graphics={
         Rectangle(
           extent={{-32,24},{30,-82}},
           fillColor={175,175,175},
@@ -85,7 +87,7 @@ equation
           lineColor={0,0,0},
           pattern=LinePattern.None,
           fillColor={175,175,175},
-          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},{100,100}}),
+          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-140,-80},{100,100}}),
                                                                                                                       graphics={Rectangle(
           extent={{-18,80},{70,50}},
           lineThickness=1,

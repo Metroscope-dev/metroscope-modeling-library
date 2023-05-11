@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial;
 package Connectors
-  extends Icons.PackageIcon;
+  extends Utilities.Icons.PackageIcon;
 
   annotation (Icon(graphics={
       Ellipse(

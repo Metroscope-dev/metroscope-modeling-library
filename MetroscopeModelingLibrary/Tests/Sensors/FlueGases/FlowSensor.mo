@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Tests.Sensors.FlueGases;
 model FlowSensor
-  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
-  input Units.PositiveMassFlowRate source_Q(start=100) "kg/s";
+  input Utilities.Units.Pressure source_P(start=1e5) "Pa";
+  input Utilities.Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
+  input Utilities.Units.PositiveMassFlowRate source_Q(start=100) "kg/s";
 
   MetroscopeModelingLibrary.Sensors.FlueGases.FlowSensor source_Q_sensor annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));

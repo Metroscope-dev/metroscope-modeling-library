@@ -1,27 +1,27 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Superheater_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
 
   // Boundary conditions
   input Real P_hot_source(start=1.5, min=0, nominal=1) "barA";
-  input Units.MassFlowRate Q_hot_source(start=586) "kg/s";
+  input Utilities.Units.MassFlowRate Q_hot_source(start=586) "kg/s";
   input Real hot_source_h(start=600000) "J/kg";
 
   input Real P_cold_source(start=3.5, min=1.5, nominal=3.5) "barA";
-  input Units.MassFlowRate Q_cold_source(start=11) "kg/s";
+  input Utilities.Units.MassFlowRate Q_cold_source(start=11) "kg/s";
   input Real T_cold_source(start = 200, min = 130, nominal = 150) "degC";
 
 
   // Parameters
   parameter String QCp_max_side = "hot";
-  parameter Units.Area S = 10;
-  parameter Units.Temperature nominal_cold_side_temperature_rise = 140;
-  parameter Units.Temperature nominal_hot_side_temperature_drop = 3;
+  parameter Utilities.Units.Area S=10;
+  parameter Utilities.Units.Temperature nominal_cold_side_temperature_rise=140;
+  parameter Utilities.Units.Temperature nominal_hot_side_temperature_drop=3;
 
   // Calibrated parameters
-  output Units.HeatExchangeCoefficient Kth;
-  output Units.FrictionCoefficient Kfr_hot;
-  output Units.FrictionCoefficient Kfr_cold;
+  output Utilities.Units.HeatExchangeCoefficient Kth;
+  output Utilities.Units.FrictionCoefficient Kfr_hot;
+  output Utilities.Units.FrictionCoefficient Kfr_cold;
 
 
   // Calibration inputs

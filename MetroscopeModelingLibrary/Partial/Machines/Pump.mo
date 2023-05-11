@@ -1,11 +1,11 @@
 within MetroscopeModelingLibrary.Partial.Machines;
 partial model Pump
   extends BaseClasses.FlowModel(P_out_0=10e5) annotation(IconMap(primitivesVisible=false));
-  extends MetroscopeModelingLibrary.Icons.Machines.PumpIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Machines.PumpIcon;
 
-  import MetroscopeModelingLibrary.Units;
-  import MetroscopeModelingLibrary.Units.Inputs;
-  import MetroscopeModelingLibrary.Constants;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
 
   Real VRotn(start=1400, min=0, nominal=2000) "Nominal rotational speed";
@@ -17,7 +17,7 @@ partial model Pump
   Inputs.InputYield b3(start=0.8) "Constant coef. of the pump efficiency characteristics rh = f(vol_flow) (s.u.)";
 
   Inputs.InputYield rm(start=0.85) "Product of the pump mechanical and electrical efficiencies";
-  Inputs.InputYield rhmin(start=0.20) "Minimum efficiency to avoid zero crossings";
+  Inputs.InputYield rh_min(start=0.20) "Minimum efficiency to avoid zero crossings";
 
   Units.Yield rh "Hydraulic efficiency";
   Units.Height hn(start=10) "Pump head";
@@ -46,16 +46,16 @@ equation
 
   // Pump characteristics
   hn = a1*Qv^2 + a2*Qv*R + a3*R^2;
-  rh = noEvent(max(if (R > 1e-5) then b1*Qv^2/R^2 + b2*Qv/R + b3 else b3, rhmin));
+  rh =noEvent(max(if (R > 1e-5) then b1*Qv^2/R^2 + b2*Qv/R + b3 else b3, rh_min));
 
   // Outlet variation
   DP = rho*Constants.g*hn;
-  h_out-h_in = Constants.g*hn/rh;
+  DH = Constants.g *hn/rh;
 
   // Mechanical power
   Wm = C_power.W; // C_power.W is positive since it is power fed to the component
   Wm = W/rm; // Wm is positive since it is the power produced by the pump
 
   // Hydraulic power
-  Wh = Qv * DP / rh; // = Qv*rho * g*hn/rh = Q * (h_out - h_in) = W
+  Wh = Qv * DP / rh; // = Qv*rho * g*hn/rh = Q * DH = W
 end Pump;

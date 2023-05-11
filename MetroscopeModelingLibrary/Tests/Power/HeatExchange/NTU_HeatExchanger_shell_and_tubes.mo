@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
 model NTU_HeatExchanger_shell_and_tubes
 
-  extends MetroscopeModelingLibrary.Icons.Tests.PowerTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
 
   MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "shell_and_tubes_two_passes",QCp_max_side = "cold");
 

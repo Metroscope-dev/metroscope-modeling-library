@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.BoundaryConditions;
 model Source
-  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
-  import MetroscopeModelingLibrary.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";

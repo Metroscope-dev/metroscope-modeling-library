@@ -1,18 +1,18 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model Pump_direct
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // Boundary conditions
-  input Units.Pressure source_P(start=20e5);
-  input Units.Temperature source_T(start= 150 + 273.15);
-  input Units.NegativeMassFlowRate source_Q(start=-1000);
+  input Utilities.Units.Pressure source_P(start=20e5);
+  input Utilities.Units.Temperature source_T(start=150 + 273.15);
+  input Utilities.Units.NegativeMassFlowRate source_Q(start=-1000);
   input Real pump_VRot(start=1400);
 
   // Component parameters
   parameter Real pump_VRotn = 1400;
   parameter Real pump_a3 = 444;
   parameter Real pump_b3 = 0.93;
-  parameter Units.Yield pump_rhmin = 0.20;
+  parameter Utilities.Units.Yield pump_rhmin=0.20;
 
   .MetroscopeModelingLibrary.WaterSteam.Machines.Pump pump annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-76,-10},{-56,10}})));
@@ -41,7 +41,7 @@ equation
   pump.b1 = 0;
   pump.b2 = 0;
   pump.b3 = pump_b3;
-  pump.rhmin = pump_rhmin;
+  pump.rh_min = pump_rhmin;
 
   connect(pump.C_in, source.C_out) annotation (Line(points={{-10,0},{-61,0}}, color={28,108,200}));
   connect(pump.C_out, sink.C_in) annotation (Line(points={{10,0},{71,0}}, color={28,108,200}));

@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.FeedWater;
 model ParallelTurboFWP_direct
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
   parameter Units.Pressure STs_CV_P_in_0 = 30e5;
@@ -36,8 +36,8 @@ model ParallelTurboFWP_direct
   WaterSteam.BoundaryConditions.Source STs_source annotation (Placement(transformation(extent={{-128,70},{-108,90}})));
   WaterSteam.BoundaryConditions.Sink STs_sink annotation (Placement(transformation(extent={{108,70},{128,90}})));
   // STs
-  WaterSteam.Machines.StodolaTurbine ST1(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{20,90.0002},{40,110}})));
-  WaterSteam.Machines.StodolaTurbine ST2(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{20,70},{40,50}})));
+  WaterSteam.Machines.SteamTurbine ST1(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{20,90.0002},{40,110}})));
+  WaterSteam.Machines.SteamTurbine ST2(P_out_0=STs_P_out_0) annotation (Placement(transformation(extent={{20,70},{40,50}})));
   // STs CV
   WaterSteam.Pipes.ControlValve ST2_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,62.5455},{-4,48.5455}})));
   WaterSteam.Pipes.ControlValve ST1_CV(P_in_0=STs_CV_P_in_0) annotation (Placement(transformation(extent={{-16,97.4545},{-4,111.455}})));
@@ -72,27 +72,23 @@ equation
 
   // Component parameters
   // ST1_CV // Hyp on CVs : same Cv (or same mass flow)
-  ST1_CV.Cvmax = STs_CVmax;
+  ST1_CV.Cv_max = STs_CVmax;
 
   // ST1_CV
-  ST2_CV.Cvmax = STs_CVmax;
+  ST2_CV.Cv_max = STs_CVmax;
 
   // ST1
-  ST1.eta_nz = 1.0;
-  ST1.area_nz = 1.0;
   ST1.eta_is = ST1_eta_is;
   ST1.Cst = ST1_Cst;
 
   // ST2
-  ST2.eta_nz = 1.0;
-  ST2.area_nz = 1.0;
   ST2.eta_is = ST2_eta_is;
   ST2.Cst = ST2_Cst;
 
   // FWP1
   FWP1.VRotn = 4300;
   FWP1.rm = 1; // No conversion on turbopumps, so no yield
-  FWP1.rhmin = 0.20;
+  FWP1.rh_min = 0.20;
   FWP1.b3 = FWPs_b3;
   FWP1.b2 = 0;
   FWP1.b1 = 0;
@@ -103,7 +99,7 @@ equation
   // FWP2
   FWP2.VRotn = 4500;
   FWP2.rm = 1; // No conversion on turbopumps, so no yield
-  FWP2.rhmin = 0.20;
+  FWP2.rh_min = 0.20;
   FWP2.b3 = FWPs_b3;
   FWP2.b2 = 0;
   FWP2.b1 = 0;

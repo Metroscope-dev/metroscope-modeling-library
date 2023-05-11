@@ -1,8 +1,8 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.BaseClasses;
 model IsoHFlowModel
-  extends MetroscopeModelingLibrary.Icons.Tests.WaterSteamTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
-  import MetroscopeModelingLibrary.Units;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary conditions
   input Units.Pressure source_P(start=50e5) "Pa";

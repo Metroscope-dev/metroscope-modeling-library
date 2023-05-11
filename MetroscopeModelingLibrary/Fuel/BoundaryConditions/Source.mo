@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Fuel.BoundaryConditions;
 model Source
-  extends MetroscopeModelingLibrary.Icons.BoundaryConditions.FuelSourceIcon;
-  package FuelMedium = MetroscopeModelingLibrary.Media.FuelMedium;
+  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+  package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
   extends Partial.BoundaryConditions.FluidSource(redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out, redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
 
     // Atomic mass
@@ -19,12 +19,12 @@ model Source
   Real amN2 "H2O molecular mass";
 
   // Fuel composition
-  Units.MassFraction X_CH4(start=0.848);
-  Units.MassFraction X_C2H6(start=0.083);
-  Units.MassFraction X_C3H8(start=0.0126);
-  Units.MassFraction X_C4H10_n_butane(start=0.00668);
-  Units.MassFraction X_N2(start=0.024);
-  Units.MassFraction X_CO2(start=0.025);
+  Utilities.Units.MassFraction X_CH4(start=0.848);
+  Utilities.Units.MassFraction X_C2H6(start=0.083);
+  Utilities.Units.MassFraction X_C3H8(start=0.0126);
+  Utilities.Units.MassFraction X_C4H10_n_butane(start=0.00668);
+  Utilities.Units.MassFraction X_N2(start=0.024);
+  Utilities.Units.MassFraction X_CO2(start=0.025);
 
   // Mole fractions
   Real X_molar_CH4(start=0.92);
@@ -67,4 +67,12 @@ equation
   X_molar_N2 = X_N2/amN2 * mean_molecular_mass;
   X_molar_CO2 = X_CO2/amCO2 * mean_molecular_mass;
 
+  annotation (Icon(graphics={
+        Ellipse(
+          extent={{-80,60},{40,-60}},
+          fillColor={213,213,0},
+          fillPattern=FillPattern.Solid,
+          lineThickness=0.5,
+          pattern=LinePattern.None,
+          lineColor={0,0,0})}));
 end Source;

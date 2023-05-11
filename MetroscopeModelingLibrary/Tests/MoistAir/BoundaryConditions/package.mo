@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.MoistAir;
 package BoundaryConditions
-  extends MetroscopeModelingLibrary.Icons.Tests.MoistAirTestPackageIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestPackageIcon;
 
 
 end BoundaryConditions;

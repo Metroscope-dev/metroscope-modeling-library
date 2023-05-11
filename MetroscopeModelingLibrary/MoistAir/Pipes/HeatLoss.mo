@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.MoistAir.Pipes;
 model HeatLoss
-  package MoistAirMedium = MetroscopeModelingLibrary.Media.MoistAirMedium;
+  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   extends Partial.Pipes.HeatLoss(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
