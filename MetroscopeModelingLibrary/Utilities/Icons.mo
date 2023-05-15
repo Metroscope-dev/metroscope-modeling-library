@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Utilities;
 package Icons
-  partial record KeepingScaleIcon
+  partial class KeepingScaleIcon
     annotation (Icon(coordinateSystem(preserveAspectRatio=true)),
           Diagram(coordinateSystem(preserveAspectRatio=true)));
   end KeepingScaleIcon;
