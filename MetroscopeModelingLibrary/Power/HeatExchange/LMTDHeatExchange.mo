@@ -24,7 +24,7 @@ model LMTDHeatExchange
   Inputs.InputTemperature T_cold_out(start=T_cold_out_0) "Temperature, cold side, at the outlet";
 
   // intermediate variables
-  Real DT_a(start = T_hot_in_0 - T_cold_out_0);
+  Units.DifferentialTemperature DT_a(start = T_hot_in_0 - T_cold_out_0);
   Units.DifferentialTemperature DT_b(start = T_hot_out_0 - T_cold_in_0);
 equation
   // Counter-current configuration. (Also correct for cross-current since the likely correction coefficient can be considered as absorbed by Kth)
