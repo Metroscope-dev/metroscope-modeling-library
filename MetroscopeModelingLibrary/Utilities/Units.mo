@@ -66,7 +66,7 @@ package Units
   type Cst = Real(final quantity="Stodola constant", min=0, nominal=1e4, start=1e4);
   type Density = SI.Density(start=1);
   type DifferentialPressure = SI.PressureDifference(nominal=1.0e5, start=1.0e5, min=-1.0e8, max=1.0e8);
-  type DifferentialTemperature = SI.TemperatureDifference(nominal=100, start=0, min=-2000, max=2000, displayUnit = "K");
+  type DifferentialTemperature = SI.TemperatureDifference(nominal=100, start=0, min=-2000, max=2000);
   type DifferentialEnthalpy = Real(nominal=1e4, start=0, min=-2e7, max=2e7);
   type FrictionCoefficient = Real(quantity="FrictionCoefficient", unit="m-4", nominal=1e-3);
   type Fraction = SI.PerUnit(min=0., max=1., nominal=0.5);
