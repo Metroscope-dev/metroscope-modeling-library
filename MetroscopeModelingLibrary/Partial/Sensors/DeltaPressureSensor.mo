@@ -5,7 +5,7 @@ partial model DeltaPressureSensor
   replaceable package Medium =
       MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
-  parameter Utilities.Units.DifferentialPressure DP_0=0;
+  parameter Utilities.Units.DifferentialPressure DP_0=1e4;
   Utilities.Units.DifferentialPressure DP(start=DP_0, nominal=DP_0);
   Real DP_bar(unit="bar", start=DP_0*Utilities.Constants.Pa_to_barA);
                                                               // Pressure difference in bar
