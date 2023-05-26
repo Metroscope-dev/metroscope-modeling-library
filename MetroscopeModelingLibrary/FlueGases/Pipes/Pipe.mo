@@ -5,7 +5,8 @@ model Pipe
   extends Partial.Pipes.Pipe(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
-    redeclare package Medium = FlueGasesMedium) annotation(IconMap(primitivesVisible=false));
+    redeclare package Medium = FlueGasesMedium,
+    Q_0 = 500, rho_in(start=1), rho_out(start=1), rho(start=1)) annotation(IconMap(primitivesVisible=false));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                                Rectangle(
           extent={{-100,30},{100,-30}},

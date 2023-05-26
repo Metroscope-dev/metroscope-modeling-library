@@ -4,7 +4,8 @@ model HeatLoss
   extends Partial.Pipes.HeatLoss(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
-    redeclare package Medium = FlueGasesMedium)
+    redeclare package Medium = FlueGasesMedium,
+    Q_0 = 500, rho_in(start=1), rho_out(start=1), rho(start=1))
     annotation(IconMap(primitivesVisible=false));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                                Rectangle(

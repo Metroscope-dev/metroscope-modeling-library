@@ -24,8 +24,8 @@ model Evaporator
     Units.Temperature Tsat;
 
     // Definitions
-    Units.MassFlowRate Q_cold;
-    Units.MassFlowRate Q_hot;
+    Units.MassFlowRate Q_cold(start=Q_cold_0);
+    Units.MassFlowRate Q_hot(start=Q_hot_0);
     Units.Temperature T_cold_in;
     Units.Temperature T_hot_in;
     Units.Temperature T_cold_out;

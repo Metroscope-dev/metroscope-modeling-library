@@ -19,9 +19,9 @@ partial model WaterFlueGasesMonophasicHX
   parameter String mixed_fluid = "hot";
 
   Units.Power W;
-  Units.MassFlowRate Q_cold(start=Q_cold_0);
-  Units.MassFlowRate Q_hot(start=Q_hot_0);
-  Units.Temperature T_cold_in(start=T_cold_in_0);
+  Units.MassFlowRate Q_cold;
+  Units.MassFlowRate Q_hot;
+  Units.Temperature T_cold_in;
   Units.Temperature T_hot_in;
   Units.Temperature T_cold_out;
   Units.Temperature T_hot_out;

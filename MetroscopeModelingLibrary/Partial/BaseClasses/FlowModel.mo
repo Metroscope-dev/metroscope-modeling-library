@@ -33,9 +33,9 @@ partial model FlowModel "Basic fluid transport brick for all components"
 
   // ------ Computed Quantities ------
   // Densities
-  Units.Density rho_in(start=1) "Inlet density";
-  Units.Density rho_out(start=1) "Outlet density";
-  Units.Density rho(start=1) "Mean density";
+  Units.Density rho_in(start=1000) "Inlet density";
+  Units.Density rho_out(start=1000) "Outlet density";
+  Units.Density rho(start=1000) "Mean density";
 
   // Volumetric flow rates
   Units.PositiveVolumeFlowRate Qv_in "Inlet volumetric flow rate";
