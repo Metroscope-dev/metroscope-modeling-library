@@ -134,8 +134,17 @@ model MetroscopiaCCGT_causality_direct_init
     Q_cold_0=56.89394,
     Q_hot_0=510.45065,
     T_cold_in_0=358.14999,
+    T_cold_out_0=593.15,
+    T_hot_in_0=719.15,
+    T_hot_out_0=612.15,
     P_cold_in_0=17000533,
-    h_hot_in_0=772388.4)
+    P_cold_out_0=13770000,
+    P_hot_in_0=111000,
+    P_hot_out_0=100000,
+    h_cold_in_0=369317.84,
+    h_cold_out_0=1459478.5,
+    h_hot_in_0=772388.4,
+    h_hot_out_0=650881)
     annotation (Placement(transformation(extent={{74,-56},{132,3}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink flue_gas_sink
     annotation (Placement(transformation(
@@ -178,8 +187,17 @@ model MetroscopiaCCGT_causality_direct_init
     Q_cold_0=47.517586,
     Q_hot_0=510.45065,
     T_cold_in_0=596.03474,
-    P_cold_in_0=11484281,
-    h_hot_in_0=957089.1)
+    T_cold_out_0=726.45,
+    T_hot_in_0=878.034,
+    T_hot_out_0=835.819,
+    P_cold_in_0=11720000,
+    P_cold_out_0=11484000,
+    P_hot_in_0=111000,
+    P_hot_out_0=111000,
+    h_cold_in_0=2691576,
+    h_cold_out_0=3227785.8,
+    h_hot_in_0=957089.1,
+    h_hot_out_0=907173.6)
     annotation (Placement(transformation(extent={{-186,-56},{-126,4}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH1_out_sensor(Q_0=47.517586, P_0=11484281)
     annotation (Placement(transformation(
@@ -244,11 +262,8 @@ model MetroscopiaCCGT_causality_direct_init
     T_hot_out_0=305.92236,
     h_cold_in_0=63375,
     h_cold_out_0=104974.11,
-    h_hot_in_0=2420969,
-    water_height_pipe(DP(start = 9754.728)),
-    P_tot(start=condenser.Psat_0))
+    h_hot_in_0=2420969)
     annotation (Placement(transformation(extent={{32,144.778},{72,176.778}})));
-    //P_tot(start=5000))
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_circulating_water_out_sensor(
     Q_0=2730.2332,
     P_0=492540.5,
@@ -363,8 +378,17 @@ model MetroscopiaCCGT_causality_direct_init
     Q_cold_0=49.734425,
     Q_hot_0=510.45065,
     T_cold_in_0=527.15528,
+    T_cold_out_0=622.15,
+    T_hot_in_0=835.85,
+    T_hot_out_0=818.75,
     P_cold_in_0=978559.2,
-    h_hot_in_0=907173.6)
+    P_cold_out_0=895000,
+    P_hot_in_0=111000,
+    P_hot_out_0=111000,
+    h_cold_in_0=2952838,
+    h_cold_out_0=3159031.2,
+    h_hot_in_0=907173.6,
+    h_hot_out_0=887083.75)
     annotation (Placement(transformation(extent={{-102,-56},{-42,4}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPsteamTurbine(
     T_in_0=621.62244,
@@ -573,8 +597,17 @@ model MetroscopiaCCGT_causality_direct_init
     Q_cold_0=49.734425,
     Q_hot_0=510.45065,
     T_cold_in_0=684.24146,
-    P_cold_in_0=11338658,
-    h_hot_in_0=998985.06)
+    T_cold_out_0=839.65,
+    T_hot_in_0=913.15,
+    T_hot_out_0=878.034,
+    P_cold_in_0=11484000,
+    P_cold_out_0=11338000,
+    P_hot_in_0=111000,
+    P_hot_out_0=111000,
+    h_cold_in_0=3100373.8,
+    h_cold_out_0=3530374.2,
+    h_hot_in_0=998985.06,
+    h_hot_out_0=957089.1)
     annotation (Placement(transformation(extent={{-302,-56},{-242,4}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH2_out_sensor(
     Q_0=49.734425,
