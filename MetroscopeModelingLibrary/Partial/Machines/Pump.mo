@@ -24,7 +24,7 @@ partial model Pump
   Units.Fraction R(start=1) "Reduced rotational speed";
 
   Units.Power Wh "Hydraulic power";
-  Units.PositivePower Wm "Mechanical power";
+  Units.Power Wm "Mechanical power";
 
   Modelica.Blocks.Interfaces.RealInput VRot "Pump rotational speed" annotation (Placement(
         transformation(extent={{-20,-20},{20,20}},
@@ -33,13 +33,6 @@ partial model Pump
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={0,-120})));
-  Power.Connectors.Inlet C_power "Electrical alimentation of the pump" annotation (Placement(transformation(
-        extent={{-12,-12},{12,12}},
-        rotation=-90,
-        origin={0,108}), iconTransformation(
-        extent={{-12,-12},{12,12}},
-        rotation=-90,
-        origin={0,108})));
 equation
   // internal variables
   R = VRot/VRotn; // Reduced rotational speed
@@ -53,7 +46,6 @@ equation
   DH = Constants.g *hn/rh;
 
   // Mechanical power
-  Wm = C_power.W; // C_power.W is positive since it is power fed to the component
   Wm = W/rm; // Wm is positive since it is the power produced by the pump
 
   // Hydraulic power

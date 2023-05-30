@@ -16,7 +16,6 @@ model TurbineLPCondenser_reverse_step1
   // Hypothesis on component parameters
   // Turbines
   parameter Units.Yield LP_turbine_eta_nz = 1;
-  parameter Units.Area LP_turbine_area_nz = 1;
 
   // Extraction splitters
   parameter Units.Fraction LP_turbine1_ext_alpha = 1;
@@ -156,7 +155,6 @@ equation
 
   // Hypothesis for step 1 : no nozzle effect on the last turbine stage
   LP_turbine3.eta_nz = LP_turbine_eta_nz;
-  LP_turbine3.area_nz = LP_turbine_area_nz;
 
   // Generator
   W_tot_sensor.W_MW = W_tot; // Calibrates LP_turbines_eta_is

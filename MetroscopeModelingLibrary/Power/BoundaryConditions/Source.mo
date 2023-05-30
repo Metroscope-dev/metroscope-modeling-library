@@ -1,9 +1,11 @@
 within MetroscopeModelingLibrary.Power.BoundaryConditions;
 model Source
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+  import MetroscopeModelingLibrary.Utilities.Units;
 
-  Utilities.Units.NegativePower W_out;
-  Connectors.Outlet C_out annotation (Placement(transformation(extent={{38,-10},{58,10}}), iconTransformation(extent={{38,-10},{58,10}})));
+  Units.NegativePower W_out;
+  Units.Inputs.InputNotUsedVariable dummy; // To keep local balance
+  Power.Connectors.Outlet C_out(dummy=dummy) annotation (Placement(transformation(extent={{38,-10},{58,10}}), iconTransformation(extent={{38,-10},{58,10}})));
 equation
   W_out = C_out.W;
   annotation (Icon(graphics={

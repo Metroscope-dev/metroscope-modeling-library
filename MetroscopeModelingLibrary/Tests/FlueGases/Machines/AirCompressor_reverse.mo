@@ -27,9 +27,13 @@ model AirCompressor_reverse
   MetroscopeModelingLibrary.Power.BoundaryConditions.Source turbine_power_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={38,40})));
+        origin={78,40})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor annotation (Placement(transformation(extent={{18,-10},{38,10}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor compressor_P_out_sensor annotation (Placement(transformation(extent={{46,-10},{66,10}})));
+  MetroscopeModelingLibrary.Power.Connectors.DummyFix dummyFix annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={60,60})));
 equation
 
   // Boundary conditions
@@ -47,11 +51,15 @@ equation
   airCompressor.eta_is = eta_is;
 
   connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-33,0},{-8,0}}, color={95,95,95}));
-  connect(turbine_power_source.C_out, airCompressor.C_W_in) annotation (Line(
-      points={{33.2,40},{12,40},{12,10}},
-      color={244,125,35},
-      smooth=Smooth.Bezier));
   connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{12,0},{18,0}}, color={95,95,95}));
   connect(compressor_T_out_sensor.C_out, compressor_P_out_sensor.C_in) annotation (Line(points={{38,0},{46,0}}, color={95,95,95}));
   connect(compressor_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{66,0},{73,0}}, color={95,95,95}));
+  connect(airCompressor.C_W_in, turbine_power_source.C_out) annotation (Line(
+      points={{12,10},{12,10},{20,10},{20,40},{73.2,40}},
+      color={244,125,35},
+      smooth=Smooth.Bezier));
+  connect(turbine_power_source.C_out, dummyFix.W_port) annotation (Line(
+      points={{73.2,40},{72,40},{60,40},{60,56}},
+      color={244,125,35},
+      smooth=Smooth.Bezier));
 end AirCompressor_reverse;

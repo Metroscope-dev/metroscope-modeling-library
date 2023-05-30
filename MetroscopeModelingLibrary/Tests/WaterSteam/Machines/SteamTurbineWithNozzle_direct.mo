@@ -21,7 +21,6 @@ equation
 
   // Turbine parameters
   turbine.eta_nz = 0.98;
-  turbine.area_nz = 25;
 
   // Component parameters
   turbine.Cst = 2;

@@ -13,9 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `assert` statements in heat exchangers power components [PR#420](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/420), fixing [#417](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/417)
 
 ### Changed
+
 - Steam generators now have power connectors for thermal power and embedded feedwater mass flow rate bias [PR#418](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/418)
+- Removed pumps power connector [PR#419](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/419)
 
 ### Fixed
+
+- Power connectors are now balanced [PR#419](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/419), fixing [#99](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/99)
 
 ## MML-v3.5.0
 

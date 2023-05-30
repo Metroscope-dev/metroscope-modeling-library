@@ -15,7 +15,6 @@ model TurbineLPCondenser_reverse_step2
 
   // Hypothesis on component parameters
   // Turbines
-  parameter Units.Area LP_turbine_area_nz = 12; // pi*turbine_R**2 - pi*rotor_R**2, with turbine_R = 2m, rotor_R = 0.35m
   parameter Units.Yield LP_turbines_eta_is = 0.9;
 
   // Extraction splitters
@@ -156,7 +155,6 @@ equation
 
   // Hypothesis : no nozzle
   LP_turbine3.eta_nz = LP_turbine3_eta_nz;
-  LP_turbine3.area_nz = LP_turbine_area_nz;
 
   // Generator
   W_tot_sensor.W_MW = W_tot; // Calibrates LP_turbines_eta_is

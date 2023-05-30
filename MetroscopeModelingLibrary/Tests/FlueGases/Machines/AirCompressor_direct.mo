@@ -19,7 +19,11 @@ model AirCompressor_direct
   MetroscopeModelingLibrary.Power.BoundaryConditions.Source turbine_power_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={38,40})));
+        origin={78,40})));
+  MetroscopeModelingLibrary.Power.Connectors.DummyFix dummy_fix annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={60,62})));
 equation
 
   source.P_out = source_P;
@@ -34,8 +38,12 @@ equation
 
   connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-33,0},{-8,0}}, color={95,95,95}));
   connect(airCompressor.C_out, sink.C_in) annotation (Line(points={{12,0},{33,0}}, color={95,95,95}));
-  connect(turbine_power_source.C_out, airCompressor.C_W_in) annotation (Line(
-      points={{33.2,40},{12,40},{12,10}},
+  connect(airCompressor.C_W_in, turbine_power_source.C_out) annotation (Line(
+      points={{12,10},{20,10},{20,40},{73.2,40}},
+      color={244,125,35},
+      smooth=Smooth.Bezier));
+  connect(dummy_fix.W_port, turbine_power_source.C_out) annotation (Line(
+      points={{60,58},{60,40},{73.2,40}},
       color={244,125,35},
       smooth=Smooth.Bezier));
 end AirCompressor_direct;
