@@ -52,13 +52,13 @@ partial model WaterFlueGasesMonophasicHX
 
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
           extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
-  FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0)) annotation (Placement(transformation(
+  FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
           extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
   WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(
           extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
-  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0)) annotation (Placement(transformation(
+  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start = h_cold_out_0)) annotation (Placement(transformation(
           extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
-  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0,h_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
+  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, h_in_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
   Power.HeatExchange.NTUHeatExchange HX(config=config, mixed_fluid=mixed_fluid, QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
@@ -73,7 +73,7 @@ partial model WaterFlueGasesMonophasicHX
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={6,24})));
-  WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={30,42})));

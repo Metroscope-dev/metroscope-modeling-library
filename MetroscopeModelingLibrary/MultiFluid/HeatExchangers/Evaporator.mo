@@ -18,9 +18,9 @@ model Evaporator
     parameter String HX_config="evaporator";
 
     Units.Power W_vap;
-    Units.MassFraction x_steam_out(start=0.7); // Steam mass fraction at water outlet
-    Units.SpecificEnthalpy h_vap_sat(start=2e6);
-    Units.SpecificEnthalpy h_liq_sat(start=1e5);
+    Units.MassFraction x_steam_out(start=1); // Steam mass fraction at water outlet
+    Units.SpecificEnthalpy h_vap_sat;
+    Units.SpecificEnthalpy h_liq_sat;
     Units.Temperature Tsat;
 
     // Definitions
@@ -40,23 +40,23 @@ model Evaporator
       parameter Units.MassFlowRate Q_cold_0 = 100;
       parameter Units.MassFlowRate Q_hot_0 = 500;
       // Temperatures
-      parameter Units.Temperature T_cold_in_0 = 320 + 273.15;
-      parameter Units.Temperature T_cold_out_0 = 322.88 + 273.15;
-      parameter Units.Temperature T_hot_in_0 = 545.6 + 273.15;
-      parameter Units.Temperature T_hot_out_0 = 446.7 + 273.15;
+      parameter Units.Temperature T_cold_in_0 = 132 + 273.15;
+      parameter Units.Temperature T_cold_out_0 = WaterSteamMedium.saturationTemperature(P_cold_out_0);
+      parameter Units.Temperature T_hot_in_0 = 200 + 273.15;
+      parameter Units.Temperature T_hot_out_0 = 95 + 273.15;
       // Pressures
-      parameter Units.Pressure P_cold_in_0 = 117.3e5;
-      parameter Units.Pressure P_cold_out_0 = 117.2e5;
-      parameter Units.Pressure P_hot_in_0 = 1.11e5;
-      parameter Units.Pressure P_hot_out_0 = 1.105e5;
+      parameter Units.Pressure P_cold_in_0 = 3.55e5;
+      parameter Units.Pressure P_cold_out_0 = 3.5e5;
+      parameter Units.Pressure P_hot_in_0 = 1.1e5;
+      parameter Units.Pressure P_hot_out_0 = 1.05e5;
       // Enthalpies
-      parameter Units.SpecificEnthalpy h_cold_in_0 = 1459478.5;
+      parameter Units.SpecificEnthalpy h_cold_in_0 = 1.461e6;
       parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_cold_out_0));
       parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_cold_out_0));
-      parameter Units.SpecificEnthalpy h_hot_in_0 = 9e5;
-      parameter Units.SpecificEnthalpy h_hot_out_0 = 7.7e5;
+      parameter Units.SpecificEnthalpy h_hot_in_0 = 5e5;
+      parameter Units.SpecificEnthalpy h_hot_out_0 = 3.8e5;
 
-  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0,h_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(extent={{-58,-30},{-38,-10}})));
+  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, h_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(extent={{-58,-30},{-38,-10}})));
   Power.HeatExchange.NTUHeatExchange HX_vaporising(config=HX_config, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
@@ -69,7 +69,7 @@ model Evaporator
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={-20,20})));
-  WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={42,34})));
@@ -77,17 +77,17 @@ model Evaporator
         extent={{10,-10},{-10,10}},
         rotation=180,
         origin={20,-20})));
-  WaterSteam.BaseClasses.IsoPFlowModel cold_side_heating(Q_0=Q_cold_0, T_in_0=T_cold_in_0, P_0=P_cold_out_0, h_out_0=h_liq_sat_0) annotation (Placement(transformation(
+  WaterSteam.BaseClasses.IsoPFlowModel cold_side_heating(Q_0=Q_cold_0, h_in_0=h_cold_in_0, P_0=P_cold_out_0, h_out_0=h_liq_sat_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={20,20})));
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
           extent={{-80,-12},{-60,8}}),  iconTransformation(extent={{-80,-12},{-60,8}})));
-  FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0)) annotation (Placement(transformation(
+  FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
           extent={{60,-12},{80,8}}),  iconTransformation(extent={{60,-12},{80,8}})));
   WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(
           extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
-  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0)) annotation (Placement(transformation(extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
+  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start = h_vap_sat_0)) annotation (Placement(transformation(extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
 
 equation
   // Failure modes
