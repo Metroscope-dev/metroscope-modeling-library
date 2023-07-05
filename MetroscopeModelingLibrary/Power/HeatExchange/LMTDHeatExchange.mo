@@ -4,10 +4,10 @@ model LMTDHeatExchange
   import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
-  parameter Units.Temperature T_hot_in_0 = 273.15 + 200 "Init parameter for Hot temperature at the inlet";
+  parameter Units.Temperature T_hot_in_0 = 273.15 + 230 "Init parameter for Hot temperature at the inlet";
   parameter Units.Temperature T_cold_in_0 = 273.15 + 30 "Init parameter for Cold temperature at the inlet";
-  parameter Units.Temperature T_hot_out_0 = 273.15 + 90 "Init parameter for Hot temperature at the outlet";
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 100 "Init parameter for Cold temperature at the outlet";
+  parameter Units.Temperature T_hot_out_0 = 273.15 + 80 "Init parameter for Hot temperature at the outlet";
+  parameter Units.Temperature T_cold_out_0 = 273.15 + 200 "Init parameter for Cold temperature at the outlet";
 
   /* Exchanger configuration and parameters */
   //parameter String config = "LMTD_monophasic_counter_current"; No need for parameter as long as there is only one configuration !!
@@ -15,7 +15,7 @@ model LMTDHeatExchange
   Inputs.InputHeatExchangeCoefficient Kth(start=1900) "Heat exchange coefficient";
 
   /* Exchanger output */
-  Units.Power W(start=1e4);
+  Units.Power W(start=1e6);
 
   /* Exchanger boundary conditions */
   Inputs.InputTemperature T_hot_in(start=T_hot_in_0) "Temperature, hot side, at the inlet";
@@ -27,13 +27,14 @@ model LMTDHeatExchange
   Units.DifferentialTemperature DT_a(start = T_hot_in_0 - T_cold_out_0);
   Units.DifferentialTemperature DT_b(start = T_hot_out_0 - T_cold_in_0);
 equation
-   // Counter-current configuration. (Also correct for cross-current since the likely correction coefficient can be considered as absorbed by Kth)
-   DT_a = T_hot_in - T_cold_out;
-   DT_b = T_hot_out - T_cold_in;
+  // Counter-current configuration. (Also correct for cross-current since the likely correction coefficient can be considered as absorbed by Kth)
+  DT_a = T_hot_in - T_cold_out;
+  DT_b = T_hot_out - T_cold_in;
 
-   // Log mean equation written in an exponential way
-   0 = - DT_a + DT_b * exp(Kth*S*(DT_a - DT_b)/W);
+  // Log mean equation written in an exponential way
+  0 = - DT_a + DT_b * exp(Kth*S*(DT_a - DT_b)/W);
 
+  assert(W > 0, "Heat exchange is done in the wrong direction", AssertionLevel.warning);  // Ensure heat exchange is done in the correct direction
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(

@@ -50,7 +50,7 @@ equation
   h_is = Medium.specificEnthalpy(state_is);
 
   // Fluid specific enthalpy after the expansion
-  h_out - h_in = xm*eta_is*(h_is - h_in);
+  DH = xm*eta_is*(h_is - h_in);
 
   // Mechanical power produced by the turbine
   W = C_W_out.W;

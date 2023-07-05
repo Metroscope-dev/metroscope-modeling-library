@@ -14,7 +14,7 @@ equation
   h = h_in;
 
   // Conservation equation
-  h_in = h_out;
+  DH = 0;
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end IsoHFlowModel;
