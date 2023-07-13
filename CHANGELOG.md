@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
+## MML - v3.6.0 <!--Make sure to add a link to the PR and issues related to your change-->
+
 ### Added
 
 - Added DT and DH variables in flow model to simplify access to these variables [PR#421](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/421) fixing [#397](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/397)
