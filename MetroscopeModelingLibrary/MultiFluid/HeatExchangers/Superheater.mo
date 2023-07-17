@@ -8,21 +8,13 @@ model Superheater
 
   annotation (Icon(graphics={
           Rectangle(
-          extent={{-70,50},{70,-50}},
+          extent={{-100,60},{100,-60}},
           lineColor={0,0,0},
           fillColor={215,215,215},
-          fillPattern=FillPattern.Solid),
-        Line(
-          points={{30,66},{30,-60},{10,-60},{10,64},{-10,64},{-10,-60},{-30,-60},{-30,66}},
-          color={170,213,255},
+          fillPattern=FillPattern.Solid), Line(
+          points={{40,80},{40,-72},{10,-72},{12,80},{-12,80},{-10,-72},{-40,-72},{-40,80}},
+          color={28,108,200},
           smooth=Smooth.Bezier,
-          thickness=1),
-        Line(
-          points={{28,68},{30,-56},{10,-60},{12,66},{-12,66},{-10,-60},{-30,-56},{-28,68}},
-          color={28,108,200},
-          smooth=Smooth.Bezier),
-        Line(
-          points={{32,66},{32,-60},{8,-62},{10,62},{-10,62},{-8,-62},{-32,-60},{-32,66}},
-          color={28,108,200},
-          smooth=Smooth.Bezier)}));
+          thickness=1,
+          pattern=LinePattern.Dash)}));
 end Superheater;

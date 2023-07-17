@@ -38,11 +38,11 @@ model FuelHeater
   parameter Units.Pressure P_hot_in_0 = 18 *1e5;
   parameter Real h_hot_in_0 = 1e6;
 
-  Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
-  Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
-  WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{30,60},{50,80}}), iconTransformation(extent={{30,60},{50,80}})));
-  WaterSteam.Connectors.Outlet C_hot_out(h_outflow(start=h_hot_in_0)) annotation (Placement(transformation(extent={{-50,-80},{-30,-60}}),
-                                                                                                           iconTransformation(extent={{-50,-80},{-30,-60}})));
+  Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
+  Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
+  WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{30,70},{50,90}}), iconTransformation(extent={{30,70},{50,90}})));
+  WaterSteam.Connectors.Outlet C_hot_out(h_outflow(start=h_hot_in_0)) annotation (Placement(transformation(extent={{-50,-90},{-30,-70}}),
+                                                                                                           iconTransformation(extent={{-50,-90},{-30,-70}})));
   Power.HeatExchange.NTUHeatExchange HX(
     config=HX_config,
     QCp_max_side=QCp_max_side,
@@ -120,19 +120,19 @@ equation
   Cp_hot_max=WaterSteamMedium.specificHeatCapacityCp(hot_side.state_in);// fg inlet Cp
   state_hot_out = WaterSteamMedium.setState_pTX(hot_side.P_in, hot_side.T_in - nominal_hot_side_temperature_drop,hot_side.Xi);
   Cp_hot_min =WaterSteamMedium.specificHeatCapacityCp(state_hot_out);  // fg outlet Cp
-  connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{-52,0},{-70,0}}, color={213,213,0}));
+  connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{-52,0},{-100,0}},color={213,213,0}));
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
-  connect(cold_side.C_out, C_cold_out) annotation (Line(points={{20,0},{70,0}}, color={213,213,0}));
+  connect(cold_side.C_out, C_cold_out) annotation (Line(points={{20,0},{100,0}},color={213,213,0}));
   connect(hot_side.C_in, hot_side_pipe.C_out) annotation (Line(points={{20,28},{40,28},{40,34}}, color={28,108,200}));
-  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(points={{40,54},{40,70}}, color={28,108,200}));
-  connect(hot_side.C_out, C_hot_out) annotation (Line(points={{0,28},{-20,28},{-20,-70},{-40,-70}}, color={28,108,200}));
+  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(points={{40,54},{40,80}}, color={28,108,200}));
+  connect(hot_side.C_out, C_hot_out) annotation (Line(points={{0,28},{-20,28},{-20,-80},{-40,-80}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
-          extent={{-70,50},{70,-50}},
+          extent={{-100,60},{100,-60}},
           lineColor={0,0,0},
           fillColor={226,230,140},
           fillPattern=FillPattern.Solid), Line(
-          points={{40,66},{40,-60},{20,-60},{20,64},{0,64},{0,-60},{-20,-60},{-20,65.6309},{-40,66},{-40,-66}},
+          points={{40,80},{40,-80},{20,-80},{20,80},{0,80},{0,-80},{-20,-80},{-20,80},{-40,80},{-40,-80}},
           color={28,108,200},
           thickness=1,
           smooth=Smooth.Bezier),
