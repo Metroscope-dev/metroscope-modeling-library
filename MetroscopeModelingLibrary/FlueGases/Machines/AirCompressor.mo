@@ -18,7 +18,7 @@ model AirCompressor
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
 
-  Power.Connectors.Inlet C_W_in annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
+  Power.Connectors.Inlet C_W_in annotation (Placement(transformation(extent={{90,50},{110,70}}),  iconTransformation(extent={{90,50},{110,70}})));
 equation
 
   /* Compression ratio */
@@ -38,18 +38,18 @@ equation
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
-        extent={{-100,-100},{100,100}},
+        extent={{-100,-80},{100,80}},
         grid={2,2})),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
-        extent={{-100,-100},{100,100}},
+        extent={{-100,-80},{100,80}},
         grid={2,2}), graphics={Polygon(
-          points={{100,60},{100,40},{100,-40},{100,-60},{80,-66},{-80,-100},{-100,-100},{-100,-80},{-100,77.5391},{-100,100},{-80,100},{80,68},{100,60}},
+          points={{100,26},{100,14},{100,-14},{100,-26},{80,-32},{-80,-60},{-100,-64},{-100,-40},{-100,40},{-100,64},{-80,60},{80,30},{100,26}},
           lineColor={95,95,95},
           lineThickness=0.5,
           smooth=Smooth.Bezier),
                                Polygon(
-          points={{92,58},{92,40},{92,-40},{92,-54},{74,-60},{-72,-90},{-92,-94},{-92,-72},{-92,70},{-92,92},{-72,90},{72,62},{92,58}},
+          points={{92,20},{92,14},{92,-14},{92,-20},{76,-26},{-72,-50},{-92,-54},{-92,-40},{-92,40},{-92,54},{-70,50},{76,24},{92,20}},
           lineThickness=0.5,
           smooth=Smooth.Bezier,
           fillColor={175,175,175},
@@ -57,30 +57,58 @@ equation
           pattern=LinePattern.None,
           lineColor={0,0,0}),
         Line(
-          points={{-62,86},{-62,-86}},
+          points={{-66,38},{-66,-38}},
           color={95,95,95},
           thickness=0.5,
           smooth=Smooth.Bezier),
         Line(
-          points={{-22,78},{-22,-78}},
+          points={{6,26},{6,-26}},
           color={95,95,95},
           thickness=0.5,
           smooth=Smooth.Bezier),
         Line(
-          points={{18,68},{18,-68}},
+          points={{24,22},{24,-22}},
           color={95,95,95},
           thickness=0.5,
           smooth=Smooth.Bezier),
         Line(
-          points={{56,60},{56,-58}},
+          points={{56,19},{56,-19}},
           color={95,95,95},
           thickness=0.5,
           smooth=Smooth.Bezier),
+        Line(
+          points={{-30,32},{-30,-32}},
+          color={95,95,95},
+          thickness=0.5,
+          smooth=Smooth.Bezier),
+        Polygon(
+          points={{-71,-2.5},{-65,-2.5},{-45,-2.5},{0,-7.5},{62,-7.5},{72,-7.5},{72,0.5},{72,0.5},{72,6.5},{63,7.5},{0,6.5},{-45,1.5},{-65,1.5},{-71,1.5},{-71,-0.5},{-71,-0.5},{-71,-2.5}},
+          lineColor={0,0,0},
+          pattern=LinePattern.None,
+          lineThickness=0.5,
+          smooth=Smooth.Bezier,
+          fillColor={95,95,95},
+          fillPattern=FillPattern.Solid),
         Rectangle(
-          extent={{74,2},{-76,-2}},
+          extent={{-212,2},{-362,-2}},
           lineThickness=0.5,
           fillColor={95,95,95},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None,
-          lineColor={95,95,95})}));
+          lineColor={95,95,95}),
+        Line(
+          points={{40,20.5},{40,-20.5}},
+          color={95,95,95},
+          thickness=0.5,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{-12,29.25},{-12,-29.25}},
+          color={95,95,95},
+          thickness=0.5,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{-48,35.5},{-48,-35.5}},
+          color={95,95,95},
+          thickness=0.5,
+          smooth=Smooth.Bezier)}));
 end AirCompressor;
