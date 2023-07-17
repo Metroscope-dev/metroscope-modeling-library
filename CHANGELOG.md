@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
 
+### Changed
+
+- Fixed all icons issues in [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
+
+### Added
+
+- Tank component [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
+
 ## MML - v3.6.0 <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### Added
