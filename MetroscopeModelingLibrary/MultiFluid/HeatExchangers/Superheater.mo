@@ -8,11 +8,11 @@ model Superheater
 
   annotation (Icon(graphics={
           Rectangle(
-          extent={{-70,50},{70,-50}},
+          extent={{-100,60},{100,-60}},
           lineColor={0,0,0},
           fillColor={215,215,215},
           fillPattern=FillPattern.Solid), Line(
-          points={{30,64},{30,-62},{10,-62},{10,62},{-10,62},{-10,-62},{-30,-62},{-30,64}},
+          points={{40,80},{40,-72},{10,-72},{12,80},{-12,80},{-10,-72},{-40,-72},{-40,80}},
           color={28,108,200},
           smooth=Smooth.Bezier,
           thickness=1,
