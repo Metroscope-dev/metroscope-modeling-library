@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Utilities.Icons;
 partial package HeatExchangePackage
   extends Icons.PackageIcon;
+
    annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(
           points={{-66,-70},{-48,-70},{-48,-64},{-50,-52},{-54,-42},{-58,-32},{-60,
