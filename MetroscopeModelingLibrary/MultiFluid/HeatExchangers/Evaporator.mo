@@ -149,36 +149,36 @@ equation
           fillColor={215,215,215},
           fillPattern=FillPattern.Solid),
         Line(
-          points={{32,64},{32,-2},{2,-52},{-30,0},{-30,64}},
+          points={{36,64},{36,8},{20,-28},{4,-40}},
           color={28,108,200},
           thickness=1,
           smooth=Smooth.Bezier),
         Line(
-          points={{28,64},{28,-2},{-2,-52},{-34,0},{-34,64}},
+          points={{-24,60},{-24,18.2871},{-18,-6},{-12,-20},{-2.14648,-33.7949},{6,-40}},
+          color={28,108,200},
+          thickness=1,
+          pattern=LinePattern.Dot,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{-30,64},{-30,18.2871},{-24,-6},{-18,-20},{-8.1465,-33.7949},{0,-40}},
+          color={28,108,200},
+          thickness=1,
+          pattern=LinePattern.Dot,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{-36,60},{-36,18.2871},{-30,-6},{-24,-20},{-14.1465,-33.795},{-6,-40}},
+          color={28,108,200},
+          thickness=1,
+          pattern=LinePattern.Dot,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{30,64},{30,8},{14,-28},{-2,-40}},
           color={28,108,200},
           thickness=1,
           smooth=Smooth.Bezier),
         Line(
-          points={{36,64},{36,-2},{6,-52},{-26,0},{-26,64}},
+          points={{24,64},{24,8},{8,-28},{-8,-40}},
           color={28,108,200},
           thickness=1,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{-26,60},{-26,18.2871},{-20,-6},{-14,-20},{-4.14648,-33.7949},{4,-40}},
-          color={170,213,255},
-          thickness=1,
-          pattern=LinePattern.Dot,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{-30,60},{-30,18.2871},{-24,-6},{-18,-20},{-8.1465,-33.7949},{0,-40}},
-          color={170,213,255},
-          thickness=1,
-          pattern=LinePattern.Dot,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{-34,60},{-34,18.2871},{-28,-6},{-22,-20},{-12.1465,-33.795},{-4,-40}},
-          color={170,213,255},
-          thickness=1,
-          pattern=LinePattern.Dot,
           smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Evaporator;
