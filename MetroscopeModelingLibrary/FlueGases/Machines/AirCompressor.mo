@@ -89,13 +89,6 @@ equation
           smooth=Smooth.Bezier,
           fillColor={95,95,95},
           fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{-212,2},{-362,-2}},
-          lineThickness=0.5,
-          fillColor={95,95,95},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          lineColor={95,95,95}),
         Line(
           points={{40,20.5},{40,-20.5}},
           color={95,95,95},
