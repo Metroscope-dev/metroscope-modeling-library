@@ -319,6 +319,13 @@ equation
           pattern=LinePattern.None,
           lineColor={0,0,0}),
         Polygon(
+          points={{4,-26.75},{-4,-26.75},{-4,7.25},{-8,7.25},{0,22.75},{8,7.25},{4,7.25},{4,-26.75}},
+          lineThickness=1,
+          fillColor={0,128,255},
+          fillPattern=FillPattern.Solid,
+          pattern=LinePattern.None,
+          lineColor={0,0,0}),
+        Polygon(
           points={{-108,40},{-116,42},{-116,-46},{-108,-46},{-98,-46},{16,-46},{
               124,-46},{126,40},{12,40},{-100,40},{-108,40}},
           lineColor={238,46,47},
