@@ -357,22 +357,42 @@ package Icons
               extent={{-100,56},{100,-56}},
               textColor={0,0,0},
               textString="DP"),
-            Line(
-              points={{-100,120},{100,120}},
-              color={0,0,0},
-              thickness=1),
-            Polygon(
-              points={{80,106},{100,120},{80,120},{80,106}},
+            Ellipse(
+              extent={{-120,140},{-80,100}},
               lineColor={0,0,0},
               lineThickness=1,
-              fillColor={0,0,0},
+              fillColor={215,215,215},
+              fillPattern=FillPattern.Solid),
+            Ellipse(
+              extent={{80,140},{120,100}},
+              lineColor={0,0,0},
+              lineThickness=1,
+              fillColor={215,215,215},
               fillPattern=FillPattern.Solid),
             Polygon(
-              points={{80,134},{100,120},{80,120},{80,134}},
+              points={{-2,14},{-2,-14},{2,-14},{2,14},{-2,14}},
               lineColor={0,0,0},
               lineThickness=1,
               fillColor={0,0,0},
-              fillPattern=FillPattern.Solid)}));
+              fillPattern=FillPattern.Solid,
+              origin={-100,120},
+              rotation=90),
+            Polygon(
+              points={{-2,14},{-2,-14},{2,-14},{2,14},{-2,14}},
+              lineColor={0,0,0},
+              lineThickness=1,
+              fillColor={0,0,0},
+              fillPattern=FillPattern.Solid,
+              origin={-100,120},
+              rotation=180),
+            Polygon(
+              points={{-2,14},{-2,-14},{2,-14},{2,14},{-2,14}},
+              lineColor={0,0,0},
+              lineThickness=1,
+              fillColor={0,0,0},
+              fillPattern=FillPattern.Solid,
+              origin={100,120},
+              rotation=90)}));
     end DeltaPressureIcon;
 
     partial record FlowIcon
