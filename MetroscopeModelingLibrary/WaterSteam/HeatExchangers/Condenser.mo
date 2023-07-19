@@ -50,12 +50,12 @@ model Condenser
   parameter Units.SpecificEnthalpy h_hot_in_0 = 2e6;
   parameter Units.SpecificEnthalpy h_liq_sat_0 = Water.bubbleEnthalpy(Water.setSat_p(Psat_0));
   parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
-  parameter Units.DifferentialPressure water_height_DP_0 = 0.5e5;
+  parameter Units.DifferentialPressure water_height_DP_0 = 0.2e5;
 
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=Psat_0, nominal=Psat_0)) annotation (Placement(transformation(extent={{-10,92},{10,112}}), iconTransformation(extent={{-10,92},{10,112}})));
-  Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=Psat_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=Psat_0+water_height_DP_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
   Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0))
                                                    annotation (Placement(transformation(extent={{88,-10},{108,10}}),iconTransformation(extent={{88,-10},{108,10}})));
 
@@ -81,7 +81,7 @@ model Condenser
   Pipes.Pipe water_height_pipe(
     Q_0=Q_hot_0,
     P_in_0=Psat_0,
-    P_out_0=Psat_0,
+    P_out_0=Psat_0+water_height_DP_0,
     T_0=Tsat_0,
     h_0=h_liq_sat_0,
     h(start=2.46e5)) annotation (Placement(transformation(
