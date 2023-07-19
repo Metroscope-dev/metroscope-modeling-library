@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] <!--Make sure to add a link to the PR and issues related to your change-->
+## [Unreleased]
+
+### Added <!--Make sure to add a link to the PR and issues related to your change-->
+
+### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### Removed <!--Make sure to add a link to the PR and issues related to your change-->
+
+
+## MML - v3.6.0
 
 ### Changed
 
@@ -15,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tank component [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
 
-## MML - v3.6.0 <!--Make sure to add a link to the PR and issues related to your change-->
+## MML - v3.6.0
 
 ### Added
 
