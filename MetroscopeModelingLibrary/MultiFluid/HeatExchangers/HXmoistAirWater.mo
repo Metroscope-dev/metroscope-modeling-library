@@ -55,10 +55,10 @@ model HXmoistAirWater
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-16,-24})));
-  MoistAir.Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
-  MoistAir.Connectors.Outlet C_cold_out(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
-  WaterSteam.Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,60},{10,80}}), iconTransformation(extent={{-10,60},{10,80}})));
-  WaterSteam.Connectors.Outlet C_hot_out(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,-80},{10,-60}}), iconTransformation(extent={{-10,-80},{10,-60}})));
+  MoistAir.Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
+  MoistAir.Connectors.Outlet C_cold_out(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{88,-10},{108,10}}),iconTransformation(extent={{90,-10},{110,10}})));
+  WaterSteam.Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
+  WaterSteam.Connectors.Outlet C_hot_out(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
 equation
       // Definitions
   Q_cold = cold_side.Q;
@@ -88,19 +88,19 @@ equation
   HX.T_hot_in = T_hot_in;
   HX.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side.state_in);
   HX.Cp_cold = MoistAirMedium.specificHeatCapacityCp(cold_side.state_in);
-  connect(C_hot_in, hot_side.C_in) annotation (Line(points={{0,70},{0,48},{16,48},{16,34},{12,34}}, color={28,108,200}));
+  connect(C_hot_in, hot_side.C_in) annotation (Line(points={{0,80},{0,48},{16,48},{16,34},{12,34}}, color={28,108,200}));
   connect(hot_side.C_out, cold_side_pipe.C_in) annotation (Line(points={{-8,34},{-16,34},{-16,-14}}, color={28,108,200}));
-  connect(cold_side_pipe.C_out, C_hot_out) annotation (Line(points={{-16,-34},{-16,-70},{0,-70}}, color={28,108,200}));
-  connect(C_cold_in, hot_side_pipe.C_in) annotation (Line(points={{-70,0},{-54,0},{-54,-8},{-50,-8}}, color={85,170,255}));
+  connect(cold_side_pipe.C_out, C_hot_out) annotation (Line(points={{-16,-34},{-16,-80},{0,-80}}, color={28,108,200}));
+  connect(C_cold_in, hot_side_pipe.C_in) annotation (Line(points={{-100,0},{-54,0},{-54,-8},{-50,-8}},color={85,170,255}));
   connect(hot_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{-30,-8},{-19,-8},{-19,-8},{-8,-8}}, color={85,170,255}));
-  connect(cold_side.C_out, C_cold_out) annotation (Line(points={{12,-8},{54,-8},{54,0},{70,0}}, color={85,170,255}));
+  connect(cold_side.C_out, C_cold_out) annotation (Line(points={{12,-8},{54,-8},{54,0},{98,0}}, color={85,170,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
-          extent={{-70,72},{70,-70}},
+          extent={{-100,80},{100,-80}},
           lineColor={0,0,0},
           fillColor={170,213,255},
           fillPattern=FillPattern.Solid), Line(
-          points={{68,4},{40,-60},{20,-60},{44,40},{24,54},{-22,-52},{-40,-38},{-20,65.631},{-40,66},{-62,4}},
+          points={{78,8},{40,-60},{20,-60},{44,40},{24,54},{-22,-52},{-40,-38},{-20,65.631},{-40,66},{-80,-4}},
           color={28,108,200},
           thickness=1,
           smooth=Smooth.Bezier,

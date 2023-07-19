@@ -145,9 +145,9 @@ equation
           fillColor={244,125,35},
           fillPattern=FillPattern.Solid),
         Polygon(
-          points={{-32,62},{34,46},{-10,30},{46,18},{-6,0},{36,-16},{-10,-32},{42,
-              -44},{-32,-60},{-32,62}},
-          lineColor={0,0,0},
+          points={{-32,62},{-18.916,58.8281},{34,46},{-10,30},{46,18},{-6,0},{36,-16},{-10,-32},{42,-44},{-20.4375,-57.5},{-32,-60},{-32,-46},{-32,45.5586},{-32,62}},
+          lineColor={158,0,0},
           fillColor={255,0,0},
-          fillPattern=FillPattern.CrossDiag)}));
+          fillPattern=FillPattern.Solid,
+          smooth=Smooth.Bezier)}));
 end CombustionChamber;

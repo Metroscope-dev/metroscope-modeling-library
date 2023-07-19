@@ -82,12 +82,12 @@ model Evaporator
         rotation=0,
         origin={20,20})));
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
-          extent={{-80,-12},{-60,8}}),  iconTransformation(extent={{-80,-12},{-60,8}})));
+          extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
   FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
-          extent={{60,-12},{80,8}}),  iconTransformation(extent={{60,-12},{80,8}})));
+          extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
   WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(
-          extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
-  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start = h_vap_sat_0)) annotation (Placement(transformation(extent={{-40,60},{-20,80}}), iconTransformation(extent={{-40,60},{-20,80}})));
+          extent={{30,70},{50,90}}),   iconTransformation(extent={{30,70},{50,90}})));
+  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start = h_vap_sat_0)) annotation (Placement(transformation(extent={{-50,70},{-30,90}}), iconTransformation(extent={{-50,70},{-30,90}})));
 
 equation
   // Failure modes
@@ -143,51 +143,51 @@ equation
   HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
   connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
-  connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{30,70},{30,58},{42,58},{42,44}},
+  connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{40,80},{40,58},{42,58},{42,44}},
                                                                                      color={28,108,200}));
-  connect(hot_side_pipe.C_in,C_hot_in)  annotation (Line(points={{-58,-20},{-70,-20},{-70,-2}}, color={95,95,95}));
+  connect(hot_side_pipe.C_in,C_hot_in)  annotation (Line(points={{-58,-20},{-100,-20},{-100,0}},color={95,95,95}));
   connect(cold_side_vaporising.C_in,cold_side_heating. C_out) annotation (Line(points={{-10,20},{10,20}}, color={28,108,200}));
   connect(cold_side_pipe.C_out,cold_side_heating. C_in) annotation (Line(points={{42,24},{42,20},{30,20}}, color={28,108,200}));
   connect(hot_side_vaporising.C_out,hot_side_heating. C_in) annotation (Line(points={{-10,-20},{10,-20}}, color={95,95,95}));
-  connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,-20},{70,-20},{70,-2}}, color={95,95,95}));
-  connect(cold_side_vaporising.C_out, C_cold_out) annotation (Line(points={{-30,20},{-30,20},{-30,70}}, color={28,108,200}));
+  connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,-20},{100,-20},{100,0}},color={95,95,95}));
+  connect(cold_side_vaporising.C_out, C_cold_out) annotation (Line(points={{-30,20},{-30,80},{-40,80}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
-          extent={{-68,50},{70,-50}},
+          extent={{-100,60},{100,-60}},
           lineColor={0,0,0},
           fillColor={215,215,215},
           fillPattern=FillPattern.Solid),
         Line(
-          points={{32,64},{32,-2},{2,-52},{-30,0},{-30,64}},
+          points={{-44,80},{-44,48},{-42,18},{-38,-8},{-24,-32},{-6,-46}},
+          color={28,108,200},
+          thickness=1,
+          pattern=LinePattern.Dash,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{-40,80},{-40,48},{-38,18},{-34,-8},{-20,-32},{-2,-46}},
+          color={28,108,200},
+          thickness=1,
+          pattern=LinePattern.Dash,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{-36,80},{-36,48},{-34,18},{-30,-8},{-16,-32},{2,-46}},
+          color={28,108,200},
+          thickness=1,
+          pattern=LinePattern.Dash,
+          smooth=Smooth.Bezier),
+        Line(
+          points={{36,82},{36,50},{34,20},{30,-6},{16,-30},{-6,-46}},
           color={28,108,200},
           thickness=1,
           smooth=Smooth.Bezier),
         Line(
-          points={{28,64},{28,-2},{-2,-52},{-34,0},{-34,64}},
+          points={{40,82},{40,50},{38,20},{34,-6},{20,-30},{-2,-46}},
           color={28,108,200},
           thickness=1,
           smooth=Smooth.Bezier),
         Line(
-          points={{36,64},{36,-2},{6,-52},{-26,0},{-26,64}},
+          points={{44,82},{44,50},{42,20},{38,-6},{24,-30},{2,-46}},
           color={28,108,200},
           thickness=1,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{-26,60},{-26,18.2871},{-20,-6},{-14,-20},{-4.14648,-33.7949},{4,-40}},
-          color={170,213,255},
-          thickness=1,
-          pattern=LinePattern.Dot,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{-30,60},{-30,18.2871},{-24,-6},{-18,-20},{-8.1465,-33.7949},{0,-40}},
-          color={170,213,255},
-          thickness=1,
-          pattern=LinePattern.Dot,
-          smooth=Smooth.Bezier),
-        Line(
-          points={{-34,60},{-34,18.2871},{-28,-6},{-22,-20},{-12.1465,-33.795},{-4,-40}},
-          color={170,213,255},
-          thickness=1,
-          pattern=LinePattern.Dot,
           smooth=Smooth.Bezier)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Evaporator;

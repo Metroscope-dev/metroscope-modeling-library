@@ -60,26 +60,25 @@ model AirCooledCondenser_with_subcooling
 
   MetroscopeModelingLibrary.MoistAir.Connectors.Inlet
                             C_cold_in(Q(start=Q_cold_0),P(start=P_cold_in_0)) annotation (
-      Placement(transformation(extent={{-100,-10},{-80,10}}),iconTransformation(
-          extent={{-98,-10},{-78,10}})));
+      Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(
+          extent={{-110,-10},{-90,10}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in(Q(start=
           Q_hot_0), P(start=Psat_0, nominal=Psat_0)) annotation (Placement(
         transformation(extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,90}),                              iconTransformation(extent={{-8,80},
-            {12,100}})));
+        origin={0,90}),                              iconTransformation(extent={{-10,90},{10,110}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out(Q(start=
           Q_cold_0), P(start=Psat_0)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={0,-90}),iconTransformation(extent={{-10,-80},{10,-60}})));
+        origin={0,-90}),iconTransformation(extent={{-10,-90},{10,-70}})));
   MetroscopeModelingLibrary.MoistAir.Connectors.Outlet
                              C_cold_out(Q(start=-Q_cold_0), P(start=
           P_cold_out_0)) annotation (Placement(transformation(extent={{-10,-10},
             {10,10}},
         rotation=270,
         origin={90,0}),
-                      iconTransformation(extent={{80,-10},{100,10}})));
+                      iconTransformation(extent={{90,-10},{110,10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPFlowModel hot_side_condensing(
     T_in_0=Tsat_0,
@@ -215,7 +214,7 @@ equation
   connect(C_hot_out, C_hot_out)
     annotation (Line(points={{0,-90},{0,-90}},
                                              color={28,108,200}));
-  connect(C_cold_in, C_cold_in) annotation (Line(points={{-90,0},{-90,0}},
+  connect(C_cold_in, C_cold_in) annotation (Line(points={{-100,0},{-100,0}},
                                   color={85,170,255}));
   connect(C_hot_in, hot_side_pipe.C_in)
     annotation (Line(points={{0,90},{-50,90}},          color={28,108,200}));
@@ -235,7 +234,7 @@ equation
   connect(cold_side_subcooling.C_out, final_mix_cold.C_in) annotation (Line(points={{42,-14},{46,-14},{46,0},{56,0}}, color={85,170,255}));
   connect(cold_side_condensing.C_out, final_mix_cold.C_in) annotation (Line(points={{13.5,0},{56,0}},color={85,170,255}));
   connect(cold_side_subcooling.C_in, pressure_cut.C_out) annotation (Line(points={{18,-14},{11,-14}}, color={85,170,255}));
-  connect(C_cold_in, cold_side_condensing.C_in) annotation (Line(points={{-90,0},{-13.5,0}}, color={85,170,255}));
+  connect(C_cold_in, cold_side_condensing.C_in) annotation (Line(points={{-100,0},{-13.5,0}},color={85,170,255}));
   connect(pressure_cut.C_in, cold_side_condensing.C_in) annotation (Line(points={{-11,-14},{-36,-14},{-36,0},{-13.5,0}}, color={85,170,255}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},
             {100,100}}),                                        graphics={
@@ -470,6 +469,20 @@ equation
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}),                      Diagram(
+          fillPattern=FillPattern.Solid),
+        Polygon(
+          points={{-88,-24},{-74,-38},{-46,-4},{-72,-4},{-88,-24}},
+          pattern=LinePattern.None,
+          lineThickness=1,
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid,
+          lineColor={0,0,0}),
+        Polygon(
+          points={{88,-24},{74,-38},{46,-4},{72,-4},{88,-24}},
+          pattern=LinePattern.None,
+          lineThickness=1,
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid,
+          lineColor={0,0,0})}),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
 end AirCooledCondenser_with_subcooling;
