@@ -3410,5 +3410,7 @@ h(start=1125606.4),
 p(start=3100000.0),
 phase(start=0))),
 turbines_eta_is(start=0.53308195));
-  annotation (experiment(__Dymola_fixedstepsize=0.1, __Dymola_Algorithm="Euler"));
+  annotation (experiment(__Dymola_fixedstepsize=0.1, __Dymola_Algorithm="Euler"),
+    Diagram(coordinateSystem(extent={{-220,-160},{520,200}})),
+    Icon(coordinateSystem(extent={{-220,-160},{520,200}})));
 end MetroscopiaNPP_internal_ramp_direct_withStartValues;

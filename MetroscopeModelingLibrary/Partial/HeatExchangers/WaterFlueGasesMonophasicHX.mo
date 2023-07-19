@@ -55,7 +55,7 @@ partial model WaterFlueGasesMonophasicHX
   FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
           extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
   WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(
-          extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
+          extent={{30,70},{50,90}}),   iconTransformation(extent={{30,70},{50,90}})));
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start= h_cold_out_0)) annotation (Placement(transformation(
           extent={{-50,72},{-30,92}}), iconTransformation(extent={{-50,70},{-30,90}})));
   FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, h_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
@@ -147,7 +147,7 @@ equation
                                                                                                       // fg outlet Cp
 
   connect(cold_side.C_in, cold_side_pipe.C_out) annotation (Line(points={{16,24},{30,24},{30,32}}, color={28,108,200}));
-  connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{30,52},{30,66},{30,70},{30,70}},
+  connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{30,52},{30,66},{30,80},{40,80}},
                                                                                      color={28,108,200}));
   connect(cold_side.C_out, C_cold_out) annotation (Line(points={{-4,24},{-18,24},{-18,22},{-40,22},{-40,82}}, color={28,108,200}));
   connect(hot_side.C_in, hot_side_pipe.C_out) annotation (Line(points={{-6,-6},{-22,-6},{-22,0},{-30,0}}, color={95,95,95}));

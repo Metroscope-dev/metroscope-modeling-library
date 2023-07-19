@@ -322,6 +322,11 @@ model MetroscopiaNPP_internal_ramp_direct
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-142,-70})));
+    Power.BoundaryConditions.Source                           HP_pump_Wm_source1(C_out(W(start=-30217902.0)), W_out(start=-30217902.0))
+                                                                                annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-208,-70})));
 equation
 
   // Ramps
@@ -584,5 +589,6 @@ equation
   connect(Q_feedwater_sensor.C_out, loopBreaker.C_in) annotation (Line(points={{-118,-70},{-132,-70}}, color={28,108,200}));
   connect(loopBreaker.C_out, steam_generator.feedwater_inlet) annotation (Line(points={{-152,-70},{-159,-70}}, color={28,108,200}));
   connect(Q_purge_sensor.C_out, sink.C_in) annotation (Line(points={{-170,-139},{-170,-145}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-200,-160},{520,200}})), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-200,-160},{520,200}})));
+  connect(steam_generator.C_thermal_power, HP_pump_Wm_source1.C_out) annotation (Line(points={{-181,-70},{-203.2,-70}}, color={244,125,35}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-220,-160},{520,200}})), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-220,-160},{520,200}})));
 end MetroscopiaNPP_internal_ramp_direct;
