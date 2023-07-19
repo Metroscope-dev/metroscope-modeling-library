@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Evaporator
-  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
-   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+    extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+    package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
     import MetroscopeModelingLibrary.Utilities.Units;
     import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
@@ -26,10 +26,10 @@ model Evaporator
     // Definitions
     Units.MassFlowRate Q_cold(start=Q_cold_0);
     Units.MassFlowRate Q_hot(start=Q_hot_0);
-    Units.Temperature T_cold_in;
-    Units.Temperature T_hot_in;
-    Units.Temperature T_cold_out;
-    Units.Temperature T_hot_out;
+    Units.Temperature T_cold_in(start=T_cold_in_0);
+    Units.Temperature T_hot_in(start=T_hot_in_0);
+    Units.Temperature T_cold_out(start=T_cold_out_0);
+    Units.Temperature T_hot_out(start=T_hot_out_0);
 
     // Failure modes
     parameter Boolean faulty = false;
