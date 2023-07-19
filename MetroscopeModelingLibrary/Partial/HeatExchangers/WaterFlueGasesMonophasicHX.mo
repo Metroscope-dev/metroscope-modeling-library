@@ -7,7 +7,6 @@ partial model WaterFlueGasesMonophasicHX
   Inputs.InputArea S;
   Inputs.InputHeatExchangeCoefficient Kth;
   Inputs.InputFrictionCoefficient Kfr_cold;
-  Inputs.InputFrictionCoefficient Kfr_hot;
   Inputs.InputTemperature nominal_cold_side_temperature_rise; // water reference temperature rise based on H&MB diagramm values
   Inputs.InputTemperature nominal_hot_side_temperature_drop; // flue gases reference temperature rise based on H&MB diagramm values
 
@@ -55,10 +54,10 @@ partial model WaterFlueGasesMonophasicHX
   FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
           extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
   WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(
-          extent={{20,60},{40,80}}),   iconTransformation(extent={{20,60},{40,80}})));
+          extent={{30,70},{50,90}}),   iconTransformation(extent={{30,70},{50,90}})));
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start= h_cold_out_0)) annotation (Placement(transformation(
-          extent={{-50,72},{-30,92}}), iconTransformation(extent={{-50,70},{-30,90}}))
-  FlueGases.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, h_in_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
+          extent={{-50,72},{-30,92}}), iconTransformation(extent={{-50,70},{-30,90}})),
+                                                  h_in_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0);
   Power.HeatExchange.NTUHeatExchange HX(config=config, mixed_fluid=mixed_fluid, QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
@@ -100,7 +99,7 @@ equation
   Q_hot =hot_side.Q;
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out = cold_side.T_out;
-  T_hot_in = hot_side_pipe.T_in;
+  T_hot_in = hot_side.T_in;
   T_hot_out = hot_side.T_out;
   cold_side.W = W;
 
@@ -110,8 +109,6 @@ equation
   // Pressure losses
   cold_side_pipe.delta_z=0;
   cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z=0;
-  hot_side_pipe.Kfr = Kfr_hot;
 
   // Power Exchange
   HX.W = W;
@@ -150,13 +147,11 @@ equation
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{30,52},{30,66},{30,80},{40,80}},
                                                                                      color={28,108,200}));
   connect(cold_side.C_out, C_cold_out) annotation (Line(points={{-4,24},{-18,24},{-18,22},{-40,22},{-40,82}}, color={28,108,200}));
-  connect(hot_side.C_in, hot_side_pipe.C_out) annotation (Line(points={{-6,-6},{-22,-6},{-22,0},{-30,0}}, color={95,95,95}));
-  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(points={{-50,0},{-100,0}},color={95,95,95}));
   connect(hot_side.C_out, C_hot_out) annotation (Line(points={{14,-6},{100,-6},{100,0}},
                                                                                        color={95,95,95}));
-  connect(C_hot_out, C_hot_out) annotation (Line(points={{100,0},{62,0},{62,-6},{100,-6},{100,0}},
-                                                                                                color={95,95,95}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  connect(C_hot_in, hot_side.C_in) annotation (Line(points={{-100,0},{-40,0},{-40,-6},{-6,-6}}, color={95,95,95}));
+                                                                                                             annotation (Placement(transformation(extent={{-50,-10},{-30,10}})),
+              Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-100,60},{100,-60}},
           lineColor={0,0,0},
