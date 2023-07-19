@@ -7,7 +7,7 @@ model Evaporator
 
     // Pressure Losses
     Inputs.InputFrictionCoefficient Kfr_cold;
-    Inputs.InputFrictionCoefficient Kfr_hot;
+    Inputs.InputFrictionCoefficient Kfr_hot(start=0);
     Inputs.InputArea S;
 
     // Heating
@@ -19,9 +19,9 @@ model Evaporator
 
     Units.Power W_vap;
     Units.MassFraction x_steam_out(start=1); // Steam mass fraction at water outlet
-    Units.SpecificEnthalpy h_vap_sat;
-    Units.SpecificEnthalpy h_liq_sat;
-    Units.Temperature Tsat;
+    Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0);
+    Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0);
+    Units.Temperature Tsat(start=T_cold_out_0);
 
     // Definitions
     Units.MassFlowRate Q_cold(start=Q_cold_0);
