@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
-model MetroscopiaCCGT_causality_direct_withStartValues
-  extends MetroscopiaCCGT_causality_direct(
+model MetroscopiaCCGT_direct_withStartValues
+  extends MetroscopiaCCGT_direct(
     AirFilter(
       C_in(
         P(start=100000.0),
@@ -1812,4 +1812,4 @@ model MetroscopiaCCGT_causality_direct_withStartValues
       state(T(start=920.1309))),
     turbine_compression_rate(start=15.363636));
   annotation (experiment(__Dymola_fixedstepsize=0.1, __Dymola_Algorithm="Euler"));
-end MetroscopiaCCGT_causality_direct_withStartValues;
+end MetroscopiaCCGT_direct_withStartValues;

@@ -4,7 +4,8 @@ model ControlValve
   extends Partial.Pipes.ControlValve(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
-    redeclare package Medium = FlueGasesMedium) annotation(IconMap(primitivesVisible=false));
+    redeclare package Medium = FlueGasesMedium,
+    Q_0 = 500, rho_in(start=1), rho_out(start=1), rho(start=1)) annotation(IconMap(primitivesVisible=false));
   annotation (Icon(graphics={
         Polygon(
           points={{40,102},{-40,102},{-40,118},{-38,136},{-32,146},{-20,156},{0,162},{20,156},{32,146},{38,134},{40,116},{40,102}},

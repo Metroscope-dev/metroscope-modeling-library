@@ -231,7 +231,7 @@ model MetroscopiaNPP_direct
     T_cold_out_0=298.15,
     h_cold_in_0=63e3,
     h_cold_out_0=105e3,
-    h_hot_in_0=2.4e6)                                                                      annotation (Placement(transformation(extent={{377,48.2222},{408,74}})));
+    h_hot_in_0=2.4e6)                               annotation (Placement(transformation(extent={{377,48.2222},{408,74}})));
     MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,

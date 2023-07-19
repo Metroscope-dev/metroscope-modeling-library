@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Economiser
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   extends Partial.HeatExchangers.WaterFlueGasesMonophasicHX(
-                                                    QCp_max_side = "hot",T_cold_in_0=76 + 273.15,P_cold_in_0 = 18 *1e5,Q_cold_0=178)
+                                                    QCp_max_side = "hot")
  annotation(IconMap(primitivesVisible=false));
 
   annotation (Icon(graphics={

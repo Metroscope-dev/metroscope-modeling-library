@@ -1,6 +1,6 @@
 ﻿within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_calibration_diagram
-  extends MetroscopiaCCGT_causality_reverse;
+  extends MetroscopiaCCGT_reverse;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},
             {260,280}})),                                     Diagram(
         graphics={

@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
-  extends MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT.MetroscopiaCCGT_causality_direct_withStartValues(
+  extends MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT.MetroscopiaCCGT_direct_withStartValues(
     condenser(faulty=true),
     AirFilter(faulty=true),
     HPsuperheater1(faulty=true),
