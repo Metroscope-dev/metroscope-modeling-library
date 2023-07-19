@@ -2,50 +2,48 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ## [Unreleased]
 
-### Added <!--Make sure to add a link to the PR and issues related to your change-->
+### :sparkles: Added <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+### :bug: Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+### :boom: Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Removed <!--Make sure to add a link to the PR and issues related to your change-->
+### :fire: Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
 ## MML - v3.6.0
 
-### Changed
+### :boom: Changed
 
 - Fixed all icons issues in [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
 
-### Added
+### :sparkles: Added
 
 - Tank component [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
 
 ## MML - v3.6.0
 
-### Added
+### :sparkles: Added
 
 - Added DT and DH variables in flow model to simplify access to these variables [PR#421](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/421) fixing [#397](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/397)
 - Added `assert` statements in heat exchangers power components [PR#420](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/420), fixing [#417](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/417)
 
-### Changed
+### :boom: Changed
 - Steam generators now have power connectors for thermal power and embedded feedwater mass flow rate bias [PR#418](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/418)
-
-### Fixed
 
 ## MML-v3.5.0
 
-### Added
+### :sparkles: Added
 - SteamTurbineWithNozzle component to replace StodolaTurbine when there is a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - PressureCut component with the medium MoistAir [PR#398](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/398/commits)
 - AirCooledCondenser_with_subcooling component adding subcooling to the ACC model [PR#394](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/394)
 
-### Changed
+### :boom: Changed
 - Renamed parameter `rhmin` of pumps in `rh_min`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - Renamed parameter `Cvmax` of pumps in `Cv_max`[PR#414](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - Deleted compressor power inlet in gas turbine model and renamed `Wmech` into `W_shaft` [PR#409](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/409)
@@ -56,26 +54,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Stodola turbine has been renamed SteamTurbine and does not have a nozzle [PR#396](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/396)
 - `kPa` and `MPa` units are splitted between gauge and absolute in pressure sensor [PR#391](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/391)
 
-### Fixed
-
 ## MML-v3.4.1
 
-### Added
-
-### Changed
+### :boom: Changed
 - Sensors now contain a flow model to ease convergence [PR#383](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/383)
 
-### Fixed
+### :bug: Fixed
 - Pipes now can have a unique flow direction according to the pressure difference direction [PR#385](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/385)
 
 ## MML-v3.4.0
 
-### Added
+### :sparkles: Added
 
 - Added a version number in root `package.mo`, to allow appropriate versioning in models, using `uses(MetroscopeModelingLibrary(version="3.1.0"))` annotation. [PR#364](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/364)
 - Added `MPa` and `kPa` pressure units in pressure sensors [PR#362](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/362), fixing [#361](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/361)
 
-### Changed
+### :boom: Changed
 
 - Updated leak model so they use inheritance [PR#373](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/373)
 - Abstract sensors connectors are renamed `C_in` and `C_out`, breaking change for topological models [PR#372](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/372)
@@ -83,64 +77,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR#368](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/368) the `fouling` fault in `Pipe` and `closed` fault in `SlideVale` are changed to percentage. The values given to those faults should be a percentage (%) and not a value less than 1 as before. Therefore, it is a breaking change for faulty models in prevous versions.
 - [PR#377](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/377) the `DP` in the `CombustionChamber` model is replaced by a `Kfr` by adding a pipe. This is a breaking change for models using previous versions.
 
-### Fixed
+### :bug: Fixed
 - [PR#376](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/376) fixed the outlet temperatures of the evaporator.
 
 ## MML-v3.3.1
-### Added
+### :sparkles: Added
 
 - [PR#355](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/355) added `PressureCut` and `Leak` components for the flue gases medium.
 - [PR#356](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/356) Added an  `valve_closed` in the `SlideValve` component to model slight decrease in the valve opening.
 
 ## MML-v3.3.0
 
-### Added
-
-### Changed
-
-### Fixed
+### :bug: Fixed
 - Fix start values of outlet flows in heater with internal leaks [PR#349](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/349)
 - [PR#351](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/351) Correction of the sign of the nominal temperature drop in the `hrsg_monophasic_HX` and in the `FuelHeater`. This is a breaking change for the models calibrated before.
 
 ## MML-v3.2.2
 
-### Added
+### :sparkles: Added
 - [PR#338](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/338) Added the calibration diagram of Metroscopia CCGT.
 - Added water manifold in WaterSteam/Pipes [PR#341](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/341)
 
-### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+### :boom: Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - [PR#346](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/346) adds inlet and outlet connectors to abstract sensors to be able to put them in the line, to avoid mapping mistakes. Closes [issue#284](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/284)
 
-### Fixed
+### :bug: Fixed
 - [PR#347](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/347) Modification of the pressure drop equation of a valve so it can simulate the conditions where the pressure at the outlet is higher than the pressure at the inlet. No impact on models.
-
-### Removed
 
 ## MML-v3.2.1 <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Added
+### :sparkles: Added
 - [PR#331](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/331) replace control valves by slide valves at the steam turbines admission in CCGT Metroscopia.
 - Added [PR#330](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/330) `HeatLoss` component for the `MoistAir` medium. Answers [issue#329](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/329).
 
 ## MML-v3.2 <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Fixed 
+### :bug: Fixed 
 - [PR#326](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/326) pipe order and assigned temperatures of the `hrsg_monophasic_HX`. Model calibrated with previous version of the library should be recalibrated. The parameter `nominal_hot_side_temperature_rise` was changed to `nominal_hot_side_temperature_drop` and needs to be updated in the models. The default configuration of the HRSG HX is now `monophasic_counter_current`. Answers issues [#268](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/268) and [#254](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/254).
 - Fixed [PR#318](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/318) `MoistAir_to_FlueGases` to have equal T between inlet and oulet.
 
-### Added <!--Make sure to add a link to the PR and issues related to your change-->
+### :sparkles: Added <!--Make sure to add a link to the PR and issues related to your change-->
 - Added [PR#325](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/325) created Slide Valve and added a Flue Gases control valve.
 - Added [PR#319](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/319) densities and volumetric flow rates in the `FlowModel`
 
-### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+### :boom: Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Changed [PR#327](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/327) `fuelHeater` pipes location, HX_configuration. In order to harmonise it with other other HX. And to have converging unit test. + Breaking retrocompatibility change : new Cp calculation implies to give 2 more parameters `nominal_cold_side_temperature_rise` and `nominal_hot_side_temperature_drop`
-
-### Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
 ## MML-v3.1 <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Added <!--Make sure to add a link to the PR and issues related to your change-->
+### :sparkles: Added <!--Make sure to add a link to the PR and issues related to your change-->
 
 - Added internal leaks in DryReheater, Reheater and SuperHeater [PR#306](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/306)
 - Added units in leaks [PR#314](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/314)
@@ -148,20 +134,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a new configuration 'monophasic_counter_current' to NTUHeatExchange model. Added the possibility not to predefine the side of 'QCpMAX'. Added a parameter 'mixed_fluid' to specify if it's the 'hot' or the 'cold' fluid [PR#304](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/304)
 - Added Metroscopia CCGT faulty model in [PR#301](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/301)
 
-### Fixed
+### :bug: Fixed
 - Fixed [PR#311](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/311) `FlueGases.Machines.AirCompressor` Corrected the isentropic state by giving the correct composition
 
-### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+### :boom: Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Modified `MultiFluid.Machines.CombustionChamber` [PR#310](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/310) can calculate HHV and LHV from the composition, and can be modified by user too
 - Added `monophasic_counter_current` configuration in `Power.HeatExchange.NTUHeatExchange` [PR#304](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/304) with the ability not to pre identify the `Cpmax` side
 - Modified `Fuel.BoundaryConditions.Source` [PR#309](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/309) to convert molar fraction to mass fraction
 
-### Removed <!--Make sure to add a link to the PR and issues related to your change-->
+### :fire: Removed <!--Make sure to add a link to the PR and issues related to your change-->
  - Removed `adiabatic_compression` parameter in `Pump`, since it was not used [288](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/288) : [PR #289](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/289)
 
 ## MML-v3.0-beta <!--Make sure to add a link to the PR and issues related to your change-->
 
-### Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+### :bug: Fixed <!--Make sure to add a link to the PR and issues related to your change-->
  - Fixed issue [#191](https://github.com/Metroscope-dev/metroscope-modeling-library/issues) : now components cannot be put in the model with the wrong connections, thanks to assertions in base classes ([PR#274](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/274))
  - Fixed [#282](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/282) with [#287](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/287), by setting min and max in Positive/Negative MassFlowRate to 0, as it was an unnecessary protection.
  - Fixed [#273](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/273), steam extraction splitter'`x` are lower than 1 [PR#275](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/275)
@@ -173,12 +159,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed TurbineLine examples in [PR#218](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/218)
 - Fixed [#214](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/214): `.mat` files are ignored by default, but can still be added manually, [PR#215](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/215)
 
-### Changed <!--Make sure to add a link to the PR and issues related to your change-->
+### :boom: Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Moved `Partial/BaseClasses/IsoPHSimplifiedFlowModel.mo` to `Partial/Sensors/BaseSensor.mo` [PR #245](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/245)
 - Replaced `PartialTransportModel` by `FlowModel` and removed `Xi_in`, `Xi_out`, `Q_in`, `Q_out`, `Qv_in`, `Qv_out`, `Qvm`, `rho_in`, `rho_out`, `rhom`, `DM`. Added `rho` instead of `rhom`, [PR#233](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/233)
 - Ordered nuclear examples into subpackages called with power plant system names, [PR#219](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/219)
 
-### Added <!--Make sure to add a link to the PR and issues related to your change-->
+### :sparkles: Added <!--Make sure to add a link to the PR and issues related to your change-->
  - Added `psiA` and `psiG` distinction in pressure sensor [PR#252](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/252)
  - Added `LMTDHeatExchange` function, `LMTDfuelHeater`component and reverse unit test. [PR #266](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/266)
  - Added`HXmoistAirWater` component and reverse unit test, [PR #250](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/250) 
@@ -191,14 +177,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## MML3-DTG-V2
 
-### Fixed
+### :sparkles: Added
+- Everything present in the lib at this time 😇
 
-### Changed
-
-### Added
-Everything present in the lib at this time 😇
-
-### Removed
-Everything from MML2
+### :fire: Removed
+- Everything from MML2
 
 ## [2.4] 2022-01-04
