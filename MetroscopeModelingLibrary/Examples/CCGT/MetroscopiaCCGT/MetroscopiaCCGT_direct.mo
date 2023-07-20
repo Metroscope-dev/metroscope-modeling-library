@@ -173,7 +173,8 @@ model MetroscopiaCCGT_direct
     Q_cold_0=47.517586,
     Q_hot_0=510.45065,
     T_cold_in_0=592.94025,
-    P_cold_in_0=11720722)
+    P_cold_in_0=11720722,
+    P_cold_out_0=11700000)
     annotation (Placement(transformation(extent={{-36,-48},{6,-6}})));
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_evap_out_sensor(
@@ -182,7 +183,7 @@ model MetroscopiaCCGT_direct
     h_0=2691576)
     annotation (Placement(transformation(extent={{-34,2},{-46,14}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater1(
-      QCp_max_side=HPSH_QCp_max_side,
+      QCp_max_side="unidentified",
     Q_cold_0=47.517586,
     Q_hot_0=510.45065,
     T_cold_in_0=596.03474,
