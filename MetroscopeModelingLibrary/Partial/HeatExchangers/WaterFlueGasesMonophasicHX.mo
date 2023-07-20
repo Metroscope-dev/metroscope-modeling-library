@@ -30,25 +30,25 @@ partial model WaterFlueGasesMonophasicHX
   parameter Boolean faulty = false;
   Units.Percentage fouling; // Fouling percentage
 
-    // Initialization parameters
+    // Initialization parameters (Values for an economizer)
       // Flow Rates
-      parameter Units.MassFlowRate Q_cold_0 = 100;
-      parameter Units.MassFlowRate Q_hot_0 = 500;
+      parameter Units.MassFlowRate Q_cold_0 = 85;
+      parameter Units.MassFlowRate Q_hot_0 = 640;
       // Temperatures
-      parameter Units.Temperature T_cold_in_0 = 85 + 273.15;
-      parameter Units.Temperature T_cold_out_0 = 250 + 273.15;
-      parameter Units.Temperature T_hot_in_0 = 400 + 273.15;
-      parameter Units.Temperature T_hot_out_0 = 300 + 273.15;
+      parameter Units.Temperature T_cold_in_0 = 227 + 273.15;
+      parameter Units.Temperature T_cold_out_0 = 270 + 273.15;
+      parameter Units.Temperature T_hot_in_0 = 300 + 273.15;
+      parameter Units.Temperature T_hot_out_0 = 273 + 273.15;
       // Pressures
       parameter Units.Pressure P_cold_in_0 = 170e5;
-      parameter Units.Pressure P_cold_out_0 = 169e5;
+      parameter Units.Pressure P_cold_out_0 = 169.5e5;
       parameter Units.Pressure P_hot_in_0 = 1.1e5;
       parameter Units.Pressure P_hot_out_0 = 1.05e5;
       // Enthalpies
-      parameter Units.SpecificEnthalpy h_cold_in_0 = 369.3e3;
-      parameter Units.SpecificEnthalpy h_cold_out_0 = 1086.2e3;
-      parameter Units.SpecificEnthalpy h_hot_in_0 = 7e5;
-      parameter Units.SpecificEnthalpy h_hot_out_0 = 5.57e5;
+      parameter Units.SpecificEnthalpy h_cold_in_0 = 977378.7;
+      parameter Units.SpecificEnthalpy h_cold_out_0 = 1185904.9;
+      parameter Units.SpecificEnthalpy h_hot_in_0 = 6.08e5;
+      parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
 
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
           extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));

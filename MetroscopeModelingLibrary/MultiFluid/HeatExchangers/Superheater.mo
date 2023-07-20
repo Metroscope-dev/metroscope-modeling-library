@@ -3,20 +3,18 @@ model Superheater
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   extends Partial.HeatExchangers.WaterFlueGasesMonophasicHX(
                                                     QCp_max_side = "hot",
-                                                    Q_cold_0 = 100,
-                                                    Q_hot_0 = 500,
-                                                    T_cold_in_0 = 360 + 273.15,
-                                                    T_cold_out_0 = 400 + 273.15,
-                                                    T_hot_in_0 = 293 + 273.15,
-                                                    T_hot_out_0 = 290.5 + 273.15,
-                                                    P_cold_in_0 = 170e5,
-                                                    P_cold_out_0 = 169e5,
+                                                    T_cold_in_0 = 410 + 273.15,
+                                                    T_cold_out_0 = 515 + 273.15,
+                                                    T_hot_in_0 = 600 + 273.15,
+                                                    T_hot_out_0 = 565 + 273.15,
+                                                    P_cold_in_0 = 130e5,
+                                                    P_cold_out_0 = 129.5e5,
                                                     P_hot_in_0 = 1.1e5,
                                                     P_hot_out_0 = 1.05e5,
-                                                    h_cold_in_0 = 2.65e6,
-                                                    h_cold_out_0 = 2.917e6,
-                                                    h_hot_in_0 = 7e5,
-                                                    h_hot_out_0 = 6.4e5)
+                                                    h_cold_in_0 = 3.06e6,
+                                                    h_cold_out_0 = 3.38e6,
+                                                    h_hot_in_0 = 9.6e5,
+                                                    h_hot_out_0 = 9.1e5)
  annotation(IconMap(primitivesVisible=false));
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
