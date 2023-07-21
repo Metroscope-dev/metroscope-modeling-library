@@ -16,6 +16,8 @@ partial model FlowModel "Basic fluid transport brick for all components"
   // Enthalpy
   parameter Units.SpecificEnthalpy h_in_0 = 5e5;
   parameter Units.SpecificEnthalpy h_out_0 = 5e5;
+  // Density
+  parameter Units.Density rho_0 = 998;
   // Mass flow rate
   parameter Units.PositiveMassFlowRate Q_0 = 1000 "Inlet Mass flow rate";
 
@@ -33,9 +35,9 @@ partial model FlowModel "Basic fluid transport brick for all components"
 
   // ------ Computed Quantities ------
   // Densities
-  Units.Density rho_in(start=1000) "Inlet density";
-  Units.Density rho_out(start=1000) "Outlet density";
-  Units.Density rho(start=1000) "Mean density";
+  Units.Density rho_in(start=rho_0) "Inlet density";
+  Units.Density rho_out(start=rho_0) "Outlet density";
+  Units.Density rho(start=rho_0) "Mean density";
 
   // Volumetric flow rates
   Units.PositiveVolumeFlowRate Qv_in "Inlet volumetric flow rate";
@@ -59,11 +61,11 @@ partial model FlowModel "Basic fluid transport brick for all components"
   // ------ Connectors ------
   replaceable Partial.Connectors.FluidInlet C_in(
     Q(start=Q_0),
-    P(start=P_in_0, nominal=P_in_0),
+    P(start=P_in_0, nominal=P_in_0), h_outflow(start=0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   replaceable Partial.Connectors.FluidOutlet C_out(
     Q(start=-Q_0),
-    P(start=P_out_0, nominal=P_out_0),
+    P(start=P_out_0, nominal=P_out_0), h_outflow(start=h_out_0),
     redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
 equation
   // ------ Input Quantities ------
