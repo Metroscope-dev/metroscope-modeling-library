@@ -22,17 +22,17 @@ model FuelHeater_direct
   parameter Units.FrictionCoefficient Kfr_hot = 0;
   parameter Units.FrictionCoefficient Kfr_cold = 1;
 
-  MultiFluid.HeatExchangers.FuelHeater fuelHeater(QCp_max_side=QCp_max_side) annotation (Placement(transformation(extent={{-50,-48},{50,48}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-78,-10},{-58,10}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{60,-10},{80,10}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-74,-10},{-54,10}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{54,-10},{74,10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source   annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={16,62})));
+        rotation=180,
+        origin={64,40})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-20,-80})));
+        rotation=180,
+        origin={-64,-40})));
+  MultiFluid.HeatExchangers.FuelHeater fuelHeater annotation (Placement(transformation(extent={{-6,-10},{14,10}})));
 equation
 
   hot_source.P_out = P_hot_source * 1e5;
@@ -52,9 +52,9 @@ equation
   fuelHeater.Kfr_hot = Kfr_hot;
   fuelHeater.Kfr_cold = Kfr_cold;
 
-  connect(fuelHeater.C_cold_in, cold_source.C_out) annotation (Line(points={{-35,0},{-63,0}}, color={213,213,0}));
-  connect(fuelHeater.C_cold_out, cold_sink.C_in) annotation (Line(points={{35,0},{65,0}}, color={213,213,0}));
-  connect(fuelHeater.C_hot_out, hot_sink.C_in) annotation (Line(points={{-20,-33.6},{-20,-75}},          color={28,108,200}));
-  connect(fuelHeater.C_hot_in, hot_source.C_out) annotation (Line(points={{20,33.6},{16,33.6},{16,57}}, color={28,108,200}));
+  connect(fuelHeater.C_cold_in, cold_source.C_out) annotation (Line(points={{-6,0},{-59,0}}, color={213,213,0}));
+  connect(fuelHeater.C_cold_out, cold_sink.C_in) annotation (Line(points={{14,0},{59,0}}, color={213,213,0}));
+  connect(hot_source.C_out, fuelHeater.C_hot_in) annotation (Line(points={{59,40},{8,40},{8,8}}, color={28,108,200}));
+  connect(fuelHeater.C_hot_out, hot_sink.C_in) annotation (Line(points={{0,-8},{0,-40},{-59,-40}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end FuelHeater_direct;

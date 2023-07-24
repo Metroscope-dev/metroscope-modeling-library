@@ -42,6 +42,11 @@ model Reheater
   Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out(start=T_hot_out_0);
 
+  // Indicators
+  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
+  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
@@ -171,7 +176,7 @@ equation
   Q_cold_out = C_cold_out.Q;
   Q_hot_out = C_hot_out.Q;
   T_cold_in = cold_side_pipe.T_in;
-  T_cold_out =final_mix_cold.T_out;
+  T_cold_out = final_mix_cold.T_out;
                                 // A IsoPHFlowModel is necessary to have a full thermodynamic state with temperature calculation at the cold outlet
   T_hot_in = hot_side_pipe.T_in;
   T_hot_out = final_mix_hot.T_out;
@@ -236,6 +241,13 @@ equation
   HX_subcooling.T_hot_in = hot_side_subcooling.T_in;
   HX_subcooling.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_subcooling.state_in);
   HX_subcooling.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side_subcooling.state_in);
+
+  // Indicators
+  DT_hot_in_side = T_hot_in - T_cold_out;
+  DT_hot_out_side = T_hot_out - T_cold_in;
+  pinch = min(DT_hot_in_side, DT_hot_out_side);
+
+  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
 
 
   // Internal leaks

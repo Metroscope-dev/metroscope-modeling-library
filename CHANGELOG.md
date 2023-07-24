@@ -10,6 +10,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### :sparkles: Added <!--Make sure to add a link to the PR and issues related to your change-->
 
 -  ✨ Add and correct initialization parameters in flue gases [#436](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/436/files)
+-  ✨ Add indicators in the HX models
 
 ### :bug: Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 - :wrench: Initialisation parameters and unit tests of the multifluid heat exchangers fix for a better convergence

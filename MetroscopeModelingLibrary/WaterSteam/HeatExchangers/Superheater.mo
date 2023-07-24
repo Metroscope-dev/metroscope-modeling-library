@@ -47,6 +47,11 @@ model Superheater
   Units.Temperature T_hot_out(start=T_hot_out_0);
   Units.Power W;
 
+  // Indicators
+  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
+  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
@@ -244,6 +249,13 @@ equation
   else
       cold_side_vaporising.h_out = cold_side_vaporising.h_in;
   end if;
+
+  // Indicators
+  DT_hot_in_side = T_hot_in - T_cold_out;
+  DT_hot_out_side = T_hot_out - T_cold_in;
+  pinch = min(DT_hot_in_side, DT_hot_out_side);
+
+  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
 
   // Internal leaks
   tube_rupture.Q = 1e-5 + tube_rupture_leak;

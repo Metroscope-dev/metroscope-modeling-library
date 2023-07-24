@@ -35,7 +35,8 @@ model Superheater_reverse
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,24})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor drains_pressure_sensor annotation (Placement(transformation(extent={{38,-10},{58,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor drains_pressure_sensor(Q_0=50)
+                                                                                     annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation
 
   // Boundary conditions

@@ -27,26 +27,27 @@ model FuelHeater_reverse
   input Real T_hot_out(start = 80, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
   //input Real T_cold_out(start = 200, nominal = 200)"degC";
 
-  MultiFluid.HeatExchangers.FuelHeater fuelHeater(QCp_max_side = QCp_max_side) annotation (Placement(transformation(extent={{-38,-34},{38,34}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={14,50})));
+        rotation=180,
+        origin={64,40})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-16,-88})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-66,-10},{-46,10}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{74,-10},{94,10}})));
-  MetroscopeModelingLibrary.Sensors.Fuel.PressureSensor P_cold_out_sensor annotation (Placement(transformation(extent={{46,-10},{66,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_hot_out_sensor annotation (Placement(transformation(
+        origin={-20,-90})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-74,-10},{-54,10}})));
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{54,-10},{74,10}})));
+  MetroscopeModelingLibrary.Sensors.Fuel.PressureSensor P_cold_out_sensor annotation (Placement(transformation(extent={{20,-10},{40,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_hot_out_sensor(h_0=5.75e5)
+                                                                                  annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-16,-40})));
+        origin={-20,-40})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_hot_out_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-16,-66})));
+        origin={-20,-68})));
+  MultiFluid.HeatExchangers.FuelHeater fuelHeater annotation (Placement(transformation(extent={{-14,-10},{6,10}})));
 equation
   // Boundary conditions
   hot_source.P_out = P_hot_source * 1e5;
@@ -74,15 +75,14 @@ equation
   fuelHeater.Kfr_hot = Kfr_hot;
   fuelHeater.Kfr_cold = Kfr_cold;
 
-  connect(fuelHeater.C_hot_in, hot_source.C_out) annotation (Line(points={{15.2,23.8},{14,23.8},{14,45}}, color={28,108,200}));
-  connect(fuelHeater.C_cold_in, cold_source.C_out) annotation (Line(points={{-26.6,0},{-51,0}}, color={213,213,0}));
-  connect(fuelHeater.C_cold_out, P_cold_out_sensor.C_in) annotation (Line(points={{26.6,0},{46,0}}, color={213,213,0}));
-  connect(cold_sink.C_in, P_cold_out_sensor.C_out) annotation (Line(points={{79,0},{66,0}}, color={213,213,0}));
-  connect(fuelHeater.C_hot_out, T_hot_out_sensor.C_in) annotation (Line(points={{-15.2,-23.8},{-15.2,-26.9},{-16,-26.9},{-16,-30}},
-                                                                                                                                color={28,108,200}));
-  connect(T_hot_out_sensor.C_out, P_hot_out_sensor.C_in) annotation (Line(points={{-16,-50},{-16,-53},{-16,-53},{-16,-56}},
+  connect(cold_sink.C_in, P_cold_out_sensor.C_out) annotation (Line(points={{59,0},{40,0}}, color={213,213,0}));
+  connect(T_hot_out_sensor.C_out, P_hot_out_sensor.C_in) annotation (Line(points={{-20,-50},{-20,-58}},
                                                                                                       color={28,108,200}));
-  connect(hot_sink.C_in, P_hot_out_sensor.C_out) annotation (Line(points={{-16,-83},{-16,-76}},
+  connect(hot_sink.C_in, P_hot_out_sensor.C_out) annotation (Line(points={{-20,-85},{-20,-78}},
                                                                                               color={28,108,200}));
+  connect(fuelHeater.C_cold_out, P_cold_out_sensor.C_in) annotation (Line(points={{6,0},{20,0}}, color={213,213,0}));
+  connect(fuelHeater.C_hot_out, T_hot_out_sensor.C_in) annotation (Line(points={{-8,-8},{-8,-20},{-20,-20},{-20,-30}}, color={28,108,200}));
+  connect(hot_source.C_out, fuelHeater.C_hot_in) annotation (Line(points={{59,40},{0,40},{0,8}}, color={28,108,200}));
+  connect(fuelHeater.C_cold_in, cold_source.C_out) annotation (Line(points={{-14,0},{-59,0}}, color={213,213,0}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end FuelHeater_reverse;

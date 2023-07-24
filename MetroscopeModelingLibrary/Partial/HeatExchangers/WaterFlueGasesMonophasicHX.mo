@@ -26,29 +26,34 @@ partial model WaterFlueGasesMonophasicHX
   Units.Temperature T_cold_out(start=T_cold_out_0);
   Units.Temperature T_hot_out(start=T_hot_out_0);
 
-    // Failure modes
+  // Indicators
+  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
+  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+
+  // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling; // Fouling percentage
 
-    // Initialization parameters (Values for an economizer)
-      // Flow Rates
-      parameter Units.MassFlowRate Q_cold_0 = 85;
-      parameter Units.MassFlowRate Q_hot_0 = 640;
-      // Temperatures
-      parameter Units.Temperature T_cold_in_0 = 227 + 273.15;
-      parameter Units.Temperature T_cold_out_0 = 270 + 273.15;
-      parameter Units.Temperature T_hot_in_0 = 300 + 273.15;
-      parameter Units.Temperature T_hot_out_0 = 273 + 273.15;
-      // Pressures
-      parameter Units.Pressure P_cold_in_0 = 170e5;
-      parameter Units.Pressure P_cold_out_0 = 169.5e5;
-      parameter Units.Pressure P_hot_in_0 = 1.1e5;
-      parameter Units.Pressure P_hot_out_0 = 1.05e5;
-      // Enthalpies
-      parameter Units.SpecificEnthalpy h_cold_in_0 = 977378.7;
-      parameter Units.SpecificEnthalpy h_cold_out_0 = 1185904.9;
-      parameter Units.SpecificEnthalpy h_hot_in_0 = 6.08e5;
-      parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
+  // Initialization parameters (Values for an economizer)
+  // Flow Rates
+  parameter Units.MassFlowRate Q_cold_0 = 85;
+  parameter Units.MassFlowRate Q_hot_0 = 640;
+  // Temperatures
+  parameter Units.Temperature T_cold_in_0 = 227 + 273.15;
+  parameter Units.Temperature T_cold_out_0 = 270 + 273.15;
+  parameter Units.Temperature T_hot_in_0 = 300 + 273.15;
+  parameter Units.Temperature T_hot_out_0 = 273 + 273.15;
+  // Pressures
+  parameter Units.Pressure P_cold_in_0 = 170e5;
+  parameter Units.Pressure P_cold_out_0 = 169.5e5;
+  parameter Units.Pressure P_hot_in_0 = 1.1e5;
+  parameter Units.Pressure P_hot_out_0 = 1.05e5;
+  // Enthalpies
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 977378.7;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 1185904.9;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 6.08e5;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
 
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
           extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
@@ -84,10 +89,8 @@ protected
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_max;
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_min;
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_max;
-  MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.ThermodynamicState state_cold_out;
-                                                                                      // estimation of the water outlet thermodynamic state
-  MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.ThermodynamicState state_hot_out;
-                                                                                    // estimation of the flue gases outlet thermodynamic state
+  MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.ThermodynamicState state_cold_out; // estimation of the water outlet thermodynamic state
+  MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
 
 equation
   // Failure modes
@@ -121,30 +124,38 @@ equation
   HX.Q_hot = Q_hot;
   HX.T_cold_in = T_cold_in;
   HX.T_hot_in = T_hot_in;
+//   HX.T_cold_out = T_cold_out;
+//   HX.T_hot_out = T_hot_out;
   HX.Cp_cold = (Cp_cold_min + Cp_cold_max)/2;
   HX.Cp_hot = (Cp_hot_min + Cp_hot_max)/2;
+
+  DT_hot_in_side = T_hot_in - T_cold_out;
+  DT_hot_out_side = T_hot_out - T_cold_in;
+  pinch = min(DT_hot_in_side, DT_hot_out_side);
+
+  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+
+//   HX.DT_hot_in_side = DT_hot_in_side;
+//   HX.DT_hot_out_side = DT_hot_out_side;
+//   HX.pinch = pinch;
 
   // For each medium, an average Cp is calculated beteween Cp inlet and an estimation of Cp outlet.
   // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise of the H&MB diagram.
   // For more details about this hypothesis, please refer the Economiser page of the MML documentation.
 
-  Cp_cold_min =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in);
-                                                                                                            // water steam inlet Cp
+  Cp_cold_min =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in); // water steam inlet Cp
   state_cold_out =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.setState_pTX(
     cold_side.P_in,
     cold_side.T_in + nominal_cold_side_temperature_rise,
     cold_side.Xi);
-  Cp_cold_max=MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out);
-                                                                                                        // water steam outlet Cp
+  Cp_cold_max=MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(state_cold_out);// water steam outlet Cp
 
-  Cp_hot_max=MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in);
-                                                                                                       // fg inlet Cp
+  Cp_hot_max=MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side.state_in); // fg inlet Cp
   state_hot_out =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.setState_pTX(
     hot_side.P_in,
     hot_side.T_in - nominal_hot_side_temperature_drop,
     hot_side.Xi);
-  Cp_hot_min =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out);
-                                                                                                      // fg outlet Cp
+  Cp_hot_min =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(state_hot_out); // fg outlet Cp
 
   connect(cold_side.C_in, cold_side_pipe.C_out) annotation (Line(points={{16,24},{30,24},{30,32}}, color={28,108,200}));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{30,52},{30,66},{30,80},{40,80}},

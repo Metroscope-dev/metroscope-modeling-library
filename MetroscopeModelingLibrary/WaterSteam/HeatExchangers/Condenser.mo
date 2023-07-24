@@ -128,7 +128,6 @@ equation
   // Pressure losses
   cold_side_pipe.delta_z=0;
   cold_side_pipe.Kfr = Kfr_cold;
-
   water_height_pipe.delta_z = - water_height;
   water_height_pipe.Kfr = 0;
   water_height_pipe.DP = water_height_DP;
@@ -147,6 +146,7 @@ equation
 
   // Heat Exchange
   0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*S*((T_cold_in - T_cold_out)/W));
+
 
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(

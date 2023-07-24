@@ -20,6 +20,11 @@ model LiqLiqHX
   Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out(start=T_hot_out_0);
 
+  // Indicators
+  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
+  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
@@ -97,6 +102,13 @@ equation
   HX.T_hot_in = T_hot_in;
   HX.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in);
   HX.Cp_hot = WaterSteamMedium.specificHeatCapacityCp(hot_side.state_in);
+
+  // Indicators
+  DT_hot_in_side = T_hot_in - T_cold_out;
+  DT_hot_out_side = T_hot_out - T_cold_in;
+  pinch = min(DT_hot_in_side, DT_hot_out_side);
+
+  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
 
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(

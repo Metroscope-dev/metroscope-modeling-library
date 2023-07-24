@@ -9,6 +9,7 @@ model NTUHeatExchange
   parameter Units.MassFlowRate Q_cold_0 = 1500 "Init parameter for Cold mass flow rate at the inlet";
   parameter Units.Temperature T_hot_in_0 = 273.15 + 200 "Init parameter for Hot mass flow rate at the inlet";
   parameter Units.Temperature T_cold_in_0 = 273.15 + 100 "Init parameter for Cold mass flow rate at the inlet";
+
   parameter Units.HeatCapacity Cp_hot_0 = 45 "Init parameter for Hot fluid specific heat capacity";
   parameter Units.HeatCapacity Cp_cold_0 = 75 "Init parameter for Cold fluid specific heat capacity";
   parameter Units.Area S_0 = 100 "init parameter for Heat exchange surface";
@@ -32,6 +33,7 @@ model NTUHeatExchange
   Inputs.InputTemperature T_hot_in(start=T_hot_in_0) "Temperature, hot side, at the inlet";
   Inputs.InputTemperature T_cold_in(start=T_cold_in_0) "Temperature, cold side, at the inlet";
 
+
   // Exchange parameters
   Real QCpMIN(unit="W/K", start=QCpMIN_0);
   Real QCpMAX(unit="W/K", start=QCpMAX_0);
@@ -39,6 +41,7 @@ model NTUHeatExchange
   Units.Fraction Cr(start=Cr_0);
   Units.Fraction epsilon(start=epsilon_0);
   Units.Power W_max(start=W_max_0);
+
 
   // When the QCp_max_side is "hot", the initial parameters may be in the opposite order, however, no impact on the simulations
   parameter Real QCpMIN_0(unit="W/K") = if QCp_max_side == "hot" then Q_cold_0 * Cp_cold_0 elseif QCp_max_side == "cold" then Q_hot_0 * Cp_hot_0 else min(Q_cold_0 * Cp_cold_0,Q_hot_0 * Cp_hot_0);
@@ -48,6 +51,8 @@ model NTUHeatExchange
   parameter Units.Fraction epsilon_0 = 0.9;
   parameter Units.Power W_max_0 = QCpMIN_0*(T_hot_in_0 - T_cold_in_0);
   parameter Units.Power W_0 = epsilon_0*W_max_0;
+
+
 equation
 
   W_max = QCpMIN*(T_hot_in - T_cold_in);
@@ -59,6 +64,7 @@ equation
 
     /* This is a monophasic shell and tube heat exchanger with two tube passes, 
     for instance for U-shaped tubes */
+
 
     if QCp_max_side == "hot" then
       QCpMAX = Q_hot*Cp_hot;
