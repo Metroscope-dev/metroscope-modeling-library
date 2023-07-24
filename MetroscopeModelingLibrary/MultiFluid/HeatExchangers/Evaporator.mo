@@ -31,6 +31,9 @@ model Evaporator
     Units.Temperature T_cold_out(start=T_cold_out_0);
     Units.Temperature T_hot_out(start=T_hot_out_0);
 
+    // Indicators
+    Units.Temperature T_approach(start=T_cold_out_0-T_cold_in_0);
+
     // Failure modes
     parameter Boolean faulty = false;
     Units.Percentage fouling; // Fouling percentage
@@ -105,6 +108,9 @@ equation
   Tsat = cold_side_heating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(cold_side_heating.P_in));
+
+  // Indicators
+  T_approach = cold_side_heating.DT;
 
     // Pressure losses
   cold_side_pipe.delta_z=0;
