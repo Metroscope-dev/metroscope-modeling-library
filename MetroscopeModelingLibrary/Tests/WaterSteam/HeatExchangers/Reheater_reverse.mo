@@ -37,9 +37,10 @@ model Reheater_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-56})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cold_sink_sensor annotation (Placement(transformation(extent={{48,-10},{68,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cold_sink_sensor annotation (Placement(transformation(extent={{22,-10},{42,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_drains_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cold_sink_sensor annotation (Placement(transformation(extent={{24,-10},{44,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cold_sink_sensor annotation (Placement(transformation(extent={{48,-10},{68,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_drains_sensor(P_0=1100000)
+                                                                                 annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-30})));
@@ -72,13 +73,12 @@ equation
           25},{-8.88178e-16,16.5},{0,16.5},{0,8}}, color={28,108,200}));
   connect(cold_source.C_out, reheater.C_cold_in)
     annotation (Line(points={{-43,0},{-16.2,0}}, color={28,108,200}));
-  connect(reheater.C_cold_out, P_cold_sink_sensor.C_in)
-    annotation (Line(points={{16,0},{22,0}}, color={28,108,200}));
-  connect(P_cold_sink_sensor.C_out, T_cold_sink_sensor.C_in) annotation (Line(points={{42,0},{48,0}}, color={28,108,200}));
-  connect(T_cold_sink_sensor.C_out, cold_sink.C_in) annotation (Line(points={{68,0},{73,0}}, color={28,108,200}));
   connect(T_drains_sensor.C_in, reheater.C_hot_out) annotation (Line(points={{1.77636e-15,
           -20},{1.77636e-15,-14},{0,-14},{0,-8}}, color={28,108,200}));
   connect(T_drains_sensor.C_out, hot_sink.C_in) annotation (Line(points={{-1.77636e-15,
           -40},{-1.77636e-15,-45.5},{8.88178e-16,-45.5},{8.88178e-16,-51}},
         color={28,108,200}));
+  connect(reheater.C_cold_out, T_cold_sink_sensor.C_in) annotation (Line(points={{16,0},{24,0}}, color={28,108,200}));
+  connect(P_cold_sink_sensor.C_in, T_cold_sink_sensor.C_out) annotation (Line(points={{48,0},{44,0}}, color={28,108,200}));
+  connect(cold_sink.C_in, P_cold_sink_sensor.C_out) annotation (Line(points={{73,0},{68,0}}, color={28,108,200}));
 end Reheater_reverse;

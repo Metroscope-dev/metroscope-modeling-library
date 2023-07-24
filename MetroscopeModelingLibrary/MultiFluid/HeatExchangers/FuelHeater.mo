@@ -20,47 +20,58 @@ model FuelHeater
   Units.Power W;
 
   // Definitions
-  Units.MassFlowRate Q_cold;
-  Units.MassFlowRate Q_hot;
-  Units.Temperature T_cold_in;
-  Units.Temperature T_cold_out;
-  Units.Temperature T_hot_in;
-  Units.Temperature T_hot_out;
+  Units.MassFlowRate Q_cold(start=Q_cold_0);
+  Units.MassFlowRate Q_hot(start=Q_hot_0);
+  Units.Temperature T_cold_in(start=T_cold_in_0);
+  Units.Temperature T_cold_out(start=T_cold_out_0);
+  Units.Temperature T_hot_in(start=T_hot_in_0);
+  Units.Temperature T_hot_out(start=T_hot_out_0);
+
+  // Indicators
+  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
+  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
 
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 500;
-  parameter Units.MassFlowRate Q_hot_0 = 50;
-  parameter Units.Temperature T_hot_in_0 = 76 + 273.15;
-  parameter Units.Pressure P_hot_in_0 = 18 *1e5;
-  parameter Real h_hot_in_0 = 1e6;
+  // Flow Rates
+  parameter Units.MassFlowRate Q_cold_0 = 15;
+  parameter Units.MassFlowRate Q_hot_0 = 11;
+  // Temperatures
+  parameter Units.Temperature T_cold_in_0 = 8 + 273.15;
+  parameter Units.Temperature T_cold_out_0 = 200 + 273.15;
+  parameter Units.Temperature T_hot_in_0 = 210 + 273.15;
+  parameter Units.Temperature T_hot_out_0 = 68 + 273.15;
+  // Pressures
+  parameter Units.Pressure P_cold_in_0 = 30e5;
+  parameter Units.Pressure P_cold_out_0 = 29.5e5;
+  parameter Units.Pressure P_hot_in_0 = 18.5e5;
+  parameter Units.Pressure P_hot_out_0 = 18.3e5;
+  // Enthalpies
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 554708.5;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 292266.22;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 958265.3;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
 
-  Fuel.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
-  Fuel.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
-  WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{30,70},{50,90}}), iconTransformation(extent={{30,70},{50,90}})));
-  WaterSteam.Connectors.Outlet C_hot_out(h_outflow(start=h_hot_in_0)) annotation (Placement(transformation(extent={{-50,-90},{-30,-70}}),
+  Fuel.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
+  Fuel.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start= h_cold_out_0)) annotation (Placement(transformation(extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
+  WaterSteam.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(extent={{30,70},{50,90}}), iconTransformation(extent={{30,70},{50,90}})));
+  WaterSteam.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(extent={{-50,-90},{-30,-70}}),
                                                                                                            iconTransformation(extent={{-50,-90},{-30,-70}})));
-  Power.HeatExchange.NTUHeatExchange HX(
-    config=HX_config,
-    QCp_max_side=QCp_max_side,
-    T_hot_in_0=T_hot_in_0)                                                                                                  annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX(config=HX_config, QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0, T_hot_in_0=T_hot_in_0) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={10,14})));
-  WaterSteam.BaseClasses.IsoPFlowModel hot_side(
-    Q_0=Q_hot_0,
-    T_in_0=T_hot_in_0,
-    P_in_0=P_hot_in_0,
-    h_in_0=h_hot_in_0) annotation (Placement(transformation(
+  WaterSteam.BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0, h_in_0=h_hot_in_0, T_out_0=T_hot_out_0, P_0=P_hot_out_0, h_out_0=h_hot_out_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
-  Fuel.Pipes.Pipe cold_side_pipe annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
-  Fuel.BaseClasses.IsoPFlowModel cold_side annotation (Placement(transformation(extent={{0,-10},{20,10}})));
-  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, T_in_0=T_hot_in_0, h_in_0=h_hot_in_0) annotation (Placement(transformation(
+  Fuel.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
+  Fuel.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_in_0=T_cold_in_0, P_0=P_cold_in_0, T_out_0=T_cold_out_0, h_out_0=h_cold_out_0) annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, h_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={40,44})));
@@ -111,7 +122,12 @@ equation
   HX.Cp_cold = (Cp_cold_min + Cp_cold_max)/2;
   HX.Cp_hot = (Cp_hot_min + Cp_hot_max)/2;
 
+  // Indicators
+  DT_hot_in_side = T_hot_in - T_cold_out;
+  DT_hot_out_side = T_hot_out - T_cold_in;
+  pinch = min(DT_hot_in_side, DT_hot_out_side);
 
+  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
 
   Cp_cold_min = FuelMedium.specificHeatCapacityCp(cold_side.state_in); // fuel steam inlet Cp
   state_cold_out = FuelMedium.setState_pTX(cold_side.P_in, cold_side.T_in + nominal_cold_side_temperature_rise,cold_side.Xi);

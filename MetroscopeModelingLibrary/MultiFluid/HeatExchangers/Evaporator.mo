@@ -33,6 +33,9 @@ model Evaporator
 
     // Indicators
     Units.Temperature T_approach(start=T_cold_out_0-T_cold_in_0);
+    Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
+    Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
+    Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
 
     // Failure modes
     parameter Boolean faulty = false;
@@ -147,6 +150,13 @@ equation
   HX_vaporising.T_hot_in = hot_side_vaporising.T_in;
   HX_vaporising.Cp_cold = 0; // Not used by NTU method in evaporator mode
   HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
+
+  DT_hot_in_side = T_hot_in - T_cold_out;
+  DT_hot_out_side = T_hot_out - T_cold_in;
+  pinch = min(DT_hot_in_side, DT_hot_out_side);
+
+  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+
 
   connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
   connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{40,80},{40,58},{42,58},{42,44}},
