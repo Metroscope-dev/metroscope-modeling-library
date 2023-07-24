@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
-  extends MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT.MetroscopiaCCGT_direct_withStartValues(
+  extends MetroscopiaCCGT_direct(
     condenser(faulty=true),
     AirFilter(faulty=true),
     HPsuperheater1(faulty=true),
@@ -27,7 +27,7 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
   input Real Fault_deSH_controlValve_leak_Q(start=0);
 
   // Gas turbine failures
-  input Real Fault_AirFilter_fouling;
+  input Real Fault_AirFilter_fouling(start=0);
 
   // Steam turbine
   input Real Fault_HPST_CV_closed_valve(start=0);
@@ -36,27 +36,27 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-110,182})));
+        origin={-104,200})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_CV_to_condenser_leak
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-162,192})));
+        origin={-166,220})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_IP_CV_to_condenser_leak
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-4,284})));
+        origin={-6,320})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_IP_turbine_to_condenser_leak
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=180,
-        origin={-4,268})));
+        origin={-4,300})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak deSH_controlValve_leak
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
-        origin={-158,64})));
+        origin={-148,80})));
 equation
 
   //Condenser
@@ -85,34 +85,20 @@ equation
   AirFilter.fouling = Fault_AirFilter_fouling;
 
   connect(P_HPST_in_sensor.C_in, HPST_control_valve.C_out) annotation (Line(
-        points={{-180,148},{-183.375,148},{-183.375,148},{-186.75,148}}, color={
+        points={{-180,180},{-183.375,180},{-183.375,180},{-186.75,180}}, color={
           28,108,200}));
-  connect(bypass_HP_CV_to_condenser_leak.C_out, condenser.C_hot_in) annotation (
-     Line(points={{-152,192},{52,192},{52,177.134}}, color={217,67,180}));
-  connect(HPsteamTurbine.C_in, bypass_HP_turbine_to_condenser_leak.C_in)
-    annotation (Line(points={{-160,148},{-158,148},{-158,182},{-120,182}},
-        color={217,67,180}));
-  connect(bypass_HP_turbine_to_condenser_leak.C_out, condenser.C_hot_in)
-    annotation (Line(points={{-100,182},{52,182},{52,177.134}}, color={217,67,
-          180}));
-  connect(bypass_IP_CV_to_condenser_leak.C_in, LPST_control_valve.C_in)
-    annotation (Line(points={{-14,284},{-80,284},{-80,214},{-61.25,214}}, color={217,67,
-          180}));
-  connect(bypass_IP_CV_to_condenser_leak.C_out, condenser.C_hot_in) annotation (
-     Line(points={{6,284},{52,284},{52,177.134}}, color={217,67,180}));
   connect(LPST_control_valve.C_out, bypass_IP_turbine_to_condenser_leak.C_in)
-    annotation (Line(points={{-44.75,214},{-38,214},{-38,268},{-14,268}}, color={217,67,
+    annotation (Line(points={{-44.75,240},{-36,240},{-36,300},{-14,300}}, color={217,67,
           180}));
-  connect(bypass_IP_turbine_to_condenser_leak.C_out, condenser.C_hot_in)
-    annotation (Line(points={{6,268},{52,268},{52,177.134}}, color={217,67,180}));
-  connect(deSH_controlValve_leak.C_out, deSH_controlValve.C_out) annotation (
-      Line(points={{-168,64},{-184,64},{-184,92},{-171.25,92}}, color={217,67,
-          180}));
-  connect(deSH_controlValve_leak.C_in, Q_deSH_sensor.C_in) annotation (Line(
-        points={{-148,64},{-132,64},{-132,92}}, color={217,67,180}));
-  connect(bypass_HP_CV_to_condenser_leak.C_in, HPST_control_valve.C_in)
-    annotation (Line(points={{-172,192},{-222,192},{-222,148},{-203.25,148}},
-        color={217,67,180}));
+  connect(deSH_controlValve_leak.C_in, loopBreaker.C_in) annotation (Line(points={{-138,80},{-118,80},{-118,120},{180,120},{180,64}}, color={28,108,200}));
+  connect(deSH_controlValve_leak.C_out, HPsuperheater2.C_cold_in) annotation (Line(points={{-158,80},{-172,80},{-172,86},{-192,86},{-192,120},{-260,120},{-260,34},{-265.4,34},{-265.4,14.2}}, color={28,108,200}));
+  connect(bypass_HP_turbine_to_condenser_leak.C_in, HPsteamTurbine.C_in) annotation (Line(points={{-114,200},{-166,200},{-166,180},{-160,180}}, color={28,108,200}));
+  connect(bypass_HP_CV_to_condenser_leak.C_in, HPST_control_valve.C_in) annotation (Line(points={{-176,220},{-220,220},{-220,180},{-203.25,180}}, color={28,108,200}));
+  connect(bypass_HP_CV_to_condenser_leak.C_out, condenser.C_hot_in) annotation (Line(points={{-156,220},{52,220},{52,203.134}}, color={28,108,200}));
+  connect(bypass_HP_turbine_to_condenser_leak.C_out, condenser.C_hot_in) annotation (Line(points={{-94,200},{-40,200},{-40,220},{52,220},{52,203.134}}, color={28,108,200}));
+  connect(bypass_IP_turbine_to_condenser_leak.C_out, condenser.C_hot_in) annotation (Line(points={{6,300},{52,300},{52,203.134}}, color={28,108,200}));
+  connect(bypass_IP_CV_to_condenser_leak.C_out, condenser.C_hot_in) annotation (Line(points={{4,320},{52,320},{52,203.134}}, color={28,108,200}));
+  connect(bypass_IP_CV_to_condenser_leak.C_in, LPST_control_valve.C_in) annotation (Line(points={{-16,320},{-70,320},{-70,240},{-61.25,240}}, color={28,108,200}));
   annotation (Diagram(coordinateSystem(extent={{-720,-120},{260,340}})), Icon(
         coordinateSystem(extent={{-720,-120},{260,340}})));
 end MetroscopiaCCGT_faulty;

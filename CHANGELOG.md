@@ -13,6 +13,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### :bug: Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 - :wrench: Initialisation parameters and unit tests of the multifluid heat exchangers fix for a better convergence
+- 🔧 Added `rho_0` as an initialization parameter in the `FlowModel`
 
 ### :boom: Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
