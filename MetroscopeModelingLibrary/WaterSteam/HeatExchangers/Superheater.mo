@@ -24,7 +24,7 @@ model Superheater
   // Vaporising
   Units.Power W_vap;
   Units.SpecificEnthalpy h_vap_sat_cold(start=h_cold_in_0);
-  Units.Temperature Tsat_cold;
+  Units.Temperature Tsat_cold(start=T_cold_in_0);
 
   // Ventilation
   Units.PositiveMassFlowRate Q_vent(start=Q_vent_0);
@@ -48,9 +48,10 @@ model Superheater
   Units.Power W;
 
   // Indicators
-  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
-  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
-  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+  Units.DifferentialTemperature DT_superheat(start=T_cold_out_0-T_cold_in_0) "Superheat temperature difference";
+  Units.DifferentialTemperature TTD(start=T_hot_in_0-T_cold_out_0) "Terminal Temperature Difference";
+  Units.DifferentialTemperature DCA(start=T_hot_out_0-T_cold_in_0) "Drain Cooler Approach";
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0)) "Lowest temperature difference";
 
   // Failure modes
   parameter Boolean faulty = false;
@@ -251,10 +252,10 @@ equation
   end if;
 
   // Indicators
-  DT_hot_in_side = T_hot_in - T_cold_out;
-  DT_hot_out_side = T_hot_out - T_cold_in;
-  pinch = min(DT_hot_in_side, DT_hot_out_side);
-
+  DT_superheat = T_cold_out - Tsat_cold;
+  TTD = T_hot_in - T_cold_out;
+  DCA = T_hot_out - T_cold_in;
+  pinch = min(TTD, DCA);
   assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
 
   // Internal leaks
