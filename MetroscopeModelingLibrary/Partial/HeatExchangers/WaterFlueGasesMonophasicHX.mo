@@ -130,7 +130,8 @@ equation
   DT_hot_in_side = T_hot_in - T_cold_out;
   DT_hot_out_side = T_hot_out - T_cold_in;
   pinch = min(DT_hot_in_side, DT_hot_out_side);
-  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
   // For each medium, an average Cp is calculated beteween Cp inlet and an estimation of Cp outlet.
   // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise of the H&MB diagram.

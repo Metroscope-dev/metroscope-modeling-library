@@ -126,7 +126,8 @@ equation
   DT_hot_in_side = T_hot_in - T_cold_out;
   DT_hot_out_side = T_hot_out - T_cold_in;
   pinch = min(DT_hot_in_side, DT_hot_out_side);
-  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
   Cp_cold_min = FuelMedium.specificHeatCapacityCp(cold_side.state_in); // fuel steam inlet Cp
   state_cold_out = FuelMedium.setState_pTX(cold_side.P_in, cold_side.T_in + nominal_cold_side_temperature_rise,cold_side.Xi);
