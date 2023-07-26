@@ -27,9 +27,9 @@ partial model WaterFlueGasesMonophasicHX
   Units.Temperature T_hot_out(start=T_hot_out_0);
 
   // Indicators
-  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
-  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
-  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0) "Temperature difference between hot and cold fluids, hot inlet side";
+  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0) "Temperature difference between hot and cold fluids, hot outlet side";
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0)) "Lowest temperature difference";
 
   // Failure modes
   parameter Boolean faulty = false;
@@ -124,20 +124,14 @@ equation
   HX.Q_hot = Q_hot;
   HX.T_cold_in = T_cold_in;
   HX.T_hot_in = T_hot_in;
-//   HX.T_cold_out = T_cold_out;
-//   HX.T_hot_out = T_hot_out;
   HX.Cp_cold = (Cp_cold_min + Cp_cold_max)/2;
   HX.Cp_hot = (Cp_hot_min + Cp_hot_max)/2;
 
   DT_hot_in_side = T_hot_in - T_cold_out;
   DT_hot_out_side = T_hot_out - T_cold_in;
   pinch = min(DT_hot_in_side, DT_hot_out_side);
-
-  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
-
-//   HX.DT_hot_in_side = DT_hot_in_side;
-//   HX.DT_hot_out_side = DT_hot_out_side;
-//   HX.pinch = pinch;
+  assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
   // For each medium, an average Cp is calculated beteween Cp inlet and an estimation of Cp outlet.
   // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise of the H&MB diagram.
