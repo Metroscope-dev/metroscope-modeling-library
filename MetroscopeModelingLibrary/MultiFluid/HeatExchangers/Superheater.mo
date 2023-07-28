@@ -20,7 +20,7 @@ model Superheater
  annotation(IconMap(primitivesVisible=false));
 
  // Indicators
- Units.DifferentialTemperature STR(start=T_cold_out_0-T_cold_in_0) "Feedwater Temperature Rise";
+ Units.DifferentialTemperature STR(start=T_cold_out_0-T_cold_in_0) "Steam Temperature Rise";
  Units.DifferentialTemperature DT_superheat(start=T_cold_out_0-WaterSteamMedium.saturationTemperature(P_cold_in_0)) "Superheat temperature difference";
 
 equation
