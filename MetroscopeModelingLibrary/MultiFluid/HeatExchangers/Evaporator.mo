@@ -32,10 +32,10 @@ model Evaporator
     Units.Temperature T_hot_out(start=T_hot_out_0);
 
     // Indicators
-    Units.Temperature T_approach(start=T_cold_out_0-T_cold_in_0);
-    Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
-    Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
-    Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+    Units.Temperature T_approach(start=T_cold_out_0-T_cold_in_0) "Cold temperature inlet difference to saturation";
+    Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0) "Temperature difference between hot and cold fluids, hot inlet side";
+    Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0) "Temperature difference between hot and cold fluids, hot outlet side";
+    Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0)) "Lowest temperature difference";
 
     // Failure modes
     parameter Boolean faulty = false;
@@ -154,8 +154,8 @@ equation
   DT_hot_in_side = T_hot_in - T_cold_out;
   DT_hot_out_side = T_hot_out - T_cold_in;
   pinch = min(DT_hot_in_side, DT_hot_out_side);
-
-  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
 
   connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));

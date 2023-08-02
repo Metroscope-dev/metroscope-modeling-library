@@ -139,10 +139,14 @@ equation
   incondensables_in.DP = - P_incond;
   incondensables_out.DP = + P_incond;
 
+  // Saturated vapor admission check
+  assert(T_hot_in - Tsat < 0.1, "The steam admitted in the condenser in superheated", AssertionLevel.warning);
+
+
   // Condensation
   Psat = hot_side.P_in;
-  Tsat = hot_side.T_in;
-  hot_side.h_out = Water.bubbleEnthalpy(Water.setSat_T(Tsat));
+  Tsat =  Water.saturationTemperature(Psat);
+  hot_side.h_out = Water.bubbleEnthalpy(Water.setSat_p(Psat));
 
   // Heat Exchange
   0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*S*((T_cold_in - T_cold_out)/W));

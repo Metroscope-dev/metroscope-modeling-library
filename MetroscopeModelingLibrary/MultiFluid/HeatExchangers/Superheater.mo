@@ -1,5 +1,7 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Superheater
+  import MetroscopeModelingLibrary.Utilities.Units;
+  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   extends Partial.HeatExchangers.WaterFlueGasesMonophasicHX(
                                                     QCp_max_side = "hot",
@@ -16,7 +18,19 @@ model Superheater
                                                     h_hot_in_0 = 9.6e5,
                                                     h_hot_out_0 = 9.1e5)
  annotation(IconMap(primitivesVisible=false));
-  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+ // Indicators
+ Units.DifferentialTemperature STR(start=T_cold_out_0-T_cold_in_0) "Steam Temperature Rise";
+ Units.DifferentialTemperature DT_superheat(start=T_cold_out_0-WaterSteamMedium.saturationTemperature(P_cold_in_0)) "Superheat temperature difference";
+
+equation
+
+  // Indicators
+  STR = T_cold_out - T_cold_in;
+  DT_superheat = T_cold_out - WaterSteamMedium.saturationTemperature(cold_side_pipe.P_in);
+
+
+
 
   annotation (Icon(graphics={
           Rectangle(

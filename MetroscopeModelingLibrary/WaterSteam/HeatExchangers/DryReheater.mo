@@ -29,9 +29,10 @@ model DryReheater
   Units.Temperature T_hot_out(start=T_hot_out_0);
 
   // Indicators
-  Units.DifferentialTemperature DT_hot_in_side(start=T_hot_in_0-T_cold_out_0);
-  Units.DifferentialTemperature DT_hot_out_side(start=T_hot_out_0-T_cold_in_0);
-  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0));
+  Units.DifferentialTemperature FTR(start=T_cold_out_0-T_cold_in_0) "Feedwater Temperature Rise";
+  Units.DifferentialTemperature TTD(start=T_hot_in_0-T_cold_out_0) "Terminal Temperature Difference";
+  Units.DifferentialTemperature DCA(start=T_hot_out_0-T_cold_in_0) "Drain Cooler Approach";
+  Units.DifferentialTemperature pinch(start=min(T_hot_in_0-T_cold_out_0,T_hot_out_0-T_cold_in_0)) "Lowest temperature difference";
 
   // Failure modes
   parameter Boolean faulty = false;
@@ -180,11 +181,12 @@ equation
   HX_condensing.Cp_hot = 0; // Not used by NTU method in condenser mode
 
   // Indicators
-  DT_hot_in_side = T_hot_in - T_cold_out;
-  DT_hot_out_side = T_hot_out - T_cold_in;
-  pinch = min(DT_hot_in_side, DT_hot_out_side);
-
-  assert(pinch > 0, "A very low or negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  FTR = T_cold_out - T_cold_in;
+  TTD = T_hot_in - T_cold_out;
+  DCA = T_hot_out - T_cold_in;
+  pinch = min(TTD, DCA);
+  assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
+  assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
   // Internal leaks
   partition_plate.Q = 1e-5 + partition_plate_leak;

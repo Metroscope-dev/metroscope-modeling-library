@@ -19,17 +19,17 @@ model Condenser_direct
   parameter Utilities.Units.Pressure P_offset=0;
   parameter Real C_incond = 0;
 
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cooling_sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
-  .MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(extent={{-56,-10},{-36,10}})));
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cooling_sink annotation (Placement(transformation(extent={{36,-10},{56,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,30})));
+        origin={0,46})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-30})));
+        origin={0,-46})));
+  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser annotation (Placement(transformation(extent={{-10,-8},{10,10}})));
 equation
 
   turbine_outlet.h_out = h_turbine;
@@ -46,14 +46,10 @@ equation
   condenser.P_offset = P_offset;
   condenser.C_incond = C_incond;
 
-  connect(condenser.C_cold_out, cooling_sink.C_in) annotation (Line(points={{16,
-          -1.42222},{30,-1.42222},{30,0},{45,0}}, color={28,108,200}));
-  connect(condensate_sink.C_in, condenser.C_hot_out) annotation (Line(points={{8.88178e-16,
-          -25},{8.88178e-16,-20.5},{0,-20.5},{0,-8.35556}}, color={28,108,200}));
-  connect(turbine_outlet.C_out, condenser.C_hot_in) annotation (Line(points={{-8.88178e-16,
-          25},{-8.88178e-16,16.5},{0,16.5},{0,8}}, color={28,108,200}));
-  connect(cooling_source.C_out, condenser.C_cold_in) annotation (Line(points={{-43,
-          0},{-30,0},{-30,3.55556},{-16.64,3.55556}}, color={28,108,200}));
+  connect(turbine_outlet.C_out, condenser.C_hot_in) annotation (Line(points={{-8.88178e-16,41},{-8.88178e-16,25.6},{0,25.6},{0,10.2}}, color={28,108,200}));
+  connect(cooling_source.C_out, condenser.C_cold_in) annotation (Line(points={{-41,0},{-10,0}}, color={28,108,200}));
+  connect(cooling_sink.C_in, condenser.C_cold_out) annotation (Line(points={{41,0},{9.8,0}}, color={28,108,200}));
+  connect(condensate_sink.C_in, condenser.C_hot_out) annotation (Line(points={{8.88178e-16,-41},{8.88178e-16,-24.5},{0,-24.5},{0,-8}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,80}})),
                         Diagram(coordinateSystem(preserveAspectRatio=false,
