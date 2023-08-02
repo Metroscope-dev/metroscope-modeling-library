@@ -7,19 +7,20 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ## [Unreleased]
 
-### :sparkles: Added <!--Make sure to add a link to the PR and issues related to your change-->
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 
--  ✨ Add and correct initialization parameters in flue gases [#436](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/436/files)
--  ✨ Add indicators in the HX models
--  ✨ Added a wawrning if the steam admitted in the condenser is superheated
+- 🆕 Added fuel valve component [PR#446](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/446)
+- ✨ Add and correct initialization parameters in flue gases [PR#436](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/436)
+- ✨ Add indicators in the HX models [PR#443](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/443)
+- ✨ Added a wawrning if the steam admitted in the condenser is superheated [PR#445](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/445)
 
-### :bug: Fixed <!--Make sure to add a link to the PR and issues related to your change-->
-- :wrench: Initialisation parameters and unit tests of the multifluid heat exchangers fix for a better convergence
-- 🔧 Added `rho_0` as an initialization parameter in the `FlowModel`
+### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+- 🔧 Initialisation parameters and unit tests of the multifluid heat exchangers fix for a better convergence [PR#439](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/439)
+- 🔧 Added `rho_0` as an initialization parameter in the `FlowModel` [PR#440](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/440)
 
-### :boom: Changed <!--Make sure to add a link to the PR and issues related to your change-->
+### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
-### :fire: Removed <!--Make sure to add a link to the PR and issues related to your change-->
+### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
 ## MML - v3.6.0
