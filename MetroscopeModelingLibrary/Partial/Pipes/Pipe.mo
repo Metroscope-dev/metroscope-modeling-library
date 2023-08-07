@@ -10,9 +10,6 @@ partial model Pipe
   Units.DifferentialPressure DP_f "Singular pressure loss";
   Units.DifferentialPressure DP_z "Singular pressure loss";
 
-  Units.DifferentialPressure DP_f_old "Singular pressure loss";
-  Units.DifferentialPressure DP_z_old "Singular pressure loss";
-
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling; // Fouling coefficient
@@ -24,13 +21,10 @@ equation
     fouling = 0;
   end if;
 
-  DP_f_old = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho;
-  DP_z_old = - rho*Constants.g*delta_z;
-
   DP_f = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho_in;
   DP_z = - rho_in*Constants.g*delta_z;
 
-  DP = time * (DP_f + DP_z) + (1-time)*(DP_f_old+DP_z_old);
+  DP = DP_f + DP_z;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=true,
