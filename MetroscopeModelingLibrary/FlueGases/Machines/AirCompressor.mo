@@ -5,7 +5,7 @@ model AirCompressor
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium,
-    Q_0 = 500, rho_in(start=1), rho_out(start=1), rho(start=1)) annotation (IconMap(primitivesVisible=false));
+    Q_0 = 500, rho_0 = 1) annotation (IconMap(primitivesVisible=false));
 
   package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 

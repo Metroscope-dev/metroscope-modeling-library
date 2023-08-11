@@ -21,8 +21,8 @@ equation
     fouling = 0;
   end if;
 
-  DP_f = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho;
-  DP_z = - rho*Constants.g*delta_z;
+  DP_f = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho_in;
+  DP_z = - rho_in*Constants.g*delta_z;
 
   DP = DP_f + DP_z;
   annotation (

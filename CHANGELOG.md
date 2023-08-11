@@ -19,6 +19,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 - 🔧 Added `rho_0` as an initialization parameter in the `FlowModel` [PR#440](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/440)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+- Pressure losses equations in Pipe, ControlValve and SlidingValve now use inlet density instead of mean density. This change can affect calibrated models. [PR#450](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/450)
 
 ### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
