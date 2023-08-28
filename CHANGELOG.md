@@ -9,14 +9,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 
-- 🆕 Added fuel valve component [PR#446](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/446)
-- ✨ Add and correct initialization parameters in flue gases [PR#436](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/436)
-- ✨ Add indicators in the HX models [PR#443](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/443)
-- ✨ Added a wawrning if the steam admitted in the condenser is superheated [PR#445](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/445)
-
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
-- 🔧 Initialisation parameters and unit tests of the multifluid heat exchangers fix for a better convergence [PR#439](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/439)
-- 🔧 Added `rho_0` as an initialization parameter in the `FlowModel` [PR#440](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/440)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Pressure losses equations in Pipe, ControlValve and SlidingValve now use inlet density instead of mean density. This change can affect calibrated models. [PR#450](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/450)
@@ -24,15 +17,26 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
-## MML - v3.6.0
+## MML - v3.6.1
 
-### :boom: Changed
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 
-- Fixed all icons issues in [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
+- 🆕 Added fuel valve component [PR#446](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/446)
+- ✨ Add and correct initialization parameters in flue gases [PR#436](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/436)
+- ✨ Add indicators in the HX models [PR#443](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/443)
+- ✨ Added a warning if the steam admitted in the condenser is superheated [PR#445](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/445)
+- 🆕 Tank component [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
 
-### :sparkles: Added
+### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
-- Tank component [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
+- 🔧 Initialisation parameters and unit tests of the multifluid heat exchangers fix for a better convergence [PR#439](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/439)
+- 🔧 Added `rho_0` as an initialization parameter in the `FlowModel` [PR#440](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/440)
+
+### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+
+- 💅 Fixed all icons issues in [PR#434](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/434)
+
+### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 ## MML - v3.6.0
 
