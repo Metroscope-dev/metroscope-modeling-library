@@ -1,6 +1,8 @@
 # <img src="https://github.com/Metroscope-dev/metroscope-modeling-library/assets/97044708/e44434a7-5f0b-42c9-8800-a31d99fb7b7d" height="30"> Metroscope Modeling Library 
 
-[![Metroscope](https://img.shields.io/badge/by-Metroscope-blue)](https://metroscope.tech) [![TSP](https://img.shields.io/badge/based_on-ThermoSysPro-green)](https://thermosyspro.com) [![License](https://img.shields.io/badge/licensed_under-Modelica_License_2-red)](https://github.com/Metroscope-dev/metroscope-modeling-library/blob/main/LICENSE.md)
+[![Metroscope](https://img.shields.io/badge/by-Metroscope-blue)](https://metroscope.tech) [![TSP](https://img.shields.io/badge/based_on-ThermoSysPro-green)](https://thermosyspro.com) [![License](https://img.shields.io/badge/licensed_under-Modelica_License_2-red)](https://github.com/Metroscope-dev/metroscope-modeling-library/blob/main/LICENSE.md) [![GitHub release (with filter)](https://img.shields.io/github/v/release/Metroscope-dev/metroscope-modeling-library)](https://github.com/Metroscope-dev/metroscope-modeling-library/releases)
+
+
 
 ## 📃 Content
 
@@ -19,7 +21,7 @@ You can use comments in the documentation to ask questions about the library. Pl
 
 ## 🐛 Reporting a bug 
 
-![GitHub issues by-label](https://img.shields.io/github/issues/Metroscope-dev/metroscope-modeling-library/%F0%9F%90%9Bbug?label=bugs&color=red)
+[![GitHub issues by-label](https://img.shields.io/github/issues/Metroscope-dev/metroscope-modeling-library/%F0%9F%90%9Bbug?label=bugs&color=red)](https://github.com/Metroscope-dev/metroscope-modeling-library/issues?q=is%3Aissue+is%3Aopen+label%3A%F0%9F%90%9Bbug)
 
 - Report your issues on [issues page](https://github.com/Metroscope-dev/metroscope-modeling-library/issues)
 - Do not attach sensitive data to the GitHub issue you create
@@ -31,7 +33,7 @@ You can use comments in the documentation to ask questions about the library. Pl
 
 ## 👨‍💻 Contributions
 
-![GitHub issues by-label](https://img.shields.io/github/issues/Metroscope-dev/metroscope-modeling-library/%E2%9C%A8enhancement?label=feature%20request&color=blue&link=https%3A%2F%2Fgithub.com%2FMetroscope-dev%2Fmetroscope-modeling-library%2Flabels%2F%25E2%259C%25A8enhancement)
+[![GitHub issues by-label](https://img.shields.io/github/issues/Metroscope-dev/metroscope-modeling-library/%E2%9C%A8enhancement?label=feature%20request&color=blue&link=https%3A%2F%2Fgithub.com%2FMetroscope-dev%2Fmetroscope-modeling-library%2Flabels%2F%25E2%259C%25A8enhancement)](https://github.com/Metroscope-dev/metroscope-modeling-library/issues?q=is%3Aissue+is%3Aopen+label%3A%E2%9C%A8enhancement)
 
 Your contributions are very welcome. To contribute, you have to clone or fork the repository `Metroscope Modeling Library`: `git clone git@github.com:Metroscope-dev/metroscope-modeling-library.git`
 
