@@ -1,4 +1,6 @@
-# <img src="https://github.com/Metroscope-dev/metroscope-modeling-library/assets/97044708/e44434a7-5f0b-42c9-8800-a31d99fb7b7d" height="40"> Metroscope Modeling Library [![Metroscope](https://img.shields.io/badge/by-Metroscope-blue)](https://metroscope.tech) [![TSP](https://img.shields.io/badge/based_on-ThermoSysPro-green)](https://thermosyspro.com) [![License](https://img.shields.io/badge/license-Modelica_License_2-red)](https://github.com/Metroscope-dev/metroscope-modeling-library/blob/main/LICENSE.md)
+# <img src="https://github.com/Metroscope-dev/metroscope-modeling-library/assets/97044708/e44434a7-5f0b-42c9-8800-a31d99fb7b7d" height="30"> Metroscope Modeling Library 
+
+[![Metroscope](https://img.shields.io/badge/by-Metroscope-blue)](https://metroscope.tech) [![TSP](https://img.shields.io/badge/based_on-ThermoSysPro-green)](https://thermosyspro.com) [![License](https://img.shields.io/badge/licensed_under-Modelica_License_2-red)](https://github.com/Metroscope-dev/metroscope-modeling-library/blob/main/LICENSE.md)
 
 ## 📃 Content
 
