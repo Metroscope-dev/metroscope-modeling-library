@@ -9,6 +9,8 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 
+- Added compressor and gas turbine internal faults, and missing Fuel and FlueGases pipes, with all corresponding tests [PR#457](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/457)
+
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
