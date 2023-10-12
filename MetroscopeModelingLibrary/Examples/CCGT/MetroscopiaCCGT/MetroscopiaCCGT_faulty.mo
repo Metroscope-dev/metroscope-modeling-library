@@ -8,7 +8,9 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
     Reheater(faulty=true),
     evaporator(faulty=true),
     economiser(faulty=true),
-    HPST_control_valve(faulty=true));
+    HPST_control_valve(faulty=true),
+    airCompressor(faulty=true),
+    gasTurbine(faulty=true));
 
   // Heat exchangers failures
   input Real Fault_Reheater_fouling(start=0);
@@ -28,9 +30,14 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
 
   // Gas turbine failures
   input Real Fault_AirFilter_fouling(start=0);
+  input Real Fault_airCompressor_tau_decrease(start=0);
+  input Real Fault_airCompressor_eta_is_decrease(start=0);
+  input Real Fault_gasTurbine_eta_is_decrease(start=0);
+
 
   // Steam turbine
   input Real Fault_HPST_CV_closed_valve(start=0);
+
 
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_turbine_to_condenser_leak
     annotation (Placement(transformation(
@@ -83,6 +90,9 @@ equation
 
   //Gas turbine
   AirFilter.fouling = Fault_AirFilter_fouling;
+  airCompressor.tau_decrease = Fault_airCompressor_tau_decrease;
+  airCompressor.eta_is_decrease = Fault_airCompressor_eta_is_decrease;
+  gasTurbine.eta_is_decrease = Fault_gasTurbine_eta_is_decrease;
 
   connect(P_HPST_in_sensor.C_in, HPST_control_valve.C_out) annotation (Line(
         points={{-180,180},{-183.375,180},{-183.375,180},{-186.75,180}}, color={

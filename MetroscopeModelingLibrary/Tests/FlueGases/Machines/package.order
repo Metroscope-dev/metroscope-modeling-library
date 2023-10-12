@@ -1,4 +1,6 @@
 AirCompressor_direct
 AirCompressor_reverse
+AirCompressor_faulty
 GasTurbine_direct
 GasTurbine_reverse
+GasTurbine_faulty

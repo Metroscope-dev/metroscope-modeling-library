@@ -18,15 +18,25 @@ model AirCompressor
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage eta_is_decrease(min = 0, max=100) "percentage decrease of eta_is";
+  Units.Percentage tau_decrease(min = 0, max=100) "percentage decrease of tau";
 
   Power.Connectors.Inlet C_W_in annotation (Placement(transformation(extent={{90,50},{110,70}}),  iconTransformation(extent={{90,50},{110,70}})));
 equation
 
+  // Failure modes
+  if not faulty then
+    eta_is_decrease = 0;
+    tau_decrease = 0;
+  end if;
+
   /* Compression ratio */
-  tau = P_out/P_in;
+  tau*(1-tau_decrease/100) = P_out/P_in;
 
   /* Fluid specific enthalpy after the expansion */
-  DH*eta_is = h_is - h_in;
+  DH*eta_is*(1-eta_is_decrease/100) = h_is - h_in;
 
   /* Mechanical power from the turbine */
   C_W_in.W = W;

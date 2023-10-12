@@ -21,14 +21,24 @@ model GasTurbine
 
   Units.Power W_shaft;
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage eta_is_decrease(min = 0, max=100) "percentage decrease of eta_is";
+
+
   Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
 equation
+
+  // Failure modes
+  if not faulty then
+    eta_is_decrease = 0;
+  end if;
 
   /* Compression ratio */
   tau = P_in/P_out;
 
   /* Fluid specific enthalpy after the expansion */
-  DH = eta_is*(h_is - h_in);
+  DH = eta_is*(1-eta_is_decrease/100)*(h_is - h_in);
 
   /* Mechanical power produced by the turbine */
   W_shaft = - C_W_shaft.W;
