@@ -115,7 +115,7 @@ equation
   Q_cold = cold_side.Q;
   T_cold_in = cold_side.T_in;
   T_cold_out = cold_side.T_out;
-  Qv_cold_in = cold_side.Q / cold_side.rho * (1 - Qv_cold_in_decrease/100);
+  cold_side.Qv = Qv_cold_in * (1 - Qv_cold_in_decrease/100);
 
   Q_hot = hot_side.Q;
   T_hot_in = hot_side.T_in;
