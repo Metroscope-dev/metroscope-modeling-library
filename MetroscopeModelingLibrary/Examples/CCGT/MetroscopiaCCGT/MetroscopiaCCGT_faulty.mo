@@ -20,6 +20,7 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
   input Real Fault_economiser_fouling(start=0);
   input Real Fault_condenser_fouling(start=0);
   input Real Fault_condenser_air_intake(start=0);
+  input Real Fault_condenser_Qv_cold_in_decrease(start=0);
 
   // Leaks
   input Real Fault_bypass_HP_turbine_to_condenser_leak_Q(start=0);
@@ -69,6 +70,7 @@ equation
   //Condenser
   condenser.fouling = Fault_condenser_fouling;
   condenser.air_intake = Fault_condenser_air_intake;
+  condenser.Qv_cold_in_decrease = Fault_condenser_Qv_cold_in_decrease;
 
   //Reheater
   Reheater.fouling = Fault_Reheater_fouling;

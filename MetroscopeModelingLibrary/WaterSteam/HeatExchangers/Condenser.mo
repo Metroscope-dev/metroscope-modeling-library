@@ -35,6 +35,7 @@ model Condenser
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100, start=0, nominal=10); // Fouling percentage
   Real air_intake(unit="mol/m3", min=0, start=0, nominal=1e-3); // Air intake
+  Units.Percentage Qv_cold_in_decrease(start=0); // Decrease of Qv_cold_in, in %
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 5000;
@@ -106,6 +107,7 @@ equation
   if not faulty then
     fouling = 0;
     air_intake=0;
+    Qv_cold_in_decrease=0;
   end if;
 
 
@@ -113,7 +115,7 @@ equation
   Q_cold = cold_side.Q;
   T_cold_in = cold_side.T_in;
   T_cold_out = cold_side.T_out;
-  Qv_cold_in = cold_side.Q / cold_side.rho;
+  Qv_cold_in = cold_side.Q / cold_side.rho * (1 - Qv_cold_in_decrease/100);
 
   Q_hot = hot_side.Q;
   T_hot_in = hot_side.T_in;
