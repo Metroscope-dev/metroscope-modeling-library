@@ -16,11 +16,11 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
-## MML - v3.6.2
+## MML - v3.7.0
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 
-- Added compressor and gas turbine internal faults, and missing Fuel and FlueGases pipes, with all corresponding tests [PR#457](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/457)
+- Added compressor and gas turbine internal faults, condenser `Qv_cold_in` decrease fault, and missing Fuel and FlueGases pipes, with all corresponding tests [PR#457](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/457)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Pressure losses equations in Pipe, ControlValve and SlidingValve now use inlet density instead of mean density. This change can affect calibrated models. [PR#450](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/450)
