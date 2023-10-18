@@ -12,6 +12,7 @@ atmospheric_pressure_in_bar
 P0_psiG_in_psiA
 P0_kPaG_in_kPaA
 P0_MPaG_in_MPaA
+m3s_to_lm
 kgs_to_th
 kgs_to_lbs
 kgs_to_Mlbh
