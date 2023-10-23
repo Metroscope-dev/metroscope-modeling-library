@@ -3,18 +3,18 @@ model Fogging_reverse
 
   // Boundary conditions
   input Real P_fg_in(start = 1.1, min = 0, nominal = 10) "barA";
-  input Utilities.Units.MassFlowRate Q_fg_in(start = 640) "kg/s";
-  input Utilities.Units.Temperature T_fg_in(start = 30) "degC";
+  input Utilities.Units.MassFlowRate Q_fg_in(start = 660) "kg/s";
+  input Utilities.Units.Temperature T_fg_in(start = 22.21) "degC";
 
   input Real P_water(start = 5, min = 0, nominal = 10) "barA";
-  input Utilities.Units.MassFlowRate Q_water(start = 1) "kg/s";
-  input Utilities.Units.Temperature T_water(start = 20, min = 0, nominal = 50) "degC";
+  input Real Q_water(start = 68.68) "l/m";
+  input Utilities.Units.Temperature T_water(start = 19.86, min = 0, nominal = 50) "degC";
 
   // Calibrated parameters
-  output Utilities.Units.MassFraction x_vapor;
+  input Utilities.Units.MassFraction x_vapor(start=1);
 
   // Calibration inputs
-  input Utilities.Units.Temperature T_fg_out(start = 27) "degC";
+  output Utilities.Units.Temperature T_fg_out "degC";
 
   MultiFluid.HeatExchangers.Fogging fogging annotation (Placement(transformation(extent={{10,-30},{30,-10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source_w annotation (Placement(transformation(
@@ -47,11 +47,11 @@ equation
   T_fg_in_sensor.T_degC = T_fg_in;
   source_fg.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
   P_water_sensor.P_barA = P_water;
-  Q_water_sensor.Q = Q_water;
+  Q_water_sensor.Q_lm = Q_water;
   T_water_sensor.T_degC = T_water;
 
   // Calibrated parameters
-  fogging.x_vapor = x_vapor;
+  fogging.x_vapor = x_vapor - 0.5*time;
 
   // Calibration inputs
   T_fg_out_sensor.T_degC = T_fg_out;

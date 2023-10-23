@@ -5,12 +5,21 @@ model Fogging
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
+  // Boundary Conditions
+  Inputs.InputMassFlowRate Q_fg_in(start=Q_fg_in_0) "Inlet fg mass flow rate at the inlet";
+
   // Parameters
   Inputs.InputMassFraction x_vapor(start=1); // Vapor mass fraction
 
   // Definitions
   Units.SpecificEnthalpy h_vap_sat;
   Units.SpecificEnthalpy h_liq_sat;
+  Units.MassFlowRate Q_w_in(start=Q_w_in_0) "Inlet fg mass flow rate at the inlet";
+
+  // Initialization parameters
+  // Flow Rates
+  parameter Units.MassFlowRate Q_fg_in_0 = 500;
+  parameter Units.MassFlowRate Q_w_in_0 = 1;
 
 
   WaterSteam.Connectors.Inlet C_water_in annotation (Placement(transformation(extent={{-10,50},{10,70}}), iconTransformation(extent={{-10,50},{10,70}})));
@@ -23,26 +32,28 @@ model Fogging
         rotation=270,
         origin={0,-44})));
   FlueGases.Connectors.Inlet C_fg_inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
-  FlueGases.Pipes.HeatLoss evaporative_cooling annotation (Placement(transformation(extent={{30,-10},{50,10}})));
+  FlueGases.Pipes.HeatLoss evaporative_cooling annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
   FlueGases.BoundaryConditions.Source source_fg annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-40,64})));
+        origin={40,44})));
   FlueGases.Connectors.Outlet C_fg_out annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
-  FlueGases.Pipes.PressureCut fogging_nozzle_fg annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-40,30})));
   WaterSteam.Pipes.PressureCut fogging_nozzle_w annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,14})));
-  FlueGases.BaseClasses.IsoPHFlowModel isoPHFlowModel annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
+  FlueGases.Pipes.PressureCut pressureCut annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={40,20})));
 equation
 
+  // Boundary Conditions
+  evaporative_cooling.Q = Q_fg_in;
 
   // Definitions
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(water_evaporation.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(water_evaporation.P_in));
+  fogging_nozzle_w.Q = Q_w_in;
 
   // Parameters
   x_vapor = (water_evaporation.h_out - h_liq_sat)/(h_vap_sat - h_liq_sat);
@@ -53,24 +64,24 @@ equation
   // Mixing
   source_fg.P_out = sink_w.P_in;
   source_fg.Q_out = - sink_w.Q_in;
-  source_fg.T_out = isoPHFlowModel.T_out;
+  source_fg.T_out = evaporative_cooling.T_out;
   source_fg.Xi_out[1] = 0;
   source_fg.Xi_out[2] = 0;
   source_fg.Xi_out[3] = 1;
   source_fg.Xi_out[4] = 0;
   source_fg.Xi_out[5] = 0;
-  water_evaporation.P_in = isoPHFlowModel.P_in;
+  water_evaporation.P_in = evaporative_cooling.P_in;
 
 
-  connect(evaporative_cooling.C_out, C_fg_out) annotation (Line(points={{50,0},{100,0}},color={95,95,95}));
-  connect(fogging_nozzle_fg.C_in, source_fg.C_out) annotation (Line(points={{-40,40},{-40,59}}, color={95,95,95}));
+  connect(evaporative_cooling.C_out, C_fg_out) annotation (Line(points={{-40,0},{100,0}},
+                                                                                        color={95,95,95}));
   connect(water_evaporation.C_out, sink_w.C_in) annotation (Line(points={{-1.77636e-15,-24},{-1.77636e-15,-27.5},{8.88178e-16,-27.5},{8.88178e-16,-39}},
                                                                                                                                                      color={28,108,200}));
-  connect(evaporative_cooling.C_in, isoPHFlowModel.C_out) annotation (Line(points={{30,0},{-50,0}}, color={95,95,95}));
-  connect(isoPHFlowModel.C_in, C_fg_inlet) annotation (Line(points={{-70,0},{-100,0}},color={95,95,95}));
-  connect(fogging_nozzle_fg.C_out, isoPHFlowModel.C_out) annotation (Line(points={{-40,20},{-40,0},{-50,0}}, color={95,95,95}));
   connect(fogging_nozzle_w.C_out, water_evaporation.C_in) annotation (Line(points={{-1.77636e-15,4},{-1.77636e-15,-1},{1.77636e-15,-1},{1.77636e-15,-4}}, color={28,108,200}));
   connect(fogging_nozzle_w.C_in, C_water_in) annotation (Line(points={{1.77636e-15,24},{1.77636e-15,41},{0,41},{0,60}}, color={28,108,200}));
+  connect(source_fg.C_out, pressureCut.C_in) annotation (Line(points={{40,39},{40,30}}, color={95,95,95}));
+  connect(pressureCut.C_out, C_fg_out) annotation (Line(points={{40,10},{40,0},{100,0}}, color={95,95,95}));
+  connect(evaporative_cooling.C_in, C_fg_inlet) annotation (Line(points={{-60,0},{-100,0}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           extent={{-100,60},{100,-60}},
