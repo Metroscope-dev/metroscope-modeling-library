@@ -237,18 +237,19 @@ package DynamicComponents
 
       // Geometry
       // Pipes
-      parameter Real D_out = 0.03 "Pipe outer diameter";
-      parameter Real e = 0.003 "Pipe wall thickness";
-      parameter Real L = 22 "Tube length";
+      parameter Units.DifferentialHeight D_out = 0.03 "Pipe outer diameter";
+      parameter Units.DifferentialHeight e = 0.003 "Pipe wall thickness";
+      parameter Units.DifferentialHeight D_in = D_out - 2*e "Pipe inner diameter";
+      parameter Units.DifferentialHeight L = 22 "Tube length";
       parameter Integer N_tubes = 180 "Number of tubes";
 
       // Water side properties
-      parameter Real A_water = 680 "m2";
-      parameter Real hc_water = 2400 "W/m2.K";
+      parameter Units.Area A_water = N_tubes*L*Modelica.Constants.pi*D_in "water side heat exchange surface";
+      parameter Units.HeatExchangeCoefficient hc_water = 2430 "W/m2.K";
 
       // Flue gases properties
-      parameter Real A_fg = 2800 "m2";
-      parameter Real hc_fg = 80 "W/m2.K";
+      parameter Units.Area A_fg = 2800 "m2";
+      parameter Units.HeatExchangeCoefficient hc_fg = 82.06 "W/m2.K";
 
       // Wall properties
       parameter Real M_wall = 17800 "kg";
@@ -540,6 +541,61 @@ package DynamicComponents
           __Dymola_NumberOfIntervals=1000,
           __Dymola_Algorithm="Dassl"));
     end MonoPhasicHX_node_test;
+
+    model MonoPhasicHX_node_Geometry_test
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+      HeatExchangers.MonoPhasicHX_nodes_Geometry
+                                        monoPhasicHX_nodes_Geometry(
+                                                           N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        N_tubes=2*184,
+        A_water=676.73035,
+        T_wall_0=745.15)                                                          annotation (Placement(transformation(extent={{-10,-10},{10,12}})));
+
+        // Boundary conditions
+      input Real P_hot_source(start = 1.1, min = 0, nominal = 1) "barA";
+      input Real Q_hot_source(start = 658.695) "kg/s";
+      input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+      input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
+      input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
+      input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
+
+      WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=180,
+            origin={64,20})));
+      WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{-54,10},{-74,30}})));
+      FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-76,-50},{-56,-30}})));
+      FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{54,-50},{74,-30}})));
+      Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-72,66},{-52,86}})));
+      Modelica.Blocks.Sources.Ramp ramp(
+        height=-20,
+        duration=60,
+        startTime=300) annotation (Placement(transformation(extent={{-6,66},{14,86}})));
+    equation
+      hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+      hot_source.P_out = P_hot_source*1e5;
+      hot_source.T_out = T_hot_source + 273.15 + ramp.y;
+      hot_source.Q_out = - Q_hot_source + step.y;
+
+      cold_source.P_out = P_cold_source*1e5;
+      cold_source.T_out = 273.15 + T_cold_source;
+      cold_source.Q_out = - Q_cold_source;
+
+      connect(monoPhasicHX_nodes_Geometry.water_inlet, cold_source.C_out) annotation (Line(points={{5,4.3},{5,2},{54,2},{54,20},{59,20}}, color={28,108,200}));
+      connect(monoPhasicHX_nodes_Geometry.water_outlet, cold_sink.C_in) annotation (Line(points={{-5,4.3},{-32,4.3},{-32,20},{-59,20}}, color={28,108,200}));
+      connect(monoPhasicHX_nodes_Geometry.fg_inlet, hot_source.C_out) annotation (Line(points={{-5,-2.3},{-5,-2},{-50,-2},{-50,-40},{-61,-40}}, color={95,95,95}));
+      connect(monoPhasicHX_nodes_Geometry.fg_outlet, hot_sink.C_in) annotation (Line(points={{5,-2.3},{5,-2},{50,-2},{50,-40},{59,-40}}, color={95,95,95}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(
+          StopTime=500,
+          __Dymola_NumberOfIntervals=1000,
+          __Dymola_Algorithm="Dassl"));
+    end MonoPhasicHX_node_Geometry_test;
   end Tests;
   annotation (Icon(graphics={Line(points={{-56,72}}, color={28,108,200}), Line(
           points={{-100,0},{-50,100},{50,-100},{100,0}},
