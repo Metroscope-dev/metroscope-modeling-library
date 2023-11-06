@@ -289,7 +289,7 @@ package DynamicComponents
       Units.Temperature T_water_avg[N] "Node average water temperature";
       Units.Temperature T_fg[N+1] "Node boundary flue gas temperature";
       Units.Temperature T_fg_avg[N] "Node average flue gas temperature";
-      Units.Temperature T_wall[N](each start=T_wall_0, fixed=true) "Node wall temperature";
+      Units.Temperature T_wall[N](each start=T_wall_0, fixed=true) "Node wall temperature"; // add an init equation
 
       // ------ States ------
       WaterSteamMedium.ThermodynamicState state_water[N+1];
@@ -347,8 +347,8 @@ package DynamicComponents
         dW_fg[i] = Q_fg*(h_fg[i] - h_fg[i+1]);
 
         // ------ Heat transfer equations ------
-        dW_water[i] + dW_fg[i] = -dM_wall*Cp_wall*der(T_wall[i]);
-        dW_water[i] = -hc_water*dA_water*(T_water_avg[i] - T_wall[i]);
+        dW_water[i] + dW_fg[i] = -dM_wall*Cp_wall*der(T_wall[i]); // equal zero
+        dW_water[i] = -hc_water*dA_water*(T_water_avg[i] - T_wall[i]); // naming of convection HTC
         dW_fg[i] = -hc_fg*dA_fg*(T_fg_avg[i] - T_wall[i]);
 
         // ------- Average temperatures ------
