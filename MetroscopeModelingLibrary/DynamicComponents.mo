@@ -1484,8 +1484,8 @@ package DynamicComponents
             k_fg_node[i] = 0.5*(k_fg[i] + k_fg[i+1]);
 
           // Conduction heat transfer
-            dW_water[i] = 2*pi*K_cond_wall*dx*L*(T_wall[i] - T_wall_water[i])/(Modelica.Math.log(1 + e/D_in));
-            dW_fg[i] = 2*pi*K_cond_wall*dx*L*(T_wall[i] - T_wall_fg[i])/(Modelica.Math.log(1 + e/(e + D_in)));
+            dW_water[i] = 2*pi*K_cond_wall*dx*N_tubes*(T_wall[i] - T_wall_water[i])/(Modelica.Math.log(1 + e/D_in));
+            dW_fg[i] = 2*pi*K_cond_wall*dx*N_tubes*(T_wall[i] - T_wall_fg[i])/(Modelica.Math.log(1 + e/(e + D_in)));
 
           // Node energy balance
             // Water side
@@ -2765,11 +2765,16 @@ package DynamicComponents
 
           // 1-D Conduction
             // Conduction boundary conditions
-            K_conv_water[i]*(T_water_node[i] - T_wall_y[1,i]) + K_cond_wall*(T_wall_y[2,i] - T_wall_y[1,i])/dx = K_cond_wall/a_wall*dy_wall/2*der(T_wall_y[1,i]); // check sign
-            K_conv_fg*(T_fg_node[i] - T_wall_y[N_wall+1,i]) - K_cond_wall*(T_wall_y[N_wall+1,i] - T_wall_y[N_wall,i])/dx = K_cond_wall/a_wall*dy_wall/2*der(T_wall_y[N_wall+1,i]); // check sign
+             // K_conv_water[i]*(T_water_node[i] - T_wall_y[1,i]) + K_cond_wall*(T_wall_y[2,i] - T_wall_y[1,i])/dy_wall = K_cond_wall/a_wall*dy_wall/2*der(T_wall_y[1,i]); // check sign
+             // K_conv_fg*(T_fg_node[i] - T_wall_y[N_wall+1,i]) - K_cond_wall*(T_wall_y[N_wall+1,i] - T_wall_y[N_wall,i])/dy_wall = K_cond_wall/a_wall*dy_wall/2*der(T_wall_y[N_wall+1,i]); // check sign
+    //        dW_water[i]/dA_water + K_cond_wall*(T_wall_y[2,i] - T_wall_y[1,i])/dy_wall = K_cond_wall/a_wall*dy_wall/2*der(T_wall_y[1,i]); // check sign
+    //        dW_fg[i]/(dA_fg_tubes + eff_fins*dA_fg_fin) - K_cond_wall*(T_wall_y[N_wall+1,i] - T_wall_y[N_wall,i])/dy_wall = K_cond_wall/a_wall*dy_wall/2*der(T_wall_y[N_wall+1,i]); // check sign
+              - dW_water[i] + K_cond_wall*(T_wall_y[2,i] - T_wall_y[1,i])/dy_wall*pi*D_in*0.5*dx*N_tubes = dM_wall*Cp_wall/N_wall/2*der(T_wall_y[1,i]); // check sign
+              - dW_fg[i] - K_cond_wall*(T_wall_y[N_wall+1,i] - T_wall_y[N_wall,i])/dy_wall*pi*D_out*0.5*dx*N_tubes = dM_wall*Cp_wall/N_wall/2*der(T_wall_y[N_wall+1,i]); // check sign
+
             // Conduction inner nodes
             for j in 2:N_wall loop
-              K_cond_wall*(T_wall_y[j-1,i] - T_wall_y[j,i])/dy_wall + K_cond_wall*(T_wall_y[j+1,i] - T_wall_y[j,i])/dy_wall = K_cond_wall/a_wall*dy_wall*der(T_wall_y[j,i]);
+              K_cond_wall*(T_wall_y[j-1,i] - T_wall_y[j,i])/dy_wall + K_cond_wall*(T_wall_y[j+1,i] - T_wall_y[j,i])/dy_wall = dM_wall*Cp_wall/N_wall*der(T_wall_y[j,i]);
             end for;
 
           // Node energy balance
@@ -3052,6 +3057,7 @@ package DynamicComponents
       HeatExchangers.MonoPhasicHX_2NodesConduction monoPhasicHX_2NodesConduction(
         N_tubes_row=184,
         Rows=2,
+        K_cond_wall=27,
         Tubes_Config=2,
         fg_path_width=14.07,
         N=10,
