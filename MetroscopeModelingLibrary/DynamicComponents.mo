@@ -1139,13 +1139,12 @@ package DynamicComponents
             // Conduction boundary conditions
               //- dW_water[i] + K_cond_wall*(T_wall_y[2,i] - T_wall_y[1,i])/dy_wall*pi*D_in*dx*N_tubes = dM_wall*Cp_wall/N_wall/2*der(T_wall_y[1,i]); // check sign
 
-              - dW_water[i] + K_cond_wall*2*pi*dx*N_tubes*(T_wall_y[2,i] - T_wall_y[1,i])/(Modelica.Math.log(D_in/(D_in + dy_wall))) = dM_wall*Cp_wall/N_wall/2*der(T_wall_y[1,i]);
-
-              - dW_fg[i] - K_cond_wall*2*pi*dx*N_tubes*(T_wall_y[N_wall+1,i] - T_wall_y[N_wall,i])/(Modelica.Math.log((D_out - dy_wall)/D_out)) = dM_wall*Cp_wall/N_wall/2*der(T_wall_y[N_wall+1,i]); // check sign
+              - dW_water[i] + K_cond_wall*2*pi*dx*N_tubes*(T_wall_y[2,i] - T_wall_y[1,i])/(Modelica.Math.log(D_in*0.5/(D_in*0.5 + dy_wall))) = dM_wall*Cp_wall/N_wall/2*der(T_wall_y[1,i]);
+              - dW_fg[i] - K_cond_wall*2*pi*dx*N_tubes*(T_wall_y[N_wall+1,i] - T_wall_y[N_wall,i])/(Modelica.Math.log((D_out*0.5 - dy_wall)/D_out*0.5)) = dM_wall*Cp_wall/N_wall/2*der(T_wall_y[N_wall+1,i]); // check sign
 
             // Conduction inner nodes
             for j in 2:N_wall loop
-              + K_cond_wall*2*pi*dx*N_tubes*(T_wall_y[j-1,i] - T_wall_y[j,i])/(Modelica.Math.log((D_in/2 + (j-1)*dy_wall)/(D_in/2 + (j-2)*dy_wall)))
+              K_cond_wall*2*pi*dx*N_tubes*(T_wall_y[j-1,i] - T_wall_y[j,i])/(Modelica.Math.log((D_in/2 + (j-1)*dy_wall)/(D_in/2 + (j-2)*dy_wall)))
               + K_cond_wall*2*pi*dx*N_tubes*(T_wall_y[j+1,i] - T_wall_y[j,i])/(Modelica.Math.log((D_in/2 + (j-1)*dy_wall)/(D_in/2 + j*dy_wall)))
               = dM_wall*Cp_wall/N_wall*der(T_wall_y[j,i]);
             end for;
