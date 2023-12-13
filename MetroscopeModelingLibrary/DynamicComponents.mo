@@ -1320,10 +1320,10 @@ package DynamicComponents
       // ------ Fluids properties ------
         // State
         WaterSteamMedium.ThermodynamicState state_water[N+1] "Water side node boundary state";
-        FlueGasesMedium.ThermodynamicState state_fg[N+1] "Flue gas side node boundary states";
+        FlueGasesMedium.ThermodynamicState state_fg[2, N] "Flue gas side node boundary states";
         // Enthalpy
         Units.SpecificEnthalpy h_water[N+1](each start=h_water_out_0) "Water specific enthalpy";
-        Units.SpecificEnthalpy h_fg[N+1] "Flue gas specific enthalpy";
+        Units.SpecificEnthalpy h_fg[2, N](start = fill(h_fg_out_0, 2, N)) "Flue gas specific enthalpy";
         // Mass flow rate
         Units.PositiveMassFlowRate Q_water(start=Q_water_0) "Water Mass flow rate";
         Units.PositiveMassFlowRate Q_fg(start=Q_fg_0) "Flue gas Mass flow rate";
@@ -1333,7 +1333,7 @@ package DynamicComponents
         // Density
         Units.Density rho_water[N+1] "Node boundary water density";
         Units.Density rho_water_node[N] "Node average water density";
-        Units.Density rho_fg[N+1] "Node boundary flue gas density";
+        Units.Density rho_fg[2, N] "Node boundary flue gas density";
         Units.Density rho_fg_node[N] "Node average flue gas density";
         // Mass fraction
         Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
@@ -1341,53 +1341,53 @@ package DynamicComponents
         // Temperature
         Units.Temperature T_water[N+1] "Node boundary water temperature";
         Units.Temperature T_water_node[N] "Node average water temperature";
-        Units.Temperature T_fg[N+1] "Node boundary flue gas temperature";
+        Units.Temperature T_fg[2, N] "Node boundary flue gas temperature";
         Units.Temperature T_fg_node[N] "Node average flue gas temperature";
         // Dynamic viscosities
         Modelica.Units.SI.DynamicViscosity Mu_water[N+1] "Node boundary water dynamic viscosity";
         Modelica.Units.SI.DynamicViscosity Mu_water_node[N] "Node average water dynamic viscosity";
-        Modelica.Units.SI.DynamicViscosity Mu_fg[N+1] "Node boundary flue gas dynamic viscosity";
+        Modelica.Units.SI.DynamicViscosity Mu_fg[2, N] "Node boundary flue gas dynamic viscosity";
         Modelica.Units.SI.DynamicViscosity Mu_fg_node[N] "Node average flue gas dynamic viscosity";
         // Heat capacities Cp
         Units.HeatCapacity Cp_water[N+1] "Node boundary water Cp";
         Units.HeatCapacity Cp_water_node[N] "Node average water Cp";
-        Units.HeatCapacity Cp_fg[N+1] "Node boundary flue gas Cp";
+        Units.HeatCapacity Cp_fg[2, N] "Node boundary flue gas Cp";
         Units.HeatCapacity Cp_fg_node[N] "Node average flue gas Cp";
         // Thermal conductivity
         Modelica.Units.SI.ThermalConductivity k_water[N+1] "Node boundary water thermal conductivity";
         Modelica.Units.SI.ThermalConductivity k_water_node[N] "Node average water thermal conductivity";
-        Modelica.Units.SI.ThermalConductivity k_fg[N+1] "Node boundary flue gas thermal conductivity";
+        Modelica.Units.SI.ThermalConductivity k_fg[2, N] "Node boundary flue gas thermal conductivity";
         Modelica.Units.SI.ThermalConductivity k_fg_node[N] "Node average flue gas thermal conductivity";
 
       // ------ Conduction variables ------
         Units.Temperature T_wall[N] "Node wall average temperature";
 
       // ------ Tubes configuration parameters ------
-        Units.Velocity U_fg_face "Flue gas face velocity";
-        Units.Velocity U_fg_max "Flue gas maximum velocity";
-        Real Re_fg_max "Flue gas maximum Reynold's number";
-        Real Pr_fg "Flue gas overall average Prandtl number";
-        FlueGasesMedium.ThermodynamicState state_fg_s "Flue gas state at surface temperature";
-        Real Pr_fg_s "Flue gas overall average Prandtl number at surface temperature";
-        Real Nu_fg_avg "Flue gass overall average Nusselt number";
-        Units.HeatExchangeCoefficient K_conv_fg "Flue gase convection heat transfer coefficient"; //  = 82.06
+    //     Units.Velocity U_fg_face "Flue gas face velocity";
+    //     Units.Velocity U_fg_max "Flue gas maximum velocity";
+    //     Real Re_fg_max "Flue gas maximum Reynold's number";
+    //     Real Pr_fg "Flue gas overall average Prandtl number";
+    //     FlueGasesMedium.ThermodynamicState state_fg_s "Flue gas state at surface temperature";
+    //     Real Pr_fg_s "Flue gas overall average Prandtl number at surface temperature";
+    //     Real Nu_fg_avg "Flue gass overall average Nusselt number";
+        parameter Units.HeatExchangeCoefficient K_conv_fg = 76.83 "Flue gase convection heat transfer coefficient"; //  = 82.06
 
       // ------ Heat transfer parameters ------
-        // Average velocities
-        Units.Velocity U_water_node[N] "Node average water velocity";
-        // Prandtl Number
-        Real Pr_water[N] "Node water Prandtl's number";
-        // Reynold's Number
-        Real Re_water[N] "Node water Reynold's number";
-        // Nusselt Nymber
-        Real Nu_water[N] "Node water Nusselt number";
-        // Convection heat transfer coefficient
-        Units.HeatExchangeCoefficient K_conv_water[N](each start=K_conv_water_0) "Water side convection heat transfer coefficient";
+    //     // Average velocities
+    //     Units.Velocity U_water_node[N] "Node average water velocity";
+    //     // Prandtl Number
+    //     Real Pr_water[N] "Node water Prandtl's number";
+    //     // Reynold's Number
+    //     Real Re_water[N] "Node water Reynold's number";
+    //     // Nusselt Nymber
+    //     Real Nu_water[N] "Node water Nusselt number";
+    //     // Convection heat transfer coefficient
+    //     Units.HeatExchangeCoefficient K_conv_water[N](each start=K_conv_water_0) "Water side convection heat transfer coefficient";
         // Discretized heat transfer power
         Units.Power dW_water[N] "Node water heat exchange";
         Units.Power dW_fg[N] "Node flue gas heat exchange";
         // Biot Number
-        Real Bi[N] "Node Biot number";
+    //     Real Bi[N] "Node Biot number";
 
       // Parameters of interest
         Units.Temperature T_water_in "Water inlet temperature";
@@ -1397,12 +1397,14 @@ package DynamicComponents
         Units.Temperature T_water_avg "Water overall average temperature";
         Units.Temperature T_fg_avg "Flue gas overall average temperature";
         Units.Temperature T_wall_avg "Wall overall average temperature";
-        Units.Velocity U_water_avg "Water overall average velocity";
-        Real Pr_water_avg "Water overall average Prandtl number";
-        Real Re_water_avg "Water overall average Reynold's number";
-        Real Nu_water_avg "Water overall average Nusselt number";
-        Real K_conv_water_avg "Water side overall average convection heat transfer coefficient";
-        Real Bi_max "Maximum Biot number";
+    //     Units.Velocity U_water_avg "Water overall average velocity";
+    //     Real Pr_water_avg "Water overall average Prandtl number";
+    //     Real Re_water_avg "Water overall average Reynold's number";
+    //     Real Nu_water_avg "Water overall average Nusselt number";
+    //     Real K_conv_water_avg "Water side overall average convection heat transfer coefficient";
+    //     Real Bi_max "Maximum Biot number";
+
+        parameter Real K_conv_water = 2418 "Water side overall average convection heat transfer coefficient";
 
       WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{90,30},{110,50}}),iconTransformation(extent={{90,30},{110,50}})));
       WaterSteam.Connectors.Outlet water_outlet annotation (Placement(transformation(extent={{-110,32},{-90,52}}),iconTransformation(extent={{-110,32},{-90,52}})));
@@ -1416,8 +1418,13 @@ package DynamicComponents
         // Enthalpy
         h_water[1] = water_side.h_in;
         h_water[N+1] = water_side.h_out;
-        h_fg[1] = fg_side.h_out;
-        h_fg[N+1] = fg_side.h_in;
+
+        sum(h_fg[2, :]) = fg_side.h_out;
+
+        for i in 1:N loop
+          h_fg[1, i] = fg_side.h_in;
+        end for;
+
         // Pressure
         P_water = water_side.P_in;
         P_fg = fg_side.P_in;
@@ -1428,42 +1435,51 @@ package DynamicComponents
         Xi_water = water_side.Xi;
         Xi_fg = fg_side.Xi;
 
-      // ------ Tubes configuration parameters ------
-        // Flue gas face velocity
-        U_fg_face = Q_fg/(rho_fg[N+1]*Af_fg);
-        // Flue gas maximum velocity
-        if (Tubes_Config == 1) then
-          U_fg_max = S_T*U_fg_face/(S_T - D_out);
-        elseif (S_D < (S_T + D_out)/2) then
-          U_fg_max = S_T*U_fg_face/(2*(S_D - D_out));
-        else
-          U_fg_max = S_T*U_fg_face/(S_T - D_out);
-        end if;
-        // Flue gas maximum Reynold's number
-        Re_fg_max = rho_fg[N+1]*U_fg_max*D_out/Mu_fg[N+1];
-        // Flue gas Prandtl number
-        Pr_fg = Cp_fg[N+1]*Mu_fg[N+1]/k_fg[N+1];
-        // Flue gas Prandtl number at surface temperature
-        state_fg_s = FlueGasesMedium.setState_pTX(P_fg, T_wall_avg, Xi_fg);
-        Pr_fg_s = FlueGasesMedium.specificHeatCapacityCp(state_fg_s)*FlueGasesMedium.dynamicViscosity(state_fg_s)/FlueGasesMedium.thermalConductivity(state_fg_s);
-        // Convection coefficient calculation
-        Nu_fg_avg = K_conv_fg*D_out/k_fg[N+1];
-        // Nu_fg_avg = CorrelationConstants.Zukauskas(Re_fg_max, Pr_fg, Pr_fg_s, Tubes_Config, Rows, S_T, S_L);
-        Nu_fg_avg = CorrelationConstants.ESCOA(Re_fg_max, Pr_fg, Rows, T_fg_avg, T_wall_avg, D_out, H_fin, e_fin, S_f, S_T, S_L);
+    //   // ------ Tubes configuration parameters ------
+    //     // Flue gas face velocity
+    //     U_fg_face = Q_fg/(rho_fg[N+1]*Af_fg);
+    //     // Flue gas maximum velocity
+    //     if (Tubes_Config == 1) then
+    //       U_fg_max = S_T*U_fg_face/(S_T - D_out);
+    //     elseif (S_D < (S_T + D_out)/2) then
+    //       U_fg_max = S_T*U_fg_face/(2*(S_D - D_out));
+    //     else
+    //       U_fg_max = S_T*U_fg_face/(S_T - D_out);
+    //     end if;
+    //     // Flue gas maximum Reynold's number
+    //     Re_fg_max = rho_fg[N+1]*U_fg_max*D_out/Mu_fg[N+1];
+    //     // Flue gas Prandtl number
+    //     Pr_fg = Cp_fg[N+1]*Mu_fg[N+1]/k_fg[N+1];
+    //     // Flue gas Prandtl number at surface temperature
+    //     state_fg_s = FlueGasesMedium.setState_pTX(P_fg, T_wall_avg, Xi_fg);
+    //     Pr_fg_s = FlueGasesMedium.specificHeatCapacityCp(state_fg_s)*FlueGasesMedium.dynamicViscosity(state_fg_s)/FlueGasesMedium.thermalConductivity(state_fg_s);
+    //     // Convection coefficient calculation
+    //     Nu_fg_avg = K_conv_fg*D_out/k_fg[N+1];
+    //     // Nu_fg_avg = CorrelationConstants.Zukauskas(Re_fg_max, Pr_fg, Pr_fg_s, Tubes_Config, Rows, S_T, S_L);
+    //     Nu_fg_avg = CorrelationConstants.ESCOA(Re_fg_max, Pr_fg, Rows, T_fg_avg, T_wall_avg, D_out, H_fin, e_fin, S_f, S_T, S_L);
 
       // ------ First node properties ------
         state_water[1] = WaterSteamMedium.setState_phX(P_water, h_water[1], Xi_water);
-        state_fg[1] = FlueGasesMedium.setState_phX(P_fg, h_fg[1], Xi_fg);
+
         T_water[1] = WaterSteamMedium.temperature(state_water[1]);
-        T_fg[1] = FlueGasesMedium.temperature(state_fg[1]);
+
         rho_water[1] = WaterSteamMedium.density(state_water[1]);
-        rho_fg[1] = FlueGasesMedium.density(state_fg[1]);
+
         Mu_water[1] = WaterSteamMedium.dynamicViscosity(state_water[1]);
-        Mu_fg[1] = FlueGasesMedium.dynamicViscosity(state_fg[1]);
+
         Cp_water[1] = WaterSteamMedium.specificHeatCapacityCp(state_water[1]);
-        Cp_fg[1] = FlueGasesMedium.specificHeatCapacityCp(state_fg[1]);
+
         k_water[1] = WaterSteamMedium.thermalConductivity(state_water[1]);
-        k_fg[1] = FlueGasesMedium.thermalConductivity(state_fg[1]);
+
+
+        for i in 1:N loop
+          state_fg[1, i] = FlueGasesMedium.setState_phX(P_fg, h_fg[1, 1], Xi_fg);
+          T_fg[1, i] = FlueGasesMedium.temperature(state_fg[1, 1]);
+          rho_fg[1, i] = FlueGasesMedium.density(state_fg[1, 1]);
+          Mu_fg[1, i] = FlueGasesMedium.dynamicViscosity(state_fg[1, 1]);
+          Cp_fg[1, i] = FlueGasesMedium.specificHeatCapacityCp(state_fg[1, 1]);
+          k_fg[1, i] = FlueGasesMedium.thermalConductivity(state_fg[1, 1]);
+        end for;
 
       // ------ Parameters of interest ------
         // IN/OUT temperatures
@@ -1475,16 +1491,16 @@ package DynamicComponents
         T_water_avg = sum(T_water_node)/N;
         T_fg_avg = sum(T_fg_node)/N;
         T_wall_avg =  sum(T_wall)/N;
-        // Average velocity
-        U_water_avg = sum(U_water_node)/N;
-        // Average heat transfer parameters
-        Pr_water_avg = sum(Pr_water)/N;
-        Re_water_avg = sum(Re_water)/N;
-        Nu_water_avg = sum(Nu_water)/N;
-        K_conv_water_avg = sum(K_conv_water)/N;
-        // Biot number and validity of LCM verification
-        Bi_max = max(Bi);
-        assert(Bi_max < 0.1, "LCM is not valid",  AssertionLevel.warning);
+    //     // Average velocity
+    //     U_water_avg = sum(U_water_node)/N;
+    //     // Average heat transfer parameters
+    //     Pr_water_avg = sum(Pr_water)/N;
+    //     Re_water_avg = sum(Re_water)/N;
+    //     Nu_water_avg = sum(Nu_water)/N;
+    //     K_conv_water_avg = sum(K_conv_water)/N;
+    //     // Biot number and validity of LCM verification
+    //     Bi_max = max(Bi);
+    //     assert(Bi_max < 0.1, "LCM is not valid",  AssertionLevel.warning);
 
       // ------ Discretization computation loop ------
         for i in 1:N loop
@@ -1492,61 +1508,61 @@ package DynamicComponents
           // Fluids Properties
             // State
             state_water[i+1] = WaterSteamMedium.setState_phX(P_water, h_water[i+1], Xi_water);
-            state_fg[i+1] = FlueGasesMedium.setState_phX(P_fg, h_fg[i+1], Xi_fg);
+            state_fg[2, i] = FlueGasesMedium.setState_phX(P_fg, h_fg[2, i], Xi_fg);
             // Temperature
             T_water[i+1] = WaterSteamMedium.temperature(state_water[i+1]);
-            T_fg[i+1] = FlueGasesMedium.temperature(state_fg[i+1]);
+            T_fg[2, i] = FlueGasesMedium.temperature(state_fg[2, i]);
             T_water_node[i] = 0.5*(T_water[i] + T_water[i+1]);
-            T_fg_node[i] = 0.5*(T_fg[i] + T_fg[i+1]);
+            T_fg_node[i] = 0.5*(T_fg[1, i] + T_fg[2, i]);
             // Density
             rho_water[i+1] = WaterSteamMedium.density(state_water[i+1]);
-            rho_fg[i+1] = FlueGasesMedium.density(state_fg[i+1]);
+            rho_fg[2, i] = FlueGasesMedium.density(state_fg[2, i]);
             rho_water_node[i] = 0.5*(rho_water[i] + rho_water[i+1]);
-            rho_fg_node[i] = 0.5*(rho_fg[i] + rho_fg[i+1]);
+            rho_fg_node[i] = 0.5*(rho_fg[1, i] + rho_fg[2, i]);
             // Dynamic viscosity
             Mu_water[i+1] = WaterSteamMedium.dynamicViscosity(state_water[i+1]);
             Mu_water_node[i] = 0.5*(Mu_water[i] + Mu_water[i+1]);
-            Mu_fg[i+1] = FlueGasesMedium.dynamicViscosity(state_fg[i+1]);
-            Mu_fg_node[i] = 0.5*(Mu_fg[i] + Mu_fg[i+1]);
+            Mu_fg[2, i] = FlueGasesMedium.dynamicViscosity(state_fg[2, i]);
+            Mu_fg_node[i] = 0.5*(Mu_fg[1, i] + Mu_fg[2, i]);
             // Specific heat capacities Cp
             Cp_water[i+1] = WaterSteamMedium.specificHeatCapacityCp(state_water[i+1]);
             Cp_water_node[i] = 0.5*(Cp_water[i] + Cp_water[i+1]);
-            Cp_fg[i+1] = FlueGasesMedium.specificHeatCapacityCp(state_fg[i+1]);
-            Cp_fg_node[i] = 0.5*(Cp_fg[i] + Cp_fg[i+1]);
+            Cp_fg[2, i] = FlueGasesMedium.specificHeatCapacityCp(state_fg[2, i]);
+            Cp_fg_node[i] = 0.5*(Cp_fg[1, i] + Cp_fg[2, i]);
             // Thermal conductivity
             k_water[i+1] = WaterSteamMedium.thermalConductivity(state_water[i+1]);
             k_water_node[i] = 0.5*(k_water[i] + k_water[i+1]);
-            k_fg[i+1] = FlueGasesMedium.thermalConductivity(state_fg[i+1]);
-            k_fg_node[i] = 0.5*(k_fg[i] + k_fg[i+1]);
+            k_fg[2, i] = FlueGasesMedium.thermalConductivity(state_fg[2, i]);
+            k_fg_node[i] = 0.5*(k_fg[1, i] + k_fg[2, i]);
 
           // Node energy balance
             // Water side
             dW_water[i] = Q_water*(h_water[i+1] - h_water[i]);
             // Flue gas side
-            dW_fg[i] = Q_fg*(h_fg[i] - h_fg[i+1]);
+            dW_fg[i] = Q_fg*(h_fg[1, i] - h_fg[2, i]);
             // Global with wall storage
             dW_water[i] + dW_fg[i] + dM_wall*Cp_wall*der(T_wall[i]) = 0;
 
-          // Convection heat transfer coefficient calculation
-            // Average velocities
-            U_water_node[i] = Q_water/(rho_water_node[i]*Ac_water);
-            // Prandtl number
-            Pr_water[i] = Cp_water_node[i]*Mu_water_node[i]/k_water_node[i];
-            // Reynold's number
-            Re_water[i] = rho_water_node[i]*U_water_node[i]*D_in/Mu_water_node[i];
-            // Nusselt number
-            Nu_water[i] = K_conv_water[i]*D_in/k_water_node[i];
-            // Convection correlation: Dittus-Boelter equation
-            Nu_water[i] = 0.023*Re_water[i]^0.8*Pr_water[i]^0.4;
+    //       // Convection heat transfer coefficient calculation
+    //         // Average velocities
+    //         U_water_node[i] = Q_water/(rho_water_node[i]*Ac_water);
+    //         // Prandtl number
+    //         Pr_water[i] = Cp_water_node[i]*Mu_water_node[i]/k_water_node[i];
+    //         // Reynold's number
+    //         Re_water[i] = rho_water_node[i]*U_water_node[i]*D_in/Mu_water_node[i];
+    //         // Nusselt number
+    //         Nu_water[i] = K_conv_water[i]*D_in/k_water_node[i];
+    //         // Convection correlation: Dittus-Boelter equation
+    //         Nu_water[i] = 0.023*Re_water[i]^0.8*Pr_water[i]^0.4;
 
           // Convection heat transfer equations
             // Water side
-            dW_water[i] = K_conv_water[i]*dA_water*(T_wall[i] - T_water_node[i]);
+            dW_water[i] = K_conv_water*dA_water*(T_wall[i] - T_water_node[i]);
             // Flue gas side
-            dW_fg[i] = K_conv_fg*(T_wall[i] - T_fg_node[i])*(dA_fg_tubes + eff_fins*dA_fg_fin);
+            dW_fg[i] = K_conv_fg*(T_wall[i] - T_fg[1, i])*(dA_fg_tubes + eff_fins*dA_fg_fin);
 
           // Biot number
-            Bi[i] = max(K_conv_water[i], K_conv_fg)*e/K_cond_wall;
+    //         Bi[i] = max(K_conv_water[i], K_conv_fg)*e/K_cond_wall;
 
         end for;
 
