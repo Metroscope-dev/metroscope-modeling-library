@@ -1248,7 +1248,7 @@ package DynamicComponents
               textString="Flue gas side")}),                         Diagram(coordinateSystem(preserveAspectRatio=false)));
     end MonoPhasicHX_1DConduction;
 
-    model CrossCurrent_MonoPhasicHX_LCM "Added more info on fins and used ESCOA correlation"
+    model CrossCurrent_MonoPhasicHX_LCM_ter "Added more info on fins and used ESCOA correlation"
      import MetroscopeModelingLibrary.Utilities.Units;
       import MetroscopeModelingLibrary.Utilities.Units.Inputs;
       import MetroscopeModelingLibrary.Utilities.Constants;
@@ -1309,7 +1309,7 @@ package DynamicComponents
         parameter Units.HeatExchangeCoefficient K_conv_water_0 = 2400;
 
       // ------ Discretization ------
-        parameter Integer N = 1;
+        parameter Integer N = 10;
         parameter Units.Mass dM_wall = M_wall/N "Tube mass of a single node";
         parameter Units.Area dA_water = A_water/N "Water side heat exchange surface of a single node";
         parameter Units.Area dA_fg_tubes = A_fg_tubes/N "Flue gas side heat exchange surface of a single node";
@@ -1323,7 +1323,7 @@ package DynamicComponents
         FlueGasesMedium.ThermodynamicState state_fg[2, N] "Flue gas side node boundary states";
         // Enthalpy
         Units.SpecificEnthalpy h_water[N+1](each start=h_water_out_0) "Water specific enthalpy";
-        Units.SpecificEnthalpy h_fg[2, N](start = fill(h_fg_out_0, 2, N)) "Flue gas specific enthalpy";
+        Units.SpecificEnthalpy h_fg[2, N] "Flue gas specific enthalpy";
         // Mass flow rate
         Units.PositiveMassFlowRate Q_water(start=Q_water_0) "Water Mass flow rate";
         Units.PositiveMassFlowRate Q_fg(start=Q_fg_0) "Flue gas Mass flow rate";
@@ -1331,10 +1331,10 @@ package DynamicComponents
         Units.Pressure P_water(start=P_water_0) "Water Pressure";
         Units.Pressure P_fg(start=P_fg_0) "Flue gas Pressure";
         // Density
-        Units.Density rho_water[N+1] "Node boundary water density";
-        Units.Density rho_water_node[N] "Node average water density";
-        Units.Density rho_fg[2, N] "Node boundary flue gas density";
-        Units.Density rho_fg_node[N] "Node average flue gas density";
+    //     Units.Density rho_water[N+1] "Node boundary water density";
+    //     Units.Density rho_water_node[N] "Node average water density";
+    //     Units.Density rho_fg[N+1] "Node boundary flue gas density";
+    //     Units.Density rho_fg_node[N] "Node average flue gas density";
         // Mass fraction
         Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
         Units.MassFraction Xi_fg[FlueGasesMedium.nXi] "Species mass fraction";
@@ -1342,22 +1342,22 @@ package DynamicComponents
         Units.Temperature T_water[N+1] "Node boundary water temperature";
         Units.Temperature T_water_node[N] "Node average water temperature";
         Units.Temperature T_fg[2, N] "Node boundary flue gas temperature";
-        Units.Temperature T_fg_node[N] "Node average flue gas temperature";
-        // Dynamic viscosities
-        Modelica.Units.SI.DynamicViscosity Mu_water[N+1] "Node boundary water dynamic viscosity";
-        Modelica.Units.SI.DynamicViscosity Mu_water_node[N] "Node average water dynamic viscosity";
-        Modelica.Units.SI.DynamicViscosity Mu_fg[2, N] "Node boundary flue gas dynamic viscosity";
-        Modelica.Units.SI.DynamicViscosity Mu_fg_node[N] "Node average flue gas dynamic viscosity";
-        // Heat capacities Cp
-        Units.HeatCapacity Cp_water[N+1] "Node boundary water Cp";
-        Units.HeatCapacity Cp_water_node[N] "Node average water Cp";
-        Units.HeatCapacity Cp_fg[2, N] "Node boundary flue gas Cp";
-        Units.HeatCapacity Cp_fg_node[N] "Node average flue gas Cp";
-        // Thermal conductivity
-        Modelica.Units.SI.ThermalConductivity k_water[N+1] "Node boundary water thermal conductivity";
-        Modelica.Units.SI.ThermalConductivity k_water_node[N] "Node average water thermal conductivity";
-        Modelica.Units.SI.ThermalConductivity k_fg[2, N] "Node boundary flue gas thermal conductivity";
-        Modelica.Units.SI.ThermalConductivity k_fg_node[N] "Node average flue gas thermal conductivity";
+        //Units.Temperature T_fg_node[N] "Node average flue gas temperature";
+    //     // Dynamic viscosities
+    //     Modelica.Units.SI.DynamicViscosity Mu_water[N+1] "Node boundary water dynamic viscosity";
+    //     Modelica.Units.SI.DynamicViscosity Mu_water_node[N] "Node average water dynamic viscosity";
+    //     Modelica.Units.SI.DynamicViscosity Mu_fg[N+1] "Node boundary flue gas dynamic viscosity";
+    //     Modelica.Units.SI.DynamicViscosity Mu_fg_node[N] "Node average flue gas dynamic viscosity";
+    //     // Heat capacities Cp
+    //     Units.HeatCapacity Cp_water[N+1] "Node boundary water Cp";
+    //     Units.HeatCapacity Cp_water_node[N] "Node average water Cp";
+    //     Units.HeatCapacity Cp_fg[N+1] "Node boundary flue gas Cp";
+    //     Units.HeatCapacity Cp_fg_node[N] "Node average flue gas Cp";
+    //     // Thermal conductivity
+    //     Modelica.Units.SI.ThermalConductivity k_water[N+1] "Node boundary water thermal conductivity";
+    //     Modelica.Units.SI.ThermalConductivity k_water_node[N] "Node average water thermal conductivity";
+    //     Modelica.Units.SI.ThermalConductivity k_fg[N+1] "Node boundary flue gas thermal conductivity";
+    //     Modelica.Units.SI.ThermalConductivity k_fg_node[N] "Node average flue gas thermal conductivity";
 
       // ------ Conduction variables ------
         Units.Temperature T_wall[N] "Node wall average temperature";
@@ -1381,13 +1381,13 @@ package DynamicComponents
     //     Real Re_water[N] "Node water Reynold's number";
     //     // Nusselt Nymber
     //     Real Nu_water[N] "Node water Nusselt number";
-    //     // Convection heat transfer coefficient
-    //     Units.HeatExchangeCoefficient K_conv_water[N](each start=K_conv_water_0) "Water side convection heat transfer coefficient";
+        // Convection heat transfer coefficient
+        parameter Units.HeatExchangeCoefficient K_conv_water = 2418 "Water side convection heat transfer coefficient";
         // Discretized heat transfer power
         Units.Power dW_water[N] "Node water heat exchange";
         Units.Power dW_fg[N] "Node flue gas heat exchange";
         // Biot Number
-    //     Real Bi[N] "Node Biot number";
+        // Real Bi[N] "Node Biot number";
 
       // Parameters of interest
         Units.Temperature T_water_in "Water inlet temperature";
@@ -1395,7 +1395,7 @@ package DynamicComponents
         Units.Temperature T_fg_in "Flue gas inlet temperature";
         Units.Temperature T_fg_out "Flue gas outlet temperature";
         Units.Temperature T_water_avg "Water overall average temperature";
-        Units.Temperature T_fg_avg "Flue gas overall average temperature";
+        //Units.Temperature T_fg_avg "Flue gas overall average temperature";
         Units.Temperature T_wall_avg "Wall overall average temperature";
     //     Units.Velocity U_water_avg "Water overall average velocity";
     //     Real Pr_water_avg "Water overall average Prandtl number";
@@ -1404,27 +1404,29 @@ package DynamicComponents
     //     Real K_conv_water_avg "Water side overall average convection heat transfer coefficient";
     //     Real Bi_max "Maximum Biot number";
 
-        parameter Real K_conv_water = 2418 "Water side overall average convection heat transfer coefficient";
-
-      WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{90,30},{110,50}}),iconTransformation(extent={{90,30},{110,50}})));
-      WaterSteam.Connectors.Outlet water_outlet annotation (Placement(transformation(extent={{-110,32},{-90,52}}),iconTransformation(extent={{-110,32},{-90,52}})));
-      FlueGases.Connectors.Outlet fg_outlet annotation (Placement(transformation(extent={{88,-50},{108,-30}}),iconTransformation(extent={{88,-50},{108,-30}})));
-      FlueGases.Connectors.Inlet fg_inlet annotation (Placement(transformation(extent={{-110,-50},{-90,-30}}),iconTransformation(extent={{-110,-50},{-90,-30}})));
-      WaterSteam.BaseClasses.IsoPFlowModel water_side(T_out(start=T_water_out_0), h_out(start=h_water_out_0)) annotation (Placement(transformation(extent={{10,10},{-10,30}})));
-      FlueGases.BaseClasses.IsoPFlowModel  fg_side(T_out(start=T_fg_out_0), h_out(start=h_fg_out_0)) annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
+      WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{-10,-110},{10,-90}}),
+                                                                                                              iconTransformation(extent={{-10,-110},{10,-90}})));
+      WaterSteam.Connectors.Outlet water_outlet annotation (Placement(transformation(extent={{-10,90},{10,110}}), iconTransformation(extent={{-10,90},{10,110}})));
+      FlueGases.Connectors.Outlet fg_outlet annotation (Placement(transformation(extent={{30,-10},{50,10}}),  iconTransformation(extent={{30,-10},{50,10}})));
+      FlueGases.Connectors.Inlet fg_inlet annotation (Placement(transformation(extent={{-50,-10},{-30,10}}),  iconTransformation(extent={{-50,-10},{-30,10}})));
+      WaterSteam.BaseClasses.IsoPFlowModel water_side(T_out(start=T_water_out_0), h_out(start=h_water_out_0)) annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+            rotation=270,
+            origin={0,20})));
+      FlueGases.BaseClasses.IsoPFlowModel  fg_side(T_out(start=T_fg_out_0), h_out(start=h_fg_out_0)) annotation (Placement(transformation(extent={{-30,-50},{-10,-30}})));
     equation
 
       // ------ Boundaries ------
         // Enthalpy
         h_water[1] = water_side.h_in;
         h_water[N+1] = water_side.h_out;
-
-        sum(h_fg[2, :]) = fg_side.h_out;
+        //sum(h_fg[2, N]) = fg_side.h_out;
+        fg_side.W = sum(dW_fg);
 
         for i in 1:N loop
-          h_fg[1, i] = fg_side.h_in;
+         h_fg[1, i] = fg_side.h_in;
+         T_fg[1, i] = FlueGasesMedium.temperature(state_fg[1, i]);
+         state_fg[1, i] = FlueGasesMedium.setState_phX(P_fg, h_fg[1, i], Xi_fg);
         end for;
-
         // Pressure
         P_water = water_side.P_in;
         P_fg = fg_side.P_in;
@@ -1435,8 +1437,8 @@ package DynamicComponents
         Xi_water = water_side.Xi;
         Xi_fg = fg_side.Xi;
 
-    //   // ------ Tubes configuration parameters ------
-    //     // Flue gas face velocity
+      // ------ Tubes configuration parameters ------
+        // Flue gas face velocity
     //     U_fg_face = Q_fg/(rho_fg[N+1]*Af_fg);
     //     // Flue gas maximum velocity
     //     if (Tubes_Config == 1) then
@@ -1463,23 +1465,14 @@ package DynamicComponents
 
         T_water[1] = WaterSteamMedium.temperature(state_water[1]);
 
-        rho_water[1] = WaterSteamMedium.density(state_water[1]);
-
-        Mu_water[1] = WaterSteamMedium.dynamicViscosity(state_water[1]);
-
-        Cp_water[1] = WaterSteamMedium.specificHeatCapacityCp(state_water[1]);
-
-        k_water[1] = WaterSteamMedium.thermalConductivity(state_water[1]);
-
-
-        for i in 1:N loop
-          state_fg[1, i] = FlueGasesMedium.setState_phX(P_fg, h_fg[1, 1], Xi_fg);
-          T_fg[1, i] = FlueGasesMedium.temperature(state_fg[1, 1]);
-          rho_fg[1, i] = FlueGasesMedium.density(state_fg[1, 1]);
-          Mu_fg[1, i] = FlueGasesMedium.dynamicViscosity(state_fg[1, 1]);
-          Cp_fg[1, i] = FlueGasesMedium.specificHeatCapacityCp(state_fg[1, 1]);
-          k_fg[1, i] = FlueGasesMedium.thermalConductivity(state_fg[1, 1]);
-        end for;
+    //     rho_water[1] = WaterSteamMedium.density(state_water[1]);
+    //     rho_fg[1] = FlueGasesMedium.density(state_fg[1]);
+    //     Mu_water[1] = WaterSteamMedium.dynamicViscosity(state_water[1]);
+    //     Mu_fg[1] = FlueGasesMedium.dynamicViscosity(state_fg[1]);
+    //     Cp_water[1] = WaterSteamMedium.specificHeatCapacityCp(state_water[1]);
+    //     Cp_fg[1] = FlueGasesMedium.specificHeatCapacityCp(state_fg[1]);
+    //     k_water[1] = WaterSteamMedium.thermalConductivity(state_water[1]);
+    //     k_fg[1] = FlueGasesMedium.thermalConductivity(state_fg[1]);
 
       // ------ Parameters of interest ------
         // IN/OUT temperatures
@@ -1489,9 +1482,9 @@ package DynamicComponents
         T_fg_out = fg_side.T_out;
         // Average Temperatures
         T_water_avg = sum(T_water_node)/N;
-        T_fg_avg = sum(T_fg_node)/N;
+        //T_fg_avg = sum(T_fg_node)/N;
         T_wall_avg =  sum(T_wall)/N;
-    //     // Average velocity
+        // Average velocity
     //     U_water_avg = sum(U_water_node)/N;
     //     // Average heat transfer parameters
     //     Pr_water_avg = sum(Pr_water)/N;
@@ -1513,33 +1506,33 @@ package DynamicComponents
             T_water[i+1] = WaterSteamMedium.temperature(state_water[i+1]);
             T_fg[2, i] = FlueGasesMedium.temperature(state_fg[2, i]);
             T_water_node[i] = 0.5*(T_water[i] + T_water[i+1]);
-            T_fg_node[i] = 0.5*(T_fg[1, i] + T_fg[2, i]);
+            //T_fg_node[i] = 0.5*(T_fg[i] + T_fg[i+1]);
             // Density
-            rho_water[i+1] = WaterSteamMedium.density(state_water[i+1]);
-            rho_fg[2, i] = FlueGasesMedium.density(state_fg[2, i]);
-            rho_water_node[i] = 0.5*(rho_water[i] + rho_water[i+1]);
-            rho_fg_node[i] = 0.5*(rho_fg[1, i] + rho_fg[2, i]);
-            // Dynamic viscosity
-            Mu_water[i+1] = WaterSteamMedium.dynamicViscosity(state_water[i+1]);
-            Mu_water_node[i] = 0.5*(Mu_water[i] + Mu_water[i+1]);
-            Mu_fg[2, i] = FlueGasesMedium.dynamicViscosity(state_fg[2, i]);
-            Mu_fg_node[i] = 0.5*(Mu_fg[1, i] + Mu_fg[2, i]);
-            // Specific heat capacities Cp
-            Cp_water[i+1] = WaterSteamMedium.specificHeatCapacityCp(state_water[i+1]);
-            Cp_water_node[i] = 0.5*(Cp_water[i] + Cp_water[i+1]);
-            Cp_fg[2, i] = FlueGasesMedium.specificHeatCapacityCp(state_fg[2, i]);
-            Cp_fg_node[i] = 0.5*(Cp_fg[1, i] + Cp_fg[2, i]);
-            // Thermal conductivity
-            k_water[i+1] = WaterSteamMedium.thermalConductivity(state_water[i+1]);
-            k_water_node[i] = 0.5*(k_water[i] + k_water[i+1]);
-            k_fg[2, i] = FlueGasesMedium.thermalConductivity(state_fg[2, i]);
-            k_fg_node[i] = 0.5*(k_fg[1, i] + k_fg[2, i]);
+    //         rho_water[i+1] = WaterSteamMedium.density(state_water[i+1]);
+    //         rho_fg[i+1] = FlueGasesMedium.density(state_fg[i+1]);
+    //         rho_water_node[i] = 0.5*(rho_water[i] + rho_water[i+1]);
+    //         rho_fg_node[i] = 0.5*(rho_fg[i] + rho_fg[i+1]);
+    //         // Dynamic viscosity
+    //         Mu_water[i+1] = WaterSteamMedium.dynamicViscosity(state_water[i+1]);
+    //         Mu_water_node[i] = 0.5*(Mu_water[i] + Mu_water[i+1]);
+    //         Mu_fg[i+1] = FlueGasesMedium.dynamicViscosity(state_fg[i+1]);
+    //         Mu_fg_node[i] = 0.5*(Mu_fg[i] + Mu_fg[i+1]);
+    //         // Specific heat capacities Cp
+    //         Cp_water[i+1] = WaterSteamMedium.specificHeatCapacityCp(state_water[i+1]);
+    //         Cp_water_node[i] = 0.5*(Cp_water[i] + Cp_water[i+1]);
+    //         Cp_fg[i+1] = FlueGasesMedium.specificHeatCapacityCp(state_fg[i+1]);
+    //         Cp_fg_node[i] = 0.5*(Cp_fg[i] + Cp_fg[i+1]);
+    //         // Thermal conductivity
+    //         k_water[i+1] = WaterSteamMedium.thermalConductivity(state_water[i+1]);
+    //         k_water_node[i] = 0.5*(k_water[i] + k_water[i+1]);
+    //         k_fg[i+1] = FlueGasesMedium.thermalConductivity(state_fg[i+1]);
+    //         k_fg_node[i] = 0.5*(k_fg[i] + k_fg[i+1]);
 
           // Node energy balance
             // Water side
             dW_water[i] = Q_water*(h_water[i+1] - h_water[i]);
             // Flue gas side
-            dW_fg[i] = Q_fg*(h_fg[1, i] - h_fg[2, i]);
+            dW_fg[i] = Q_fg/N*(h_fg[2, i] - h_fg[1, i]);
             // Global with wall storage
             dW_water[i] + dW_fg[i] + dM_wall*Cp_wall*der(T_wall[i]) = 0;
 
@@ -1573,62 +1566,59 @@ package DynamicComponents
       end for;
 
     equation
-      connect(water_side.C_in, water_inlet) annotation (Line(points={{10,20},{100,20},{100,40}},
+      connect(water_side.C_in, water_inlet) annotation (Line(points={{-1.83187e-15,10},{-1.83187e-15,-6},{0,-6},{0,-100}},
                                                                                        color={28,108,200}));
-      connect(water_side.C_out, water_outlet) annotation (Line(points={{-10,20},{-100,20},{-100,42}},
+      connect(water_side.C_out, water_outlet) annotation (Line(points={{1.77636e-15,30},{0,30},{0,100}},
                                                                                            color={28,108,200}));
-      connect(fg_side.C_out, fg_outlet) annotation (Line(points={{10,-20},{100,-20},{100,-40},{98,-40}},
+      connect(fg_side.C_out, fg_outlet) annotation (Line(points={{-10,-40},{40,-40},{40,0}},
                                                                                      color={95,95,95}));
-      connect(fg_side.C_in, fg_inlet) annotation (Line(points={{-10,-20},{-100,-20},{-100,-40}},
+      connect(fg_side.C_in, fg_inlet) annotation (Line(points={{-30,-40},{-40,-40},{-40,0}},
                                                                                      color={95,95,95}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
             Rectangle(
-              extent={{-100,-10},{100,-60}},
+              extent={{-100,10},{100,-10}},
               lineColor={0,0,0},
               fillColor={95,95,95},
-              fillPattern=FillPattern.Solid),
+              fillPattern=FillPattern.Solid,
+              origin={-30,0},
+              rotation=90),
+            Rectangle(
+              extent={{-100,5},{100,-5}},
+              lineColor={0,0,0},
+              fillColor={215,215,215},
+              fillPattern=FillPattern.Solid,
+              origin={-15,0},
+              rotation=90),
             Rectangle(
               extent={{-100,10},{100,-10}},
               lineColor={0,0,0},
-              fillColor={215,215,215},
-              fillPattern=FillPattern.Solid),
-            Rectangle(
-              extent={{-100,60},{100,10}},
-              lineColor={0,0,0},
               fillColor={28,108,200},
-              fillPattern=FillPattern.Solid),
-            Line(points={{-60,60},{-60,-60}},color={0,0,0}),
-            Line(points={{-40,60},{-40,-60}},color={0,0,0}),
-            Line(points={{40,60},{40,-60}},color={0,0,0}),
-            Line(points={{60,60},{60,-60}},color={0,0,0}),
-            Line(points={{80,60},{80,-60}},color={0,0,0}),
-            Line(points={{-80,60},{-80,-60}},color={0,0,0}),
-            Text(
-              extent={{-20,4},{16,-4}},
-              textColor={0,0,0},
-              fontSize=20,
-              textString="Tube Wall"),
-            Line(
-              points={{30,40},{-30,40}},
-              color={0,0,0},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=0.5),
-            Line(
-              points={{-26,-38},{34,-38}},
-              color={0,0,0},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=0.5),
-            Text(
-              extent={{-22,32},{14,24}},
-              textColor={0,0,0},
-              fontSize=20,
-              textString="Water side"),
-            Text(
-              extent={{-30,-24},{26,-32}},
-              textColor={0,0,0},
-              fontSize=20,
-              textString="Flue gas side")}),                         Diagram(coordinateSystem(preserveAspectRatio=false)));
-    end CrossCurrent_MonoPhasicHX_LCM;
+              fillPattern=FillPattern.Solid,
+              rotation=90),
+            Rectangle(
+              extent={{-100,5},{100,-5}},
+              lineColor={0,0,0},
+              fillColor={215,215,215},
+              fillPattern=FillPattern.Solid,
+              origin={15,0},
+              rotation=90),
+            Rectangle(
+              extent={{-100,10},{100,-10}},
+              lineColor={0,0,0},
+              fillColor={95,95,95},
+              fillPattern=FillPattern.Solid,
+              origin={30,0},
+              rotation=90),
+            Line(points={{-40,-80},{40,-80}},color={0,0,0}),
+            Line(points={{-40,-60},{40,-60}},color={0,0,0}),
+            Line(points={{-40,-20},{40,-20}},color={0,0,0}),
+            Line(points={{-40,-40},{40,-40}},color={0,0,0}),
+            Line(points={{-40,80},{40,80}},  color={0,0,0}),
+            Line(points={{-40,60},{40,60}},  color={0,0,0}),
+            Line(points={{-40,40},{40,40}},  color={0,0,0}),
+            Line(points={{-40,20},{40,20}},  color={0,0,0}),
+            Line(points={{-40,0},{40,0}},    color={0,0,0})}),       Diagram(coordinateSystem(preserveAspectRatio=false)));
+    end CrossCurrent_MonoPhasicHX_LCM_ter;
   end HeatExchangers;
 
   package Tests
@@ -1804,21 +1794,9 @@ package DynamicComponents
           __Dymola_Algorithm="Dassl"));
     end MonoPhasicHX_1DConduction_terTest;
 
-    model CrossCurrent_MonoPhasicHX_LCM_Test
+    model CrossCurrent_MonoPhasicHX_LCM_ter_Test
       import MetroscopeModelingLibrary.Utilities.Units;
       import MetroscopeModelingLibrary.Utilities.Units.Inputs;
-      HeatExchangers.CrossCurrent_MonoPhasicHX_LCM
-                                      crossCurrent_MonoPhasicHX_LCM(
-        N_tubes_row=184,
-        Rows=2,
-        Tubes_Config=2,
-        fg_path_width=14.07,
-        N=10,
-        D_out=0.0381,
-        e=0.003048,
-        L=18.29,
-        A_water=676.73035,
-        T_wall_0=745.15) annotation (Placement(transformation(extent={{-10,-6},{10,16}})));
 
         // Boundary conditions
       input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
@@ -1831,16 +1809,19 @@ package DynamicComponents
 
       WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
-            rotation=180,
-            origin={64,20})));
-      WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{-54,10},{-74,30}})));
-      FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-76,-50},{-56,-30}})));
-      FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{54,-50},{74,-30}})));
+            rotation=90,
+            origin={0,-86})));
+      WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+            rotation=270,
+            origin={0,84})));
+      FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
+      FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{74,-10},{94,10}})));
       Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-72,66},{-52,86}})));
       Modelica.Blocks.Sources.Ramp ramp(
         height=-20,
         duration=60,
-        startTime=300) annotation (Placement(transformation(extent={{-6,66},{14,86}})));
+        startTime=300) annotation (Placement(transformation(extent={{58,70},{78,90}})));
+      HeatExchangers.CrossCurrent_MonoPhasicHX_LCM_ter crossCurrent_MonoPhasicHX_LCM_ter annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
     equation
       hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
       hot_source.P_out = P_hot_source*1e5;
@@ -1851,16 +1832,16 @@ package DynamicComponents
       cold_source.T_out = 273.15 + T_cold_source;
       cold_source.Q_out = - Q_cold_source;
 
-      connect(crossCurrent_MonoPhasicHX_LCM.water_inlet, cold_source.C_out) annotation (Line(points={{10,9.4},{10,8},{48,8},{48,20},{59,20}}, color={28,108,200}));
-      connect(crossCurrent_MonoPhasicHX_LCM.water_outlet, cold_sink.C_in) annotation (Line(points={{-10,9.62},{-10,8},{-48,8},{-48,20},{-59,20}}, color={28,108,200}));
-      connect(crossCurrent_MonoPhasicHX_LCM.fg_inlet, hot_source.C_out) annotation (Line(points={{-10,0.6},{-50,0.6},{-50,-40},{-61,-40}}, color={95,95,95}));
-      connect(crossCurrent_MonoPhasicHX_LCM.fg_outlet, hot_sink.C_in) annotation (Line(points={{9.8,0.6},{50,0.6},{50,-40},{59,-40}}, color={95,95,95}));
+      connect(hot_source.C_out, crossCurrent_MonoPhasicHX_LCM_ter.fg_inlet) annotation (Line(points={{-79,0},{-4,0}}, color={95,95,95}));
+      connect(crossCurrent_MonoPhasicHX_LCM_ter.fg_outlet, hot_sink.C_in) annotation (Line(points={{4,0},{79,0}}, color={95,95,95}));
+      connect(crossCurrent_MonoPhasicHX_LCM_ter.water_inlet, cold_source.C_out) annotation (Line(points={{0,-10},{0,-45.5},{2.77556e-16,-45.5},{2.77556e-16,-81}}, color={28,108,200}));
+      connect(crossCurrent_MonoPhasicHX_LCM_ter.water_outlet, cold_sink.C_in) annotation (Line(points={{0,10},{0,44.5},{-9.4369e-16,44.5},{-9.4369e-16,79}}, color={28,108,200}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
         experiment(
           StopTime=500,
           __Dymola_NumberOfIntervals=1000,
           __Dymola_Algorithm="Dassl"));
-    end CrossCurrent_MonoPhasicHX_LCM_Test;
+    end CrossCurrent_MonoPhasicHX_LCM_ter_Test;
   end Tests;
 
   annotation (Icon(graphics={
