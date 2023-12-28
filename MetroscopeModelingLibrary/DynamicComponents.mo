@@ -4369,6 +4369,56 @@ package DynamicComponents
   end Tests;
 
   package Examples
+    model HX_2_pass
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+        // Boundary conditions
+      input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+      input Real Q_hot_source(start = 658.695) "kg/s";
+      input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+      input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
+      input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
+      input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
+
+      FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-44,-10},{-24,10}})));
+      FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{20,-10},{40,10}})));
+      Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-40,-40},{-20,-20}})));
+      Modelica.Blocks.Sources.Ramp ramp(
+        height=-20,
+        duration=60,
+        startTime=300) annotation (Placement(transformation(extent={{20,-40},{40,-20}})));
+      Multiple_Pass_HX.HX_2_pass hX_2_pass annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+      WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+            rotation=180,
+            origin={-44,40})));
+      WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=0,
+            origin={44,40})));
+    equation
+      hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+      hot_source.P_out = P_hot_source*1e5;
+      hot_source.T_out = T_hot_source + 273.15 + ramp.y;
+      hot_source.Q_out = - Q_hot_source + step.y;
+
+      cold_source.P_out = P_cold_source*1e5;
+      cold_source.T_out = 273.15 + T_cold_source;
+      cold_source.Q_out = - Q_cold_source;
+
+      connect(hot_source.C_out, hX_2_pass.fg_inlet) annotation (Line(points={{-29,0},{-10,0}}, color={95,95,95}));
+      connect(hX_2_pass.fg_outlet, hot_sink.C_in) annotation (Line(points={{10,0},{25,0}}, color={95,95,95}));
+      connect(hX_2_pass.inlet, cold_source.C_out) annotation (Line(points={{6,10},{6,40},{39,40}}, color={28,108,200}));
+      connect(hX_2_pass.outlet, cold_sink.C_in) annotation (Line(points={{-6,10},{-6,40},{-39,40}}, color={28,108,200}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-60},{60,60}})),
+                                                                     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-60,-60},{60,60}})),
+        experiment(
+          StopTime=500,
+          __Dymola_NumberOfIntervals=1000,
+          __Dymola_Algorithm="Dassl"));
+    end HX_2_pass;
+
     model HX_4_pass
       import MetroscopeModelingLibrary.Utilities.Units;
       import MetroscopeModelingLibrary.Utilities.Units.Inputs;
@@ -4382,25 +4432,21 @@ package DynamicComponents
       input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
       input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
 
-      WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
-            extent={{-10,-10},{10,10}},
-            rotation=0,
-            origin={-34,-40})));
-      WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{10,-10},{-10,10}},
-            rotation=180,
-            origin={30,-40})));
       FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-44,-10},{-24,10}})));
       FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{20,-10},{40,10}})));
-      Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-40,20},{-20,40}})));
+      Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-40,-40},{-20,-20}})));
       Modelica.Blocks.Sources.Ramp ramp(
         height=-20,
         duration=60,
-        startTime=300) annotation (Placement(transformation(extent={{20,20},{40,40}})));
-      Multiple_Pass_HX.HX_4_pass hX_4_pass(
-        N_tubes_row_dir_1=46,
-        N_tubes_row_dir_2=46,
-        N_tubes_row_dir_3=46,
-        N_tubes_row_dir_4=46)              annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+        startTime=300) annotation (Placement(transformation(extent={{20,-40},{40,-20}})));
+      Multiple_Pass_HX.HX_4_pass HX_4_pass annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+      WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+            rotation=180,
+            origin={44,40})));
+      WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=0,
+            origin={-44,40})));
     equation
       hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
       hot_source.P_out = P_hot_source*1e5;
@@ -4411,11 +4457,10 @@ package DynamicComponents
       cold_source.T_out = 273.15 + T_cold_source;
       cold_source.Q_out = - Q_cold_source;
 
-
-      connect(hot_source.C_out, hX_4_pass.fg_in) annotation (Line(points={{-29,0},{-10,0}}, color={95,95,95}));
-      connect(hX_4_pass.fg_out, hot_sink.C_in) annotation (Line(points={{10,0},{25,0}}, color={95,95,95}));
-      connect(cold_source.C_out, hX_4_pass.water_in) annotation (Line(points={{-29,-40},{-6,-40},{-6,-10}}, color={28,108,200}));
-      connect(cold_sink.C_in, hX_4_pass.water_out) annotation (Line(points={{25,-40},{6.2,-40},{6.2,-10}}, color={28,108,200}));
+      connect(hot_source.C_out, HX_4_pass.fg_inlet) annotation (Line(points={{-29,0},{-10,0}}, color={95,95,95}));
+      connect(HX_4_pass.fg_outlet, hot_sink.C_in) annotation (Line(points={{10,0},{25,0}}, color={95,95,95}));
+      connect(cold_source.C_out, HX_4_pass.inlet) annotation (Line(points={{-39,40},{-6,40},{-6,10}}, color={28,108,200}));
+      connect(cold_sink.C_in, HX_4_pass.outlet) annotation (Line(points={{39,40},{6,40},{6,10}}, color={28,108,200}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-60},{60,60}})),
                                                                      Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-60,-60},{60,60}})),
         experiment(
@@ -4426,83 +4471,96 @@ package DynamicComponents
   end Examples;
 
   package Multiple_Pass_HX
-    model HX_4_pass
+    model HX_2_pass
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-      parameter Integer N_tubes_row_dir_1 = 40;
-      parameter Integer N_tubes_row_dir_2 = 40;
-      parameter Integer N_tubes_row_dir_3 = 40;
-      parameter Integer N_tubes_row_dir_4 = 40;
+      // Number of tubes per water flow direction
+      parameter Integer N_tubes_row_dir_1 = 93 "Number of tubes of water flowing in in direction 1";
+      parameter Integer N_tubes_row_dir_2 = 93 "Number of tubes of water flowing in in direction 2";
 
-      Integer N_tubes_row;
-      Real Q_tot;
+      // Indicators
+        // Configuration
+        Integer N_tubes_row_tot "Total number of tubes per row";
+        Units.PositiveMassFlowRate Q_fg_dir_1 "Flue gas mass flow rate heating water in direction 1";
+        Units.PositiveMassFlowRate Q_fg_dir_2 "Flue gas mass flow rate heating water in direction 2";
+        Units.PositiveMassFlowRate Q_fg_tot "Total flue gas mass flow rate";
+        // Temperatures
+        Units.Temperature T_water_in "Water inlet temperature";
+        Units.Temperature T_water_out "Water outlet temperature";
+        Units.Temperature T_fg_in "Flue gas inlet temperature";
+        Units.Temperature T_fg_out "Flue gas outlet temperature";
 
+
+
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_2(
+        N_tubes_row=N_tubes_row_dir_1,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{-50,-11},{-30,11}})));
 
       HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_1(
+        N_tubes_row=N_tubes_row_dir_2,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
         D_out=0.0381,
         e=0.003048,
-        L=18.29,                                                                            N_tubes_row = N_tubes_row_dir_1,
-        T_wall_0=745.15,
-        N=10)                                                                                                                annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
-      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_2(
-        D_out=0.0381,
-        e=0.003048,
-        L=18.29,                                                                            N_tubes_row = N_tubes_row_dir_2,
-        T_wall_0=745.15,
-        N=10)                                                                                                                annotation (Placement(transformation(extent={{-30,10},{-10,-10}})));
-      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_3(
-        D_out=0.0381,
-        e=0.003048,
-        L=18.29,                                                                            N_tubes_row = N_tubes_row_dir_3,
-        T_wall_0=745.15,
-        N=10)                                                                                                                annotation (Placement(transformation(extent={{10,-10},{30,10}})));
-      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_4(
-        D_out=0.0381,
-        e=0.003048,
-        L=18.29,                                                                            N_tubes_row = N_tubes_row_dir_4,
-        T_wall_0=745.15,
-        N=10)                                                                                                                annotation (Placement(transformation(extent={{50,10},{70,-10}})));
-      FlueGases.Connectors.Inlet fg_in annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
-      FlueGases.Connectors.Outlet fg_out annotation (Placement(transformation(extent={{90,-10},{110,10}})));
-      WaterSteam.Connectors.Inlet water_in annotation (Placement(transformation(extent={{-70,-110},{-50,-90}})));
-      WaterSteam.Connectors.Outlet water_out annotation (Placement(transformation(extent={{52,-110},{72,-90}})));
-      FlueGases.Pipes.PressureCut PC_Dir_1 annotation (Placement(transformation(
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{30,11},{50,-11}})));
+      FlueGases.Pipes.PressureCut PC_1 annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
-            rotation=270,
-            origin={-50,-40})));
-      FlueGases.Pipes.PressureCut PC_Dir_2 annotation (Placement(transformation(
+            rotation=90,
+            origin={0,20})));
+      FlueGases.Connectors.Inlet fg_inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
+      FlueGases.Connectors.Outlet fg_outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+      WaterSteam.Connectors.Inlet inlet annotation (Placement(transformation(extent={{50,90},{70,110}}),     iconTransformation(extent={{50,90},{70,110}})));
+      WaterSteam.Connectors.Outlet outlet annotation (Placement(transformation(extent={{-70,90},{-50,110}})));
+      FlueGases.BaseClasses.IsoPHFlowModel fg_inlet_properties annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
-            rotation=270,
-            origin={-10,-40})));
-      FlueGases.Pipes.PressureCut PC_Dir_3 annotation (Placement(transformation(
+            rotation=0,
+            origin={-70,0})));
+      FlueGases.BaseClasses.IsoPHFlowModel fg_outlet_properties
+                                                               annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
-            rotation=270,
-            origin={28,-40})));
+            rotation=0,
+            origin={70,0})));
     equation
 
-      N_tubes_row = N_tubes_row_dir_1 + N_tubes_row_dir_2 + N_tubes_row_dir_3 + N_tubes_row_dir_4;
-      Q_tot = Dir_1.fg_side.Q + Dir_2.fg_side.Q + Dir_3.fg_side.Q + Dir_4.fg_side.Q;
+      // Indicators
+        // Configuration
+        N_tubes_row_tot = N_tubes_row_dir_1 + N_tubes_row_dir_2;
+        Dir_1.fg_side.Q = Q_fg_dir_1;
+        Dir_2.fg_side.Q =  Q_fg_dir_2;
+        Q_fg_tot = Q_fg_dir_1 + Q_fg_dir_2;
+        // Temperatures
+        T_water_in = Dir_1.T_water_in;
+        T_water_out = Dir_2.T_water_out;
+        T_fg_in = fg_inlet_properties.T_in;
+        T_fg_out = fg_outlet_properties.T_out;
 
-      Dir_1.fg_side.Q = Q_tot*N_tubes_row_dir_1/N_tubes_row;
-      Dir_2.fg_side.Q = Q_tot*N_tubes_row_dir_2/N_tubes_row;
-      Dir_3.fg_side.Q = Q_tot*N_tubes_row_dir_3/N_tubes_row;
+      // Flow repartition is proportional to the number of tubes
+      Q_fg_dir_1 = Q_fg_tot*N_tubes_row_dir_1/N_tubes_row_tot;
 
-
-      connect(Dir_1.water_inlet, water_in) annotation (Line(points={{-60,-10},{-60,-100}}, color={28,108,200}));
-      connect(Dir_4.water_outlet, water_out) annotation (Line(points={{60,-10},{60,-56},{60,-100},{62,-100}}, color={28,108,200}));
-      connect(fg_in, Dir_1.fg_inlet) annotation (Line(points={{-100,0},{-64,0}}, color={95,95,95}));
-      connect(Dir_4.fg_outlet, fg_out) annotation (Line(points={{64,0},{100,0}}, color={95,95,95}));
-      connect(Dir_1.fg_outlet, PC_Dir_1.C_in) annotation (Line(points={{-56,0},{-50,0},{-50,-30}}, color={95,95,95}));
-      connect(PC_Dir_1.C_out, fg_out) annotation (Line(points={{-50,-50},{-50,-60},{80,-60},{80,0},{100,0}}, color={95,95,95}));
-      connect(Dir_2.fg_outlet, PC_Dir_2.C_in) annotation (Line(points={{-16,0},{-10,0},{-10,-30}}, color={95,95,95}));
-      connect(PC_Dir_2.C_out, fg_out) annotation (Line(points={{-10,-50},{-10,-60},{80,-60},{80,0},{100,0}}, color={95,95,95}));
-      connect(Dir_3.fg_outlet, PC_Dir_3.C_in) annotation (Line(points={{24,0},{28,0},{28,-30}}, color={95,95,95}));
-      connect(PC_Dir_3.C_out, fg_out) annotation (Line(points={{28,-50},{28,-60},{80,-60},{80,0},{100,0}}, color={95,95,95}));
-      connect(Dir_4.fg_inlet, Dir_1.fg_inlet) annotation (Line(points={{56,0},{50,0},{50,60},{-80,60},{-80,0},{-64,0}}, color={95,95,95}));
-      connect(Dir_3.fg_inlet, Dir_1.fg_inlet) annotation (Line(points={{16,0},{10,0},{10,60},{-80,60},{-80,0},{-64,0}}, color={95,95,95}));
-      connect(Dir_2.fg_inlet, Dir_1.fg_inlet) annotation (Line(points={{-24,0},{-30,0},{-30,60},{-80,60},{-80,0},{-64,0}}, color={95,95,95}));
-      connect(Dir_1.water_outlet, Dir_2.water_inlet) annotation (Line(points={{-60,10},{-60,40},{-20,40},{-20,10}}, color={28,108,200}));
-      connect(Dir_2.water_outlet, Dir_3.water_inlet) annotation (Line(points={{-20,-10},{-20,-20},{20,-20},{20,-10}}, color={28,108,200}));
-      connect(Dir_3.water_outlet, Dir_4.water_inlet) annotation (Line(points={{20,10},{20,40},{60,40},{60,10}}, color={28,108,200}));
+      connect(Dir_2.fg_outlet, PC_1.C_in) annotation (Line(points={{-36,0},{-5.55112e-16,0},{-5.55112e-16,10}}, color={95,95,95}));
+      connect(fg_inlet, fg_inlet) annotation (Line(points={{-100,0},{-100,0}}, color={95,95,95}));
+      connect(fg_inlet, fg_inlet_properties.C_in) annotation (Line(points={{-100,0},{-80,0}},           color={95,95,95}));
+      connect(fg_inlet_properties.C_out, Dir_2.fg_inlet) annotation (Line(points={{-60,0},{-44,0}}, color={95,95,95}));
+      connect(Dir_1.fg_inlet, Dir_2.fg_inlet) annotation (Line(points={{36,0},{20,0},{20,-40},{-52,-40},{-52,0},{-44,0}}, color={95,95,95}));
+      connect(inlet, Dir_1.water_inlet) annotation (Line(points={{60,100},{60,60},{40,60},{40,11}}, color={28,108,200}));
+      connect(Dir_2.water_outlet, outlet) annotation (Line(points={{-40,11},{-40,60},{-60,60},{-60,100}}, color={28,108,200}));
+      connect(Dir_2.water_inlet, Dir_1.water_outlet) annotation (Line(points={{-40,-11},{-40,-20},{40,-20},{40,-11}}, color={28,108,200}));
+      connect(PC_1.C_out, fg_outlet_properties.C_in) annotation (Line(points={{5.55112e-16,30},{5.55112e-16,36},{0,36},{0,40},{54,40},{54,0},{60,0}}, color={95,95,95}));
+      connect(fg_outlet_properties.C_out, fg_outlet) annotation (Line(points={{80,0},{100,0}}, color={95,95,95}));
+      connect(Dir_1.fg_outlet, fg_outlet_properties.C_in) annotation (Line(points={{44,0},{60,0}}, color={95,95,95}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
               Rectangle(
               extent={{-100,100},{100,-100}},
@@ -4515,73 +4573,444 @@ package DynamicComponents
               lineColor={28,108,200},
               fillColor={28,108,200},
               fillPattern=FillPattern.Solid),
-            Line(points={{-58,72}}, color={28,108,200}),
             Rectangle(
               extent={{-80,-80},{80,-86}},
               lineColor={28,108,200},
               fillColor={28,108,200},
               fillPattern=FillPattern.Solid),
             Line(
-              points={{-70,0},{-70,-80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{0,86},{0,80}},
+              color={0,0,0},
+              thickness=1),
             Line(
-              points={{-60,0},{-60,-80}},
+              points={{60,80},{60,-82},{-60,-80},{-60,80}},
               color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              smooth=Smooth.Bezier,
+              thickness=1),
+            Polygon(
+              points={{-60,10},{-66,-10},{-54,-10},{-60,10}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{60,-10},{54,10},{66,10},{60,-10}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
             Line(
-              points={{-50,0},{-50,-80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{-92,20},{-72,0}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled}),
             Line(
-              points={{-30,0},{-30,80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{30,20},{50,0}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled})}),                    Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(
+          StopTime=500,
+          __Dymola_NumberOfIntervals=1000,
+          __Dymola_Algorithm="Dassl"));
+    end HX_2_pass;
+
+    model HX_4_pass
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+      // Number of tubes per water flow direction
+      parameter Integer N_tubes_row_dir_1 = 40 "Number of tubes of water flowing in in direction 1";
+      parameter Integer N_tubes_row_dir_2 = 40 "Number of tubes of water flowing in in direction 2";
+      parameter Integer N_tubes_row_dir_3 = 40 "Number of tubes of water flowing in in direction 3";
+      parameter Integer N_tubes_row_dir_4 = 40 "Number of tubes of water flowing in in direction 4";
+
+      // Indicators
+        // Configuration
+        Integer N_tubes_row_tot "Total number of tubes per row";
+        Units.PositiveMassFlowRate Q_fg_dir_1 "Flue gas mass flow rate heating water in direction 1";
+        Units.PositiveMassFlowRate Q_fg_dir_2 "Flue gas mass flow rate heating water in direction 2";
+        Units.PositiveMassFlowRate Q_fg_dir_3 "Flue gas mass flow rate heating water in direction 3";
+        Units.PositiveMassFlowRate Q_fg_dir_4 "Flue gas mass flow rate heating water in direction 4";
+        Units.PositiveMassFlowRate Q_fg_tot "Total flue gas mass flow rate";
+        // Temperatures
+        Units.Temperature T_water_in "Water inlet temperature";
+        Units.Temperature T_water_out "Water outlet temperature";
+        Units.Temperature T_fg_in "Flue gas inlet temperature";
+        Units.Temperature T_fg_out "Flue gas outlet temperature";
+
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_1(
+        N_tubes_row=N_tubes_row_dir_1,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{-70,11},{-50,-11}})));
+
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_2(
+        N_tubes_row=N_tubes_row_dir_2,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{-30,-11},{-10,11}})));
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_3(
+        N_tubes_row=N_tubes_row_dir_3,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{10,11},{30,-11}})));
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_4(
+        N_tubes_row=N_tubes_row_dir_4,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{50,-11},{70,11}})));
+      FlueGases.Pipes.PressureCut PC_1 annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={-46,20})));
+      FlueGases.Pipes.PressureCut PC_2 annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={0,20})));
+      FlueGases.Pipes.PressureCut PC_3 annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={40,20})));
+      FlueGases.Connectors.Inlet fg_inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
+      FlueGases.Connectors.Outlet fg_outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+      WaterSteam.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-70,90},{-50,110}}),   iconTransformation(extent={{-70,90},{-50,110}})));
+      WaterSteam.Connectors.Outlet outlet annotation (Placement(transformation(extent={{50,90},{70,110}})));
+      FlueGases.BaseClasses.IsoPHFlowModel fg_inlet_properties annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-80,-20})));
+      FlueGases.BaseClasses.IsoPHFlowModel fg_outlet_properties
+                                                               annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=270,
+            origin={80,-22})));
+    equation
+
+      // Indicators
+        // Configuration
+        N_tubes_row_tot = Dir_1.N_tubes_row + Dir_2.N_tubes_row + Dir_3.N_tubes_row + Dir_4.N_tubes_row;
+        Dir_1.fg_side.Q =  Q_fg_dir_1;
+        Dir_2.fg_side.Q =  Q_fg_dir_2;
+        Dir_3.fg_side.Q =  Q_fg_dir_2;
+        Dir_4.fg_side.Q =  Q_fg_dir_3;
+        Q_fg_tot = Q_fg_dir_1 + Q_fg_dir_2 + Q_fg_dir_3 + Q_fg_dir_4;
+        // Temperatures
+        T_water_in = Dir_1.T_water_in;
+        T_water_out = Dir_4.T_water_out;
+        T_fg_in = fg_inlet_properties.T_in;
+        T_fg_out = fg_outlet_properties.T_out;
+
+      // Flow repartition is proportional to the number of tubes
+      Q_fg_dir_1 = Q_fg_tot*Dir_1.N_tubes_row/N_tubes_row_tot;
+      Q_fg_dir_2 = Q_fg_tot*Dir_2.N_tubes_row/N_tubes_row_tot;
+      Q_fg_dir_3 = Q_fg_tot*Dir_3.N_tubes_row/N_tubes_row_tot;
+
+
+
+      connect(Dir_1.fg_outlet, PC_1.C_in) annotation (Line(points={{-56,0},{-46,0},{-46,10}}, color={95,95,95}));
+      connect(Dir_2.fg_outlet, PC_2.C_in) annotation (Line(points={{-16,0},{0,0},{0,10}}, color={95,95,95}));
+      connect(Dir_3.fg_outlet, PC_3.C_in) annotation (Line(points={{24,0},{40,0},{40,10}}, color={95,95,95}));
+      connect(fg_inlet, fg_inlet) annotation (Line(points={{-100,0},{-100,0}}, color={95,95,95}));
+      connect(fg_inlet, fg_inlet_properties.C_in) annotation (Line(points={{-100,0},{-80,0},{-80,-10}}, color={95,95,95}));
+      connect(fg_inlet_properties.C_out, Dir_4.fg_inlet) annotation (Line(points={{-80,-30},{-80,-40},{50,-40},{50,0},{56,0}}, color={95,95,95}));
+      connect(Dir_1.fg_inlet, Dir_4.fg_inlet) annotation (Line(points={{-64,0},{-70,0},{-70,-40},{50,-40},{50,0},{56,0}}, color={95,95,95}));
+      connect(Dir_2.fg_inlet, Dir_4.fg_inlet) annotation (Line(points={{-24,0},{-30,0},{-30,-40},{50,-40},{50,0},{56,0}}, color={95,95,95}));
+      connect(Dir_3.fg_inlet, Dir_4.fg_inlet) annotation (Line(points={{16,0},{10,0},{10,-40},{50,-40},{50,0},{56,0}}, color={95,95,95}));
+      connect(Dir_4.water_outlet, outlet) annotation (Line(points={{60,11},{60,100},{60,100}}, color={28,108,200}));
+      connect(Dir_1.water_inlet, inlet) annotation (Line(points={{-60,11},{-60,100},{-60,100}}, color={28,108,200}));
+      connect(Dir_1.water_outlet, Dir_2.water_inlet) annotation (Line(points={{-60,-11},{-60,-60},{-20,-60},{-20,-11}}, color={28,108,200}));
+      connect(Dir_2.water_outlet, Dir_3.water_inlet) annotation (Line(points={{-20,11},{-20,60},{20,60},{20,11}}, color={28,108,200}));
+      connect(Dir_3.water_outlet, Dir_4.water_inlet) annotation (Line(points={{20,-11},{20,-60},{60,-60},{60,-11}}, color={28,108,200}));
+      connect(Dir_4.fg_outlet, fg_outlet_properties.C_in) annotation (Line(points={{64,0},{72,0},{72,-40},{80,-40},{80,-32}}, color={95,95,95}));
+      connect(PC_1.C_out, fg_outlet_properties.C_in) annotation (Line(points={{-46,30},{-46,40},{72,40},{72,-40},{80,-40},{80,-32}}, color={95,95,95}));
+      connect(PC_2.C_out, fg_outlet_properties.C_in) annotation (Line(points={{0,30},{0,40},{72,40},{72,-40},{80,-40},{80,-32}}, color={95,95,95}));
+      connect(PC_3.C_out, fg_outlet_properties.C_in) annotation (Line(points={{40,30},{40,40},{72,40},{72,-40},{80,-40},{80,-32}}, color={95,95,95}));
+      connect(fg_outlet_properties.C_out, fg_outlet) annotation (Line(points={{80,-12},{80,0},{100,0}}, color={95,95,95}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Rectangle(
+              extent={{-100,100},{100,-100}},
+              lineColor={0,0,0},
+              fillColor={215,215,215},
+              fillPattern=FillPattern.Solid),
+            Ellipse(extent={{-72,70},{-72,70}}, lineColor={28,108,200}),
+            Rectangle(
+              extent={{-80,86},{80,80}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-80,-80},{80,-86}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
             Line(
-              points={{-20,0},{-20,80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{-40,86},{-40,80}},
+              color={0,0,0},
+              thickness=1),
             Line(
-              points={{-10,0},{-10,80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{40,86},{40,80}},
+              color={0,0,0},
+              thickness=1),
             Line(
-              points={{10,0},{10,-80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{0,-80},{0,-86}},
+              color={0,0,0},
+              thickness=1),
             Line(
-              points={{20,0},{20,-80}},
+              points={{-60,80},{-60,-82},{-20,-80},{-20,80},{20,80},{20,-80},{60,-80},{60,80}},
               color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              thickness=1,
+              smooth=Smooth.Bezier),
+            Polygon(
+              points={{-60,-10},{-66,10},{-54,10},{-60,-10}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{-20,12},{-26,-8},{-14,-8},{-20,12}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{20,-10},{14,10},{26,10},{20,-10}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{60,10},{54,-10},{66,-10},{60,10}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
             Line(
-              points={{30,0},{30,-80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{30,20},{50,0}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled}),
             Line(
-              points={{50,0},{50,80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{-10,20},{10,0}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled}),
             Line(
-              points={{60,0},{60,80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
+              points={{-50,20},{-30,0}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled}),
             Line(
-              points={{70,0},{70,80}},
-              color={28,108,200},
-              arrow={Arrow.Filled,Arrow.None}),
-            Line(points={{-70,0},{-70,80}}, color={28,108,200}),
-            Line(points={{-60,0},{-60,80}}, color={28,108,200}),
-            Line(points={{-50,0},{-50,80}}, color={28,108,200}),
-            Line(points={{-10,-80},{-10,0}}, color={28,108,200}),
-            Line(points={{-20,-80},{-20,0}}, color={28,108,200}),
-            Line(points={{-30,-80},{-30,0}}, color={28,108,200}),
-            Line(points={{70,-80},{70,0}}, color={28,108,200}),
-            Line(points={{60,-80},{60,0}}, color={28,108,200}),
-            Line(points={{50,-80},{50,0}}, color={28,108,200}),
-            Line(points={{30,0},{30,80}}, color={28,108,200}),
-            Line(points={{20,0},{20,80}}, color={28,108,200}),
-            Line(points={{10,0},{10,80}}, color={28,108,200})}),     Diagram(coordinateSystem(preserveAspectRatio=false)));
+              points={{-92,20},{-72,0}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled}),
+            Line(
+              points={{70,20},{90,0}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled})}),                    Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(
+          StopTime=500,
+          __Dymola_NumberOfIntervals=1000,
+          __Dymola_Algorithm="Dassl"));
     end HX_4_pass;
+
+    model HX_3_pass
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+      // Number of tubes per water flow direction
+      parameter Integer N_tubes_row_dir_1 = 62 "Number of tubes of water flowing in in direction 1";
+      parameter Integer N_tubes_row_dir_2 = 62 "Number of tubes of water flowing in in direction 2";
+      parameter Integer N_tubes_row_dir_3 = 62 "Number of tubes of water flowing in in direction 2";
+
+      // Indicators
+        // Configuration
+        Integer N_tubes_row_tot "Total number of tubes per row";
+        Units.PositiveMassFlowRate Q_fg_dir_1 "Flue gas mass flow rate heating water in direction 1";
+        Units.PositiveMassFlowRate Q_fg_dir_2 "Flue gas mass flow rate heating water in direction 2";
+        Units.PositiveMassFlowRate Q_fg_dir_3 "Flue gas mass flow rate heating water in direction 3";
+        Units.PositiveMassFlowRate Q_fg_tot "Total flue gas mass flow rate";
+        // Temperatures
+        Units.Temperature T_water_in "Water inlet temperature";
+        Units.Temperature T_water_out "Water outlet temperature";
+        Units.Temperature T_fg_in "Flue gas inlet temperature";
+        Units.Temperature T_fg_out "Flue gas outlet temperature";
+
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_1(
+        N_tubes_row=N_tubes_row_dir_1,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{-50,-11},{-30,11}})));
+
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_3(
+        N_tubes_row=N_tubes_row_dir_2,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{30,-11},{50,11}})));
+      FlueGases.Pipes.PressureCut PC_1 annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={-28,30})));
+      FlueGases.Connectors.Inlet fg_inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
+      FlueGases.Connectors.Outlet fg_outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+      WaterSteam.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-70,-110},{-50,-90}}), iconTransformation(extent={{-70,-110},{-50,-90}})));
+      WaterSteam.Connectors.Outlet outlet annotation (Placement(transformation(extent={{50,90},{70,110}})));
+      FlueGases.BaseClasses.IsoPHFlowModel fg_inlet_properties annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=0,
+            origin={-70,0})));
+      FlueGases.BaseClasses.IsoPHFlowModel fg_outlet_properties
+                                                               annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=0,
+            origin={70,0})));
+      HeatExchangers.CrossCurrent_1NodePerRow_MonoPhasicHX_LCM_ConstantK_WaterStorage Dir_2(
+        N_tubes_row=N_tubes_row_dir_3,
+        Rows=2,
+        Tubes_Config=2,
+        fg_path_width=14.07,
+        N=10,
+        D_out=0.0381,
+        e=0.003048,
+        L=18.29,
+        A_water=676.73035,
+        T_wall_0=745.15) annotation (Placement(transformation(extent={{-10,11},{10,-11}})));
+      FlueGases.Pipes.PressureCut PC_2 annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={20,30})));
+    equation
+
+      // Indicators
+        // Configuration
+        N_tubes_row_tot = N_tubes_row_dir_1 + N_tubes_row_dir_2 + N_tubes_row_dir_3;
+      Dir_3.fg_side.Q   = Q_fg_dir_1;
+      Dir_1.fg_side.Q = Q_fg_dir_2;
+      Dir_2.fg_side.Q   = Q_fg_dir_3;
+        Q_fg_tot = Q_fg_dir_1 + Q_fg_dir_2 + Q_fg_dir_3;
+        // Temperatures
+        T_water_in =Dir_3.T_water_in;
+        T_water_out =Dir_2.T_water_out;
+        T_fg_in = fg_inlet_properties.T_in;
+        T_fg_out = fg_outlet_properties.T_out;
+
+      // Flow repartition is proportional to the number of tubes
+      Q_fg_dir_1 = Q_fg_tot*N_tubes_row_dir_1/N_tubes_row_tot;
+      Q_fg_dir_2 = Q_fg_tot*N_tubes_row_dir_2/N_tubes_row_tot;
+
+      connect(fg_inlet, fg_inlet) annotation (Line(points={{-100,0},{-100,0}}, color={95,95,95}));
+      connect(fg_inlet, fg_inlet_properties.C_in) annotation (Line(points={{-100,0},{-80,0}},           color={95,95,95}));
+      connect(fg_inlet_properties.C_out, Dir_1.fg_inlet) annotation (Line(points={{-60,0},{-44,0}}, color={95,95,95}));
+      connect(fg_outlet_properties.C_out, fg_outlet) annotation (Line(points={{80,0},{100,0}}, color={95,95,95}));
+      connect(Dir_3.fg_outlet, fg_outlet_properties.C_in) annotation (Line(points={{44,0},{60,0}}, color={95,95,95}));
+      connect(PC_1.C_in, Dir_1.fg_outlet) annotation (Line(points={{-28,20},{-28,0},{-36,0}}, color={95,95,95}));
+      connect(PC_1.C_out, fg_outlet_properties.C_in) annotation (Line(points={{-28,40},{-28,60},{52,60},{52,0},{60,0}}, color={95,95,95}));
+      connect(PC_2.C_out, fg_outlet_properties.C_in) annotation (Line(points={{20,40},{20,60},{52,60},{52,0},{60,0}}, color={95,95,95}));
+      connect(PC_2.C_in,Dir_2. fg_outlet) annotation (Line(points={{20,20},{22,20},{22,0},{4,0}}, color={95,95,95}));
+      connect(Dir_2.fg_inlet, Dir_1.fg_inlet) annotation (Line(points={{-4,0},{-20,0},{-20,-40},{-52,-40},{-52,0},{-44,0}}, color={95,95,95}));
+      connect(Dir_3.fg_inlet, Dir_1.fg_inlet) annotation (Line(points={{36,0},{28,0},{28,-40},{-52,-40},{-52,0},{-44,0}}, color={95,95,95}));
+      connect(Dir_1.water_inlet, inlet) annotation (Line(points={{-40,-11},{-40,-60},{-60,-60},{-60,-100}}, color={28,108,200}));
+      connect(Dir_1.water_outlet, Dir_2.water_inlet) annotation (Line(points={{-40,11},{-40,80},{0,80},{0,11}}, color={28,108,200}));
+      connect(Dir_2.water_outlet, Dir_3.water_inlet) annotation (Line(points={{0,-11},{0,-60},{40,-60},{40,-11}}, color={28,108,200}));
+      connect(Dir_3.water_outlet, outlet) annotation (Line(points={{40,11},{40,80},{60,80},{60,100}}, color={28,108,200}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Rectangle(
+              extent={{-100,100},{100,-100}},
+              lineColor={0,0,0},
+              fillColor={215,215,215},
+              fillPattern=FillPattern.Solid),
+            Ellipse(extent={{-72,70},{-72,70}}, lineColor={28,108,200}),
+            Rectangle(
+              extent={{-80,86},{80,80}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-80,-80},{80,-86}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Line(
+              points={{30,86},{30,80}},
+              color={0,0,0},
+              thickness=1),
+            Line(points={{60,0},{60,80}},   color={28,108,200}),
+            Line(
+              points={{-30,-80},{-30,-86}},
+              color={0,0,0},
+              thickness=1),
+            Line(
+              points={{-60,-80},{-60,-62},{-60,80},{0,80},{0,-80},{60,-80},{60,80}},
+              color={28,108,200},
+              thickness=1,
+              smooth=Smooth.Bezier),
+            Polygon(
+              points={{-60,8},{-66,-12},{-54,-12},{-60,8}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{0,-14},{-6,6},{6,6},{0,-14}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{60,8},{54,-12},{66,-12},{60,8}},
+              lineColor={28,108,200},
+              fillColor={28,108,200},
+              fillPattern=FillPattern.Solid),
+            Line(
+              points={{-92,16},{-72,-4}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled}),
+            Line(
+              points={{-42,16},{-22,-4}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled}),
+            Line(
+              points={{20,16},{40,-4}},
+              color={0,0,0},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled})}),                    Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(
+          StopTime=500,
+          __Dymola_NumberOfIntervals=1000,
+          __Dymola_Algorithm="Dassl"));
+    end HX_3_pass;
   end Multiple_Pass_HX;
   annotation (Icon(graphics={
         Rectangle(
