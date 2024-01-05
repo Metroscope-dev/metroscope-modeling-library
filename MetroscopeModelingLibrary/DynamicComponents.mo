@@ -4327,9 +4327,9 @@ package DynamicComponents
           T_fg_in = fg_side.T_in;
           T_fg_out = fg_side.T_out;
           // Average Temperatures
-          T_water_avg = sum(T_water_node)/N;
+          T_water_avg = sum(T_water_node)/(Rows*N);
           //T_fg_avg = sum(T_fg_node)/N;
-          T_wall_avg =  sum(T_wall)/N;
+          T_wall_avg =  sum(T_wall)/(Rows*N);
 
         // ------ Discretization computation loop ------
           for i in 1:Rows loop
@@ -4683,9 +4683,9 @@ package DynamicComponents
           T_fg_in = fg_side.T_in;
           T_fg_out = fg_side.T_out;
           // Average Temperatures
-          T_water_avg = sum(T_water_node)/N;
+          T_water_avg = sum(T_water_node)/(Rows*N);
           //T_fg_avg = sum(T_fg_node)/N;
-          T_wall_avg =  sum(T_wall)/N;
+          T_wall_avg =  sum(T_wall)/((N_wall+1)*Rows*N);
 
         // ------ Discretization computation loop ------
           for i in 1:Rows loop
