@@ -6034,8 +6034,8 @@ package DynamicComponents
               //Units.Temperature T_fg_avg "Flue gas overall average temperature";
               Units.Temperature T_wall_avg "Wall overall average temperature";
 
-              parameter Units.SpecificEnthalpy h_fg_disc_in[10] = {959957.25, 962139.56, 964190, 966112.7,
-              967912.5, 969595, 971165.94, 972631.2, 973996.75, 975268.44};
+              //parameter Units.SpecificEnthalpy h_fg_disc_in[10] = {959957.25, 962139.56, 964190, 966112.7,
+              //967912.5, 969595, 971165.94, 972631.2, 973996.75, 975268.44};
 
 
             WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{-10,-110},{10,-90}}),
@@ -6066,7 +6066,7 @@ package DynamicComponents
                 k_water[i, 1] = WaterSteamMedium.thermalConductivity(state_water[i, 1]);
               end for;
 
-              h_fg[1,  :] = h_fg_disc_in;
+              //h_fg[1,  :] = h_fg_disc_in;
 
               for j in 1:N loop
 
@@ -6213,9 +6213,20 @@ package DynamicComponents
                   Line(points={{-40,0},{40,0}},    color={0,0,0})}),       Diagram(coordinateSystem(preserveAspectRatio=false)));
           end CrossCurrent_2D_2NodeConduction_List_input;
 
-          model AlongZ_discretized_2HX
+          model AlongZ_discretized_2HX_same_direction
             import MetroscopeModelingLibrary.Utilities.Units;
             import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+            HeatExchangers.One_pass_HX.AssumptionsValidation.TubeWallTemperatureDistribution.CrossCurrent_2D_2NodeConduction HX1(
+              N_tubes_row=368,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              N=10,
+              D_out=0.0381,
+              e=0.003048,
+              L=18.29,
+              A_water=676.73035,
+              T_wall_0=745.15) annotation (Placement(transformation(extent={{-50,-11},{-30,11}})));
 
               // Boundary conditions
             input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
@@ -6230,8 +6241,356 @@ package DynamicComponents
             input Utilities.Units.MassFlowRate Q_cold_source_IP(start = 96.329) "kg/s";
             input Real T_cold_source_IP(start = 509.7, min = 130, nominal = 150) "degC";
 
-            FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
-            FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{78,-10},{98,10}})));
+            WaterSteam.BoundaryConditions.Source cold_source_HP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={-40,-84})));
+            WaterSteam.BoundaryConditions.Sink cold_sink_HP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={-40,64})));
+            FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-88,-10},{-68,10}})));
+            FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{76,-10},{96,10}})));
+            Modelica.Blocks.Sources.Step step(height=-20, startTime=100) annotation (Placement(transformation(extent={{-80,60},{-60,80}})));
+            CrossCurrent_2D_2NodeConduction_List_input                      HX2(
+              N_tubes_row=276,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              S_T=101.6e-3,
+              S_L=127e-3,
+              S_f=0.007593,
+              eff_fins=0.8094,
+              M_wall=25074,
+              N=10,
+              D_out=50.8e-3,
+              e=2.667e-3,
+              L=18.29,
+              T_wall_0=745.15,
+              K_conv_water=922.4,
+              K_conv_fg=64.23) annotation (Placement(transformation(extent={{30,-11},{50,11}})));
+            WaterSteam.BoundaryConditions.Source cold_source_IP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={40,-84})));
+            WaterSteam.BoundaryConditions.Sink cold_sink_IP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={40,64})));
+          equation
+            hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+            hot_source.P_out = P_hot_source*1e5;
+            hot_source.T_out = T_hot_source + 273.15 + step.y;
+            hot_source.Q_out = - Q_hot_source;
+
+            cold_source_HP.P_out = P_cold_source_HP *1e5;
+            cold_source_HP.T_out = 273.15 + T_cold_source_HP;
+            cold_source_HP.Q_out = -Q_cold_source_HP;
+
+            cold_source_IP.P_out = P_cold_source_IP*1e5;
+            cold_source_IP.T_out = 273.15 + T_cold_source_IP;
+            cold_source_IP.Q_out = -Q_cold_source_IP;
+
+            HX2.h_fg[1,  :] = HX1.h_fg[HX1.Rows + 1, :];
+
+            connect(HX1.fg_inlet, hot_source.C_out) annotation (Line(points={{-44,0},{-73,0}}, color={95,95,95}));
+            connect(HX1.water_inlet, cold_source_HP.C_out) annotation (Line(points={{-40,-11},{-40,-79}}, color={28,108,200}));
+            connect(HX1.water_outlet, cold_sink_HP.C_in) annotation (Line(points={{-40,11},{-40,59}}, color={28,108,200}));
+            connect(HX2.water_inlet, cold_source_IP.C_out) annotation (Line(points={{40,-11},{40,-79}}, color={28,108,200}));
+            connect(HX2.water_outlet, cold_sink_IP.C_in) annotation (Line(points={{40,11},{40,59}}, color={28,108,200}));
+            connect(HX2.fg_outlet, hot_sink.C_in) annotation (Line(points={{44,0},{81,0}}, color={95,95,95}));
+            connect(HX1.fg_outlet, HX2.fg_inlet) annotation (Line(points={{-36,0},{36,0}}, color={95,95,95}));
+            annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                  Ellipse(lineColor={0,140,72},
+                          fillColor={255,255,255},
+                          fillPattern=FillPattern.Solid,
+                          extent={{-100,-100},{100,100}}),
+                  Polygon(lineColor={0,140,72},
+                          fillColor={0,140,72},
+                          pattern=LinePattern.None,
+                          fillPattern=FillPattern.Solid,
+                          points={{-36,60},{64,0},{-36,-60},{-36,60}})}),  Diagram(coordinateSystem(preserveAspectRatio=false)),
+              experiment(
+                StopTime=500,
+                __Dymola_NumberOfIntervals=1000,
+                __Dymola_Algorithm="Dassl"));
+          end AlongZ_discretized_2HX_same_direction;
+
+          model AlongZ_discretized_2HX_opp_direction
+            import MetroscopeModelingLibrary.Utilities.Units;
+            import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+            HeatExchangers.One_pass_HX.AssumptionsValidation.TubeWallTemperatureDistribution.CrossCurrent_2D_2NodeConduction HX1(
+              N_tubes_row=368,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              N=10,
+              D_out=0.0381,
+              e=0.003048,
+              L=18.29,
+              A_water=676.73035,
+              T_wall_0=745.15) annotation (Placement(transformation(extent={{-50,-11},{-30,11}})));
+
+              // Boundary conditions
+            input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+            input Real Q_hot_source(start = 658.695) "kg/s";
+            input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+            input Real P_cold_source_HP(start = 121.2, min = 1.5, nominal = 100) "barA";
+            input Utilities.Units.MassFlowRate Q_cold_source_HP(start = 84.06) "kg/s";
+            input Real T_cold_source_HP(start = 498.8, min = 130, nominal = 150) "degC";
+
+            input Real P_cold_source_IP(start = 23.8, min = 1.5, nominal = 100) "barA";
+            input Utilities.Units.MassFlowRate Q_cold_source_IP(start = 96.329) "kg/s";
+            input Real T_cold_source_IP(start = 509.7, min = 130, nominal = 150) "degC";
+
+            WaterSteam.BoundaryConditions.Source cold_source_HP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={-40,-84})));
+            WaterSteam.BoundaryConditions.Sink cold_sink_HP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={-40,64})));
+            FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-88,-10},{-68,10}})));
+            FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{76,-10},{96,10}})));
+            Modelica.Blocks.Sources.Step step(height=-20, startTime=100) annotation (Placement(transformation(extent={{-80,60},{-60,80}})));
+            CrossCurrent_2D_2NodeConduction_List_input                      HX2(
+              N_tubes_row=276,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              S_T=101.6e-3,
+              S_L=127e-3,
+              S_f=0.007593,
+              eff_fins=0.8094,
+              M_wall=25074,
+              N=10,
+              D_out=50.8e-3,
+              e=2.667e-3,
+              L=18.29,
+              T_wall_0=745.15,
+              K_conv_water=922.4,
+              K_conv_fg=64.23) annotation (Placement(transformation(extent={{30,-11},{50,11}})));
+            WaterSteam.BoundaryConditions.Source cold_source_IP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={40,-84})));
+            WaterSteam.BoundaryConditions.Sink cold_sink_IP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={40,64})));
+          equation
+            hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+            hot_source.P_out = P_hot_source*1e5;
+            hot_source.T_out = T_hot_source + 273.15 + step.y;
+            hot_source.Q_out = - Q_hot_source;
+
+            cold_source_HP.P_out = P_cold_source_HP *1e5;
+            cold_source_HP.T_out = 273.15 + T_cold_source_HP;
+            cold_source_HP.Q_out = -Q_cold_source_HP;
+
+            cold_source_IP.P_out = P_cold_source_IP*1e5;
+            cold_source_IP.T_out = 273.15 + T_cold_source_IP;
+            cold_source_IP.Q_out = -Q_cold_source_IP;
+
+            HX2.h_fg[1,  :] = Modelica.Math.Vectors.reverse(HX1.h_fg[HX1.Rows + 1, :]);
+
+            connect(HX1.fg_inlet, hot_source.C_out) annotation (Line(points={{-44,0},{-73,0}}, color={95,95,95}));
+            connect(HX1.water_inlet, cold_source_HP.C_out) annotation (Line(points={{-40,-11},{-40,-79}}, color={28,108,200}));
+            connect(HX1.water_outlet, cold_sink_HP.C_in) annotation (Line(points={{-40,11},{-40,59}}, color={28,108,200}));
+            connect(HX2.water_inlet, cold_source_IP.C_out) annotation (Line(points={{40,-11},{40,-79}}, color={28,108,200}));
+            connect(HX2.water_outlet, cold_sink_IP.C_in) annotation (Line(points={{40,11},{40,59}}, color={28,108,200}));
+            connect(HX2.fg_outlet, hot_sink.C_in) annotation (Line(points={{44,0},{81,0}}, color={95,95,95}));
+            connect(HX1.fg_outlet, HX2.fg_inlet) annotation (Line(points={{-36,0},{36,0}}, color={95,95,95}));
+            annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                  Ellipse(lineColor={0,140,72},
+                          fillColor={255,255,255},
+                          fillPattern=FillPattern.Solid,
+                          extent={{-100,-100},{100,100}}),
+                  Polygon(lineColor={0,140,72},
+                          fillColor={0,140,72},
+                          pattern=LinePattern.None,
+                          fillPattern=FillPattern.Solid,
+                          points={{-36,60},{64,0},{-36,-60},{-36,60}})}),  Diagram(coordinateSystem(preserveAspectRatio=false)),
+              experiment(
+                StopTime=500,
+                __Dymola_NumberOfIntervals=1000,
+                __Dymola_Algorithm="Dassl"));
+          end AlongZ_discretized_2HX_opp_direction;
+
+          model AlongZ_averaged_3HX
+            import MetroscopeModelingLibrary.Utilities.Units;
+            import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+            HeatExchangers.One_pass_HX.AssumptionsValidation.TubeWallTemperatureDistribution.CrossCurrent_2D_2NodeConduction HX1(
+              N_tubes_row=368,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              N=10,
+              D_out=0.0381,
+              e=0.003048,
+              L=18.29,
+              A_water=676.73035,
+              T_wall_0=745.15) annotation (Placement(transformation(extent={{-50,-11},{-30,11}})));
+
+              // Boundary conditions
+            input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+            input Real Q_hot_source(start = 658.695) "kg/s";
+            input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+            input Real P_cold_source_HP(start = 121.2, min = 1.5, nominal = 100) "barA";
+            input Utilities.Units.MassFlowRate Q_cold_source_HP(start = 84.06) "kg/s";
+            input Real T_cold_source_HP(start = 393.5, min = 130, nominal = 150) "degC";
+
+            input Real P_cold_source_IP(start = 23.8, min = 1.5, nominal = 100) "barA";
+            input Utilities.Units.MassFlowRate Q_cold_source_IP(start = 96.329) "kg/s";
+            input Real T_cold_source_IP(start = 509.7, min = 130, nominal = 150) "degC";
+
+            WaterSteam.BoundaryConditions.Source cold_source_HP annotation (Placement(transformation(
+                  extent={{-10,-10},{10,10}},
+                  rotation=270,
+                  origin={40,64})));
+            WaterSteam.BoundaryConditions.Sink cold_sink_HP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={-40,64})));
+            FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-88,-10},{-68,10}})));
+            FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{76,-10},{96,10}})));
+            Modelica.Blocks.Sources.Step step(height=-20, startTime=100) annotation (Placement(transformation(extent={{-80,60},{-60,80}})));
+            TubeWallTemperatureDistribution.CrossCurrent_2D_2NodeConduction HX2(
+              N_tubes_row=276,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              S_T=101.6e-3,
+              S_L=127e-3,
+              S_f=0.007593,
+              eff_fins=0.8094,
+              M_wall=25074,
+              N=10,
+              D_out=50.8e-3,
+              e=2.667e-3,
+              L=18.29,
+              T_wall_0=745.15,
+              K_conv_water=922.4,
+              K_conv_fg=64.23) annotation (Placement(transformation(extent={{-10,-11},{10,11}})));
+            WaterSteam.BoundaryConditions.Source cold_source_IP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={0,-84})));
+            WaterSteam.BoundaryConditions.Sink cold_sink_IP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={0,64})));
+            TubeWallTemperatureDistribution.CrossCurrent_2D_2NodeConduction                                                  HX3(
+              N_tubes_row=368,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              S_f=0.0046926,
+              eff_fins=0.8043,
+              M_wall=31189,
+              N=10,
+              D_out=0.0381,
+              e=2.667e-3,
+              L=18.29,
+              T_wall_0=745.15,
+              K_conv_water=2415.5,
+              K_conv_fg=65.56) annotation (Placement(transformation(extent={{30,11},{50,-11}})));
+          equation
+            hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+            hot_source.P_out = P_hot_source*1e5;
+            hot_source.T_out = T_hot_source + 273.15 + step.y;
+            hot_source.Q_out = - Q_hot_source;
+
+            cold_source_HP.P_out = P_cold_source_HP *1e5;
+            cold_source_HP.T_out = 273.15 + T_cold_source_HP;
+            cold_source_HP.Q_out = -Q_cold_source_HP;
+
+            cold_source_IP.P_out = P_cold_source_IP*1e5;
+            cold_source_IP.T_out = 273.15 + T_cold_source_IP;
+            cold_source_IP.Q_out = -Q_cold_source_IP;
+
+            //HX2.h_fg[1,  :] = HX1.h_fg[HX1.Rows + 1, :];
+
+
+            connect(HX1.fg_inlet, hot_source.C_out) annotation (Line(points={{-44,0},{-73,0}}, color={95,95,95}));
+            connect(HX1.water_outlet, cold_sink_HP.C_in) annotation (Line(points={{-40,11},{-40,59}}, color={238,46,47},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            connect(HX2.water_inlet, cold_source_IP.C_out) annotation (Line(points={{0,-11},{0,-45},{9.4369e-16,-45},{9.4369e-16,-79}},
+                                                                                                        color={244,125,35},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            connect(HX2.water_outlet, cold_sink_IP.C_in) annotation (Line(points={{0,11},{0,35},{-9.4369e-16,35},{-9.4369e-16,59}},
+                                                                                                    color={244,125,35},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            connect(HX1.fg_outlet, HX2.fg_inlet) annotation (Line(points={{-36,0},{-4,0}}, color={95,95,95}));
+            connect(HX2.fg_outlet, HX3.fg_inlet) annotation (Line(points={{4,0},{36,0}}, color={95,95,95}));
+            connect(HX3.fg_outlet, hot_sink.C_in) annotation (Line(points={{44,0},{81,0}}, color={95,95,95}));
+            connect(HX3.water_inlet, cold_source_HP.C_out) annotation (Line(points={{40,11},{40,59}}, color={238,46,47},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            connect(HX3.water_outlet, HX1.water_inlet) annotation (Line(points={{40,-11},{40,-40},{-40,-40},{-40,-11}}, color={238,46,47},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                  Ellipse(lineColor={0,140,72},
+                          fillColor={255,255,255},
+                          fillPattern=FillPattern.Solid,
+                          extent={{-100,-100},{100,100}}),
+                  Polygon(lineColor={0,140,72},
+                          fillColor={0,140,72},
+                          pattern=LinePattern.None,
+                          fillPattern=FillPattern.Solid,
+                          points={{-36,60},{64,0},{-36,-60},{-36,60}})}),  Diagram(coordinateSystem(preserveAspectRatio=false)),
+              experiment(
+                StopTime=500,
+                __Dymola_NumberOfIntervals=1000,
+                __Dymola_Algorithm="Dassl"));
+          end AlongZ_averaged_3HX;
+
+          model AlongZ_discretized_3HX
+            import MetroscopeModelingLibrary.Utilities.Units;
+            import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+            HeatExchangers.One_pass_HX.AssumptionsValidation.TubeWallTemperatureDistribution.CrossCurrent_2D_2NodeConduction HX1(
+              N_tubes_row=368,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              N=10,
+              D_out=0.0381,
+              e=0.003048,
+              L=18.29,
+              A_water=676.73035,
+              T_wall_0=745.15) annotation (Placement(transformation(extent={{-50,-11},{-30,11}})));
+
+              // Boundary conditions
+            input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+            input Real Q_hot_source(start = 658.695) "kg/s";
+            input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+            input Real P_cold_source_HP(start = 121.2, min = 1.5, nominal = 100) "barA";
+            input Utilities.Units.MassFlowRate Q_cold_source_HP(start = 84.06) "kg/s";
+            input Real T_cold_source_HP(start = 393.5, min = 130, nominal = 150) "degC";
+
+            input Real P_cold_source_IP(start = 23.8, min = 1.5, nominal = 100) "barA";
+            input Utilities.Units.MassFlowRate Q_cold_source_IP(start = 96.329) "kg/s";
+            input Real T_cold_source_IP(start = 509.7, min = 130, nominal = 150) "degC";
+
+            WaterSteam.BoundaryConditions.Source cold_source_HP annotation (Placement(transformation(
+                  extent={{-10,-10},{10,10}},
+                  rotation=270,
+                  origin={40,64})));
+            WaterSteam.BoundaryConditions.Sink cold_sink_HP annotation (Placement(transformation(
+                  extent={{10,-10},{-10,10}},
+                  rotation=270,
+                  origin={-40,64})));
+            FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-88,-10},{-68,10}})));
+            FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{76,-10},{96,10}})));
             Modelica.Blocks.Sources.Step step(height=-20, startTime=100) annotation (Placement(transformation(extent={{-80,60},{-60,80}})));
             CrossCurrent_2D_2NodeConduction_List_input                      HX2(
               N_tubes_row=276,
@@ -6253,28 +6612,64 @@ package DynamicComponents
             WaterSteam.BoundaryConditions.Source cold_source_IP annotation (Placement(transformation(
                   extent={{10,-10},{-10,10}},
                   rotation=270,
-                  origin={0,-78})));
+                  origin={0,-84})));
             WaterSteam.BoundaryConditions.Sink cold_sink_IP annotation (Placement(transformation(
                   extent={{10,-10},{-10,10}},
                   rotation=270,
                   origin={0,64})));
+            CrossCurrent_2D_2NodeConduction_List_input                                                                       HX3(
+              N_tubes_row=368,
+              Rows=1,
+              Tubes_Config=2,
+              fg_path_width=14.07,
+              S_f=0.0046926,
+              eff_fins=0.8043,
+              M_wall=31189,
+              N=10,
+              D_out=0.0381,
+              e=2.667e-3,
+              L=18.29,
+              T_wall_0=745.15,
+              K_conv_water=2415.5,
+              K_conv_fg=65.56) annotation (Placement(transformation(extent={{30,11},{50,-11}})));
           equation
             hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
             hot_source.P_out = P_hot_source*1e5;
             hot_source.T_out = T_hot_source + 273.15 + step.y;
             hot_source.Q_out = - Q_hot_source;
 
+            cold_source_HP.P_out = P_cold_source_HP *1e5;
+            cold_source_HP.T_out = 273.15 + T_cold_source_HP;
+            cold_source_HP.Q_out = -Q_cold_source_HP;
 
             cold_source_IP.P_out = P_cold_source_IP*1e5;
             cold_source_IP.T_out = 273.15 + T_cold_source_IP;
             cold_source_IP.Q_out = -Q_cold_source_IP;
 
-            connect(HX2.water_inlet, cold_source_IP.C_out) annotation (Line(points={{0,-11},{0,-42},{9.4369e-16,-42},{9.4369e-16,-73}},
-                                                                                                        color={28,108,200}));
+            HX2.h_fg[1,  :] = HX1.h_fg[HX1.Rows + 1, :];
+            HX3.h_fg[1,  :] = Modelica.Math.Vectors.reverse(HX2.h_fg[HX2.Rows + 1, :]); // water flows in the opposite direction
+
+            connect(HX1.fg_inlet, hot_source.C_out) annotation (Line(points={{-44,0},{-73,0}}, color={95,95,95}));
+            connect(HX1.water_outlet, cold_sink_HP.C_in) annotation (Line(points={{-40,11},{-40,59}}, color={238,46,47},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            connect(HX2.water_inlet, cold_source_IP.C_out) annotation (Line(points={{0,-11},{0,-45},{9.4369e-16,-45},{9.4369e-16,-79}},
+                                                                                                        color={244,125,35},
+                thickness=1,
+                pattern=LinePattern.Dash));
             connect(HX2.water_outlet, cold_sink_IP.C_in) annotation (Line(points={{0,11},{0,35},{-9.4369e-16,35},{-9.4369e-16,59}},
-                                                                                                    color={28,108,200}));
-            connect(HX2.fg_outlet, hot_sink.C_in) annotation (Line(points={{4,0},{83,0}}, color={95,95,95}));
-            connect(HX2.fg_inlet, hot_source.C_out) annotation (Line(points={{-4,0},{-79,0}}, color={95,95,95}));
+                                                                                                    color={244,125,35},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            connect(HX1.fg_outlet, HX2.fg_inlet) annotation (Line(points={{-36,0},{-4,0}}, color={95,95,95}));
+            connect(HX2.fg_outlet, HX3.fg_inlet) annotation (Line(points={{4,0},{36,0}}, color={95,95,95}));
+            connect(HX3.fg_outlet, hot_sink.C_in) annotation (Line(points={{44,0},{81,0}}, color={95,95,95}));
+            connect(HX3.water_inlet, cold_source_HP.C_out) annotation (Line(points={{40,11},{40,59}}, color={238,46,47},
+                thickness=1,
+                pattern=LinePattern.Dash));
+            connect(HX3.water_outlet, HX1.water_inlet) annotation (Line(points={{40,-11},{40,-40},{-40,-40},{-40,-11}}, color={238,46,47},
+                thickness=1,
+                pattern=LinePattern.Dash));
             annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                   Ellipse(lineColor={0,140,72},
                           fillColor={255,255,255},
@@ -6289,7 +6684,7 @@ package DynamicComponents
                 StopTime=500,
                 __Dymola_NumberOfIntervals=1000,
                 __Dymola_Algorithm="Dassl"));
-          end AlongZ_discretized_2HX;
+          end AlongZ_discretized_3HX;
         end DiscAlongTubeLength;
       end AssumptionsValidation;
       annotation (Icon(graphics={
