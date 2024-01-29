@@ -5902,6 +5902,10 @@ package DynamicComponents
           parameter Units.HeatExchangeCoefficient K_conv_water = 2418 "Water side convection heat transfer coefficient";
           parameter Units.HeatExchangeCoefficient K_conv_fg = 76.83 "Flue gase convection heat transfer coefficient"; //  = 82.06
           Real UA "Overall heat transfer coefficient and exchange surface product";
+          Real UA_water "Heat transfer coefficient from the water side";
+          Real UA_fg "Heat transfer coefficient from the flue gas side";
+          Real r_UA "Ratio of water to flue gas heat transfer coefficients";
+
           // Discretized heat transfer power
           Units.Power dW_water[Rows, N] "Node water heat exchange";
           Units.Power dW_fg[Rows, N] "Node flue gas heat exchange";
@@ -5972,12 +5976,15 @@ package DynamicComponents
           T_fg_in = fg_side.T_in;
           T_fg_out = fg_side.T_out;
           // Average Temperatures
-          T_water_avg = sum(T_water_node)/N;
-          //T_fg_avg = sum(T_fg_node)/N;
-          T_wall_avg =  sum(T_wall)/N;
+          T_water_avg = sum(T_water_node)/(N*Rows);
+          //T_fg_avg = sum(T_fg_node)/((N*Rows);
+          T_wall_avg =  sum(T_wall)/(N*Rows);
 
           // Overall heat transfer coefficient and exchange surface product
           1/UA = 1/(A_water*K_conv_water) + 1/(A_fg_tubes*K_conv_fg + A_fg_fins*eff_fins*K_conv_fg);
+          1/UA_water = 1/(A_water*K_conv_water);
+          1/UA_fg = 1/(A_fg_tubes*K_conv_fg + A_fg_fins*eff_fins*K_conv_fg);
+          r_UA = UA_water/UA_fg;
 
         // ------ Discretization computation loop ------
           for i in 1:Rows loop
@@ -6113,7 +6120,7 @@ package DynamicComponents
         package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
 
-          Modelica.Units.SI.ThermalConductance UA "W/K"; // = 264900
+          parameter Modelica.Units.SI.ThermalConductance UA = 264900 "W/K"; // = 264900
 
           // Real UA "Overall heat transfer coefficient and exchange surface product";
           // Temperatures
@@ -6242,8 +6249,9 @@ package DynamicComponents
         package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
         package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-          Modelica.Units.SI.ThermalConductance UA_fg(start=37200)  "W/K"; //  = 37200.34122
-          Modelica.Units.SI.ThermalConductance UA_water  "W/K"; // = 264900
+          Modelica.Units.SI.ThermalConductance UA_fg(start=37200);
+          Modelica.Units.SI.ThermalConductance UA_water;
+          parameter Modelica.Units.SI.ThermalConductance UA = 153805.22;
           parameter Real r_UA = 39.677;
 
           // Wall
@@ -6287,8 +6295,8 @@ package DynamicComponents
 
         WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{-10,-110},{10,-90}}),
                                                                                                                 iconTransformation(extent={{-10,-110},{10,-90}})));
-        WaterSteam.Connectors.Outlet water_outlet(h_outflow(start=3395390.5)) annotation (Placement(transformation(extent={{-10,90},{10,110}}), iconTransformation(extent={{-10,90},{10,110}})));
-        FlueGases.Connectors.Outlet fg_outlet(h_outflow(start=985303.7)) annotation (Placement(transformation(extent={{30,-10},{50,10}}),  iconTransformation(extent={{30,-10},{50,10}})));
+        WaterSteam.Connectors.Outlet water_outlet annotation (Placement(transformation(extent={{-10,90},{10,110}}), iconTransformation(extent={{-10,90},{10,110}})));
+        FlueGases.Connectors.Outlet fg_outlet annotation (Placement(transformation(extent={{30,-10},{50,10}}),  iconTransformation(extent={{30,-10},{50,10}})));
         FlueGases.Connectors.Inlet fg_inlet annotation (Placement(transformation(extent={{-50,-10},{-30,10}}),  iconTransformation(extent={{-50,-10},{-30,10}})));
         WaterSteam.BaseClasses.IsoPFlowModel water_side(T_out(start=T_water_out_0)) annotation (Placement(transformation(extent={{10,-10},{-10,10}},
               rotation=270,
@@ -6297,6 +6305,7 @@ package DynamicComponents
       equation
 
         r_UA = UA_water/UA_fg;
+        1/UA = 1/UA_water + 1/UA_fg;
 
         // ------ Boundaries ------
           // Enthalpy
@@ -6315,14 +6324,17 @@ package DynamicComponents
 
         // Energy Balance
           W_water + W_fg + M_wall*Cp_wall*der(T_wall) = 0;
-          DT_LMTD_water = ((T_wall - T_water_in) - (T_wall - T_water_out))/log((T_wall - T_water_in)/(T_wall - T_water_out));
-          DT_LMTD_fg = ((T_fg_in - T_wall) - (T_fg_out - T_wall))/log((T_fg_in - T_wall)/(T_fg_out - T_wall));
+      //     DT_LMTD_water = ((T_wall - T_water_in) - (T_wall - T_water_out))/log((T_wall - T_water_in)/(T_wall - T_water_out));
+      //     DT_LMTD_fg = ((T_fg_in - T_wall) - (T_fg_out - T_wall))/log((T_fg_in - T_wall)/(T_fg_out - T_wall));
+          DT_LMTD_water = T_wall - (T_water_in + T_water_out)/2;
+          DT_LMTD_fg = (T_fg_in + T_fg_out)/2 - T_wall;
           W_water = UA_water*DT_LMTD_water;
           W_fg = - UA_fg*DT_LMTD_fg;
 
       initial equation
         der(T_wall) = 0;
 
+      equation
         connect(water_side.C_in, water_inlet) annotation (Line(points={{-1.83187e-15,10},{-1.83187e-15,-6},{0,-6},{0,-100}},
                                                                                          color={28,108,200}));
         connect(water_side.C_out, water_outlet) annotation (Line(points={{1.77636e-15,30},{0,30},{0,100}},
@@ -7860,6 +7872,181 @@ package DynamicComponents
             __Dymola_NumberOfIntervals=1000,
             __Dymola_Algorithm="Dassl"));
       end Simplified_model_1_Test_bis;
+
+      model Reference_Model_B
+        import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+          // Boundary conditions
+        input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+        input Real Q_hot_source(start = 658.695) "kg/s";
+        input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+        input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
+        input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
+        input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
+
+        WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-86})));
+        WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+              rotation=270,
+              origin={0,84})));
+        FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
+        FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{74,-10},{94,10}})));
+        Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-72,66},{-52,86}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=-20,
+          duration=60,
+          startTime=300) annotation (Placement(transformation(extent={{58,70},{78,90}})));
+        HeatExchangers.Simplified.Reference_Model                          reference_Model(N=1)                    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+      equation
+        hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+        hot_source.P_out = P_hot_source*1e5;
+        hot_source.T_out = T_hot_source + 273.15 + ramp.y;
+        hot_source.Q_out = - Q_hot_source + step.y;
+
+        cold_source.P_out = P_cold_source*1e5;
+        cold_source.T_out = 273.15 + T_cold_source;
+        cold_source.Q_out = - Q_cold_source;
+
+        connect(hot_source.C_out,reference_Model. fg_inlet) annotation (Line(points={{-79,0},{-4,0}}, color={95,95,95}));
+        connect(reference_Model.fg_outlet, hot_sink.C_in) annotation (Line(points={{4,0},{79,0}}, color={95,95,95}));
+        connect(reference_Model.water_inlet, cold_source.C_out) annotation (Line(points={{0,-10},{0,-45.5},{2.77556e-16,-45.5},{2.77556e-16,-81}}, color={28,108,200}));
+        connect(reference_Model.water_outlet, cold_sink.C_in) annotation (Line(points={{0,10},{0,44.5},{-9.4369e-16,44.5},{-9.4369e-16,79}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}),  Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(
+            StopTime=500,
+            __Dymola_NumberOfIntervals=1000,
+            __Dymola_Algorithm="Dassl"));
+      end Reference_Model_B;
+
+      model Simplified_model_B
+        import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+          // Boundary conditions
+        input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+        input Real Q_hot_source(start = 658.695) "kg/s";
+        input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+        input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
+        input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
+        input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
+
+        WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-86})));
+        WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+              rotation=270,
+              origin={0,84})));
+        FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
+        FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{74,-10},{94,10}})));
+        Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-72,66},{-52,86}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=-20,
+          duration=60,
+          startTime=300) annotation (Placement(transformation(extent={{58,70},{78,90}})));
+        HeatExchangers.Simplified.Simplified_model                         simplified_model(UA=153805.22)          annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+      equation
+        hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+        hot_source.P_out = P_hot_source*1e5;
+        hot_source.T_out = T_hot_source + 273.15 + ramp.y;
+        hot_source.Q_out = - Q_hot_source + step.y;
+
+        cold_source.P_out = P_cold_source*1e5;
+        cold_source.T_out = 273.15 + T_cold_source;
+        cold_source.Q_out = - Q_cold_source;
+
+        connect(hot_source.C_out, simplified_model.fg_inlet) annotation (Line(points={{-79,0},{-4,0}}, color={95,95,95}));
+        connect(simplified_model.fg_outlet, hot_sink.C_in) annotation (Line(points={{4,0},{79,0}}, color={95,95,95}));
+        connect(simplified_model.water_inlet, cold_source.C_out) annotation (Line(points={{0,-10},{0,-45.5},{2.77556e-16,-45.5},{2.77556e-16,-81}}, color={28,108,200}));
+        connect(simplified_model.water_outlet, cold_sink.C_in) annotation (Line(points={{0,10},{0,44.5},{-9.4369e-16,44.5},{-9.4369e-16,79}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}),  Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(
+            StopTime=500,
+            __Dymola_NumberOfIntervals=1000,
+            __Dymola_Algorithm="Dassl"));
+      end Simplified_model_B;
+
+      model Simplified_model_1_B
+        import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
+          // Boundary conditions
+        input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+        input Real Q_hot_source(start = 658.695) "kg/s";
+        input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+        input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
+        input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
+        input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
+
+        WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-86})));
+        WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+              rotation=270,
+              origin={0,84})));
+        FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
+        FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{74,-10},{94,10}})));
+        Modelica.Blocks.Sources.Step step(height=100, startTime=100) annotation (Placement(transformation(extent={{-72,66},{-52,86}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=-20,
+          duration=60,
+          startTime=300) annotation (Placement(transformation(extent={{58,70},{78,90}})));
+        HeatExchangers.Simplified.Simplified_model_1                       simplified_model_1_1(r_UA=8.596588, T_wall_0=(517 + 273.15) + 273.15)
+                                                                                                                   annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+      equation
+        hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+        hot_source.P_out = P_hot_source*1e5;
+        hot_source.T_out = T_hot_source + 273.15 + ramp.y;
+        hot_source.Q_out = - Q_hot_source + step.y;
+
+        cold_source.P_out = P_cold_source*1e5;
+        cold_source.T_out = 273.15 + T_cold_source;
+        cold_source.Q_out = - Q_cold_source;
+
+        connect(hot_source.C_out, simplified_model_1_1.fg_inlet) annotation (Line(points={{-79,0},{-4,0}}, color={95,95,95}));
+        connect(simplified_model_1_1.fg_outlet, hot_sink.C_in) annotation (Line(points={{4,0},{79,0}}, color={95,95,95}));
+        connect(simplified_model_1_1.water_inlet, cold_source.C_out) annotation (Line(points={{0,-10},{0,-45.5},{2.77556e-16,-45.5},{2.77556e-16,-81}}, color={28,108,200}));
+        connect(simplified_model_1_1.water_outlet, cold_sink.C_in) annotation (Line(points={{0,10},{0,44.5},{-9.4369e-16,44.5},{-9.4369e-16,79}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}),  Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(
+            StopTime=500,
+            __Dymola_NumberOfIntervals=1000,
+            __Dymola_Algorithm="Dassl"));
+      end Simplified_model_1_B;
     end Simplified;
     annotation (Icon(graphics={
           Rectangle(
