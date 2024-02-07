@@ -7797,6 +7797,1438 @@ package DynamicComponents
         ThermoSysPro.Units.SI.MassFraction x "Vapor mass fraction";
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
       end Prop;
+
+      model SteamDrum_Astom_Simple
+         import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+          parameter Real g = Constants.g;
+
+        // Control strategy
+          parameter Boolean Controlled_level = false;
+
+        // Drum dimensions
+          parameter Modelica.Units.SI.Volume V_D = 55.8;
+          parameter Units.Mass M_D = 111030;
+          parameter Units.HeatCapacity Cp_D = 232;
+          parameter Units.Length D_D = 2.6;
+          parameter Units.Length R_D = D_D/2;
+          parameter Units.Length L_D = 11.160;
+
+        // Initialization parameters
+        parameter Units.Pressure P_drum_0 = 121.631e5;
+        parameter Modelica.Units.SI.Volume V_l_0 = 20;
+
+        // Water/Steam properties
+          // Drum pressure
+          Units.Pressure P_drum(start=P_drum_0) "Drum saturation pressure";
+          // Mass flow rates
+          Units.PositiveMassFlowRate Q_fw(start=80) "Feed water mass flow rate";
+          //Units.PositiveMassFlowRate Q_b "Bubbles mass flow rate";
+          Units.PositiveMassFlowRate Q_s(start=80) "Steam mass flow rate";
+          //Units.PositiveMassFlowRate Q_d "Downcomers mass flow rate";
+          //Units.PositiveMassFlowRate Q_r "Risers mass flow rate";
+          // Volumes
+          Modelica.Units.SI.Volume V_s "Steam volume";
+          //Modelica.Units.SI.Volume V_b "Bubble volume";
+          Modelica.Units.SI.Volume V_l(start=V_l_0, fixed=true) "Liquid volume"; //
+          // Enthalpies
+          Units.SpecificEnthalpy h_s "Steam enthalpy";
+          Units.SpecificEnthalpy h_l "Liquid enthalpy";
+          Units.SpecificEnthalpy h_fw "Feedwater enthalpy";
+          //Units.SpecificEnthalpy h_d "Downcomers enthalpy";
+          //Inputs.InputSpecificEnthalpy h_r "Risers enthalpy";
+          //Units.SpecificEnthalpy h_b "Bubble enthalpy";
+          // Densities
+          Units.Density rho_s "Steam density";
+          Units.Density rho_l "Liquid density";
+          //Units.Density rho_b "Bubble density";
+          // States
+          WaterSteamMedium.ThermodynamicState state_s "Steam state";
+          WaterSteamMedium.ThermodynamicState state_l "Liquid state";
+          // Wall temperature
+          Units.Temperature T_wall;
+          // Water surface tension
+          //Modelica.Units.SI.SurfaceTension sigma_s;
+          // Water mass fraction
+          //Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
+          // Interface Area
+          //Units.Area A_ma;
+          // Water level;
+          //Inputs.InputHeight l_water;
+          // Escape velocity
+          //Units.Velocity u_s;
+
+          // Masses
+          Units.Mass M_l;
+          Units.Mass M_s;
+
+          // Evaporation heat
+          Inputs.InputPower W_evap(start=104e6);
+
+          // Set saturation state
+          Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat;
+
+          // Derrivatives
+          Real ddph_l;
+          Real ddph_s;
+
+
+        WaterSteam.Connectors.Outlet steam_out annotation (Placement(transformation(extent={{-70,70},{-50,90}}), iconTransformation(extent={{-70,70},{-50,90}})));
+        WaterSteam.Connectors.Inlet fw_in annotation (Placement(transformation(extent={{72,-70},{92,-50}}), iconTransformation(extent={{72,-70},{92,-50}})));
+        WaterSteam.BaseClasses.IsoPHFlowModel FW_supply annotation (Placement(transformation(extent={{60,-70},{40,-50}})));
+        WaterSteam.BoundaryConditions.Sink FW_sink annotation (Placement(transformation(extent={{28,-70},{8,-50}})));
+        WaterSteam.BoundaryConditions.Source Steam_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-4})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Steam_extraction annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,38})));
+      equation
+        // Variables definition
+          // Enthalpies:
+          h_s = Steam_source.h_out;
+          h_fw = FW_supply.h_in;
+          // Pressures
+          P_drum = FW_sink.P_in;
+          P_drum = Steam_extraction.P_in;
+          // Mass flow rates
+          Q_fw = FW_supply.Q;
+          //Q_r = Risers_supply.Q;
+          Q_s = Steam_extraction.Q;
+          //Q_d = Downcomers_extraction.Q;
+          // Set saturation state
+          sat.psat = P_drum;
+          sat.Tsat = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          T_wall = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          // States
+          state_l = WaterSteamMedium.setBubbleState(sat);
+          state_s = WaterSteamMedium.setDewState(sat);
+          // Surface tension
+          //sigma_s = WaterSteamMedium.surfaceTension(WaterSteamMedium.setSat_p(P_drum));
+          // Densities
+          rho_s = WaterSteamMedium.density(state_s);
+          rho_l = WaterSteamMedium.density(state_l);
+          //rho_b = WaterSteamMedium.density(state_s);
+
+          // Enthalpies
+          h_s = WaterSteamMedium.specificEnthalpy(state_s);
+          h_l = WaterSteamMedium.specificEnthalpy(state_l);
+
+          // Masses
+          M_s = rho_s*V_s;
+          M_l = rho_l*V_l;
+
+          // Volume
+          V_s = V_D - V_l;
+
+          // Mass balance
+          Q_fw - Q_s = V_s*(ddph_s*der(P_drum)) + rho_s*der(V_s)
+                     + V_l*(ddph_l*der(P_drum)) + rho_l*der(V_l);
+
+          // Energy Balance
+          W_evap + Q_fw*h_fw - Q_s*h_s = h_s*V_s*ddph_s*der(P_drum) + rho_s*V_s*der(h_s) + rho_s*h_s*der(V_s)
+                                       + h_l*V_l*ddph_l*der(P_drum) + rho_l*V_l*der(h_l) + rho_l*h_l*der(V_l)
+                                       + V_D*der(P_drum)
+                                       + M_D*Cp_D*der(T_wall);
+
+          // Derrivatives
+          ddph_l = WaterSteamMedium.density_derp_h(state_l);
+          ddph_s = WaterSteamMedium.density_derp_h(state_s);
+
+          if Controlled_level then
+            der(V_l) = 0;
+          end if;
+
+      initial equation
+        der(P_drum) = 0;
+
+
+
+
+      equation
+        connect(Steam_extraction.C_out, steam_out) annotation (Line(points={{0,48},{0,80},{-60,80}}, color={28,108,200}));
+        connect(Steam_extraction.C_in, Steam_source.C_out) annotation (Line(points={{0,28},{0,1}}, color={28,108,200}));
+        connect(FW_supply.C_in, fw_in) annotation (Line(points={{60,-60},{82,-60}}, color={28,108,200}));
+        connect(FW_supply.C_out, FW_sink.C_in) annotation (Line(points={{40,-60},{23,-60}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Polygon(
+                points={{-98,-20},{98,-20},{98,-20},{92,-40},{80,-60},{60,-80},{40,-92},{20,-98},{0,-100},{-20,-98},{-40,-92},{-60,-80},{-78,-62},{-92,-40},{-98,-20},{-98,-20}},
+                lineThickness=1,
+                smooth=Smooth.Bezier,
+                fillColor={85,170,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={85,170,255}),
+              Ellipse(
+                extent={{-100,100},{100,-100}},
+                lineColor={135,135,135},
+                lineThickness=1),
+              Line(
+                points={{-32,-20}},
+                color={135,135,135},
+                thickness=1),
+              Ellipse(
+                extent={{-48,-60},{-40,-68}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-26,-52},{-18,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-38},{-2,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-62},{-2,-70}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-46,-38},{-38,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{6,-52},{14,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{28,-58},{36,-66}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{10,-72},{18,-80}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-32,-76},{-24,-84}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-78,-32},{-70,-40}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-42,-26},{-34,-34}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-18,-16},{-10,-24}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-30,-14},{-22,-22}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{12,-24},{20,-32}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+      end SteamDrum_Astom_Simple;
+
+      model SteamDrum_Sunil
+         import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+          parameter Real g = Constants.g;
+
+        // Control strategy
+          parameter Boolean Controlled_level = false;
+
+        // Drum dimensions
+          parameter Modelica.Units.SI.Volume V_D = 55.8;
+          parameter Units.Mass M_D = 111030;
+          parameter Units.HeatCapacity Cp_D = 232;
+          parameter Units.Length D_D = 2.6;
+          parameter Units.Length R_D = D_D/2;
+          parameter Units.Length L_D = 11.160;
+          parameter Real K_tuning = 1;
+
+        // Initialization parameters
+        parameter Units.Pressure P_drum_0 = 121.631e5;
+        parameter Modelica.Units.SI.Volume V_l_0 = 20;
+
+        // Water/Steam properties
+          // Drum pressure
+          Units.Pressure P_drum(start=P_drum_0) "Drum saturation pressure";
+          // Mass flow rates
+          Units.PositiveMassFlowRate Q_fw(start=80) "Feed water mass flow rate";
+          Units.PositiveMassFlowRate Q_b "Bubbles mass flow rate";
+          Units.PositiveMassFlowRate Q_s(start=80) "Steam mass flow rate";
+          Units.PositiveMassFlowRate Q_d(start=80) "Downcomers mass flow rate";
+          Units.PositiveMassFlowRate Q_r(start=80) "Risers mass flow rate";
+          // Volumes
+          Modelica.Units.SI.Volume V_s "Steam volume";
+          Modelica.Units.SI.Volume V_b "Bubble volume";
+          Modelica.Units.SI.Volume V_l(start=V_l_0, fixed=true) "Liquid volume"; //
+          // Enthalpies
+          Units.SpecificEnthalpy h_s "Steam enthalpy";
+          Units.SpecificEnthalpy h_l "Liquid enthalpy";
+          Units.SpecificEnthalpy h_fw(start=1431487.1) "Feedwater enthalpy";
+          Units.SpecificEnthalpy h_d(start=1509058.1) "Downcomers enthalpy";
+          Units.SpecificEnthalpy h_r(start=2675842.2) "Risers enthalpy";
+          //Units.SpecificEnthalpy h_b "Bubble enthalpy";
+          // Densities
+          Units.Density rho_s "Steam density";
+          Units.Density rho_l "Liquid density";
+          Units.Density rho_b "Bubble density";
+          // States
+          WaterSteamMedium.ThermodynamicState state_s "Steam state";
+          WaterSteamMedium.ThermodynamicState state_l "Liquid state";
+          // Wall temperature
+          Units.Temperature T_wall;
+          // Water surface tension
+          Modelica.Units.SI.SurfaceTension sigma_s;
+          //Interface Area
+          Units.Area A_ma;
+          // Water level;
+          Units.Height l_water(start=1.2, fixed=true);
+          // Escape velocity
+          Units.Velocity u_s;
+          // Masses
+          Units.Mass M_l;
+          Units.Mass M_s;
+          // Set saturation state
+          Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat;
+
+
+          // Derrivatives
+          Real ddph_l;
+          Real ddph_s;
+          Real ddph_b;
+
+        WaterSteam.Connectors.Outlet steam_out annotation (Placement(transformation(extent={{-70,70},{-50,90}}), iconTransformation(extent={{-70,70},{-50,90}})));
+        WaterSteam.Connectors.Inlet fw_in annotation (Placement(transformation(extent={{72,-70},{92,-50}}), iconTransformation(extent={{72,-70},{92,-50}})));
+        WaterSteam.BaseClasses.IsoPHFlowModel FW_supply annotation (Placement(transformation(extent={{60,-70},{40,-50}})));
+        WaterSteam.BoundaryConditions.Sink FW_sink annotation (Placement(transformation(extent={{28,-70},{8,-50}})));
+        WaterSteam.BoundaryConditions.Source Steam_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-4})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Steam_extraction annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,38})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Downcomers_extraction annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={0,-60})));
+        WaterSteam.Connectors.Outlet downcomers_out annotation (Placement(transformation(extent={{-10,-110},{10,-90}}), iconTransformation(extent={{-10,-110},{10,-90}})));
+        WaterSteam.BoundaryConditions.Sink Risers_sink annotation (Placement(transformation(extent={{-26,-70},{-6,-50}})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Risers_supply annotation (Placement(transformation(extent={{-60,-70},{-40,-50}})));
+        WaterSteam.Connectors.Inlet risers_in annotation (Placement(transformation(extent={{-90,-70},{-70,-50}}), iconTransformation(extent={{-90,-70},{-70,-50}})));
+        WaterSteam.BoundaryConditions.Source Downcomers_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={0,-28})));
+      equation
+        // Variables definition
+          // Enthalpies:
+          h_s = Steam_extraction.h_out;
+          h_fw = FW_supply.h_in;
+          h_r = Risers_supply.h_in;
+          h_d = Downcomers_extraction.h_out;
+          // Pressures
+          P_drum = FW_supply.P_in;
+          P_drum = Risers_supply.P_in;
+          P_drum = Steam_extraction.P_in;
+          P_drum = Downcomers_extraction.P_in;
+          // Mass flow rates
+          Q_fw = FW_supply.Q;
+          Q_r = Risers_supply.Q;
+          Q_s = Steam_extraction.Q;
+          Q_d = Downcomers_extraction.Q;
+          // Set saturation state
+          sat.psat = P_drum;
+          sat.Tsat = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          // Wall temperature is assumed equal to the saturation temperature
+          T_wall = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+
+          // States
+          state_l = WaterSteamMedium.setBubbleState(sat);
+          state_s = WaterSteamMedium.setDewState(sat);
+
+          // Densities
+          rho_s = WaterSteamMedium.density(state_s);
+          rho_l = WaterSteamMedium.density(state_l);
+          rho_b = WaterSteamMedium.density(state_s); // Steam bubble density = sat. density
+
+          // Enthalpies
+          h_s = WaterSteamMedium.specificEnthalpy(state_s);
+          h_l = WaterSteamMedium.specificEnthalpy(state_l);
+
+          // Masses
+          M_s = rho_s*V_s + rho_b*V_b;
+          M_l = rho_l*V_l;
+
+          // Volume
+          V_s = V_D - V_l - V_b;
+          V_l + V_b = (R_D^2*acos(1 - l_water/R_D) - (R_D - l_water)*(R_D^2 - (R_D - l_water)^2)^0.5)*L_D;
+
+          // Mass balance
+          // Total mass balance
+          Q_fw + Q_r - Q_s - Q_d = V_s*(ddph_s*der(P_drum)) + rho_s*der(V_s)
+                                 + V_l*(ddph_l*der(P_drum)) + rho_l*der(V_l)
+                                 + V_b*(ddph_b*der(P_drum)) + rho_b*der(V_b);
+
+          // Mass balance on control volume with liquid and bubble region:
+          Q_fw + Q_r - Q_d - Q_b = V_l*(ddph_l*der(P_drum)) + rho_l*der(V_l)
+                                 + V_b*(ddph_b*der(P_drum)) + rho_b*der(V_b);
+
+          Q_fw*h_fw + Q_r*h_r - Q_s*h_s - Q_d*h_d = h_l*V_l*ddph_l*der(P_drum) + rho_l*V_l*der(h_l)
+                                                  + V_D*h_s*ddph_s*der(P_drum) + rho_s*V_D*der(h_s)
+                                                  - V_l*h_s*ddph_s*der(P_drum)
+                                                  + der(V_l)*(rho_l*h_l - rho_s*h_s)
+                                                  + M_D*Cp_D*der(T_wall);
+
+          //Q_r*h_r - Q_b*h_d = 104e6;
+
+          // Bubble mass flow rate
+          // Surface tension
+          sigma_s = WaterSteamMedium.surfaceTension(sat);
+          // Interface area
+          A_ma = 2*(D_D*l_water - l_water^2)^0.5*L_D;
+          // Escape velocity
+          u_s = 1.41*((g*sigma_s*(rho_l - rho_s))/rho_l^2)^(1/4);
+          // Bubble mass flow rate
+          Q_b = K_tuning*A_ma*u_s*rho_s;
+
+          // Derrivatives
+          ddph_l = WaterSteamMedium.density_derp_h(state_l);
+          ddph_s = WaterSteamMedium.density_derp_h(state_s);
+          ddph_b = WaterSteamMedium.density_derp_h(state_s);
+
+          if Controlled_level then
+            der(V_l) = 0;
+          end if;
+
+      initial equation
+        der(P_drum) = 0;
+        //der(V_b) = 0;
+        //der(V_l) = 0;
+
+      equation
+        connect(Steam_extraction.C_out, steam_out) annotation (Line(points={{0,48},{0,80},{-60,80}}, color={28,108,200}));
+        connect(Steam_extraction.C_in, Steam_source.C_out) annotation (Line(points={{0,28},{0,1}}, color={28,108,200}));
+        connect(FW_supply.C_in, fw_in) annotation (Line(points={{60,-60},{82,-60}}, color={28,108,200}));
+        connect(FW_supply.C_out, FW_sink.C_in) annotation (Line(points={{40,-60},{23,-60}}, color={28,108,200}));
+        connect(Downcomers_extraction.C_out, downcomers_out) annotation (Line(points={{0,-70},{0,-70},{0,-100}}, color={28,108,200}));
+        connect(Downcomers_extraction.C_in, Downcomers_source.C_out) annotation (Line(points={{0,-50},{0,-33}}, color={28,108,200}));
+        connect(Risers_sink.C_in, Risers_supply.C_out) annotation (Line(points={{-21,-60},{-40,-60}}, color={28,108,200}));
+        connect(Risers_supply.C_in, risers_in) annotation (Line(points={{-60,-60},{-80,-60}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Polygon(
+                points={{-98,-20},{98,-20},{98,-20},{92,-40},{80,-60},{60,-80},{40,-92},{20,-98},{0,-100},{-20,-98},{-40,-92},{-60,-80},{-78,-62},{-92,-40},{-98,-20},{-98,-20}},
+                lineThickness=1,
+                smooth=Smooth.Bezier,
+                fillColor={85,170,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={85,170,255}),
+              Ellipse(
+                extent={{-100,100},{100,-100}},
+                lineColor={135,135,135},
+                lineThickness=1),
+              Line(
+                points={{-32,-20}},
+                color={135,135,135},
+                thickness=1),
+              Ellipse(
+                extent={{-48,-60},{-40,-68}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-26,-52},{-18,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-38},{-2,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-62},{-2,-70}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-46,-38},{-38,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{6,-52},{14,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{28,-58},{36,-66}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{10,-72},{18,-80}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-32,-76},{-24,-84}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-78,-32},{-70,-40}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-42,-26},{-34,-34}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-18,-16},{-10,-24}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-30,-14},{-22,-22}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{12,-24},{20,-32}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+      end SteamDrum_Sunil;
+
+      model SteamDrum_Sunil_noConToEvap
+         import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+          parameter Real g = Constants.g;
+
+        // Control strategy
+          parameter Boolean Controlled_level = false;
+
+        // Drum dimensions
+          parameter Modelica.Units.SI.Volume V_D = 55.8;
+          parameter Units.Mass M_D = 111030;
+          parameter Units.HeatCapacity Cp_D = 232;
+          parameter Units.Length D_D = 2.6;
+          parameter Units.Length R_D = D_D/2;
+          parameter Units.Length L_D = 11.160;
+          parameter Real K_tuning = 1;
+
+        // Initialization parameters
+        parameter Units.Pressure P_drum_0 = 121.631e5;
+        parameter Modelica.Units.SI.Volume V_l_0 = 20;
+
+        // Water/Steam properties
+          // Drum pressure
+          Units.Pressure P_drum(start=P_drum_0) "Drum saturation pressure";
+          // Mass flow rates
+          Units.PositiveMassFlowRate Q_fw(start=80, fixed=true) "Feed water mass flow rate";
+          Units.PositiveMassFlowRate Q_b "Bubbles mass flow rate";
+          Units.PositiveMassFlowRate Q_s(start=80, fixed=true) "Steam mass flow rate";
+          Units.PositiveMassFlowRate Q_d "Downcomers mass flow rate";
+          Units.PositiveMassFlowRate Q_r "Risers mass flow rate";
+          // Volumes
+          Modelica.Units.SI.Volume V_s "Steam volume";
+          Modelica.Units.SI.Volume V_b "Bubble volume";
+          Modelica.Units.SI.Volume V_l(start=V_l_0, fixed=true) "Liquid volume"; //
+          // Enthalpies
+          Units.SpecificEnthalpy h_s "Steam enthalpy";
+          Units.SpecificEnthalpy h_l "Liquid enthalpy";
+          Units.SpecificEnthalpy h_fw "Feedwater enthalpy";
+          Units.SpecificEnthalpy h_d "Downcomers enthalpy";
+          Units.SpecificEnthalpy h_r "Risers enthalpy";
+          //Units.SpecificEnthalpy h_b "Bubble enthalpy";
+          // Densities
+          Units.Density rho_s "Steam density";
+          Units.Density rho_l "Liquid density";
+          Units.Density rho_b "Bubble density";
+          // States
+          WaterSteamMedium.ThermodynamicState state_s "Steam state";
+          WaterSteamMedium.ThermodynamicState state_l "Liquid state";
+          // Wall temperature
+          Units.Temperature T_wall;
+          // Water surface tension
+          Modelica.Units.SI.SurfaceTension sigma_s;
+          //Interface Area
+          Units.Area A_ma;
+          // Water level;
+          Units.Height l_water;
+          // Escape velocity
+          Units.Velocity u_s;
+          // Masses
+          //Units.Mass M_l;
+          //Units.Mass M_s;
+          // Set saturation state
+          Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat;
+          // Downcomers and risers states
+          WaterSteamMedium.ThermodynamicState d_state;
+          WaterSteamMedium.ThermodynamicState r_state;
+
+          // Derrivatives
+          Real ddph_l;
+          Real ddph_s;
+          Real ddph_b;
+
+        WaterSteam.BaseClasses.IsoPHFlowModel FW_supply annotation (Placement(transformation(extent={{40,-70},{20,-50}})));
+        WaterSteam.BoundaryConditions.Sink FW_sink annotation (Placement(transformation(extent={{8,-70},{-12,-50}})));
+        WaterSteam.Connectors.Inlet fw_in annotation (Placement(transformation(extent={{52,-70},{72,-50}}), iconTransformation(extent={{72,-70},{92,-50}})));
+        WaterSteam.BoundaryConditions.Source Steam_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={-20,-4})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Steam_extraction annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={-20,38})));
+        WaterSteam.Connectors.Outlet steam_out annotation (Placement(transformation(extent={{-90,70},{-70,90}}), iconTransformation(extent={{-70,70},{-50,90}})));
+      equation
+        // Variables definition
+          // Enthalpies:
+          h_s = Steam_extraction.h_out;
+          h_fw = FW_supply.h_in;
+          //h_r = Risers_supply.h_in;
+          //h_d = Downcomers_extraction.h_out;
+          // Pressures
+          P_drum = FW_supply.P_in;
+          //P_drum = Risers_supply.P_in;
+          P_drum = Steam_extraction.P_in;
+          //P_drum = Downcomers_extraction.P_in;
+          // Mass flow rates
+          Q_fw = FW_supply.Q;
+          //Q_r = Risers_supply.Q;
+          Q_s = Steam_extraction.Q;
+          //Q_d = Downcomers_extraction.Q;
+          // Set saturation state
+          sat.psat = P_drum;
+          sat.Tsat = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+          // Downcomers and risers states
+          //r_state.p = P_drum;
+          //r_state.h = h_r;
+          r_state = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.setState_phX(P_drum, h_r);
+          h_r = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificEnthalpy(r_state);
+          d_state = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.setState_phX(P_drum, h_d);
+          h_d = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificEnthalpy(d_state);
+          //d_state.p = P_drum;
+          //d_state.h = h_d;
+
+
+          // Wall temperature is assumed equal to the saturation temperature
+          T_wall = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          // States
+          state_l = WaterSteamMedium.setBubbleState(sat);
+          state_s = WaterSteamMedium.setDewState(sat);
+
+          // Densities
+          rho_s = WaterSteamMedium.density(state_s);
+          rho_l = WaterSteamMedium.density(state_l);
+          rho_b = WaterSteamMedium.density(state_s); // Steam bubble density = sat. density
+
+          // Enthalpies
+          h_s = WaterSteamMedium.specificEnthalpy(state_s);
+          h_l = WaterSteamMedium.specificEnthalpy(state_l);
+          //h_b = WaterSteamMedium.specificEnthalpy(state_s);
+
+          // Masses
+          //M_s = rho_s*V_s + rho_b*V_b;
+          //M_l = rho_l*V_l;
+
+          // Volume
+          V_s = V_D - V_l - V_b;
+          V_l + V_b = (R_D^2*acos(1 - l_water/R_D) - (R_D - l_water)*(R_D^2 - (R_D - l_water)^2)^0.5)*L_D;
+
+          // Mass balance
+          // Total mass balance
+          Q_fw + Q_r - Q_s - Q_d = V_s*(ddph_s*der(P_drum)) + rho_s*der(V_s)
+                                 + V_l*(ddph_l*der(P_drum)) + rho_l*der(V_l)
+                                 + V_b*(ddph_b*der(P_drum)) + rho_b*der(V_b);
+
+          // Mass balance on control volume with liquid and bubble region:
+          Q_fw + Q_r - Q_d - Q_b = V_l*(ddph_l*der(P_drum)) + rho_l*der(V_l)
+                                 + V_b*(ddph_b*der(P_drum)) + rho_b*der(V_b);
+
+          Q_fw*h_fw + Q_r*h_r - Q_s*h_s - Q_d*h_d = h_l*V_l*ddph_l*der(P_drum) + rho_l*V_l*der(h_l)
+                                                  + V_D*h_s*ddph_s*der(P_drum) + rho_s*V_D*der(h_s)
+                                                  - V_l*h_s*ddph_s*der(P_drum)
+                                                  + der(V_l)*(rho_l*h_l - rho_s*h_s)
+                                                  + M_D*Cp_D*der(T_wall);
+
+          Q_r*h_r - Q_d*h_d = 104e6;
+
+          // Bubble mass flow rate
+          // Surface tension
+          sigma_s = WaterSteamMedium.surfaceTension(sat);
+          // Interface area
+          A_ma = 2*(D_D*l_water - l_water^2)^0.5*L_D;
+          // Escape velocity
+          u_s = 1.41*((g*sigma_s*(rho_l - rho_s))/rho_l^2)^(1/4);
+          // Bubble mass flow rate
+          Q_b = K_tuning*A_ma*u_s*rho_s;
+
+          // Derrivatives
+          ddph_l = WaterSteamMedium.density_derp_h(state_l);
+          ddph_s = WaterSteamMedium.density_derp_h(state_s);
+          ddph_b = WaterSteamMedium.density_derp_h(state_s);
+
+          if Controlled_level then
+            der(V_l) = 0;
+          end if;
+
+      initial equation
+        der(P_drum) = 0;
+
+      equation
+        connect(FW_supply.C_in,fw_in)  annotation (Line(points={{40,-60},{62,-60}}, color={28,108,200}));
+        connect(FW_supply.C_out,FW_sink. C_in) annotation (Line(points={{20,-60},{3,-60}},  color={28,108,200}));
+        connect(Steam_extraction.C_out,steam_out)  annotation (Line(points={{-20,48},{-20,80},{-80,80}},
+                                                                                                     color={28,108,200}));
+        connect(Steam_extraction.C_in,Steam_source. C_out) annotation (Line(points={{-20,28},{-20,1}},
+                                                                                                   color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Polygon(
+                points={{-98,-20},{98,-20},{98,-20},{92,-40},{80,-60},{60,-80},{40,-92},{20,-98},{0,-100},{-20,-98},{-40,-92},{-60,-80},{-78,-62},{-92,-40},{-98,-20},{-98,-20}},
+                lineThickness=1,
+                smooth=Smooth.Bezier,
+                fillColor={85,170,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={85,170,255}),
+              Ellipse(
+                extent={{-100,100},{100,-100}},
+                lineColor={135,135,135},
+                lineThickness=1),
+              Line(
+                points={{-32,-20}},
+                color={135,135,135},
+                thickness=1),
+              Ellipse(
+                extent={{-48,-60},{-40,-68}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-26,-52},{-18,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-38},{-2,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-62},{-2,-70}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-46,-38},{-38,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{6,-52},{14,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{28,-58},{36,-66}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{10,-72},{18,-80}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-32,-76},{-24,-84}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-78,-32},{-70,-40}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-42,-26},{-34,-34}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-18,-16},{-10,-24}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-30,-14},{-22,-22}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{12,-24},{20,-32}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+      end SteamDrum_Sunil_noConToEvap;
+
+      model SteamDrum_TSP
+         import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+          parameter Real g = Constants.g;
+
+        // Control strategy
+          parameter Boolean Controlled_level = false;
+
+        // Drum dimensions
+          parameter Modelica.Units.SI.Volume V_D = 55.8;
+          parameter Units.Mass M_D = 111030;
+          parameter Units.HeatCapacity Cp_D = 232;
+          parameter Units.Length D_D = 2.6;
+          parameter Units.Length R_D = D_D/2;
+          parameter Units.Length L_D = 11.160;
+
+        // Initialization parameters
+        parameter Units.Pressure P_drum_0 = 125.631e5;
+        parameter Modelica.Units.SI.Volume V_l_0 = 20;
+
+        // Water/Steam properties
+          // Drum pressure
+          Units.Pressure P_drum(start=P_drum_0) "Drum saturation pressure";
+          // Mass flow rates
+          Units.PositiveMassFlowRate Q_fw(start=80) "Feed water mass flow rate";
+          Units.PositiveMassFlowRate Q_b "Bubbles mass flow rate";
+          Units.PositiveMassFlowRate Q_s(start=80) "Steam mass flow rate";
+          Units.PositiveMassFlowRate Q_d(start=80) "Downcomers mass flow rate";
+          Units.PositiveMassFlowRate Q_r(start=80) "Risers mass flow rate";
+          // Volumes
+          Modelica.Units.SI.Volume V_s "Steam volume";
+          //Modelica.Units.SI.Volume V_b "Bubble volume";
+          Modelica.Units.SI.Volume V_l(start=V_l_0, fixed=true) "Liquid volume"; //
+          // Enthalpies
+          Units.SpecificEnthalpy h_s "Steam enthalpy";
+          Units.SpecificEnthalpy h_l "Liquid enthalpy";
+          Units.SpecificEnthalpy h_l_sat "Liquid enthalpy";
+          Units.SpecificEnthalpy h_s_sat "Liquid enthalpy";
+          Units.SpecificEnthalpy h_fw "Feedwater enthalpy";
+          Units.SpecificEnthalpy h_d "Downcomers enthalpy";
+          Units.SpecificEnthalpy h_r "Risers enthalpy";
+          //Units.SpecificEnthalpy h_b "Bubble enthalpy";
+          // Densities
+          Units.Density rho_s "Steam density";
+          Units.Density rho_l "Liquid density";
+          //Units.Density rho_b "Bubble density";
+          // States
+          WaterSteamMedium.ThermodynamicState state_s "Steam state";
+          WaterSteamMedium.ThermodynamicState state_l "Liquid state";
+          WaterSteamMedium.ThermodynamicState state_s_sat "Steam state";
+          WaterSteamMedium.ThermodynamicState state_l_sat "Liquid state";
+          // Wall temperature
+          //Units.Temperature T_wall;
+          // Water surface tension
+          //Modelica.Units.SI.SurfaceTension sigma_s;
+          // Water mass fraction
+          //Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
+          // Interface Area
+          //Units.Area A_ma;
+          // Water level;
+          //Inputs.InputHeight l_water;
+          // Escape velocity
+          //Units.Velocity u_s;
+
+          // Masses
+          Units.Mass M_l;
+          Units.Mass M_s;
+
+          // Evaporation heat
+          Inputs.InputPower W_evap(start=104e6);
+
+          // Set saturation state
+          Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat;
+
+          // Derrivatives
+          Real ddph_l;
+          Real ddph_s;
+          Real ddhp_l;
+          Real ddhp_s;
+
+          // Riser steam quality
+          Real x_r;
+
+          // Internal Energies
+          Real u_l;
+          Real u_s;
+
+          // Heat exchange
+          Real W_ls;
+          Real W_wl;
+          Real W_ws;
+
+
+        WaterSteam.Connectors.Outlet steam_out annotation (Placement(transformation(extent={{-70,70},{-50,90}}), iconTransformation(extent={{-70,70},{-50,90}})));
+        WaterSteam.Connectors.Inlet fw_in annotation (Placement(transformation(extent={{72,-70},{92,-50}}), iconTransformation(extent={{72,-70},{92,-50}})));
+        WaterSteam.BaseClasses.IsoPHFlowModel FW_supply annotation (Placement(transformation(extent={{60,-70},{40,-50}})));
+        WaterSteam.BoundaryConditions.Sink FW_sink annotation (Placement(transformation(extent={{28,-70},{8,-50}})));
+        WaterSteam.BoundaryConditions.Source Steam_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-4})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Steam_extraction annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,38})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Downcomers_extraction annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={0,-60})));
+        WaterSteam.Connectors.Outlet downcomers_out annotation (Placement(transformation(extent={{-10,-110},{10,-90}}), iconTransformation(extent={{-10,-110},{10,-90}})));
+        WaterSteam.BoundaryConditions.Sink Risers_sink annotation (Placement(transformation(extent={{-26,-70},{-6,-50}})));
+        WaterSteam.BaseClasses.IsoPHFlowModel Risers_supply annotation (Placement(transformation(extent={{-60,-70},{-40,-50}})));
+        WaterSteam.Connectors.Inlet risers_in annotation (Placement(transformation(extent={{-90,-70},{-70,-50}}), iconTransformation(extent={{-90,-70},{-70,-50}})));
+        WaterSteam.BoundaryConditions.Source Downcomers_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={0,-28})));
+      equation
+        // Variables definition
+          // Enthalpies:
+          h_s = Steam_source.h_out;
+          h_fw = FW_supply.h_in;
+          h_r = Risers_supply.h_in;
+          h_d = Downcomers_extraction.h_out;
+          // Pressures
+          P_drum = FW_sink.P_in;
+          P_drum = Steam_extraction.P_in;
+          P_drum = Risers_supply.P_in;
+          P_drum = Downcomers_extraction.P_in;
+          // Mass flow rates
+          Q_fw = FW_supply.Q;
+          Q_r = Risers_supply.Q;
+          Q_s = risers_in.Q;
+          Q_d = - downcomers_out.Q;
+          // Set saturation state
+          sat.psat = P_drum;
+          sat.Tsat = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          //T_wall = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          // States
+          state_l = WaterSteamMedium.setState_phX(P_drum, h_l);
+          state_s = WaterSteamMedium.setState_phX(P_drum, h_s);
+          state_l_sat = WaterSteamMedium.setBubbleState(sat);
+          state_s_sat = WaterSteamMedium.setDewState(sat);
+          // Surface tension
+          //sigma_s = WaterSteamMedium.surfaceTension(WaterSteamMedium.setSat_p(P_drum));
+          // Densities
+          rho_s = WaterSteamMedium.density(state_s);
+          rho_l = WaterSteamMedium.density(state_l);
+          //rho_b = WaterSteamMedium.density(state_s);
+
+          // Enthalpies
+          //h_s = WaterSteamMedium.specificEnthalpy(state_s);
+          //h_l = WaterSteamMedium.specificEnthalpy(state_l);
+          h_l_sat = WaterSteamMedium.specificEnthalpy(state_l_sat);
+          h_s_sat = WaterSteamMedium.specificEnthalpy(state_l_sat);
+
+          // Internal Energies
+          u_l = h_l - P_drum/rho_l;
+          u_s = h_s - P_drum/rho_s;
+
+          // Riser steam quality
+          if (h_r > h_s_sat) then
+            x_r = 1;
+          elseif (h_r < h_l_sat) then
+            x_r = 0;
+          else
+            x_r = (h_r - h_l)/(h_s - h_l);
+          end if;
+
+          // Masses
+          M_s = rho_s*V_s;
+          M_l = rho_l*V_l;
+
+          // Volume
+          V_s = V_D - V_l;
+
+          // Mass balance
+            // Liquid phase
+            Q_fw + (1 - x_r)*Q_r - Q_d - Q_b
+            = V_l*(ddph_l*der(P_drum) + ddhp_l*der(h_l)) + rho_l*der(V_l);
+
+            // Vapor phase
+            Q_b + x_r*Q_r - Q_s
+            = V_s*(ddph_s*der(P_drum) + ddhp_s*der(h_s)) + rho_s*der(V_s);
+
+          // Energy balance
+            // Liquid phase
+            Q_fw*(h_fw - u_l) + (1 + x_r)*Q_r*((if (x_r > 0) then h_l_sat else h_r) - u_l) - Q_d*(h_d - u_l) - Q_b*(h_s_sat - u_l)
+            + W_ls - W_wl
+            = V_l*((P_drum/rho_l*ddph_l - 1)*der(P_drum) + (P_drum/rho_l*ddhp_l + rho_l)*der(h_l));
+
+            // Vapor phase
+            Q_b*(h_s_sat - u_s) + x_r*Q_r*((if (x_r < 1) then h_s_sat else h_r) - u_s) - Q_s*(h_s - u_s)
+            - W_ls - W_ws
+            = V_s*((P_drum/rho_s*ddph_s - 1)*der(P_drum) + (P_drum/rho_s*ddhp_s + rho_s)*der(h_l));
+
+            // Wall
+            //M_D*Cp_D*der(T_wall) = W_wl + W_ws;
+
+          // Simplifications
+            W_ls = 0; // To be checked
+            W_wl = 0;
+            W_ws = 0;
+            Q_b = 0;
+
+          // Energy Input
+
+
+
+
+
+          // Derrivatives
+          ddph_l = WaterSteamMedium.density_derp_h(state_l);
+          ddph_s = WaterSteamMedium.density_derp_h(state_s);
+          ddhp_l = WaterSteamMedium.density_derh_p(state_l);
+          ddhp_s = WaterSteamMedium.density_derh_p(state_s);
+
+          if Controlled_level then
+            der(V_l) = 0;
+          end if;
+
+      initial equation
+        der(P_drum) = 0;
+
+      equation
+        connect(Steam_extraction.C_out, steam_out) annotation (Line(points={{0,48},{0,80},{-60,80}}, color={28,108,200}));
+        connect(Steam_extraction.C_in, Steam_source.C_out) annotation (Line(points={{0,28},{0,1}}, color={28,108,200}));
+        connect(FW_supply.C_in, fw_in) annotation (Line(points={{60,-60},{82,-60}}, color={28,108,200}));
+        connect(FW_supply.C_out, FW_sink.C_in) annotation (Line(points={{40,-60},{23,-60}}, color={28,108,200}));
+        connect(Downcomers_extraction.C_out,downcomers_out)  annotation (Line(points={{0,-70},{0,-100}},         color={28,108,200}));
+        connect(Downcomers_extraction.C_in,Downcomers_source. C_out) annotation (Line(points={{0,-50},{0,-33}}, color={28,108,200}));
+        connect(Risers_sink.C_in,Risers_supply. C_out) annotation (Line(points={{-21,-60},{-40,-60}}, color={28,108,200}));
+        connect(Risers_supply.C_in,risers_in)  annotation (Line(points={{-60,-60},{-80,-60}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Polygon(
+                points={{-98,-20},{98,-20},{98,-20},{92,-40},{80,-60},{60,-80},{40,-92},{20,-98},{0,-100},{-20,-98},{-40,-92},{-60,-80},{-78,-62},{-92,-40},{-98,-20},{-98,-20}},
+                lineThickness=1,
+                smooth=Smooth.Bezier,
+                fillColor={85,170,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={85,170,255}),
+              Ellipse(
+                extent={{-100,100},{100,-100}},
+                lineColor={135,135,135},
+                lineThickness=1),
+              Line(
+                points={{-32,-20}},
+                color={135,135,135},
+                thickness=1),
+              Ellipse(
+                extent={{-48,-60},{-40,-68}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-26,-52},{-18,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-38},{-2,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-62},{-2,-70}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-46,-38},{-38,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{6,-52},{14,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{28,-58},{36,-66}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{10,-72},{18,-80}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-32,-76},{-24,-84}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-78,-32},{-70,-40}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-42,-26},{-34,-34}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-18,-16},{-10,-24}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-30,-14},{-22,-22}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{12,-24},{20,-32}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+      end SteamDrum_TSP;
+
+      model SteamDrum_TSP_NoCon
+         import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+          parameter Real g = Constants.g;
+
+        // Control strategy
+          parameter Boolean Controlled_level = false;
+
+        // Drum dimensions
+          parameter Modelica.Units.SI.Volume V_D = 55.8;
+          parameter Units.Mass M_D = 111030;
+          parameter Units.HeatCapacity Cp_D = 232;
+          parameter Units.Length D_D = 2.6;
+          parameter Units.Length R_D = D_D/2;
+          parameter Units.Length L_D = 11.160;
+
+        // Initialization parameters
+        parameter Units.Pressure P_drum_0 = 125.631e5;
+        parameter Modelica.Units.SI.Volume V_l_0 = 20;
+
+        // Water/Steam properties
+          // Drum pressure
+          Units.Pressure P_drum(start=P_drum_0) "Drum saturation pressure";
+          // Mass flow rates
+          Inputs.InputPositiveMassFlowRate Q_fw(start=80) "Feed water mass flow rate";
+          Units.PositiveMassFlowRate Q_b "Bubbles mass flow rate";
+          Inputs.InputPositiveMassFlowRate Q_s(start=80) "Steam mass flow rate";
+          Units.PositiveMassFlowRate Q_d(start=80) "Downcomers mass flow rate";
+          Units.PositiveMassFlowRate Q_r(start=80) "Risers mass flow rate";
+          // Volumes
+          Modelica.Units.SI.Volume V_s "Steam volume";
+          //Modelica.Units.SI.Volume V_b "Bubble volume";
+          Modelica.Units.SI.Volume V_l(start=V_l_0, fixed=true) "Liquid volume"; //
+          // Enthalpies
+          Units.SpecificEnthalpy h_s "Steam enthalpy";
+          Units.SpecificEnthalpy h_l "Liquid enthalpy";
+          Units.SpecificEnthalpy h_l_sat "Liquid enthalpy";
+          Units.SpecificEnthalpy h_s_sat "Liquid enthalpy";
+          Inputs.InputSpecificEnthalpy h_fw "Feedwater enthalpy";
+          Units.SpecificEnthalpy h_d "Downcomers enthalpy";
+          Units.SpecificEnthalpy h_r "Risers enthalpy";
+          //Units.SpecificEnthalpy h_b "Bubble enthalpy";
+          // Densities
+          Units.Density rho_s "Steam density";
+          Units.Density rho_l "Liquid density";
+          //Units.Density rho_b "Bubble density";
+          // States
+          WaterSteamMedium.ThermodynamicState state_s "Steam state";
+          WaterSteamMedium.ThermodynamicState state_l "Liquid state";
+          WaterSteamMedium.ThermodynamicState state_s_sat "Steam state";
+          WaterSteamMedium.ThermodynamicState state_l_sat "Liquid state";
+          // Wall temperature
+          //Units.Temperature T_wall;
+          // Water surface tension
+          //Modelica.Units.SI.SurfaceTension sigma_s;
+          // Water mass fraction
+          //Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
+          // Interface Area
+          //Units.Area A_ma;
+          // Water level;
+          //Inputs.InputHeight l_water;
+          // Escape velocity
+          //Units.Velocity u_s;
+
+          // Masses
+          Units.Mass M_l;
+          Units.Mass M_s;
+
+          // Evaporation heat
+          Inputs.InputPower W_evap(start=104e6);
+
+          // Set saturation state
+          Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat;
+
+          // Derrivatives
+          Real ddph_l;
+          Real ddph_s;
+          Real ddhp_l;
+          Real ddhp_s;
+
+          // Riser steam quality
+          Real x_r;
+
+          // Internal Energies
+          Real u_l;
+          Real u_s;
+
+          // Heat exchange
+          Real W_ls;
+          Real W_wl;
+          Real W_ws;
+
+      equation
+        // Variables definition
+          // Enthalpies:
+          //h_s = Steam_source.h_out;
+          //h_fw = FW_supply.h_in;
+          //h_r = Risers_supply.h_in;
+          //h_d = Downcomers_extraction.h_out;
+          // Pressures
+          //P_drum = FW_sink.P_in;
+          //P_drum = Steam_extraction.P_in;
+          //P_drum = Risers_supply.P_in;
+          //P_drum = Downcomers_extraction.P_in;
+          // Mass flow rates
+          //Q_fw = FW_supply.Q;
+          //Q_r = Risers_supply.Q;
+          //Q_s = risers_in.Q;
+          //Q_d = - downcomers_out.Q;
+          // Set saturation state
+          sat.psat = P_drum;
+          sat.Tsat = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          //T_wall = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(P_drum);
+
+          // States
+          state_l = WaterSteamMedium.setState_phX(P_drum, h_l);
+          state_s = WaterSteamMedium.setState_phX(P_drum, h_s);
+          state_l_sat = WaterSteamMedium.setBubbleState(sat);
+          state_s_sat = WaterSteamMedium.setDewState(sat);
+          // Surface tension
+          //sigma_s = WaterSteamMedium.surfaceTension(WaterSteamMedium.setSat_p(P_drum));
+          // Densities
+          rho_s = WaterSteamMedium.density(state_s);
+          rho_l = WaterSteamMedium.density(state_l);
+          //rho_b = WaterSteamMedium.density(state_s);
+
+          // Enthalpies
+          //h_s = WaterSteamMedium.specificEnthalpy(state_s);
+          //h_l = WaterSteamMedium.specificEnthalpy(state_l);
+          h_l_sat = WaterSteamMedium.specificEnthalpy(state_l_sat);
+          h_s_sat = WaterSteamMedium.specificEnthalpy(state_l_sat);
+
+          // Internal Energies
+          u_l = h_l - P_drum/rho_l;
+          u_s = h_s - P_drum/rho_s;
+
+          // Riser steam quality
+          if (h_r > h_s_sat) then
+            x_r = 1;
+          elseif (h_r < h_l_sat) then
+            x_r = 0;
+          else
+            x_r = (h_r - h_l)/(h_s - h_l);
+          end if;
+
+          // Masses
+          M_s = rho_s*V_s;
+          M_l = rho_l*V_l;
+
+          // Volume
+          V_s = V_D - V_l;
+
+          // Mass balance
+            // Liquid phase
+            Q_fw + (1 - x_r)*Q_r - Q_d - Q_b
+            = V_l*(ddph_l*der(P_drum) + ddhp_l*der(h_l)) + rho_l*der(V_l);
+
+            // Vapor phase
+            Q_b + x_r*Q_r - Q_s
+            = V_s*(ddph_s*der(P_drum) + ddhp_s*der(h_s)) + rho_s*der(V_s);
+
+          // Energy balance
+            // Liquid phase
+            Q_fw*(h_fw - u_l) + (1 + x_r)*Q_r*((if (x_r > 0) then h_l_sat else h_r) - u_l) - Q_d*(h_d - u_l) - Q_b*(h_s_sat - u_l)
+            + W_ls - W_wl
+            = V_l*((P_drum/rho_l*ddph_l - 1)*der(P_drum) + (P_drum/rho_l*ddhp_l + rho_l)*der(h_l));
+
+            // Vapor phase
+            Q_b*(h_s_sat - u_s) + x_r*Q_r*((if (x_r < 1) then h_s_sat else h_r) - u_s) - Q_s*(h_s - u_s)
+            - W_ls - W_ws
+            = V_s*((P_drum/rho_s*ddph_s - 1)*der(P_drum) + (P_drum/rho_s*ddhp_s + rho_s)*der(h_l));
+
+            // Wall
+            //M_D*Cp_D*der(T_wall) = W_wl + W_ws;
+
+          // Simplifications
+            W_ls = 0; // To be checked
+            W_wl = 0;
+            W_ws = 0;
+            Q_b = 0;
+
+          // Energy Input
+          Q_r*h_r - Q_d*h_d = W_evap;
+
+          // Derrivatives
+          ddph_l = WaterSteamMedium.density_derp_h(state_l);
+          ddph_s = WaterSteamMedium.density_derp_h(state_s);
+          ddhp_l = WaterSteamMedium.density_derh_p(state_l);
+          ddhp_s = WaterSteamMedium.density_derh_p(state_s);
+
+          if Controlled_level then
+            der(V_l) = 0;
+          end if;
+
+      initial equation
+        der(P_drum) = 0;
+
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Polygon(
+                points={{-98,-20},{98,-20},{98,-20},{92,-40},{80,-60},{60,-80},{40,-92},{20,-98},{0,-100},{-20,-98},{-40,-92},{-60,-80},{-78,-62},{-92,-40},{-98,-20},{-98,-20}},
+                lineThickness=1,
+                smooth=Smooth.Bezier,
+                fillColor={85,170,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={85,170,255}),
+              Ellipse(
+                extent={{-100,100},{100,-100}},
+                lineColor={135,135,135},
+                lineThickness=1),
+              Line(
+                points={{-32,-20}},
+                color={135,135,135},
+                thickness=1),
+              Ellipse(
+                extent={{-48,-60},{-40,-68}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-26,-52},{-18,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-38},{-2,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-10,-62},{-2,-70}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-46,-38},{-38,-46}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{6,-52},{14,-60}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{28,-58},{36,-66}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{10,-72},{18,-80}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-32,-76},{-24,-84}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-78,-32},{-70,-40}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                lineColor={0,0,0}),
+              Ellipse(
+                extent={{-42,-26},{-34,-34}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-18,-16},{-10,-24}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-30,-14},{-22,-22}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{12,-24},{20,-32}},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+      end SteamDrum_TSP_NoCon;
     end TwoPhaseHX;
     annotation (Icon(graphics={
           Rectangle(
@@ -9590,6 +11022,233 @@ package DynamicComponents
                       fillPattern=FillPattern.Solid,
                       points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
       end Steam_Drum_Test;
+
+      model SteamDrum_Astom_Simple_Test
+
+        //input Utilities.Units.Pressure P_FW_source(start=121);
+
+        output Utilities.Units.MassFlowRate Q_FW_source(start = 84.06);
+        input Real T_FW_source(start = 315.6, min = 130, nominal = 150);
+        output Real Q_s(start = 84.06);
+        input Real W_evap(start=104.60049e6);
+
+        HeatExchangers.TwoPhaseHX.SteamDrum_Astom_Simple
+                                            steamDrum_Astom_Simple(Controlled_level=false)
+                                                      annotation (Placement(transformation(extent={{-4,-4},{16,16}})));
+        WaterSteam.BoundaryConditions.Sink Steam_sink annotation (Placement(transformation(extent={{-74,50},{-94,70}})));
+        WaterSteam.BoundaryConditions.Source FW_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=180,
+              origin={84,-60})));
+        Modelica.Blocks.Sources.Step step(height=2e6,startTime=100)  annotation (Placement(transformation(extent={{60,60},{80,80}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=10e6,
+          duration=60,
+          startTime=100) annotation (Placement(transformation(extent={{60,20},{80,40}})));
+      equation
+
+        FW_source.P_out = 121*1e5;
+        FW_source.T_out = 273.15 + T_FW_source;
+        FW_source.Q_out = - Q_FW_source;
+        Steam_sink.Q_in = Q_s;  //+ ramp.y
+        steamDrum_Astom_Simple.W_evap = W_evap + step.y;  //+ step.y
+        Q_s = 84.06/104.6649e6*steamDrum_Astom_Simple.W_evap;
+        //steamDrum_Astom_Simple.P_drum = 121e5/104.6e6*steamDrum_Astom_Simple.W_evap;
+
+
+        connect(steamDrum_Astom_Simple.steam_out, Steam_sink.C_in) annotation (Line(
+            points={{0,14},{0,60},{-79,60}},
+            color={238,46,47},
+            thickness=1,
+            pattern=LinePattern.Dash));
+        connect(steamDrum_Astom_Simple.fw_in, FW_source.C_out) annotation (Line(
+            points={{14.2,0},{70,0},{70,-60},{79,-60}},
+            color={28,108,200},
+            thickness=1));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(StopTime=500, __Dymola_Algorithm="Dassl"));
+      end SteamDrum_Astom_Simple_Test;
+
+      model SteamDrum_Sunil_Test
+
+        output Utilities.Units.Pressure P_FW_source;
+
+        input Utilities.Units.MassFlowRate Q_FW_source(start = 84.06);
+        input Real T_FW_source(start = 300, min = 130, nominal = 150);
+        input Real Q_s(start = 84.06);
+        input Real W_evap(start=200.60049e6);
+
+        HeatExchangers.TwoPhaseHX.SteamDrum_Sunil steamDrum_Astom_Complete(Controlled_level=true)  annotation (Placement(transformation(extent={{-4,-4},{16,16}})));
+        WaterSteam.BoundaryConditions.Sink Steam_sink annotation (Placement(transformation(extent={{-74,50},{-94,70}})));
+        WaterSteam.BoundaryConditions.Source FW_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=180,
+              origin={84,-60})));
+        Modelica.Blocks.Sources.Step step(height=7e6,startTime=100)  annotation (Placement(transformation(extent={{60,60},{80,80}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=10e6,
+          duration=60,
+          startTime=100) annotation (Placement(transformation(extent={{60,20},{80,40}})));
+      equation
+
+        FW_source.P_out = P_FW_source*1e5;
+        FW_source.T_out = 273.15 + T_FW_source;
+        FW_source.Q_out = - Q_FW_source;
+        Steam_sink.Q_in = Q_s;
+        //evaporator.W = W_evap;
+
+        connect(steamDrum_Astom_Complete.steam_out, Steam_sink.C_in) annotation (Line(
+            points={{0,14},{0,60},{-79,60}},
+            color={238,46,47},
+            thickness=1,
+            pattern=LinePattern.Dash));
+        connect(steamDrum_Astom_Complete.fw_in, FW_source.C_out) annotation (Line(
+            points={{14.2,0},{70,0},{70,-60},{79,-60}},
+            color={28,108,200},
+            thickness=1));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(StopTime=500, __Dymola_Algorithm="Dassl"));
+      end SteamDrum_Sunil_Test;
+
+      model SteamDrum_Sunil_noConToEvap_Test
+
+        output Utilities.Units.Pressure P_FW_source;
+
+        input Utilities.Units.MassFlowRate Q_FW_source(start = 84.06);
+        input Real T_FW_source(start = 315.6, min = 130, nominal = 150);
+        input Real Q_s(start = 84.06);
+        input Real W_evap(start=104.60049e6);
+
+        HeatExchangers.TwoPhaseHX.SteamDrum_Sunil_noConToEvap
+                                                  steamDrum_Astom_Complete(Controlled_level=false) annotation (Placement(transformation(extent={{-4,-4},{16,16}})));
+        WaterSteam.BoundaryConditions.Sink Steam_sink annotation (Placement(transformation(extent={{-74,50},{-94,70}})));
+        WaterSteam.BoundaryConditions.Source FW_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=180,
+              origin={84,-60})));
+        Modelica.Blocks.Sources.Step step(height=7e6,startTime=100)  annotation (Placement(transformation(extent={{60,60},{80,80}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=10e6,
+          duration=60,
+          startTime=100) annotation (Placement(transformation(extent={{60,20},{80,40}})));
+      equation
+
+        FW_source.P_out = P_FW_source*1e5;
+        FW_source.T_out = 273.15 + T_FW_source;
+        FW_source.Q_out = - Q_FW_source;
+        Steam_sink.Q_in = Q_s;
+        //evaporator.W = W_evap;
+
+        connect(steamDrum_Astom_Complete.steam_out, Steam_sink.C_in) annotation (Line(
+            points={{0,14},{0,60},{-79,60}},
+            color={238,46,47},
+            thickness=1,
+            pattern=LinePattern.Dash));
+        connect(steamDrum_Astom_Complete.fw_in, FW_source.C_out) annotation (Line(
+            points={{14.2,0},{70,0},{70,-60},{79,-60}},
+            color={28,108,200},
+            thickness=1));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(StopTime=500, __Dymola_Algorithm="Dassl"));
+      end SteamDrum_Sunil_noConToEvap_Test;
+
+      model SteamDrum_TSP_Test
+
+        output Utilities.Units.Pressure P_FW_source;
+
+        input Utilities.Units.MassFlowRate Q_FW_source(start = 84.06);
+        input Real T_FW_source(start = 315.6, min = 130, nominal = 150);
+        input Real Q_s(start = 84.06);
+        input Real W_evap(start=104.60049e6);
+
+        HeatExchangers.TwoPhaseHX.SteamDrum_TSP
+                                            steamDrum_TSP(         Controlled_level=true)
+                                                      annotation (Placement(transformation(extent={{-4,-4},{16,16}})));
+        WaterSteam.BoundaryConditions.Sink Steam_sink annotation (Placement(transformation(extent={{-74,50},{-94,70}})));
+        WaterSteam.BoundaryConditions.Source FW_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=180,
+              origin={84,-60})));
+        Modelica.Blocks.Sources.Step step(height=7e6,startTime=100)  annotation (Placement(transformation(extent={{60,60},{80,80}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=10e6,
+          duration=60,
+          startTime=100) annotation (Placement(transformation(extent={{60,20},{80,40}})));
+        WaterSteam.BoundaryConditions.Sink downcomer annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={6,-40})));
+        WaterSteam.BoundaryConditions.Source riser annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={-20,-84})));
+        WaterSteam.Pipes.HeatLoss evap annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={-20,-40})));
+      equation
+
+        FW_source.P_out = P_FW_source*1e5;
+
+        FW_source.T_out = 273.15 + T_FW_source;
+        FW_source.Q_out = - Q_FW_source;
+        Steam_sink.Q_in = Q_s;  //+ ramp.y
+        steamDrum_TSP.W_evap = W_evap + step.y;           //+ step.y
+        //rsteamDrum_TSP.x_r = 0.5; //2675842.2;
+        steamDrum_TSP.h_d = riser.h_out;
+        evap.W = W_evap;
+
+        connect(steamDrum_TSP.steam_out, Steam_sink.C_in) annotation (Line(
+            points={{0,14},{0,60},{-79,60}},
+            color={238,46,47},
+            thickness=1,
+            pattern=LinePattern.Dash));
+        connect(steamDrum_TSP.fw_in, FW_source.C_out) annotation (Line(
+            points={{14.2,0},{70,0},{70,-60},{79,-60}},
+            color={28,108,200},
+            thickness=1));
+        connect(steamDrum_TSP.downcomers_out, downcomer.C_in) annotation (Line(points={{6,-4},{6,-35}}, color={28,108,200}));
+        connect(riser.C_out, evap.C_in) annotation (Line(points={{-20,-79},{-20,-50}}, color={28,108,200}));
+        connect(evap.C_out, steamDrum_TSP.risers_in) annotation (Line(points={{-20,-30},{-20,0},{-2,0}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(StopTime=500, __Dymola_Algorithm="Dassl"));
+      end SteamDrum_TSP_Test;
       annotation (Icon(graphics={
             Rectangle(
               lineColor={200,200,200},
