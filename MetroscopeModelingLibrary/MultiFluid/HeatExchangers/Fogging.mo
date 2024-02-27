@@ -1,7 +1,9 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Fogging
-  package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
-  package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+  package FlueGasesMedium =
+      MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+  package WaterSteamMedium =
+      MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
@@ -14,7 +16,7 @@ model Fogging
   // Definitions
   Units.SpecificEnthalpy h_vap_sat;
   Units.SpecificEnthalpy h_liq_sat;
-  Units.MassFlowRate Q_w_in(start=Q_w_in_0) "Inlet fg mass flow rate at the inlet";
+  Units.MassFlowRate Q_w_in(start=Q_w_in_0) "Inlet water mass flow rate at the inlet";
 
   // Initialization parameters
   // Flow Rates
