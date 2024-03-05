@@ -4478,7 +4478,7 @@ package DynamicComponents
           parameter Real Fin_per_meter = 1/S_f "Number of fins per meter";
           parameter Units.Length D_fin = D_out + 2*H_fin "Fin outer diameter";
           parameter Real N_fins = N_tubes*L/S_f "Number of fins";
-          parameter Real eff_fins = 0.7742 "Fins efficiency";
+          Inputs.InputReal eff_fins(start=0.7742) "Fins efficiency";
           // Water side
           parameter Units.Area A_water = N_tubes*L*pi*D_in "Water side heat exchange surface";
           parameter Units.Area Ac_water = 0.25*pi*D_in^2*N_tubes_row "Water side cross sectional area";
