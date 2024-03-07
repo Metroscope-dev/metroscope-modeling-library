@@ -17,9 +17,9 @@ partial model ControlValve
 
 equation
   /* Pressure loss */
-  DP*Cv*abs(Cv) = -1.733e12*Q^2/rho_in^2;
+  DP*Cv*abs(Cv) = -1.733e12*abs(Q)*Q/rho_in^2;
   /* Cv as a function of the valve position */
-  Cv =Opening*Cv_max;
+  Cv = Opening*Cv_max;
 
   annotation (
     Icon(coordinateSystem(

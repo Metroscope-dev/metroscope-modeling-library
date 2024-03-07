@@ -17,7 +17,7 @@ equation
   end if;
 
   /* Pressure loss */
-  DP*(1 - closed_valve/100)^2*Cv*abs(Cv) = -1.733e12*Q^2/rho_in^2;
+  DP*(1 - closed_valve/100)^2*Cv*abs(Cv) = -1.733e12*abs(Q)*Q/rho_in^2;
 
 
   annotation (
