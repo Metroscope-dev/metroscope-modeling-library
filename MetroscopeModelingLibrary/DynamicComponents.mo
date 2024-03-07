@@ -14137,7 +14137,7 @@ package DynamicComponents
           parameter Units.HeatExchangeCoefficient K_conv_fg = 46 "FG heat transfer coefficient";
           parameter Units.Area A_fg_tubes = 3283.7;
           parameter Units.Area A_fg_fins = 58635.5;
-          parameter Real eff_fins = 0.77;
+          Inputs.InputReal eff_fins(start=0.77);
           Units.Temperature T_fg_in;
           Units.Temperature T_fg_out;
 
@@ -19188,7 +19188,7 @@ package DynamicComponents
         import MetroscopeModelingLibrary.Utilities.Units.Inputs;
         package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
         HeatExchangers.TwoPhaseHX.Evaporator_3                                         HX(
-          N_tubes_row=1476,
+          N_tubes_row=1560,
           Rows=1,
           Tubes_Config=2,
           fg_path_width=11161e-3,
@@ -19202,7 +19202,7 @@ package DynamicComponents
           N=3,
           D_out=38e-3,
           e=2.6e-3,
-          L=20.7,
+          L=21.9,
           T_wall_0=673.15) annotation (Placement(transformation(extent={{-10,-12},{10,10}})));
 
           // Boundary conditions
