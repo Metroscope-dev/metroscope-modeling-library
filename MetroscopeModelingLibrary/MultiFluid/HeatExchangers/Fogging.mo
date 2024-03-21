@@ -8,7 +8,7 @@ model Fogging
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // Boundary Conditions
-  Inputs.InputMassFlowRate Q_fg_in(start=Q_fg_in_0) "Inlet fg mass flow rate at the inlet";
+  Inputs.InputMassFlowRate Q_fg(start=Q_fg_0) "Inlet flue gases mass flow rate";
 
   // Parameters
   Inputs.InputMassFraction x_vapor(start=1); // Vapor mass fraction
@@ -16,12 +16,12 @@ model Fogging
   // Definitions
   Units.SpecificEnthalpy h_vap_sat;
   Units.SpecificEnthalpy h_liq_sat;
-  Units.MassFlowRate Q_w_in(start=Q_w_in_0) "Inlet water mass flow rate at the inlet";
+  Units.MassFlowRate Q_w(start=Q_w_0) "Inlet water mass flow rate";
 
   // Initialization parameters
   // Flow Rates
-  parameter Units.MassFlowRate Q_fg_in_0 = 500;
-  parameter Units.MassFlowRate Q_w_in_0 = 1;
+  parameter Units.MassFlowRate Q_fg_0 = 500;
+  parameter Units.MassFlowRate Q_w_0 = 1;
 
 
   WaterSteam.Connectors.Inlet C_water_in(Q(start=Q_w_in_0)) annotation (Placement(transformation(extent={{-10,50},{10,70}}), iconTransformation(extent={{-10,50},{10,70}})));
@@ -61,7 +61,7 @@ equation
   x_vapor = (water_evaporation.h_out - h_liq_sat)/(h_vap_sat - h_liq_sat);
 
   // Energy balance
-  water_evaporation.W + evaporative_cooling.W=0;
+  water_evaporation.W + evaporative_cooling.W = 0;
 
   // Mixing
   source_fg.P_out = sink_w.P_in;
