@@ -16,7 +16,6 @@ model CoolingTower2
 
   Units.MassFlowRate Q_cold;             //REMOVED THE INITIALIZATION VALUES
   Units.MassFlowRate Q_hot;
-
   Units.MassFlowRate Q_makeup;
 
   Units.Temperature T_cold_in(start=T_cold_in_0);
@@ -39,14 +38,13 @@ model CoolingTower2
   Units.SpecificEnthalpy i4(start=i4_0);
   Units.SpecificEnthalpy iTot(start=iTot_0);
 
-  Units.Density d_air_initial(start=d_air_initial_0);
-  Units.Density d_air_final(start=d_air_final_0);
+  Units.Density rho_air_inlet(start=rho_air_inlet_0);
+  Units.Density rho_air_outlet(start=rho_air_outlet_0);
 
   Units.HeatCapacity cp;
   Units.Pressure P_in;
   Units.Pressure P_out;
 
-  constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
   constant Real g(unit="m/s2") = Modelica.Constants.g_n;
 
    // Initialization Parameters
@@ -69,8 +67,8 @@ model CoolingTower2
   parameter Units.SpecificEnthalpy i4_0 = 1e5;
   parameter Units.SpecificEnthalpy iTot_0 = (1 / (2e5));
 
-  parameter Units.Density d_air_initial_0 = 1.2754;
-  parameter Units.Density d_air_final_0 = 1.2460;
+  parameter Units.Density rho_air_inlet_0 = 1.2754;
+  parameter Units.Density rho_air_outlet_0 = 1.2460;
 
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{80,-10},{100,10}})));
@@ -95,8 +93,8 @@ model CoolingTower2
         origin={0,-60})));
 equation
   // Definition
-  //Q_cold = Air_inlet.Q_in;                          //REMOVED THIS
-  //Q_hot = hot_side_cooling.Q;
+  Q_cold = Air_inlet.Q_in;
+  Q_hot = hot_side_cooling.Q;
 
   T_hot_in = hot_side_cooling.T_in;
   T_hot_out = hot_side_cooling.T_out;
@@ -107,7 +105,7 @@ equation
 
   cp = WaterSteamMedium.specificHeatCapacityCp(hot_side_cooling.state_in);
   W = Q_hot * cp * (T_hot_in - T_hot_out);
-  Q_makeup = -(Air_outlet.Q_out + Air_inlet.Q_in);
+  Q_makeup = - (Air_outlet.Q_out + Air_inlet.Q_in);
 
   // Energy Balance - Supplementary Equation
   Q_hot * cp * (T_hot_in - T_hot_out) + Q_cold * (i_initial - i_final) = 0;
@@ -135,11 +133,12 @@ equation
   (Afr * hd * afi * Lfi) / Q_hot = cp * iTot * ((T_hot_in - T_hot_out) / 4);
 
   // Drift Equation
-  d_air_initial = inputflowmodel.rho_in;
-  d_air_final = outputflowmodel.rho_in;
+  rho_air_inlet = inputflowmodel.rho_in;
+  rho_air_outlet = outputflowmodel.rho_out;
 
-  0.25 * (d_air_initial - d_air_final) * Vd * Vd * Cf - ((d_air_initial - d_air_final) * g * Lfi) = 0;
-  Q_cold - (Vd * Afr * d_air_initial * (1 - Air_outlet.Xi_out[1])) = 0;
+  0.25 * (rho_air_inlet - rho_air_outlet) * Vd * Vd * Cf - ((rho_air_inlet - rho_air_outlet) * g * Lfi) = 0;
+  Q_cold - (Vd * Afr * rho_air_inlet * (1 - Air_outlet.Xi_out[1])) = 0;
+
   connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-50,0}}, color={28,108,200}));
   connect(hot_side_cooling.C_out, C_hot_out) annotation (Line(points={{-30,0},{90,0}}, color={28,108,200}));
   connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{-1.77636e-15,42},{-1.77636e-15,35.5},{8.88178e-16,35.5},{8.88178e-16,29}}, color={85,170,255}));

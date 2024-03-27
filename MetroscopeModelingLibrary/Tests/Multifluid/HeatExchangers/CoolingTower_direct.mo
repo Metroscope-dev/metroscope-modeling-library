@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
-model CoolingTower2_reverse
+model CoolingTower_direct
   import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary Conditions
@@ -14,12 +14,12 @@ model CoolingTower2_reverse
   input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
   // Input for calibration
-  input Real AirOutletTemp(start=35) "deg_C";
-  input Real WaterOutletTemp(start=25) "deg_C";
+  output Real AirOutletTemp(start=35) "deg_C";
+  output Real WaterOutletTemp(start=25) "deg_C";
 
   // Calibrated Parameters
-  output Real hd;
-  output Real Cf;
+  parameter Real hd = 0.023336338;
+  parameter Real Cf = 10.460426;
 
   // Parameters
   parameter Real Lfi = 15 "m";
@@ -116,4 +116,4 @@ equation
   connect(airFlow_sensor.C_out, airInletPress_sensor.C_in) annotation (Line(points={{-1.77636e-15,26},{-1.77636e-15,22},{1.77636e-15,22},{1.77636e-15,18}}, color={85,170,255}));
   connect(airInletPress_sensor.C_out, CoolingTower.C_cold_in) annotation (Line(points={{-1.77636e-15,-2},{-1,-2},{-1,-11},{0,-11}},            color={85,170,255}));
   annotation (Diagram(coordinateSystem(extent={{-120,-100},{100,100}})), Icon(coordinateSystem(extent={{-120,-100},{100,100}})));
-end CoolingTower2_reverse;
+end CoolingTower_direct;
