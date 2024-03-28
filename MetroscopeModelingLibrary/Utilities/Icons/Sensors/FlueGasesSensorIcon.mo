@@ -13,5 +13,9 @@ partial record FlueGasesSensorIcon "should be extended in partial base classes"
           lineColor={0,0,0},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None)}));
+          pattern=LinePattern.None),
+        Text(
+          extent={{-100,160},{100,120}},
+          textColor={95,95,95},
+          textString="%name")}));
 end FlueGasesSensorIcon;

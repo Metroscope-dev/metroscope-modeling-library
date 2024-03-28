@@ -12,5 +12,9 @@ partial record WaterSensorIcon "should be extended in partial base classes"
           extent={{-80,81},{80,-79}},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None)}));
+          pattern=LinePattern.None),
+        Text(
+          extent={{-100,160},{100,120}},
+          textColor={28,108,200},
+          textString="%name")}));
 end WaterSensorIcon;

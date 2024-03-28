@@ -8,5 +8,8 @@ partial record OutlineSensorIcon "should be extended in partial base classes"
           lineColor={0,0,0},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          lineThickness=0.5)}));
+          lineThickness=0.5), Text(
+          extent={{-100,160},{100,120}},
+          textColor={0,0,0},
+          textString="%name")}));
 end OutlineSensorIcon;
