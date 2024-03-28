@@ -27,3 +27,5 @@ InputPositiveVolumeFlowRate
 InputNegativeVolumeFlowRate
 InputTemperature
 InputYield
+InputMassTransferCoefficient
+InputSurfaceAreaperVolume
