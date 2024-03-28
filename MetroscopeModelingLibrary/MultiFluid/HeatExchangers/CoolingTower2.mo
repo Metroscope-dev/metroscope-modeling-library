@@ -11,8 +11,8 @@ model CoolingTower2
   Inputs.InputReal hd;
   Inputs.InputReal Lfi;
   Inputs.InputReal afi;
-  Inputs.InputReal Vd;
-  Inputs.InputFrictionCoefficient Cf;
+  Units.Velocity V_inlet;
+  Inputs.InputFrictionCoefficient Kfr;
 
   Units.MassFlowRate Q_cold;             //REMOVED THE INITIALIZATION VALUES
   Units.MassFlowRate Q_hot;
@@ -78,19 +78,23 @@ model CoolingTower2
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink Air_inlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,24})));
+        origin={0,10})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source Air_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-38})));
+        origin={0,-12})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel inputflowmodel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,52})));
+        origin={0,36})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel outputflowmodel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-60})));
+        origin={0,-32})));
+  MetroscopeModelingLibrary.MoistAir.Pipes.Pipe pipe annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,62})));
 equation
   // Definition
   Q_cold = Air_inlet.Q_in;
@@ -105,6 +109,7 @@ equation
 
   cp = WaterSteamMedium.specificHeatCapacityCp(hot_side_cooling.state_in);
   W = Q_hot * cp * (T_hot_in - T_hot_out);
+
   Q_makeup = - (Air_outlet.Q_out + Air_inlet.Q_in);
 
   // Energy Balance - Supplementary Equation
@@ -121,7 +126,6 @@ equation
 
   Air_outlet.relative_humidity = 1;
   Air_outlet.Q_out * (1 - Air_outlet.Xi_out[1]) = - Air_inlet.Q_in *(1 - Air_inlet.Xi_in[1]);
-  Air_outlet.P_out = Air_inlet.P_in;
 
   i1 = MoistAir.h_pTX(P_in, T1, {MoistAir.massFraction_pTphi(P_in, T1, 1)}) - ((i_initial + 0.1 * (i_final - i_initial)));                                                                                                                                                                                                        //First integral section
   i2 = MoistAir.h_pTX(P_in, T2, {MoistAir.massFraction_pTphi(P_in, T2, 1)}) - ((i_initial + 0.4 * (i_final - i_initial)));
@@ -136,14 +140,21 @@ equation
   rho_air_inlet = inputflowmodel.rho_in;
   rho_air_outlet = outputflowmodel.rho_out;
 
-  0.25 * (rho_air_inlet - rho_air_outlet) * Vd * Vd * Cf - ((rho_air_inlet - rho_air_outlet) * g * Lfi) = 0;
-  Q_cold - (Vd * Afr * rho_air_inlet * (1 - Air_outlet.Xi_out[1])) = 0;
+  (P_in - P_out) = 0;
+
+  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * g * Lfi;
+
+  Q_cold = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
+
+  pipe.Kfr = Kfr;
+  pipe.delta_z =0;
 
   connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-50,0}}, color={28,108,200}));
   connect(hot_side_cooling.C_out, C_hot_out) annotation (Line(points={{-30,0},{90,0}}, color={28,108,200}));
-  connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{-1.77636e-15,42},{-1.77636e-15,35.5},{8.88178e-16,35.5},{8.88178e-16,29}}, color={85,170,255}));
-  connect(inputflowmodel.C_in, C_cold_in) annotation (Line(points={{1.77636e-15,62},{1.77636e-15,76},{0,76},{0,90}}, color={85,170,255}));
-  connect(Air_outlet.C_out, outputflowmodel.C_in) annotation (Line(points={{-8.88178e-16,-43},{-8.88178e-16,-46.5},{1.77636e-15,-46.5},{1.77636e-15,-50}}, color={85,170,255}));
-  connect(outputflowmodel.C_out, C_cold_out) annotation (Line(points={{-1.77636e-15,-70},{-1.77636e-15,-80},{0,-80},{0,-90}}, color={85,170,255}));
+  connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{-1.77636e-15,26},{-1.77636e-15,20.5},{8.88178e-16,20.5},{8.88178e-16,15}}, color={85,170,255}));
+  connect(Air_outlet.C_out, outputflowmodel.C_in) annotation (Line(points={{-8.88178e-16,-17},{-8.88178e-16,-19.5},{1.77636e-15,-19.5},{1.77636e-15,-22}}, color={85,170,255}));
+  connect(outputflowmodel.C_out, C_cold_out) annotation (Line(points={{-1.77636e-15,-42},{-1.77636e-15,-66},{0,-66},{0,-90}}, color={85,170,255}));
+  connect(pipe.C_in, C_cold_in) annotation (Line(points={{1.77636e-15,72},{1.77636e-15,81},{0,81},{0,90}}, color={85,170,255}));
+  connect(pipe.C_out, inputflowmodel.C_in) annotation (Line(points={{-1.77636e-15,52},{-1.77636e-15,49},{1.77636e-15,49},{1.77636e-15,46}}, color={85,170,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end CoolingTower2;
