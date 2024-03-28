@@ -20540,7 +20540,7 @@ package DynamicComponents
           parameter Units.Mass M_r = 160000 "Riser mass";
           parameter Units.Mass M_t = 300000 "Total mass of the system";
           // Surfaces
-          input Units.Area A_dc "Downcomers cross sectional surface";
+          parameter Units.Area A_dc "Downcomers cross sectional surface";
           parameter Units.Area A_d = 20 "Drum wet area at normal operating level";
           // Metal heat capacity
           parameter Units.HeatCapacity Cp = 550 "Heat capacity of the metal";
@@ -20549,7 +20549,7 @@ package DynamicComponents
           parameter Real beta = 0.3 "Constant";
           parameter Real T_d = 12 "Steam residence time in the drum";
           // Friction coefficient
-          parameter Real k = 25 "Friction coefficient in the downcomers";
+          Inputs.InputReal k "Friction coefficient in the downcomers";
           // Levels at nominal operating conditions
           parameter Units.Height l_0 = 0;
           parameter Units.Height l_w_0 = 0;
@@ -20612,6 +20612,8 @@ package DynamicComponents
           Units.Height l "Water level";
           Units.Height l_w "Water level";
           Units.Height l_s "Water level";
+          // Circulation ratio
+          Real CR "Circulation ratio";
 
         WaterSteam.BaseClasses.IsoPHFlowModel FW_supply annotation (Placement(transformation(extent={{60,-70},{40,-50}})));
         WaterSteam.BoundaryConditions.Sink FW_sink annotation (Placement(transformation(extent={{28,-70},{8,-50}})));
@@ -20733,6 +20735,8 @@ package DynamicComponents
         l = (V_wd + V_sd)/A_d - l_0;
         l_w = V_wd/A_d - l_w_0;
         l_s = V_sd/A_d - l_s_0;
+        // Circulation ratio
+        CR = Q_dc/Q_s;
 
         // Heat exchange with flue gas
         W_evap = - fg_cooling.W;
@@ -26825,15 +26829,13 @@ package DynamicComponents
           // Outputs of interest
           Drum.W_evap = W_evap;
 
-          connect(Drum.fw_in, FW_source.C_out) annotation (Line(points={{8.2,3.73913},{60,3.73913},{60,-62},{79,-62}},
-                                                                                                           color={28,108,200}));
-          connect(Drum.steam_out, Steam_sink.C_in) annotation (Line(points={{-6,16.5217},{-6,56},{-79,56}},     color={28,108,200}));
-          connect(Drum.fg_inlet, fg_source.C_out) annotation (Line(points={{-8,-10.8696},{-24,-10.8696},{-24,-10},{-39,-10}},
+          connect(Drum.fw_in, FW_source.C_out) annotation (Line(points={{8.2,6},{60,6},{60,-62},{79,-62}}, color={28,108,200}));
+          connect(Drum.steam_out, Steam_sink.C_in) annotation (Line(points={{-6,20},{-6,56},{-79,56}},          color={28,108,200}));
+          connect(Drum.fg_inlet, fg_source.C_out) annotation (Line(points={{-8,-10},{-24,-10},{-24,-10},{-39,-10}},
                                                                                                 color={95,95,95}));
-          connect(Drum.fg_outlet, fg_sink.C_in) annotation (Line(points={{8,-10.8696},{24,-10.8696},{24,-10},{39,-10}},
+          connect(Drum.fg_outlet, fg_sink.C_in) annotation (Line(points={{8,-10},{24,-10},{24,-10},{39,-10}},
                                                                                             color={95,95,95}));
-          connect(Water_sink.C_in,Drum. water_out) annotation (Line(points={{-65,4},{-36,4},{-36,3.73913},{-8,3.73913}},
-                                                                                                                 color={28,108,200}));
+          connect(Water_sink.C_in,Drum. water_out) annotation (Line(points={{-65,4},{-36,4},{-36,6},{-8,6}},     color={28,108,200}));
           annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                 Ellipse(lineColor={0,140,72},
                         fillColor={255,255,255},
