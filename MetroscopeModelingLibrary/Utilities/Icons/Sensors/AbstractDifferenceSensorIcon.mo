@@ -27,5 +27,9 @@ partial record AbstractDifferenceSensorIcon "should be extended in partial base 
           fillColor={0,0,0},
           fillPattern=FillPattern.Solid,
           origin={-138,0},
-          rotation=270)}));
+          rotation=270),
+        Text(
+          extent={{-100,160},{100,120}},
+          textColor={0,0,0},
+          textString="%name")}));
 end AbstractDifferenceSensorIcon;

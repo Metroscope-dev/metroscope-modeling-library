@@ -13,5 +13,9 @@ partial record AbstractSensorIcon "should be extended in partial base classes"
           points={{-10,-114},{0,-134},{10,-114},{0,-118},{-10,-114}},
           lineColor={0,0,0},
           fillColor={0,0,0},
-          fillPattern=FillPattern.Solid)}));
+          fillPattern=FillPattern.Solid),
+        Text(
+          extent={{-100,160},{100,120}},
+          textColor={0,0,0},
+          textString="%name")}));
 end AbstractSensorIcon;
