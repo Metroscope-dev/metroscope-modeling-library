@@ -1,2 +1,2 @@
 within MetroscopeModelingLibrary.Utilities.Units.Inputs;
-connector InputHeight = input Units.Height;
+connector InputVolume = input Units.Volume;
