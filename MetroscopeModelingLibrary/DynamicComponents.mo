@@ -19624,10 +19624,10 @@ package DynamicComponents
 
         // Parameters
           // Volumes
-          parameter Modelica.Units.SI.Volume V_D = 40 "Drum volume";
-          parameter Modelica.Units.SI.Volume V_r = 37 "Riser volume";
-          parameter Modelica.Units.SI.Volume V_dc = 11 "Downcomers volume";
-          parameter Modelica.Units.SI.Volume V_t = V_D + V_r + V_dc;
+          parameter Units.Volume V_D = 40 "Drum volume";
+          parameter Units.Volume V_r = 37 "Riser volume";
+          parameter Units.Volume V_dc = 11 "Downcomers volume";
+          parameter Units.Volume V_t = V_D + V_r + V_dc;
           // Masses
           parameter Units.Mass M_d = 140000 "Drum mass";
           parameter Units.Mass M_r = 160000 "Riser mass";
@@ -19638,7 +19638,7 @@ package DynamicComponents
           // Metal heat capacity
           parameter Units.HeatCapacity Cp = 550 "Heat capacity of the metal";
           // Empirical relation of Q_sd
-          input Modelica.Units.SI.Volume V_0_sd "Hypothetical volume of bubbles";
+          input Units.Volume V_0_sd "Hypothetical volume of bubbles";
           parameter Real beta = 0.3 "Constant";
           parameter Real T_d = 12 "Steam residence time in the drum";
           // Friction coefficient
@@ -19650,7 +19650,7 @@ package DynamicComponents
 
         // Initialization parameters
           parameter Units.Pressure p_0 = 85e5;
-          parameter Modelica.Units.SI.Volume V_wt_0 = 57.1;
+          parameter Units.Volume V_wt_0 = 57.1;
 
         // Variables
           // Drum pressure
@@ -19664,10 +19664,10 @@ package DynamicComponents
           Units.PositiveMassFlowRate Q_cd "Drum condensation mass flow rate";
           Units.PositiveMassFlowRate Q_ct "Total condensation mass flow rate";
           // Volumes
-          Modelica.Units.SI.Volume V_st "Total steam volume";
-          Modelica.Units.SI.Volume V_sd(start=4.8) "Drum steam volume";
-          Modelica.Units.SI.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
-          Modelica.Units.SI.Volume V_wd "Drum water volume";
+          Units.Volume V_st "Total steam volume";
+          Units.Volume V_sd(start=4.8) "Drum steam volume";
+          Units.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
+          Units.Volume V_wd "Drum water volume";
           // Masses
           Units.Mass M_wt "Total water mass";
           Units.Mass M_st "Total steam mass";
@@ -19935,10 +19935,10 @@ package DynamicComponents
 
         // Parameters
           // Volumes
-          parameter Modelica.Units.SI.Volume V_D = 40 "Drum volume";
-          parameter Modelica.Units.SI.Volume V_r = 37 "Riser volume";
-          parameter Modelica.Units.SI.Volume V_dc = 11 "Downcomers volume";
-          parameter Modelica.Units.SI.Volume V_t = V_D + V_r + V_dc "Total system volume";
+          parameter Units.Volume V_D = 40 "Drum volume";
+          parameter Units.Volume V_r = 37 "Riser volume";
+          parameter Units.Volume V_dc = 11 "Downcomers volume";
+          parameter Units.Volume V_t = V_D + V_r + V_dc "Total system volume";
 
           // Masses
           parameter Units.Mass M_d = 0 "Drum mass";
@@ -19950,7 +19950,7 @@ package DynamicComponents
           // Metal heat capacity
           parameter Units.HeatCapacity Cp = 550 "Heat capacity of the metal";
           // Empirical relation of Q_sd
-          input Modelica.Units.SI.Volume V_0_sd "Hypothetical volume of bubbles";
+          input Units.Volume V_0_sd "Hypothetical volume of bubbles";
           parameter Real beta = 0.3 "Constant";
           parameter Real T_d = 12 "Steam residence time in the drum";
           // Friction coefficient
@@ -19962,7 +19962,7 @@ package DynamicComponents
 
         // Initialization parameters
           parameter Units.Pressure p_0 = 85e5;
-          parameter Modelica.Units.SI.Volume V_wt_0 = 57.2;
+          parameter Units.Volume V_wt_0 = 57.2;
 
         // Variables
           // Drum pressure
@@ -19976,10 +19976,10 @@ package DynamicComponents
           Units.PositiveMassFlowRate Q_cd "Drum condensation mass flow rate";
           Units.PositiveMassFlowRate Q_ct "Total condensation mass flow rate";
           // Volumes
-          Modelica.Units.SI.Volume V_st "Total steam volume";
-          Modelica.Units.SI.Volume V_sd(start=4.8) "Drum steam volume";
-          Modelica.Units.SI.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
-          Modelica.Units.SI.Volume V_wd "Drum water volume";
+          Units.Volume V_st "Total steam volume";
+          Units.Volume V_sd(start=4.8) "Drum steam volume";
+          Units.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
+          Units.Volume V_wd "Drum water volume";
           // Masses
           Units.Mass M_wt "Total water mass";
           Units.Mass M_st "Total steam mass";
@@ -20226,10 +20226,10 @@ package DynamicComponents
 
         // Parameters
           // Volumes
-          parameter Modelica.Units.SI.Volume V_D = 40 "Drum volume";
-          parameter Modelica.Units.SI.Volume V_r = 37 "Riser volume";
-          parameter Modelica.Units.SI.Volume V_dc = 11 "Downcomers volume";
-          parameter Modelica.Units.SI.Volume V_t = V_D + V_r + V_dc "Total system volume";
+          parameter Units.Volume V_D = 40 "Drum volume";
+          parameter Units.Volume V_r = 37 "Riser volume";
+          parameter Units.Volume V_dc = 11 "Downcomers volume";
+          parameter Units.Volume V_t = V_D + V_r + V_dc "Total system volume";
 
           // Masses
           parameter Units.Mass M_d = 0 "Drum mass";
@@ -20241,7 +20241,7 @@ package DynamicComponents
           // Metal heat capacity
           parameter Units.HeatCapacity Cp = 550 "Heat capacity of the metal";
           // Empirical relation of Q_sd
-          input Modelica.Units.SI.Volume V_0_sd "Hypothetical volume of bubbles";
+          input Units.Volume V_0_sd "Hypothetical volume of bubbles";
           parameter Real beta = 0.3 "Constant";
           parameter Real T_d = 12 "Steam residence time in the drum";
           // Friction coefficient
@@ -20256,7 +20256,7 @@ package DynamicComponents
 
         // Initialization parameters
           parameter Units.Pressure p_0 = 85e5;
-          parameter Modelica.Units.SI.Volume V_wt_0 = 57.2;
+          parameter Units.Volume V_wt_0 = 57.2;
 
         // Variables
           // Drum pressure
@@ -20271,10 +20271,10 @@ package DynamicComponents
           Units.PositiveMassFlowRate Q_cd "Drum condensation mass flow rate";
           Units.PositiveMassFlowRate Q_ct "Total condensation mass flow rate";
           // Volumes
-          Modelica.Units.SI.Volume V_st "Total steam volume";
-          Modelica.Units.SI.Volume V_sd(start=4.8, fixed = true) "Drum steam volume";
-          Modelica.Units.SI.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
-          Modelica.Units.SI.Volume V_wd "Drum water volume";
+          Units.Volume V_st "Total steam volume";
+          Units.Volume V_sd(start=4.8, fixed = true) "Drum steam volume";
+          Units.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
+          Units.Volume V_wd "Drum water volume";
           // Masses
           Units.Mass M_wt "Total water mass";
           Units.Mass M_st "Total steam mass";
@@ -20304,7 +20304,7 @@ package DynamicComponents
           Units.Height l_w "Water level";
           Units.Height l_s "Water level";
           // Zuber & Findlay correlation for Q_sd
-            Modelica.Units.SI.SurfaceTension sigma "Water surface tension";
+            Units.SurfaceTension sigma "Water surface tension";
             Units.Velocity u_sd "Escape velocity";
 
 
@@ -20530,10 +20530,10 @@ package DynamicComponents
 
         // Parameters
           // Volumes
-          parameter Modelica.Units.SI.Volume V_D = 40 "Drum volume";
-          parameter Modelica.Units.SI.Volume V_r = 37 "Riser volume";
-          parameter Modelica.Units.SI.Volume V_dc = 11 "Downcomers volume";
-          parameter Modelica.Units.SI.Volume V_t = V_D + V_r + V_dc "Total system volume";
+          parameter Units.Volume V_D = 40 "Drum volume";
+          parameter Units.Volume V_r = 37 "Riser volume";
+          parameter Units.Volume V_dc = 11 "Downcomers volume";
+          parameter Units.Volume V_t = V_D + V_r + V_dc "Total system volume";
 
           // Masses
           parameter Units.Mass M_d = 0 "Drum mass";
@@ -20545,7 +20545,7 @@ package DynamicComponents
           // Metal heat capacity
           parameter Units.HeatCapacity Cp = 550 "Heat capacity of the metal";
           // Empirical relation of Q_sd
-          input Modelica.Units.SI.Volume V_0_sd "Hypothetical volume of bubbles";
+          Inputs.InputVolume V_0_sd "Hypothetical volume of bubbles";
           parameter Real beta = 0.3 "Constant";
           parameter Real T_d = 12 "Steam residence time in the drum";
           // Friction coefficient
@@ -20562,7 +20562,7 @@ package DynamicComponents
 
         // Initialization parameters
           parameter Units.Pressure p_0 = 85e5;
-          parameter Modelica.Units.SI.Volume V_wt_0 = 57.2;
+          parameter Units.Volume V_wt_0 = 57.2;
 
         // Variables
           // Drum pressure
@@ -20577,10 +20577,10 @@ package DynamicComponents
           Units.PositiveMassFlowRate Q_ct "Total condensation mass flow rate";
           Units.PositiveMassFlowRate Q_w_out "Water extraction from steam drum";
           // Volumes
-          Modelica.Units.SI.Volume V_st "Total steam volume";
-          Modelica.Units.SI.Volume V_sd(start=4.8) "Drum steam volume";
-          Modelica.Units.SI.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
-          Modelica.Units.SI.Volume V_wd "Drum water volume";
+          Units.Volume V_st "Total steam volume";
+          Units.Volume V_sd(start=4.8) "Drum steam volume";
+          Units.Volume V_wt(start=V_wt_0, fixed = true) "Total water volume";
+          Units.Volume V_wd "Drum water volume";
           // Masses
           Units.Mass M_wt "Total water mass";
           Units.Mass M_st "Total steam mass";
