@@ -35,3 +35,7 @@ NegativeVolumeFlowRate
 Yield
 Length
 Mass
+ThermalConductivity
+DynamicViscosity
+Volume
+SurfaceTension
