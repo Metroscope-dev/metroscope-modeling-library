@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
-model CoolingTower2
+model CoolingTower3
+  MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-10,80},{10,100}})));
   package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   package MoistAir = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   import MetroscopeModelingLibrary.Utilities.Units;
@@ -14,7 +15,7 @@ model CoolingTower2
   Units.Velocity V_inlet;
   Inputs.InputFrictionCoefficient Kfr;
 
-  Units.MassFlowRate Q_cold;             //REMOVED THE INITIALIZATION VALUES
+  Units.MassFlowRate Q_cold;
   Units.MassFlowRate Q_hot;
   Units.MassFlowRate Q_makeup;
 
@@ -70,35 +71,36 @@ model CoolingTower2
   parameter Units.Density rho_air_inlet_0 = 1.2754;
   parameter Units.Density rho_air_outlet_0 = 1.2460;
 
-  MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{-102,-10},{-82,10}}), iconTransformation(extent={{-102,-10},{-82,10}})));
-  MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{82,-10},{102,10}})));
-  MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-10,80},{10,100}})));
+  MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{-100,-10},{-80,10}}), iconTransformation(extent={{-100,-10},{-80,10}})));
+  MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{80,-10},{100,10}})));
   MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
-  MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPFlowModel hot_side_cooling annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
+  MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPFlowModel hot_side_cooling annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink Air_inlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,16})));
+        origin={0,18})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source Air_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-28})));
+        origin={0,-18})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel inputflowmodel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,36})));
+        origin={0,38})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel outputflowmodel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-52})));
+        origin={0,-60})));
   MetroscopeModelingLibrary.MoistAir.Pipes.Pipe pipe annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,64})));
+        origin={0,62})));
+  WaterSteam.BoundaryConditions.Sink Water_inlet annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
+  WaterSteam.BoundaryConditions.Source Water_outlet annotation (Placement(transformation(extent={{10,-10},{30,10}})));
 equation
   // Definition
   Q_cold = Air_inlet.Q_in;
-  Q_hot = hot_side_cooling.Q;
+  Q_hot = Water_outlet.Q_out;
 
   T_hot_in = hot_side_cooling.T_in;
   T_hot_out = hot_side_cooling.T_out;
@@ -127,6 +129,10 @@ equation
   Air_outlet.relative_humidity = 1;
   Air_outlet.Q_out * (1 - Air_outlet.Xi_out[1]) = - Air_inlet.Q_in *(1 - Air_inlet.Xi_in[1]);
 
+  Water_outlet.P_out = Water_inlet.P_in;
+  Water_outlet.T_out = Water_inlet.T_in;
+  Water_outlet.Q_out = Water_inlet.Q_in - Q_makeup;
+
   i1 = MoistAir.h_pTX(P_in, T1, {MoistAir.massFraction_pTphi(P_in, T1, 1)}) - ((i_initial + 0.1 * (i_final - i_initial)));                                                                                                                                                                                                        //First integral section
   i2 = MoistAir.h_pTX(P_in, T2, {MoistAir.massFraction_pTphi(P_in, T2, 1)}) - ((i_initial + 0.4 * (i_final - i_initial)));
   i3 = MoistAir.h_pTX(P_in, T3, {MoistAir.massFraction_pTphi(P_in, T3, 1)}) - ((i_initial + 0.6 * (i_final - i_initial)));
@@ -149,42 +155,41 @@ equation
   pipe.Kfr = Kfr;
   pipe.delta_z =0;
 
-  connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-92,0},{-54,0}}, color={28,108,200}));
-  connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,26},{0,21}},                                                             color={85,170,255}));
-  connect(Air_outlet.C_out, outputflowmodel.C_in) annotation (Line(points={{-8.88178e-16,-33},{-8.88178e-16,-37.5},{1.77636e-15,-37.5},{1.77636e-15,-42}}, color={85,170,255}));
-  connect(outputflowmodel.C_out, C_cold_out) annotation (Line(points={{0,-62},{0,-90}},                                       color={85,170,255}));
-  connect(pipe.C_in, C_cold_in) annotation (Line(points={{0,74},{0,90}},                                   color={85,170,255}));
-  connect(pipe.C_out, inputflowmodel.C_in) annotation (Line(points={{0,54},{0,46}},                                                         color={85,170,255}));
-  connect(C_hot_out, C_hot_out) annotation (Line(points={{92,0},{92,0}}, color={28,108,200}));
-  connect(hot_side_cooling.C_out, C_hot_out) annotation (Line(points={{-34,0},{92,0}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Line(points={{-60,-60},{60,-60},{40,60},{-40,60},{-60,-60}}, color={28,108,200}),
-        Rectangle(
-          extent={{-46,20},{46,-14}},
-          lineColor={28,108,200},
-          fillColor={170,255,213},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{42,46},{-42,42}},
-          lineColor={28,108,200},
-          fillColor={255,85,85},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{-58,-48},{58,-60}},
-          lineColor={28,108,200},
-          fillColor={0,0,255},
-          fillPattern=FillPattern.Solid),
-        Line(points={{-20,42},{-20,36}}, color={28,108,200}),
-        Line(points={{20,42},{20,38},{20,36}}, color={28,108,200}),
-        Line(points={{-46,82}}, color={28,108,200}),
+  connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-70,0}}, color={28,108,200}));
+  connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,28},{0,23}},                                                             color={85,170,255}));
+  connect(Air_outlet.C_out, outputflowmodel.C_in) annotation (Line(points={{0,-23},{0,-50}},                                                               color={85,170,255}));
+  connect(outputflowmodel.C_out, C_cold_out) annotation (Line(points={{0,-70},{0,-90}},                                       color={85,170,255}));
+  connect(pipe.C_in, C_cold_in) annotation (Line(points={{1.77636e-15,72},{0,81},{0,90}},                  color={85,170,255}));
+  connect(pipe.C_out, inputflowmodel.C_in) annotation (Line(points={{0,52},{0,48}},                                                         color={85,170,255}));
+  connect(hot_side_cooling.C_out, Water_inlet.C_in) annotation (Line(points={{-50,0},{-27,0}},                                color={28,108,200}));
+  connect(Water_outlet.C_out, C_hot_out) annotation (Line(points={{25,0},{90,0}}, color={28,108,200}));
+  connect(C_cold_in, C_cold_in) annotation (Line(points={{0,90},{0,90}}, color={85,170,255}));
+  connect(C_hot_out, C_hot_out) annotation (Line(points={{90,0},{90,0}}, color={28,108,200}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}}), graphics={
         Ellipse(
-          extent={{-26,30},{-14,36}},
+          extent={{-20,110},{20,70}},
           lineColor={28,108,200},
-          fillColor={255,85,85},
-          fillPattern=FillPattern.Solid),
+          fillColor={95,95,95},
+          fillPattern=FillPattern.Backward),
+        Line(points={{-80,-80},{82,-80},{40,60},{-40,60},{-80,-80}}, color={28,108,200}),
         Ellipse(
-          extent={{14,30},{26,36}},
+          extent={{-48,82},{-40,74}},
           lineColor={28,108,200},
-          fillColor={255,85,85},
-          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)));
-end CoolingTower2;
+          fillColor={95,95,95},
+          fillPattern=FillPattern.Backward),
+        Ellipse(
+          extent={{32,114},{40,106}},
+          lineColor={28,108,200},
+          fillColor={95,95,95},
+          fillPattern=FillPattern.Backward),
+        Ellipse(
+          extent={{28,78},{36,70}},
+          lineColor={28,108,200},
+          fillColor={95,95,95},
+          fillPattern=FillPattern.Backward),
+        Ellipse(
+          extent={{-36,110},{-28,104}},
+          lineColor={28,108,200},
+          fillColor={95,95,95},
+          fillPattern=FillPattern.Backward)}),                   Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}})));
+end CoolingTower3;
