@@ -16,7 +16,6 @@ model CoolingTower_reverse
   // Input for calibration
   input Real AirOutletTemp(start=35) "deg_C";
 
-
   // Calibrated Parameters
   output Real hd(start = 0.00943308);
   parameter Real Kfr = 0;
@@ -28,12 +27,12 @@ model CoolingTower_reverse
   output Real V_inlet(start = 13.251477) "m/s";
 
   // Observables
-  output Real airFlow(start=440) "m3/s";
-  output Real Q_makeup(start=1311.1932);
-  output Real Q_cold(start=52552.133);
+  output Real airFlow(start=52552.133) "m3/s";                        //440
+  output Real Q_makeup(start=1311.1932) "m3/s";
+  output Real Q_cold(start=52552.133) "m3/s";
 
   output Real WaterOutletTemp(start=25) "deg_C";
-  output Real airOutletPress(start=1);
+  output Real airOutletPress(start=1) "bar";
 
   // Output
   output Units.Fraction cold_sink_relative_humidity(start=1) "1";
@@ -62,7 +61,7 @@ model CoolingTower_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-70})));
-  MetroscopeModelingLibrary.Sensors.MoistAir.FlowSensor airFlow_sensor annotation (Placement(transformation(
+  MetroscopeModelingLibrary.Sensors.MoistAir.FlowSensor airInletFlow_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,36})));
@@ -84,8 +83,8 @@ equation
   // Cold Air Inlet
   airInletPress_sensor.P_barA = airInletPress;
   cold_source.relative_humidity = cold_source_relative_humidity;
-  airFlow_sensor.Qv = airFlow;
-  AirInletTemp_sensor.T_degC = AirInletTemp;
+  airInletFlow_sensor.Qv = airFlow;
+  AirInletTemp_sensor.T_degC = AirInletTemp;   //+10*time - ramps up the temperature by 10 degrees
 
   // Hot Water Outlet
 
@@ -124,10 +123,35 @@ equation
   connect(waterInletTemp_sensor.C_in, waterFlow_sensor.C_out) annotation (Line(points={{-68,-20},{-78,-20}},
                                                                                                          color={28,108,200}));
   connect(AirOutletTemp_sensor.C_out, cold_sink.C_in) annotation (Line(points={{-1.77636e-15,-80},{-1.77636e-15,-83.5},{8.88178e-16,-83.5},{8.88178e-16,-87}}, color={85,170,255}));
-  connect(AirInletTemp_sensor.C_out, airFlow_sensor.C_in) annotation (Line(points={{-1.77636e-15,56},{-1.77636e-15,52},{1.77636e-15,52},{1.77636e-15,46}}, color={85,170,255}));
-  connect(airFlow_sensor.C_out, airInletPress_sensor.C_in) annotation (Line(points={{0,26},{0,22}},                                                         color={85,170,255}));
+  connect(AirInletTemp_sensor.C_out, airInletFlow_sensor.C_in) annotation (Line(points={{-1.77636e-15,56},{-1.77636e-15,52},{1.77636e-15,52},{1.77636e-15,46}}, color={85,170,255}));
+  connect(airInletFlow_sensor.C_out, airInletPress_sensor.C_in) annotation (Line(points={{0,26},{0,22}}, color={85,170,255}));
   connect(airInletPress_sensor.C_out, CoolingTower.C_cold_in) annotation (Line(points={{0,2},{-1,2},{-1,-12.5},{-2,-12.5}},                    color={85,170,255}));
   connect(CoolingTower.C_cold_out, airOutletPress_sensor.C_in) annotation (Line(points={{-2,-27.5},{-2,-31.5},{0,-31.5},{0,-34}},                 color={85,170,255}));
   connect(AirOutletTemp_sensor.C_in, airOutletPress_sensor.C_out) annotation (Line(points={{1.77636e-15,-60},{1.77636e-15,-57},{-1.77636e-15,-57},{-1.77636e-15,-54}}, color={85,170,255}));
-  annotation (Diagram(coordinateSystem(extent={{-120,-100},{100,100}})), Icon(coordinateSystem(extent={{-120,-100},{100,100}})));
+  annotation (Diagram(coordinateSystem(extent={{-120,-100},{100,100}})), Icon(coordinateSystem(extent={{-120,-100},{100,100}}), graphics={
+        Ellipse(lineColor={0,0,0},
+                fillColor={255,255,255},
+                fillPattern=FillPattern.Solid,
+                extent={{-110,-100},{90,100}}),
+        Polygon(
+          origin={12,14},
+          lineColor={78,138,73},
+          fillColor={95,95,95},
+          pattern=LinePattern.None,
+          fillPattern=FillPattern.Solid,
+          points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}}),
+        Polygon(
+          origin={12,14},
+          lineColor={78,138,73},
+          fillColor={213,213,0},
+          pattern=LinePattern.None,
+          fillPattern=FillPattern.Solid,
+          points={{-58,46},{-4,14},{-58,-14},{-58,46}}),
+        Polygon(
+          origin={12,14},
+          lineColor={78,138,73},
+          fillColor={28,108,200},
+          pattern=LinePattern.None,
+          fillPattern=FillPattern.Solid,
+          points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}));
 end CoolingTower_reverse;
