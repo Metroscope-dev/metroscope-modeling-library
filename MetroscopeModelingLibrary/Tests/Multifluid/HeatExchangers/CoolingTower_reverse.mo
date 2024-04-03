@@ -4,7 +4,7 @@ model CoolingTower_reverse
 
   // Boundary Conditions
     // Hot Water Inlet
-  input Real waterInletTemp(start=45) "deg_C";
+  input Real waterInletTemp(start=35) "deg_C";
   input Units.VolumeFlowRate waterFlow(start=39) "m3/s";
   input Real waterInletPress(start=1) "bar";
 
@@ -32,7 +32,7 @@ model CoolingTower_reverse
   output Real Q_cold(start=52552.133) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=35) "deg_C";
+  input Real AirOutletTemp(start=35) "deg_C";                            //output
 
   // Output
   output Units.Fraction cold_sink_relative_humidity(start=1) "1";
@@ -107,7 +107,7 @@ equation
 
   // Observable for Calibration
   WaterOutletTemp_sensor.T_degC = WaterOutletTemp;
-  AirOutletTemp_sensor.T_degC = AirOutletTemp;
+  AirOutletTemp_sensor.T_degC = AirOutletTemp-10*time;
 
   connect(CoolingTower.C_hot_in, waterInletPress_sensor.C_out) annotation (Line(points={{-1.5,-18},{-14,-18},{-14,-20},{-16,-20}},
                                                                                                          color={28,108,200}));

@@ -4,7 +4,7 @@ model CoolingTower_direct
 
   // Boundary Conditions
     // Hot Water Inlet
-  input Real waterInletTemp(start=45) "deg_C";
+  input Real waterInletTemp(start=35) "deg_C";
   input Units.VolumeFlowRate waterFlow(start=39) "m3/s";
   input Real waterInletPress(start=1) "bar";
 
@@ -14,10 +14,10 @@ model CoolingTower_direct
   input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
   // Observables for calibration
-  output Real WaterOutletTemp(start=37.75459) "deg_C";
+  output Real WaterOutletTemp(start=24.999994) "deg_C";
 
   // Calibrated Parameters
-  parameter Real hd = 0.009132665;
+  parameter Real hd = -0.037266716;
   parameter Real Kfr = 0;
 
   // Parameters
@@ -27,12 +27,12 @@ model CoolingTower_direct
   output Real V_inlet(start = 4.3490353) "m/s";     //output
 
   // Observables
-  output Real airFlow(start=15214.605) "kg/s";
+  output Real airFlow(start=12894.166) "kg/s";
   output Real Q_makeup(start=379.48428);                    /// check these
   output Real Q_cold(start=15214.605);
 
-  output Real AirOutletTemp(start=45.27341) "deg_C";    //output
-  output Real airOutletPress(start=0.99);
+  input Real AirOutletTemp(start=35) "deg_C";        //output
+  output Real airOutletPress(start=1);
 
   // Output
   output Units.Fraction cold_sink_relative_humidity(start=1) "1";

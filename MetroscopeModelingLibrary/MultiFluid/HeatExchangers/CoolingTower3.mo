@@ -100,10 +100,10 @@ model CoolingTower3
 equation
   // Definition
   Q_cold = Air_inlet.Q_in;
-  Q_hot = Water_outlet.Q_out;
+  Q_hot = Water_inlet.Q_in;
 
-  T_hot_in = hot_side_cooling.T_in;
-  T_hot_out = hot_side_cooling.T_out;
+  T_hot_in = Water_inlet.T_in;                                       //hot_side_cooling
+  T_hot_out = Water_outlet.T_out;
   P_in = Air_inlet.P_in;
   P_out = Air_outlet.P_out;
   T_cold_in = Air_inlet.T_in;
@@ -130,8 +130,8 @@ equation
   Air_outlet.Q_out * (1 - Air_outlet.Xi_out[1]) = - Air_inlet.Q_in *(1 - Air_inlet.Xi_in[1]);
 
   Water_outlet.P_out = Water_inlet.P_in;
-  Water_outlet.T_out = Water_inlet.T_in;
-  Water_outlet.Q_out = Water_inlet.Q_in - Q_makeup;
+  //Water_outlet.T_out = Water_inlet.T_in;
+  Water_outlet.Q_out = Q_hot - Q_makeup;
 
   i1 = MoistAir.h_pTX(P_in, T1, {MoistAir.massFraction_pTphi(P_in, T1, 1)}) - ((i_initial + 0.1 * (i_final - i_initial)));                                                                                                                                                                                                        //First integral section
   i2 = MoistAir.h_pTX(P_in, T2, {MoistAir.massFraction_pTphi(P_in, T2, 1)}) - ((i_initial + 0.4 * (i_final - i_initial)));
