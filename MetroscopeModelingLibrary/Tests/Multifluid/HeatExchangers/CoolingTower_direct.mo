@@ -13,11 +13,11 @@ model CoolingTower_direct
   input Real AirInletTemp(start=20) "deg_C";
   input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
-  // Input for calibration
-  output Real AirOutletTemp(start=34.999992) "deg_C";    //output
+  // Observables for calibration
+  output Real WaterOutletTemp(start=37.75459) "deg_C";
 
   // Calibrated Parameters
-  parameter Real hd = 0.001538501;
+  parameter Real hd = 0.009132665;
   parameter Real Kfr = 0;
 
   // Parameters
@@ -31,7 +31,7 @@ model CoolingTower_direct
   output Real Q_makeup(start=379.48428);                    /// check these
   output Real Q_cold(start=15214.605);
 
-  output Real WaterOutletTemp(start=37.75459) "deg_C";
+  output Real AirOutletTemp(start=45.27341) "deg_C";    //output
   output Real airOutletPress(start=0.99);
 
   // Output
