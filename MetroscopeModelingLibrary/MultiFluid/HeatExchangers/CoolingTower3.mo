@@ -153,7 +153,7 @@ equation
   Q_cold = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
   pipe.Kfr = Kfr;
-  pipe.delta_z =0;
+  pipe.delta_z = 0;
 
   connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-70,0}}, color={28,108,200}));
   connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,28},{0,23}},                                                             color={85,170,255}));
