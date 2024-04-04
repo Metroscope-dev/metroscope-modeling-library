@@ -2,8 +2,8 @@ within MetroscopeModelingLibrary.Utilities.Icons.Sensors;
 partial record WaterSensorIcon "should be extended in partial base classes"
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
 
-  parameter Boolean BC = false "True if the sensor is a boundary condition";
-  parameter Boolean no_calibration = false "True is the sensor is not used for calibration";
+  parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
+    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
 
   annotation (Icon(
       graphics={
@@ -11,8 +11,8 @@ partial record WaterSensorIcon "should be extended in partial base classes"
           extent={{-100,100},{100,-100}},
           lineColor={0,0,0},
           pattern=LinePattern.None,
-          fillColor=if BC then {238, 46, 47} elseif no_calibration then {0,140,72} else {255, 255, 255},
-          fillPattern=if BC or no_calibration then FillPattern.Solid else FillPattern.None),
+          fillColor=if sensor_function == "BC" then {238, 46, 47} elseif sensor_function == "Calibration" then {107, 175, 17} else {255, 255, 255},
+          fillPattern=if sensor_function == "BC" or sensor_function == "Calibration" then FillPattern.Solid else FillPattern.None),
         Ellipse(
           extent={{-100,100},{100,-100}},
           lineColor={0,0,0},
