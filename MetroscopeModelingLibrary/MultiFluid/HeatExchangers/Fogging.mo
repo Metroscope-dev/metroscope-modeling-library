@@ -8,7 +8,7 @@ model Fogging
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   // Boundary Conditions
-  Inputs.InputMassFlowRate Q_fg_in(start=Q_fg_in_0) "Inlet flue gases mass flow rate";
+  Inputs.InputMassFlowRate Q_fg(start=Q_fg_0) "Inlet flue gases mass flow rate";
 
   // Parameters
   Inputs.InputMassFraction x_vapor(start=1); // Vapor mass fraction
@@ -16,16 +16,16 @@ model Fogging
   // Definitions
   Units.SpecificEnthalpy h_vap_sat;
   Units.SpecificEnthalpy h_liq_sat;
-  Units.MassFlowRate Q_w_in(start=Q_w_in_0) "Inlet water mass flow rate";
+  Units.MassFlowRate Q_w(start=Q_w_0) "Inlet water mass flow rate";
 
   // Initialization parameters
   // Flow Rates
-  parameter Units.MassFlowRate Q_fg_in_0 = 500;
-  parameter Units.MassFlowRate Q_w_in_0 = 1;
+  parameter Units.MassFlowRate Q_fg_0 = 500;
+  parameter Units.MassFlowRate Q_w_0 = 1;
 
 
-  WaterSteam.Connectors.Inlet C_water_in(Q(start=Q_w_in_0)) annotation (Placement(transformation(extent={{-10,50},{10,70}}), iconTransformation(extent={{-10,50},{10,70}})));
-  WaterSteam.Pipes.HeatLoss water_evaporation(Q_0=Q_w_in_0) annotation (Placement(transformation(
+  WaterSteam.Connectors.Inlet C_water_in(Q(start=Q_w_0)) annotation (Placement(transformation(extent={{-10,50},{10,70}}), iconTransformation(extent={{-10,50},{10,70}})));
+  WaterSteam.Pipes.HeatLoss water_evaporation(Q_0=Q_w_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-14})));
@@ -33,13 +33,13 @@ model Fogging
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-44})));
-  FlueGases.Connectors.Inlet C_fg_inlet(Q(start=Q_fg_in_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
-  FlueGases.Pipes.HeatLoss evaporative_cooling(Q_0=Q_fg_in_0) annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
+  FlueGases.Connectors.Inlet C_fg_inlet(Q(start=Q_fg_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
+  FlueGases.Pipes.HeatLoss evaporative_cooling(Q_0=Q_fg_0) annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
   FlueGases.BoundaryConditions.Source source_fg annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=270,
         origin={40,44})));
-  FlueGases.Connectors.Outlet C_fg_out(Q(start=-Q_fg_in_0)) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
-  WaterSteam.Pipes.PressureCut fogging_nozzle_w(Q_0=Q_w_in_0) annotation (Placement(transformation(
+  FlueGases.Connectors.Outlet C_fg_out(Q(start=-Q_fg_0)) annotation (Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
+  WaterSteam.Pipes.PressureCut fogging_nozzle_w(Q_0=Q_w_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,14})));
@@ -50,12 +50,12 @@ model Fogging
 equation
 
   // Boundary Conditions
-  evaporative_cooling.Q = Q_fg_in;
+  evaporative_cooling.Q = Q_fg;
 
   // Definitions
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(water_evaporation.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(water_evaporation.P_in));
-  fogging_nozzle_w.Q = Q_w_in;
+  fogging_nozzle_w.Q = Q_w;
 
   // Parameters
   x_vapor = (water_evaporation.h_out - h_liq_sat)/(h_vap_sat - h_liq_sat);
