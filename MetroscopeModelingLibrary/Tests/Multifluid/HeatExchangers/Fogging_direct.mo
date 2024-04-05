@@ -10,11 +10,12 @@ model Fogging_direct
   input Real Q_water(start = 2.5) "kg/s";
   input Real T_water(start = 19.86, min = 0, nominal = 50) "degC";
 
-  input Real T_fg_out(start=23.5) "degC";
-
-
   // Parameters
-  output Utilities.Units.MassFraction x_vapor(start=1);
+  input Utilities.Units.MassFraction x_vapor(start=1);
+
+  //Observables
+  output Real T_fg_out(start=23.5) "degC";
+
 
 
 

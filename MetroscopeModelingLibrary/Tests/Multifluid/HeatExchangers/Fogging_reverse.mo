@@ -11,10 +11,10 @@ model Fogging_reverse
   input Real T_water(start = 19.86, min = 0, nominal = 50) "degC";
 
   // Calibrated parameters
-  input Utilities.Units.MassFraction x_vapor(start=1);
+  output Utilities.Units.MassFraction x_vapor(start=1);
 
   // Calibration inputs
-  output Real T_fg_out(start=23.5) "degC";
+  input Real T_fg_out(start=23.5) "degC";
 
   MultiFluid.HeatExchangers.Fogging fogging annotation (Placement(transformation(extent={{10,-30},{30,-10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source_w annotation (Placement(transformation(
