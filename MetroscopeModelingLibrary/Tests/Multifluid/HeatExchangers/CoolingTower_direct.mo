@@ -24,14 +24,14 @@ model CoolingTower_direct
   parameter Real Lfi = 15 "m";
   parameter Real afi = 200 "m-1";
   parameter Real Afr = 3000 "m2";
-  output Real V_inlet(start = 4.3490353) "m/s";     //output
+  output Real V_inlet(start = 4.3490353) "m/s";             //output
 
   // Observables
-  output Real airFlow(start=12894.166) "kg/s";
+  output Real airInletFlow(start=12894.166) "kg/s";
   output Real Q_makeup(start=379.48428);                    /// check these
-  output Real Q_cold(start=15214.605);
+  output Real Q_cold_in(start=15214.605);
 
-  input Real AirOutletTemp(start=35) "deg_C";        //output
+  output Real AirOutletTemp(start=35) "deg_C";               //output
   output Real airOutletPress(start=1);
 
   // Output
@@ -83,7 +83,7 @@ equation
   // Cold Air Inlet
   airInletPress_sensor.P_barA = airInletPress;
   cold_source.relative_humidity = cold_source_relative_humidity;
-  airInletFlow_sensor.Qv = airFlow;
+  airInletFlow_sensor.Qv = airInletFlow;
   AirInletTemp_sensor.T_degC = AirInletTemp + 10*time;
 
   // Hot Water Outlet
@@ -97,7 +97,7 @@ equation
   CoolingTower.Kfr = Kfr;
 
   CoolingTower.Q_makeup = Q_makeup;
-  CoolingTower.Q_cold = Q_cold;
+  CoolingTower.Q_cold_in = Q_cold_in;
 
   // Parameters
   CoolingTower.Lfi = Lfi;

@@ -15,8 +15,10 @@ model CoolingTower3
   Units.Velocity V_inlet;
   Inputs.InputFrictionCoefficient Kfr;
 
-  Units.MassFlowRate Q_cold;
-  Units.MassFlowRate Q_hot;
+  Units.MassFlowRate Q_cold_in;
+  Units.MassFlowRate Q_cold_out;
+  Units.MassFlowRate Q_hot_in;
+  Units.MassFlowRate Q_hot_out;
   Units.MassFlowRate Q_makeup;
 
   Units.Temperature T_cold_in(start=T_cold_in_0);
@@ -74,7 +76,7 @@ model CoolingTower3
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{-100,-10},{-80,10}}), iconTransformation(extent={{-100,-10},{-80,10}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{80,-10},{100,10}})));
   MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
-  MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPFlowModel hot_side_cooling annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
+  WaterSteam.BaseClasses.IsoPHFlowModel                          hot_side_cooling annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink Air_inlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -99,10 +101,12 @@ model CoolingTower3
   WaterSteam.BoundaryConditions.Source Water_outlet annotation (Placement(transformation(extent={{10,-10},{30,10}})));
 equation
   // Definition
-  Q_cold = Air_inlet.Q_in;
-  Q_hot = Water_inlet.Q_in;
+  Q_cold_in = Air_inlet.Q_in;
+  Q_cold_out = Air_outlet.Q_out;
+  Q_hot_in = Water_inlet.Q_in;
+  Q_hot_out = Water_outlet.Q_out;
 
-  T_hot_in = Water_inlet.T_in;                                       //hot_side_cooling
+  T_hot_in = Water_inlet.T_in;
   T_hot_out = Water_outlet.T_out;
   P_in = Air_inlet.P_in;
   P_out = Air_outlet.P_out;
@@ -110,12 +114,12 @@ equation
   T_cold_out = Air_outlet.T_out;
 
   cp = WaterSteamMedium.specificHeatCapacityCp(hot_side_cooling.state_in);
-  W = Q_hot * cp * (T_hot_in - T_hot_out);
+  W = Q_hot_in * cp * (T_hot_in - T_hot_out);
 
-  Q_makeup = - (Air_outlet.Q_out + Air_inlet.Q_in);
+  Q_makeup = - (Q_cold_out + Q_cold_in);
 
   // Energy Balance - Supplementary Equation
-  Q_hot * cp * (T_hot_in - T_hot_out) + Q_cold * (i_initial - i_final) = 0;
+  Q_hot_in * cp * (T_hot_in - T_hot_out) + Q_cold_in * (i_initial - i_final) = 0;
 
   // Tchebyshev Integral
   T1 = T_hot_out + 0.1 * (T_hot_in - T_hot_out);
@@ -131,7 +135,7 @@ equation
 
   Water_outlet.P_out = Water_inlet.P_in;
   //Water_outlet.T_out = Water_inlet.T_in;
-  Water_outlet.Q_out = Q_hot - Q_makeup;
+  Q_hot_out = -(Q_hot_in - Q_makeup);
 
   i1 = MoistAir.h_pTX(P_in, T1, {MoistAir.massFraction_pTphi(P_in, T1, 1)}) - ((i_initial + 0.1 * (i_final - i_initial)));                                                                                                                                                                                                        //First integral section
   i2 = MoistAir.h_pTX(P_in, T2, {MoistAir.massFraction_pTphi(P_in, T2, 1)}) - ((i_initial + 0.4 * (i_final - i_initial)));
@@ -140,7 +144,7 @@ equation
   iTot = 1 / i1 + 1 / i2 + 1 / i3 + 1 / i4;
 
   // Heat Exchange - Merkel
-  (Afr * hd * afi * Lfi) / Q_hot = cp * iTot * ((T_hot_in - T_hot_out) / 4);
+  (Afr * hd * afi * Lfi) / Q_hot_in = cp * iTot * ((T_hot_in - T_hot_out) / 4);
 
   // Drift Equation
   rho_air_inlet = inputflowmodel.rho_in;
@@ -150,7 +154,7 @@ equation
 
   0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * g * Lfi;
 
-  Q_cold = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
+  Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
   pipe.Kfr = Kfr;
   pipe.delta_z = 0;

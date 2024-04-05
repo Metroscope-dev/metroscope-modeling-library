@@ -5,7 +5,7 @@ model CoolingTower_reverse
   // Boundary Conditions
     // Hot Water Inlet
   input Real waterInletTemp(start=35) "deg_C";
-  input Units.VolumeFlowRate waterFlow(start=39) "m3/s";
+  input Units.VolumeFlowRate waterInletFlow(start=39) "m3/s";
   input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
@@ -27,12 +27,11 @@ model CoolingTower_reverse
   output Real V_inlet(start = 13.251477) "m/s";
 
   // Observables
-  output Real airFlow(start=52552.133) "m3/s";                        //440
+  output Real airInletFlow(start=52552.133) "m3/s";                        //440
   output Real Q_makeup(start=1311.1932) "m3/s";
-  output Real Q_cold(start=52552.133) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  input Real AirOutletTemp(start=35) "deg_C";                            //output
+  output Real AirOutletTemp(start=35) "deg_C";                            //output
 
   // Output
   output Units.Fraction cold_sink_relative_humidity(start=1) "1";
@@ -76,15 +75,15 @@ model CoolingTower_reverse
         origin={0,-44})));
 equation
   // Hot Water Inlet
-  waterFlow_sensor.Qv = waterFlow;
+  waterFlow_sensor.Qv = waterInletFlow;
   waterInletTemp_sensor.T_degC = waterInletTemp;
   waterInletPress_sensor.P_barA = waterInletPress;
 
   // Cold Air Inlet
   airInletPress_sensor.P_barA = airInletPress;
   cold_source.relative_humidity = cold_source_relative_humidity;
-  airInletFlow_sensor.Qv = airFlow;
-  AirInletTemp_sensor.T_degC = AirInletTemp;   //+10*time - ramps up the temperature by 10 degrees
+  airInletFlow_sensor.Qv = airInletFlow;
+  AirInletTemp_sensor.T_degC = AirInletTemp;                               //+10*time - ramps up the temperature by 10 degrees
 
   // Hot Water Outlet
 
@@ -97,7 +96,6 @@ equation
   CoolingTower.Kfr = Kfr;
 
   CoolingTower.Q_makeup = Q_makeup;
-  CoolingTower.Q_cold = Q_cold;
 
   // Parameters
   CoolingTower.Lfi = Lfi;
@@ -107,7 +105,7 @@ equation
 
   // Observable for Calibration
   WaterOutletTemp_sensor.T_degC = WaterOutletTemp;
-  AirOutletTemp_sensor.T_degC = AirOutletTemp-10*time;
+  AirOutletTemp_sensor.T_degC = AirOutletTemp;
 
   connect(CoolingTower.C_hot_in, waterInletPress_sensor.C_out) annotation (Line(points={{-1.5,-18},{-14,-18},{-14,-20},{-16,-20}},
                                                                                                          color={28,108,200}));
