@@ -3,7 +3,6 @@ package Units
   extends Modelica.Icons.Package;
    import Modelica.Units.SI;
 
-
   annotation(Icon(graphics={
       Polygon(
         fillColor = {128,128,128},
