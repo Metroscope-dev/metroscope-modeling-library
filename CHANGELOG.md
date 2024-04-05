@@ -8,6 +8,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+- Added Fogging component [PR#460](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/460)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
