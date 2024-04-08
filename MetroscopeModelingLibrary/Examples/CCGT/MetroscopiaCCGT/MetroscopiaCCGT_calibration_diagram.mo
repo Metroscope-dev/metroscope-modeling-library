@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
+within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_calibration_diagram
   extends MetroscopiaCCGT_reverse;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-680,-120},

@@ -13,6 +13,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 - Added input connectors for all units [#475](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/475)
 - Added sensor background color feature in sensors icons [#477](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/477)
 - Added Fogging component [PR#460](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/460)
+- Added show_causality parameter in the sensors icons
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 - Fix flow direction in valve [#468](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/468)
