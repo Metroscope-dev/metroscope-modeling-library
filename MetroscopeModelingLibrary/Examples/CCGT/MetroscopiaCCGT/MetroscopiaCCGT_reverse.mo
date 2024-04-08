@@ -361,7 +361,7 @@ model MetroscopiaCCGT_reverse
             103.455}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor deSH_opening_sensor(sensor_function="Calibration")
     annotation (Placement(transformation(extent={{-170,114},{-160,124}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_deSH_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_deSH_sensor(sensor_function="Calibration", causality="Kfr_pipe")
     annotation (Placement(transformation(extent={{-132,86},{-144,98}})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve Evap_controlValve
     annotation (Placement(transformation(extent={{41.25,5.4545},{28.75,19.455}})));
