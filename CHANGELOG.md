@@ -8,6 +8,17 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
+
+
+## MML - v3.8.0
+
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 - Added sensors name in sensors icons [#473](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/473)
 - Added units for volume, surface tension, dynamic viscosity and thermal conductivity [#474](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/474)
 - Added input connectors for all units [#475](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/475)
@@ -18,15 +29,10 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 - Fix flow direction in valve [#468](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/468)
 
-### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
-
-### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
-
 
 ## MML - v3.7.0
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-
 - Added compressor and gas turbine internal faults, condenser `Qv_cold_in` decrease fault, and missing Fuel and FlueGases pipes, with all corresponding tests [PR#457](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/457)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
