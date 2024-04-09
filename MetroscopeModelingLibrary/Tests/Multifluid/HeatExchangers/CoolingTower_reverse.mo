@@ -4,17 +4,17 @@ model CoolingTower_reverse
 
   // Boundary Conditions
     // Hot Water Inlet
-  input Real waterInletTemp(start=35) "deg_C";
+  input Real waterInletTemp(start=28) "deg_C";
   input Units.VolumeFlowRate waterInletFlow(start=39) "m3/s";
   input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
   input Real airInletPress(start=1) "bar";
-  input Real AirInletTemp(start=20) "deg_C";
+  input Real AirInletTemp(start=6) "deg_C";
   input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
   // Input for calibration
-  input Real WaterOutletTemp(start=25) "deg_C";
+  input Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
   output Real hd(start = 0.00943308);
