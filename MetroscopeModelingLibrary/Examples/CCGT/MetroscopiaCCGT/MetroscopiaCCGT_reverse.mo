@@ -2,6 +2,8 @@ within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_reverse
   import MetroscopeModelingLibrary.Utilities.Units;
 
+  inner parameter Boolean show_causality = true "true to show causality, false to hide it";
+
   // Boundary conditions
 
     // Air source
@@ -139,49 +141,49 @@ model MetroscopiaCCGT_reverse
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={222,198})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_eco_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_eco_out_sensor(sensor_function="Calibration", causality="Eco_Kth")
     annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
+        extent={{-6,6},{6,-6}},
         rotation=180,
         origin={8,8})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_eco_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_eco_out_sensor(sensor_function="Calibration", causality="Eco_Kfr")
     annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
+        extent={{-6,6},{6,-6}},
         rotation=180,
         origin={56,8})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Evaporator evaporator
     annotation (Placement(transformation(extent={{-46,-56},{12,4.5}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_evap_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_evap_out_sensor(sensor_function="Calibration", causality="SH1_Kfr")
     annotation (Placement(transformation(extent={{-34,2},{-46,14}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater1(
       QCp_max_side=HPSH_QCp_max_side)
     annotation (Placement(transformation(extent={{-186,-56},{-126,4}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH1_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH1_out_sensor(sensor_function="Calibration", causality="SH1_Kth")
     annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
+        extent={{-6,6},{6,-6}},
         rotation=180,
         origin={-184,8})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_HPSH1_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_HPSH1_out_sensor(sensor_function="Calibration", causality="SH2_Kfr")
     annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
+        extent={{-6,6},{6,-6}},
         rotation=180,
         origin={-208,8})));
   WaterSteam.Pipes.SlideValve                             HPST_control_valve
     annotation (Placement(transformation(extent={{-203.25,144.738},{-186.75,
             162.677}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_in_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_in_sensor(sensor_function="Calibration", causality="HPST_Cst")
     annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-174,148})));
   MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine HPsteamTurbine annotation (Placement(transformation(extent={{-160,132},{-126,164}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_HPST_out_sensor(sensor_function="Calibration", causality="RHT_Kfr")
     annotation (Placement(transformation(extent={{-114,142},{-102,154}})));
-  MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_ST_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_ST_out_sensor(sensor_function="Calibration", causality="LPST_eta_is")
     annotation (Placement(transformation(extent={{90,250},{102,262}})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser
     annotation (Placement(transformation(extent={{32,144.778},{72,176.778}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_circulating_water_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_circulating_water_out_sensor(sensor_function="Calibration", causality="Cond_Qv")
     annotation (Placement(transformation(extent={{86,171},{96,181}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source circulating_water_source
     annotation (Placement(transformation(
@@ -195,12 +197,12 @@ model MetroscopiaCCGT_reverse
         extent={{-7,-7},{7,7}},
         origin={116,131},
         rotation=0)));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_pump_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_pump_out_sensor(sensor_function="Calibration", causality="rh")
     annotation (Placement(transformation(
         extent={{5,5},{-5,-5}},
         rotation=180,
         origin={137,131})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_pump_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_pump_out_sensor(sensor_function="Calibration", causality="hn")
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={155,
             131})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Source powerSource
@@ -213,7 +215,7 @@ model MetroscopiaCCGT_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={182,28})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_pump_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_pump_out_sensor(sensor_function="Calibration", causality="Evap_Kth")
     annotation (Placement(transformation(extent={{166,126},{176,136}})));
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(h_out(
         start=7e5))
@@ -232,13 +234,13 @@ model MetroscopiaCCGT_reverse
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-442,-90})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor compressor_P_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor compressor_P_out_sensor(sensor_function="Calibration", causality="compressor_tau")
     annotation (Placement(transformation(extent={{-490,-32},{-478,-20}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor(sensor_function="Calibration", causality="compressor_eta_is")
     annotation (Placement(transformation(extent={{-472,-32},{-460,-20}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor turbine_P_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor turbine_P_out_sensor(sensor_function="Calibration", causality="hrsg_kf_hot")
     annotation (Placement(transformation(extent={{-350,-32},{-338,-20}})));
-  MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_GT_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_GT_sensor(sensor_function="Calibration", causality="turbine_eta_is")
     annotation (Placement(transformation(extent={{-346,28},{-334,40}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor turbine_T_out_sensor(sensor_function="BC")
     annotation (Placement(transformation(extent={{-370,-32},{-358,-20}})));
@@ -246,17 +248,17 @@ model MetroscopiaCCGT_reverse
       QCp_max_side=ReH_QCp_max_side)
     annotation (Placement(transformation(extent={{-102,-56},{-42,4}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPsteamTurbine annotation (Placement(transformation(extent={{-14,198},{20,230}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_ReH_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_ReH_out_sensor(sensor_function="Calibration", causality="RHT_Kth")
     annotation (Placement(transformation(
-        extent={{6,-6},{-6,6}},
+        extent={{6,6},{-6,-6}},
         rotation=270,
         origin={-80,29})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_ReH_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_ReH_out_sensor(sensor_function="Calibration", causality="LPST_valve_CV")
     annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-80,49})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_Cond_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_Cond_sensor(sensor_function="Calibration", causality="Cond_Kth")
     annotation (Placement(transformation(extent={{28,208},{40,220}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_source_air_sensor(sensor_function="BC")
     annotation (Placement(transformation(extent={{-636,-32},{-624,-20}})));
@@ -274,7 +276,7 @@ model MetroscopiaCCGT_reverse
   WaterSteam.Pipes.SlideValve                             LPST_control_valve
     annotation (Placement(transformation(extent={{-61.25,210.738},{-44.75,
             228.677}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_LPST_in_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_LPST_in_sensor(sensor_function="Calibration", causality="LPST_Cst")
     annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -289,12 +291,12 @@ model MetroscopiaCCGT_reverse
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={94,66})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_pumpRec_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_pumpRec_out_sensor(sensor_function="Calibration", causality="rh")
     annotation (Placement(transformation(
-        extent={{5,-5},{-5,5}},
+        extent={{5,5},{-5,-5}},
         rotation=180,
         origin={115,48.5455})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_pumpRec_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_pumpRec_out_sensor(sensor_function="Calibration", causality="hn")
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={131,
             48.5455})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_pumpRec_out_sensor
@@ -306,7 +308,7 @@ model MetroscopiaCCGT_reverse
         origin={145,9})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve pumpRec_controlValve
     annotation (Placement(transformation(extent={{157,46},{170,60}})));
-  MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function="Calibration", causality="Cvmax")
     annotation (Placement(transformation(extent={{158,68},{168,78}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_flue_gas_sink_sensor(sensor_function="BC")
     annotation (Placement(transformation(
@@ -341,7 +343,7 @@ model MetroscopiaCCGT_reverse
         origin={170,-26})));
   MetroscopeModelingLibrary.FlueGases.Pipes.Filter AirFilter
     annotation (Placement(transformation(extent={{-576,-36},{-556,-16}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor(sensor_function="Calibration", causality="filter_Kfr")
     annotation (Placement(transformation(extent={{-548,-32},{-536,-20}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(
       QCp_max_side=HPSH_QCp_max_side)
@@ -351,7 +353,7 @@ model MetroscopiaCCGT_reverse
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-282,34})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_HPSH2_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_HPSH2_out_sensor(sensor_function="Calibration", causality="HPST_valve_CV")
     annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -359,19 +361,19 @@ model MetroscopiaCCGT_reverse
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve deSH_controlValve
     annotation (Placement(transformation(extent={{-158.75,89.4545},{-171.25,
             103.455}})));
-  MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor deSH_opening_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor deSH_opening_sensor(sensor_function="Calibration", causality="Cvmax")
     annotation (Placement(transformation(extent={{-170,114},{-160,124}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_deSH_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_deSH_sensor(sensor_function="Calibration", causality="SH2_Kth")
     annotation (Placement(transformation(extent={{-132,86},{-144,98}})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve Evap_controlValve
     annotation (Placement(transformation(extent={{41.25,5.4545},{28.75,19.455}})));
-  MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration", causality="Cvmax")
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
   MetroscopeModelingLibrary.MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-708,-36},{-688,-16}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor(sensor_function="Calibration")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor(sensor_function="Calibration", causality="HPST_eta_is")
                                                                                    annotation (Placement(transformation(
-        extent={{6,-6},{-6,6}},
+        extent={{6,6},{-6,-6}},
         rotation=180,
         origin={-90,148})));
 equation
