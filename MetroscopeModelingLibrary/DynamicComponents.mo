@@ -19624,6 +19624,7 @@ package DynamicComponents
         parameter Units.Area A_fg_fins = 0.25*pi*(D_fin^2 - D_out^2)*2*N_fins + pi*D_fin*e_fin*N_fins "Fins outer surface";
         parameter Units.Area Af_fg = L*fg_path_width "Flue gas frontal area";
         Inputs.InputReal k_corr(start=1);
+        parameter Integer N_r = Rows "Number of rows from the beginning of the HRSG";
         // Wall
         parameter Units.Mass M_wall = 25379 "Tubes + fins total mass";
         parameter Units.HeatCapacity Cp_wall = 420 "Tubes specific heat capacity";
@@ -19793,7 +19794,7 @@ package DynamicComponents
         // Convection coefficient calculation
         Nu_fg_avg = K_conv_fg*D_out/k_fg[1, 1];
         // Nu_fg_avg = CorrelationConstants.Zukauskas(Re_fg_max, Pr_fg, Pr_fg_s, Tubes_Config, Rows, S_T, S_L);
-        Nu_fg_avg = CorrelationConstants.ESCOA(Re_fg_max, Pr_fg, Rows, T_fg[1, 1], T_wall_avg, D_out, H_fin, e_fin, S_f, S_T, S_L);
+        Nu_fg_avg = CorrelationConstants.ESCOA(Re_fg_max, Pr_fg, N_r, T_fg[1, 1], T_wall_avg, D_out, H_fin, e_fin, S_f, S_T, S_L);
 
       // ------ Parameters of interest ------
         // IN/OUT temperatures
@@ -19939,7 +19940,15 @@ package DynamicComponents
               textColor={28,108,200},
               textString="%name",
               origin={-69,50},
-              rotation=90)}),                                        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
+              rotation=90),
+            Text(
+              extent={{48,-102},{188,-160}},
+              textColor={28,108,200},
+              textString="T_in = " + DynamicSelect("?", String(T_water_in-273.15))),
+            Text(
+              extent={{28,176},{168,118}},
+              textColor={28,108,200},
+              textString="T_out = " + DynamicSelect("?", String(T_water_out-273.15)))}),                           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
     end Monophasic_Dynamic_HX;
     annotation (Icon(graphics={
           Rectangle(
