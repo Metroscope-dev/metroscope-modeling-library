@@ -22,7 +22,7 @@ partial model PressureSensor
   Real P_inHg(nominal = P_0*Constants.Pa_to_inHg, start = P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
-  outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
+  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
   parameter String display_unit = "barA" "Specify the display unit"
     annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
 

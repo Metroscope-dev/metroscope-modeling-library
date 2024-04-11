@@ -345,7 +345,7 @@ model MetroscopiaCCGT_reverse
   MetroscopeModelingLibrary.FlueGases.Pipes.Filter AirFilter
     annotation (Placement(transformation(extent={{-576,-36},{-556,-16}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor(
-    display_unit="MPaA",                                                         sensor_function="Calibration", causality="filter_Kfr")
+    display_unit="mbar",                                                         sensor_function="Calibration", causality="filter_Kfr")
     annotation (Placement(transformation(extent={{-548,-32},{-536,-20}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(
       QCp_max_side=HPSH_QCp_max_side)

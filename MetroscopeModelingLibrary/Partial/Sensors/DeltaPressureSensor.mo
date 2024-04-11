@@ -11,7 +11,7 @@ partial model DeltaPressureSensor
   Real DP_mbar(unit="mbar", start=DP_0*Utilities.Constants.Pa_to_mbar); // Pressure difference in mbar
   Real DP_psi(start=DP_0*Utilities.Constants.Pa_to_psiA); // Pressure difference in PSI
 
-  outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
+  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
   parameter String display_unit = "bar" "Specify the display unit"
     annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa"));
 
