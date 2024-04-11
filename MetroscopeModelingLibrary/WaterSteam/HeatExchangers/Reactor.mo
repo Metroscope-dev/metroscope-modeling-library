@@ -56,7 +56,8 @@ equation
   Q_steam = Q_feedwater_measured;
 
   // Power
-  thermal_power = Q_steam*steam_source.h_out - Q_feedwater_measured*feedwater_sink.h_in; // thermal power here refers to the estimation of thermal power so it corresponds to the measured feedwater flow rate
+  thermal_power = Q_feedwater_measured * (steam_source.h_out - feedwater_sink.h_in); // thermal power here refers to the estimation of thermal power so it corresponds to the measured feedwater flow rate
+
   thermal_power = C_thermal_power.W;
 
   connect(steam_source.C_out, steam_outlet) annotation (Line(points={{2.77556e-16,71},{2.77556e-16,104.5},{0,104.5},{0,100}},
