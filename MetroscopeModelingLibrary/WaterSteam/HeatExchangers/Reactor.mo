@@ -48,7 +48,8 @@ equation
   steam_source.h_out = vapor_fraction*h_vap_sat + (1 - vapor_fraction)*h_liq_sat;
 
   // Mass flow rates definitions
-  Q_feedwater_measured = feedwater_sink.Q_in + feed_water_flow_rate_measurement_bias; // Note : feedwater_sink.Q_in is the actual flow going into the steam generator
+  Q_feedwater_measured = feedwater_sink.Q_in + feed_water_flow_rate_measurement_bias; // Note : feedwater_sink.Q_in is the actual flow going into the reactor
+
   Q_steam = - steam_source.Q_out;
 
   // Mass balance
