@@ -8,7 +8,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-- Added a deature to display simulation outputs on the models' diagrams [#482](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/482)
+- New feature to display simulation outputs on model diagrams [#482](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/482)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
