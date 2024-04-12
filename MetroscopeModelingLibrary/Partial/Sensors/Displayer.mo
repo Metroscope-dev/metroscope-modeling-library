@@ -5,7 +5,7 @@ partial model Displayer
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
 
   // Initialization parameters
-  parameter Units.PositiveMassFlowRate Q_0=100;
+  parameter Units.PositiveMassFlowRate Q_0 = 100;
   parameter Units.Pressure P_0 = 1e5;
   parameter Units.SpecificEnthalpy h_0 = 5e5;
 
