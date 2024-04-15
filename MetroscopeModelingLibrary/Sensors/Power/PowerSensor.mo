@@ -12,7 +12,7 @@ model PowerSensor
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
   parameter String causality = "" "Specify which parameter is calibrated by this sensor";
-  outer parameter Boolean show_causality = true "Used to switch show or not the causality";
+  outer parameter Boolean show_causality = true "Used to show or not the causality";
   parameter String display_unit = "MW" "Specify the display unit"
     annotation(choices(choice="MW", choice="W"));
   outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
