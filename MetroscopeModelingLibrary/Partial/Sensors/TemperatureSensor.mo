@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Partial.Sensors;
 partial model TemperatureSensor
-  extends BaseSensor                                   annotation(IconMap(primitivesVisible=false));
+  extends BaseSensor                                   annotation(IconMap(primitivesVisible=true));
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.TemperatureIcon;
 

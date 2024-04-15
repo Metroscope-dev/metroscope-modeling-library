@@ -11,6 +11,11 @@ partial model DeltaPressureSensor
   Real DP_mbar(unit="mbar", start=DP_0*Utilities.Constants.Pa_to_mbar); // Pressure difference in mbar
   Real DP_psi(start=DP_0*Utilities.Constants.Pa_to_psiA); // Pressure difference in PSI
 
+  // Icon parameters
+  parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
+    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
+  parameter String causality = "" "Specify which parameter is calibrated by this sensor";
+  outer parameter Boolean show_causality = true "Used to show or not the causality";
   outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
   parameter String display_unit = "bar" "Specify the display unit"
     annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa"));
@@ -42,5 +47,26 @@ equation
                      else if display_unit == "psi" then DynamicSelect("",String(DP_psi)+" psi")
                      else if display_unit == "Pa" then DynamicSelect("",String(DP)+" Pa")
                      else DynamicSelect("",String(DP_bar)+" bar")
-                     else "")}));
+                     else ""),
+          Rectangle(
+            extent={{-100,100},{100,-100}},
+            lineColor={0,0,0},
+            pattern=LinePattern.None,
+            fillColor=if sensor_function == "BC" then {238, 46, 47} elseif sensor_function == "Calibration" then {107, 175, 17} else {255, 255, 255},
+            fillPattern=if sensor_function == "BC" or sensor_function == "Calibration" then FillPattern.Solid else FillPattern.None),
+          Text(
+            extent={{-100,160},{100,120}},
+            textColor={85,170,255},
+            textString="%name"),
+          Text(
+            extent={{-100,-120},{100,-160}},
+            textColor={107,175,17},
+            textString=if show_causality then "%causality" else ""),
+          Line(
+            points={{100,-60},{140,-60},{140,-140},{100,-140}},
+            color={107,175,17},
+            arrow=if causality == "" or show_causality == false then {Arrow.None,Arrow.None} else {Arrow.None,Arrow.Filled},
+            thickness=0.5,
+            pattern=if causality == "" or show_causality == false then LinePattern.None else LinePattern.Solid,
+            smooth=Smooth.Bezier)}));
 end DeltaPressureSensor;
