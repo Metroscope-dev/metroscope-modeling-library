@@ -3,6 +3,7 @@ model MetroscopiaCCGT_reverse
   import MetroscopeModelingLibrary.Utilities.Units;
 
   inner parameter Boolean show_causality = true "true to show causality, false to hide it";
+  inner parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
   // Boundary conditions
 
@@ -233,7 +234,7 @@ model MetroscopiaCCGT_reverse
         start=0.9e6)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-442,-90})));
+        origin={-442,-110})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor compressor_P_out_sensor(sensor_function="Calibration", causality="compressor_tau")
     annotation (Placement(transformation(extent={{-490,-32},{-478,-20}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor(sensor_function="Calibration", causality="compressor_eta_is")
@@ -303,7 +304,7 @@ model MetroscopiaCCGT_reverse
     annotation (Placement(transformation(extent={{140,43.5455},{150,53.5455}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_eco_in_sensor(sensor_function="BC")
     annotation (Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=180,
         origin={145,9})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve pumpRec_controlValve
@@ -343,12 +344,13 @@ model MetroscopiaCCGT_reverse
         origin={170,-26})));
   MetroscopeModelingLibrary.FlueGases.Pipes.Filter AirFilter
     annotation (Placement(transformation(extent={{-576,-36},{-556,-16}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor(sensor_function="Calibration", causality="filter_Kfr")
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor(
+    display_unit="mbar",                                                         sensor_function="Calibration", causality="filter_Kfr")
     annotation (Placement(transformation(extent={{-548,-32},{-536,-20}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(
       QCp_max_side=HPSH_QCp_max_side)
     annotation (Placement(transformation(extent={{-302,-56},{-242,4}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH2_out_sensor(sensor_function="BC")
+  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH2_out_sensor(sensor_function="BC", display_unit="degC")
     annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -370,12 +372,19 @@ model MetroscopiaCCGT_reverse
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration", causality="Cvmax")
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
   MetroscopeModelingLibrary.MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-708,-36},{-688,-16}})));
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-720,-36},{-700,-16}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor(sensor_function="Calibration", causality="HPST_eta_is")
                                                                                    annotation (Placement(transformation(
         extent={{6,6},{-6,-6}},
         rotation=180,
         origin={-90,148})));
+  Sensors.Displayer.WaterDisplayer displayer annotation (Placement(transformation(extent={{-248,138},{-228,158}})));
+  Sensors.Displayer.FuelDisplayer fuelDisplayer annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-442,-92})));
+  Sensors.Displayer.MoistAirDisplayer moistAirDisplayer annotation (Placement(transformation(extent={{-700,-36},{-680,-16}})));
+  Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer annotation (Placement(transformation(extent={{-654,-36},{-634,-16}})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -384,7 +393,7 @@ equation
       // Quantities definition
       P_source_air_sensor.P_barA = P_source_air;
       T_source_air_sensor.T_degC = T_source_air;
-      Q_source_air_sensor.Q = Q_source_air;
+      Q_source_air_sensor.Q = Q_source_air + 10*time;
       source_air.relative_humidity=Relative_Humidity;
 
     // Fuel Source
@@ -710,8 +719,6 @@ equation
   connect(P_fuel_source_sensor.C_in, T_fuel_source_sensor.C_out) annotation (
       Line(points={{-442,-66},{-442,-68},{-442,-68},{-442,-70}}, color={213,213,
           0}));
-  connect(source_fuel.C_out, T_fuel_source_sensor.C_in)
-    annotation (Line(points={{-442,-85},{-442,-80}}, color={213,213,0}));
   connect(GT_generator.C_out, W_GT_sensor.C_in)
     annotation (Line(points={{-352.8,34},{-346,34}}, color={244,125,35}));
   connect(W_GT_sensor.C_out, sink_power.C_in)
@@ -744,8 +751,6 @@ equation
     annotation (Line(points={{-186,-26},{-242,-26}}, color={95,95,95}));
   connect(P_w_HPSH1_out_sensor.C_out, HPsuperheater2.C_cold_in) annotation (
      Line(points={{-214,8},{-260,8},{-260,-2}}, color={28,108,200}));
-  connect(P_w_HPSH2_out_sensor.C_out, HPST_control_valve.C_in) annotation (Line(
-        points={{-282,58},{-282,148},{-203.25,148}}, color={28,108,200}));
   connect(turbine_P_out_sensor.C_out, HPsuperheater2.C_hot_in)
     annotation (Line(points={{-338,-26},{-302,-26}}, color={95,95,95}));
   connect(deSH_opening_sensor.Opening, deSH_controlValve.Opening)
@@ -771,16 +776,21 @@ equation
     annotation (Line(points={{35,18.1822},{35,33.9}}, color={0,0,127}));
   connect(economiser.C_hot_out, T_flue_gas_sink_sensor.C_in) annotation (Line(
         points={{132,-26.5},{132,-26},{164,-26}},     color={95,95,95}));
-  connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in)
-    annotation (Line(points={{176,-26},{222,-26},{222,166}}, color={95,95,95}));
-  connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,-26},{-652,-26}}, color={95,95,95}));
-  connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,-26},{-693,-26}}, color={85,170,255}));
   connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-102,148},{-96,148}}, color={28,108,200}));
   connect(T_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={{-84,148},{-60,148},{-60,-2}}, color={28,108,200}));
   connect(airCompressor.C_W_in, gasTurbine.C_W_shaft) annotation (Line(
       points={{-496,-15.5},{-496,8},{-382,8},{-382,-10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
+  connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{176,-26},{222,-26},{222,166}},                     color={95,95,95}));
+  connect(HPST_control_valve.C_in, displayer.C_out) annotation (Line(points={{-203.25,148},{-216,148},{-216,148},{-235,148}}, color={28,108,200}));
+  connect(displayer.C_in, P_w_HPSH2_out_sensor.C_out) annotation (Line(points={{-241,148},{-280,148},{-280,82},{-282,82},{-282,58}}, color={28,108,200}));
+  connect(source_fuel.C_out, fuelDisplayer.C_in) annotation (Line(points={{-442,-105},{-442,-95}}, color={213,213,0}));
+  connect(fuelDisplayer.C_out, T_fuel_source_sensor.C_in) annotation (Line(points={{-442,-89},{-442,-80}}, color={213,213,0}));
+  connect(moistAir_to_FlueGases.inlet, moistAirDisplayer.C_out) annotation (Line(points={{-672,-26},{-687,-26}}, color={85,170,255}));
+  connect(moistAirDisplayer.C_in, source_air.C_out) annotation (Line(points={{-693,-26},{-705,-26}}, color={85,170,255}));
+  connect(P_source_air_sensor.C_in, flueGasesDisplayer.C_out) annotation (Line(points={{-636,-26},{-641,-26}}, color={95,95,95}));
+  connect(flueGasesDisplayer.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-647,-26},{-652,-26}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
