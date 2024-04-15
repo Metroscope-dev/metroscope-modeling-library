@@ -410,6 +410,8 @@ model MetroscopiaNPP_reverse
         origin={-142,-70})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-238,-80},{-218,-60}})));
   MetroscopeModelingLibrary.Sensors.Power.PowerSensor thermal_power_sensor annotation (Placement(transformation(extent={{-212,-78},{-196,-62}})));
+  Sensors.Displayer.WaterDisplayer waterDisplayer annotation(
+    Placement(transformation(origin = {128, 130}, extent = {{-10, -10}, {10, 10}})));
 equation
 
   // SteamGenerator
@@ -618,7 +620,6 @@ equation
   connect(LPT2.C_out, P_cond_sensor.C_in) annotation (Line(points={{239,130},{286,130}},                             color={28,108,200}));
   connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74.2864}},
                                                                                                            color={28,108,200}));
-  connect(superheater_T_out_sensor.C_out, LPT1.C_in) annotation (Line(points={{100,130},{151,130}},                             color={28,108,200}));
   connect(extraction_pump.C_power, LP_pump_Wm_source.C_out) annotation (Line(points={{372,-61.36},{372,-50.8}}, color={244,125,35}));
   connect(extraction_pump.C_out, extraction_pump_T_out_sensor.C_in) annotation (Line(points={{364,-70},{350,-70}}, color={28,108,200}));
   connect(extraction_pump_T_out_sensor.C_out,extraction_pump_P_out_sensor. C_in) annotation (Line(points={{336,-70},{322,-70}}, color={28,108,200}));
@@ -671,5 +672,9 @@ equation
   connect(Q_purge_sensor.C_out, sink.C_in) annotation (Line(points={{-170,-139},{-170,-145}}, color={28,108,200}));
   connect(steam_generator.C_thermal_power, thermal_power_sensor.C_out) annotation (Line(points={{-181,-70},{-196.16,-70}}, color={244,125,35}));
   connect(thermal_power_sensor.C_in, source.C_out) annotation (Line(points={{-212,-70},{-223.2,-70}}, color={244,125,35}));
+  connect(waterDisplayer.C_in, superheater_T_out_sensor.C_out) annotation(
+    Line(points = {{126, 130}, {100, 130}}, color = {28, 108, 200}));
+  connect(waterDisplayer.C_out, LPT1.C_in) annotation(
+    Line(points = {{132, 130}, {152, 130}}, color = {28, 108, 200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-240,-160},{520,200}})), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-240,-160},{520,200}})));
 end MetroscopiaNPP_reverse;
