@@ -22,6 +22,10 @@ partial model PressureSensor
   Real P_inHg(nominal = P_0*Constants.Pa_to_inHg, start = P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
+  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter String display_unit = "barA" "Specify the display unit"
+    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
+
 equation
   P_barA = P * Constants.Pa_to_barA;
   P_psiA = P * Constants.Pa_to_psiA;
@@ -35,4 +39,15 @@ equation
 
   P_mbar = P * Constants.Pa_to_mbar;
   P_inHg = P * Constants.Pa_to_inHg;
+
+  annotation (Icon(graphics={Text(
+          extent={{-100,-160},{102,-200}},
+          textColor={0,0,0},
+          textString=if display_output then
+                     if display_unit == "barG" then DynamicSelect("",String(P_barG)+" barG")
+                     else if display_unit == "mbar" then DynamicSelect("",String(P_mbar)+" mbar")
+                     else if display_unit == "MPaA" then DynamicSelect("",String(P_MPaA)+" MPaA")
+                     else if display_unit == "kPaA" then DynamicSelect("",String(P_kPaA)+" kPaA")
+                     else DynamicSelect("",String(P_barA)+" barA")
+                     else "")}));
 end PressureSensor;
