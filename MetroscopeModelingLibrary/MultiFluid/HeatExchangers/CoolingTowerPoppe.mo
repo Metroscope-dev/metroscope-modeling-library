@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
-model CoolingTower3
+model CoolingTowerPoppe
   MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-10,80},{10,100}})));
   package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   package MoistAir = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
@@ -8,16 +8,65 @@ model CoolingTower3
   import MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   import MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium.specificEnthalpy;
 
+  function f
+    input Real Tw;
+    input Real w;
+    input Real i;
+    input Real cp;
+    input Real Qw;
+    input Real Qa;
+    input Real P_in;
+    input Real Lef;
+    output Real y;
+  algorithm
+    y:= (cp * (Qw / Qa) * (MoistAir.xsaturation_pT(P_in, Tw) - w)) / (((MoistAir.h_pTX(P_in, Tw, {MoistAir.massFraction_pTphi(P_in, Tw, 1)})) - i + (Lef-1) * ((MoistAir.h_pTX(P_in, Tw, {MoistAir.massFraction_pTphi(P_in, Tw, 1)}) - i - (MoistAir.xsaturation_pT(P_in, Tw) - w) * WaterSteamMedium.specificEnthalpy_pT(P_in, 100+273.15, 1))) - (MoistAir.xsaturation_pT(P_in, Tw) - w) * cp * Tw));
+  end f;
+
+  //Check specific enthalpy of steam mass fraction value, 1 or 0 ?
+  //Check also if temperature is in kelvin or degrees for all three functions ?
+
+  function g
+    input Real Tw;
+    input Real w;
+    input Real i;
+    input Real cp;
+    input Real Qw;
+    input Real Qa;
+    input Real P_in;
+    input Real Lef;
+    output Real y;
+  algorithm
+    y:= ((Qw * cp) / Qa) * (1 + (((MoistAir.xsaturation_pT(P_in, Tw) - w) * (cp * Tw)) / ((MoistAir.h_pTX(P_in, Tw, {MoistAir.massFraction_pTphi(P_in, Tw, 1)}) - i + ((Lef-1) * (MoistAir.h_pTX(P_in, Tw, {MoistAir.massFraction_pTphi(P_in, Tw, 1)}) - i - (MoistAir.xsaturation_pT(P_in, Tw) - w) * WaterSteamMedium.specificEnthalpy_pT(P_in, 100+273.15, 1))) - (MoistAir.xsaturation_pT(P_in, Tw) - w) * cp * Tw))));
+  end g;
+
+
+
+  function h
+    input Real Tw;
+    input Real w;
+    input Real i;
+    input Real cp;
+    input Real P_in;
+    input Real Lef;
+    output Real y;
+  algorithm
+    y:= cp / (MoistAir.h_pTX(P_in, Tw, {MoistAir.massFraction_pTphi(P_in, Tw, 1)}) - i + (Lef-1) * (MoistAir.h_pTX(P_in, Tw, {MoistAir.massFraction_pTphi(P_in, Tw, 1)}) - i - (MoistAir.xsaturation_pT(P_in, Tw) - w) * WaterSteamMedium.specificEnthalpy_pT(P_in, 100+273.15, 1)) - (MoistAir.xsaturation_pT(P_in, Tw) - w) * cp * Tw);
+  end h;
+
+
   Inputs.InputArea Afr;
-  Inputs.InputReal hd;
   Inputs.InputReal Lfi;
   Inputs.InputReal afi;
+  Inputs.InputReal hd;
+  Inputs.InputReal D;
   Units.Velocity V_inlet;
-  Inputs.InputFrictionCoefficient Kfr;
+  Inputs.InputFrictionCoefficient Cf;
 
   Units.MassFlowRate Q_cold_in;
   Units.MassFlowRate Q_cold_out;
   Units.MassFlowRate Q_hot_in;
+  Units.MassFlowRate Qw[N_step];
+  Units.MassFlowRate Qa[N_step];
   Units.MassFlowRate Q_hot_out;
   Units.MassFlowRate Q_makeup;
 
@@ -26,20 +75,12 @@ model CoolingTower3
   Units.Temperature T_hot_in(start=T_hot_in_0);
   Units.Temperature T_hot_out(start=T_hot_out_0);
 
-  Units.Temperature T1(start=T1_0);
-  Units.Temperature T2(start=T2_0);
-  Units.Temperature T3(start=T3_0);
-  Units.Temperature T4(start=T4_0);
+  Units.SpecificEnthalpy i_initial;
+  Units.SpecificEnthalpy i_final;
 
   Units.Power W;
-
-  Units.SpecificEnthalpy i_initial(start=i_initial_0);
-  Units.SpecificEnthalpy i_final(start=i_final_0);
-  Units.SpecificEnthalpy i1(start=i1_0);
-  Units.SpecificEnthalpy i2(start=i2_0);
-  Units.SpecificEnthalpy i3(start=i3_0);
-  Units.SpecificEnthalpy i4(start=i4_0);
-  Units.SpecificEnthalpy iTot(start=iTot_0);
+  Real w_in;
+  Real w_out;
 
   Units.Density rho_air_inlet(start=rho_air_inlet_0);
   Units.Density rho_air_outlet(start=rho_air_outlet_0);
@@ -48,27 +89,23 @@ model CoolingTower3
   Units.Pressure P_in;
   Units.Pressure P_out;
 
-  constant Real g(unit="m/s2") = Modelica.Constants.g_n;
+  constant Real gr(unit="m/s2") = Modelica.Constants.g_n;
 
-   // Initialization Parameters
+    // Poppe Inputs
+  Units.Temperature deltaT;
+  Real Lef;                                    //Why is this an output
+  parameter Integer N_step = 1;
+  Real w[N_step];                               //Not sure if these should be output or Units.......
+  Real M[N_step];
+  Real i[N_step];
+  Real Tw[N_step];
+
+  // Initialization Parameters
 
   parameter Units.Temperature T_cold_in_0 = 15 + 273.15;
   parameter Units.Temperature T_cold_out_0 = 25 + 273.15;
   parameter Units.Temperature T_hot_in_0 = 40 + 273.15;
   parameter Units.Temperature T_hot_out_0 = 20 + 273.15;
-
-  parameter Units.Temperature T1_0 = 15 + 273.15;
-  parameter Units.Temperature T2_0 = 18 + 273.15;
-  parameter Units.Temperature T3_0 = 22 + 273.15;
-  parameter Units.Temperature T4_0 = 25 + 273.15;
-
-  parameter Units.SpecificEnthalpy i_initial_0 = 0.5e5;
-  parameter Units.SpecificEnthalpy i_final_0 = 1.05e5;
-  parameter Units.SpecificEnthalpy i1_0 = 0.65e5;
-  parameter Units.SpecificEnthalpy i2_0 = 0.8e5;
-  parameter Units.SpecificEnthalpy i3_0 = 0.9e5;
-  parameter Units.SpecificEnthalpy i4_0 = 1e5;
-  parameter Units.SpecificEnthalpy iTot_0 = (1 / (2e5));
 
   parameter Units.Density rho_air_inlet_0 = 1.2754;
   parameter Units.Density rho_air_outlet_0 = 1.2460;
@@ -108,56 +145,75 @@ equation
 
   T_hot_in = Water_inlet.T_in;
   T_hot_out = Water_outlet.T_out;
-  P_in = Air_inlet.P_in;
-  P_out = Air_outlet.P_out;
   T_cold_in = Air_inlet.T_in;
   T_cold_out = Air_outlet.T_out;
+  P_in = Air_inlet.P_in;
+  P_out = Air_outlet.P_out;
 
+  w_in = Air_inlet.relative_humidity * MoistAir.xsaturation(Air_inlet.state_in);
+  w_out = Air_outlet.relative_humidity * MoistAir.xsaturation(Air_outlet.state_out);           //multiplication converts it to absolute humidity for both ?
   cp = WaterSteamMedium.specificHeatCapacityCp(hot_side_cooling.state_in);
+
   W = Q_hot_in * cp * (T_hot_in - T_hot_out);
 
-  Q_makeup = - (Q_cold_out + Q_cold_in);
-
-  // Energy Balance - Supplementary Equation
-  Q_hot_in * cp * (T_hot_in - T_hot_out) + Q_cold_in * (i_initial - i_final) = 0;
-
-  // Tchebyshev Integral
-  T1 = T_hot_out + 0.1 * (T_hot_in - T_hot_out);
-  T2 = T_hot_out + 0.4 * (T_hot_in - T_hot_out);
-  T3 = T_hot_out + 0.6 * (T_hot_in - T_hot_out);
-  T4 = T_hot_out + 0.9 * (T_hot_in - T_hot_out);
+  P_in - P_out = 0;
+  Water_outlet.P_out = Water_inlet.P_in;
 
   i_initial = Air_inlet.h_in;
   i_final = Air_outlet.h_out;
 
-  Air_outlet.relative_humidity = 1;
-  Air_outlet.Q_out * (1 - Air_outlet.Xi_out[1]) = - Air_inlet.Q_in *(1 - Air_inlet.Xi_in[1]);
+  pipe.Kfr = 0;
+  pipe.delta_z = 0;
 
-  Water_outlet.P_out = Water_inlet.P_in;
-  //Water_outlet.T_out = Water_inlet.T_in;
-  Q_hot_out = -(Q_hot_in - Q_makeup);
 
-  i1 = MoistAir.h_pTX(P_in, T1, {MoistAir.massFraction_pTphi(P_in, T1, 1)}) - ((i_initial + 0.1 * (i_final - i_initial)));                                                                                                                                                                                                        //First integral section
-  i2 = MoistAir.h_pTX(P_in, T2, {MoistAir.massFraction_pTphi(P_in, T2, 1)}) - ((i_initial + 0.4 * (i_final - i_initial)));
-  i3 = MoistAir.h_pTX(P_in, T3, {MoistAir.massFraction_pTphi(P_in, T3, 1)}) - ((i_initial + 0.6 * (i_final - i_initial)));
-  i4 = MoistAir.h_pTX(P_in, T4, {MoistAir.massFraction_pTphi(P_in, T4, 1)}) - ((i_initial + 0.9 * (i_final - i_initial)));
-  iTot = 1 / i1 + 1 / i2 + 1 / i3 + 1 / i4;
+  // New Poppe Equations
 
-  // Heat Exchange - Merkel
-  (Afr * hd * afi * Lfi) / Q_hot_in = cp * iTot * ((T_hot_in - T_hot_out) / 4);
+  Lef = 0.9077990913 * (((MoistAir.xsaturation_pT(P_in, T_cold_in)+0.622)/(w_in+0.622))-1) / log((MoistAir.xsaturation_pT(P_in, T_cold_in)+0.622)/(w_in+0.622));
+  //Lef = hd /cp;
+
+  deltaT = (T_hot_in - T_hot_out)/N_step;
+
+  for n in 1:N_step-1 loop
+    w[n+1] = w[n] + deltaT * f(Tw[n], w[n], i[n], cp, Qw[n], Qa[n], P_in, Lef);                               //Add absolute humidity conversion ?
+    i[n+1] = i[n] + deltaT * g(Tw[n], w[n], i[n], cp, Qw[n], Qa[n], P_in, Lef);
+    M[n+1]= M[n] + deltaT * h(Tw[n], w[n], i[n], cp, P_in, Lef);
+    Qw[n] = Qw[n+1] + Qa[n] * (w[n+1] - w[n]);
+    Qa[n+1] = Qa[n] * (1 + w[n+1]);
+    M[n+1] = hd * Afr / Qw[n+1];
+  end for;
+
+  w[1] = w_in;
+  w[N_step] = w_out;
+  i[1] = i_initial;
+  i[N_step] = i_final;
+  Tw[1] = T_hot_in "degC";                    //added these to [N_step] equations to correlate with defined variables (so the models knows at the end of the loop its at the outlets)
+  Tw[N_step] = T_hot_out "degC";
+  M[1] = hd * Afr / Q_hot_in; //need start value for hd in loop or in the reverse model calibrate M[1] not hd ?
+  Qw[N_step] = Q_hot_out;
+  Qw[1] = Q_hot_in;
+  Qa[1] = Q_cold_in;
+  Qa[N_step] = Q_cold_out;
 
   // Drift Equation
   rho_air_inlet = inputflowmodel.rho_in;
   rho_air_outlet = outputflowmodel.rho_out;
 
-  (P_in - P_out) = 0;
-
-  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * g * Lfi;
-
+  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * gr * Lfi;
   Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
-  pipe.Kfr = Kfr;
-  pipe.delta_z = 0;
+
+
+
+  //WaterSteamMedium.specificEnthalpy_pT(P_in, 100+273.15, 1)
+  //MoistAirMedium.relativeHumidity_pTX(P_in, T[n], {MoistAir.massFraction_pTphi(P_in, T[n], 1)})
+  //MoistAir.saturationPressure
+  //MoistAir.xsaturation_pT
+  //MoistAir.Xsaturation
+  //w[1] = MoistAir.xsaturation(Air_inlet.state_in);
+
+  //Absolute Humidity = Relative Humidity * Saturation Absolute Humidity at temperature
+  //Absolute Humidity = Relative Humidity * Maximum Possible Humidity
+
 
   connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-70,0}}, color={28,108,200}));
   connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,28},{0,23}},                                                             color={85,170,255}));
@@ -195,5 +251,10 @@ equation
           extent={{-36,110},{-28,104}},
           lineColor={28,108,200},
           fillColor={95,95,95},
-          fillPattern=FillPattern.Backward)}),                   Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}})));
-end CoolingTower3;
+          fillPattern=FillPattern.Backward),
+        Ellipse(
+          extent={{26,-44},{-28,22}},
+          lineColor={28,108,200},
+          fillColor={85,255,255},
+          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}})));
+end CoolingTowerPoppe;

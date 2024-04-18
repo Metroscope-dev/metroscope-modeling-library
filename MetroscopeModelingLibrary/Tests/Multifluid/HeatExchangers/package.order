@@ -18,5 +18,7 @@ AirCooledCondenser_with_subcooling_faulty
 AirCooledCondenser_reverse
 AirCooledCondenser_direct
 AirCooledCondenser_faulty
-CoolingTower_direct
-CoolingTower_reverse
+CoolingTowerMerkel_direct
+CoolingTowerMerkel_reverse
+CoolingTowerPoppe_direct
+CoolingTowerPoppe_reverse

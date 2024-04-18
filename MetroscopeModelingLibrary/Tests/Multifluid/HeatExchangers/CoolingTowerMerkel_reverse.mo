@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
-model CoolingTower_reverse
+model CoolingTowerMerkel_reverse
   import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary Conditions
@@ -9,8 +9,8 @@ model CoolingTower_reverse
   input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
-  input Real airInletPress(start=1) "bar";
   input Real AirInletTemp(start=6) "deg_C";
+  input Real airInletPress(start=1) "bar";
   input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
   // Input for calibration
@@ -24,14 +24,16 @@ model CoolingTower_reverse
   parameter Real Lfi = 15 "m";
   parameter Real afi = 200 "m-1";
   parameter Real Afr = 3000 "m2";
+  parameter Real D = 20 "m";
+  parameter Real Cf = 1;
   output Real V_inlet(start = 13.251477) "m/s";
 
   // Observables
-  output Real airInletFlow(start=52552.133) "m3/s";                        //440
-  output Real Q_makeup(start=1311.1932) "m3/s";
+  output Real airInletFlow(start=52552.133) "m3/s";
+  output Real Q_evap(start=1311.1932) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=35) "deg_C";                            //output
+  output Real AirOutletTemp(start=35) "deg_C";
 
   // Output
   output Units.Fraction cold_sink_relative_humidity(start=1) "1";
@@ -39,7 +41,7 @@ model CoolingTower_reverse
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{66,-30},{86,-10}})));
-  MultiFluid.HeatExchangers.CoolingTower3                           CoolingTower annotation (Placement(transformation(extent={{-4,-28},{16,-8}})));
+  MultiFluid.HeatExchangers.CoolingTowerMerkel CoolingTower annotation (Placement(transformation(extent={{-4,-28},{16,-8}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -83,7 +85,7 @@ equation
   airInletPress_sensor.P_barA = airInletPress;
   cold_source.relative_humidity = cold_source_relative_humidity;
   airInletFlow_sensor.Qv = airInletFlow;
-  AirInletTemp_sensor.T_degC = AirInletTemp;                               //+10*time - ramps up the temperature by 10 degrees
+  AirInletTemp_sensor.T_degC = AirInletTemp;
 
   // Hot Water Outlet
 
@@ -93,14 +95,15 @@ equation
 
   // Calibrated Parameters
   CoolingTower.hd = hd;
-  CoolingTower.Kfr = Kfr;
+  CoolingTower.Cf = Cf;
 
-  CoolingTower.Q_makeup = Q_makeup;
+  CoolingTower.Q_evap = Q_evap;
 
   // Parameters
   CoolingTower.Lfi = Lfi;
   CoolingTower.afi = afi;
   CoolingTower.Afr = Afr;
+  CoolingTower.D =D;
   CoolingTower.V_inlet = V_inlet;
 
   // Observable for Calibration
@@ -152,4 +155,4 @@ equation
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}));
-end CoolingTower_reverse;
+end CoolingTowerMerkel_reverse;

@@ -1,16 +1,16 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
-model CoolingTower_direct
+model CoolingTowerMerkel_direct
   import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary Conditions
     // Hot Water Inlet
   input Real waterInletTemp(start=28) "deg_C";
-  input Units.VolumeFlowRate waterFlow(start=39) "m3/s";
+  input Units.VolumeFlowRate waterFlow(start=40) "m3/s";
   input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
-  input Real airInletPress(start=1) "bar";
   input Real AirInletTemp(start=6) "deg_C";
+  input Real airInletPress(start=1) "bar";
   input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
   // Observables for calibration
@@ -24,14 +24,18 @@ model CoolingTower_direct
   parameter Real Lfi = 15 "m";
   parameter Real afi = 200 "m-1";
   parameter Real Afr = 3000 "m2";
-  output Real V_inlet(start = 4.3490353) "m/s";             //output
+  parameter Real D = 20 "m";
+  parameter Real Cf = 15;
+  output Real V_inlet(start = 4.3490353) "m/s";
 
   // Observables
   output Real airInletFlow(start=12894.166) "kg/s";
-  output Real Q_makeup(start=379.48428);                    /// check these
+  output Real Q_evap(start=379.48428) "kg/s";
   output Real Q_cold_in(start=15214.605);
+  output Real Ratio;
+  output Real W;
 
-  output Real AirOutletTemp(start=35) "deg_C";               //output
+  output Real AirOutletTemp(start=35) "deg_C";
   output Real airOutletPress(start=1);
 
   // Output
@@ -40,7 +44,7 @@ model CoolingTower_direct
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-122,-10},{-102,10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{64,-10},{84,10}})));
-  MultiFluid.HeatExchangers.CoolingTower3                           CoolingTower annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
+  MultiFluid.HeatExchangers.CoolingTowerMerkel CoolingTower annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -84,7 +88,7 @@ equation
   airInletPress_sensor.P_barA = airInletPress;
   cold_source.relative_humidity = cold_source_relative_humidity;
   airInletFlow_sensor.Qv = airInletFlow;
-  AirInletTemp_sensor.T_degC = AirInletTemp + 10*time;
+  AirInletTemp_sensor.T_degC = AirInletTemp;
 
   // Hot Water Outlet
 
@@ -94,15 +98,18 @@ equation
 
   // Calibrated Parameters
   CoolingTower.hd = hd;
-  CoolingTower.Kfr = Kfr;
+  CoolingTower.Cf = Cf+10*time;
 
-  CoolingTower.Q_makeup = Q_makeup;
+  CoolingTower.Q_evap = Q_evap;
   CoolingTower.Q_cold_in = Q_cold_in;
+  CoolingTower.Ratio = Ratio;
+  CoolingTower.W = W;
 
   // Parameters
   CoolingTower.Lfi = Lfi;
   CoolingTower.afi = afi;
   CoolingTower.Afr = Afr;
+  CoolingTower.D = D;
   CoolingTower.V_inlet = V_inlet;
 
   // Observable for Calibration
@@ -151,4 +158,4 @@ equation
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}));
-end CoolingTower_direct;
+end CoolingTowerMerkel_direct;
