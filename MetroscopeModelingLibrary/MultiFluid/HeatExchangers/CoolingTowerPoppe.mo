@@ -23,7 +23,6 @@ model CoolingTowerPoppe
   end f;
 
   //Check specific enthalpy of steam mass fraction value, 1 or 0 ?
-  //Check also if temperature is in kelvin or degrees for all three functions ?
 
   function g
     input Real Tw;
@@ -93,9 +92,9 @@ model CoolingTowerPoppe
 
     // Poppe Inputs
   Units.Temperature deltaT;
-  Real Lef;                                    //Why is this an output
-  parameter Integer N_step = 1;
-  Real w[N_step];                               //Not sure if these should be output or Units.......
+  Real Lef;
+  parameter Integer N_step = 3;
+  Real w[N_step];
   Real M[N_step];
   Real i[N_step];
   Real Tw[N_step];
@@ -151,7 +150,7 @@ equation
   P_out = Air_outlet.P_out;
 
   w_in = Air_inlet.relative_humidity * MoistAir.xsaturation(Air_inlet.state_in);
-  w_out = Air_outlet.relative_humidity * MoistAir.xsaturation(Air_outlet.state_out);           //multiplication converts it to absolute humidity for both ?
+  w_out = Air_outlet.relative_humidity * MoistAir.xsaturation(Air_outlet.state_out);
   cp = WaterSteamMedium.specificHeatCapacityCp(hot_side_cooling.state_in);
 
   W = Q_hot_in * cp * (T_hot_in - T_hot_out);
@@ -169,7 +168,6 @@ equation
   // New Poppe Equations
 
   Lef = 0.9077990913 * (((MoistAir.xsaturation_pT(P_in, T_cold_in)+0.622)/(w_in+0.622))-1) / log((MoistAir.xsaturation_pT(P_in, T_cold_in)+0.622)/(w_in+0.622));
-  //Lef = hd /cp;
 
   deltaT = (T_hot_in - T_hot_out)/N_step;
 
@@ -177,20 +175,23 @@ equation
     w[n+1] = w[n] + deltaT * f(Tw[n], w[n], i[n], cp, Qw[n], Qa[n], P_in, Lef);                               //Add absolute humidity conversion ?
     i[n+1] = i[n] + deltaT * g(Tw[n], w[n], i[n], cp, Qw[n], Qa[n], P_in, Lef);
     M[n+1]= M[n] + deltaT * h(Tw[n], w[n], i[n], cp, P_in, Lef);
-    Qw[n] = Qw[n+1] + Qa[n] * (w[n+1] - w[n]);
+    Qw[n+1] = Qw[n] - Qa[n] * (w[n+1] - w[n]);
     Qa[n+1] = Qa[n] * (1 + w[n+1]);
     M[n+1] = hd * Afr / Qw[n+1];
+
+    Tw[n+1] = Tw[n] - deltaT / N_step;
   end for;
 
   w[1] = w_in;
   w[N_step] = w_out;
   i[1] = i_initial;
   i[N_step] = i_final;
-  Tw[1] = T_hot_in "degC";                    //added these to [N_step] equations to correlate with defined variables (so the models knows at the end of the loop its at the outlets)
+  Tw[1] = T_hot_in "degC";
   Tw[N_step] = T_hot_out "degC";
-  M[1] = hd * Afr / Q_hot_in; //need start value for hd in loop or in the reverse model calibrate M[1] not hd ?
-  Qw[N_step] = Q_hot_out;
+  M[1] = hd * Afr / Q_hot_in;                                         //swapping hd to for a number
+  //M[N_step] = hd * Afr / Q_hot_in;                                    //added this
   Qw[1] = Q_hot_in;
+  Qw[N_step] = Q_hot_out;
   Qa[1] = Q_cold_in;
   Qa[N_step] = Q_cold_out;
 
