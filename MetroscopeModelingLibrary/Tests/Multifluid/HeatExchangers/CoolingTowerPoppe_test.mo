@@ -17,7 +17,7 @@ model CoolingTowerPoppe_test
   input Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
-  output Real hd;
+  output Real hd(start=1);
 
   // Parameters
   //parameter Real Lfi = 15 "m";

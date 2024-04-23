@@ -50,8 +50,6 @@ model CoolingTowerPoppeTrial
 
   Inputs.InputReal hd;
 
-  Units.MassFlowRate Qw[N_step];
-  Units.MassFlowRate Qa[N_step];
   Units.MassFlowRate Q_hot_in;
   Units.MassFlowRate Q_hot_out;
   Units.MassFlowRate Q_cold_in;
@@ -63,10 +61,10 @@ model CoolingTowerPoppeTrial
   Units.SpecificEnthalpy i_initial;
   Units.SpecificEnthalpy i_final;
 
-  Units.HeatCapacity cp[N_step];                       //NEW
 
 
   Units.Temperature T_cold_in;
+  Units.Temperature T_cold_out;
   Units.Temperature T_hot_in;
   Units.Temperature T_hot_out;
 
@@ -78,9 +76,11 @@ model CoolingTowerPoppeTrial
   Real M[N_step];
   Real i[N_step];
   Real Tw[N_step];
-
+  Units.HeatCapacity cp[N_step];                      //NEW
   Real Pin[N_step];                                   //NEW
   Real Lef[N_step];                                   //NEW
+  Units.MassFlowRate Qw[N_step];
+  Units.MassFlowRate Qa[N_step];
 
   WaterSteam.Connectors.Inlet water_inlet_connector annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
   WaterSteam.Connectors.Outlet water_outlet_connector annotation (Placement(transformation(extent={{100,-10},{120,10}})));
@@ -109,29 +109,30 @@ model CoolingTowerPoppeTrial
         origin={0,-64})));
 equation
 
-  // connectors
 
+  // connectors
   air_inlet_connector.P = Pin[1];
   air_inlet_connector.Q = Q_cold_in;
   air_inlet_connector.h_outflow = i_initial;
-  w[1] = air_inlet.relative_humidity * MoistAir.xsaturation(air_inlet_flow.state_in);
+  w_in = air_inlet.relative_humidity * MoistAir.xsaturation(air_inlet_flow.state_in);
   air_inlet.T_in = T_cold_in;
 
 
   air_outlet_connector.P = Pin[1];
   air_outlet_connector.Q = Q_cold_out;
   air_outlet_connector.h_outflow = i_final;
-  w[N_step] = air_outlet.relative_humidity * MoistAir.xsaturation(air_outlet_flow.state_out);
+  air_outlet.T_out = T_cold_out;
+  w_out = air_outlet.relative_humidity * MoistAir.xsaturation(air_outlet_flow.state_out);
 
 
   water_inlet_flow.P_out = Pin[1];
   water_inlet_flow.Q = Q_hot_in;
-  water_inlet_flow.T_in = Tw[1];
+  water_inlet_flow.T_in = T_hot_in;
   cp[1] = WaterSteamMedium.specificHeatCapacityCp(water_inlet_flow.state_in);
 
   water_outlet_flow.P_out = Pin[1];
   water_outlet_flow.Q = Q_hot_out;
-  water_outlet_flow.T_in = Tw[N_step];
+  water_outlet_flow.T_in = T_hot_out;
 
 
 
@@ -139,7 +140,12 @@ equation
 
   Lef[1] = 0.9077990913 * (((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622))-1) / log((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622));
 
-  deltaT = (Tw[1] - Tw[N_step])/N_step;
+  deltaT = (T_hot_in - T_hot_out) / (N_step - 1);
+
+  for n in 1:N_step loop
+    Tw[n] = T_hot_in + (T_hot_out-T_hot_in)*(n-1)/(N_step-1);
+  end for;
+
 
   for n in 1:N_step-1 loop
     w[n+1] = w[n] + deltaT * f(Tw[n], w[n], i[n], cp[n], Qw[n], Qa[n], Pin[n], Lef[n]);
@@ -147,11 +153,11 @@ equation
     M[n+1]= M[n] + deltaT * h(Tw[n], w[n], i[n], cp[n], Pin[n], Lef[n]);
     Qw[n+1] = Qw[n] - Qa[n] * (w[n+1] - w[n]);
     Qa[n+1] = Qa[n] * (1 + w[n+1]);
-    M[n+1] = hd / Qw[n+1];
+    //M[n+1] = hd / Qw[n+1];
 
     Lef[n+1] = Lef[n];                                        //NEW
     Pin[n+1] = Pin[n];                                        //NEW
-    Tw[n+1] = Tw[n] - deltaT;                        //NEW
+    //Tw[n+1] = Tw[n] - deltaT;                               //NEW
     cp[n+1] = cp[n];                                          //NEW
   end for;
 
@@ -159,10 +165,8 @@ equation
   w[N_step] = w_out;
   i[1] = i_initial;
   i[N_step] = i_final;
-  Tw[1] = T_hot_in "degC";
-  Tw[N_step] = T_hot_out "degC";
-  M[1] = hd / Qw[1];
-  //M[N_step] = hd / Qw[N_step];                                   //NEW
+  M[1] = hd / Qw[1];   // H: Not no sure of this equation
+  M[N_step] = hd / Qw[N_step]; // New
   Qw[1] = Q_hot_in;
   Qw[N_step] = Q_hot_out;
   Qa[1] = Q_cold_in;
