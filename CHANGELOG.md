@@ -16,7 +16,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
-## MML - v3.9.0
+## MML - v3.8.1
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 - Added Reactor component [#481](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/481)
