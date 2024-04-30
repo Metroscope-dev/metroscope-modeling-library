@@ -22,9 +22,7 @@ model CoolingTowerPoppe_direct
 
   // Parameters
   parameter Real Lfi = 15 "m";
-  parameter Real afi = 200 "m-1";
   parameter Real Afr = 3000 "m2";
-  parameter Real D = 20 "m";
   parameter Real Cf = 15;
   output Real V_inlet(start = 4.3490353) "m/s";
 
@@ -33,7 +31,7 @@ model CoolingTowerPoppe_direct
   //output Real Q_evap(start=379.48428) "kg/s";
   output Real Q_cold_in(start=15214.605);
   //output Real Ratio;
-  output Real W;
+  //output Real W;
 
   output Real AirOutletTemp(start=35) "deg_C";
   output Real airOutletPress(start=1);
@@ -44,7 +42,8 @@ model CoolingTowerPoppe_direct
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-122,-10},{-102,10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{64,-10},{84,10}})));
-  MultiFluid.HeatExchangers.CoolingTowerPoppe  CoolingTower annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
+  MultiFluid.HeatExchangers.CoolingTowerPoppeTrial
+                                               CoolingTower annotation (Placement(transformation(extent={{-10,-26},{10,-6}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -103,25 +102,19 @@ equation
   //CoolingTower.Q_evap = Q_evap;
   CoolingTower.Q_cold_in = Q_cold_in;
   //CoolingTower.Ratio = Ratio;
-  CoolingTower.W = W;
+  //CoolingTower.W = W;
 
   // Parameters
   CoolingTower.Lfi = Lfi;
-  CoolingTower.afi = afi;
   CoolingTower.Afr = Afr;
-  CoolingTower.D = D;
   CoolingTower.V_inlet = V_inlet;
 
   // Observable for Calibration
   WaterOutletTemp_sensor.T_degC = WaterOutletTemp;
   AirOutletTemp_sensor.T_degC = AirOutletTemp;
 
-  connect(CoolingTower.C_hot_in, waterInletPress_sensor.C_out) annotation (Line(points={{-7.5,-20},{-16,-20},{-16,-14},{-14,-14},{-14,-4},{-12,-4},{-12,0},{-32,0}},
-                                                                                                         color={28,108,200}));
   connect(AirInletTemp_sensor.C_in, cold_source.C_out) annotation (Line(points={{1.77636e-15,76},{1.77636e-15,80.5},{-8.88178e-16,80.5},{-8.88178e-16,85}}, color={85,170,255}));
   connect(waterInletPress_sensor.C_in,waterInletTemp_sensor. C_out) annotation (Line(points={{-52,0},{-56,0}}, color={28,108,200}));
-  connect(CoolingTower.C_hot_out, WaterOutletTemp_sensor.C_in) annotation (Line(points={{7.5,-20},{24,-20},{24,0},{30,0}},
-                                                                                                       color={28,108,200}));
   connect(WaterOutletTemp_sensor.C_out, hot_sink.C_in) annotation (Line(points={{50,0},{69,0}}, color={28,108,200}));
   connect(hot_source.C_out, waterFlow_sensor.C_in) annotation (Line(points={{-107,0},{-102,0}},
                                                                                               color={28,108,200}));
@@ -129,9 +122,11 @@ equation
   connect(AirOutletTemp_sensor.C_out, cold_sink.C_in) annotation (Line(points={{-1.77636e-15,-80},{-1.77636e-15,-83.5},{8.88178e-16,-83.5},{8.88178e-16,-87}}, color={85,170,255}));
   connect(AirInletTemp_sensor.C_out, airInletFlow_sensor.C_in) annotation (Line(points={{-1.77636e-15,56},{-1.77636e-15,52},{1.77636e-15,52},{1.77636e-15,46}}, color={85,170,255}));
   connect(airInletFlow_sensor.C_out, airInletPress_sensor.C_in) annotation (Line(points={{-1.77636e-15,26},{-1.77636e-15,22},{1.77636e-15,22},{1.77636e-15,18}}, color={85,170,255}));
-  connect(airInletPress_sensor.C_out, CoolingTower.C_cold_in) annotation (Line(points={{0,-2},{-1,-2},{-1,-12.5},{0,-12.5}},                   color={85,170,255}));
-  connect(CoolingTower.C_cold_out, airOutletPress_sensor.C_in) annotation (Line(points={{0,-27.5},{0,-31.5},{0,-31.5},{0,-34}},                   color={85,170,255}));
   connect(AirOutletTemp_sensor.C_in, airOutletPress_sensor.C_out) annotation (Line(points={{1.77636e-15,-60},{1.77636e-15,-57},{-1.77636e-15,-57},{-1.77636e-15,-54}}, color={85,170,255}));
+  connect(airInletPress_sensor.C_out, CoolingTower.air_inlet_connector) annotation (Line(points={{0,-2},{0,-6.83333}}, color={85,170,255}));
+  connect(waterInletPress_sensor.C_out, CoolingTower.water_inlet_connector) annotation (Line(points={{-32,0},{-16,0},{-16,-16},{-9.16667,-16}}, color={28,108,200}));
+  connect(airOutletPress_sensor.C_in, CoolingTower.air_outlet_connector) annotation (Line(points={{0,-34},{0,-25.1667}}, color={85,170,255}));
+  connect(WaterOutletTemp_sensor.C_in, CoolingTower.water_outlet_connector) annotation (Line(points={{30,0},{16,0},{16,-16},{9.16667,-16}}, color={28,108,200}));
   annotation (Diagram(coordinateSystem(extent={{-120,-100},{100,100}})), Icon(coordinateSystem(extent={{-120,-100},{100,100}}), graphics={
         Ellipse(lineColor={0,0,0},
                 fillColor={255,255,255},

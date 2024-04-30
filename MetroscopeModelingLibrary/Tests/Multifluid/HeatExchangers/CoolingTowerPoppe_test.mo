@@ -17,18 +17,13 @@ model CoolingTowerPoppe_test
   input Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
-  output Real hd(start=1);
+  output Real hd(start=0.00943308);
 
   // Parameters
-  //parameter Real Lfi = 15 "m";
-  //parameter Real afi = 200 "m-1";
-  //parameter Real Afr = 3000 "m2";
-  //parameter Real D = 20 "m";
-  //parameter Real Cf = 1;
- // output Real V_inlet(start = 13.251477) "m/s";
+  output Real V_inlet(start = 13.251477) "m/s";
 
   // Observables
-  input Real airInletFlow(start=52552.133) "m3/s";
+  output Real airInletFlow(start=52552.133) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
   output Real AirOutletTemp(start=35) "deg_C";
@@ -40,7 +35,8 @@ model CoolingTowerPoppe_test
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{66,-30},{86,-10}})));
   MultiFluid.HeatExchangers.CoolingTowerPoppeTrial
-                                               CoolingTower annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
+                                               CoolingTower(Cf=1)
+                                                            annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -49,7 +45,8 @@ model CoolingTowerPoppe_test
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-92})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor waterInletPress_sensor annotation (Placement(transformation(extent={{-36,-30},{-16,-10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor waterInletPress_sensor(P_0=100000)
+                                                                                     annotation (Placement(transformation(extent={{-36,-30},{-16,-10}})));
   MetroscopeModelingLibrary.Sensors.MoistAir.TemperatureSensor AirInletTemp_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -97,11 +94,7 @@ equation
   //CoolingTower.Cf = Cf;
 
   // Parameters
-  //CoolingTower.Lfi = Lfi;
-  //CoolingTower.afi = afi;
-  //CoolingTower.Afr = Afr;
-  //CoolingTower.D = D;
-  //CoolingTower.V_inlet = V_inlet;
+  CoolingTower.V_inlet = V_inlet;
 
   // Observable for Calibration
   WaterOutletTemp_sensor.T_degC = WaterOutletTemp;
