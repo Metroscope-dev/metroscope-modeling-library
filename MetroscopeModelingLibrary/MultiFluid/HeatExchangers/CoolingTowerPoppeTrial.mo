@@ -7,7 +7,7 @@ model CoolingTowerPoppeTrial
   import MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   import MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium.specificEnthalpy;
 
-  function f
+ function f
     input Real Tw;
     input Real w;
     input Real i;
@@ -17,9 +17,9 @@ model CoolingTowerPoppeTrial
     input Real Pin;
     input Real Lef;
     output Real y;
-  algorithm
+ algorithm
     y:= ((cp * (Qw / Qa) * (MoistAir.xsaturation_pT(Pin, Tw) - w))) / (((MoistAir.h_pTX(Pin, Tw, {w})) - i + (Lef-1) * ((MoistAir.h_pTX(Pin, Tw, {w}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1}))) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw));
-  end f;
+ end f;
 
   function g
     input Real Tw;
@@ -47,12 +47,11 @@ model CoolingTowerPoppeTrial
     y:= cp / (MoistAir.h_pTX(Pin, Tw, {w}) - i + (Lef-1) * (MoistAir.h_pTX(Pin, Tw, {w}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1})) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw);
   end h;
 
-
-  Real hd;
-  parameter Units.FrictionCoefficient Cf = 1;
   Units.Velocity V_inlet;
-  parameter Units.Area Afr = 3000;
-  parameter Real Lfi = 15;
+  Inputs.InputReal hd;
+  Inputs.InputArea Afr;
+  Inputs.InputReal Lfi;
+  Inputs.InputFrictionCoefficient Cf;
 
 
   constant Real gr(unit="m/s2") = Modelica.Constants.g_n;
@@ -79,7 +78,7 @@ model CoolingTowerPoppeTrial
     // Poppe Inputs
   Units.Temperature deltaTw;
 
-  parameter Integer N_step = 3;
+  parameter Integer N_step = 10;
   Real w[N_step];
   Real M[N_step];
   Real i[N_step];
@@ -148,6 +147,7 @@ equation
 
   for n in 1:N_step loop
     Tw[n] = T_hot_in + (T_hot_out-T_hot_in)*(n-1)/(N_step-1);
+
   end for;
 
 
@@ -156,7 +156,7 @@ equation
     i[n+1] = i[n] + deltaTw * g(Tw[n], w[n], i[n], cp[n], Qw[n], Qa[n], Pin[n], Lef[n]);
     M[n+1]= M[n] + deltaTw * h(Tw[n], w[n], i[n], cp[n], Pin[n], Lef[n]);
     Qw[n+1] = Qw[n] - Qa[n] * (w[n+1] - w[n]);
-    Qa[n+1] = Qa[n] * (1 + w[n+1]);
+    Qa[n+1] = Qa[n];// * (1 + w[n+1]);
 
     //Ta[n+1] = MoistAir.T_phX(Pin[n+1], i[n+1], {w[n+1]});
 

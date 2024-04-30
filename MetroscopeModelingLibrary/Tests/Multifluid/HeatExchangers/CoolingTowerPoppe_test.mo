@@ -9,33 +9,36 @@ model CoolingTowerPoppe_test
   input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
-  input Real AirInletTemp(start=6) "deg_C";
+  input Real AirInletTemp(start=4) "deg_C";
   input Real airInletPress(start=1) "bar";
-  input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
+  input Units.Fraction cold_source_relative_humidity(start=0.2) "1";
 
   // Input for calibration
-  input Real WaterOutletTemp(start=20) "deg_C";
+  input Real WaterOutletTemp(start=27) "deg_C";
 
   // Calibrated Parameters
   output Real hd(start=0.00943308);
 
   // Parameters
-  output Real V_inlet(start = 13.251477) "m/s";
+  parameter Units.Area Afr = 3000;
+  parameter Real Lfi = 15;
+  parameter Real Cf = 1;
 
   // Observables
   output Real airInletFlow(start=52552.133) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=35) "deg_C";
+  output Real AirOutletTemp(start=10) "deg_C";
 
   // Output
   output Units.Fraction cold_sink_relative_humidity(start=1) "1";
+  output Real V_inlet(start = 13.251477) "m/s";
+
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{66,-30},{86,-10}})));
-  MultiFluid.HeatExchangers.CoolingTowerPoppeTrial
-                                               CoolingTower(Cf=1)
+  MultiFluid.HeatExchangers.CoolingTowerPoppeTrial CoolingTower
                                                             annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -91,7 +94,10 @@ equation
 
   // Calibrated Parameters
   CoolingTower.hd = hd;
-  //CoolingTower.Cf = Cf;
+  CoolingTower.Cf = Cf;
+  CoolingTower.Afr = Afr;
+  CoolingTower.Lfi = Lfi;
+
 
   // Parameters
   CoolingTower.V_inlet = V_inlet;
