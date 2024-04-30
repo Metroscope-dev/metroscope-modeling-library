@@ -156,7 +156,7 @@ equation
     i[n+1] = i[n] + deltaTw * g(Tw[n], w[n], i[n], cp[n], Qw[n], Qa[n], Pin[n], Lef[n]);
     M[n+1]= M[n] + deltaTw * h(Tw[n], w[n], i[n], cp[n], Pin[n], Lef[n]);
     Qw[n+1] = Qw[n] - Qa[n] * (w[n+1] - w[n]);
-    Qa[n+1] = Qa[n];// * (1 + w[n+1]);
+    Qa[n+1] = Qa[n] * (1 + w[n+1]);
 
     //Ta[n+1] = MoistAir.T_phX(Pin[n+1], i[n+1], {w[n+1]});
 
