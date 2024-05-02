@@ -42,13 +42,16 @@ model Functionftest
   Real abshumid;
   Real enthalp;
   Real steam;
-  Real xsat;
+  Real deltaw;
   Real Qw1;
   Real Qw2;
   Real Qw3;
   Real Qa1;
   Real Qa2;
   Real Qa3;
+  Real Qa11;
+  Real Qa22;
+  Real Qa33;
 
 equation
 
@@ -61,12 +64,12 @@ equation
   y = f(Tw, w, i, cp, Qw, Qa, Pin, Lef);
   y2 = f(Tw, w+0.5*time, i, cp, Qw, Qa, Pin, Lef);
 
-  w2 = w + 10 * f(Tw-20*time, w+0.005, i+50000*time, cp, Qw, Qa, Pin, Lef);
+  w2 = w + 10 * f(Tw, w, i, cp, Qw, Qa, Pin, Lef);
   w3 = w2 + 10 * f(Tw, w2, i, cp, Qw2, Qa2, Pin, Lef);
   w4 = w3 + 10 * f(Tw, w3, i, cp, Qw3, Qa3, Pin, Lef);
 
-  abshumid = (MoistAir.xsaturation_pT(Pin, Tw) - w);
-  xsat = MoistAir.xsaturation_pT(Pin, Tw);
+  abshumid = MoistAir.xsaturation_pT(Pin, Tw);
+  deltaw = MoistAir.xsaturation_pT(Pin, Tw) - w;
   enthalp = MoistAir.h_pTX(Pin, Tw, {MoistAir.massFraction_pTphi(Pin, Tw, w)}) - i;
   steam = WaterSteamMedium.specificEnthalpy_pT(Pin, 100.05+273.15, 0);
 
@@ -78,11 +81,14 @@ equation
   Qa2 = Qa1 * (1 + w2);
   Qa3 = Qa2 * (1 + w3);
 
+  Qa11 = Qa + Qa * (w2 - w);
+  Qa22 = Qa1 + Qa1 * (w3 - w2);
+  Qa33 = Qa2 + Qa2 * (w4 - w3);
 
-  //RHconversion = MoistAir.relativeHumidity_pTX(Pin, Tw, {MoistAir.massFraction_pTphi(Pin, Tw, w)}) * Saturation Vapor Pressure
+
 
   //dw/dTw -  humidity ratio/water temperature - function f
-  //humidity is the problem, equations need humidity ratio/specific humidity but I only have functions for absolute humidity or relative humidity
+
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}}), graphics={
         Ellipse(
           extent={{-20,110},{20,70}},

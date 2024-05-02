@@ -48,9 +48,9 @@ equation
   w = MoistAir.massFraction_pTphi(Pin, Tw, rh);
 
   M1 = 0.000980808;
-  M2 = M1 + 10 * h(Tw-5, w+0.02, i+10000, cp, Pin, Lef);
-  M3 = M2 + 10 * h(Tw-10, w+0.035, i+20000, cp, Pin, Lef);
-  M4 = M3 + 10 * h(Tw-25, w+0.04, i+160000, cp, Pin, Lef);
+  M2 = M1 + 10 * h(Tw, w, i, cp, Pin, Lef);
+  M3 = M2 + 10 * h(Tw-5, w+0.05, i+20000, cp, Pin, Lef);
+  M4 = M3 + 10 * h(Tw-10, w+0.09, i+40000, cp, Pin, Lef);
 
 
   //dMe/dTw = function h

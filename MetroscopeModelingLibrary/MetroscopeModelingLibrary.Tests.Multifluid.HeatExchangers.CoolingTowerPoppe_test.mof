@@ -3,13 +3,13 @@ model CoolingTowerPoppe_test
   input MetroscopeModelingLibrary.Utilities.Units.VolumeFlowRate waterInletFlow(
     start = 39) "m3/s";
   input Real waterInletPress(start = 1) "bar";
-  input Real AirInletTemp(start = 10) "deg_C";
+  input Real AirInletTemp(start = 4) "deg_C";
   input Real airInletPress(start = 1) "bar";
   input MetroscopeModelingLibrary.Utilities.Units.Fraction cold_source_relative_humidity
-    (start = 0.4) "1";
-  input Real WaterOutletTemp(start = 20) "deg_C";
-  parameter Real Lfi = 15 "m";
-  parameter Real Afr = 3000 "m2";
+    (start = 0.2) "1";
+  input Real WaterOutletTemp(start = 27) "deg_C";
+  parameter MetroscopeModelingLibrary.Utilities.Units.Area Afr = 3000;
+  parameter Real Lfi = 15;
   parameter Real Cf = 1;
   constant Real CoolingTower.gr(unit = "m/s2") = 9.80665;
   parameter Integer CoolingTower.N_step = 10;
@@ -120,7 +120,7 @@ model CoolingTowerPoppe_test
   constant MetroscopeModelingLibrary.Utilities.Units.PositiveMassFlowRate 
     waterInletPress_sensor.Q_0 = 100;
   constant MetroscopeModelingLibrary.Utilities.Units.Pressure waterInletPress_sensor.P_0
-     = 100000.0;
+     = 100000;
   parameter MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy 
     waterInletPress_sensor.h_0 = 500000.0;
   parameter Boolean waterInletPress_sensor.faulty_flow_rate = false;
@@ -420,13 +420,13 @@ model CoolingTowerPoppe_test
   parameter MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy 
     airOutletPress_sensor.flow_model.h_0 = 500000.0;
 
-  output Real hd(start = 1);
-  output Real V_inlet(start = 13.251477) "m/s";
+  output Real hd(start = 0.00943308);
   output Real airInletFlow(start = 52552.133) "m3/s";
   output Real airOutletPress(start = 1) "bar";
-  output Real AirOutletTemp(start = 35) "deg_C";
+  output Real AirOutletTemp(start = 10) "deg_C";
   output MetroscopeModelingLibrary.Utilities.Units.Fraction cold_sink_relative_humidity
     (start = 1) "1";
+  output Real V_inlet(start = 13.251477) "m/s";
   MetroscopeModelingLibrary.Utilities.Units.Inputs.InputSpecificEnthalpy 
     hot_source.h_out;
   MetroscopeModelingLibrary.Utilities.Units.Inputs.InputMassFraction 
@@ -479,33 +479,31 @@ model CoolingTowerPoppe_test
   MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy hot_sink.C_in.h_outflow
     (start = 100000.0);
   Modelica.Media.Interfaces.Types.MassFraction hot_sink.C_in.Xi_outflow[0];
-  MetroscopeModelingLibrary.Utilities.Units.Inputs.InputReal CoolingTower.hd;
-  MetroscopeModelingLibrary.Utilities.Units.Inputs.InputFrictionCoefficient 
-    CoolingTower.Cf;
   MetroscopeModelingLibrary.Utilities.Units.Velocity CoolingTower.V_inlet;
+  MetroscopeModelingLibrary.Utilities.Units.Inputs.InputReal CoolingTower.hd;
   MetroscopeModelingLibrary.Utilities.Units.Inputs.InputArea CoolingTower.Afr;
   MetroscopeModelingLibrary.Utilities.Units.Inputs.InputReal CoolingTower.Lfi;
+  MetroscopeModelingLibrary.Utilities.Units.Inputs.InputFrictionCoefficient 
+    CoolingTower.Cf;
   MetroscopeModelingLibrary.Utilities.Units.Density CoolingTower.rho_air_inlet;
   MetroscopeModelingLibrary.Utilities.Units.Density CoolingTower.rho_air_outlet;
   MetroscopeModelingLibrary.Utilities.Units.MassFlowRate CoolingTower.Q_hot_in;
   MetroscopeModelingLibrary.Utilities.Units.MassFlowRate CoolingTower.Q_hot_out;
   MetroscopeModelingLibrary.Utilities.Units.MassFlowRate CoolingTower.Q_cold_in;
   MetroscopeModelingLibrary.Utilities.Units.MassFlowRate CoolingTower.Q_cold_out;
-  MetroscopeModelingLibrary.Utilities.Units.Inputs.InputReal CoolingTower.w_in;
-  MetroscopeModelingLibrary.Utilities.Units.Inputs.InputReal CoolingTower.w_out;
+  Real CoolingTower.w_in;
+  Real CoolingTower.w_out;
   MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy CoolingTower.i_initial;
   MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy CoolingTower.i_final;
   MetroscopeModelingLibrary.Utilities.Units.Temperature CoolingTower.T_cold_in;
   MetroscopeModelingLibrary.Utilities.Units.Temperature CoolingTower.T_cold_out;
   MetroscopeModelingLibrary.Utilities.Units.Temperature CoolingTower.T_hot_in;
   MetroscopeModelingLibrary.Utilities.Units.Temperature CoolingTower.T_hot_out;
-  MetroscopeModelingLibrary.Utilities.Units.Temperature CoolingTower.deltaT;
-  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity CoolingTower.deltacp;
+  MetroscopeModelingLibrary.Utilities.Units.Temperature CoolingTower.deltaTw;
   Real CoolingTower.w[CoolingTower.N_step];
   Real CoolingTower.M[CoolingTower.N_step];
   Real CoolingTower.i[CoolingTower.N_step];
   Real CoolingTower.Tw[CoolingTower.N_step];
-  Real CoolingTower.Ta[CoolingTower.N_step];
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity CoolingTower.cp[
     CoolingTower.N_step];
   Real CoolingTower.Pin[CoolingTower.N_step];
@@ -2514,76 +2512,65 @@ model CoolingTowerPoppe_test
     CoolingTower.air_inlet_flow.Q = CoolingTower.Q_cold_in;
     CoolingTower.air_inlet_connector.h_outflow = CoolingTower.i_initial;
     CoolingTower.air_inlet.T_in = CoolingTower.T_cold_in;
-    CoolingTower.w_in = CoolingTower.air_inlet.relative_humidity*
-      xsaturation_Unique37(
-      CoolingTower.air_inlet_flow.state_in);
+    CoolingTower.w_in = CoolingTower.air_inlet.Xi_in[1];
     CoolingTower.air_outlet_flow.P_in = CoolingTower.Pin[1];
     CoolingTower.air_outlet_flow.Q = CoolingTower.Q_cold_out;
     CoolingTower.air_outlet_connector.h_outflow = CoolingTower.i_final;
     CoolingTower.air_outlet.T_out = CoolingTower.T_cold_out;
-    CoolingTower.w_out = CoolingTower.air_outlet.relative_humidity*
-      xsaturation_Unique37(
-      CoolingTower.air_outlet_flow.state_out);
+    CoolingTower.w_out = CoolingTower.air_outlet.Xi_out[1];
     CoolingTower.water_inlet_flow.P_out = CoolingTower.Pin[1];
     CoolingTower.water_inlet_flow.Q = CoolingTower.Q_hot_in;
     CoolingTower.water_inlet_flow.T_in = CoolingTower.T_hot_in;
-    CoolingTower.cp[1] = Modelica.Media.Water.WaterIF97_ph.specificHeatCapacityCp_Unique38
-      (
-      CoolingTower.water_inlet_flow.state_in);
     CoolingTower.water_outlet_flow.P_out = CoolingTower.Pin[1];
     CoolingTower.water_outlet_flow.Q = CoolingTower.Q_hot_out;
     CoolingTower.water_outlet_flow.T_in = CoolingTower.T_hot_out;
-    CoolingTower.deltaT = (CoolingTower.T_hot_in-CoolingTower.T_hot_out)/(
+    CoolingTower.deltaTw = (CoolingTower.T_hot_in-CoolingTower.T_hot_out)/(
       CoolingTower.N_step-1);
-    CoolingTower.deltacp = (CoolingTower.cp[CoolingTower.N_step]-CoolingTower.cp
-      [1])/(CoolingTower.N_step-1);
     for n in (1:CoolingTower.N_step) loop
-      CoolingTower.Tw[n] = CoolingTower.T_hot_in+(CoolingTower.T_hot_out-
-        CoolingTower.T_hot_in)*(n-1)/(CoolingTower.N_step-1);
-      CoolingTower.Ta[n] = CoolingTower.T_cold_in+(CoolingTower.T_cold_out-
-        CoolingTower.T_cold_in)*(n-1)/(CoolingTower.N_step-1);
+      CoolingTower.Tw[n] = CoolingTower.T_hot_out+(CoolingTower.T_hot_in-
+        CoolingTower.T_hot_out)*(n-1)/(CoolingTower.N_step-1);
     end for;
     for n in (1:CoolingTower.N_step-1) loop
-      CoolingTower.w[n+1] = CoolingTower.w[n]+CoolingTower.deltaT*
+      CoolingTower.w[n+1] = CoolingTower.w[n]+CoolingTower.deltaTw*
         MetroscopeModelingLibrary.MultiFluid.HeatExchangers.CoolingTowerPoppeTrial.f
         (CoolingTower.Tw[n], CoolingTower.w[n], CoolingTower.i[n], 
         CoolingTower.cp[n], CoolingTower.Qw[n], CoolingTower.Qa[n], 
         CoolingTower.Pin[n], CoolingTower.Lef[n]);
-      CoolingTower.i[n+1] = CoolingTower.i[n]+CoolingTower.deltaT*
+      CoolingTower.i[n+1] = CoolingTower.i[n]+CoolingTower.deltaTw*
         MetroscopeModelingLibrary.MultiFluid.HeatExchangers.CoolingTowerPoppeTrial.g
         (CoolingTower.Tw[n], CoolingTower.w[n], CoolingTower.i[n], 
         CoolingTower.cp[n], CoolingTower.Qw[n], CoolingTower.Qa[n], 
         CoolingTower.Pin[n], CoolingTower.Lef[n]);
-      CoolingTower.M[n+1] = CoolingTower.M[n]+CoolingTower.deltaT*
+      CoolingTower.M[n+1] = CoolingTower.M[n]+CoolingTower.deltaTw*
         MetroscopeModelingLibrary.MultiFluid.HeatExchangers.CoolingTowerPoppeTrial.h
         (CoolingTower.Tw[n], CoolingTower.w[n], CoolingTower.i[n], 
         CoolingTower.cp[n], CoolingTower.Pin[n], CoolingTower.Lef[n]);
       CoolingTower.Qw[n+1] = CoolingTower.Qw[n]-CoolingTower.Qa[n]*(
         CoolingTower.w[n+1]-CoolingTower.w[n]);
       CoolingTower.Qa[n+1] = CoolingTower.Qa[n]*(1+CoolingTower.w[n+1]);
-      CoolingTower.Lef[n+1] = 0.9077990913*((xsaturation_pT_Unique39(
-        CoolingTower.Pin[n+1], CoolingTower.Ta[n+1])+0.622)/(CoolingTower.w[n+1]
-        +0.622)-1)/log((xsaturation_pT_Unique39(CoolingTower.Pin[n+1], 
-        CoolingTower.Ta[n+1])+0.622)/(CoolingTower.w[n+1]+0.622));
-      CoolingTower.cp[n+1] = CoolingTower.cp[n]+CoolingTower.deltacp*
-        CoolingTower.N_step;
+      CoolingTower.Lef[n+1] = CoolingTower.Lef[n];
+      CoolingTower.cp[n+1] = CoolingTower.cp[n];
       CoolingTower.Pin[n+1] = CoolingTower.Pin[n];
     end for;
     CoolingTower.w[1] = CoolingTower.w_in;
     CoolingTower.w[CoolingTower.N_step] = CoolingTower.w_out;
     CoolingTower.i[1] = CoolingTower.i_initial;
     CoolingTower.i[CoolingTower.N_step] = CoolingTower.i_final;
-    CoolingTower.M[1] = CoolingTower.hd*CoolingTower.Afr/CoolingTower.Qw[1];
+    CoolingTower.M[1] = CoolingTower.hd*CoolingTower.Afr/CoolingTower.Qw[
+      CoolingTower.N_step];
     CoolingTower.M[CoolingTower.N_step] = CoolingTower.hd*CoolingTower.Afr/
-      CoolingTower.Qw[CoolingTower.N_step];
-    CoolingTower.Qw[1] = CoolingTower.Q_hot_in;
-    CoolingTower.Qw[CoolingTower.N_step] = CoolingTower.Q_hot_out;
+      CoolingTower.Qw[1];
+    CoolingTower.Qw[1] = CoolingTower.Q_hot_out;
+    CoolingTower.Qw[CoolingTower.N_step] = CoolingTower.Q_hot_in;
     CoolingTower.Qa[1] = CoolingTower.Q_cold_in;
     CoolingTower.Qa[CoolingTower.N_step] = CoolingTower.Q_cold_out;
-    CoolingTower.Lef[1] = 0.9077990913*((xsaturation_pT_Unique39(
-      CoolingTower.Pin[1], CoolingTower.Ta[1])+0.622)/(CoolingTower.w[1]+0.622)-1)
-      /log((xsaturation_pT_Unique39(CoolingTower.Pin[1], CoolingTower.Ta[1])+
-      0.622)/(CoolingTower.w[1]+0.622));
+    CoolingTower.Lef[1] = 0.9077990913*((xsaturation_pT_Unique37(
+      CoolingTower.Pin[1], CoolingTower.T_cold_in)+0.622)/(CoolingTower.w[1]+
+      0.622)-1)/log((xsaturation_pT_Unique37(CoolingTower.Pin[1], 
+      CoolingTower.T_cold_in)+0.622)/(CoolingTower.w[1]+0.622));
+    CoolingTower.cp[1] = Modelica.Media.Water.WaterIF97_ph.specificHeatCapacityCp_Unique44
+      (
+      CoolingTower.water_inlet_flow.state_in);
     CoolingTower.rho_air_inlet = CoolingTower.air_inlet_flow.rho_in;
     CoolingTower.rho_air_outlet = CoolingTower.air_outlet_flow.rho_out;
     0.25*(CoolingTower.rho_air_inlet+CoolingTower.rho_air_outlet)*
@@ -3470,8 +3457,8 @@ model CoolingTowerPoppe_test
     airOutletPress_sensor.P_barA = airOutletPress;
     CoolingTower.hd = hd;
     CoolingTower.Cf = Cf;
-    CoolingTower.Lfi = Lfi;
     CoolingTower.Afr = Afr;
+    CoolingTower.Lfi = Lfi;
     CoolingTower.V_inlet = V_inlet;
     WaterOutletTemp_sensor.T_degC = WaterOutletTemp;
     AirOutletTemp_sensor.T_degC = AirOutletTemp;

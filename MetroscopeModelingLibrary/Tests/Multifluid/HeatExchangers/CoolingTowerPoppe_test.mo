@@ -9,12 +9,12 @@ model CoolingTowerPoppe_test
   input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
-  input Real AirInletTemp(start=4) "deg_C";
+  input Real AirInletTemp(start=5) "deg_C";
   input Real airInletPress(start=1) "bar";
-  input Units.Fraction cold_source_relative_humidity(start=0.2) "1";
+  input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
   // Input for calibration
-  input Real WaterOutletTemp(start=27) "deg_C";
+  input Real WaterOutletTemp(start=18) "deg_C";
 
   // Calibrated Parameters
   output Real hd(start=0.00943308);
@@ -28,7 +28,7 @@ model CoolingTowerPoppe_test
   output Real airInletFlow(start=52552.133) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=10) "deg_C";
+  output Real AirOutletTemp(start=20) "deg_C";
 
   // Output
   output Units.Fraction cold_sink_relative_humidity(start=1) "1";
