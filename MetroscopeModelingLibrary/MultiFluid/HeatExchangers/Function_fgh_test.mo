@@ -49,17 +49,21 @@ model Function_fgh_test
 
     // Poppe Inputs
 
-  parameter Real rh = 0.8;
-  parameter Real i = 17719.107;
-  parameter Real Tw = 20+273.15;
+  parameter Real rh = 0.2;
+
+  parameter Real Tw_in = 30+273.15;
+  output Real Tw_out(start = 20+273.15);
+  parameter Real Ta1 = 15+273.15;
+
+  Real Tw[4];
+  Real deltaTw;
+
+
   parameter Real cp = 4180;
   parameter Real Pin = 100000;
-  parameter Real hd = 0.012856079;                       //From Merkel model
+  parameter Real hd(start= -0.0012223658);                       //From Merkel model
   Real Lef;
-  parameter Real Qw = 38853.242;
-  parameter Real Qa = 18717.115;
 
-  Real w;
   Real w1;
   Real w2;
   Real w3;
@@ -74,17 +78,17 @@ model Function_fgh_test
   Real M2;
   Real M3;
   Real M4;
-  Real Mtest;
-  Real Mtest1;
-  Real Mtest3;
+  Real Me;
 
-  Real Qw1;
+  parameter Real Qw1 = 30;
   Real Qw2;
   Real Qw3;
+  Real Qw4;
 
-  Real Qa1;
+  parameter Real Qa1 = 20;
   Real Qa2;
   Real Qa3;
+  Real Qa4;
 
   Real imasw;
   Real wsw;
@@ -93,55 +97,66 @@ model Function_fgh_test
   Real P2;
   Real P3;
   Real Tot;
+  Real delta2;
+
 
 equation
 
-  // connectors
+   // Water temperature
+   Tw[1] = Tw_out;
+   Tw[2] = Tw[1] + deltaTw;
+   Tw[3] = Tw[2] + deltaTw;
+   Tw[4] = Tw_in;
+   deltaTw = (Tw[4] - Tw[1]) / (4 - 1);
 
-  // New Poppe Equations
+  // Lewis factor
+  Lef = 0.9077990913 * (((MoistAir.xsaturation_pT(Pin, Ta1)+0.622)/(w1+0.622))-1) / log((MoistAir.xsaturation_pT(Pin, Ta1)+0.622)/(w1+0.622));                                  //NEW
 
-  Lef = 0.9077990913 * (((MoistAir.xsaturation_pT(Pin, 5+273.15)+0.622)/(w+0.622))-1) / log((MoistAir.xsaturation_pT(Pin, 5+273.15)+0.622)/(w+0.622));                                  //NEW
+  // Air enthalpy
+  i1 = MoistAir.h_pTX(Pin, Ta1, {w1}); //inlet
+  i2 = i1 + deltaTw * g(Tw[1], w1, i1, cp, Qw1, Qa1, Pin, Lef);
+  i3 = i2 + deltaTw * g(Tw[2], w2, i2, cp, Qw2, Qa2, Pin, Lef);
+  i4 = i3 + deltaTw * g(Tw[3], w3, i3, cp, Qw3, Qa3, Pin, Lef); //outlet
 
-  //i - has a given start value, taken from Merkel model
-  i1 = i + 2 * g(Tw, w, i, cp, Qw, Qa, Pin, Lef);
-  i2 = i1 + 2 * g(Tw-5, w1, i1, cp, Qw1, Qa1, Pin, Lef);
-  i3 = i2 + 2 * g(Tw-10, w2, i2, cp, Qw2, Qa2, Pin, Lef);
-  i4 = i3 + 2 * g(Tw-15, w3, i3, cp, Qw3, Qa3, Pin, Lef);
+  // Humidity
+  w1 = MoistAir.massFraction_pTphi(Pin, Ta1, rh);           // inlet
+  w2 = w1 + deltaTw * f(Tw[1], w1, i1, cp, Qw1, Qa1, Pin, Lef);
+  w3 = w2 + deltaTw * f(Tw[2], w2, i2, cp, Qw2, Qa2, Pin, Lef);
+  w4 = w3 + deltaTw * f(Tw[3], w3, i3, cp, Qw3, Qa3, Pin, Lef); //outlet
 
-  w = MoistAir.massFraction_pTphi(Pin, Tw, rh);             //start value with relative humidity equal to 0.8
-  w1 = w + 2 * f(Tw, w, i, cp, Qw, Qa, Pin, Lef);
-  w2 = w1 + 2 * f(Tw-5, w1, i1, cp, Qw1, Qa1, Pin, Lef);
-  w3 = w2 + 2 * f(Tw-10, w2, i2, cp, Qw2, Qa2, Pin, Lef);
-  w4 = w3 + 2 * f(Tw-15, w3, i3, cp, Qw3, Qa3, Pin, Lef);
+  delta2= (((MoistAir.h_pTX(Pin, Tw[2], {w2})) - i2 + (Lef-1) * ((MoistAir.h_pTX(Pin, Tw[2], {w2}) - i2 - (MoistAir.xsaturation_pT(Pin, Tw[2]) - w2) * MoistAir.h_pTX(Pin, Tw[2], {1}))) - (MoistAir.xsaturation_pT(Pin, Tw[2]) - w2) * cp * Tw[2]));
 
-  M1 = 1;                                                   //Possibly a standard merkel number start value - range of 0.5-2 online seems acceptable
-  M2 = M1 + 2 * h(Tw-5, w1, i1, cp, Pin, Lef);
-  M3 = M2 + 2 * h(Tw-10, w2, i2, cp, Pin, Lef);             //Merkel number is decreasing and can go negative depending on hd (and hence M1) and also depending on deltaTw
-  M4 = M3 + 2 * h(Tw-15, w3, i3, cp, Pin, Lef);             //Negative Merkel number isn't supposed to happen
-  Mtest = h(Tw, w, i, cp, Pin, Lef);
+  // Merkel number
+  M1 =  deltaTw * h(Tw[1], w1, i1, cp, Pin, Lef);
+  M2 =  deltaTw * h(Tw[2], w2, i2, cp, Pin, Lef);             //Merkel number is decreasing and can go negative depending on hd (and hence M1) and also depending on deltaTw
+  M3 =  deltaTw * h(Tw[3], w3, i3, cp, Pin, Lef);             //Negative Merkel number isn't supposed to happen
+  M4 =  deltaTw * h(Tw[4], w4, i4, cp, Pin, Lef);
+  Me = (M1 + M2 + M3 + M3) / (4 * deltaTw);
+  Me = hd * 3000 / Qw1;
 
-  Mtest1 = hd * 3000 / Qw;
-  Mtest3 = hd * 3000 / Qw3;
 
+  // Water flow
   //Qw - has a given start value, taken from Merkel model
-  Qw1 = Qw - Qa * (w1 - w);
   Qw2 = Qw1 - Qa1 * (w2 - w1);
-  Qw3 = Qw2 - Qa2 * (w3 - w2);                              //Depending on Tw, Qw and Qa can both increase ?
+  Qw3 = Qw2 - Qa2 * (w3 - w2);
+  Qw4 = Qw3 - Qa3 * (w4 - w3);//Depending on Tw, Qw and Qa can both increase ?
 
+  // Air flow
   //Qa - has a given start value, taken from Merkel model
-  Qa1 = Qa * (1 + w1);
   Qa2 = Qa1 * (1 + w2);
   Qa3 = Qa2 * (1 + w3);
+  Qa4 = Qa3 * (1 + w4);
 
-  imasw = MoistAir.h_pTX(Pin, Tw, {w});
-  wsw = MoistAir.xsaturation_pT(Pin, Tw);
-  iv = MoistAir.h_pTX(Pin, Tw, {1});
-  P1 = MoistAir.h_pTX(Pin, Tw, {w}) - i;
-  P2 = (Lef - 1) * (MoistAir.h_pTX(Pin, Tw, {w}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1}));
-  P3 = -(MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw;
+
+
+  imasw = MoistAir.h_pTX(Pin, Tw_in, {w1});
+  wsw = MoistAir.xsaturation_pT(Pin, Tw_in);
+  iv = MoistAir.h_pTX(Pin, Tw_in, {1});
+  P1 = MoistAir.h_pTX(Pin, Tw_in, {w1}) - i1;
+  P2 = (Lef - 1) * (MoistAir.h_pTX(Pin, Tw_in, {w1}) - i1 - (MoistAir.xsaturation_pT(Pin, Tw_in) - w1) * MoistAir.h_pTX(Pin, Tw_in, {1}));
+  P3 = -(MoistAir.xsaturation_pT(Pin, Tw_in) - w1) * cp * Tw_in;
   Tot = cp / (P1 + P2 + P3);
 
-  //di/dTw -  function g
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}}), graphics={
         Ellipse(
