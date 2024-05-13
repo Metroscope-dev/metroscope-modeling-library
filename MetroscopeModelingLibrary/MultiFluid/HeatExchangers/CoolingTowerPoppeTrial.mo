@@ -18,7 +18,7 @@ model CoolingTowerPoppeTrial
     input Real Lef;
     output Real y;
   algorithm
-    y:= ((cp * (Qw / Qa) * (MoistAir.xsaturation_pT(Pin, Tw) - w))) / (((MoistAir.h_pTX(Pin, Tw, {w})) - i + (Lef-1) * ((MoistAir.h_pTX(Pin, Tw, {w}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1}))) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw));
+    y:= (cp * (Qw / Qa) * (MoistAir.xsaturation_pT(Pin, Tw) - w)) / (((MoistAir.h_pTX(Pin, Tw, {1-MoistAir.xsaturation_pT(Pin, Tw)})) - i + (Lef-1) * ((MoistAir.h_pTX(Pin, Tw, {1-MoistAir.xsaturation_pT(Pin, Tw)}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1}))) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw));
   end f;
 
   function g
@@ -32,7 +32,7 @@ model CoolingTowerPoppeTrial
     input Real Lef;
     output Real y;
   algorithm
-    y:= ((Qw * cp) / Qa) * (1 + (((MoistAir.xsaturation_pT(Pin, Tw) - w) * (cp * Tw)) / ((MoistAir.h_pTX(Pin, Tw, {w}) - i + ((Lef-1) * (MoistAir.h_pTX(Pin, Tw, {w}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1}))) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw))));
+    y:= ((Qw * cp) / Qa) * (1 + (((MoistAir.xsaturation_pT(Pin, Tw) - w) * (cp * Tw)) / ((MoistAir.h_pTX(Pin, Tw, {1-MoistAir.xsaturation_pT(Pin, Tw)}) - i + ((Lef-1) * (MoistAir.h_pTX(Pin, Tw, {1-MoistAir.xsaturation_pT(Pin, Tw)}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1}))) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw))));
   end g;
 
   function h
@@ -44,7 +44,7 @@ model CoolingTowerPoppeTrial
     input Real Lef;
     output Real y;
   algorithm
-    y:= cp / (MoistAir.h_pTX(Pin, Tw, {w}) - i + (Lef-1) * (MoistAir.h_pTX(Pin, Tw, {w}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1})) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw);
+    y:= cp / (MoistAir.h_pTX(Pin, Tw, {1-MoistAir.xsaturation_pT(Pin, Tw)}) - i + (Lef-1) * (MoistAir.h_pTX(Pin, Tw, {1-MoistAir.xsaturation_pT(Pin, Tw)}) - i - (MoistAir.xsaturation_pT(Pin, Tw) - w) * MoistAir.h_pTX(Pin, Tw, {1})) - (MoistAir.xsaturation_pT(Pin, Tw) - w) * cp * Tw);
   end h;
 
   Units.Velocity V_inlet;
@@ -78,9 +78,10 @@ model CoolingTowerPoppeTrial
     // Poppe Inputs
   Units.Temperature deltaTw;
 
-  parameter Integer N_step = 10;
+  parameter Integer N_step = 5;
   Real w[N_step];
   Real M[N_step];
+  Real Me;
   Real i[N_step];
   Real Tw[N_step];
   //Real Ta[N_step];                                 //NEW
@@ -89,6 +90,12 @@ model CoolingTowerPoppeTrial
   Real Lef[N_step];
   Units.MassFlowRate Qw[N_step];
   Units.MassFlowRate Qa[N_step];
+
+  //Real M1;
+  //Real M2;
+  //Real M3;
+  //Real M4;
+
 
   WaterSteam.Connectors.Inlet water_inlet_connector annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
   WaterSteam.Connectors.Outlet water_outlet_connector annotation (Placement(transformation(extent={{100,-10},{120,10}})));
@@ -154,30 +161,43 @@ equation
   for n in 1:N_step-1 loop
     w[n+1] = w[n] + deltaTw * f(Tw[n], w[n], i[n], cp[n], Qw[n], Qa[n], Pin[n], Lef[n]);
     i[n+1] = i[n] + deltaTw * g(Tw[n], w[n], i[n], cp[n], Qw[n], Qa[n], Pin[n], Lef[n]);
-    M[n+1]= M[n] - deltaTw * h(Tw[n], w[n], i[n], cp[n], Pin[n], Lef[n]);
+    //M[n+1]= M[n] + deltaTw * h(Tw[n], w[n], i[n], cp[n], Pin[n], Lef[n]);
+    M[n]= deltaTw * h(Tw[n], w[n], i[n], cp[n], Pin[n], Lef[n]);
     Qw[n+1] = Qw[n] - Qa[n] * (w[n+1] - w[n]);
     Qa[n+1] = Qa[n] * (1 + w[n+1]);
-    //Qa[n+1] = Qa[n] + Qa[n] * (w[n+1] - w[n]);     //Possibly better Qa equation in future ?
+    //Qa[n+1] = Qa[n] + Qa[n] * (w[n+1] - w[n]);                              //Possibly better Qa equation in future ?
 
-    //Ta[n+1] = MoistAir.T_phX(Pin[n+1], i[n+1], {w[n+1]});    //Evolution of Ta to allow for Lef factor to change in N_step's
+    //Ta[n+1] = MoistAir.T_phX(Pin[n+1], i[n+1], {w[n+1]});                   //Evolution of Ta to allow for Lef factor to change in N_step's
 
     Lef[n+1] = Lef[n];
     //Lef[n+1] = 0.9077990913 * (((MoistAir.xsaturation_pT(Pin[n+1], Ta[n+1])+0.622)/(w[n+1]+0.622))-1) / log((MoistAir.xsaturation_pT(Pin[n+1], Ta[n+1])+0.622)/(w[n+1]+0.622));                  //NEW
 
     cp[n+1] = cp[n];
-    //cp[n+1] = WaterSteamMedium.cp_pT(Pin[n+1], Tw[n+1], {1});
+    //cp[n+1] = WaterSteamMedium.cp_pT(Pin[n+1], Tw[n+1], {1});               //Need exact WaterSteamMedium subgroup name
 
     Pin[n+1] = Pin[n];
   end for;
+
+    // Merkel number
+  //M1 =  deltaTw * h(Tw[1], w1, i1, cp, Pin, Lef);
+  //M2 =  deltaTw * h(Tw[2], w2, i2, cp, Pin, Lef);
+  //M3 =  deltaTw * h(Tw[3], w3, i3, cp, Pin, Lef);                           //Negative Merkel number isn't supposed to happen
+  //M4 =  deltaTw * h(Tw[4], w4, i4, cp, Pin, Lef);
+
+  Me = (M[1] + M[N_step]) / ((N_step - 1) * deltaTw);
+  //Me = hd * 3000 / Qw[1];
+
+
 
   w[1] = w_in;
   w[N_step] = w_out;
   i[1] = i_initial;
   i[N_step] = i_final;
-  M[1] = hd * Afr / Qw[N_step];              //was Qw[1] but Merkel number evolution follows direction of water flow
-  M[N_step] = hd * Afr / Qw[1];              //was Qw[N_step] but Merkel number follows flow of water so must be like this
-  Qw[1] = Q_hot_out;                         //was Q_hot_in but water and air flow in opposite directions so like this
-  Qw[N_step] = Q_hot_in;                     //was Q_hot_out but water and air flow in opposite directions so like this
+  //M[1] = hd * Afr / Qw[1];                                                                             //was Qw[1] but Merkel number evolution follows direction of water flow
+  M[N_step] = hd * Afr / Qw[N_step];                                                                    //was Qw[N_step] but Merkel number follows flow of water so must be like this
+  M[N_step] = deltaTw * h(Tw[N_step], w[N_step], i[N_step], cp[N_step], Pin[N_step], Lef[N_step]);
+  Qw[1] = Q_hot_out;                                                                                    //was Q_hot_in but water and air flow in opposite directions so like this
+  Qw[N_step] = Q_hot_in;                                                                        //was Q_hot_out but water and air flow in opposite directions so like this
   Qa[1] = Q_cold_in;
   Qa[N_step] = Q_cold_out;
 

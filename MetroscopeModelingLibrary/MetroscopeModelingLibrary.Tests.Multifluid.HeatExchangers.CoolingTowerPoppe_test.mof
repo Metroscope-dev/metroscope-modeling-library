@@ -1,18 +1,18 @@
 model CoolingTowerPoppe_test
-  input Real waterInletTemp(start = 28) "deg_C";
+  input Real waterInletTemp(start = 30) "deg_C";
   input MetroscopeModelingLibrary.Utilities.Units.VolumeFlowRate waterInletFlow(
-    start = 39) "m3/s";
+    start = 30) "m3/s";
   input Real waterInletPress(start = 1) "bar";
-  input Real AirInletTemp(start = 4) "deg_C";
+  input Real AirInletTemp(start = 15) "deg_C";
   input Real airInletPress(start = 1) "bar";
   input MetroscopeModelingLibrary.Utilities.Units.Fraction cold_source_relative_humidity
-    (start = 0.2) "1";
-  input Real WaterOutletTemp(start = 27) "deg_C";
+    (start = 0.4) "1";
+  input Real WaterOutletTemp(start = 20) "deg_C";
   parameter MetroscopeModelingLibrary.Utilities.Units.Area Afr = 3000;
   parameter Real Lfi = 15;
   parameter Real Cf = 1;
   constant Real CoolingTower.gr(unit = "m/s2") = 9.80665;
-  parameter Integer CoolingTower.N_step = 10;
+  parameter Integer CoolingTower.N_step = 3;
   parameter MetroscopeModelingLibrary.Utilities.Units.Temperature 
     CoolingTower.water_inlet_flow.T_in_0 = CoolingTower.water_inlet_flow.T_0;
   parameter MetroscopeModelingLibrary.Utilities.Units.Temperature 
@@ -420,12 +420,12 @@ model CoolingTowerPoppe_test
   parameter MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy 
     airOutletPress_sensor.flow_model.h_0 = 500000.0;
 
-  output Real hd(start = 0.00943308);
+  output Real hd(start = 0.0017803314);
   output Real airInletFlow(start = 52552.133) "m3/s";
   output Real airOutletPress(start = 1) "bar";
-  output Real AirOutletTemp(start = 10) "deg_C";
+  output Real AirOutletTemp(start = 20) "deg_C";
   output MetroscopeModelingLibrary.Utilities.Units.Fraction cold_sink_relative_humidity
-    (start = 1) "1";
+    (start = 0.870559) "1";
   output Real V_inlet(start = 13.251477) "m/s";
   MetroscopeModelingLibrary.Utilities.Units.Inputs.InputSpecificEnthalpy 
     hot_source.h_out;
@@ -2541,7 +2541,7 @@ model CoolingTowerPoppe_test
         (CoolingTower.Tw[n], CoolingTower.w[n], CoolingTower.i[n], 
         CoolingTower.cp[n], CoolingTower.Qw[n], CoolingTower.Qa[n], 
         CoolingTower.Pin[n], CoolingTower.Lef[n]);
-      CoolingTower.M[n+1] = CoolingTower.M[n]+CoolingTower.deltaTw*
+      CoolingTower.M[n+1] = CoolingTower.M[n]-CoolingTower.deltaTw*
         MetroscopeModelingLibrary.MultiFluid.HeatExchangers.CoolingTowerPoppeTrial.h
         (CoolingTower.Tw[n], CoolingTower.w[n], CoolingTower.i[n], 
         CoolingTower.cp[n], CoolingTower.Pin[n], CoolingTower.Lef[n]);

@@ -4,20 +4,21 @@ model CoolingTowerPoppe_test
 
   // Boundary Conditions
     // Hot Water Inlet
-  input Real waterInletTemp(start=28) "deg_C";
-  input Units.VolumeFlowRate waterInletFlow(start=39) "m3/s";
+  input Real waterInletTemp(start=30) "deg_C";
+  input Units.VolumeFlowRate waterInletFlow(start=30) "m3/s";
   input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
-  input Real AirInletTemp(start=5) "deg_C";
+  input Real AirInletTemp(start=15) "deg_C";
   input Real airInletPress(start=1) "bar";
-  input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
+  input Units.Fraction cold_source_relative_humidity(start=0.2) "1";
+
 
   // Input for calibration
-  input Real WaterOutletTemp(start=18) "deg_C";
+  input Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
-  output Real hd(start=0.00943308);
+  output Real hd(start=0.00226379);
 
   // Parameters
   parameter Units.Area Afr = 3000;
@@ -25,14 +26,14 @@ model CoolingTowerPoppe_test
   parameter Real Cf = 1;
 
   // Observables
-  output Real airInletFlow(start=52552.133) "m3/s";
+  output Real airInletFlow(start=20) "m3/s";                                         //Unsure of start value
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=20) "deg_C";
+  output Real AirOutletTemp(start=33.89) "deg_C";
 
   // Output
-  output Units.Fraction cold_sink_relative_humidity(start=1) "1";
-  output Real V_inlet(start = 13.251477) "m/s";
+  output Units.Fraction cold_sink_relative_humidity(start=0.83941764) "1";
+  output Real V_inlet(start = 13.251477) "m/s";                                             //No known start value
 
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));
