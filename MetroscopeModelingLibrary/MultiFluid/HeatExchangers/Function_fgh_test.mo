@@ -76,6 +76,7 @@ model Function_fgh_test
   Real i2;
   Real i3;
   Real i4;
+  Real Ta4;
 
   Real M1;
   Real M2;
@@ -114,6 +115,7 @@ equation
   i2 = i1 + deltaTw * g(Tw[1], w1, i1, cp, Qw1, Qa1, Pin, Lef);
   i3 = i2 + deltaTw * g(Tw[2], w2, i2, cp, Qw2, Qa2, Pin, Lef);
   i4 = i3 + deltaTw * g(Tw[3], w3, i3, cp, Qw3, Qa3, Pin, Lef);         //outlet
+  Ta4 = MoistAir.T_phX(Pin, i4, {w4});
 
   // Humidity
   w1 = MoistAir.massFraction_pTphi(Pin, Ta1, rh);                       //inlet

@@ -18,28 +18,28 @@ model CoolingTowerPoppe_test
   input Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
-  output Real hd(start=0.00226379);
+  output Real hd(start=8.849857);
 
   // Parameters
   parameter Units.Area Afr = 3000;
   parameter Real Lfi = 15;
-  parameter Real Cf = 1;
+  parameter Real Cf = 0.02931342;
 
   // Observables
-  output Real airInletFlow(start=20) "m3/s";                                         //Unsure of start value
+  output Real airInletFlow(start=38533.254) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=33.89) "deg_C";
+  output Real AirOutletTemp(start=25) "deg_C";
 
   // Output
-  output Units.Fraction cold_sink_relative_humidity(start=0.83941764) "1";
-  output Real V_inlet(start = 13.251477) "m/s";                                             //No known start value
+  output Units.Fraction cold_sink_relative_humidity(start=0.40412638) "1";
+  output Real V_inlet(start = 12.871763) "m/s";                                             //No known start value
 
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{66,-30},{86,-10}})));
-  MultiFluid.HeatExchangers.CoolingTowerPoppeTrial CoolingTower
+  MultiFluid.HeatExchangers.CoolingTowerPoppeTrial CoolingTower(air_outlet_flow(h_out_0=20400.438),air_inlet_flow(h_out_0=108262.83),w_out(start=0.0018949909))
                                                             annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -149,5 +149,6 @@ equation
           fillColor={28,108,200},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
-          points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}));
+          points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}),
+    experiment(Tolerance=0.001, __Dymola_Algorithm="Lsodar"));
 end CoolingTowerPoppe_test;

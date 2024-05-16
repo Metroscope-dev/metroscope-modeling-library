@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
+within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
 model MetroscopiaNPP_reverse
 
 

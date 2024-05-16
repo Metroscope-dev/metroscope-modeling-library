@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
+within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_reverse
   import MetroscopeModelingLibrary.Utilities.Units;
 
