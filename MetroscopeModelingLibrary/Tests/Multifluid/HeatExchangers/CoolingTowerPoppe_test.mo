@@ -23,10 +23,10 @@ model CoolingTowerPoppe_test
   // Parameters
   parameter Units.Area Afr = 3000;
   parameter Real Lfi = 15;
-  parameter Real Cf = 0.02931342;
+  parameter Real Cf = 0.025509778;
 
   // Observables
-  output Real airInletFlow(start=38533.254) "m3/s";
+  output Real airInletFlow(start=50000) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
   output Real AirOutletTemp(start=25) "deg_C";
@@ -150,5 +150,5 @@ equation
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}),
-    experiment(Tolerance=0.001, __Dymola_Algorithm="Lsodar"));
+    experiment(__Dymola_Algorithm="Dassl"));
 end CoolingTowerPoppe_test;
