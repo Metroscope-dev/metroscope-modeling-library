@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
-model CoolingTowerPoppeTrial
+model CoolingTowerPoppe
   package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   package MoistAir = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   import MetroscopeModelingLibrary.Utilities.Units;
@@ -53,7 +53,6 @@ model CoolingTowerPoppeTrial
   Inputs.InputReal Lfi;
   Inputs.InputFrictionCoefficient Cf;
 
-
   constant Real gr(unit="m/s2") = Modelica.Constants.g_n;
 
   Units.Density rho_air_inlet;
@@ -91,8 +90,6 @@ model CoolingTowerPoppeTrial
   Units.MassFlowRate Qw[N_step];
   Units.MassFlowRate Qa[N_step];
 
-
-
   WaterSteam.Connectors.Inlet water_inlet_connector annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
   WaterSteam.Connectors.Outlet water_outlet_connector annotation (Placement(transformation(extent={{100,-10},{120,10}})));
   MetroscopeModelingLibrary.MoistAir.Connectors.Inlet air_inlet_connector annotation (Placement(transformation(extent={{-10,100},{10,120}})));
@@ -120,7 +117,6 @@ model CoolingTowerPoppeTrial
         origin={0,-64})));
 equation
 
-
   // connectors
   air_inlet_flow.P_out = Pin[1];
   air_inlet_flow.Q = Q_cold_in;
@@ -128,13 +124,11 @@ equation
   air_inlet.T_in = T_cold_in;
   w_in = air_inlet.Xi_in[1];
 
-
   air_outlet_flow.P_in = Pin[N_step];
   air_outlet_flow.Q = Q_cold_out;
   air_outlet_flow.h = i_final;
   air_outlet.T_out = T_cold_out;
   w_out = air_outlet.Xi_out[1];
-
 
   water_inlet_flow.P_out = Pin[N_step];
   water_inlet_flow.Q = Q_hot_in;
@@ -149,10 +143,8 @@ equation
   deltaTw = (Tw[N_step] - Tw[1]) / (N_step - 1);
 
   for n in 1:N_step loop
-    //Tw[n] = T_hot_in + (T_hot_out-T_hot_in)*(n-1)/(N_step-1);           //OLD LOOP
-    Tw[n] = T_hot_out + (T_hot_in-T_hot_out)*(n-1)/(N_step-1);            //NEW LOOP where T[N_step] = T_hot_in
+    Tw[n] = T_hot_out + (T_hot_in-T_hot_out)*(n-1)/(N_step-1);
   end for;
-
 
   for n in 1:N_step-1 loop
      w[n+1] = w[n] + deltaTw * f(Tw[n], w[n], i[n], cp[n], Qw[n], Qa[n], Pin[n], Lef[n]);
@@ -171,7 +163,6 @@ equation
 
   end for;
 
-
   Me = hd * Afr / Qw[1];
   M[N_step] = Me;
   M[1] = 0;
@@ -182,12 +173,12 @@ equation
   i[1] = i_initial;
   i[N_step] = i_final;
 
-  Qw[1] = Q_hot_out;                                                                                    //was Q_hot_in but water and air flow in opposite directions so like this
-  Qw[N_step] = Q_hot_in;                                                                        //was Q_hot_out but water and air flow in opposite directions so like this
+  Qw[1] = Q_hot_out;
+  Qw[N_step] = Q_hot_in;
   Qa[1] = Q_cold_in;
   Qa[N_step] = Q_cold_out;
 
-  Lef[1] = 0.9077990913 * (((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622))-1) / log((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622));                                  //NEW
+  Lef[1] = 0.9077990913 * (((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622))-1) / log((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622));
   cp[1] = WaterSteamMedium.specificHeatCapacityCp(water_inlet_flow.state_in);
 
    // Drift Equation
@@ -237,4 +228,4 @@ equation
           lineColor={28,108,200},
           fillColor={85,255,255},
           fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}})));
-end CoolingTowerPoppeTrial;
+end CoolingTowerPoppe;

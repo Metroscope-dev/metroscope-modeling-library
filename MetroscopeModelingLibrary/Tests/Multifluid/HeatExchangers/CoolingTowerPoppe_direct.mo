@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
-model CoolingTowerPoppe_test
+model CoolingTowerPoppe_direct
   import MetroscopeModelingLibrary.Utilities.Units;
 
   // Boundary Conditions
@@ -11,14 +11,13 @@ model CoolingTowerPoppe_test
     // Cold Air Inlet
   input Real AirInletTemp(start=15) "deg_C";
   input Real airInletPress(start=1) "bar";
-  input Units.Fraction cold_source_relative_humidity(start=0.2) "1";
-
+  input Units.Fraction cold_source_relative_humidity(start=0.5) "1";
 
   // Input for calibration
-  input Real WaterOutletTemp(start=20) "deg_C";
+  output Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
-  output Real hd(start=8.849857);
+  parameter Real hd(start=8.849857);
 
   // Parameters
   parameter Units.Area Afr = 3000;
@@ -35,12 +34,14 @@ model CoolingTowerPoppe_test
   output Units.Fraction cold_sink_relative_humidity(start=0.40412638) "1";
   output Real V_inlet(start = 12.871763) "m/s";                                             //No known start value
 
-
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{66,-30},{86,-10}})));
-  MultiFluid.HeatExchangers.CoolingTowerPoppeTrial CoolingTower(air_outlet_flow(h_out_0=20400.438),air_inlet_flow(h_out_0=108262.83),w_out(start=0.0018949909))
-                                                            annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
+  MultiFluid.HeatExchangers.CoolingTowerPoppewithSS
+                                              CoolingTower(
+    air_outlet_flow(h_out_0=20400.438),
+    air_inlet_flow(h_out_0=108262.83),
+    w_out(start=0.0018949909)) annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -99,7 +100,6 @@ equation
   CoolingTower.Afr = Afr;
   CoolingTower.Lfi = Lfi;
 
-
   // Parameters
   CoolingTower.V_inlet = V_inlet;
 
@@ -151,4 +151,4 @@ equation
           fillPattern=FillPattern.Solid,
           points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}),
     experiment(__Dymola_Algorithm="Dassl"));
-end CoolingTowerPoppe_test;
+end CoolingTowerPoppe_direct;

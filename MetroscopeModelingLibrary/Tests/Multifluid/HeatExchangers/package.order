@@ -20,4 +20,6 @@ AirCooledCondenser_direct
 AirCooledCondenser_faulty
 CoolingTowerMerkel_direct
 CoolingTowerMerkel_reverse
-CoolingTowerPoppe_test
+CoolingTowerPoppe_reverse
+CoolingTowerPoppe_direct
+CoolingTowerPoppe_direct_withStartValues
