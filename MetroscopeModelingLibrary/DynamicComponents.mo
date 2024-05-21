@@ -19737,7 +19737,11 @@ package DynamicComponents
         Real drhodp_water[Rows, N+1];
         //Real drhodp_water_node[Rows, N];
 
-        output Real a;
+        Units.Power E_water[Rows, N];
+        Units.Power E_wall[Rows, N];
+        Units.Power dQh[Rows, N];
+
+        //output Real a;
 
         WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{-10,-110},{10,-90}}),
                                                                                                                 iconTransformation(extent={{-10,-110},{10,-90}})));
@@ -19864,8 +19868,7 @@ package DynamicComponents
               //drhodp_water_node[i, j] = 0.5*(drhodp_water[i, j] + drhodp_water[i, j+1]);
 
             // Mass balance
-              Q_water[i, j+1] = Q_water[i, j];
-              // + dV_water*drhodh_water[i, j+1]*der(h_water[i, j+1])
+              Q_water[i, j] - Q_water[i, j+1] = dV_water*drhodh_water[i, j]*der(h_water_node[i, j]);
               Q_fg[i+1, j] =  Q_fg[i, j];
               //a[i, j+1] = der(h_water[i,j]);
 
@@ -19875,7 +19878,9 @@ package DynamicComponents
 
             // Node energy balance
               // Water side
-              dW_water[i, j] = Q_water[i, j]*(h_water[i, j+1] - h_water[i, j]);
+              dW_water[i, j] + Q_water[i, j]*h_water[i, j] - Q_water[i, j+1]*h_water[i, j+1] =  dV_water*(h_water_node[i,j]*drhodh_water[i,j] + rho_water[i,j])*der(h_water_node[i,j]);
+              E_water[i, j] = dV_water*(h_water_node[i,j]*drhodh_water[i,j] + rho_water[i,j])*der(h_water_node[i,j]);
+              dQh[i, j] = Q_water[i, j]*h_water[i, j] - Q_water[i, j+1]*h_water[i, j+1];
               // Flue gas side
               dW_fg[i, j] = Q_fg[i, j]*(h_fg[i+1, j] - h_fg[i, j]);
               // Global with wall storage
@@ -19884,6 +19889,8 @@ package DynamicComponents
               else
                 dW_water[i, j] + dW_fg[i, j] + dM_wall*Cp_wall*der(T_wall[i, j]) = 0;
               end if;
+
+              E_wall[i, j] = dM_wall*Cp_wall*der(T_wall[i, j]);
 
             // Convection heat transfer coefficient calculation
               // Average velocities
@@ -19906,13 +19913,14 @@ package DynamicComponents
           end for;
           end for;
 
-          a = der(h_water[1,2]);
+          //a = der(h_water[1,2]);
 
       initial equation
           if (steady_state == false) then
             for i in 1:Rows loop
               for j in 1:N loop
               der(T_wall[i, j]) = 0;
+              der(h_water_node[i,j]) = 0;
               end for;
             end for;
           end if;
@@ -19986,6 +19994,912 @@ package DynamicComponents
                 textColor={28,108,200},
                 textString="T_out = " + DynamicSelect("?", String(T_water_out-273.15)))}),                           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
       end Monophasic_Dynamic_HX_1;
+
+      model Monophasic_Dynamic_HX_simple_2
+       import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+
+        parameter Boolean steady_state = false;
+
+        // Geometry
+        parameter Units.Area A_i = 680;
+        parameter Units.Area A_o = 721;
+        parameter Units.Area A_f = 2500;
+        parameter Real eta_f = 0.8;
+        parameter Integer N_r = 2;
+        parameter Units.Length L = 18;
+        parameter Integer N_tubes = 300;
+        parameter Units.Length D_out = 0.03 "Pipe outer diameter";
+        parameter Units.Length e = 0.003 "Pipe wall thickness";
+        parameter Units.Length D_in = D_out - 2*e "Pipe inner diameter";
+        parameter Units.Mass M_wall = 25379 "Tubes + fins total mass";
+        parameter Units.HeatCapacity Cp_wall = 420 "Tubes specific heat capacity";
+        parameter Units.Volume V_water = N_tubes*0.25*pi*D_in^2*L "Total volume of water inside the tubes";
+        parameter Units.HeatCapacity Cp_fg = 1068;
+        parameter Units.HeatCapacity Cp_water = 4333;
+
+        // Heat transfer
+        parameter Units.HeatExchangeCoefficient K_conv_water = 2500;
+        parameter Units.HeatExchangeCoefficient K_conv_fg = 70;
+        parameter Units.ThermalConductivity K_cond_wall = 27 "Wall thermal conductivity";
+
+        // Discretization
+        parameter Integer N = 10;
+        parameter Units.Length dz = L/N;
+        parameter Units.Mass dM_wall = M_wall/N/N_r "Tube mass of a single node";
+        parameter Units.Area dA_i = A_i/N/N_r "Water side heat exchange surface of a single node";
+        parameter Units.Area dA_o = A_o/N/N_r "Flue gas side heat exchange surface of a single node";
+        parameter Units.Area dA_fg_fin = A_f/N/N_r;
+        parameter Units.Volume dV_water = V_water/N/N_r "WAter volume of 1 element";
+
+        // ------ Initialization ------
+        parameter Units.Temperature T_wall_0 = 450;
+        parameter Units.Pressure P_water_0 = 70e5;
+        parameter Units.Pressure P_fg_0 = 1e5;
+        parameter Units.PositiveMassFlowRate Q_water_0 = 85;
+        parameter Units.PositiveMassFlowRate Q_fg_0 = 640;
+        parameter Units.Temperature T_water_out_0 = 500;
+        parameter Units.Temperature T_fg_out_0 = 560;
+        parameter Units.SpecificEnthalpy h_water_out_0 = 3354324.5;
+        parameter Units.SpecificEnthalpy h_fg_out_0 = 912869.94;
+        parameter Units.HeatExchangeCoefficient K_conv_water_0 = 2400;
+
+        // ------ Fluids properties ------
+          // State
+          //FlueGasesMedium.ThermodynamicState state_fg[N_r + 1, N] "Flue gas side node boundary states";
+          // Enthalpy
+          Units.SpecificEnthalpy h_water[N_r, N+1](each start=h_water_out_0) "Water specific enthalpy";
+          Units.SpecificEnthalpy h_water_node[N_r, N](each start=h_water_out_0) "Water specific enthalpy";
+          Units.SpecificEnthalpy h_fg[N_r + 1, N] "Flue gas specific enthalpy";
+          // Mass flow rate
+          Units.PositiveMassFlowRate Q_water[N_r, N+1] "Node boundary water mass flow rate";
+          Units.PositiveMassFlowRate Q_fg "Node boundary fg mass flow rate";
+          // Pressure
+          Units.Pressure P_water(start=P_water_0) "Water Pressure";
+          Units.Pressure P_fg(start=P_fg_0) "Flue gas Pressure";
+          // Mass fraction
+          Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
+          Units.MassFraction Xi_fg[FlueGasesMedium.nXi] "Species mass fraction";
+          // Temperature
+          Units.Temperature T_water[N_r, N+1] "Node boundary water temperature";
+          Units.Temperature T_water_node[N_r, N] "Node average water temperature";
+          Units.Temperature T_fg[N_r + 1, N] "Node boundary flue gas temperature";
+        // ------ Conduction variables ------
+          Units.Temperature T_wall_water[N_r, N] "Wall temperature from the water side";
+          Units.Temperature T_wall[N_r, N] "Node wall average temperature";
+          Units.Temperature T_wall_fg[N_r, N] "Wall temperature from the flue gas side";
+
+          Units.Power dW_water[N_r, N] "Node water heat exchange";
+          Units.Power dW_fg[N_r, N] "Node flue gas heat exchange";
+
+        // Parameters of interest
+          Units.Temperature T_water_in "Water inlet temperature";
+          Units.Temperature T_water_out "Water outlet temperature";
+          //Units.Temperature T_fg_in "Flue gas inlet temperature";
+          //Units.Temperature T_fg_out "Flue gas outlet temperature";
+          Units.Temperature T_water_avg "Water overall average temperature";
+          Units.Temperature T_wall_avg "Wall overall average temperature";
+
+        // Density derivatives
+        Real drhodh_water[N_r, N+1];
+        Real drhodp_water[N_r, N+1];
+
+
+        WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{-10,-110},{10,-90}}),
+                                                                                                                iconTransformation(extent={{-10,-110},{10,-90}})));
+        WaterSteam.Connectors.Outlet water_outlet annotation (Placement(transformation(extent={{-10,90},{10,110}}), iconTransformation(extent={{-10,90},{10,110}})));
+        FlueGases.Connectors.Outlet fg_outlet annotation (Placement(transformation(extent={{30,-10},{50,10}}),  iconTransformation(extent={{30,-10},{50,10}})));
+        FlueGases.Connectors.Inlet fg_inlet annotation (Placement(transformation(extent={{-50,-10},{-30,10}}),  iconTransformation(extent={{-50,-10},{-30,10}})));
+        WaterSteam.BaseClasses.IsoPFlowModel water_side(T_out(start=T_water_out_0), h_out(start=h_water_out_0)) annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+              rotation=270,
+              origin={0,20})));
+        FlueGases.BaseClasses.IsoPFlowModel  fg_side(T_out(start=T_fg_out_0), h_out(start=h_fg_out_0)) annotation (Placement(transformation(extent={{-30,-50},{-10,-30}})));
+      equation
+
+        // ------ Boundaries ------
+
+          // Outlet
+          water_side.W = sum(dW_water);
+          fg_side.W = sum(dW_fg);
+
+          // Inlet
+          for i in 1:N_r loop
+            h_water[i, 1] = water_side.h_in;
+            T_water[i, 1] = h_water[i, 1]/Cp_water;
+            Q_water[i, 1] = water_side.Q/N_r;
+            drhodh_water[i, 1] = 0.001;
+            drhodp_water[i, 1] = 0.001;
+          end for;
+
+          for j in 1:N loop
+           h_fg[1,  j] = fg_side.h_in;
+           T_fg[1,  j] = h_fg[1,  j]/Cp_fg;
+          end for;
+
+
+          // Pressure
+          P_water = water_side.P_in;
+          P_fg = fg_side.P_in;
+          // Mass flow rate
+          Q_fg = fg_side.Q;
+          // Mass Fraction
+          Xi_water = water_side.Xi;
+          Xi_fg = fg_side.Xi;
+
+        // ------ Parameters of interest ------
+          // IN/OUT temperatures
+          T_water_in = water_side.T_in;
+          T_water_out = water_side.T_out;
+          //T_fg_in = fg_side.T_in;
+          //T_fg_out = fg_side.T_out;
+          // Average Temperatures
+          T_water_avg = sum(T_water_node)/(N_r*N);
+          T_wall_avg =  sum(T_wall)/(N_r*N);
+
+        // ------ Discretization computation loop ------
+          for i in 1:N_r loop
+              for j in 1:N loop
+            // Fluids Properties
+              // State
+              // Temperature
+              T_water[i, j+1] = h_water[i, j+1]/Cp_water;
+              T_fg[i+1, j] = h_fg[i+1, j]/Cp_fg;
+              T_water_node[i, j] = 0.5*(T_water[i, j] + T_water[i, j+1]);
+              // Mean enthalpy
+              h_water_node[i, j] = 0.5*(h_water[i, j] + h_water[i, j+1]);
+              // Density derivatives
+              drhodh_water[i, j+1] = 0.001;
+              drhodp_water[i, j+1] = 0.001;
+
+            // Mass balance
+              Q_water[i, j+1] = Q_water[i, j] + dV_water*drhodh_water[i, j]*der(h_water[i, j+1]);
+
+            // Conduction heat transfer
+              dW_water[i, j] = 2*pi*K_cond_wall*dz*N_tubes*(T_wall[i, j] - T_wall_water[i, j])/(Modelica.Math.log(1 + e/D_in));
+              dW_fg[i, j] = 2*pi*K_cond_wall*dz*N_tubes*(T_wall[i, j] - T_wall_fg[i, j])/(Modelica.Math.log(1 + e/(e + D_in)));
+
+            // Node energy balance
+              // Water side
+              dW_water[i, j] = Q_water[i, j]*(h_water[i, j+1] - h_water[i, j]);
+              // Flue gas side
+              dW_fg[i, j] = Q_fg*(h_fg[i+1, j] - h_fg[i, j]);
+              // Global with wall storage
+              dW_water[i, j] + dW_fg[i, j] + dM_wall*Cp_wall*der(T_wall[i, j]) = 0;
+
+            // Convection heat transfer equations
+              // Water side
+              dW_water[i, j] = K_conv_water*dA_i*(T_wall[i, j] - T_water_node[i, j]);
+              // Flue gas side
+              dW_fg[i, j] = K_conv_fg*(T_wall[i, j] - T_fg[i, j])*(dA_o + eta_f*dA_fg_fin);
+
+          end for;
+          end for;
+
+
+      initial equation
+            for i in 1:N_r loop
+              for j in 1:N loop
+              der(T_wall[i, j]) = 0;
+              end for;
+            end for;
+
+      equation
+        connect(water_side.C_in, water_inlet) annotation (Line(points={{-1.83187e-15,10},{-1.83187e-15,-6},{0,-6},{0,-100}},
+                                                                                         color={28,108,200}));
+        connect(water_side.C_out, water_outlet) annotation (Line(points={{1.77636e-15,30},{0,30},{0,100}},
+                                                                                             color={28,108,200}));
+        connect(fg_side.C_out, fg_outlet) annotation (Line(points={{-10,-40},{40,-40},{40,0}},
+                                                                                       color={95,95,95}));
+        connect(fg_side.C_in, fg_inlet) annotation (Line(points={{-30,-40},{-40,-40},{-40,0}},
+                                                                                       color={95,95,95}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}}),
+                                                                      graphics={
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={95,95,95},
+                fillPattern=FillPattern.Solid,
+                origin={-30,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,5},{100,-5}},
+                lineColor={0,0,0},
+                fillColor={215,215,215},
+                fillPattern=FillPattern.Solid,
+                origin={-15,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid,
+                rotation=90),
+              Rectangle(
+                extent={{-100,5},{100,-5}},
+                lineColor={0,0,0},
+                fillColor={215,215,215},
+                fillPattern=FillPattern.Solid,
+                origin={15,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={95,95,95},
+                fillPattern=FillPattern.Solid,
+                origin={30,0},
+                rotation=90),
+              Line(points={{-40,-80},{40,-80}},color={0,0,0}),
+              Line(points={{-40,-60},{40,-60}},color={0,0,0}),
+              Line(points={{-40,-20},{40,-20}},color={0,0,0}),
+              Line(points={{-40,-40},{40,-40}},color={0,0,0}),
+              Line(points={{-40,80},{40,80}},  color={0,0,0}),
+              Line(points={{-40,60},{40,60}},  color={0,0,0}),
+              Line(points={{-40,40},{40,40}},  color={0,0,0}),
+              Line(points={{-40,20},{40,20}},  color={0,0,0}),
+              Line(points={{-40,0},{40,0}},    color={0,0,0}),
+              Text(
+                extent={{-49,14},{49,-14}},
+                textColor={28,108,200},
+                textString="%name",
+                origin={-69,50},
+                rotation=90),
+              Text(
+                extent={{48,-102},{188,-160}},
+                textColor={28,108,200},
+                textString="T_in = " + DynamicSelect("?", String(T_water_in-273.15))),
+              Text(
+                extent={{28,176},{168,118}},
+                textColor={28,108,200},
+                textString="T_out = " + DynamicSelect("?", String(T_water_out-273.15)))}),                           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
+      end Monophasic_Dynamic_HX_simple_2;
+
+      model Monophasic_Dynamic_HX_simple_3
+       import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+
+        parameter Boolean steady_state = false;
+
+        // Geometry
+        parameter Units.Area A_i = 680;
+        parameter Units.Area A_o = 721;
+        parameter Units.Area A_f = 2500;
+        parameter Real eta_f = 0.8;
+        parameter Integer N_r = 2;
+        parameter Units.Length L = 18;
+        parameter Integer N_tubes = 300;
+        parameter Units.Length D_out = 0.03 "Pipe outer diameter";
+        parameter Units.Length e = 0.003 "Pipe wall thickness";
+        parameter Units.Length D_in = D_out - 2*e "Pipe inner diameter";
+        parameter Units.Mass M_wall = 25379 "Tubes + fins total mass";
+        parameter Units.HeatCapacity Cp_wall = 420 "Tubes specific heat capacity";
+        parameter Units.Volume V_water = N_tubes*0.25*pi*D_in^2*L "Total volume of water inside the tubes";
+        parameter Units.HeatCapacity Cp_fg = 1068;
+        parameter Units.HeatCapacity Cp_water = 4333;
+
+        // Heat transfer
+        parameter Units.HeatExchangeCoefficient K_conv_water = 2500;
+        parameter Units.HeatExchangeCoefficient K_conv_fg = 70;
+        parameter Units.ThermalConductivity K_cond_wall = 27 "Wall thermal conductivity";
+
+        // Discretization
+        parameter Integer N = 10;
+        parameter Units.Length dz = L/N;
+        parameter Units.Mass dM_wall = M_wall/N/N_r "Tube mass of a single node";
+        parameter Units.Area dA_i = A_i/N/N_r "Water side heat exchange surface of a single node";
+        parameter Units.Area dA_o = A_o/N/N_r "Flue gas side heat exchange surface of a single node";
+        parameter Units.Area dA_fg_fin = A_f/N/N_r;
+        parameter Units.Volume dV_water = V_water/N/N_r "WAter volume of 1 element";
+
+        // ------ Initialization ------
+        parameter Units.Temperature T_wall_0 = 450;
+        parameter Units.Pressure P_water_0 = 70e5;
+        parameter Units.Pressure P_fg_0 = 1e5;
+        parameter Units.PositiveMassFlowRate Q_water_0 = 85;
+        parameter Units.PositiveMassFlowRate Q_fg_0 = 640;
+        parameter Units.Temperature T_water_out_0 = 500;
+        parameter Units.Temperature T_fg_out_0 = 560;
+        parameter Units.SpecificEnthalpy h_water_out_0 = 3354324.5;
+        parameter Units.SpecificEnthalpy h_fg_out_0 = 912869.94;
+        parameter Units.HeatExchangeCoefficient K_conv_water_0 = 2400;
+
+        // ------ Fluids properties ------
+          // State
+          //FlueGasesMedium.ThermodynamicState state_fg[N_r + 1, N] "Flue gas side node boundary states";
+          // Enthalpy
+          Units.SpecificEnthalpy h_water[N_r, N+1](each start=h_water_out_0) "Water specific enthalpy";
+          Units.SpecificEnthalpy h_water_node[N_r, N](each start=h_water_out_0) "Water specific enthalpy";
+          Units.SpecificEnthalpy h_fg[N_r + 1, N] "Flue gas specific enthalpy";
+          // Mass flow rate
+          Units.PositiveMassFlowRate Q_water[N_r, N+1] "Node boundary water mass flow rate";
+          Units.PositiveMassFlowRate Q_fg "Node boundary fg mass flow rate";
+          // Pressure
+          Units.Pressure P_water(start=P_water_0) "Water Pressure";
+          Units.Pressure P_fg(start=P_fg_0) "Flue gas Pressure";
+          // Mass fraction
+          Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
+          Units.MassFraction Xi_fg[FlueGasesMedium.nXi] "Species mass fraction";
+          // Temperature
+          Units.Temperature T_water[N_r, N+1] "Node boundary water temperature";
+          Units.Temperature T_water_node[N_r, N] "Node average water temperature";
+          Units.Temperature T_fg[N_r + 1, N] "Node boundary flue gas temperature";
+        // ------ Conduction variables ------
+          Units.Temperature T_wall_water[N_r, N] "Wall temperature from the water side";
+          Units.Temperature T_wall[N_r, N] "Node wall average temperature";
+          Units.Temperature T_wall_fg[N_r, N] "Wall temperature from the flue gas side";
+
+          Units.Power dW_water[N_r, N] "Node water heat exchange";
+          Units.Power dW_fg[N_r, N] "Node flue gas heat exchange";
+
+        // Parameters of interest
+          //Units.Temperature T_water_in "Water inlet temperature";
+          //Units.Temperature T_water_out "Water outlet temperature";
+          //Units.Temperature T_fg_in "Flue gas inlet temperature";
+          //Units.Temperature T_fg_out "Flue gas outlet temperature";
+          //Units.Temperature T_water_avg "Water overall average temperature";
+          //Units.Temperature T_wall_avg "Wall overall average temperature";
+
+        // Density derivatives
+        Real drhodh_water[N_r, N+1];
+        Real drhodp_water[N_r, N+1];
+
+        Modelica.Blocks.Sources.Ramp ramp(height=23891.76,
+          duration=500,
+          startTime=50)                                              annotation (Placement(transformation(extent={{24,18},{44,38}})));
+      equation
+
+        // ------ Boundaries ------
+
+          // Outlet
+          //water_side.W = sum(dW_water);
+          //fg_side.W = sum(dW_fg);
+
+          // Inlet
+          for i in 1:N_r loop
+            h_water[i, 1] = 3345181.2;
+            T_water[i, 1] = h_water[i, 1]/Cp_water;
+            Q_water[i, 1] = 86/N_r;
+            drhodh_water[i, 1] = 0.001;
+            drhodp_water[i, 1] = 0.001;
+          end for;
+
+          for j in 1:N loop
+           h_fg[1,  j] = 991711.2 -1000*time;
+           T_fg[1,  j] = h_fg[1,  j]/Cp_fg;
+          end for;
+
+          // Pressure
+          P_water = 121e5;
+          P_fg = 1e5;
+          // Mass flow rate
+          Q_fg = 658.695;
+          // Mass Fraction
+          Xi_fg = {0.7481, 0.1392, 0.0525, 0.0601, 0};
+
+        // ------ Parameters of interest ------
+          // IN/OUT temperatures
+          //T_water_in = water_side.T_in;
+          //T_water_out = water_side.T_out;
+          //T_fg_in = fg_side.T_in;
+          //T_fg_out = fg_side.T_out;
+          // Average Temperatures
+          //T_water_avg = sum(T_water_node)/(N_r*N);
+          //T_wall_avg =  sum(T_wall)/(N_r*N);
+
+        // ------ Discretization computation loop ------
+          for i in 1:N_r loop
+              for j in 1:N loop
+            // Fluids Properties
+              // State
+              // Temperature
+              T_water[i, j+1] = h_water[i, j+1]/Cp_water;
+              T_fg[i+1, j] = h_fg[i+1, j]/Cp_fg;
+              T_water_node[i, j] = 0.5*(T_water[i, j] + T_water[i, j+1]);
+              // Mean enthalpy
+              h_water_node[i, j] = 0.5*(h_water[i, j] + h_water[i, j+1]);
+              // Density derivatives
+              drhodh_water[i, j+1] = 0.001;
+              drhodp_water[i, j+1] = 0.001;
+
+            // Mass balance
+              Q_water[i, j+1] = Q_water[i, j] + dV_water*drhodh_water[i, j]*der(h_water[i, j+1]);
+
+            // Conduction heat transfer
+              dW_water[i, j] = 2*pi*K_cond_wall*dz*N_tubes*(T_wall[i, j] - T_wall_water[i, j])/(Modelica.Math.log(1 + e/D_in));
+              dW_fg[i, j] = 2*pi*K_cond_wall*dz*N_tubes*(T_wall[i, j] - T_wall_fg[i, j])/(Modelica.Math.log(1 + e/(e + D_in)));
+
+            // Node energy balance
+              // Water side
+              dW_water[i, j] = Q_water[i, j]*(h_water[i, j+1] - h_water[i, j]);
+              // Flue gas side
+              dW_fg[i, j] = Q_fg*(h_fg[i+1, j] - h_fg[i, j]);
+              // Global with wall storage
+              dW_water[i, j] + dW_fg[i, j] + dM_wall*Cp_wall*der(T_wall[i, j]) = 0;
+
+            // Convection heat transfer equations
+              // Water side
+              dW_water[i, j] = K_conv_water*dA_i*(T_wall[i, j] - T_water_node[i, j]);
+              // Flue gas side
+              dW_fg[i, j] = K_conv_fg*(T_wall[i, j] - T_fg[i, j])*(dA_o + eta_f*dA_fg_fin);
+
+          end for;
+          end for;
+
+      initial equation
+            for i in 1:N_r loop
+              for j in 1:N loop
+              der(T_wall[i, j]) = 0;
+              end for;
+            end for;
+
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}}),
+                                                                      graphics={
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={95,95,95},
+                fillPattern=FillPattern.Solid,
+                origin={-30,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,5},{100,-5}},
+                lineColor={0,0,0},
+                fillColor={215,215,215},
+                fillPattern=FillPattern.Solid,
+                origin={-15,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid,
+                rotation=90),
+              Rectangle(
+                extent={{-100,5},{100,-5}},
+                lineColor={0,0,0},
+                fillColor={215,215,215},
+                fillPattern=FillPattern.Solid,
+                origin={15,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={95,95,95},
+                fillPattern=FillPattern.Solid,
+                origin={30,0},
+                rotation=90),
+              Line(points={{-40,-80},{40,-80}},color={0,0,0}),
+              Line(points={{-40,-60},{40,-60}},color={0,0,0}),
+              Line(points={{-40,-20},{40,-20}},color={0,0,0}),
+              Line(points={{-40,-40},{40,-40}},color={0,0,0}),
+              Line(points={{-40,80},{40,80}},  color={0,0,0}),
+              Line(points={{-40,60},{40,60}},  color={0,0,0}),
+              Line(points={{-40,40},{40,40}},  color={0,0,0}),
+              Line(points={{-40,20},{40,20}},  color={0,0,0}),
+              Line(points={{-40,0},{40,0}},    color={0,0,0}),
+              Text(
+                extent={{-49,14},{49,-14}},
+                textColor={28,108,200},
+                textString="%name",
+                origin={-69,50},
+                rotation=90),
+              Text(
+                extent={{48,-102},{188,-160}},
+                textColor={28,108,200},
+                textString="T_in = " + DynamicSelect("?", String(T_water_in-273.15))),
+              Text(
+                extent={{28,176},{168,118}},
+                textColor={28,108,200},
+                textString="T_out = " + DynamicSelect("?", String(T_water_out-273.15)))}),                           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
+      end Monophasic_Dynamic_HX_simple_3;
+
+      model Monophasic_Dynamic_HX_4
+       import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+        // Constants
+          parameter Real pi = Constants.pi;
+
+        parameter Boolean steady_state = false;
+
+        // ------ Geometry ------
+          // Pipes
+          parameter Units.Length D_out = 0.03 "Pipe outer diameter";
+          parameter Units.Length e = 0.003 "Pipe wall thickness";
+          parameter Units.Length D_in = D_out - 2*e "Pipe inner diameter";
+          parameter Units.Length L = 22 "Tube's length";
+          parameter Integer N_tubes_row = 184 "Number of tubes per row";
+          parameter Integer Rows = 2 "Number of tubes rows";
+          parameter Integer N_tubes = N_tubes_row*Rows "Total number of tubes";
+          parameter Units.ThermalConductivity K_cond_wall = 27 "Wall thermal conductivity";
+          parameter Integer Tubes_Config = 2 "1: aligned, 2: staggered";
+          parameter Units.Length fg_path_width = 14.07 "Flue gas path transverse width";
+          parameter Units.Length S_T = 76.25e-3 "Transverse pitch";
+          parameter Units.Length S_L = 95.25e-3 "Longitudinal pitch";
+          parameter Units.Length S_D = (S_L^2 + (S_T/2)^2)^0.5 "Diagonal pitch";
+          parameter Units.Length S_f = 0.009506 "Fins pitch";
+          parameter Units.Length H_fin = 0.009525 "Fin height";
+          parameter Units.Length e_fin = 0.0009906 "Fin thickness";
+          parameter Real Fin_per_meter = 1/S_f "Number of fins per meter";
+          parameter Units.Length D_fin = D_out + 2*H_fin "Fin outer diameter";
+          parameter Real N_fins = N_tubes*L/S_f "Number of fins";
+          parameter Real eff_fins = 0.8 "Fins efficiency";
+          // Water side
+          parameter Units.Area A_water = N_tubes*L*pi*D_in "Water side heat exchange surface";
+          parameter Units.Area Ac_water = 0.25*pi*D_in^2*N_tubes_row "Water side cross sectional area";
+          parameter Units.Volume V_water = N_tubes*0.25*pi*D_in^2*L "Total volume of water inside the tubes";
+          // Flue gas side
+          parameter Units.Area A_fin_cb = pi*D_out*e_fin*N_fins "Fins cross-sectional area at the base";
+          parameter Units.Area A_fg_tubes = N_tubes*L*pi*D_out - A_fin_cb "Outer tubes surface";
+          parameter Units.Area A_fg_fins = 0.25*pi*(D_fin^2 - D_out^2)*2*N_fins + pi*D_fin*e_fin*N_fins "Fins outer surface";
+          parameter Units.Area Af_fg = L*fg_path_width "Flue gas frontal area";
+          Inputs.InputReal k_corr(start=1);
+          parameter Integer N_r = Rows "Number of rows from the beginning of the HRSG";
+          // Wall
+          parameter Units.Mass M_wall = 25379 "Tubes + fins total mass";
+          parameter Units.HeatCapacity Cp_wall = 420 "Tubes specific heat capacity";
+
+        // ------ Initialization ------
+          parameter Units.Temperature T_wall_0 = 450;
+          parameter Units.Pressure P_water_0 = 70e5;
+          parameter Units.Pressure P_fg_0 = 1e5;
+          parameter Units.PositiveMassFlowRate Q_water_0 = 85;
+          parameter Units.PositiveMassFlowRate Q_fg_0 = 640;
+          parameter Units.Temperature T_water_out_0 = 500;
+          parameter Units.Temperature T_fg_out_0 = 560;
+          parameter Units.SpecificEnthalpy h_water_out_0 = 3354324.5;
+          parameter Units.SpecificEnthalpy h_fg_out_0 = 912869.94;
+          parameter Units.HeatExchangeCoefficient K_conv_water_0 = 2400;
+
+        // ------ Discretization z axis ------
+          parameter Integer N = 10;
+          parameter Units.Mass dM_wall = M_wall/N/Rows "Tube mass of a single node";
+          parameter Units.Area dA_water = A_water/N/Rows "Water side heat exchange surface of a single node";
+          parameter Units.Area dA_fg_tubes = A_fg_tubes/N/Rows "Flue gas side heat exchange surface of a single node";
+          parameter Units.Area dA_fin_cb = A_fin_cb/N/Rows;
+          parameter Units.Area dA_fg_fin = A_fg_fins/N/Rows;
+          parameter Units.Length dz = L/N;
+          parameter Units.Volume dV_water = V_water/N/Rows "WAter volume of 1 element";
+
+        // ------ Fluids properties ------
+          // State
+          WaterSteamMedium.ThermodynamicState state_water[Rows, N+1] "Water side node boundary state";
+          FlueGasesMedium.ThermodynamicState state_fg[Rows + 1, N] "Flue gas side node boundary states";
+          // Enthalpy
+          Units.SpecificEnthalpy h_water[Rows, N+1](each start=h_water_out_0) "Water specific enthalpy";
+          Units.SpecificEnthalpy h_water_node[Rows, N](each start=h_water_out_0) "Water specific enthalpy";
+          Units.SpecificEnthalpy h_fg[Rows + 1, N] "Flue gas specific enthalpy";
+          // Mass flow rate
+          Units.PositiveMassFlowRate Q_water[Rows, N+1] "Node boundary water mass flow rate";
+          Units.PositiveMassFlowRate Q_water_node[Rows, N] "Node average boundary water mass flow rate";
+          Units.PositiveMassFlowRate Q_fg[Rows + 1, N] "Node boundary fg mass flow rate";
+          Units.PositiveMassFlowRate Q_fg_node[Rows, N] "Node average boundary fg mass flow rate";
+          // Pressure
+          Units.Pressure P_water(start=P_water_0) "Water Pressure";
+          Units.Pressure P_fg(start=P_fg_0) "Flue gas Pressure";
+          // Density
+          Units.Density rho_water[Rows, N+1] "Node boundary water density";
+          Units.Density rho_water_node[Rows, N] "Node average water density";
+          Units.Density rho_fg[Rows + 1, N] "Node boundary flue gas density";
+          // Mass fraction
+          Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
+          Units.MassFraction Xi_fg[FlueGasesMedium.nXi] "Species mass fraction";
+          // Temperature
+          Units.Temperature T_water[Rows, N+1] "Node boundary water temperature";
+          Units.Temperature T_water_node[Rows, N] "Node average water temperature";
+          Units.Temperature T_fg[Rows + 1, N] "Node boundary flue gas temperature";
+          // Dynamic viscosities
+          Units.DynamicViscosity Mu_water[Rows, N+1] "Node boundary water dynamic viscosity";
+          Units.DynamicViscosity Mu_water_node[Rows, N] "Node average water dynamic viscosity";
+          Units.DynamicViscosity Mu_fg[Rows + 1, N] "Node boundary flue gas dynamic viscosity";
+          // Heat capacities Cp
+          Units.HeatCapacity Cp_water[Rows, N+1] "Node boundary water Cp";
+          Units.HeatCapacity Cp_water_node[Rows, N] "Node average water Cp";
+          Units.HeatCapacity Cp_fg[Rows + 1, N] "Node boundary flue gas Cp";
+          // Thermal conductivity
+          Units.ThermalConductivity k_water[Rows, N+1] "Node boundary water thermal conductivity";
+          Units.ThermalConductivity k_water_node[Rows, N] "Node average water thermal conductivity";
+          Units.ThermalConductivity k_fg[Rows + 1, N] "Node boundary flue gas thermal conductivity";
+
+        // ------ Conduction variables ------
+          Units.Temperature T_wall_water[Rows, N] "Wall temperature from the water side";
+          Units.Temperature T_wall[Rows, N] "Node wall average temperature";
+          Units.Temperature T_wall_fg[Rows, N] "Wall temperature from the flue gas side";
+
+        // ------ Tubes configuration parameters ------
+          Units.Velocity U_fg_face "Flue gas face velocity";
+          Units.Velocity U_fg_max "Flue gas maximum velocity";
+          Real Re_fg_max "Flue gas maximum Reynold's number";
+          Real Pr_fg "Flue gas overall average Prandtl number";
+          FlueGasesMedium.ThermodynamicState state_fg_s "Flue gas state at surface temperature";
+          Real Pr_fg_s "Flue gas overall average Prandtl number at surface temperature";
+          Real Nu_fg_avg "Flue gass overall average Nusselt number";
+          Units.HeatExchangeCoefficient K_conv_fg(each start=K_conv_water_0) "Flue gase convection heat transfer coefficient"; //  = 76.83
+
+        // ------ Heat transfer parameters ------
+          // Average velocities
+          Units.Velocity U_water_node[Rows, N] "Node average water velocity";
+          // Prandtl Number
+          Real Pr_water[Rows, N] "Node water Prandtl's number";
+          // Reynold's Number
+          Real Re_water[Rows, N] "Node water Reynold's number";
+          // Nusselt Nymber
+          Real Nu_water[Rows, N] "Node water Nusselt number";
+          // Convection heat transfer coefficient
+          Units.HeatExchangeCoefficient K_conv_water[Rows, N](each start=K_conv_water_0) "Water side convection heat transfer coefficient"; // = 2418
+          // Discretized heat transfer power
+          Units.Power dW_water[Rows, N] "Node water heat exchange";
+          Units.Power dW_fg[Rows, N] "Node flue gas heat exchange";
+
+        // Parameters of interest
+          //Units.Temperature T_water_in "Water inlet temperature";
+          //Units.Temperature T_water_out "Water outlet temperature";
+          //Units.Temperature T_fg_in "Flue gas inlet temperature";
+          //Units.Temperature T_fg_out "Flue gas outlet temperature";
+         // Units.Temperature T_water_avg "Water overall average temperature";
+          Units.Temperature T_wall_avg "Wall overall average temperature";
+
+        // Density derivatives
+        Real drhodh_water[Rows, N+1];
+        //Real drhodh_water_node[Rows, N];
+        Real drhodp_water[Rows, N+1];
+        //Real drhodp_water_node[Rows, N];
+
+        //output Real a;
+
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=1,
+          duration=500,
+          startTime=50)  annotation (Placement(transformation(extent={{4,20},{24,40}})));
+      equation
+
+        // ------ Boundaries ------
+
+          // Outlet
+          //water_side.W = sum(dW_water);
+          //fg_side.W = sum(dW_fg);
+
+          // Inlet
+          for i in 1:Rows loop
+            h_water[i, 1] = 3345181.2;
+            state_water[i, 1] = WaterSteamMedium.setState_phX(P_water, h_water[i, 1], Xi_water);
+            T_water[i, 1] = WaterSteamMedium.temperature(state_water[i, 1]);
+            rho_water[i, 1] = WaterSteamMedium.density(state_water[i, 1]);
+            Mu_water[i, 1] = WaterSteamMedium.dynamicViscosity(state_water[i, 1]);
+            Cp_water[i, 1] = WaterSteamMedium.specificHeatCapacityCp(state_water[i, 1]);
+            k_water[i, 1] = WaterSteamMedium.thermalConductivity(state_water[i, 1]);
+            Q_water[i, 1] = 86/Rows;
+            drhodh_water[i, 1] = WaterSteamMedium.density_derh_p(state_water[i, 1]);
+            drhodp_water[i, 1] = WaterSteamMedium.density_derp_h(state_water[i, 1]);
+            //a[i, 1] = 0;
+          end for;
+
+          for j in 1:N loop
+           h_fg[1,  j] = 991711.2;
+           T_fg[1,  j] = FlueGasesMedium.temperature(state_fg[1,  j]);
+           state_fg[1,  j] = FlueGasesMedium.setState_phX(P_fg, h_fg[1,  j], Xi_fg);
+           rho_fg[1,  j] = FlueGasesMedium.density(state_fg[1,  j]);
+           Mu_fg[1,  j] = FlueGasesMedium.dynamicViscosity(state_fg[1,  j]);
+           Cp_fg[1,  j] = FlueGasesMedium.specificHeatCapacityCp(state_fg[1,  j]);
+           k_fg[1,  j] = FlueGasesMedium.thermalConductivity(state_fg[1,  j]);
+           Q_fg[1, j] = (658.695)/N;
+          end for;
+
+          // Pressure
+          P_water = 121e5;
+          P_fg = 1e5;
+          // Mass flow rate
+      //     Q_water = water_side.Q;
+      //     Q_fg = fg_side.Q;
+          // Mass Fraction
+          Xi_water = zeros(WaterSteamMedium.nXi);
+          Xi_fg = {0.7481, 0.1392, 0.0525, 0.0601, 0};
+
+          // ------ Tubes configuration parameters ------
+          // Flue gas face velocity
+          U_fg_face = 658.695/(rho_fg[1, 1]*Af_fg);
+          // Flue gas maximum velocity
+          if (Tubes_Config == 1) then
+            U_fg_max = S_T*U_fg_face/(S_T - D_out);
+          elseif (S_D < (S_T + D_out)/2) then
+            U_fg_max = S_T*U_fg_face/(2*(S_D - D_out));
+          else
+            U_fg_max = S_T*U_fg_face/(S_T - D_out);
+          end if;
+          // Flue gas maximum Reynold's number
+          Re_fg_max = rho_fg[1, 1]*U_fg_max*D_out/Mu_fg[1, 1];
+          // Flue gas Prandtl number
+          Pr_fg = Cp_fg[1, 1]*Mu_fg[1, 1]/k_fg[1, 1];
+          // Flue gas Prandtl number at surface temperature
+          state_fg_s = FlueGasesMedium.setState_pTX(P_fg, T_wall_avg, Xi_fg);
+          Pr_fg_s = FlueGasesMedium.specificHeatCapacityCp(state_fg_s)*FlueGasesMedium.dynamicViscosity(state_fg_s)/FlueGasesMedium.thermalConductivity(state_fg_s);
+          // Convection coefficient calculation
+          Nu_fg_avg = K_conv_fg*D_out/k_fg[1, 1];
+          // Nu_fg_avg = CorrelationConstants.Zukauskas(Re_fg_max, Pr_fg, Pr_fg_s, Tubes_Config, Rows, S_T, S_L);
+          Nu_fg_avg = CorrelationConstants.ESCOA(Re_fg_max, Pr_fg, N_r, T_fg[1, 1], T_wall_avg, D_out, H_fin, e_fin, S_f, S_T, S_L);
+
+        // ------ Parameters of interest ------
+          // IN/OUT temperatures
+          //T_water_in = water_side.T_in;
+          //T_water_out = water_side.T_out;
+          //T_fg_in = fg_side.T_in;
+          //T_fg_out = fg_side.T_out;
+          // Average Temperatures
+          //T_water_avg = sum(T_water_node)/(Rows*N);
+          T_wall_avg =  sum(T_wall)/(Rows*N);
+
+        // ------ Discretization computation loop ------
+          for i in 1:Rows loop
+              for j in 1:N loop
+            // Fluids Properties
+              // State
+              state_water[i, j+1] = noEvent(WaterSteamMedium.setState_phX(P_water, h_water[i, j+1], Xi_water));
+              state_fg[i+1, j] = FlueGasesMedium.setState_phX(P_fg, h_fg[i+1, j], Xi_fg);
+              // Temperature
+              T_water[i, j+1] = WaterSteamMedium.temperature(state_water[i, j+1]);
+              T_fg[i+1, j] = FlueGasesMedium.temperature(state_fg[i+1, j]);
+              T_water_node[i, j] = 0.5*(T_water[i, j] + T_water[i, j+1]);
+              // Mass flow rates
+              Q_water_node[i, j] = 0.5*(Q_water[i, j] + Q_water[i, j+1]);
+              Q_fg_node[i, j] = 0.5*(Q_fg[i, j] + Q_fg[i+1, j]);
+              // Density
+              rho_water[i, j+1] = WaterSteamMedium.density(state_water[i, j+1]);
+              rho_fg[i+1, j] = FlueGasesMedium.density(state_fg[i+1, j]);
+              rho_water_node[i, j] = 0.5*(rho_water[i, j] + rho_water[i, j+1]);
+              // Dynamic viscosity
+              Mu_water[i, j+1] = WaterSteamMedium.dynamicViscosity(state_water[i, j+1]);
+              Mu_water_node[i, j] = 0.5*(Mu_water[i, j] + Mu_water[i, j+1]);
+              Mu_fg[i+1, j] = FlueGasesMedium.dynamicViscosity(state_fg[i+1, j]);
+              // Specific heat capacities Cp
+              Cp_water[i, j+1] = WaterSteamMedium.specificHeatCapacityCp(state_water[i, j+1]);
+              Cp_water_node[i, j] = 0.5*(Cp_water[i, j] + Cp_water[i, j+1]);
+              Cp_fg[i+1, j] = FlueGasesMedium.specificHeatCapacityCp(state_fg[i+1, j]);
+              // Thermal conductivity
+              k_water[i, j+1] = WaterSteamMedium.thermalConductivity(state_water[i, j+1]);
+              k_water_node[i, j] = 0.5*(k_water[i, j] + k_water[i, j+1]);
+              k_fg[i+1, j] = FlueGasesMedium.thermalConductivity(state_fg[i+1, j]);
+              // Mean enthalpy
+              h_water_node[i, j] = 0.5*(h_water[i, j] + h_water[i, j+1]);
+              // Density derivatives
+              drhodh_water[i, j+1] = WaterSteamMedium.density_derh_p(state_water[i, j+1]);
+              //drhodh_water_node[i, j] = 0.5*(drhodh_water[i, j] + drhodh_water[i, j+1]);
+              drhodp_water[i, j+1] = WaterSteamMedium.density_derp_h(state_water[i, j+1]);
+              //drhodp_water_node[i, j] = 0.5*(drhodp_water[i, j] + drhodp_water[i, j+1]);
+
+            // Mass balance
+              Q_water[i, j+1] = Q_water[i, j] + dV_water*drhodh_water[i, j]*der(h_water_node[i, j]);
+              // + dV_water*drhodh_water[i, j+1]*der(h_water[i, j+1])
+              Q_fg[i+1, j] =  Q_fg[i, j];
+              //a[i, j+1] = der(h_water[i,j]);
+
+            // Conduction heat transfer
+              dW_water[i, j] = 2*pi*K_cond_wall*dz*N_tubes*(T_wall[i, j] - T_wall_water[i, j])/(Modelica.Math.log(1 + e/D_in));
+              dW_fg[i, j] = 2*pi*K_cond_wall*dz*N_tubes*(T_wall[i, j] - T_wall_fg[i, j])/(Modelica.Math.log(1 + e/(e + D_in)));
+
+            // Node energy balance
+              // Water side
+              dW_water[i, j] - dV_water*(h_water[i, j]*drhodh_water[i, j] + rho_water[i,j])*der(h_water_node[i, j]) = Q_water[i, j+1]*h_water[i, j+1] - Q_water[i, j]*h_water[i, j];
+              // Flue gas side
+              dW_fg[i, j] = Q_fg[i, j]*(h_fg[i+1, j] - h_fg[i, j]);
+              // Global with wall storage
+              if steady_state then
+                dW_water[i, j] + dW_fg[i, j] = 0;
+              else
+                dW_water[i, j] + dW_fg[i, j] + dM_wall*Cp_wall*der(T_wall[i, j]) = 0;
+              end if;
+
+            // Convection heat transfer coefficient calculation
+              // Average velocities
+              U_water_node[i, j] = Q_water[i, j]/(rho_water_node[i, j]*Ac_water);
+              // Prandtl number
+              Pr_water[i, j] = Cp_water_node[i, j]*Mu_water_node[i, j]/k_water_node[i, j];
+              // Reynold's number
+              Re_water[i, j] = rho_water_node[i, j]*U_water_node[i, j]*D_in/Mu_water_node[i, j];
+              // Nusselt number
+              Nu_water[i, j] = K_conv_water[i, j]*D_in/k_water_node[i, j];
+              // Convection correlation: Dittus-Boelter equation
+              Nu_water[i, j] = 0.023*Re_water[i, j]^0.8*Pr_water[i, j]^0.4;
+
+            // Convection heat transfer equations
+              // Water side
+              dW_water[i, j] = K_conv_water[i, j]*dA_water*(T_wall[i, j] - T_water_node[i, j]);
+              // Flue gas side
+              dW_fg[i, j] = k_corr*K_conv_fg*(T_wall[i, j] - T_fg[i, j])*(dA_fg_tubes + eff_fins*dA_fg_fin);
+
+          end for;
+          end for;
+
+          //a = der(h_water[1,2]);
+
+      initial equation
+          if (steady_state == false) then
+            for i in 1:Rows loop
+              for j in 1:N loop
+              der(T_wall[i, j]) = 0;
+              der(h_water_node[i, j]) =0;
+              end for;
+            end for;
+          end if;
+
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}}),
+                                                                      graphics={
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={95,95,95},
+                fillPattern=FillPattern.Solid,
+                origin={-30,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,5},{100,-5}},
+                lineColor={0,0,0},
+                fillColor={215,215,215},
+                fillPattern=FillPattern.Solid,
+                origin={-15,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid,
+                rotation=90),
+              Rectangle(
+                extent={{-100,5},{100,-5}},
+                lineColor={0,0,0},
+                fillColor={215,215,215},
+                fillPattern=FillPattern.Solid,
+                origin={15,0},
+                rotation=90),
+              Rectangle(
+                extent={{-100,10},{100,-10}},
+                lineColor={0,0,0},
+                fillColor={95,95,95},
+                fillPattern=FillPattern.Solid,
+                origin={30,0},
+                rotation=90),
+              Line(points={{-40,-80},{40,-80}},color={0,0,0}),
+              Line(points={{-40,-60},{40,-60}},color={0,0,0}),
+              Line(points={{-40,-20},{40,-20}},color={0,0,0}),
+              Line(points={{-40,-40},{40,-40}},color={0,0,0}),
+              Line(points={{-40,80},{40,80}},  color={0,0,0}),
+              Line(points={{-40,60},{40,60}},  color={0,0,0}),
+              Line(points={{-40,40},{40,40}},  color={0,0,0}),
+              Line(points={{-40,20},{40,20}},  color={0,0,0}),
+              Line(points={{-40,0},{40,0}},    color={0,0,0}),
+              Text(
+                extent={{-49,14},{49,-14}},
+                textColor={28,108,200},
+                textString="%name",
+                origin={-69,50},
+                rotation=90)}),                           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})),
+          experiment(
+            StopTime=2000,
+            __Dymola_NumberOfIntervals=2000,
+            __Dymola_Algorithm="Dassl"));
+      end Monophasic_Dynamic_HX_4;
     end Monophasic_HeatExchanger;
 
     model Monophasic_Dynamic_HX
@@ -28162,6 +29076,7 @@ package DynamicComponents
         import MetroscopeModelingLibrary.Utilities.Units;
         import MetroscopeModelingLibrary.Utilities.Units.Inputs;
         HeatExchangers.Monophasic_HeatExchanger.Monophasic_Dynamic_HX_1                HX(
+          steady_state=false,
           N_tubes_row=184,
           Rows=2,
           Tubes_Config=2,
@@ -28178,9 +29093,88 @@ package DynamicComponents
         input Real Q_hot_source(start = 658.695) "kg/s";
         input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
 
-        //input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
+        input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
         input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
-        //input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
+        input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
+
+        WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-82})));
+        WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+              rotation=270,
+              origin={0,80})));
+        FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-88,-10},{-68,10}})));
+        FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{72,-10},{92,10}})));
+        Sensors.Displayer.WaterDisplayer waterDisplayer annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=180,
+              origin={-10,34})));
+        Sensors.Displayer.WaterDisplayer waterDisplayer1 annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=180,
+              origin={-12,-30})));
+        Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
+        Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer1 annotation (Placement(transformation(extent={{34,-10},{54,10}})));
+        Modelica.Blocks.Sources.Ramp ramp(
+          height=-20,
+          duration=2,
+          startTime=50)  annotation (Placement(transformation(extent={{40,60},{60,80}})));
+      equation
+        hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
+        hot_source.P_out = P_hot_source*1e5;
+        hot_source.T_out = T_hot_source + 273.15 - ramp.y;
+        hot_source.Q_out = - Q_hot_source;
+
+        cold_source.P_out = P_cold_source*1e5;
+        cold_source.T_out = 273.15 + T_cold_source;
+        cold_source.Q_out = - Q_cold_source;
+
+        HX.k_corr = 1;
+
+        connect(HX.water_outlet, waterDisplayer.C_in) annotation (Line(points={{0,12},{0,34},{-7,34}}, color={28,108,200}));
+        connect(waterDisplayer.C_out, cold_sink.C_in) annotation (Line(points={{-13,34},{-13,54},{0,54},{0,75}}, color={28,108,200}));
+        connect(HX.water_inlet, waterDisplayer1.C_out) annotation (Line(points={{0,-10},{0,-16},{-26,-16},{-26,-30},{-15,-30}}, color={28,108,200}));
+        connect(waterDisplayer1.C_in, cold_source.C_out) annotation (Line(points={{-9,-30},{0,-30},{0,-77}},                 color={28,108,200}));
+        connect(HX.fg_inlet, flueGasesDisplayer.C_out) annotation (Line(points={{-4,1},{-4,0},{-37,0}}, color={95,95,95}));
+        connect(flueGasesDisplayer.C_in, hot_source.C_out) annotation (Line(points={{-43,0},{-73,0}}, color={95,95,95}));
+        connect(HX.fg_outlet, flueGasesDisplayer1.C_in) annotation (Line(points={{4,1},{4,0},{41,0}}, color={95,95,95}));
+        connect(flueGasesDisplayer1.C_out, hot_sink.C_in) annotation (Line(points={{47,0},{77,0}}, color={95,95,95}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Ellipse(lineColor={0,140,72},
+                      fillColor={255,255,255},
+                      fillPattern=FillPattern.Solid,
+                      extent={{-100,-100},{100,100}}),
+              Polygon(lineColor={0,140,72},
+                      fillColor={0,140,72},
+                      pattern=LinePattern.None,
+                      fillPattern=FillPattern.Solid,
+                      points={{-36,60},{64,0},{-36,-60},{-36,60}})}),  Diagram(coordinateSystem(preserveAspectRatio=false)),
+          experiment(
+            StopTime=200,
+            __Dymola_NumberOfIntervals=1000,
+            __Dymola_Algorithm="Dassl"));
+      end Monophasic_Dynamic_HX_1_Test;
+
+      model Monophasic_Dynamic_HX_simple_2_Test
+        import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        HeatExchangers.Monophasic_HeatExchanger.Monophasic_Dynamic_HX_simple_2         HX(
+          steady_state=true,
+          N=10,
+          D_out=0.0381,
+          e=0.003048,
+          L=18.29,
+          T_wall_0=745.15) annotation (Placement(transformation(extent={{-10,-10},{10,12}})));
+
+          // Boundary conditions
+        input Real P_hot_source(start = 1, min = 0, nominal = 1) "barA";
+        input Real Q_hot_source(start = 658.695) "kg/s";
+        input Utilities.Units.Temperature T_hot_source(start = 633.7) "degC";
+
+        input Real P_cold_source(start = 121.2, min = 1.5, nominal = 100) "barA";
+        input Utilities.Units.MassFlowRate Q_cold_source(start = 84.06) "kg/s";
+        input Real T_cold_source(start = 498.8, min = 130, nominal = 150) "degC";
 
         WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
               extent={{-10,-10},{10,10}},
@@ -28208,17 +29202,19 @@ package DynamicComponents
         Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer1 annotation (Placement(transformation(extent={{34,-10},{54,10}})));
       equation
         hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
-        hot_source.P_out = P_hot_source*1e5;
-        hot_source.T_out = T_hot_source + 273.15 + ramp.y;
-        hot_source.Q_out = - Q_hot_source + step.y;
+        hot_source.P_out = 1*1e5;
+        hot_source.T_out = 633.7 + 273.15 + ramp.y;
+        hot_source.Q_out = - 658.695 + step.y;
 
         //cold_source.P_out = P_cold_source*1e5;
         cold_source.P_out = 121.2*1e5;
         //cold_source.T_out = 273.15 + T_cold_source;
-        cold_source.T_out = 273.15 + 498.8;
-        cold_source.Q_out = - Q_cold_source;
+        //cold_source.T_out = 273.15 + 498.8;
+        cold_source.Q_out = - 84.06;
 
-        HX.k_corr = 1;
+        HX.water_side.W = 5e5;
+
+        //HX.T_fg_out = 550 + 273.15;
 
         connect(HX.water_outlet, waterDisplayer.C_in) annotation (Line(points={{0,12},{0,34},{-7,34}}, color={28,108,200}));
         connect(waterDisplayer.C_out, cold_sink.C_in) annotation (Line(points={{-13,34},{-13,54},{0,54},{0,75}}, color={28,108,200}));
@@ -28242,7 +29238,7 @@ package DynamicComponents
             StopTime=500,
             __Dymola_NumberOfIntervals=1000,
             __Dymola_Algorithm="Euler"));
-      end Monophasic_Dynamic_HX_1_Test;
+      end Monophasic_Dynamic_HX_simple_2_Test;
     end Monophasic_HeatExchanger;
     annotation (Icon(graphics={
           Rectangle(
