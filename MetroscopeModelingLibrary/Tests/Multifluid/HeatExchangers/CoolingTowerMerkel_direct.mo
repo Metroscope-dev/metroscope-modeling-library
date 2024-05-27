@@ -98,7 +98,7 @@ equation
 
   // Calibrated Parameters
   CoolingTower.hd = hd;
-  CoolingTower.Cf = Cf+10*time;
+  CoolingTower.Cf = Cf;
 
   CoolingTower.Q_evap = Q_evap;
   CoolingTower.Q_cold_in = Q_cold_in;
@@ -109,7 +109,6 @@ equation
   CoolingTower.Lfi = Lfi;
   CoolingTower.afi = afi;
   CoolingTower.Afr = Afr;
-  CoolingTower.D = D;
   CoolingTower.V_inlet = V_inlet;
 
   // Observable for Calibration

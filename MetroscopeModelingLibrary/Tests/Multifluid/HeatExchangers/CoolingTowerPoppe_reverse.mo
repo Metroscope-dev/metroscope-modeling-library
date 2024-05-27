@@ -11,7 +11,7 @@ model CoolingTowerPoppe_reverse
     // Cold Air Inlet
   input Real AirInletTemp(start=15) "deg_C";
   input Real airInletPress(start=1) "bar";
-  input Units.Fraction cold_source_relative_humidity(start=0.2) "1";
+  input Units.Fraction cold_source_relative_humidity(start=0.5) "1";
 
   // Input for calibration
   input Real WaterOutletTemp(start=20) "deg_C";
@@ -37,8 +37,7 @@ model CoolingTowerPoppe_reverse
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{66,-30},{86,-10}})));
-  MultiFluid.HeatExchangers.CoolingTowerPoppewithSS
-                                              CoolingTower(
+  MultiFluid.HeatExchangers.CoolingTowerPoppe CoolingTower(
     air_outlet_flow(h_out_0=20400.438),
     air_inlet_flow(h_out_0=108262.83),
     w_out(start=0.0018949909)) annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));

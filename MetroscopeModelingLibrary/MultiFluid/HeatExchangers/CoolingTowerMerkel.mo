@@ -8,14 +8,15 @@ model CoolingTowerMerkel
   import MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   import MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium.specificEnthalpy;
 
-  Inputs.InputArea Afr;
-  Inputs.InputReal hd;
-  Inputs.InputReal Lfi;
-  Inputs.InputReal afi;
-  Inputs.InputReal D;
-  Inputs.InputReal Ratio;
-  Units.Velocity V_inlet;
-  Inputs.InputFrictionCoefficient Cf;
+  Units.Velocity V_inlet;                  //Wind velocity entering cooling tower
+  Inputs.InputReal hd;                     //Mass transfer coefficient
+  Inputs.InputArea Afr;                    //Tower cross-sectional area
+  Inputs.InputReal Lfi;                    //Height of filling
+  Inputs.InputFrictionCoefficient Cf;      //Friction coefficient of air
+  Inputs.InputReal afi;                    //Fill material surface area per unit volume
+  Inputs.InputReal Ratio;                  //Ratio used to see if results align with EDF reference paper
+
+  parameter String configuration = "natural draft";
 
   Units.MassFlowRate Q_cold_in;
   Units.MassFlowRate Q_cold_out;
@@ -152,13 +153,22 @@ equation
   rho_air_inlet = inputflowmodel.rho_in;
   rho_air_outlet = outputflowmodel.rho_out;
 
+  pipe.Kfr = 0;
+  pipe.delta_z = 0;
+
   (P_in - P_out) = 0;
+
+  if configuration == "natural draft" then
 
   0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * g * Lfi;
   Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
-  pipe.Kfr = 0;
-  pipe.delta_z = 0;
+  else
+
+  Q_cold_in = sqrt((rho_air_inlet - rho_air_outlet) * g * Lfi + 0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet);
+  Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
+
+  end if;
 
   connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-70,0}}, color={28,108,200}));
   connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,28},{0,23}},                                                             color={85,170,255}));

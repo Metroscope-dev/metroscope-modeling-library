@@ -37,8 +37,7 @@ model CoolingTowerPoppe_direct
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{66,-30},{86,-10}})));
-  MultiFluid.HeatExchangers.CoolingTowerPoppewithSS
-                                              CoolingTower(
+  MultiFluid.HeatExchangers.CoolingTowerPoppe CoolingTower(
     air_outlet_flow(h_out_0=20400.438),
     air_inlet_flow(h_out_0=108262.83),
     w_out(start=0.0018949909)) annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
