@@ -1,6 +1,8 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
 model MetroscopiaNPP_reverse
 
+  inner parameter Boolean show_causality = true "true to show causality, false to hide it";
+  inner parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
   // Boundary Conditions
 

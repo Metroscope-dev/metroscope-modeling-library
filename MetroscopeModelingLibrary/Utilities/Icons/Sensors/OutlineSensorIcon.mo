@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Utilities.Icons.Sensors;
 partial record OutlineSensorIcon "should be extended in partial base classes"
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+
   annotation (Icon(
       graphics={
         Ellipse(
