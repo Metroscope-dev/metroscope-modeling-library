@@ -1,494 +1,5 @@
 within MetroscopeModelingLibrary;
 package DynamicComponents
-  package Correlations
-
-    function Zukauskas "External flow heat transfer coefficient - Bare tubes"
-
-      import MetroscopeModelingLibrary.Utilities.Units;
-
-      // Input arguments
-        input Real Re_fg_max;
-        input Real Pr_fg_avg;
-        input Real Pr_fg_avg_s;
-        input Integer Tubes_Config;
-        input Integer Rows;
-        input Units.Length S_T;
-        input Units.Length S_L;
-
-      // Function output
-        // Nusselt number
-        output Real Nu_fg_avg;
-
-    protected
-      Real Constant_C "Constant used in the Zukauskas empirical relation";
-      Real Constant_m "Constant used in the Zukauskas empirical relation";
-      parameter Real C2[2,19] = {{0.7,0.8,0.86,0.9,0.92,0.935,0.95,0.956666667,0.963333333,0.97,0.973333333,0.976666667,0.98,0.983333333,0.986666667,0.99,0.99,0.99,0.99},
-                                 {0.64,0.76,0.84,0.89,0.92,0.935,0.95,0.956666667,0.963333333,0.97,0.973333333,0.976666667,0.98,0.983333333,0.986666667,0.99,0.99,0.99,0.99}};
-
-    algorithm
-
-      if (Tubes_Config == 1) then
-        if (Re_fg_max > 10 and Re_fg_max < 10^2) then
-          Constant_C := 0.8;
-          Constant_m := 0.4;
-        elseif (Re_fg_max > 10^3 and Re_fg_max < 2*10^5) then
-          Constant_C := 0.27;
-          Constant_m := 0.63;
-        elseif (Re_fg_max > 2*10^5 and Re_fg_max < 2*10^6) then
-          Constant_C := 0.021;
-          Constant_m := 0.84;
-        end if;
-
-      elseif  (Tubes_Config == 2) then
-        if (Re_fg_max > 10 and Re_fg_max < 10^2) then
-          Constant_C := 0.9;
-          Constant_m := 0.4;
-        elseif (Re_fg_max > 10^3 and Re_fg_max < 2*10^5) then
-          if (S_T/S_L < 2) then
-            Constant_C := 0.35*(S_T/S_L)^(1/5);
-            Constant_m := 0.6;
-          else
-            Constant_C := 0.4;
-            Constant_m := 0.6;
-          end if;
-        elseif (Re_fg_max > 2*10^5 and Re_fg_max < 2*10^6) then
-          Constant_C := 0.022;
-          Constant_m := 0.84;
-        end if;
-      end if;
-
-      if (Rows < 20) then
-        Nu_fg_avg :=Constant_C*Re_fg_max^Constant_m*Pr_fg_avg^0.36*(Pr_fg_avg/Pr_fg_avg_s)^0.25*C2[Tubes_Config, Rows];
-      else
-        Nu_fg_avg :=Constant_C*Re_fg_max^Constant_m*Pr_fg_avg^0.36*(Pr_fg_avg/Pr_fg_avg_s)^0.25;
-      end if;
-
-    end Zukauskas;
-
-    function ESCOA "External flow heat transfer coefficient - Finned tubes"
-
-      /* This function is valid for segmented finned-tubes at staggered arrangement with:
-    2000 < Re_fg < 500000
-    9.5 mm < H_fin < 38.1 mm
-    0.9 mm < e_fin < 4.2 mm
-    39.37 fin/m < S_fin < 275 fin/m
-  */
-
-      import MetroscopeModelingLibrary.Utilities.Units;
-
-      // Input arguments
-        input Real Re_fg "Flue gas Reynold's number";
-        input Real Pr_fg "Flue gas Prandtl number";
-        input Integer Rows "Number of tubes in flow direction";
-        input Units.Temperature T_fg "Flue gas temperature";
-        input Units.Temperature T_fin "Fin temperature";
-        input Units.Length D_out "Tube outer diameter";
-        input Units.Length H_fin "Fin height";
-        input Units.Length e_fin "Fin thickness";
-        input Units.Length S_fin "Fin pitch";
-        input Units.Length S_T "Tube bundle transverse pitch";
-        input Units.Length S_L "Tube bundle longitudanal pitch";
-
-      // Function output
-        // Nusselt number
-        output Real Nu_fg;
-
-    protected
-      Real Constant_C1 "Constant used in ESCOA empirical relation";
-      Real Constant_C3 "Constant used in ESCOA empirical relation";
-      Real Constant_C5 "Constant used in ESCOA empirical relation";
-      parameter Units.Length D_fin = D_out + 2*H_fin "Fin outer diameter";
-
-    algorithm
-
-       // Traditional ESCOA Correlation
-      Constant_C1 := 0.25*Re_fg^(-0.35);
-      Constant_C3 := 0.55 + 0.45*exp(-0.35*H_fin/(S_fin - e_fin));
-      Constant_C5 := 0.7 + (0.7 - 0.8*exp(-0.15*Rows^2))*exp(-S_L/S_T);
-
-      // Revised ESCOA Correlation
-
-    //   Constant_C1 := 0.091*Re_fg^(-0.25);
-    //   Constant_C3 := 0.35 + 0.65*exp(-0.17*H_fin/(S_fin - e_fin));
-    //   Constant_C5 := 0.7 + (0.7 - 0.8*exp(-0.15*Rows^2))*exp(-S_L/S_T);
-
-
-      Nu_fg := Constant_C1*Constant_C3*Constant_C5*Re_fg*Pr_fg^(1/3)*((T_fg + 273.15)/(T_fin + 273.15))^0.25*(D_fin/D_out)^0.5;
-
-
-    end ESCOA;
-
-    function Kandlikar_2phase
-      "Computes the 2 phase heat transfer Coefficient for vertical tubes (c_5 = 0) with water inside (F_k = 1) based on Kandlikar empirical relation"
-
-      import MetrosCopeModelingLibrary.Utilities.Units;
-      import MetrosCopeModelingLibrary.Utilities.Constants;
-      package WaterSteamMedium = MetrosCopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-
-      // Input arguments
-      input Units.Pressure p "Saturation ressure";
-      input Units.PositiveMassFlowRate Q "Mass flow rate";
-      input Units.Power W "Heat input";
-      input Units.HeatExchangeCoefficient k_1phase "1 phase heat transfer Coefficient";
-      input Real x "Steam quality";
-      input Units.Area A_c "Tubes cross-sectional area";
-      input Units.Area A "Tubes exposed area";
-
-
-      output Units.HeatExchangeCoefficient k_2phase;
-
-
-      // Intermediate variables
-    protected
-      Real G;
-      Real Co "Convection number";
-      Real Bo "Boiling number";
-      Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat "Saturation state for properties calculation";
-      Units.Density rho_s "Steam density";
-      Units.Density rho_l "Liquid density";
-      Units.SpecificEnthalpy h_l "Liquid enthalpy";
-      Units.SpecificEnthalpy h_s "Steam enthalpy";
-      Real c_1, c_2, c_3, c_4;
-      //parameter Real g = Constants.g;
-
-
-
-    algorithm
-
-      // Set saturation state
-      sat.psat := p;
-      sat.Tsat := Modelica.Media.Water.WaterIF97_ph.saturationTemperature(p);
-
-      // Saturation properties
-      rho_s :=WaterSteamMedium.density(WaterSteamMedium.setDewState(sat));
-      rho_l :=WaterSteamMedium.density(WaterSteamMedium.setBubbleState(sat));
-      h_l :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setBubbleState(sat));
-      h_s :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setDewState(sat));
-
-
-
-      // Constants
-      c_4 :=0.7;
-      if (Co < 0.65) then
-        c_1 :=1.136;
-        c_2 :=-0.9;
-        c_3 :=667.2;
-      else
-        c_1 :=0.6683;
-        c_2 :=-0.2;
-        c_3 :=1058;
-      end if;
-
-
-      G := Q/A_c;
-      Bo := W/(A*G*(h_s - h_l));
-
-      if x > 0 then
-        Co := ((1 - x)/x)^0.8*(rho_s/rho_l)^0.5;
-        k_2phase := k_1phase*(c_1*Co^c_2 + c_3*abs(Bo)^c_4);
-      else
-        k_2phase := k_1phase;
-        Co :=1;
-      end if;
-
-
-
-    end Kandlikar_2phase;
-
-    function Gungor_Winterton_2phase
-
-      import MetroscopeModelingLibrary.Utilities.Units;
-      import MetroscopeModelingLibrary.Utilities.Constants;
-      package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-
-      // Input arguments
-      input Units.Pressure p "Saturation ressure";
-      input Units.PositiveMassFlowRate Q "Mass flow rate";
-      input Units.Power W "Heat input";
-      input Real x "Steam quality";
-      input Units.Area A_c "Tubes cross-sectional area";
-      input Units.Area A "Tubes exposed area";
-      input Units.Length D_in "Tubes inner diameter";
-      input Units.Length L "Tubes length";
-      input Integer N "number of nodes";
-      input Integer N_tubes "Number of tubes";
-
-      output Units.HeatExchangeCoefficient K_conv;
-
-    protected
-      Real G;
-      Real Bo "Boiling number";
-      Real X_tt "Martinelli number";
-      Real E "Enhancement factor";
-      Real S "Suppression factor";
-      Real Re_l "Liquid fraction Reynold's number";
-      Real Re_s "Steam fraction Reynold's number";
-      Real Pr_l "Liquid fraction Prandtl number";
-      Real Pr_s "Steam fraction Prandtl number";
-      Units.HeatExchangeCoefficient K_l "Liquid heat transfer coefficient";
-      Units.HeatExchangeCoefficient K_s "Steam heat transfer coefficient";
-      Units.HeatExchangeCoefficient K_pool "Pool boiling heat transfer coefficient";
-
-      Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat "Saturation state for properties calculation";
-      Units.Density rho_s "Steam density";
-      Units.Density rho_l "Liquid density";
-      Units.SpecificEnthalpy h_l "Liquid enthalpy";
-      Units.SpecificEnthalpy h_s "Steam enthalpy";
-      Modelica.Units.SI.DynamicViscosity Mu_l "Sat. liquid dynamic viscosity";
-      Modelica.Units.SI.DynamicViscosity Mu_s "Sat. vapor dynamic viscosity";
-      Units.HeatCapacity Cp_l "Sat. liquid heat capacity";
-      Units.HeatCapacity Cp_s "Sat. vapor heat capacity";
-      Modelica.Units.SI.ThermalConductivity k_l "Sat. liquid thermal conductivity";
-      Modelica.Units.SI.ThermalConductivity k_s "Sat. vapor thermal conductivity";
-      parameter Real Mmol = 18.015 "Water molar mass";
-      parameter Units.Pressure pcrit = 220.64e5 "Critical pressure";
-      parameter Real pi = Constants.pi;
-      parameter Real x_min = 0.0002;
-      parameter Real x_max = 0.85;
-
-    algorithm
-
-      // Set saturation state
-      sat.psat :=p;
-      sat.Tsat :=Modelica.Media.Water.WaterIF97_ph.saturationTemperature(p);
-
-      // Saturation properties
-      rho_s :=WaterSteamMedium.density(WaterSteamMedium.setDewState(sat));
-      rho_l :=WaterSteamMedium.density(WaterSteamMedium.setBubbleState(sat));
-      h_l :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setBubbleState(sat));
-      h_s :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setDewState(sat));
-      Mu_l :=WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setBubbleState(sat));
-      Mu_s :=WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setDewState(sat));
-      Cp_l :=WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setBubbleState(sat));
-      Cp_s :=WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setDewState(sat));
-      k_l :=WaterSteamMedium.thermalConductivity(WaterSteamMedium.setBubbleState(sat));
-      k_s :=WaterSteamMedium.thermalConductivity(WaterSteamMedium.setDewState(sat));
-
-      // Reynold's number
-      Re_l :=abs(4*Q*(1 - x)/(pi*D_in*N_tubes*Mu_l));
-      Re_s :=abs(4*Q*x/(pi*D_in*N_tubes*Mu_s));
-      // Prandtl number
-      Pr_l :=Cp_l*Mu_l/k_l;
-      Pr_s :=Cp_s*Mu_s/k_s;
-      // Liquid fraction heat transfer coefficient
-      K_l :=0.023*(abs(Re_l))^0.8*(abs(Pr_l))^0.4*k_l/D_in;
-      K_s :=0.023*(abs(Re_s))^0.8*(abs(Pr_s))^0.4*k_s/D_in;
-      // Mass flux
-      G :=abs(Q/A_c);
-      // Boiling number
-      Bo :=abs(W/(A*(h_s - h_l)*G));
-      //Bo := abs(W*D_in/(4*Q*(h_s - h_l)*L/N));
-      // Enhancement factor
-      //E = 1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
-      // Suppression factor
-      //S :=1/(1 + 1.15e-6*E^2*Re_l^1.17);
-      // Pool boiling heat transfer coefficient
-      K_pool :=55*(abs(p/pcrit))^0.12*(-Modelica.Math.log10(abs(p/pcrit)))^(-0.55)*Mmol^(-0.5)*(abs(W/A))^0.67;
-      // Martellini number and convection HTC
-      if (x < x_min) then
-        X_tt :=(abs((1 - x_min)/x_min))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
-        E :=1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
-        S :=1/(1 + 1.15e-6*E^2*Re_l^1.17);
-        if (p > pcrit) then
-          K_conv :=K_l;
-        else
-          K_conv :=(1 - x)/x_min*K_l + x/x_min*(E*K_l + S*K_pool);
-        end if;
-
-      elseif (x > x_max) then
-        X_tt :=(abs((1 - x_max)/x_max))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
-        E :=1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
-        S :=1/(1 + 1.15e-6*E^2*Re_l^1.17);
-        K_conv :=(x - x_max)/(1 - x_max)*K_s + (1 - x)/(1 - x_max)*(E*K_l + S*K_pool);
-
-      else
-        X_tt :=(abs((1 - x)/x))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
-        E := 1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
-        S := 1/(1 + 1.15e-6*E^2*Re_l^1.17);
-        K_conv := E*K_l + S*K_pool;
-
-      end if;
-
-
-
-
-
-
-    end Gungor_Winterton_2phase;
-
-    model Test_2phase_function
-
-      import MetroscopeModelingLibrary.Utilities.Units;
-      import MetroscopeModelingLibrary.Utilities.Constants;
-      package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-
-      // Input arguments
-      input Units.Pressure p(start=127.34658e5) "Saturation ressure";
-      input Units.PositiveMassFlowRate Q(start=150) "Mass flow rate";
-      input Units.Power W(start=26725826) "Heat input";
-      input Units.SpecificEnthalpy h(start=2021168.9) "Steam quality";
-      input Units.Area A_c(start=1.2471651) "Tubes cross-sectional area";
-      input Units.Area A(start=1049.4437) "Tubes exposed area";
-      input Units.Length D_in(start=0.0328) "Tubes inner diameter";
-      input Integer N_tubes(start=1476) "Number of tubes";
-
-
-      output Units.HeatExchangeCoefficient K_conv;
-
-
-
-
-      // Intermediate variables
-      Real G;
-      Real Bo "Boiling number";
-      Real X_tt "Martinelli number";
-      Real E "Enhancement factor";
-      Real S "Suppression factor";
-      Real Re_l "Liquid fraction Reynold's number";
-      Real Re_s "Steam fraction Reynold's number";
-      Real Pr_l "Liquid fraction Prandtl number";
-      Real Pr_s "Steam fraction Prandtl number";
-      Units.HeatExchangeCoefficient K_l "Liquid heat transfer coefficient";
-      Units.HeatExchangeCoefficient K_s "Steam heat transfer coefficient";
-      Units.HeatExchangeCoefficient K_pool "Pool boiling heat transfer coefficient";
-      Real x "Steam quality";
-      Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat "Saturation state for properties calculation";
-      Units.Density rho_s "Steam density";
-      Units.Density rho_l "Liquid density";
-      Units.SpecificEnthalpy h_l "Liquid enthalpy";
-      Units.SpecificEnthalpy h_s "Steam enthalpy";
-      Modelica.Units.SI.DynamicViscosity Mu_l "Sat. liquid dynamic viscosity";
-      Modelica.Units.SI.DynamicViscosity Mu_s "Sat. vapor dynamic viscosity";
-      Units.HeatCapacity Cp_l "Sat. liquid heat capacity";
-      Units.HeatCapacity Cp_s "Sat. vapor heat capacity";
-      Modelica.Units.SI.ThermalConductivity k_l "Sat. liquid thermal conductivity";
-      Modelica.Units.SI.ThermalConductivity k_s "Sat. vapor thermal conductivity";
-      parameter Real Mmol = 18.015 "Water molar mass";
-      parameter Units.Pressure pcrit = 220.64e5 "Critical pressure";
-      parameter Real pi = Constants.pi;
-      parameter Real x_min = 0.0002;
-      parameter Real x_max = 0.85;
-
-    equation
-
-      // Set saturation state
-      sat.psat = p;
-      sat.Tsat = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(p);
-
-      // Saturation properties
-      rho_s =WaterSteamMedium.density(WaterSteamMedium.setDewState(sat));
-      rho_l =WaterSteamMedium.density(WaterSteamMedium.setBubbleState(sat));
-      h_l =WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setBubbleState(sat));
-      h_s =WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setDewState(sat));
-      Mu_l =WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setBubbleState(sat));
-      Mu_s =WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setDewState(sat));
-      Cp_l =WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setBubbleState(sat));
-      Cp_s =WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setDewState(sat));
-      k_l =WaterSteamMedium.thermalConductivity(WaterSteamMedium.setBubbleState(sat));
-      k_s =WaterSteamMedium.thermalConductivity(WaterSteamMedium.setDewState(sat));
-
-      // Steam quality
-      x = (h - h_l)/(h_s - h_l);
-      // Reynold's number
-      Re_l = abs(4*Q*(1 - x)/(pi*D_in*N_tubes*Mu_l));
-      Re_s = abs(4*Q*x/(pi*D_in*N_tubes*Mu_s));
-      // Prandtl number
-      Pr_l = Cp_l*Mu_l/k_l;
-      Pr_s = Cp_s*Mu_s/k_s;
-      // Liquid fraction heat transfer coefficient
-      K_l = 0.023*(abs(Re_l))^0.8*(abs(Pr_l))^0.4*k_l/D_in;
-      K_s = 0.023*(abs(Re_s))^0.8*(abs(Pr_s))^0.4*k_s/D_in;
-      // Mass flux
-      G = abs(Q/A_c);
-      // Boiling number
-      Bo = abs(W/(A*(h_s - h_l)*G));
-      // Enhancement factor
-      E = 1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
-      // Suppression factor
-      S = 1/(1 + 1.15e-6*E^2*Re_l^1.17);
-      // Pool boiling heat transfer coefficient
-      K_pool = 55*(abs(p/pcrit))^0.12*(-Modelica.Math.log10(abs(p/pcrit)))^(-0.55)*Mmol^(-0.5)*(abs(W/A))^0.67;
-      // Martellini number and convection HTC
-      if (x < x_min) then
-        X_tt = (abs((1 - x_min)/x_min))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
-        if (p > pcrit) then
-          K_conv = K_l;
-        else
-          K_conv = (1 - x)/x_min*K_l + x/x_min*(E*K_l + S*K_pool);
-        end if;
-
-      elseif (x > x_max) then
-        X_tt = (abs((1 - x_max)/x_max))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
-        K_conv = (x - x_max)/(1 - x_max)*K_s + (1 - x)/(1 - x_max)*(E*K_l + S*K_pool);
-
-      else
-        X_tt = (abs((1 - x)/x))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
-        K_conv = E*K_l + S*K_pool;
-
-      end if;
-
-
-
-      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
-    end Test_2phase_function;
-
-    model Test_2phase_function1
-
-      import MetroscopeModelingLibrary.Utilities.Units;
-      import MetroscopeModelingLibrary.Utilities.Constants;
-      package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-      import CorrelationConstants = MetroscopeModelingLibrary.DynamicComponents.Correlations;
-
-      // Input arguments
-      input Units.Pressure p(start=127.34658e5) "Saturation ressure";
-      input Units.PositiveMassFlowRate Q(start=150) "Mass flow rate";
-      input Units.Power W(start=26725826) "Heat input";
-      input Units.SpecificEnthalpy h(start=2021168.9) "Steam quality";
-      input Units.Area A_c(start=1.2471651) "Tubes cross-sectional area";
-      input Units.Area A(start=1049.4437) "Tubes exposed area";
-      input Units.Length D_in(start=0.0328) "Tubes inner diameter";
-      input Integer N_tubes(start=1476) "Number of tubes";
-
-      output Units.HeatExchangeCoefficient K_conv;
-
-
-
-    equation
-
-      K_conv = CorrelationConstants.Gungor_Winterton_2phase(p, Q, W, h, A_c, A, D_in, N_tubes);
-
-      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
-    end Test_2phase_function1;
-
-    function removeSensorSuffix
-      input String name;
-      output String newName;
-
-    algorithm
-        newName := if Modelica.Utilities.Strings.find(name, "_sensor") > 0 then
-        Modelica.Utilities.Strings.replace(name, "_sensor", "")
-      else
-        name;
-
-    end removeSensorSuffix;
-    annotation (Icon(graphics={
-          Rectangle(
-            lineColor={200,200,200},
-            fillColor={248,248,248},
-            fillPattern=FillPattern.HorizontalCylinder,
-            extent={{-100,-100},{100,100}},
-            radius=25.0),
-          Rectangle(
-            lineColor={128,128,128},
-            extent={{-100,-100},{100,100}},
-            radius=25.0),
-          Text(
-            extent={{100,100},{-100,-100}},
-            textColor={0,0,0},
-            fontName="Centaur",
-            textString="f")}));
-  end Correlations;
-
   package HeatExchangers
 
     package One_pass_HX
@@ -20902,6 +20413,331 @@ package DynamicComponents
       end Monophasic_Dynamic_HX_4;
     end Monophasic_HeatExchanger;
 
+    package Condenser
+      model Condenser "Added more info on fins and used ESCOA correlation"
+       import MetroscopeModelingLibrary.Utilities.Units;
+        import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+        import MetroscopeModelingLibrary.Utilities.Constants;
+        import CorrelationConstants =
+               MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+        package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+          Modelica.Units.SI.ThermalConductance UA "W/K"; // = 264900
+          Modelica.Units.SI.ThermalConductance UA_hot "W/K"; // = 264900
+          Modelica.Units.SI.ThermalConductance UA_cold "W/K"; // = 264900
+
+          parameter Real r_UA = 3;
+
+          // Wall
+          parameter Units.Mass M_wall = 25379 "Tubes total mass";
+          parameter Units.HeatCapacity Cp_wall = 420 "Tubes specific heat capacity";
+
+          // Temperatures
+          Units.Temperature T_cold_in "Cooling inlet temperature";
+          Units.Temperature T_cold_out "Cooling water outlet temperature";
+          Units.Temperature T_cold_avg "Cooling water average temperature";
+          Units.Temperature T_hot_in "Cooling inlet temperature";
+          Units.Temperature T_hot_out "Cooling water outlet temperature";
+          Units.Temperature T_hot_sat "Saturation temperature";
+          Units.Temperature T_wall "Wall temperature";
+          // Pressures
+          Units.Pressure P_cold_in(start=P_water_0) "Cooling water inlet pressure";
+          Units.Pressure P_cold_out(start=P_water_0) "Cooling water outlet pressure";
+          Units.Pressure P_sat(start=P_fg_0) "Saturation pressure";
+          // Mass flow rates
+          Units.PositiveMassFlowRate Q_cold(start=Q_water_0) "Cold water mass flow rate";
+          Units.VolumeFlowRate Qv_cold "Cold water volumetric flow rate";
+          Units.PositiveMassFlowRate Q_hot(start=Q_fg_0) "Hot water mass flow rate";
+          // Heat exchanged
+          Units.Power W_cold;
+          Units.Power W_hot;
+          // Saturation state
+          Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat "Saturation state for properties calculation";
+
+          // ------ Initialization ------
+          parameter Units.Temperature T_wall_0 = 450;
+          parameter Units.Pressure P_water_0 = 70e5;
+          parameter Units.Pressure P_fg_0 = 1e5;
+          parameter Units.PositiveMassFlowRate Q_water_0 = 85;
+          parameter Units.PositiveMassFlowRate Q_fg_0 = 640;
+          parameter Units.Temperature T_water_out_0 = 500;
+          parameter Units.Temperature T_fg_out_0 = 560;
+          parameter Units.SpecificEnthalpy h_water_out_0 = 3354324.5;
+          parameter Units.SpecificEnthalpy h_fg_out_0 = 912869.94;
+          parameter Units.HeatExchangeCoefficient K_conv_water_0 = 2400;
+
+        WaterSteam.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{90,-30},{110,-10}}), iconTransformation(extent={{90,-30},{110,-10}})));
+        WaterSteam.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{90,10},{110,30}}), iconTransformation(extent={{90,10},{110,30}})));
+        WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{-10,90},{10,110}}), iconTransformation(extent={{-10,90},{10,110}})));
+        WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{-10,-110},{10,-90}}), iconTransformation(extent={{-10,-110},{10,-90}})));
+        WaterSteam.Pipes.HeatLoss hot_side annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=180,
+              origin={-30,40})));
+        WaterSteam.Pipes.HeatLoss cold_side annotation (Placement(transformation(
+              extent={{10,10},{-10,-10}},
+              rotation=180,
+              origin={-30,20})));
+      equation
+
+      initial equation
+        der(T_wall) = 0;
+
+      equation
+
+        r_UA = UA_cold/UA_hot;
+        1/UA = 1/UA_cold + 1/UA_hot;
+
+        // ------ Boundaries ------
+          // Enthalpy
+          T_cold_in = cold_side.T_in;
+          T_cold_out = cold_side.T_out;
+          T_hot_in = hot_side.T_in;
+          T_hot_out = hot_side.T_out;
+          P_cold_in = cold_side.P_in;
+          P_cold_out = cold_side.P_out;
+          P_sat = hot_side.P_in;
+          // Mass flow rate
+          Q_cold = cold_side.Q;
+          Qv_cold = cold_side.Qv_in;
+          Q_hot = hot_side.Q;
+          // Mass Fraction
+          cold_side.W = W_cold;
+          hot_side.W = W_hot;
+
+        // Saturation
+        // Set saturation state
+          sat.psat = P_sat;
+          sat.Tsat = WaterSteamMedium.saturationTemperature(P_sat);
+          T_hot_sat = sat.Tsat;
+          hot_side.h_out = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_sat));
+
+        // Average cold water temperature
+          T_cold_avg = (T_cold_in + T_cold_out)/2;
+
+        // Energy Balance
+          W_cold + W_hot + M_wall*Cp_wall*der(T_wall) = 0; //
+          W_cold = UA_cold*(T_wall - T_cold_avg);
+          W_hot = - UA_hot*(T_hot_sat - T_wall);
+
+
+
+
+
+        connect(hot_side.C_in, C_hot_in) annotation (Line(points={{-20,40},{0,40},{0,100}}, color={28,108,200}));
+        connect(hot_side.C_out, C_hot_out) annotation (Line(points={{-40,40},{-80,40},{-80,-80},{0,-80},{0,-100}}, color={28,108,200}));
+        connect(cold_side.C_in, C_cold_in) annotation (Line(points={{-40,20},{-60,20},{-60,-20},{100,-20}}, color={28,108,200}));
+        connect(cold_side.C_out, C_cold_out) annotation (Line(points={{-20,20},{100,20}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Polygon(
+                points={{-40,100},{-100,60},{-100,-46},{100,-46},{100,60},{40,100},{-40,100}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={170,213,255},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-80,26},{-28,-26}},
+                lineColor={0,0,255},
+                lineThickness=0.5),
+              Ellipse(
+                extent={{-74,20},{-34,-20}},
+                lineColor={0,0,255},
+                lineThickness=0.5),
+              Ellipse(
+                extent={{-68,14},{-40,-14}},
+                lineColor={0,0,255},
+                lineThickness=0.5),
+              Rectangle(
+                extent={{-24,-26},{-54,28}},
+                lineColor={0,0,255},
+                pattern=LinePattern.None,
+                fillColor={170,213,255},
+                fillPattern=FillPattern.Solid,
+                lineThickness=0.5),
+              Line(
+                points={{-54,26},{90,26}},
+                color={0,0,255},
+                thickness=0.5),
+              Line(
+                points={{-54,20},{90,20}},
+                color={0,0,255},
+                thickness=0.5),
+              Line(
+                points={{-54,14},{90,14}},
+                color={0,0,255},
+                thickness=0.5),
+              Line(
+                points={{-54,-14},{88,-14}},
+                color={0,0,255},
+                thickness=0.5),
+              Line(
+                points={{-54,-20},{88,-20}},
+                color={0,0,255},
+                thickness=0.5),
+              Line(
+                points={{-54,-26},{88,-26}},
+                color={0,0,255},
+                thickness=0.5),
+              Polygon(
+                points={{42,28},{46,26},{42,24},{42,28}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{42,22},{46,20},{42,18},{42,22}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{42,16},{46,14},{42,12},{42,16}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{46,-12},{42,-14},{46,-16},{46,-12}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{46,-18},{42,-20},{46,-22},{46,-18}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{46,-24},{42,-26},{46,-28},{46,-24}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Rectangle(
+                extent={{-100,-46},{100,-100}},
+                lineColor={0,0,255},
+                lineThickness=0.5,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-50,8},{-46,4}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-36,-36},{-32,-40}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-58,-38},{-54,-42}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-34,4},{-30,0}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{26,8},{22,4}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-20,-34},{-16,-38}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{42,10},{38,6}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{30,-40},{34,-44}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-16,10},{-12,6}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{2,6},{6,2}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-78,-28},{-74,-32}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{24,-34},{20,-38}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{76,6},{80,2}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{54,-6},{50,-10}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{68,-30},{72,-34}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-16,-2},{-12,-6}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{-46,-6},{-42,-10}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{2,-30},{6,-34}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid),
+              Ellipse(
+                extent={{52,-36},{56,-40}},
+                lineColor={28,108,200},
+                lineThickness=1,
+                fillColor={28,108,200},
+                fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)));
+      end Condenser;
+    end Condenser;
+
     model Monophasic_Dynamic_HX
      import MetroscopeModelingLibrary.Utilities.Units;
       import MetroscopeModelingLibrary.Utilities.Units.Inputs;
@@ -21301,6 +21137,495 @@ package DynamicComponents
             fillColor={238,46,47},
             fillPattern=FillPattern.Solid)}));
   end HeatExchangers;
+
+  package Correlations
+
+    function Zukauskas "External flow heat transfer coefficient - Bare tubes"
+
+      import MetroscopeModelingLibrary.Utilities.Units;
+
+      // Input arguments
+        input Real Re_fg_max;
+        input Real Pr_fg_avg;
+        input Real Pr_fg_avg_s;
+        input Integer Tubes_Config;
+        input Integer Rows;
+        input Units.Length S_T;
+        input Units.Length S_L;
+
+      // Function output
+        // Nusselt number
+        output Real Nu_fg_avg;
+
+    protected
+      Real Constant_C "Constant used in the Zukauskas empirical relation";
+      Real Constant_m "Constant used in the Zukauskas empirical relation";
+      parameter Real C2[2,19] = {{0.7,0.8,0.86,0.9,0.92,0.935,0.95,0.956666667,0.963333333,0.97,0.973333333,0.976666667,0.98,0.983333333,0.986666667,0.99,0.99,0.99,0.99},
+                                 {0.64,0.76,0.84,0.89,0.92,0.935,0.95,0.956666667,0.963333333,0.97,0.973333333,0.976666667,0.98,0.983333333,0.986666667,0.99,0.99,0.99,0.99}};
+
+    algorithm
+
+      if (Tubes_Config == 1) then
+        if (Re_fg_max > 10 and Re_fg_max < 10^2) then
+          Constant_C := 0.8;
+          Constant_m := 0.4;
+        elseif (Re_fg_max > 10^3 and Re_fg_max < 2*10^5) then
+          Constant_C := 0.27;
+          Constant_m := 0.63;
+        elseif (Re_fg_max > 2*10^5 and Re_fg_max < 2*10^6) then
+          Constant_C := 0.021;
+          Constant_m := 0.84;
+        end if;
+
+      elseif  (Tubes_Config == 2) then
+        if (Re_fg_max > 10 and Re_fg_max < 10^2) then
+          Constant_C := 0.9;
+          Constant_m := 0.4;
+        elseif (Re_fg_max > 10^3 and Re_fg_max < 2*10^5) then
+          if (S_T/S_L < 2) then
+            Constant_C := 0.35*(S_T/S_L)^(1/5);
+            Constant_m := 0.6;
+          else
+            Constant_C := 0.4;
+            Constant_m := 0.6;
+          end if;
+        elseif (Re_fg_max > 2*10^5 and Re_fg_max < 2*10^6) then
+          Constant_C := 0.022;
+          Constant_m := 0.84;
+        end if;
+      end if;
+
+      if (Rows < 20) then
+        Nu_fg_avg :=Constant_C*Re_fg_max^Constant_m*Pr_fg_avg^0.36*(Pr_fg_avg/Pr_fg_avg_s)^0.25*C2[Tubes_Config, Rows];
+      else
+        Nu_fg_avg :=Constant_C*Re_fg_max^Constant_m*Pr_fg_avg^0.36*(Pr_fg_avg/Pr_fg_avg_s)^0.25;
+      end if;
+
+    end Zukauskas;
+
+    function ESCOA "External flow heat transfer coefficient - Finned tubes"
+
+      /* This function is valid for segmented finned-tubes at staggered arrangement with:
+    2000 < Re_fg < 500000
+    9.5 mm < H_fin < 38.1 mm
+    0.9 mm < e_fin < 4.2 mm
+    39.37 fin/m < S_fin < 275 fin/m
+  */
+
+      import MetroscopeModelingLibrary.Utilities.Units;
+
+      // Input arguments
+        input Real Re_fg "Flue gas Reynold's number";
+        input Real Pr_fg "Flue gas Prandtl number";
+        input Integer Rows "Number of tubes in flow direction";
+        input Units.Temperature T_fg "Flue gas temperature";
+        input Units.Temperature T_fin "Fin temperature";
+        input Units.Length D_out "Tube outer diameter";
+        input Units.Length H_fin "Fin height";
+        input Units.Length e_fin "Fin thickness";
+        input Units.Length S_fin "Fin pitch";
+        input Units.Length S_T "Tube bundle transverse pitch";
+        input Units.Length S_L "Tube bundle longitudanal pitch";
+
+      // Function output
+        // Nusselt number
+        output Real Nu_fg;
+
+    protected
+      Real Constant_C1 "Constant used in ESCOA empirical relation";
+      Real Constant_C3 "Constant used in ESCOA empirical relation";
+      Real Constant_C5 "Constant used in ESCOA empirical relation";
+      parameter Units.Length D_fin = D_out + 2*H_fin "Fin outer diameter";
+
+    algorithm
+
+       // Traditional ESCOA Correlation
+      Constant_C1 := 0.25*Re_fg^(-0.35);
+      Constant_C3 := 0.55 + 0.45*exp(-0.35*H_fin/(S_fin - e_fin));
+      Constant_C5 := 0.7 + (0.7 - 0.8*exp(-0.15*Rows^2))*exp(-S_L/S_T);
+
+      // Revised ESCOA Correlation
+
+    //   Constant_C1 := 0.091*Re_fg^(-0.25);
+    //   Constant_C3 := 0.35 + 0.65*exp(-0.17*H_fin/(S_fin - e_fin));
+    //   Constant_C5 := 0.7 + (0.7 - 0.8*exp(-0.15*Rows^2))*exp(-S_L/S_T);
+
+
+      Nu_fg := Constant_C1*Constant_C3*Constant_C5*Re_fg*Pr_fg^(1/3)*((T_fg + 273.15)/(T_fin + 273.15))^0.25*(D_fin/D_out)^0.5;
+
+
+    end ESCOA;
+
+    function Kandlikar_2phase
+      "Computes the 2 phase heat transfer Coefficient for vertical tubes (c_5 = 0) with water inside (F_k = 1) based on Kandlikar empirical relation"
+
+      import MetrosCopeModelingLibrary.Utilities.Units;
+      import MetrosCopeModelingLibrary.Utilities.Constants;
+      package WaterSteamMedium = MetrosCopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+      // Input arguments
+      input Units.Pressure p "Saturation ressure";
+      input Units.PositiveMassFlowRate Q "Mass flow rate";
+      input Units.Power W "Heat input";
+      input Units.HeatExchangeCoefficient k_1phase "1 phase heat transfer Coefficient";
+      input Real x "Steam quality";
+      input Units.Area A_c "Tubes cross-sectional area";
+      input Units.Area A "Tubes exposed area";
+
+
+      output Units.HeatExchangeCoefficient k_2phase;
+
+
+      // Intermediate variables
+    protected
+      Real G;
+      Real Co "Convection number";
+      Real Bo "Boiling number";
+      Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat "Saturation state for properties calculation";
+      Units.Density rho_s "Steam density";
+      Units.Density rho_l "Liquid density";
+      Units.SpecificEnthalpy h_l "Liquid enthalpy";
+      Units.SpecificEnthalpy h_s "Steam enthalpy";
+      Real c_1, c_2, c_3, c_4;
+      //parameter Real g = Constants.g;
+
+
+
+    algorithm
+
+      // Set saturation state
+      sat.psat := p;
+      sat.Tsat := Modelica.Media.Water.WaterIF97_ph.saturationTemperature(p);
+
+      // Saturation properties
+      rho_s :=WaterSteamMedium.density(WaterSteamMedium.setDewState(sat));
+      rho_l :=WaterSteamMedium.density(WaterSteamMedium.setBubbleState(sat));
+      h_l :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setBubbleState(sat));
+      h_s :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setDewState(sat));
+
+
+
+      // Constants
+      c_4 :=0.7;
+      if (Co < 0.65) then
+        c_1 :=1.136;
+        c_2 :=-0.9;
+        c_3 :=667.2;
+      else
+        c_1 :=0.6683;
+        c_2 :=-0.2;
+        c_3 :=1058;
+      end if;
+
+
+      G := Q/A_c;
+      Bo := W/(A*G*(h_s - h_l));
+
+      if x > 0 then
+        Co := ((1 - x)/x)^0.8*(rho_s/rho_l)^0.5;
+        k_2phase := k_1phase*(c_1*Co^c_2 + c_3*abs(Bo)^c_4);
+      else
+        k_2phase := k_1phase;
+        Co :=1;
+      end if;
+
+
+
+    end Kandlikar_2phase;
+
+    function Gungor_Winterton_2phase
+
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Constants;
+      package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+      // Input arguments
+      input Units.Pressure p "Saturation ressure";
+      input Units.PositiveMassFlowRate Q "Mass flow rate";
+      input Units.Power W "Heat input";
+      input Real x "Steam quality";
+      input Units.Area A_c "Tubes cross-sectional area";
+      input Units.Area A "Tubes exposed area";
+      input Units.Length D_in "Tubes inner diameter";
+      input Units.Length L "Tubes length";
+      input Integer N "number of nodes";
+      input Integer N_tubes "Number of tubes";
+
+      output Units.HeatExchangeCoefficient K_conv;
+
+    protected
+      Real G;
+      Real Bo "Boiling number";
+      Real X_tt "Martinelli number";
+      Real E "Enhancement factor";
+      Real S "Suppression factor";
+      Real Re_l "Liquid fraction Reynold's number";
+      Real Re_s "Steam fraction Reynold's number";
+      Real Pr_l "Liquid fraction Prandtl number";
+      Real Pr_s "Steam fraction Prandtl number";
+      Units.HeatExchangeCoefficient K_l "Liquid heat transfer coefficient";
+      Units.HeatExchangeCoefficient K_s "Steam heat transfer coefficient";
+      Units.HeatExchangeCoefficient K_pool "Pool boiling heat transfer coefficient";
+
+      Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat "Saturation state for properties calculation";
+      Units.Density rho_s "Steam density";
+      Units.Density rho_l "Liquid density";
+      Units.SpecificEnthalpy h_l "Liquid enthalpy";
+      Units.SpecificEnthalpy h_s "Steam enthalpy";
+      Modelica.Units.SI.DynamicViscosity Mu_l "Sat. liquid dynamic viscosity";
+      Modelica.Units.SI.DynamicViscosity Mu_s "Sat. vapor dynamic viscosity";
+      Units.HeatCapacity Cp_l "Sat. liquid heat capacity";
+      Units.HeatCapacity Cp_s "Sat. vapor heat capacity";
+      Modelica.Units.SI.ThermalConductivity k_l "Sat. liquid thermal conductivity";
+      Modelica.Units.SI.ThermalConductivity k_s "Sat. vapor thermal conductivity";
+      parameter Real Mmol = 18.015 "Water molar mass";
+      parameter Units.Pressure pcrit = 220.64e5 "Critical pressure";
+      parameter Real pi = Constants.pi;
+      parameter Real x_min = 0.0002;
+      parameter Real x_max = 0.85;
+
+    algorithm
+
+      // Set saturation state
+      sat.psat :=p;
+      sat.Tsat :=Modelica.Media.Water.WaterIF97_ph.saturationTemperature(p);
+
+      // Saturation properties
+      rho_s :=WaterSteamMedium.density(WaterSteamMedium.setDewState(sat));
+      rho_l :=WaterSteamMedium.density(WaterSteamMedium.setBubbleState(sat));
+      h_l :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setBubbleState(sat));
+      h_s :=WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setDewState(sat));
+      Mu_l :=WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setBubbleState(sat));
+      Mu_s :=WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setDewState(sat));
+      Cp_l :=WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setBubbleState(sat));
+      Cp_s :=WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setDewState(sat));
+      k_l :=WaterSteamMedium.thermalConductivity(WaterSteamMedium.setBubbleState(sat));
+      k_s :=WaterSteamMedium.thermalConductivity(WaterSteamMedium.setDewState(sat));
+
+      // Reynold's number
+      Re_l :=abs(4*Q*(1 - x)/(pi*D_in*N_tubes*Mu_l));
+      Re_s :=abs(4*Q*x/(pi*D_in*N_tubes*Mu_s));
+      // Prandtl number
+      Pr_l :=Cp_l*Mu_l/k_l;
+      Pr_s :=Cp_s*Mu_s/k_s;
+      // Liquid fraction heat transfer coefficient
+      K_l :=0.023*(abs(Re_l))^0.8*(abs(Pr_l))^0.4*k_l/D_in;
+      K_s :=0.023*(abs(Re_s))^0.8*(abs(Pr_s))^0.4*k_s/D_in;
+      // Mass flux
+      G :=abs(Q/A_c);
+      // Boiling number
+      Bo :=abs(W/(A*(h_s - h_l)*G));
+      //Bo := abs(W*D_in/(4*Q*(h_s - h_l)*L/N));
+      // Enhancement factor
+      //E = 1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
+      // Suppression factor
+      //S :=1/(1 + 1.15e-6*E^2*Re_l^1.17);
+      // Pool boiling heat transfer coefficient
+      K_pool :=55*(abs(p/pcrit))^0.12*(-Modelica.Math.log10(abs(p/pcrit)))^(-0.55)*Mmol^(-0.5)*(abs(W/A))^0.67;
+      // Martellini number and convection HTC
+      if (x < x_min) then
+        X_tt :=(abs((1 - x_min)/x_min))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
+        E :=1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
+        S :=1/(1 + 1.15e-6*E^2*Re_l^1.17);
+        if (p > pcrit) then
+          K_conv :=K_l;
+        else
+          K_conv :=(1 - x)/x_min*K_l + x/x_min*(E*K_l + S*K_pool);
+        end if;
+
+      elseif (x > x_max) then
+        X_tt :=(abs((1 - x_max)/x_max))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
+        E :=1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
+        S :=1/(1 + 1.15e-6*E^2*Re_l^1.17);
+        K_conv :=(x - x_max)/(1 - x_max)*K_s + (1 - x)/(1 - x_max)*(E*K_l + S*K_pool);
+
+      else
+        X_tt :=(abs((1 - x)/x))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
+        E := 1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
+        S := 1/(1 + 1.15e-6*E^2*Re_l^1.17);
+        K_conv := E*K_l + S*K_pool;
+
+      end if;
+
+
+
+
+
+
+    end Gungor_Winterton_2phase;
+
+    model Test_2phase_function
+
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Constants;
+      package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+
+      // Input arguments
+      input Units.Pressure p(start=127.34658e5) "Saturation ressure";
+      input Units.PositiveMassFlowRate Q(start=150) "Mass flow rate";
+      input Units.Power W(start=26725826) "Heat input";
+      input Units.SpecificEnthalpy h(start=2021168.9) "Steam quality";
+      input Units.Area A_c(start=1.2471651) "Tubes cross-sectional area";
+      input Units.Area A(start=1049.4437) "Tubes exposed area";
+      input Units.Length D_in(start=0.0328) "Tubes inner diameter";
+      input Integer N_tubes(start=1476) "Number of tubes";
+
+
+      output Units.HeatExchangeCoefficient K_conv;
+
+
+
+
+      // Intermediate variables
+      Real G;
+      Real Bo "Boiling number";
+      Real X_tt "Martinelli number";
+      Real E "Enhancement factor";
+      Real S "Suppression factor";
+      Real Re_l "Liquid fraction Reynold's number";
+      Real Re_s "Steam fraction Reynold's number";
+      Real Pr_l "Liquid fraction Prandtl number";
+      Real Pr_s "Steam fraction Prandtl number";
+      Units.HeatExchangeCoefficient K_l "Liquid heat transfer coefficient";
+      Units.HeatExchangeCoefficient K_s "Steam heat transfer coefficient";
+      Units.HeatExchangeCoefficient K_pool "Pool boiling heat transfer coefficient";
+      Real x "Steam quality";
+      Modelica.Media.Water.WaterIF97_ph.SaturationProperties sat "Saturation state for properties calculation";
+      Units.Density rho_s "Steam density";
+      Units.Density rho_l "Liquid density";
+      Units.SpecificEnthalpy h_l "Liquid enthalpy";
+      Units.SpecificEnthalpy h_s "Steam enthalpy";
+      Modelica.Units.SI.DynamicViscosity Mu_l "Sat. liquid dynamic viscosity";
+      Modelica.Units.SI.DynamicViscosity Mu_s "Sat. vapor dynamic viscosity";
+      Units.HeatCapacity Cp_l "Sat. liquid heat capacity";
+      Units.HeatCapacity Cp_s "Sat. vapor heat capacity";
+      Modelica.Units.SI.ThermalConductivity k_l "Sat. liquid thermal conductivity";
+      Modelica.Units.SI.ThermalConductivity k_s "Sat. vapor thermal conductivity";
+      parameter Real Mmol = 18.015 "Water molar mass";
+      parameter Units.Pressure pcrit = 220.64e5 "Critical pressure";
+      parameter Real pi = Constants.pi;
+      parameter Real x_min = 0.0002;
+      parameter Real x_max = 0.85;
+
+    equation
+
+      // Set saturation state
+      sat.psat = p;
+      sat.Tsat = Modelica.Media.Water.WaterIF97_ph.saturationTemperature(p);
+
+      // Saturation properties
+      rho_s =WaterSteamMedium.density(WaterSteamMedium.setDewState(sat));
+      rho_l =WaterSteamMedium.density(WaterSteamMedium.setBubbleState(sat));
+      h_l =WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setBubbleState(sat));
+      h_s =WaterSteamMedium.specificEnthalpy(WaterSteamMedium.setDewState(sat));
+      Mu_l =WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setBubbleState(sat));
+      Mu_s =WaterSteamMedium.dynamicViscosity(WaterSteamMedium.setDewState(sat));
+      Cp_l =WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setBubbleState(sat));
+      Cp_s =WaterSteamMedium.specificHeatCapacityCp(WaterSteamMedium.setDewState(sat));
+      k_l =WaterSteamMedium.thermalConductivity(WaterSteamMedium.setBubbleState(sat));
+      k_s =WaterSteamMedium.thermalConductivity(WaterSteamMedium.setDewState(sat));
+
+      // Steam quality
+      x = (h - h_l)/(h_s - h_l);
+      // Reynold's number
+      Re_l = abs(4*Q*(1 - x)/(pi*D_in*N_tubes*Mu_l));
+      Re_s = abs(4*Q*x/(pi*D_in*N_tubes*Mu_s));
+      // Prandtl number
+      Pr_l = Cp_l*Mu_l/k_l;
+      Pr_s = Cp_s*Mu_s/k_s;
+      // Liquid fraction heat transfer coefficient
+      K_l = 0.023*(abs(Re_l))^0.8*(abs(Pr_l))^0.4*k_l/D_in;
+      K_s = 0.023*(abs(Re_s))^0.8*(abs(Pr_s))^0.4*k_s/D_in;
+      // Mass flux
+      G = abs(Q/A_c);
+      // Boiling number
+      Bo = abs(W/(A*(h_s - h_l)*G));
+      // Enhancement factor
+      E = 1 + 24000*Bo^1.16 + 1.37*(1/X_tt)^0.86;
+      // Suppression factor
+      S = 1/(1 + 1.15e-6*E^2*Re_l^1.17);
+      // Pool boiling heat transfer coefficient
+      K_pool = 55*(abs(p/pcrit))^0.12*(-Modelica.Math.log10(abs(p/pcrit)))^(-0.55)*Mmol^(-0.5)*(abs(W/A))^0.67;
+      // Martellini number and convection HTC
+      if (x < x_min) then
+        X_tt = (abs((1 - x_min)/x_min))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
+        if (p > pcrit) then
+          K_conv = K_l;
+        else
+          K_conv = (1 - x)/x_min*K_l + x/x_min*(E*K_l + S*K_pool);
+        end if;
+
+      elseif (x > x_max) then
+        X_tt = (abs((1 - x_max)/x_max))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
+        K_conv = (x - x_max)/(1 - x_max)*K_s + (1 - x)/(1 - x_max)*(E*K_l + S*K_pool);
+
+      else
+        X_tt = (abs((1 - x)/x))^0.9*(abs(rho_s/rho_l))^0.5*(abs(Mu_l/Mu_s))^0.1;
+        K_conv = E*K_l + S*K_pool;
+
+      end if;
+
+
+
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+    end Test_2phase_function;
+
+    model Test_2phase_function1
+
+      import MetroscopeModelingLibrary.Utilities.Units;
+      import MetroscopeModelingLibrary.Utilities.Constants;
+      package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
+      import CorrelationConstants = MetroscopeModelingLibrary.DynamicComponents.Correlations;
+
+      // Input arguments
+      input Units.Pressure p(start=127.34658e5) "Saturation ressure";
+      input Units.PositiveMassFlowRate Q(start=150) "Mass flow rate";
+      input Units.Power W(start=26725826) "Heat input";
+      input Units.SpecificEnthalpy h(start=2021168.9) "Steam quality";
+      input Units.Area A_c(start=1.2471651) "Tubes cross-sectional area";
+      input Units.Area A(start=1049.4437) "Tubes exposed area";
+      input Units.Length D_in(start=0.0328) "Tubes inner diameter";
+      input Integer N_tubes(start=1476) "Number of tubes";
+
+      output Units.HeatExchangeCoefficient K_conv;
+
+
+
+    equation
+
+      K_conv = CorrelationConstants.Gungor_Winterton_2phase(p, Q, W, h, A_c, A, D_in, N_tubes);
+
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+    end Test_2phase_function1;
+
+    function removeSensorSuffix
+      input String name;
+      output String newName;
+
+    algorithm
+        newName := if Modelica.Utilities.Strings.find(name, "_sensor") > 0 then
+        Modelica.Utilities.Strings.replace(name, "_sensor", "")
+      else
+        name;
+
+    end removeSensorSuffix;
+    annotation (Icon(graphics={
+          Rectangle(
+            lineColor={200,200,200},
+            fillColor={248,248,248},
+            fillPattern=FillPattern.HorizontalCylinder,
+            extent={{-100,-100},{100,100}},
+            radius=25.0),
+          Rectangle(
+            lineColor={128,128,128},
+            extent={{-100,-100},{100,100}},
+            radius=25.0),
+          Text(
+            extent={{100,100},{-100,-100}},
+            textColor={0,0,0},
+            fontName="Centaur",
+            textString="f")}));
+  end Correlations;
 
   package SteamDrum
     package Astrom_Bell "Model based on \"Drum-boiler dynamics\" by K. J. Astrom, R.D. Bell"
@@ -29240,6 +29565,101 @@ package DynamicComponents
             __Dymola_Algorithm="Euler"));
       end Monophasic_Dynamic_HX_simple_2_Test;
     end Monophasic_HeatExchanger;
+
+    package Condenser
+
+      model Condenser_reverse
+
+        extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
+
+          // Boundary conditions
+        input Utilities.Units.MassFlowRate Q_turbine(start=105.7) "kg/s";
+        input Utilities.Units.SpecificEnthalpy h_turbine(start=2417031.8);
+        input Real P_cold_source(start=5, min=0, nominal=10) "barA";
+        input Real T_cold_source(start = 16.25, min = 0, nominal = 50) "degC";
+
+          // Parameters
+        parameter Utilities.Units.VolumeFlowRate Qv_cold=7.438;
+
+          // Calibrated parameters
+
+          // Inputs for calibration
+        output Real P_cond(start = 0.19e5) "Pa";
+
+        .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={0,78})));
+        .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={0,-44})));
+        .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(
+              extent={{10,-10},{-10,10}},
+              rotation=0,
+              origin={84,-20})));
+        .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cooling_sink annotation (Placement(transformation(extent={{74,-10},{94,10}})));
+        HeatExchangers.Condenser.Condenser                            condenser annotation (Placement(transformation(extent={{-10,-8},{10,10}})));
+        MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor circulating_water_T_out_sensor annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=0,
+              origin={32,0})));
+        MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor circulating_water_P_out_sensor annotation (Placement(transformation(extent={{50,-10},{70,10}})));
+        MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={0,40})));
+      equation
+
+        // Boundary Conditions
+        turbine_outlet.h_out = h_turbine;
+        turbine_outlet.Q_out = -Q_turbine;
+
+        cooling_source.P_out = P_cold_source*1e5;
+        cooling_source.T_out = 273.15 + T_cold_source;
+
+        // Parameters
+        condenser.Qv_cold = Qv_cold;
+
+        // Calibrated Parameters
+        condenser.UA = 25e6;
+
+        // Inputs for calibration
+        P_cond_sensor.P = P_cond;
+
+        connect(condenser.C_cold_in, cooling_source.C_out) annotation (Line(points={{10,-0.8},{20,-0.8},{20,-20},{79,-20}},
+                                                                                                      color={28,108,200}));
+        connect(condenser.C_cold_out, circulating_water_T_out_sensor.C_in) annotation (Line(points={{10,2.8},{16,2.8},{16,0},{22,0}},
+                                                                                                                     color={28,108,200}));
+        connect(circulating_water_T_out_sensor.C_out, circulating_water_P_out_sensor.C_in) annotation (Line(points={{42,0},{50,0}}, color={28,108,200}));
+        connect(circulating_water_P_out_sensor.C_out, cooling_sink.C_in) annotation (Line(points={{70,0},{79,0}}, color={28,108,200}));
+        connect(turbine_outlet.C_out, P_cond_sensor.C_in) annotation (Line(points={{-8.88178e-16,73},{-8.88178e-16,61.5},{1.77636e-15,61.5},{1.77636e-15,50}}, color={28,108,200}));
+        connect(condenser.C_hot_in, P_cond_sensor.C_out) annotation (Line(points={{0,10},{0,20.1},{0,20.1},{0,30}},                         color={28,108,200}));
+        connect(condensate_sink.C_in, condenser.C_hot_out) annotation (Line(points={{0,-39},{0,-8}}, color={28,108,200}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+                  -100},{100,80}})),
+                              Diagram(coordinateSystem(preserveAspectRatio=false,
+                extent={{-100,-100},{100,100}})));
+      end Condenser_reverse;
+      annotation (Icon(graphics={
+            Rectangle(
+              lineColor={200,200,200},
+              fillColor={248,248,248},
+              fillPattern=FillPattern.HorizontalCylinder,
+              extent={{-100,-100},{100,100}},
+              radius=25.0),
+            Rectangle(
+              lineColor={128,128,128},
+              extent={{-100,-100},{100,100}},
+              radius=25.0),
+            Polygon(
+              origin={8,14},
+              lineColor={78,138,73},
+              fillColor={78,138,73},
+              pattern=LinePattern.None,
+              fillPattern=FillPattern.Solid,
+              points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}));
+    end Condenser;
     annotation (Icon(graphics={
           Rectangle(
             lineColor={200,200,200},
