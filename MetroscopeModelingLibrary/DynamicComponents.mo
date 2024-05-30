@@ -20429,6 +20429,8 @@ package DynamicComponents
 
           parameter Real r_UA = 3;
 
+          parameter Boolean steady_state = false;
+
           // Wall
           parameter Units.Mass M_wall = 25379 "Tubes total mass";
           parameter Units.HeatCapacity Cp_wall = 420 "Tubes specific heat capacity";
@@ -20482,7 +20484,9 @@ package DynamicComponents
       equation
 
       initial equation
+        if not steady_state then
         der(T_wall) = 0;
+        end if;
 
       equation
 
@@ -20517,7 +20521,12 @@ package DynamicComponents
           T_cold_avg = (T_cold_in + T_cold_out)/2;
 
         // Energy Balance
-          W_cold + W_hot + M_wall*Cp_wall*der(T_wall) = 0; //
+          if steady_state then
+            W_cold + W_hot = 0;
+          else
+            W_cold + W_hot + M_wall*Cp_wall*der(T_wall) = 0;
+          end if;
+
           W_cold = UA_cold*(T_wall - T_cold_avg);
           W_hot = - UA_hot*(T_hot_sat - T_wall);
 
