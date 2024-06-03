@@ -18,13 +18,8 @@ AirCooledCondenser_with_subcooling_faulty
 AirCooledCondenser_reverse
 AirCooledCondenser_direct
 AirCooledCondenser_faulty
-<<<<<<< HEAD
 CoolingTowerMerkel_direct
 CoolingTowerMerkel_reverse
 CoolingTowerPoppe_reverse
 CoolingTowerPoppe_direct
 CoolingTowerPoppe_direct_withStartValues
-=======
-Fogging_reverse
-Fogging_direct
->>>>>>> main

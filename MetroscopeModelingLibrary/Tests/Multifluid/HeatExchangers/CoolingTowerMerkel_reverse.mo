@@ -18,13 +18,11 @@ model CoolingTowerMerkel_reverse
 
   // Calibrated Parameters
   output Real hd(start = 0.00943308);
-  parameter Real Kfr = 0;
 
   // Parameters
   parameter Real Lfi = 15 "m";
   parameter Real afi = 200 "m-1";
   parameter Real Afr = 3000 "m2";
-  parameter Real D = 20 "m";
   parameter Real Cf = 1;
   output Real V_inlet(start = 13.251477) "m/s";
 
@@ -103,7 +101,6 @@ equation
   CoolingTower.Lfi = Lfi;
   CoolingTower.afi = afi;
   CoolingTower.Afr = Afr;
-  CoolingTower.D =D;
   CoolingTower.V_inlet = V_inlet;
 
   // Observable for Calibration
