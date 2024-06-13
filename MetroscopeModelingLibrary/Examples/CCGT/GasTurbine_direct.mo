@@ -22,7 +22,7 @@ model GasTurbine_direct
   parameter Real eta_mech = 0.99;
   parameter Real combustionChamber_eta = 0.9999;
 
-  FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
+  FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-96,-10},{-76,10}})));
   FlueGases.Machines.AirCompressor air_compressor annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
   FlueGases.BoundaryConditions.Sink sink_exhaust annotation (Placement(transformation(extent={{66,-10},{86,10}})));
   FlueGases.Machines.GasTurbine gas_turbine annotation (Placement(transformation(extent={{30,-10},{50,10}})));
@@ -32,6 +32,7 @@ model GasTurbine_direct
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,-38})));
+  FlueGases.Machines.InletGuideVanes inletGuideVanes annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
 equation
 
   // Boundary Conditions
@@ -54,7 +55,6 @@ equation
   gas_turbine.eta_is = turbine_eta_is;
   gas_turbine.eta_mech = eta_mech;
 
-  connect(source_air.C_out, air_compressor.C_in) annotation (Line(points={{-79,0},{-54,0}}, color={95,95,95}));
   connect(gas_turbine.C_out, sink_exhaust.C_in) annotation (Line(points={{50,0},{71,0}}, color={95,95,95}));
   connect(gas_turbine.C_W_shaft, sink_power.C_in) annotation (Line(
       points={{50,10},{50,10},{50,40},{71,40}},
@@ -64,9 +64,11 @@ equation
   connect(combustion_chamber.outlet, gas_turbine.C_in) annotation (Line(points={{10,0},{30,0}}, color={95,95,95}));
   connect(combustion_chamber.inlet, air_compressor.C_out) annotation (Line(points={{-10,0},{-34,0}}, color={95,95,95}));
   connect(air_compressor.C_W_in, gas_turbine.C_W_shaft) annotation (Line(
-      points={{-34,10},{-34,22},{50,22},{50,10}},
+      points={{-34,7.5},{-34,22},{50,22},{50,10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
+  connect(source_air.C_out, inletGuideVanes.C_in) annotation (Line(points={{-81,0},{-75,0}}, color={95,95,95}));
+  connect(inletGuideVanes.C_out, air_compressor.C_in) annotation (Line(points={{-65,0},{-60,0},{-60,0},{-54,0}}, color={95,95,95}));
     annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

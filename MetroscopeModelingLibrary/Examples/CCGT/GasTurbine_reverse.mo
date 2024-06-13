@@ -33,7 +33,7 @@ model GasTurbine_reverse
   // Initialisation parameters
   parameter Units.SpecificEnthalpy h_out_compressor_0 = 7e5; // Model won't initialize correctly without a guess value for the outlet enthalpy
 
-  FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-108,-10},{-88,10}})));
+  FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-134,-10},{-114,10}})));
   FlueGases.Machines.AirCompressor air_compressor(h_out(start=h_out_compressor_0)) annotation (Placement(transformation(extent={{-84,-10},{-64,10}})));
   FlueGases.BoundaryConditions.Sink sink_exhaust annotation (Placement(transformation(extent={{88,-10},{108,10}})));
   FlueGases.Machines.GasTurbine gas_turbine(eta_is(start=0.73), eta_mech(start=0.9)) annotation (Placement(transformation(extent={{30,-10},{50,10}})));
@@ -47,6 +47,7 @@ model GasTurbine_reverse
   Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor annotation (Placement(transformation(extent={{-34,-10},{-14,10}})));
   Sensors.FlueGases.PressureSensor turbine_P_out_sensor annotation (Placement(transformation(extent={{62,-10},{82,10}})));
   Sensors.Power.PowerSensor W_sensor annotation (Placement(transformation(extent={{64,30},{84,50}})));
+  FlueGases.Machines.InletGuideVanes inletGuideVanes annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
 equation
 
   // Boundary Conditions
@@ -77,7 +78,6 @@ equation
   gas_turbine.tau = turbine_compression_rate;
   gas_turbine.eta_is = turbine_eta_is;
 
-  connect(source_air.C_out, air_compressor.C_in) annotation (Line(points={{-93,0},{-84,0}}, color={95,95,95}));
   connect(combustion_chamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33}}, color={213,213,0}));
   connect(combustion_chamber.outlet, gas_turbine.C_in) annotation (Line(points={{10,0},{30,0}}, color={95,95,95}));
   connect(sink_power.C_in, W_sensor.C_out) annotation (Line(points={{93,40},{83.8,40}}, color={244,125,35}));
@@ -91,17 +91,19 @@ equation
   connect(compressor_P_out_sensor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{-38,0},{-34,0}}, color={95,95,95}));
   connect(compressor_T_out_sensor.C_out, combustion_chamber.inlet) annotation (Line(points={{-14,0},{-10,0}}, color={95,95,95}));
   connect(air_compressor.C_W_in, gas_turbine.C_W_shaft) annotation (Line(
-      points={{-64,10},{-64,22},{50,22},{50,10}},
+      points={{-64,7.5},{-64,22},{50,22},{50,10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
+  connect(source_air.C_out, inletGuideVanes.C_in) annotation (Line(points={{-119,0},{-105,0}}, color={95,95,95}));
+  connect(inletGuideVanes.C_out, air_compressor.C_in) annotation (Line(points={{-95,0},{-84,0}}, color={95,95,95}));
     annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
-        extent={{-100,-100},{100,100}},
+        extent={{-140,-100},{100,100}},
         grid={2,2})),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
-        extent={{-100,-100},{100,100}},
+        extent={{-140,-100},{100,100}},
         grid={2,2}), graphics={Polygon(
           points={{100,100},{100,-100},{-100,-100},{-100,100},{100,100}},
           lineColor={0,0,255},
