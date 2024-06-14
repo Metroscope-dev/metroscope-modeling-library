@@ -5,12 +5,15 @@ model GasTurbine_reverse
 
   // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
   input Units.SpecificEnthalpy source_h(start=0.3e6) "J/kg";
 
   input Units.Pressure P_fuel(start = 30e5);
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
   input Units.NegativeMassFlowRate Q_fuel(start=-15);
+
+  input Real turbine_P_out(start=1) "barA";
+
+  input Real IGV_angle(start=100);
 
   // Parameters
   input Units.SpecificEnthalpy LHV_plant( start=48130e3) "Directly assigned in combustion chamber modifiers";
@@ -19,21 +22,21 @@ model GasTurbine_reverse
   parameter Real combustionChamber_eta = 0.9999;
 
   // Inputs for calibration
+  input Units.NegativeMassFlowRate source_Q(start=500) "kg/s";
   input Real compressor_P_out(start = 16) "barA";
   input Real compressor_T_out(start = 406) "degC";
   input Real W(start = 200) "MW";
-  input Real turbine_P_out(start=1) "barA";
 
   // Parameters for calibration
   output Real compression_rate;
   output Real compressor_eta_is;
-  output Real turbine_compression_rate;
   output Real turbine_eta_is;
+  output Real compressor_Qv_in; // This is used to establish a relation with the IGV angle
 
   // Initialisation parameters
   parameter Units.SpecificEnthalpy h_out_compressor_0 = 7e5; // Model won't initialize correctly without a guess value for the outlet enthalpy
 
-  FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-134,-10},{-114,10}})));
+  FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-154,-10},{-134,10}})));
   FlueGases.Machines.AirCompressor air_compressor(h_out(start=h_out_compressor_0)) annotation (Placement(transformation(extent={{-84,-10},{-64,10}})));
   FlueGases.BoundaryConditions.Sink sink_exhaust annotation (Placement(transformation(extent={{88,-10},{108,10}})));
   FlueGases.Machines.GasTurbine gas_turbine(eta_is(start=0.73), eta_mech(start=0.9)) annotation (Placement(transformation(extent={{30,-10},{50,10}})));
@@ -43,18 +46,24 @@ model GasTurbine_reverse
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,-38})));
-  Sensors.FlueGases.PressureSensor compressor_P_out_sensor annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
-  Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor annotation (Placement(transformation(extent={{-34,-10},{-14,10}})));
-  Sensors.FlueGases.PressureSensor turbine_P_out_sensor annotation (Placement(transformation(extent={{62,-10},{82,10}})));
-  Sensors.Power.PowerSensor W_sensor annotation (Placement(transformation(extent={{64,30},{84,50}})));
+  Sensors.FlueGases.PressureSensor compressor_P_out_sensor(sensor_function="Calibration", causality="compression_rate")
+                                                           annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
+  Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor(sensor_function="Calibration", causality="compressor_eta_is")
+                                                              annotation (Placement(transformation(extent={{-34,-10},{-14,10}})));
+  Sensors.FlueGases.PressureSensor turbine_P_out_sensor(sensor_function="BC")
+                                                        annotation (Placement(transformation(extent={{62,-10},{82,10}})));
+  Sensors.Power.PowerSensor W_sensor(sensor_function="Calibration", causality="turbine_eta_is")
+                                     annotation (Placement(transformation(extent={{64,30},{84,50}})));
   FlueGases.Machines.InletGuideVanes inletGuideVanes annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
+  Sensors.FlueGases.FlowSensor air_massflowrate_sensor(sensor_function="Calibration", causality="compressor_Qv_in = f(IGV_angle)")
+                                                                             annotation (Placement(transformation(extent={{-132,-10},{-112,10}})));
 equation
 
   // Boundary Conditions
   source_air.P_out = source_P;
   source_air.h_out = source_h;
-  source_air.Q_out = source_Q;
   source_air.Xi_out = {0.768,0.232,0.0,0.0,0.0};
+  turbine_P_out_sensor.P_barA = turbine_P_out;
 
   source_fuel.P_out = P_fuel;
   source_fuel.h_out = h_fuel;
@@ -67,16 +76,16 @@ equation
   gas_turbine.eta_mech = eta_mech;
 
   // Inputs for calibration
+  air_massflowrate_sensor.Q = source_Q;
   compressor_T_out_sensor.T_degC = compressor_T_out;
   compressor_P_out_sensor.P_barA = compressor_P_out;
   W_sensor.W_MW = W;
-  turbine_P_out_sensor.P_barA = turbine_P_out;
 
   // Parameters for calibration
   air_compressor.tau = compression_rate;
   air_compressor.eta_is = compressor_eta_is;
-  gas_turbine.tau = turbine_compression_rate;
   gas_turbine.eta_is = turbine_eta_is;
+  inletGuideVanes.Qv = compressor_Qv_in;
 
   connect(combustion_chamber.inlet1, source_fuel.C_out) annotation (Line(points={{0,-10},{0,-33}}, color={213,213,0}));
   connect(combustion_chamber.outlet, gas_turbine.C_in) annotation (Line(points={{10,0},{30,0}}, color={95,95,95}));
@@ -94,16 +103,17 @@ equation
       points={{-64,7.5},{-64,22},{50,22},{50,10}},
       color={244,125,35},
       smooth=Smooth.Bezier));
-  connect(source_air.C_out, inletGuideVanes.C_in) annotation (Line(points={{-119,0},{-105,0}}, color={95,95,95}));
   connect(inletGuideVanes.C_out, air_compressor.C_in) annotation (Line(points={{-95,0},{-84,0}}, color={95,95,95}));
+  connect(source_air.C_out, air_massflowrate_sensor.C_in) annotation (Line(points={{-139,0},{-132,0}}, color={95,95,95}));
+  connect(air_massflowrate_sensor.C_out, inletGuideVanes.C_in) annotation (Line(points={{-112,0},{-105,0}}, color={95,95,95}));
     annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
-        extent={{-140,-100},{100,100}},
+        extent={{-160,-100},{100,100}},
         grid={2,2})),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
-        extent={{-140,-100},{100,100}},
+        extent={{-160,-100},{100,100}},
         grid={2,2}), graphics={Polygon(
           points={{100,100},{100,-100},{-100,-100},{-100,100},{100,100}},
           lineColor={0,0,255},
