@@ -4,17 +4,17 @@ model CoolingTowerPoppe_reverse
 
   // Boundary Conditions
     // Hot Water Inlet
-  input Real waterInletTemp(start=30) "deg_C";
+  input Real waterInletTemp(start=31) "deg_C";
   input Units.VolumeFlowRate waterInletFlow(start=30) "m3/s";
-  input Real waterInletPress(start=1) "bar";
+  input Real waterInletPress(start=3) "bar";
 
     // Cold Air Inlet
-  input Real AirInletTemp(start=15) "deg_C";
+  input Real AirInletTemp(start=10) "deg_C";
   input Real airInletPress(start=1) "bar";
   input Units.Fraction cold_source_relative_humidity(start=0.5) "1";
 
   // Input for calibration
-  input Real WaterOutletTemp(start=20) "deg_C";
+  input Real WaterOutletTemp(start=18.9) "deg_C";
 
   // Calibrated Parameters
   output Real hd(start=8.849857);
@@ -123,7 +123,7 @@ equation
   connect(CoolingTower.water_outlet_connector, WaterOutletTemp_sensor.C_in) annotation (Line(points={{9.16667,-20},{34,-20}}, color={28,108,200}));
   connect(CoolingTower.air_outlet_connector, airOutletPress_sensor.C_in) annotation (Line(points={{0,-29.1667},{0,-34}}, color={85,170,255}));
   connect(airInletPress_sensor.C_out, CoolingTower.air_inlet_connector) annotation (Line(points={{0,0},{0,-10.8333}}, color={85,170,255}));
-  annotation (Diagram(coordinateSystem(extent={{-120,-100},{100,100}})), Icon(coordinateSystem(extent={{-120,-100},{100,100}}), graphics={
+  annotation (Diagram(coordinateSystem(extent={{-140,-120},{120,100}})), Icon(coordinateSystem(extent={{-140,-120},{120,100}}), graphics={
         Ellipse(lineColor={0,0,0},
                 fillColor={255,255,255},
                 fillPattern=FillPattern.Solid,

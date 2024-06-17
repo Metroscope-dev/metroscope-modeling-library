@@ -15,6 +15,8 @@ model CoolingTowerMerkel
   Inputs.InputFrictionCoefficient Cf;      //Friction coefficient of air
   Inputs.InputReal afi;                    //Fill material surface area per unit volume
   Inputs.InputReal Ratio;                  //Ratio used to see if results align with EDF reference paper
+  Inputs.InputReal efan;                   //Fan effiency
+  Units.Power W_fan;                        //Fan power
 
   parameter String configuration = "natural draft";
 
@@ -50,6 +52,7 @@ model CoolingTowerMerkel
   Units.HeatCapacity cp;
   Units.Pressure P_in;
   Units.Pressure P_out;
+  Units.Pressure deltaP_fan;                             //Pressure change across fan
 
   constant Real g(unit="m/s2") = Modelica.Constants.g_n;
 
@@ -158,17 +161,19 @@ equation
 
   (P_in - P_out) = 0;
 
-  //if configuration == "natural draft" then
+  deltaP_fan = (W_fan * efan)/(abs(V_inlet) * Afr);
+
+  if configuration == "natural draft" then
 
   0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * g * Lfi;
   Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
-  //else
+  else
 
-  //Q_cold_in = sqrt((rho_air_inlet - rho_air_outlet) * g * Lfi + 0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet);
-  //Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
+  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  = (W_fan * efan)/(abs(V_inlet) * Afr);
+  Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
-  //end if;
+  end if;
 
   connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-70,0}}, color={28,108,200}));
   connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,28},{0,23}},                                                             color={85,170,255}));
