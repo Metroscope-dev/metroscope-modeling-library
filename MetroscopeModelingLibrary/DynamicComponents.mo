@@ -24080,6 +24080,7 @@ package DynamicComponents
         WaterSteam.Connectors.Outlet steam_out annotation (Placement(transformation(extent={{-70,70},{-50,90}}), iconTransformation(extent={{-70,70},{-50,90}})));
         WaterSteam.Connectors.Inlet fw_in annotation (Placement(transformation(extent={{72,-70},{92,-50}}), iconTransformation(extent={{72,-70},{92,-50}})));
         WaterSteam.Connectors.Outlet water_out annotation (Placement(transformation(extent={{-90,-90},{-70,-70}}), iconTransformation(extent={{-90,-70},{-70,-50}})));
+        Modelica.Blocks.Interfaces.RealOutput drum_level annotation (Placement(transformation(extent={{94,-10},{114,10}}), iconTransformation(extent={{94,-10},{114,10}})));
       equation
 
         // Connectors
@@ -24183,11 +24184,14 @@ package DynamicComponents
         W_evap = - fg_cooling.W;
         W_evap = k_corr*K_conv_fg*(0.5*(T_fg_in + T_fg_out) - T_s)*(A_fg_tubes + eta_fins*A_fg_fins);
 
+        // Drum level output
+        drum_level = l;
+
       initial equation
         if not steady_state then
           der(x_r) = 0;
           der(V_sd) = 0;
-          der(V_wt) = 0;
+          //der(V_wt) = 0;
         end if;
       equation
         connect(Steam_extraction.C_out,steam_out)  annotation (Line(points={{0,48},{0,80},{-60,80}}, color={28,108,200}));
