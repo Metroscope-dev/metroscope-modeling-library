@@ -202,7 +202,7 @@ equation
   W_max = Qw[10] * cp[1] * (Tw[N_step] - Tw[1]);
   W_min = Qw[1] * cp[1] * (Tw[N_step] - Tw[1]);
 
-  Q_evap = (Q_cold_out + Q_cold_in);
+  Q_evap = (Q_cold_out - Q_cold_in);
 
   //New Poppe Equations
 
