@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary;
+within MetroscopeModelingLibrary;
 package Partial "contains all partial models"
   extends Modelica.Icons.InternalPackage;
 

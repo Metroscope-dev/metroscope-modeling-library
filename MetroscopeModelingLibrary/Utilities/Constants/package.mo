@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary.Utilities;
+within MetroscopeModelingLibrary.Utilities;
 package Constants "Stores all constants used in MML"
   extends Modelica.Icons.Package;
   import MetroscopeModelingLibrary.Utilities.Units;
