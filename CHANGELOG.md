@@ -8,14 +8,20 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-- Added Reactor component [#481](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/481)
-- New feature to display simulation outputs on model diagrams [#482](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/482)
+- Added an IGV component PR[#492](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/492)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
+
+
+## MML - v3.8.1
+
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+- Added Reactor component [#481](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/481)
+- New feature to display simulation outputs on model diagrams [#482](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/482)
 
 
 ## MML - v3.8.0
