@@ -28,7 +28,7 @@ model CoolingTowerMerkel_direct
   parameter Real Cf = 15;
   output Real V_inlet(start = 4.3490353) "m/s";
 
-  parameter Real efan = 1;
+  parameter Real eta_fan = 1;
   parameter Real W_fan = 40000 "W";
 
   // Observables
@@ -48,7 +48,7 @@ model CoolingTowerMerkel_direct
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-138,-10},{-118,10}})));
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{64,-10},{84,10}})));
-  MultiFluid.HeatExchangers.CoolingTowerMerkel CoolingTower annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.HeatExchangers.CoolingTowerMerkel CoolingTower annotation (Placement(transformation(extent={{10,-10},{-10,10}}, rotation=180)));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -116,18 +116,18 @@ equation
   CoolingTower.Afr = Afr;
   CoolingTower.V_inlet = V_inlet;
 
-  CoolingTower.efan = efan;
+  CoolingTower.eta_fan = eta_fan;
   CoolingTower.W_fan = W_fan;
 
   // Observable for Calibration
   WaterOutletTemp_sensor.T_degC = WaterOutletTemp;
   AirOutletTemp_sensor.T_degC = AirOutletTemp;
 
-  connect(CoolingTower.C_hot_in, waterInletPress_sensor.C_out) annotation (Line(points={{-7.5,0},{-26,0}},
+  connect(CoolingTower.C_hot_in, waterInletPress_sensor.C_out) annotation (Line(points={{-7.5,0},{-14,0},{-14,0},{-26,0}},
                                                                                                          color={28,108,200}));
   connect(AirInletTemp_sensor.C_in, cold_source.C_out) annotation (Line(points={{0,100},{0,109}},                                                           color={85,170,255}));
   connect(waterInletPress_sensor.C_in,waterInletTemp_sensor. C_out) annotation (Line(points={{-46,0},{-58,0}}, color={28,108,200}));
-  connect(CoolingTower.C_hot_out, WaterOutletTemp_sensor.C_in) annotation (Line(points={{7.5,0},{30,0}},
+  connect(CoolingTower.C_hot_out, WaterOutletTemp_sensor.C_in) annotation (Line(points={{7.5,0},{16,0},{16,0},{30,0}},
                                                                                                        color={28,108,200}));
   connect(WaterOutletTemp_sensor.C_out, hot_sink.C_in) annotation (Line(points={{50,0},{69,0}}, color={28,108,200}));
   connect(hot_source.C_out, waterFlow_sensor.C_in) annotation (Line(points={{-123,0},{-110,0}},
@@ -136,8 +136,8 @@ equation
   connect(AirOutletTemp_sensor.C_out, cold_sink.C_in) annotation (Line(points={{-1.77636e-15,-74},{0,-83.5},{0,-87}},                                          color={85,170,255}));
   connect(AirInletTemp_sensor.C_out, airInletFlow_sensor.C_in) annotation (Line(points={{0,80},{0,68}},                                                         color={85,170,255}));
   connect(airInletFlow_sensor.C_out, airInletPress_sensor.C_in) annotation (Line(points={{0,48},{0,38}},                                                         color={85,170,255}));
-  connect(airInletPress_sensor.C_out, CoolingTower.C_cold_in) annotation (Line(points={{0,18},{0,7.5}},                                        color={85,170,255}));
-  connect(CoolingTower.C_cold_out, airOutletPress_sensor.C_in) annotation (Line(points={{0,-7.5},{0,-20}},                                        color={85,170,255}));
+  connect(airInletPress_sensor.C_out, CoolingTower.C_cold_in) annotation (Line(points={{0,18},{0,10},{0,8.83333},{0,8.83333}},                 color={85,170,255}));
+  connect(CoolingTower.C_cold_out, airOutletPress_sensor.C_in) annotation (Line(points={{0,-8.66667},{0,-10},{0,-10},{0,-20}},                    color={85,170,255}));
   connect(AirOutletTemp_sensor.C_in, airOutletPress_sensor.C_out) annotation (Line(points={{0,-54},{0,-40}},                                                           color={85,170,255}));
   annotation (Diagram(coordinateSystem(extent={{-160,-120},{120,140}})), Icon(coordinateSystem(extent={{-160,-120},{120,140}}), graphics={
         Ellipse(lineColor={0,0,0},
@@ -164,5 +164,6 @@ equation
           fillColor={28,108,200},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
-          points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}));
+          points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}),
+    experiment(StopTime=1, __Dymola_Algorithm="Dassl"));
 end CoolingTowerMerkel_direct;

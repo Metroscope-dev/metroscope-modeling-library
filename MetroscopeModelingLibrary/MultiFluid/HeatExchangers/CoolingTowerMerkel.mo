@@ -1,6 +1,8 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model CoolingTowerMerkel
-  MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-10,80},{10,100}})));
+                            //Reference Paper: Abdo, Rodrigo & Rodrigues, Yuri & Silva, Víctor & Cabezas-Gómez, Luben & Hanriot, Sérgio,  The difference between Merkel and Poppe models and its influence on the prediction of wet-cooling towers, 2013
+
+  MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_cold_in annotation (Placement(transformation(extent={{-10,-116},{10,-96}})));
   package Water = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   package MoistAir = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   import MetroscopeModelingLibrary.Utilities.Units;
@@ -8,17 +10,19 @@ model CoolingTowerMerkel
   import MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   import MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium.specificEnthalpy;
 
-  Units.Velocity V_inlet;                  //Wind velocity entering cooling tower
+  Units.Velocity V_inlet;                  //Air velocity at the bottom of the cooling tower
   Inputs.InputReal hd;                     //Mass transfer coefficient
   Inputs.InputArea Afr;                    //Tower cross-sectional area
-  Inputs.InputReal Lfi;                    //Height of filling
+  Inputs.InputReal Lfi;                    //Height of filling/packing
   Inputs.InputFrictionCoefficient Cf;      //Friction coefficient of air
   Inputs.InputReal afi;                    //Fill material surface area per unit volume
-  Inputs.InputReal Ratio;                  //Ratio used to see if results align with EDF reference paper
-  Inputs.InputReal efan;                   //Fan effiency
-  Units.Power W_fan;                        //Fan power
+  Inputs.InputReal Ratio;                  //Ratio of Q_evaporation to P_thermal used to see if results align with an EDF reference paper
+  Inputs.InputReal eta_fan;                //Fan effiency
+  Units.Power W_fan;                       //Fan power
 
-  parameter String configuration = "natural draft";
+  Units.Power W;                           //Heat transfer-rate or Power of the Cooling Tower
+
+  parameter String configuration = "mechanical";
 
   Units.MassFlowRate Q_cold_in;
   Units.MassFlowRate Q_cold_out;
@@ -36,8 +40,6 @@ model CoolingTowerMerkel
   Units.Temperature T3(start=T3_0);
   Units.Temperature T4(start=T4_0);
 
-  Units.Power W;
-
   Units.SpecificEnthalpy i_initial(start=i_initial_0);
   Units.SpecificEnthalpy i_final(start=i_final_0);
   Units.SpecificEnthalpy i1(start=i1_0);
@@ -52,7 +54,7 @@ model CoolingTowerMerkel
   Units.HeatCapacity cp;
   Units.Pressure P_in;
   Units.Pressure P_out;
-  Units.Pressure deltaP_fan;                             //Pressure change across fan
+  Units.Pressure deltaP_fan;                             //Pressure Change across Fan
 
   constant Real g(unit="m/s2") = Modelica.Constants.g_n;
 
@@ -81,28 +83,28 @@ model CoolingTowerMerkel
 
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{-100,-10},{-80,10}}), iconTransformation(extent={{-100,-10},{-80,10}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{80,-10},{100,10}})));
-  MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
+  MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{-10,94},{10,114}})));
   WaterSteam.BaseClasses.IsoPHFlowModel                          hot_side_cooling annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink Air_inlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,18})));
+        rotation=90,
+        origin={0,-16})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source Air_outlet annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,-18})));
+        rotation=90,
+        origin={0,26})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel inputflowmodel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,38})));
+        rotation=90,
+        origin={0,-48})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel outputflowmodel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,-60})));
+        rotation=90,
+        origin={0,64})));
   MetroscopeModelingLibrary.MoistAir.Pipes.Pipe pipe annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,62})));
+        rotation=90,
+        origin={0,-78})));
   WaterSteam.BoundaryConditions.Sink Water_inlet annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
   WaterSteam.BoundaryConditions.Source Water_outlet annotation (Placement(transformation(extent={{10,-10},{30,10}})));
 equation
@@ -125,7 +127,7 @@ equation
   Q_evap = - (Q_cold_out + Q_cold_in);
   Ratio = Q_evap / W;
 
-  // Energy Balance - Supplementary Equation
+  // Energy Balance
   Q_hot_in * cp * (T_hot_in - T_hot_out) + Q_cold_in * (i_initial - i_final) = 0;
 
   // Tchebyshev Integral
@@ -137,7 +139,7 @@ equation
   i_initial = Air_inlet.h_in;
   i_final = Air_outlet.h_out;
 
-  Air_outlet.relative_humidity = 1;
+  Air_outlet.relative_humidity = 1;                                                              //Most Significant Hypothesis of the Model
   Air_outlet.Q_out * (1 - Air_outlet.Xi_out[1]) = - Air_inlet.Q_in *(1 - Air_inlet.Xi_in[1]);
 
   Water_outlet.P_out = Water_inlet.P_in;
@@ -159,31 +161,32 @@ equation
   pipe.Kfr = 0;
   pipe.delta_z = 0;
 
-  (P_in - P_out) = 0;
+  Air_inlet.P_in = Air_outlet.P_out;
 
-  deltaP_fan = (W_fan * efan)/(abs(V_inlet) * Afr);
+  deltaP_fan = (W_fan * eta_fan)/(abs(V_inlet) * Afr);
 
-  if configuration == "natural draft" then
+  if configuration == "natural" then
 
   0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * g * Lfi;
   Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
-  else
+  elseif configuration == "mechanical" then
 
-  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  = (W_fan * efan)/(abs(V_inlet) * Afr);
+  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  = (W_fan * eta_fan)/(abs(V_inlet) * Afr);
   Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - Air_inlet.Xi_in[1]));
 
   end if;
 
   connect(C_hot_in, hot_side_cooling.C_in) annotation (Line(points={{-90,0},{-70,0}}, color={28,108,200}));
-  connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,28},{0,23}},                                                             color={85,170,255}));
-  connect(Air_outlet.C_out, outputflowmodel.C_in) annotation (Line(points={{0,-23},{0,-50}},                                                               color={85,170,255}));
-  connect(outputflowmodel.C_out, C_cold_out) annotation (Line(points={{0,-70},{0,-90}},                                       color={85,170,255}));
-  connect(pipe.C_in, C_cold_in) annotation (Line(points={{1.77636e-15,72},{0,81},{0,90}},                  color={85,170,255}));
-  connect(pipe.C_out, inputflowmodel.C_in) annotation (Line(points={{0,52},{0,48}},                                                         color={85,170,255}));
+  connect(inputflowmodel.C_out, Air_inlet.C_in) annotation (Line(points={{0,-38},{0,-21}},                                                           color={85,170,255}));
+  connect(Air_outlet.C_out, outputflowmodel.C_in) annotation (Line(points={{0,31},{0,54}},                                                                 color={85,170,255}));
+  connect(outputflowmodel.C_out, C_cold_out) annotation (Line(points={{0,74},{0,104}},                                        color={85,170,255}));
+  connect(pipe.C_in, C_cold_in) annotation (Line(points={{0,-88},{0,-106}},                                color={85,170,255}));
+  connect(pipe.C_out, inputflowmodel.C_in) annotation (Line(points={{0,-68},{0,-58}},                                                       color={85,170,255}));
   connect(hot_side_cooling.C_out, Water_inlet.C_in) annotation (Line(points={{-50,0},{-27,0}},                                color={28,108,200}));
   connect(Water_outlet.C_out, C_hot_out) annotation (Line(points={{25,0},{90,0}}, color={28,108,200}));
-  connect(C_cold_in, C_cold_in) annotation (Line(points={{0,90},{0,90}}, color={85,170,255}));
+  connect(C_cold_in, C_cold_in) annotation (Line(points={{0,-106},{0,-106}},
+                                                                         color={85,170,255}));
   connect(C_hot_out, C_hot_out) annotation (Line(points={{90,0},{90,0}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-120,-120},{120,120}}), graphics={
         Ellipse(
