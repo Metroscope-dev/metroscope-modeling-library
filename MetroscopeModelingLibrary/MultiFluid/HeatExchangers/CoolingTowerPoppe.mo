@@ -9,7 +9,7 @@ model CoolingTowerPoppe
   import MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   import MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium.specificEnthalpy;
 
-  parameter Integer N_step = 10; //Parameter specifies the number of sections for which the Cooling Tower thermodynamic properties are divided into in the loop.
+  parameter Integer N_step = 20; //Parameter specifies the number of sections for which the Cooling Tower thermodynamic properties are divided into in the loop.
 
   //Unsaturated Air - Equations from Poppe Method for Cooling Tower Analysis
 
@@ -147,6 +147,7 @@ model CoolingTowerPoppe
   Real Ta[N_step];
   Units.HeatCapacity cp[N_step];
   Real Pin[N_step];
+  Real P_water[N_step];
   Real Lef[N_step];
   Units.MassFlowRate Qw[N_step];
   Units.MassFlowRate Qa[N_step];
@@ -191,15 +192,17 @@ equation
   air_outlet.T_out = T_cold_out;
   w_out = air_outlet.Xi_out[1];
 
-  water_inlet_flow.P_out = Pin[N_step];
+  P_water[1] = Pin[1];
+
+  water_inlet_flow.P_out = P_water[N_step];
   water_inlet_flow.Q = Q_hot_in;
   water_inlet_flow.T_in = T_hot_in;
 
-  water_outlet_flow.P_out = Pin[1];
+  water_outlet_flow.P_out = P_water[1];
   water_outlet_flow.Q = Q_hot_out;
   water_outlet_flow.T_in = T_hot_out;
 
-  W_max = Qw[10] * cp[1] * (Tw[N_step] - Tw[1]);
+  W_max = Qw[N_step] * cp[1] * (Tw[N_step] - Tw[1]);
   W_min = Qw[1] * cp[1] * (Tw[N_step] - Tw[1]);
 
   Q_evap = (Q_cold_out - Q_cold_in);
@@ -215,6 +218,8 @@ equation
   end for;
 
   for n in 1:N_step-1 loop                                                                  //This loop updates the value of thermodynamic variables, air/water flows, pressure, heat capacity and Merkel number using the governing equations as these media pass through the cooling tower
+
+   P_water[n+1] = P_water[n];
 
   if w[n] < w_sat[n] then                                                                   //This if condition switches the governing equations from the unsaturated to supersaturated ones, once the humidity in the tower exceeds the saturation humidity of the ambient conditions
      w[n+1] = w[n] + deltaTw * f(Tw[n], w[n], i[n], cp[n], Qw[n], Qa[n], Pin[n], Lef[n]);
@@ -262,8 +267,8 @@ equation
 
   Qw[1] = Q_hot_out;
   Qw[N_step] = Q_hot_in;
-  Qa[1] = Q_cold_in;
-  Qa[N_step] = Q_cold_out;
+  Qa[1] = abs(Q_cold_in);                          //abs() forces the air flow in the right direction
+  Qa[N_step] = abs(Q_cold_out);                    //abs() forces the air flow in the right direction
 
   Lef[1] = 0.9077990913 * (((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622))-1) / log((MoistAir.xsaturation_pT(Pin[1], T_cold_in)+0.622)/(w[1]+0.622));         //Can change w[1] to w[N_step] but little impact on Lef (-0.06 ish)
   cp[1] = WaterSteamMedium.specificHeatCapacityCp(water_inlet_flow.state_in);
