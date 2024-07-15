@@ -4,38 +4,38 @@ model CoolingTowerPoppe_reverse
 
   // Boundary Conditions
     // Hot Water Inlet
-  input Real waterInletTemp(start=31) "deg_C";
+  input Real waterInletTemp(start=30) "deg_C";
   input Units.VolumeFlowRate waterInletFlow(start=30) "m3/s";
-  input Real waterInletPress(start=15) "bar";
+  input Real waterInletPress(start=1) "bar";
 
     // Cold Air Inlet
-  input Real AirInletTemp(start=10) "deg_C";
+  input Real AirInletTemp(start=15) "deg_C";
   input Real airInletPress(start=1) "bar";
   input Units.Fraction cold_source_relative_humidity(start=0.5) "1";
 
   // Input for calibration
-  input Real WaterOutletTemp(start=18.9) "deg_C";
+  input Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
-  output Real hd(start=8.849857);
+  output Real hd(start=22.652998);
 
   // Parameters
   parameter Units.Area Afr = 3000;
   parameter Real Lfi = 15;
-  parameter Real Cf = 0.025509778;
+  output Real Cf(start= 0.012623798);
 
   parameter Real eta_fan = 1;
   parameter Real W_fan = 40000 "W";
 
   // Observables
-  output Real airInletFlow(start=50000) "m3/s";
+  input Real airInletFlow(start=79491.56) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=25) "deg_C";
+  output Real AirOutletTemp(start=19.475061) "deg_C";
 
   // Output
-  output Units.Fraction cold_sink_relative_humidity(start=0.40412638) "1";
-  output Real V_inlet(start = 12.871763) "m/s";                                        //No known start value
+  output Units.Fraction cold_sink_relative_humidity(start=1.0220108) "1";
+  output Real V_inlet(start = 22.105358) "m/s";                                        //No known start value
   output Real deltaP_fan;
 
 

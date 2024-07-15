@@ -17,26 +17,26 @@ model CoolingTowerPoppe_direct
   output Real WaterOutletTemp(start=20) "deg_C";
 
   // Calibrated Parameters
-  parameter Real hd(start=8.849857);
+  parameter Real hd(start=22.652998);
 
   // Parameters
   parameter Units.Area Afr = 3000;
   parameter Real Lfi = 15;
-  parameter Real Cf = 0.025509778;
+  parameter Real Cf(start = 0.0063258065);
 
   parameter Real eta_fan = 1;
   parameter Real W_fan = 40000 "W";
 
 
   // Observables
-  output Real airInletFlow(start=50000) "m3/s";
+  output Real airInletFlow(start=79491.56) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=25) "deg_C";
+  output Real AirOutletTemp(start=19.475061) "deg_C";
 
   // Output
-  output Units.Fraction cold_sink_relative_humidity(start=0.40412638) "1";
-  output Real V_inlet(start = 12.871763) "m/s";      //No known start value
+  output Units.Fraction cold_sink_relative_humidity(start=1.0220108) "1";
+  output Real V_inlet(start = 22.105358) "m/s";      //No known start value
   output Real deltaP_fan;
 
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-120,-30},{-100,-10}})));

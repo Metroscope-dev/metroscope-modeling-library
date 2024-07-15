@@ -120,6 +120,7 @@ model CoolingTowerPoppe
   Units.MassFlowRate Q_cold_in;
   Units.MassFlowRate Q_cold_out;
   Units.MassFlowRate Q_evap;
+  Units.VolumeFlowRate Qv_evap;
 
   Real w_in;
   Real w_out;
@@ -152,6 +153,11 @@ model CoolingTowerPoppe
   Units.MassFlowRate Qw[N_step];
   Units.MassFlowRate Qa[N_step];
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage fouling(min = 0, max=100, start=0, nominal=10); // Fouling percentage
+
+
   WaterSteam.Connectors.Inlet water_inlet_connector annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
   WaterSteam.Connectors.Outlet water_outlet_connector annotation (Placement(transformation(extent={{100,-10},{120,10}})));
   MetroscopeModelingLibrary.MoistAir.Connectors.Inlet air_inlet_connector annotation (Placement(transformation(extent={{-10,-118},{10,-98}})));
@@ -178,6 +184,11 @@ model CoolingTowerPoppe
         rotation=90,
         origin={0,66})));
 equation
+
+    // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
 
   // connectors
   air_inlet_flow.P_out = Pin[1];
@@ -206,6 +217,7 @@ equation
   W_min = Qw[1] * cp[1] * (Tw[N_step] - Tw[1]);
 
   Q_evap = (Q_cold_out - Q_cold_in);
+  Qv_evap = Q_evap / 1000;
 
   //New Poppe Equations
 
@@ -255,7 +267,7 @@ equation
 
   end for;
 
-  Me = hd * Afr / Qw[1];                //Can be Qw[N_step] but makes little difference
+  Me = (hd* (1 - fouling/100) * Afr) / Qw[1];                //Can be Qw[N_step] but makes little difference
   M[N_step] = Me;
   M[1] = 0;
 
@@ -281,12 +293,12 @@ equation
 
   if configuration == "natural" then
 
-   0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * gr * Lfi;
+   0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * abs(Cf) * abs(V_inlet) * V_inlet  =  (rho_air_inlet - rho_air_outlet) * gr * Lfi;
    Q_cold_in = (V_inlet * Afr * rho_air_inlet)* (1 - air_inlet.Xi_in[1]);
 
   elseif configuration == "mechanical" then
 
-  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * Cf * abs(V_inlet) * V_inlet  = (W_fan * eta_fan)/(abs(V_inlet) * Afr);
+  0.5 * 0.5 *(rho_air_inlet + rho_air_outlet) * abs(Cf) * abs(V_inlet) * V_inlet  = (W_fan * eta_fan)/(abs(V_inlet) * Afr);
   Q_cold_in = (V_inlet * Afr * rho_air_inlet * (1 - air_inlet.Xi_in[1]));
 
   end if;

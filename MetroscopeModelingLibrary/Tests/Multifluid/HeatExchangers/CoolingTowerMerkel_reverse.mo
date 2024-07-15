@@ -16,14 +16,18 @@ model CoolingTowerMerkel_reverse
   // Input for calibration
   input Real WaterOutletTemp(start=20) "deg_C";
 
+  input Real AirOutletTemp(start=24) "deg_C";
+
   // Calibrated Parameters
   output Real hd(start = 0.00943308);
+
+  output Real Cf(start = 0.08053073);
 
   // Parameters
   parameter Real Lfi = 15 "m";
   parameter Real afi = 200 "m-1";
   parameter Real Afr = 3000 "m2";
-  parameter Real Cf = 1;
+
   output Real V_inlet(start = 13.251477) "m/s";
 
   parameter Real eta_fan = 1;
@@ -34,7 +38,6 @@ model CoolingTowerMerkel_reverse
   output Real Q_evap(start=1311.1932) "m3/s";
 
   output Real airOutletPress(start=1) "bar";
-  output Real AirOutletTemp(start=35) "deg_C";
 
   output Real deltaP_fan;
 

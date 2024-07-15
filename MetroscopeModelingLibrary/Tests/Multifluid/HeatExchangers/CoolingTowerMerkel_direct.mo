@@ -4,17 +4,17 @@ model CoolingTowerMerkel_direct
 
   // Boundary Conditions
     // Hot Water Inlet
-  input Real waterInletTemp(start=28) "deg_C";
-  input Units.VolumeFlowRate waterFlow(start=40) "m3/s";
-  input Real waterInletPress(start=1) "bar";
+  input Real waterInletTemp(start=31) "deg_C";
+  input Units.VolumeFlowRate waterFlow(start=37) "m3/s";
+  input Real waterInletPress(start=15) "bar";
 
     // Cold Air Inlet
-  input Real AirInletTemp(start=6) "deg_C";
+  input Real AirInletTemp(start=10) "deg_C";
   input Real airInletPress(start=1) "bar";
   input Units.Fraction cold_source_relative_humidity(start=0.8) "1";
 
   // Observables for calibration
-  output Real WaterOutletTemp(start=24.999994) "deg_C";
+  output Real WaterOutletTemp(start=23) "deg_C";
 
   // Calibrated Parameters
   parameter Real hd = 0.012856079;
@@ -25,7 +25,7 @@ model CoolingTowerMerkel_direct
   parameter Real afi = 200 "m-1";
   parameter Real Afr = 3000 "m2";
   parameter Real D = 20 "m";
-  parameter Real Cf = 15;
+  parameter Real Cf = 1;
   output Real V_inlet(start = 4.3490353) "m/s";
 
   parameter Real eta_fan = 1;
@@ -101,7 +101,7 @@ equation
   airOutletPress_sensor.P_barA = airOutletPress;
 
   // Calibrated Parameters
-  CoolingTower.hd = hd;
+  CoolingTower.hd = hd + hd*time;
   CoolingTower.Cf = Cf;
 
   CoolingTower.Q_evap = Q_evap;

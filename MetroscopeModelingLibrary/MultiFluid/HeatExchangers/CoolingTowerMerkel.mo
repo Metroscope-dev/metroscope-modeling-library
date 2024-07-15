@@ -29,6 +29,7 @@ model CoolingTowerMerkel
   Units.MassFlowRate Q_hot_in;
   Units.MassFlowRate Q_hot_out;
   Units.MassFlowRate Q_evap;
+  Units.VolumeFlowRate Qv_evap;
 
   Units.Temperature T_cold_in(start=T_cold_in_0);
   Units.Temperature T_cold_out(start=T_cold_out_0);
@@ -81,6 +82,10 @@ model CoolingTowerMerkel
   parameter Units.Density rho_air_inlet_0 = 1.2754;
   parameter Units.Density rho_air_outlet_0 = 1.2460;
 
+  // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage fouling(min = 0, max=100, start=0, nominal=10); // Fouling percentage
+
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_hot_in annotation (Placement(transformation(extent={{-100,-10},{-80,10}}), iconTransformation(extent={{-100,-10},{-80,10}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out annotation (Placement(transformation(extent={{80,-10},{100,10}})));
   MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_cold_out annotation (Placement(transformation(extent={{-10,94},{10,114}})));
@@ -108,6 +113,13 @@ model CoolingTowerMerkel
   WaterSteam.BoundaryConditions.Sink Water_inlet annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
   WaterSteam.BoundaryConditions.Source Water_outlet annotation (Placement(transformation(extent={{10,-10},{30,10}})));
 equation
+
+  // Failure modes
+  if not faulty then
+    fouling = 0;
+  end if;
+
+
   // Definition
   Q_cold_in = Air_inlet.Q_in;
   Q_cold_out = Air_outlet.Q_out;
@@ -124,7 +136,9 @@ equation
   cp = WaterSteamMedium.specificHeatCapacityCp(hot_side_cooling.state_in);
   W = Q_hot_in * cp * (T_hot_in - T_hot_out);
 
+  Qv_evap = Q_evap / 1000;
   Q_evap = - (Q_cold_out + Q_cold_in);
+
   Ratio = Q_evap / W;
 
   // Energy Balance
@@ -152,7 +166,7 @@ equation
   iTot = 1 / i1 + 1 / i2 + 1 / i3 + 1 / i4;
 
   // Heat Exchange - Merkel
-  (Afr * hd * afi * Lfi) / Q_hot_in = cp * iTot * ((T_hot_in - T_hot_out) / 4);
+  (Afr * hd * (1 - fouling/100) * afi * Lfi) / Q_hot_in = cp * iTot * ((T_hot_in - T_hot_out) / 4);
 
   // Drift Equation
   rho_air_inlet = inputflowmodel.rho_in;

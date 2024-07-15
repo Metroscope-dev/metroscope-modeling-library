@@ -1,6 +1,6 @@
 # version script generated during FMU export and used when building shared object
 
-TIH3_0CoolingLoop_0Merkel_TIH_0CoolingLoop_0Dir5_0Merkel {
+TIH3_0CoolingLoop_0Merkel_TIH_0CoolingLoop_0Dir5_0Merkel_0withStartValues {
 
    global:
    # FMI 2
