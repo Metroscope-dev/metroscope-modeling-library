@@ -15,6 +15,8 @@ partial model FlowSensor
   Real Q_th(start=Q_0*Constants.kgs_to_th, nominal=Q_0*Constants.kgs_to_th); // Flow rate in tons per hour
   Real Q_lbs(start=Q_0*Constants.kgs_to_lbs, nominal=Q_0*Constants.kgs_to_lbs); // Flow rate in pounds per second;
   Real Q_Mlbh(start=Q_0*Constants.kgs_to_Mlbh, nominal=Q_0*Constants.kgs_to_Mlbh); // Flow rate in pounds per second;
+  Real Q_lbh(start=Q_0*Constants.kgs_to_lbh, nominal= Q_0*Constants.kgs_to_lbh); // Flow rate in pounds per hour
+  Real Q_ft3h(start=Qv_0*Constants.m3s_to_ft3h, nominal= Q_0*Constants.m3s_to_ft3h); // Volumetric flow rate in cubic foot per hour
 
   // Failure modes
   parameter Boolean faulty = false;
@@ -29,6 +31,8 @@ equation
   Q_th = Q * Constants.kgs_to_th;
   Q_lbs = Q * Constants.kgs_to_lbs;
   Q_Mlbh = Q * Constants.kgs_to_Mlbh;
+  Q_lbh = Q * Constants.kgs_to_lbh;
+  Q_ft3h = Qv / Constants.m3s_to_ft3h;
 
   annotation (Icon(graphics={Text(
         extent={{-100,-160},{102,-200}},
