@@ -32,7 +32,7 @@ equation
   Q_lbs = Q * Constants.kgs_to_lbs;
   Q_Mlbh = Q * Constants.kgs_to_Mlbh;
   Q_lbh = Q * Constants.kgs_to_lbh;
-  Q_ft3h = Qv / Constants.m3s_to_ft3h;
+  Q_ft3h = Qv * Constants.m3s_to_ft3h;
 
   annotation (Icon(graphics={Text(
         extent={{-100,-160},{102,-200}},
