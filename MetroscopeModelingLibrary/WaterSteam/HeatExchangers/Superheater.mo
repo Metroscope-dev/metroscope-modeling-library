@@ -55,7 +55,6 @@ model Superheater
 
   // Failure modes
   parameter Boolean faulty = false;
-  Units.Percentage fouling(min = 0, max=100); // Fouling percentage
   Units.Percentage closed_vent(min = 0, max= 100); // Vent closing percentage
   Units.MassFlowRate tube_rupture_leak; // Tube rupture leak mass flow rate
 
@@ -176,7 +175,6 @@ equation
 
   // Failure modes
   if not faulty then
-    fouling = 0;
     closed_vent = 0;
     tube_rupture_leak = 0;
   end if;
@@ -228,8 +226,8 @@ equation
   cold_side_condensing.W =W_cond;
 
   // Power Exchange
-  HX_condensing.W =W_cond;
-  HX_condensing.Kth = Kth * (1 - fouling/100);
+  HX_condensing.W = W_cond;
+  HX_condensing.Kth = Kth;
   HX_condensing.S = S;
   HX_condensing.Q_cold = cold_side_condensing.Q;
   HX_condensing.Q_hot = hot_side_condensing.Q;
