@@ -16,6 +16,8 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
+- Unprotect states in HX and updated units, propagated start values parameters in sources [#499](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/499)
+
 ### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
 
