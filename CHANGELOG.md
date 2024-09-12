@@ -8,7 +8,9 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-- Added an IGV component PR[#492](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/492)
+
+- Added Q_reduced in compressor [#498](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/498)
+- Added an IGV component [#492](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/492)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
