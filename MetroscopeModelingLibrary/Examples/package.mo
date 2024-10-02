@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary;
+within MetroscopeModelingLibrary;
 package Examples
   extends Modelica.Icons.ExamplesPackage;
 
