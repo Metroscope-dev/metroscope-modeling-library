@@ -30,7 +30,7 @@ partial model BaseSensor
 
   replaceable Connectors.FluidInlet C_in(Q(start=Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   replaceable Connectors.FluidOutlet C_out(Q(start=-Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}})));
-  replaceable BaseClasses.IsoPHFlowModel flow_model annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  replaceable BaseClasses.IsoPHFlowModel flow_model(P_0=P_0, Q_0=Q_0, h_0=h_0) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
 equation
   if not faulty_flow_rate then
     mass_flow_rate_bias = 0;
