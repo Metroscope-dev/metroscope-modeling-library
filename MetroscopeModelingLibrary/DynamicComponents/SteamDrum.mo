@@ -1762,7 +1762,7 @@ package SteamDrum
         // Volumes
         Units.Volume V_st "Total steam volume";
         Units.Volume V_sd(start=4.8) "Drum steam volume";
-        Units.Volume V_wt(start=V_wt_0) "Total water volume";
+        Units.Volume V_wt(start=V_wt_0, fixed=false) "Total water volume";
         Units.Volume V_wd "Drum water volume";
         // Masses
         Units.Mass M_wt "Total water mass";
@@ -1920,7 +1920,7 @@ package SteamDrum
       if l <= V_D/2 then
         V_wd + V_sd = (acos((r - l)/r)*r^2 - (r - l)*(2*r*l - l^2)^0.5)*L;
       else
-        V_wd + V_sd = (pi*r^2 - acos((r - l_v)/r)*r^2 - (r - l_v)*(2*r*l_v - l_v^2)^0.5)*L;
+        V_wd + V_sd = (pi*r^2 - (acos((r - l_v)/r)*r^2 - (r - l_v)*(2*r*l_v - l_v^2)^0.5))*L;
       end if;
 
       // Circulation ratio
