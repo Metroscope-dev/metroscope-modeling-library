@@ -20,6 +20,7 @@ partial model PressureSensor
   Real P_kPaA(nominal = P_0*Constants.Pa_to_kPaA, start = P_0*Constants.Pa_to_kPaA); // Absolute pressure in kilo pascal
 
   Real P_inHg(nominal = P_0*Constants.Pa_to_inHg, start = P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
+  Real P_inH2O(nominal = P_0*Constants.Pa_to_inH2O, start = P_0*Constants.Pa_to_inH2O); // Absolute pressure in inches of H2O
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
   outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
@@ -39,6 +40,7 @@ equation
 
   P_mbar = P * Constants.Pa_to_mbar;
   P_inHg = P * Constants.Pa_to_inHg;
+  P_inH2O = P * Constants.Pa_to_inH2O;
 
   annotation (Icon(graphics={Text(
           extent={{-100,-160},{102,-200}},

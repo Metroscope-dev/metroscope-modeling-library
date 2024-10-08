@@ -7,6 +7,7 @@ Pa_to_barA
 Pa_to_mbar
 Pa_to_psiA
 Pa_to_inHg
+Pa_to_inH2O
 Pa_to_kPaA
 Pa_to_MPaA
 atmospheric_pressure_in_bar
@@ -14,9 +15,11 @@ P0_psiG_in_psiA
 P0_kPaG_in_kPaA
 P0_MPaG_in_MPaA
 m3s_to_lm
+m3s_to_ft3h
 kgs_to_th
 kgs_to_lbs
 kgs_to_Mlbh
+kgs_to_lbh
 m_H
 m_C
 m_O

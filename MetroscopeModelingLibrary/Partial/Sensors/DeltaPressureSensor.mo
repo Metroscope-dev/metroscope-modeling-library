@@ -10,6 +10,7 @@ partial model DeltaPressureSensor
   Real DP_bar(unit="bar", start=DP_0*Utilities.Constants.Pa_to_barA); // Pressure difference in bar
   Real DP_mbar(unit="mbar", start=DP_0*Utilities.Constants.Pa_to_mbar); // Pressure difference in mbar
   Real DP_psi(start=DP_0*Utilities.Constants.Pa_to_psiA); // Pressure difference in PSI
+  Real DP_inH2O(start=DP_0^Utilities.Constants.Pa_to_inH2O); // Pressure difference in inH2O
 
   // Icon parameters
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
@@ -38,6 +39,7 @@ equation
   DP_bar =DP*Utilities.Constants.Pa_to_barA;
   DP_mbar =DP*Utilities.Constants.Pa_to_mbar;
   DP_psi =DP*Utilities.Constants.Pa_to_psiA;
+  DP_inH2O = DP*Utilities.Constants.Pa_to_inH2O;
 
   annotation (Icon(graphics={Text(
           extent={{-100,-160},{102,-200}},
