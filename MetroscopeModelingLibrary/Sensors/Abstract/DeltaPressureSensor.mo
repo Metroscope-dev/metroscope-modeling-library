@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Sensors.Abstract;
 model DeltaPressureSensor
+  extends MetroscopeModelingLibrary.Partial.Sensors.BaseAbstractSensor;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.AbstractDifferenceSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.DeltaPressureIcon;
   MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-168,-10},{-148,10}}), iconTransformation(extent={{-168,-10},{-148,10}})));
