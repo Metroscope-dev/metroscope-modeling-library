@@ -48,7 +48,7 @@ equation
 
   connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-33,0},{-8,0}}, color={95,95,95}));
   connect(turbine_power_source.C_out, airCompressor.C_W_in) annotation (Line(
-      points={{33.2,40},{12,40},{12,10}},
+      points={{33.2,40},{12,40},{12,7.5}},
       color={244,125,35},
       smooth=Smooth.Bezier));
   connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{12,0},{18,0}}, color={95,95,95}));
