@@ -372,7 +372,7 @@ model MetroscopiaCCGT_reverse
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration", causality="Cvmax")
     annotation (Placement(transformation(extent={{30,34},{40,44}})));
   MetroscopeModelingLibrary.MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-36},{-652,-16}})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-720,-36},{-700,-16}})));
+  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-734,-36},{-714,-16}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor(sensor_function="Calibration", causality="HPST_eta_is")
                                                                                    annotation (Placement(transformation(
         extent={{6,6},{-6,-6}},
@@ -385,6 +385,7 @@ model MetroscopiaCCGT_reverse
         origin={-442,-92})));
   Sensors.Displayer.MoistAirDisplayer moistAirDisplayer annotation (Placement(transformation(extent={{-700,-36},{-680,-16}})));
   Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer annotation (Placement(transformation(extent={{-654,-36},{-634,-16}})));
+  Sensors.MoistAir.RelativeHumiditySensor H_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-712,-32},{-700,-20}})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -394,7 +395,7 @@ equation
       P_source_air_sensor.P_barA = P_source_air;
       T_source_air_sensor.T_degC = T_source_air;
       Q_source_air_sensor.Q = Q_source_air + 10*time;
-      source_air.relative_humidity=Relative_Humidity;
+      H_sensor.relative_humidity=Relative_Humidity;
 
     // Fuel Source
       //  Quantities definition
@@ -788,12 +789,13 @@ equation
   connect(source_fuel.C_out, fuelDisplayer.C_in) annotation (Line(points={{-442,-105},{-442,-95}}, color={213,213,0}));
   connect(fuelDisplayer.C_out, T_fuel_source_sensor.C_in) annotation (Line(points={{-442,-89},{-442,-80}}, color={213,213,0}));
   connect(moistAir_to_FlueGases.inlet, moistAirDisplayer.C_out) annotation (Line(points={{-672,-26},{-687,-26}}, color={85,170,255}));
-  connect(moistAirDisplayer.C_in, source_air.C_out) annotation (Line(points={{-693,-26},{-705,-26}}, color={85,170,255}));
   connect(P_source_air_sensor.C_in, flueGasesDisplayer.C_out) annotation (Line(points={{-636,-26},{-641,-26}}, color={95,95,95}));
   connect(flueGasesDisplayer.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-647,-26},{-652,-26}}, color={95,95,95}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}})),
+  connect(moistAirDisplayer.C_in, H_sensor.C_out) annotation (Line(points={{-693,-26},{-700,-26}}, color={85,170,255}));
+  connect(H_sensor.C_in, source_air.C_out) annotation (Line(points={{-712,-26},{-719,-26}}, color={85,170,255}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},{260,280}})),
                                                               Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,280}}),
+        coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},{260,280}}),
         graphics={Rectangle(
           extent={{-324,18},{246,-72}},
           pattern=LinePattern.None,
