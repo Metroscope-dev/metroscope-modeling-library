@@ -20,7 +20,6 @@ model airCompressor_splitted_moistAir_flueGas_reverse
   output Real eta_is;
   output Real compression_rate_1;
 
-
   .MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-94,-10},{-74,10}})));
   FlueGases.BoundaryConditions.Sink                              sink annotation (Placement(transformation(extent={{140,-10},{160,10}})));
   MetroscopeModelingLibrary.RefMoistAir.Machines.AirCompressor airCompressor_1 annotation (Placement(transformation(extent={{-40,-8},{-20,8}})));
@@ -55,7 +54,6 @@ equation
   airCompressor_2.eta_is = eta_is;
   airCompressor_1.tau = compression_rate_1;
   compression_rate_1 = compression_rate/2;
-
 
   connect(source_fogger.C_out, airCompressor_1.C_in) annotation (Line(
       points={{-64,39},{-64,0},{-40,0}},

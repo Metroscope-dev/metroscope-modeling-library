@@ -26,7 +26,5 @@ equation
   source.X_molar_N2=0.015;
   source.X_molar_CO2=0.01;
 
-
-
   connect(source.C_out, sink.C_in) annotation (Line(points={{-23,0},{23,0}}, color={95,95,95}));
 end Source;

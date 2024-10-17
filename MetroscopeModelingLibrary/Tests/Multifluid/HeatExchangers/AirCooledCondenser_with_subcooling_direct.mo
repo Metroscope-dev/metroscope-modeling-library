@@ -69,7 +69,6 @@ equation
     // Observable for calibration
   condensate_sink.T_in = T_subc + 273.15;
 
-
   connect(airCooledCondenser_with_subcooling.C_cold_out, cold_sink.C_in) annotation (Line(points={{14.4,0},{59,0}}, color={85,170,255}));
   connect(airCooledCondenser_with_subcooling.C_hot_in, turbine_outlet.C_out) annotation (Line(points={{0.32,18},{-8.88178e-16,18},{-8.88178e-16,47}}, color={28,108,200}));
   connect(airCooledCondenser_with_subcooling.C_hot_out, condensate_sink.C_in) annotation (Line(points={{0,-14},{0,-61},{8.88178e-16,-61}}, color={28,108,200}));

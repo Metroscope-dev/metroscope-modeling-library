@@ -7,7 +7,6 @@ model PowerSensor
                   // Power in W
   Real W_MW(min=0, nominal=100, start=100); // Power in MW
 
-
   // Icon parameters
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));

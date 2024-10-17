@@ -54,7 +54,6 @@ model Condenser
   parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
   parameter Units.DifferentialPressure water_height_DP_0 = 0.09e5;
 
-
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=Psat_0, nominal=Psat_0), h_outflow(start=0.0)) annotation (Placement(transformation(extent={{-10,92},{10,112}}), iconTransformation(extent={{-10,92},{10,112}})));
   Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=Psat_0+water_height_DP_0), h_outflow(start=h_liq_sat_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
@@ -110,7 +109,6 @@ equation
     Qv_cold_in_decrease=0;
   end if;
 
-
   // Definitions
   Q_cold = cold_side.Q;
   T_cold_in = cold_side.T_in;
@@ -144,7 +142,6 @@ equation
   // Saturated vapor admission check
   assert(T_hot_in - Tsat < 0.1, "The steam admitted in the condenser in superheated", AssertionLevel.warning);
 
-
   // Condensation
   Psat = hot_side.P_in;
   Tsat =  Water.saturationTemperature(Psat);
@@ -152,8 +149,6 @@ equation
 
   // Heat Exchange
   0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*S*((T_cold_in - T_cold_out)/W));
-
-
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
       points={{-60,40},{-52,40},{-52,0},{-24,0}},

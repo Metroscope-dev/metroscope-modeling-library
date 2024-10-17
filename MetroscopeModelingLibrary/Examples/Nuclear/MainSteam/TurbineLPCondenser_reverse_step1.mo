@@ -145,7 +145,6 @@ equation
   LP_turbine2.Cst = LP_turbine2_Cst;
   LP_turbine2.eta_is = LP_turbines_eta_is;
 
-
   // Extraction 2
   LP_turbine2_ext_P_sensor.P_barA = LP_turbine2_ext_P; // Calibrates LP_turbine2_Cst
   LP_turbine2_ext.alpha = LP_turbine2_ext_alpha;

@@ -78,7 +78,6 @@ equation
   T_cond_sensor.T_degC = T_subc;
   P_cond_sensor.P_mbar = P_cond;
 
-
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{14.4,0},{39,0}}, color={85,170,255}));
   connect(airCooledCondenser.C_cold_in, cold_source.C_out)

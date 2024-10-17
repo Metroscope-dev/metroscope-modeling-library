@@ -16,9 +16,6 @@ model Fogging_direct
   //Observables
   output Real T_fg_out(start=23.5) "degC";
 
-
-
-
   MultiFluid.HeatExchangers.Fogging fogging annotation (Placement(transformation(extent={{10,-30},{30,-10}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source_w annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

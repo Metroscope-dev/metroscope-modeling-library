@@ -18,7 +18,7 @@ model AirCompressor
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
   Real Q_reduced "Compressor reduced mass flow";
-    
+
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage eta_is_decrease(min = 0, max=100) "percentage decrease of eta_is";
@@ -48,7 +48,7 @@ equation
 
   /* Output variable */
   Q_reduced = Q * sqrt(T_in) / P_in;
-  
+
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

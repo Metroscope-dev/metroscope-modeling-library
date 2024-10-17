@@ -31,7 +31,6 @@ equation
   airCompressor.tau = compression_rate;
   airCompressor.eta_is = eta_is;
 
-
   connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-33,0},{-8,0}}, color={95,95,95}));
   connect(airCompressor.C_out, sink.C_in) annotation (Line(points={{12,0},{33,0}}, color={95,95,95}));
   connect(turbine_power_source.C_out, airCompressor.C_W_in) annotation (Line(

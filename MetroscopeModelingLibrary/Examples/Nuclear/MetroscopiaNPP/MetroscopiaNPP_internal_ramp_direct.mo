@@ -16,7 +16,6 @@ model MetroscopiaNPP_internal_ramp_direct
     parameter Real Q_feedwater_val= 1400 "kg/s"; // Feedwater flow rate
     parameter Real Q_purge_val= 5 "kg/s"; // Steam generator blowdown flow
 
-
  // Boundary condition initialisation state
     parameter Real P_steam_0 = 50 "barA"; // Steam generator steam pressure
     parameter Real CW_P_in_0 = 3 "barA"; // Circulating Water inlet pressure
@@ -335,7 +334,6 @@ equation
   CW_T_in = CW_T_in_0 + time * (CW_T_in_val - CW_T_in_0);
   Q_feedwater = Q_feedwater_0 + time * (Q_feedwater_val - Q_feedwater_0);
   Q_purge = Q_purge_0 + time * (Q_purge_val - Q_purge_0);
-
 
   // SteamGenerator
 

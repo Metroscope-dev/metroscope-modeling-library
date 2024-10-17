@@ -55,7 +55,6 @@ equation
   airCompressor_1.tau = compression_rate_1;
   compression_rate_1 = compression_rate/2; // Hypothesis
 
-
   connect(source_fogger.C_out, airCompressor_1.C_in) annotation (Line(
       points={{-64,39},{-64,0},{-40,0}},
       color={0,255,128},

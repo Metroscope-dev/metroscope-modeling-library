@@ -20,7 +20,6 @@ model AirCompressor_reverse
   // Initialisation parameters
   parameter Units.SpecificEnthalpy h_out_compressor_0 = 7e5; // Model won't initialize correctly without a guess value for the outlet enthalpy
 
-
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-48,-10},{-28,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink(h_in(start=h_out_compressor_0)) annotation (Placement(transformation(extent={{68,-10},{88,10}})));
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(h_out(start=h_out_compressor_0)) annotation (Placement(transformation(extent={{-8,-10},{12,10}})));

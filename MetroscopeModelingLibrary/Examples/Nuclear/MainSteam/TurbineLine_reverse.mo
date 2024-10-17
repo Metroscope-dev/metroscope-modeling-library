@@ -106,7 +106,6 @@ equation
   ST1.Cst = ST1_Cst;
   ST1.eta_is = STs_eta_is;
 
-
   // Extraction 1
   ST1_ext_P_sensor.P_barA = ST1_ext_P; // Calibrates ST1_Cst
   ST1_ext.alpha = ST1_ext_alpha;

@@ -3,5 +3,4 @@ package HeatExchange
 
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestPackageIcon;
 
-
 end HeatExchange;

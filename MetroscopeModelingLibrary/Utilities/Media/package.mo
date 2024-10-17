@@ -1,8 +1,6 @@
 within MetroscopeModelingLibrary.Utilities;
 package Media "all media used in MML"
 
-
-
 annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},

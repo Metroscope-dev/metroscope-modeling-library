@@ -6,7 +6,6 @@ model OpeningSensor
   parameter Utilities.Units.Percentage Opening_pc_0(unit="1") = 15;
   Inputs.InputPercentage Opening_pc(unit="1", start=Opening_pc_0, min=0, max=100, nominal=Opening_pc_0); // Opening in percentage
 
-
   // Icon parameters
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
