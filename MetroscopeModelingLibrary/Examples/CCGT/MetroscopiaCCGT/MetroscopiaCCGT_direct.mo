@@ -2,6 +2,9 @@ within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_direct
   import MetroscopeModelingLibrary.Utilities.Units;
 
+  inner parameter Boolean show_causality = true "true to show causality, false to hide it";
+  inner parameter Boolean display_output = true "Used to switch ON or OFF output display";
+
   // Boundary conditions
 
     // Air source
@@ -372,6 +375,7 @@ model MetroscopiaCCGT_direct
     Q_0=510.45065,
     P_0=111669.16,
     h_0=998985.06,
+    sensor_function="BC",
     T_0=913.15)
     annotation (Placement(transformation(extent={{-370,-7},{-358,5}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater Reheater(
@@ -427,22 +431,26 @@ model MetroscopiaCCGT_direct
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_source_air_sensor(
     Q_0=500,
     P_0=100000,
-    h_0=301935.4)
+    h_0=301935.4,
+    sensor_function="BC")
     annotation (Placement(transformation(extent={{-636,-6},{-624,6}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor T_source_air_sensor(
     Q_0=500,
     P_0=100000,
-    h_0=301935.4)
+    h_0=301935.4,
+    sensor_function="BC")
     annotation (Placement(transformation(extent={{-618,-6},{-606,6}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.FlowSensor Q_source_air_sensor(
     Q_0=500,
     P_0=100000,
-    h_0=301935.4)
+    h_0=301935.4,
+    sensor_function="BC")
     annotation (Placement(transformation(extent={{-600,-6},{-588,6}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_circulating_water_in_sensor(
     Q_0=2730.2332,
     P_0=500000,
     h_0=63375,
+    sensor_function="BC",
     T_0=288.149994)
     annotation (Placement(transformation(
         extent={{5,-5},{-5,5}},
@@ -451,7 +459,8 @@ model MetroscopiaCCGT_direct
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_circulating_water_in_sensor(
     Q_0=2730.2332,
     P_0=500000,
-    h_0=63375)
+    h_0=63375,
+    sensor_function="BC")
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={19,185})));
   WaterSteam.Pipes.SlideValve                             LPST_control_valve(
     T_in_0=622.56934,
@@ -513,6 +522,7 @@ model MetroscopiaCCGT_direct
     Q_0=56.89394,
     P_0=17000533,
     h_0=369317.84,
+    sensor_function="BC",
     T_0=358.14999)
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
@@ -531,7 +541,8 @@ model MetroscopiaCCGT_direct
     annotation (Placement(transformation(extent={{160,78},{172,92}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor pumpRec_opening_sensor(Opening_pc_0=21.797726)
     annotation (Placement(transformation(extent={{162,100},{172,110}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_flue_gas_sink_sensor(Q_0=510.45065, h_0=650881)
+  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_flue_gas_sink_sensor(Q_0=510.45065, h_0=650881,
+    sensor_function="BC")
     annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -541,7 +552,8 @@ model MetroscopiaCCGT_direct
   MetroscopeModelingLibrary.Sensors.Fuel.PressureSensor P_fuel_source_sensor(
     Q_0=10.450661,
     P_0=3000000,
-    h_0=899265)
+    h_0=899265,
+    sensor_function="BC")
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
@@ -549,7 +561,8 @@ model MetroscopiaCCGT_direct
   MetroscopeModelingLibrary.Sensors.Fuel.TemperatureSensor T_fuel_source_sensor(
     Q_0=10.450661,
     P_0=3000000,
-    h_0=899265)
+    h_0=899265,
+    sensor_function="BC")
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
@@ -612,6 +625,7 @@ model MetroscopiaCCGT_direct
     Q_0=49.734425,
     P_0=11338658,
     h_0=3530374.2,
+    sensor_function="BC",
     T_0=839.65)
     annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
@@ -650,7 +664,7 @@ model MetroscopiaCCGT_direct
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor Evap_opening_sensor(Opening_pc_0=12.070684)
     annotation (Placement(transformation(extent={{30,60},{40,70}})));
   MoistAir.BoundaryConditions.Source source_air(relative_humidity_0=0.5, h_out(start=47645.766), Xi_out(start={0.01}))
-                                                annotation (Placement(transformation(extent={{-704,-10},{-684,10}})));
+                                                annotation (Placement(transformation(extent={{-718,-10},{-698,10}})));
   MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-672,-10},{-652,10}})));
   Sensors.WaterSteam.TemperatureSensor T_HPST_out_sensor(
     Q_0=49.734425,
@@ -660,6 +674,7 @@ model MetroscopiaCCGT_direct
         extent={{6,-6},{-6,6}},
         rotation=180,
         origin={-90,180})));
+  Sensors.MoistAir.RelativeHumiditySensor H_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-694,-6},{-682,6}})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -669,7 +684,7 @@ equation
       P_source_air_sensor.P_barA = P_source_air;
       T_source_air_sensor.T_degC = T_source_air;
       Q_source_air_sensor.Q = Q_source_air;
-      source_air.relative_humidity=Relative_Humidity;
+      H_sensor.relative_humidity=Relative_Humidity;
 
     // Fuel Source
       //  Quantities definition
@@ -1113,8 +1128,6 @@ equation
       thickness=1));
   connect(P_source_air_sensor.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-636,0},{-652,0}},     color={95,95,95},
       thickness=1));
-  connect(moistAir_to_FlueGases.inlet, source_air.C_out) annotation (Line(points={{-672,0},{-689,0}},     color={85,170,255},
-      thickness=1));
   connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-102,180},{-96,180}}, color={28,108,200},
       pattern=LinePattern.Dash,
       thickness=1));
@@ -1142,6 +1155,14 @@ equation
   connect(economiser.C_cold_out, P_w_eco_out_sensor.C_in) annotation (Line(
         points={{96,15.95},{96,34},{62,34}},       color={28,108,200},
       thickness=1));
+  connect(moistAir_to_FlueGases.inlet, H_sensor.C_out) annotation (Line(
+      points={{-672,0},{-682,0}},
+      color={85,170,255},
+      thickness=1));
+  connect(H_sensor.C_in, source_air.C_out) annotation (Line(
+      points={{-694,0},{-703,0}},
+      color={85,170,255},
+      thickness=1));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,300}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,300}}),
@@ -1166,89 +1187,8 @@ equation
           pattern=LinePattern.None,
           fillColor={158,158,158},
           fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{-638,8},{-586,-8}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None),
-        Rectangle(
-          extent={{-14,7},{14,-7}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={-443,-42},
-          rotation=-90),
-        Rectangle(
-          extent={{-15,7},{15,-7}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={11,185},
-          rotation=360),
-        Rectangle(
-          extent={{-8,8},{8,-8}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={222,198},
-          rotation=360),
-        Rectangle(
-          extent={{-372,7},{-356,-9}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Rectangle(
-          extent={{138,42},{152,28}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Rectangle(
-          extent={{-288,68},{-272,52}},
-          pattern=LinePattern.Dash,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
         Text(
           extent={{-230,124},{-174,124}},
           textColor={28,108,200},
-          textString="Desuperheater"),
-        Rectangle(
-          extent={{-10,10},{10,-10}},
-          fillColor={255,82,82},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          origin={-670,276},
-          rotation=360),
-        Text(
-          extent={{-650,281},{-564,271}},
-          textColor={0,0,0},
-          horizontalAlignment=TextAlignment.Left,
-          textString="Boundary Conditions",
-          fontSize=8),
-        Rectangle(
-          extent={{-680,260},{-660,240}},
-          pattern=LinePattern.None,
-          fillColor={0,140,72},
-          fillPattern=FillPattern.Solid,
-          lineColor={0,0,0}),
-        Text(
-          extent={{-650,255},{-564,245}},
-          textColor={0,0,0},
-          horizontalAlignment=TextAlignment.Left,
-          textString="Control Parameters",
-          fontSize=8),
-        Rectangle(
-          extent={{-680,234},{-660,214}},
-          lineColor={0,0,0},
-          pattern=LinePattern.None,
-          fillColor={244,237,30},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{-650,232},{-476,216}},
-          textColor={0,0,0},
-          horizontalAlignment=TextAlignment.Left,
-          fontSize=8,
-          textString="Observables not used for calibration")}));
+          textString="Desuperheater")}));
 end MetroscopiaCCGT_direct;

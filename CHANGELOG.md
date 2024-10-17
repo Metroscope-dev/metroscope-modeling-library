@@ -11,6 +11,8 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 - Add us units to MML PR[#494](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/494)
 - Added Q_reduced in compressor [#498](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/498)
 - Added an IGV component [#492](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/492)
+- Added causality function in abstract sensor [#501](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/501)
+- Added a relative humidity sensor for moist air medium [#502](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/502)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
