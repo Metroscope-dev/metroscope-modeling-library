@@ -11,7 +11,6 @@ model Superheater_reverse
   input Utilities.Units.MassFlowRate Q_cold_source(start = 85) "kg/s";
   input Real T_cold_source(start = 410, min = 130, nominal = 150) "degC";
 
-
   // Parameters
   parameter String QCp_max_side = "hot";
   parameter Utilities.Units.Area S = 10000;
@@ -22,7 +21,6 @@ model Superheater_reverse
   // Calibrated parameters
   output Utilities.Units.HeatExchangeCoefficient Kth;
   output Utilities.Units.FrictionCoefficient Kfr_cold;
-
 
   // Calibration inputs
   input Real P_cold_out(start = 129.5, min = 1.5, nominal = 3.5) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
@@ -64,7 +62,6 @@ equation
   superheater.Kth = Kth;
   superheater.Kfr_hot = Kfr_hot;
   superheater.Kfr_cold = Kfr_cold;
-
 
   connect(superheater.C_hot_in, hot_source.C_out) annotation (Line(points = {{0,0},{-61,0}}, color={95,95,95},
       thickness=1));

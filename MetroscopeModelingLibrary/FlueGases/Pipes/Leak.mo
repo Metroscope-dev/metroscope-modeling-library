@@ -9,8 +9,6 @@ model Leak
     redeclare MetroscopeModelingLibrary.Sensors.FlueGases.FlowSensor flow_sensor,
     redeclare package Medium = FlueGasesMedium) annotation (IconMap(primitivesVisible=false));
 
-
-
  annotation (Icon(graphics={Rectangle(
           extent={{-100,40},{0,-40}},
           lineColor={95,95,95},

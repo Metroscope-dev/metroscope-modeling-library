@@ -5,8 +5,6 @@ model SteamDryer
 
   import MetroscopeModelingLibrary.Utilities.Units;
 
-
-
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0); // Saturated liquid enthalpy
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0); // Saturated steam enthalpy
 
@@ -23,7 +21,6 @@ model SteamDryer
   parameter Units.PositiveMassFlowRate Q_in_0=500;
   parameter Units.PositiveMassFlowRate Q_liq_0 = 0.5*Q_in_0;
   parameter Units.PositiveMassFlowRate Q_vap_0 = Q_in_0 - Q_liq_0;
-
 
   Connectors.Inlet C_in(P(start=P_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
   Connectors.Outlet C_hot_steam(P(start=P_0), Q(start=-Q_vap_0),

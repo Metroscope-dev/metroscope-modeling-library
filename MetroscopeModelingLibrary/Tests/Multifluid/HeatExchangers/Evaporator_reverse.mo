@@ -49,7 +49,6 @@ equation
   // Calibrated parameters
   evaporator.Kth = Kth;
 
-
   connect(Q_cold_source_sensor.C_in, cold_source.C_out) annotation (Line(points = {{40,60},{61,60}}, color = {28,108,200},
       thickness = 1));
   connect(Q_cold_source_sensor.C_out, evaporator.C_cold_in) annotation (Line(points = {{20,60},{4,60},{4,8}}, color = {28,108,200},

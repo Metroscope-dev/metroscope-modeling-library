@@ -33,7 +33,6 @@ model NTUHeatExchange
   Inputs.InputTemperature T_hot_in(start=T_hot_in_0) "Temperature, hot side, at the inlet";
   Inputs.InputTemperature T_cold_in(start=T_cold_in_0) "Temperature, cold side, at the inlet";
 
-
   // Exchange parameters
   Real QCpMIN(unit="W/K", start=QCpMIN_0);
   Real QCpMAX(unit="W/K", start=QCpMAX_0);
@@ -41,7 +40,6 @@ model NTUHeatExchange
   Units.Fraction Cr(start=Cr_0);
   Units.Fraction epsilon(start=epsilon_0);
   Units.Power W_max(start=W_max_0);
-
 
   // When the QCp_max_side is "hot", the initial parameters may be in the opposite order, however, no impact on the simulations
   parameter Real QCpMIN_0(unit="W/K") = if QCp_max_side == "hot" then Q_cold_0 * Cp_cold_0 elseif QCp_max_side == "cold" then Q_hot_0 * Cp_hot_0 else min(Q_cold_0 * Cp_cold_0,Q_hot_0 * Cp_hot_0);
@@ -51,7 +49,6 @@ model NTUHeatExchange
   parameter Units.Fraction epsilon_0 = 0.9;
   parameter Units.Power W_max_0 = QCpMIN_0*(T_hot_in_0 - T_cold_in_0);
   parameter Units.Power W_0 = epsilon_0*W_max_0;
-
 
 equation
 
@@ -64,7 +61,6 @@ equation
 
     /* This is a monophasic shell and tube heat exchanger with two tube passes, 
     for instance for U-shaped tubes */
-
 
     if QCp_max_side == "hot" then
       QCpMAX = Q_hot*Cp_hot;
@@ -80,7 +76,6 @@ equation
     assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
 
     epsilon = 2*1/( 1 + Cr + sqrt(1+Cr^2)* (1+exp(-NTU*(1+Cr^2)^0.5))/(1-exp(-NTU*(1+Cr^2)^0.5)));
-
 
   elseif config == "monophasic_cross_current" then
 
@@ -187,8 +182,6 @@ equation
 
       epsilon = 1 - exp(-NTU);
 
-
-
   else // Added this forbidden case to simplify model checking, but it is anyway overriden by assert below
     QCpMAX = 0;
     QCpMIN = 0;
@@ -199,7 +192,6 @@ equation
   assert(config == "evaporator" or config == "condenser" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current" or config=="monophasic_counter_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser', 'evaporator', 'monophasic_cross_current', or 'monophasic_counter_current'", AssertionLevel.error);
   assert(mixed_fluid == "hot" or mixed_fluid == "cold", "mixed_fluid parameter of NTUHeatExchange should be 'hot' or 'cold'", AssertionLevel.error);
   assert(W > 0, "Heat exchange is done in the wrong direction", AssertionLevel.warning);  // Ensure heat exchange is done in the correct direction
-
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(

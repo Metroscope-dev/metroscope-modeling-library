@@ -28,8 +28,6 @@ equation
   pipe.Kfr = Kfr;
   pipe.delta_z = delta_z;
 
-
-
   connect(source.C_out, pipe.C_in) annotation (Line(points={{-23,0},{-10,0}}, color={95,95,95}));
   connect(pipe.C_out, sink.C_in) annotation (Line(points={{10,0},{23,0}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));

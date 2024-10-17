@@ -2,7 +2,6 @@ within MetroscopeModelingLibrary.Power;
 package Connectors
   extends MetroscopeModelingLibrary.Utilities.Icons.PackageIcon;
 
-
   annotation (Icon(graphics={
         Rectangle(
           extent={{20,30},{78,-28}},

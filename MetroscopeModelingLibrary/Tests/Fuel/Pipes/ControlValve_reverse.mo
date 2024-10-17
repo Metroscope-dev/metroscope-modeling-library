@@ -16,7 +16,6 @@ model ControlValve_reverse
   // Calibrated parameters
   output Units.Cv Cvmax;
 
-
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
   MetroscopeModelingLibrary.Fuel.Pipes.ControlValve controlValve annotation (Placement(transformation(extent={{-10,-4},{10,16}})));
@@ -35,7 +34,6 @@ equation
 
   // Parameters
   controlValve.Cv_max = Cvmax;
-
 
   connect(source.C_out, controlValve.C_in) annotation (Line(points={{-23,0},{-16,0},{-16,-0.363636},{-10,-0.363636}}, color={95,95,95}));
   connect(controlValve.C_out, sink.C_in) annotation (Line(points={{10,-0.363636},{16,-0.363636},{16,0},{23,0}}, color={95,95,95}));

@@ -2,22 +2,6 @@ within MetroscopeModelingLibrary.Utilities.Icons;
 package Sensors
   extends Icons.PackageIcon;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   annotation (Icon(graphics={
         Ellipse(
           fillColor={245,245,245},

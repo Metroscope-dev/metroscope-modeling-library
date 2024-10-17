@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
+within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Evaporator_direct
    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
 

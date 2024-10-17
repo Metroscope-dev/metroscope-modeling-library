@@ -141,13 +141,11 @@ equation
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
 
-
   // Pressure losses
   cold_side_pipe.delta_z=0;
   cold_side_pipe.Kfr = Kfr_cold;
   hot_side_pipe.delta_z=0;
   hot_side_pipe.Kfr = Kfr_hot;
-
 
   /* Deheating */
   // Energy balance
@@ -160,7 +158,6 @@ equation
   else
       hot_side_deheating.h_out = hot_side_deheating.h_in;
   end if;
-
 
   /* Condensing */
   // Energy Balance
@@ -195,7 +192,6 @@ equation
   // Total power
   W = W_deheat + W_cond;
 
-
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
       points={{-140,0},{-162,0}},
       color={28,108,200},
@@ -218,7 +214,6 @@ equation
       points={{-34,-34},{48,-34}},
       color={28,108,200},
       thickness=1));
-
 
   connect(partition_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-98,-54},{-114,-54},{-114,0},{-120,0}}, color={28,108,200}));
   connect(partition_plate.C_out, final_mix_cold.C_in) annotation (Line(points={{-78,-54},{144,-54},{144,-28}}, color={28,108,200}));
