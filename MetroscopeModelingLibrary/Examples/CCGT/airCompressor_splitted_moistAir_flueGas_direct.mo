@@ -40,7 +40,7 @@ equation
   source.relative_humidity = source_relative_humidity;
 
   // Fogger
-  source_fogger.Q_out = - 1e-3 -2.5*time;
+  source_fogger.Q_out = -2.5;
   source_fogger.T_out = 20 + 273.15;
   source_fogger.Xi_out = {0.99};
 

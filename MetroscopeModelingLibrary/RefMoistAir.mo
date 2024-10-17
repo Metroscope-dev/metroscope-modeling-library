@@ -497,6 +497,7 @@ package RefMoistAir
       /* Indicators */
       x_liq_in = Medium.massFractionWaterNonVapor(state_in);
       x_liq_out = Medium.massFractionWaterNonVapor(state_out);
+      assert(x_liq_out < 1e-10, "Condensed water at the outlet of the compressor", AssertionLevel.warning);
       relative_humidity_in = Medium.relativeHumidity(state_in);
       relative_humidity_out = Medium.relativeHumidity(state_out);
 
