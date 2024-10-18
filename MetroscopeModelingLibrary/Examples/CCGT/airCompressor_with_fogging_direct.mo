@@ -129,5 +129,5 @@ equation
           extent={{-64,94},{-34,80}},
           textColor={0,0,0},
           textString="Fogging Xi_out = {0.99}
-Equivalent to 99% water")}), Icon(coordinateSystem(extent={{-240,-40},{100,100}})));
+Equivalent to 99% water")}), Icon(coordinateSystem(extent={{-100,-100},{100,100}})));
 end airCompressor_with_fogging_direct;
