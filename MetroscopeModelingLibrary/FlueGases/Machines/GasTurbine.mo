@@ -25,7 +25,6 @@ model GasTurbine
   parameter Boolean faulty = false;
   Units.Percentage eta_is_decrease(min = 0, max=100) "percentage decrease of eta_is";
 
-
   Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
 equation
 

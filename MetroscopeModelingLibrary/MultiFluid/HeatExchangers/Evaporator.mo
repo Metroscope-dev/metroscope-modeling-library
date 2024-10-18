@@ -157,7 +157,6 @@ equation
   assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
   assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
-
   connect(hot_side_pipe.C_out,hot_side_vaporising. C_in) annotation (Line(points={{-38,-20},{-30,-20}}, color={95,95,95}));
   connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{40,80},{40,58},{42,58},{42,44}},
                                                                                      color={28,108,200}));

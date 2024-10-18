@@ -19,7 +19,6 @@ equation
   /* Pressure loss */
   DP*(1 - closed_valve/100)^2*Cv*abs(Cv) = -1.733e12*abs(Q)*Q/rho_in^2;
 
-
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=true,

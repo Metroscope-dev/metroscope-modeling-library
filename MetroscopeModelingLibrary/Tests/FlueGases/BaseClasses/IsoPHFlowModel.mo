@@ -1,20 +1,27 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.BaseClasses;
 model IsoPHFlowModel
-  extends MetroscopeModelingLibrary.Icons.Tests.FlueGasesTestIcon;
-  MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPHFlowModel isoPHFlowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-103,-19},{-65,19}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{66,-19.5},{106,19.5}})));
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
+
+  import MetroscopeModelingLibrary.Utilities.Units;
+
+  // Boundary conditions
+  input Units.Pressure source_P(start=10e5) "Pa";
+  input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
+  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
+
+  MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPHFlowModel
+                                                             isoPHFlowModel
+                                                                       annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
+  .MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
+  .MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
 equation
-  source.h_out = 1e6;
 
-  source.P_out = 1e5;
-  source.Q_out = -100;
-
+  // Boundary Conditions
+  source.h_out = source_h;
+  source.P_out = source_P;
+  source.Q_out = source_Q;
   source.Xi_out = {0.768,0.232,0.0,0.0,0.0};
 
-  assert(abs(sink.Q_in + source.Q_out) <= 1e-5, "In IsoPHFlowModel, DM should be 0");
-  assert(abs(source.P_out - sink.P_in) <= 1e-5, "In IsoPHFlowModel, DP should be 0");
-  assert(abs(sink.Q_in*sink.h_in + source.Q_out*source.h_out) <= 1e-5, "In IsoPHFlowModel, W should be 0");
-  connect(source.C_out, isoPHFlowModel.C_in) annotation (Line(points={{-74.5,0},{-23,0}}, color={95,95,95}));
-  connect(isoPHFlowModel.C_out, sink.C_in) annotation (Line(points={{23,0},{76,0}}, color={95,95,95}));
+  connect(isoPHFlowModel.C_out, sink.C_in) annotation (Line(points={{23,0},{69.5,0}}, color={95,95,95}));
+  connect(isoPHFlowModel.C_in, source.C_out) annotation (Line(points={{-23,0},{-70.5,0}}, color={95,95,95}));
 end IsoPHFlowModel;

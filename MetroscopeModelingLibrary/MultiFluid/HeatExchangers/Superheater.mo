@@ -29,9 +29,6 @@ equation
   STR = T_cold_out - T_cold_in;
   DT_superheat = T_cold_out - WaterSteamMedium.saturationTemperature(cold_side_pipe.P_in);
 
-
-
-
   annotation (Icon(graphics={
           Rectangle(
           extent={{-100,60},{100,-60}},

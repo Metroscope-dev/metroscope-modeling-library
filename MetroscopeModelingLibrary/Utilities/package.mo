@@ -2,8 +2,6 @@ within MetroscopeModelingLibrary;
 package Utilities
   extends Modelica.Icons.UtilitiesPackage;
 
-
-
 annotation(Documentation(info="<html>
   <p>Licensed by Metroscope under the Modelica License 2 </p>
 <p>Copyright © 2023, Metroscope.</p>

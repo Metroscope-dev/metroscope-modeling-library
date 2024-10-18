@@ -28,7 +28,6 @@ model HXmoistAirWater_reverse
   input Real P_hot_out(start = 2.8, min = 0, nominal = 10) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
   input Real T_hot_out(start = 7.8, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
 
-
   MultiFluid.HeatExchangers.HXmoistAirWater hXmoistAirWater(QCp_max_side = QCp_max_side,
     Q_cold_0=700,
     Q_hot_0=0.15,

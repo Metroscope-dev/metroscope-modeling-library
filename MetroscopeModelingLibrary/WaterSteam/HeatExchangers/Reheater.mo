@@ -251,7 +251,6 @@ equation
   assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
   assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
-
   // Internal leaks
   partition_plate.Q = 1e-5 + partition_plate_leak;
   tube_rupture.Q = 1e-5 + tube_rupture_leak;

@@ -35,10 +35,8 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
   input Real Fault_airCompressor_eta_is_decrease(start=0);
   input Real Fault_gasTurbine_eta_is_decrease(start=0);
 
-
   // Steam turbine
   input Real Fault_HPST_CV_closed_valve(start=0);
-
 
   MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_turbine_to_condenser_leak
     annotation (Placement(transformation(

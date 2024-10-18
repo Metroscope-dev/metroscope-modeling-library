@@ -8,7 +8,6 @@ model Leak
   input Utilities.Units.Fraction source_relative_humidity(start=0.5) "1";
   input Utilities.Units.Pressure sink_P(start=1e5, min=0, nominal=10e5) "Pa";
 
-
   MetroscopeModelingLibrary.MoistAir.Pipes.Leak leak annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{34,-10},{54,10}})));

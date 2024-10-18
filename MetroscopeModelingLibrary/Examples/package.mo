@@ -2,7 +2,6 @@ within MetroscopeModelingLibrary;
 package Examples
   extends Modelica.Icons.ExamplesPackage;
 
-
 annotation(Documentation(info="<html>
   <p>Licensed by Metroscope under the Modelica License 2 </p>
 <p>Copyright © 2023, Metroscope.</p>

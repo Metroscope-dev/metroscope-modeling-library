@@ -55,7 +55,6 @@ partial model WaterFlueGasesMonophasicHX
   parameter Units.SpecificEnthalpy h_hot_in_0 = 6.08e5;
   parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
 
-
   // Intermediate variables
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_min;
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_max;

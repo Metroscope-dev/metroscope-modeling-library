@@ -19,5 +19,4 @@ equation
   condenser.air_intake = Fault_air_intake;
   condenser.Qv_cold_in_decrease = Fault_Qv_cold_in_decrease;
 
-
 end Condenser_faulty;

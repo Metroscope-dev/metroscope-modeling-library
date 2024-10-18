@@ -23,7 +23,6 @@ model SteamGenerator
   parameter Boolean faulty = false;
   Units.Percentage feed_water_flow_rate_measurement_bias(min = 0, max=20, nominal=1); // Flow rate measurement bias
 
-
   Connectors.Inlet feedwater_inlet annotation (Placement(transformation(extent={{20,-10},{40,10}}), iconTransformation(extent={{20,-10},{40,10}})));
   Connectors.Outlet purge_outlet annotation (Placement(transformation(extent={{-10,-128},{10,-108}}), iconTransformation(extent={{-10,-128},{10,-108}})));
   Connectors.Outlet steam_outlet annotation (Placement(transformation(extent={{-10,110},{10,130}}), iconTransformation(extent={{-10,110},{10,130}})));
@@ -70,8 +69,6 @@ equation
   purge_source.h_out = Water.bubbleEnthalpy(Water.setSat_p(P_purge));
 
   purge_source.P_out = P_purge;
-
-
 
   connect(steam_source.C_out, steam_outlet) annotation (Line(points={{2.77556e-16,
           93},{2.77556e-16,106.5},{0,106.5},{0,120}}, color={28,108,200}));

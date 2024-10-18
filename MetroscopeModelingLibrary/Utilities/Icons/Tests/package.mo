@@ -2,17 +2,6 @@ within MetroscopeModelingLibrary.Utilities.Icons;
 package Tests
   extends Icons.PackageIcon;
 
-
-
-
-
-
-
-
-
-
-
-
   annotation (Icon(graphics={
         Polygon(
           origin={8,14},

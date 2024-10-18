@@ -144,7 +144,6 @@ equation
   incondensables_in.DP = - P_incond;
   incondensables_out.DP = + P_incond;
 
-
   // Pressure losses
   hot_side_pipe.delta_z = 0;
   hot_side_pipe.Kfr = Kfr_hot;
@@ -167,8 +166,6 @@ equation
     heatExchange_condensing.T_cold_out = cold_side_condensing.T_out;
     heatExchange_condensing.T_hot_in = hot_side_condensing.T_in;
     heatExchange_condensing.T_hot_out = hot_side_condensing.T_out;
-
-
 
   connect(C_cold_out, C_cold_out)
     annotation (Line(points={{90,0},{90,0}},     color={28,108,200}));

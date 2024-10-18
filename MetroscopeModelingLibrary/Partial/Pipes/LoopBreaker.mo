@@ -6,7 +6,6 @@ partial model LoopBreaker
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   Utilities.Units.Inputs.InputReal loop_flow_error;
 
-
 equation
 
   // Pressure is transmitted
@@ -22,7 +21,6 @@ equation
 
   // Flow rate is not transmitted
   C_in.Q + C_out.Q = loop_flow_error;
-
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(

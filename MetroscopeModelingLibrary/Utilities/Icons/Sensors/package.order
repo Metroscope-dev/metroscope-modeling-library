@@ -1,6 +1,7 @@
 InlineSensorIcon
 WaterSensorIcon
 MoistAirSensorIcon
+RefMoistAirSensorIcon
 FlueGasesSensorIcon
 FuelSensorIcon
 PowerSensorIcon
