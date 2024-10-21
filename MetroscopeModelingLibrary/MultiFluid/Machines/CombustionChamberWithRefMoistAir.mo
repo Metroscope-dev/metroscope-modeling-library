@@ -107,7 +107,7 @@ equation
   X_fuel_O = 2 * m_O * X_fuel_CO2/m_CO2;
 
   // Mass balance for all species
-  - Q_exhaust * X_out_N2  + Q_air * 0.78  + Q_fuel * X_fuel_N2 = 0; // N2 balance
+  - Q_exhaust*X_out_N2 + Q_air*0.78*(1 - sink_air.Xi_in[1]) + Q_fuel*X_fuel_N2 = 0; // N2 balance
   - Q_exhaust * X_out_O2  + Q_air * 0.21  + Q_fuel * X_fuel_O * 0.5 = Q_fuel * m_O * (2 * X_fuel_C/m_C + 0.5 * X_fuel_H/m_H); // O2 balance
   - Q_exhaust * X_out_H2O + Q_air * 0.01 = -Q_fuel * (0.5 * X_fuel_H/m_H) * m_H2O; // H2O balance
   - Q_exhaust * X_out_CO2 + Q_air * 0 = -Q_fuel * X_fuel_C * m_CO2/m_C; // CO2 balance
