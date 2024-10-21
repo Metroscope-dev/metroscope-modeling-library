@@ -24,7 +24,6 @@ model CombustionChamberwithRefMoistAir
   Units.SpecificEnthalpy h_exhaust;
 
   // Air intake composition (RefMoistAir-specific)
-   Real relative_humidity;  // Relative humidity for moist air
    Units.SpecificEnthalpy h_in_air;  // Specific enthalpy for moist air
 
   // Exhaust composition
@@ -59,9 +58,13 @@ model CombustionChamberwithRefMoistAir
   Fuel.Connectors.Inlet inlet1 annotation (Placement(transformation(extent={{-10,-110},{10,-90}})));
   Fuel.BoundaryConditions.Sink sink_fuel annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=90, origin={0,-22})));
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
-  RefMoistAir.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
+  FlueGases.BoundaryConditions.Sink   sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
   FlueGases.Pipes.Pipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
 
+  Converters.RefMoistAir_to_FlueGases refMoistAir_to_FlueGases annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-60,0})));
 equation
 
   // Definitions
@@ -70,7 +73,6 @@ equation
   Q_exhaust = -source_exhaust.Q_out;
 
   h_in_air = sink_air.h_in;
-  relative_humidity = sink_air.relative_humidity;  // Relative humidity for moist air inlet
 
   h_in_fuel = sink_fuel.h_in;
   h_exhaust = source_exhaust.h_out;
@@ -113,10 +115,11 @@ equation
   - Q_exhaust * X_out_CO2 + Q_air * 0 = -Q_fuel * X_fuel_C * m_CO2/m_C; // CO2 balance
   - Q_exhaust * X_out_SO2 + Q_air * 0 = 0; // No sulfur in fuel
 
-  connect(sink_air.C_in, inlet) annotation (Line(points={{-27,0},{-100,0}}, color={95,95,95}));
   connect(sink_fuel.C_in, inlet1) annotation (Line(points={{-2.77556e-16,-27},{-2.77556e-16,-63.5},{0,-63.5},{0,-100}}, color={213,213,0}));
   connect(source_exhaust.C_out, pressure_loss.C_in) annotation (Line(points={{27,0},{46,0}}, color={95,95,95}));
   connect(pressure_loss.C_out, outlet) annotation (Line(points={{66,0},{100,0}}, color={95,95,95}));
+  connect(sink_air.C_in, refMoistAir_to_FlueGases.outlet) annotation (Line(points={{-27,0},{-50,0}}, color={95,95,95}));
+  connect(refMoistAir_to_FlueGases.inlet, inlet) annotation (Line(points={{-70,0},{-100,0}}, color={0,255,128}));
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
