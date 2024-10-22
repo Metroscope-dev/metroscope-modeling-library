@@ -5,7 +5,7 @@ model AirCompressor_reverse
 
   package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-  // Boundary conditinos
+  // Boundary conditions
   input Units.Pressure source_P(start=1e5) "Pa";
   input Units.Temperature source_T(start=20);
   input Units.NegativeMassFlowRate source_Q(start=-600) "kg/s";
