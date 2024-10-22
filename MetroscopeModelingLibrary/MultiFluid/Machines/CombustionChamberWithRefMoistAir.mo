@@ -26,6 +26,14 @@ model CombustionChamberwithRefMoistAir
   // Air intake composition (RefMoistAir-specific)
    Units.SpecificEnthalpy h_in_air;  // Specific enthalpy for moist air
 
+  // Air intake composition
+  Units.MassFraction X_in_N2(start=0.78);
+  Units.MassFraction X_in_O2(start=0.22);
+  Units.MassFraction X_in_H2O(start=0.0);
+  Units.MassFraction X_in_CO2(start=0.0);
+  Units.MassFraction X_in_SO2(start=0.0);
+
+
   // Exhaust composition
   Units.MassFraction X_out_N2(start=0.73);
   Units.MassFraction X_out_O2(start=0.12);
@@ -77,6 +85,12 @@ equation
   h_in_fuel = sink_fuel.h_in;
   h_exhaust = source_exhaust.h_out;
 
+  X_in_N2 = sink_air.Xi_in[1];
+  X_in_O2 = sink_air.Xi_in[2];
+  X_in_H2O = sink_air.Xi_in[3];
+  X_in_CO2 = sink_air.Xi_in[4];
+  X_in_SO2 = sink_air.Xi_in[5];
+
   X_fuel_CH4 = sink_fuel.Xi_in[1]; // Methane
   X_fuel_C2H6 = sink_fuel.Xi_in[2]; // Ethane
   X_fuel_C3H8 = sink_fuel.Xi_in[3]; // Propane
@@ -109,11 +123,11 @@ equation
   X_fuel_O = 2 * m_O * X_fuel_CO2/m_CO2;
 
   // Mass balance for all species
-  - Q_exhaust*X_out_N2 + Q_air*0.78*(1 - sink_air.Xi_in[1]) + Q_fuel*X_fuel_N2 = 0; // N2 balance
-  - Q_exhaust*X_out_O2 + Q_air*0.22*(1 - sink_air.Xi_in[1]) + Q_fuel*X_fuel_O*0.5 = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H); // O2 balance
-  - Q_exhaust*X_out_H2O + Q_air*sink_air.Xi_in[1] = - Q_fuel*(0.5*X_fuel_H/m_H)*m_H2O; // H2O balance
-  - Q_exhaust * X_out_CO2 + Q_air * 0 = -Q_fuel * X_fuel_C * m_CO2/m_C; // CO2 balance
-  - Q_exhaust * X_out_SO2 + Q_air * 0 = 0; // No sulfur in fuel
+  - Q_exhaust * X_out_N2  + Q_air * X_in_N2  + Q_fuel*X_fuel_N2= 0; //Hyp: the NOx creation is negligible
+  - Q_exhaust * X_out_O2  + Q_air * X_in_O2  + Q_fuel*X_fuel_O*0.5 = Q_fuel*m_O*(2*X_fuel_C/m_C + 0.5*X_fuel_H/m_H);
+  - Q_exhaust * X_out_H2O + Q_air * X_in_H2O = -Q_fuel*(0.5*X_fuel_H/m_H)*m_H2O;
+  - Q_exhaust * X_out_CO2 + Q_air * X_in_CO2 = -Q_fuel*X_fuel_C*m_CO2/m_C;
+  - Q_exhaust * X_out_SO2 + Q_air * X_in_SO2 = 0; //Hyp: No S in fuel
 
   connect(sink_fuel.C_in, inlet1) annotation (Line(points={{-2.77556e-16,-27},{-2.77556e-16,-63.5},{0,-63.5},{0,-100}}, color={213,213,0}));
   connect(source_exhaust.C_out, pressure_loss.C_in) annotation (Line(points={{27,0},{46,0}}, color={95,95,95}));

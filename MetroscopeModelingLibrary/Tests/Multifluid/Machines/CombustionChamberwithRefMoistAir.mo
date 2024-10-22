@@ -5,9 +5,8 @@ model CombustionChamberwithRefMoistAir
 
   // Boundary conditions
   input Units.Pressure source_P(start=17e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=0.7e6) "J/kg";
+  input Units.Temperature source_T(start=409.7225) "deg_C";
   input Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
-  input Real source_relative_humidity(start=0.6) "Relative humidity of the moist air (0 to 1)";
 
   input Units.Pressure P_fuel(start = 30e5);
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
@@ -32,9 +31,9 @@ equation
 
   // Boundary conditions for RefMoistAir
   source_air.P_out = source_P;
-  source_air.h_out = source_h;
   source_air.Q_out = source_Q;
-  source_air.relative_humidity = source_relative_humidity;  // Relative humidity instead of Xi_out
+  source_air.T_out = source_T + 273.15;
+  source_air.Xi_out[1] = 0;
 
   // Fuel boundary conditions
   source_fuel.P_out = P_fuel;
