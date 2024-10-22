@@ -14,6 +14,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 - Added causality function in abstract sensor [#501](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/501)
 - Added a relative humidity sensor for moist air medium [#502](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/502)
 - Added `RefMoistAir` medium with corresponding components to handle wet compression [#504](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/504)
+- Added Filter and Control Valve blocks for the `RefMoistAir` medium [#508](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/508)
 - Added a `MultiFluid` airCompressor to handle wet and high temperature compression [#507](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/507)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
