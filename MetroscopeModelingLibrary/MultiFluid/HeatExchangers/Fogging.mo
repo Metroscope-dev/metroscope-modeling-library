@@ -23,7 +23,6 @@ model Fogging
   parameter Units.MassFlowRate Q_fg_0 = 500;
   parameter Units.MassFlowRate Q_w_0 = 1;
 
-
   WaterSteam.Connectors.Inlet C_water_in(Q(start=Q_w_0)) annotation (Placement(transformation(extent={{-10,50},{10,70}}), iconTransformation(extent={{-10,50},{10,70}})));
   WaterSteam.Pipes.HeatLoss water_evaporation(Q_0=Q_w_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -73,7 +72,6 @@ equation
   source_fg.Xi_out[4] = 0;
   source_fg.Xi_out[5] = 0;
   water_evaporation.P_in = evaporative_cooling.P_in;
-
 
   connect(evaporative_cooling.C_out, C_fg_out) annotation (Line(points={{-40,0},{100,0}},
                                                                                         color={95,95,95}));

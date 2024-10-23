@@ -34,9 +34,6 @@ equation
   source_2.P_out = source2_P;
   source_2.Q_out = source2_Q;
 
-
-
-
   connect(manifold.C_out, sink.C_in) annotation (Line(points={{10,0},{63,0}}, color={28,108,200}));
   connect(manifold.C_in_1, source_1.C_out) annotation (Line(points={{-10,0},{-55,0}},                  color={28,108,200}));
   connect(source_2.C_out, manifold.C_in_2) annotation (Line(points={{0,43},{0,10}},                        color={28,108,200}));

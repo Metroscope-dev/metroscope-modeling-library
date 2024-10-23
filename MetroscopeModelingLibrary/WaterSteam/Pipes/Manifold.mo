@@ -20,7 +20,6 @@ equation
   // Dummy input for local balance
   DP_input = pressure_cut_1.DP_input;
 
-
   connect(pressure_cut_1.C_in, C_in_1) annotation (Line(points={{-56,0},{-100,0}},   color={28,108,200}));
   connect(pressure_cut_1.C_out, C_out) annotation (Line(points={{-36,0},{100,0}}, color={28,108,200}));
   connect(pressure_cut_2.C_in, C_in_2) annotation (Line(points={{1.77636e-15,52},{1.77636e-15,76},{0,76},{0,100}},

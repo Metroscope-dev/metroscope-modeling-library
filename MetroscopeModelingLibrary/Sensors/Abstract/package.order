@@ -2,4 +2,5 @@ TemperatureSensor
 PressureSensor
 FlowSensor
 LevelSensor
+RelativeHumiditySensor
 DeltaPressureSensor

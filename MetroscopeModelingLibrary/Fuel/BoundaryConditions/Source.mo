@@ -47,7 +47,6 @@ equation
   amN2 = 2*amN;
   amCO2 = amC + 2*amO;
 
-
   // Composition mass fraction
   X_CH4 = Xi_out[1]; // methane
   X_C2H6 = Xi_out[2]; // ethane

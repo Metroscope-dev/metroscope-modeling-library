@@ -7,7 +7,6 @@ model Superheater_faulty
   Real Fault_closed_vent(start=0);
   Real Fault_tube_rupture_leak(start=0);
 
-
 equation
 
   // Failure input

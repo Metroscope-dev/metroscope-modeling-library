@@ -20,7 +20,6 @@ equation
 
   sink.T_in = source.T_out;
 
-
   connect(sink.C_in, inlet) annotation (Line(points={{-27,0},{-100,0}},                 color={85,170,255}));
   connect(source.C_out, outlet) annotation (Line(points={{27,0},{100,0}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(

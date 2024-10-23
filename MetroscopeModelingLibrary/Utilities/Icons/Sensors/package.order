@@ -1,6 +1,7 @@
 InlineSensorIcon
 WaterSensorIcon
 MoistAirSensorIcon
+RefMoistAirSensorIcon
 FlueGasesSensorIcon
 FuelSensorIcon
 PowerSensorIcon
@@ -15,3 +16,4 @@ PowerIcon
 OpeningIcon
 VRotIcon
 LevelIcon
+RelativeHumidityIcon

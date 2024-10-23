@@ -55,6 +55,14 @@ partial model WaterFlueGasesMonophasicHX
   parameter Units.SpecificEnthalpy h_hot_in_0 = 6.08e5;
   parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
 
+  // Intermediate variables
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_min;
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_max;
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_min;
+  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_max;
+  MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.ThermodynamicState state_cold_out; // estimation of the water outlet thermodynamic state
+  MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
+
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
           extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
   FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
@@ -82,16 +90,6 @@ partial model WaterFlueGasesMonophasicHX
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={30,42})));
-
-  // Intermediate variables
-protected
-  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_min;
-  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_max;
-  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_min;
-  MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_hot_max;
-  MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.ThermodynamicState state_cold_out; // estimation of the water outlet thermodynamic state
-  MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
-
 equation
   // Failure modes
   if not faulty then

@@ -2,10 +2,6 @@ within MetroscopeModelingLibrary.Utilities.Icons;
 package BaseClasses
   extends Icons.PackageIcon;
 
-
-
-
-
   annotation (Icon(graphics={
                 Rectangle(
                   extent={{-48,27},{48,-27}},

@@ -7,19 +7,18 @@ partial model Pump
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-
   Real VRotn(start=1400, min=0, nominal=2000) "Nominal rotational speed";
   Inputs.InputReal a1(start=0) "x^2 coef. of the pump characteristics hn = f(vol_flow) (s2/m5)";
   Inputs.InputReal a2(start=0) "x coef. of the pump characteristics hn = f(vol_flow) (s/m2)";
   Inputs.InputHeight a3(start=10) "Constant coef. of the pump characteristics hn = f(vol_flow) (m)";
   Inputs.InputReal b1(start=0) "x^2 coef. of the pump efficiency characteristics rh = f(vol_flow) (s2/m6)";
   Inputs.InputReal b2(start=0) "x coef. of the pump efficiency characteristics rh = f(vol_flow) (s/m3)";
-  Inputs.InputYield b3(start=0.8) "Constant coef. of the pump efficiency characteristics rh = f(vol_flow) (s.u.)";
+  Inputs.InputReal b3(start=0.8) "Constant coef. of the pump efficiency characteristics rh = f(vol_flow) (s.u.)";
 
   Inputs.InputYield rm(start=0.85) "Product of the pump mechanical and electrical efficiencies";
   Inputs.InputYield rh_min(start=0.20) "Minimum efficiency to avoid zero crossings";
 
-  Units.Yield rh "Hydraulic efficiency";
+  Real rh "Hydraulic efficiency";
   Units.Height hn(start=10) "Pump head";
   Units.Fraction R(start=1) "Reduced rotational speed";
 

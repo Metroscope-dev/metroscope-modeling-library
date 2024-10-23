@@ -18,7 +18,6 @@ model LiqLiqHX_direct
   parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
   parameter Utilities.Units.FrictionCoefficient Kfr_cold=20;
 
-
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-58,-10},{-38,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{40,-10},{60,10}})));
   .MetroscopeModelingLibrary.WaterSteam.HeatExchangers.LiqLiqHX liqLiqHX annotation (Placement(transformation(extent={{-16,-8},{16,8}})));

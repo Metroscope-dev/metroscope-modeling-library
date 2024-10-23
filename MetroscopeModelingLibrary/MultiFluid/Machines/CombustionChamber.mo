@@ -13,7 +13,7 @@ model CombustionChamber
   // Performance parameters
   //Inputs.Input
   Inputs.InputFrictionCoefficient Kfr(start=0);
-  Inputs.InputYield eta(start=0.99457); // The value given is found in performance document of GE
+  Inputs.InputReal eta(start=0.99457); // The value given is found in performance document of GE
 
   // Power released by the combustion
   Inputs.InputPower Wth;

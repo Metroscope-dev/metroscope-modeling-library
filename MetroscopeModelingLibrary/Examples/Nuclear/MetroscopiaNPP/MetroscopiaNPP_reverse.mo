@@ -12,7 +12,6 @@ model MetroscopiaNPP_reverse
     input Real Q_purge(start=5, unit = "kg/s", min=0) "kg/s"; // Steam generator blowdown flow
     input Real thermal_power(start=2820, unit="MW", nominal = 1e3) "MW"; // Core thermal power
 
-
   // Observables used for calibration
 
     // HP Control Valve
@@ -465,7 +464,6 @@ equation
     // Hypothesis
     superheater_control_valve.Opening = 1;
 
-
   // LP Turbines and extraction
 
     // Quantities definitions
@@ -543,7 +541,6 @@ equation
     LP_heater.Kfr_cold = LP_heater_Kfr_cold;
   LP_reheater_drains_control_valve.Cv_max = LP_heater_drains_control_valve_Cvmax;
 
-
   // Deaerator
 
     deaerator_inlet_pipe.Kfr = 0;
@@ -571,7 +568,6 @@ equation
     feedwater_pump.hn = feedwater_pump_hn;
     feedwater_pump.rh = feedwater_pump_rh;
 
-
   // HP Reheater and drains
 
     // Quantities definitions
@@ -590,7 +586,6 @@ equation
     HP_heater.Kth_cond = HP_heater_Kth_cond;
     HP_heater.Kfr_cold = HP_heater_Kfr_cold;
   HP_reheater_drains_control_valve.Cv_max = HP_heater_drains_control_valve_Cvmax;
-
 
   connect(HP_control_valve.C_out, HPT_P_in_sensor.C_in) annotation (Line(points={{-125,72},{-116,72},{-116,72},{-106,72}},                            color={28,108,200}));
   connect(HP_control_valve.Opening, HP_control_valve_opening_sensor.Opening) annotation (Line(points={{-130,80.7273},{-130,82},{-131,82},{-131,85.9}},

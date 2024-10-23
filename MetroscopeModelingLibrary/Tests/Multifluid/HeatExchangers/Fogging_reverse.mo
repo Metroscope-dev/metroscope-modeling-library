@@ -50,7 +50,6 @@ equation
   Q_water_sensor.Q = Q_water;
   T_water_sensor.T_degC = T_water;
 
-
   // Calibrated parameters
   fogging.x_vapor = x_vapor;
 

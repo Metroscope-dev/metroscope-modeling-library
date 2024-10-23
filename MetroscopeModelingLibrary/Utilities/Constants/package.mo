@@ -1,4 +1,4 @@
-﻿within MetroscopeModelingLibrary.Utilities;
+within MetroscopeModelingLibrary.Utilities;
 package Constants "Stores all constants used in MML"
   extends Modelica.Icons.Package;
   import MetroscopeModelingLibrary.Utilities.Units;
@@ -19,6 +19,7 @@ package Constants "Stores all constants used in MML"
   final constant Real Pa_to_mbar(unit="mbar/Pa") = 1e-2;
   final constant Real Pa_to_psiA(unit="1/Pa") = 0.000145038;
   final constant Real Pa_to_inHg(unit="1/Pa") = 0.0002953006;
+  final constant Real Pa_to_inH2O(unit="1/Pa") =0.0040146307866177;
   final constant Real Pa_to_kPaA(unit="1/Pa") = 0.001;
   final constant Real Pa_to_MPaA(unit="1/Pa") = 0.000001;
   final constant Real atmospheric_pressure_in_bar(unit="bar") = 1;
@@ -28,11 +29,12 @@ package Constants "Stores all constants used in MML"
 
   // Volume flow conversions
   final constant Real m3s_to_lm = 60000;
+  final constant Real m3s_to_ft3h= 127132.8002;
   // Mass flow conversions
   final constant Real kgs_to_th(unit="(1/h)/(kg/s)") = 3.6;
-  final constant Real kgs_to_lbs(unit="1/kg") = 0.453592428;
+  final constant Real kgs_to_lbs(unit="1/kg") = 2.2046;
   final constant Real kgs_to_Mlbh(unit="(1/h)/(kg/s)") = 0.0079366414387;
-
+  final constant Real kgs_to_lbh(unit="(1/h)/(kg/s)")= 7936.647912661459;
 
   // Atomic/Molecular masses
   final constant Units.AtomicMass m_H = 1.00798;

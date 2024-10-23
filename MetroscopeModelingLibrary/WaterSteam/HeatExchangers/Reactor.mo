@@ -19,7 +19,7 @@ model Reactor
 
   // Failure modes
   parameter Boolean faulty = false;
-  Units.Percentage feed_water_flow_rate_measurement_bias(min = 0, max=20, nominal=1); // Flow rate measurement bias
+  Real feed_water_flow_rate_measurement_bias(nominal=1); // Flow rate measurement bias
 
   Connectors.Inlet feedwater_inlet annotation (Placement(transformation(extent={{20,-10},{40,10}}), iconTransformation(extent={{20,-10},{40,10}})));
   Connectors.Outlet steam_outlet annotation (Placement(transformation(extent={{-10,90},{10,110}}),  iconTransformation(extent={{-10,90},{10,110}})));

@@ -13,7 +13,6 @@ model FlashTank
   parameter Units.PositiveMassFlowRate Q_liq_0 = 0.5*Q_in_0;
   parameter Units.PositiveMassFlowRate Q_vap_0 = Q_in_0 - Q_liq_0;
 
-
   Units.Pressure P(start=P_0);
   Units.PositiveMassFlowRate Q_in(start=Q_in_0);
 
