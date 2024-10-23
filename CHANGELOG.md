@@ -25,6 +25,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### 🔥 Removed <!--Make sure to add a link to the PR and issues related to your change-->
 
+- Breaking change : Remove water steam superheaters fouling [#495](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/495)
 
 ## MML - v3.8.1
 
