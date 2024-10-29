@@ -21718,6 +21718,7 @@ package HeatExchangers
       parameter Units.Area A_fin_cb = pi*D_out*e_fin*N_fins "Fins cross-sectional area at the base";
       parameter Units.Area A_fg_tubes = N_tubes*L*pi*D_out - A_fin_cb "Outer tubes surface";
       parameter Units.Area A_fg_fins = 0.25*pi*(D_fin^2 - D_out^2)*2*N_fins + pi*D_fin*e_fin*N_fins "Fins outer surface";
+      parameter Units.Area A_fg = A_fg_tubes + A_fg_fins "Total outer surface";
       parameter Units.Area Af_fg = L*fg_path_width "Flue gas frontal area";
       Inputs.InputReal k_corr(start=1);
       parameter Integer N_r = Rows "Number of rows from the beginning of the HRSG";
@@ -21826,6 +21827,8 @@ package HeatExchangers
       Modelica.Units.SI.ThermalConductance UA_water;
       Modelica.Units.SI.ThermalConductance UA;
       Real r_UA;
+      Units.HeatExchangeCoefficient U "Overall heat transfer coefficient";
+
 
     WaterSteam.Connectors.Inlet water_inlet annotation (Placement(transformation(extent={{-10,-110},{10,-90}}),
                                                                                                             iconTransformation(extent={{-10,-110},{10,-90}})));
@@ -21978,6 +21981,7 @@ package HeatExchangers
       UA_water = sum(K_conv_water)/N/Rows*A_water;
       1/UA = 1/UA_fg + 1/UA_water;
       r_UA = UA_water/UA_fg;
+      U = UA/A_fg;
 
   initial equation
       if (steady_state == false) then
@@ -22073,6 +22077,8 @@ package HeatExchangers
       Modelica.Units.SI.ThermalConductance UA_water(start=1476005.2);
       Modelica.Units.SI.ThermalConductance UA(start=155746);
       parameter Real r_UA = 39.677;
+      parameter Units.Area A = 3500;
+      Units.HeatExchangeCoefficient U "Overall heat transfer coefficient";
 
       // Wall
       parameter Units.Mass M_wall = 25379 "Tubes + fins total mass";
@@ -22142,6 +22148,7 @@ package HeatExchangers
 
     r_UA = UA_water/UA_fg;
     1/UA = 1/UA_water + 1/UA_fg;
+    UA = U*A;
 
     // ------ Boundaries ------
       // Enthalpy
