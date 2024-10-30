@@ -52,6 +52,7 @@ model Simplified_model_discretized "Added more info on fins and used ESCOA corre
     // Mass fraction
     Units.MassFraction Xi_water[WaterSteamMedium.nXi] "Species mass fraction";
     Units.MassFraction Xi_fg[FlueGasesMedium.nXi] "Species mass fraction";
+    Real pinch;
 
     // Discretization
 
@@ -127,6 +128,7 @@ equation
     // Mean temperatures
     T_water_node[i] = 0.5*(T_water[i] + T_water[i+1]);
     T_fg_node[i] = 0.5*(T_fg[1, i] + T_fg[2, i]);
+    assert(T_water_node[i] < T_fg_node[i], "Negative pinch is reached", level=AssertionLevel.warning);
     // DT LMTD
     //DT_LMTD_water[i] = ((T_wall[i] - T_water[i]) - (T_wall[i] - T_water[i+1]))/log((T_wall[i] - T_water[i])/(T_wall[i] - T_water[i+1]));
     //DT_LMTD_fg[i] = ((T_fg[1, i] - T_wall[i]) - (T_fg[2, i] - T_wall[i]))/log((T_fg[1, i] - T_wall[i])/(T_fg[2, i] - T_wall[i]));
@@ -143,6 +145,8 @@ equation
     end if;
 
   end for;
+
+  pinch = min(T_fg_node - T_water_node);
 
 initial equation
   if not steady_state then
