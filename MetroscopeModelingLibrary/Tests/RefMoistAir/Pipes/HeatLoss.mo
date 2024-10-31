@@ -19,7 +19,7 @@ equation
   source.relative_humidity = source_relative_humidity;
   heat_loss.W = W;
 
-  connect(source.C_out, heat_loss.C_in) annotation (Line(points={{-85,0},{-16,0}}, color={0,255,128}));
-  connect(heat_loss.C_out, sink.C_in) annotation (Line(points={{14,0},{85,0}}, color={0,255,128}));
+  connect(source.C_out, heat_loss.C_in) annotation (Line(points={{-85,0},{-16,0}}, color={0,127,127}));
+  connect(heat_loss.C_out, sink.C_in) annotation (Line(points={{14,0},{85,0}}, color={0,127,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end HeatLoss;

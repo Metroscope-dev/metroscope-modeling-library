@@ -7,7 +7,7 @@ partial record RefMoistAirSensorIcon "should be extended in partial base classes
         Ellipse(
           extent={{-100,100},{100,-100}},
           lineColor={0,0,0},
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid),
         Ellipse(
           extent={{-82,80},{78,-80}},

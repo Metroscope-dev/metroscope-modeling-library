@@ -38,9 +38,9 @@ equation
   controlValve.Cv_max = Cvmax;
 
   connect(source.C_out, controlValve.C_in)
-    annotation (Line(points={{-37,0},{-10,0}}, color={0,255,128}));
+    annotation (Line(points={{-37,0},{-10,0}}, color={0,127,127}));
   connect(sink.C_in, controlValve.C_out)
-    annotation (Line(points={{39,0},{10,0}}, color={0,255,128}));
+    annotation (Line(points={{39,0},{10,0}}, color={0,127,127}));
   connect(controlValve.Opening, opening_sensor.Opening)
     annotation (Line(points={{0,16},{0,25.8}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));

@@ -82,47 +82,53 @@ equation
   x_liq_water_fogger = RefMoistAirMedium.massFractionWaterNonVapor(state_fogger);
   Q_fogger = -x_liq_water_fogger*source_fogger.Q_out;
   connect(airCompressor.C_W_in, power_source.C_out) annotation (Line(points={{-12,6},{-12,40},{15.2,40}},color={244,125,35}));
-  connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{-12,0},{8,0}},  color={0,255,128},
+  connect(ambient_RH_sensor.C_in, source.C_out) annotation (Line(
+      points={{-210,0},{-219,0}},
+      color={0,127,127},
       thickness=1));
-  connect(compressor_T_out_sensor.C_out, compressor_P_out_sensor.C_in) annotation (Line(points={{28,0},{38,0}}, color={0,255,128},
+  connect(ambient_P_sensor.C_in, ambient_RH_sensor.C_out) annotation (Line(
+      points={{-180,0},{-190,0}},
+      color={0,127,127},
       thickness=1));
-  connect(compressor_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{58,0},{67,0}}, color={0,255,128},
+  connect(ambient_T_sensor.C_in, ambient_P_sensor.C_out) annotation (Line(
+      points={{-150,0},{-160,0}},
+      color={0,127,127},
       thickness=1));
-  connect(source_fogger.C_out,T_fogging_sensor. C_in) annotation (Line(
-      points={{-80,79},{-80,70}},
-      color={0,255,128},
+  connect(Q_air_sensor.C_in, ambient_T_sensor.C_out) annotation (Line(
+      points={{-120,0},{-130,0}},
+      color={0,127,127},
+      thickness=1));
+  connect(compressor_T_in_sensor.C_in, Q_air_sensor.C_out) annotation (Line(
+      points={{-60,0},{-100,0}},
+      color={0,127,127},
+      thickness=1));
+  connect(T_fogging_sensor.C_in, source_fogger.C_out) annotation (Line(
+      points={{-80,70},{-80,79}},
+      color={0,127,127},
+      thickness=1));
+  connect(Q_fogging_sensor.C_in, T_fogging_sensor.C_out) annotation (Line(
+      points={{-80,40},{-80,50}},
+      color={0,127,127},
+      thickness=1));
+  connect(Q_fogging_sensor.C_out, Q_air_sensor.C_out) annotation (Line(
+      points={{-80,20},{-80,0},{-100,0}},
+      color={0,127,127},
       thickness=1));
   connect(compressor_T_in_sensor.C_out, airCompressor.C_in) annotation (Line(
       points={{-40,0},{-32,0}},
-      color={0,255,128},
+      color={0,127,127},
       thickness=1));
-  connect(T_fogging_sensor.C_out, Q_fogging_sensor.C_in) annotation (Line(
-      points={{-80,50},{-80,40}},
-      color={0,255,128},
+  connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(
+      points={{-12,0},{8,0}},
+      color={0,127,127},
       thickness=1));
-  connect(Q_fogging_sensor.C_out, compressor_T_in_sensor.C_in) annotation (Line(
-      points={{-80,20},{-80,0},{-60,0}},
-      color={0,255,128},
+  connect(compressor_T_out_sensor.C_out, compressor_P_out_sensor.C_in) annotation (Line(
+      points={{28,0},{38,0}},
+      color={0,127,127},
       thickness=1));
-  connect(ambient_T_sensor.C_out, Q_air_sensor.C_in) annotation (Line(
-      points={{-130,0},{-120,0}},
-      color={0,255,128},
-      thickness=1));
-  connect(Q_air_sensor.C_out, compressor_T_in_sensor.C_in) annotation (Line(
-      points={{-100,0},{-60,0}},
-      color={0,255,128},
-      thickness=1));
-  connect(ambient_P_sensor.C_out, ambient_T_sensor.C_in) annotation (Line(
-      points={{-160,0},{-150,0}},
-      color={0,255,128},
-      thickness=1));
-  connect(source.C_out, ambient_RH_sensor.C_in) annotation (Line(
-      points={{-219,0},{-210,0}},
-      color={0,255,128},
-      thickness=1));
-  connect(ambient_RH_sensor.C_out, ambient_P_sensor.C_in) annotation (Line(
-      points={{-190,0},{-180,0}},
-      color={0,255,128},
+  connect(compressor_P_out_sensor.C_out, sink.C_in) annotation (Line(
+      points={{58,0},{67,0}},
+      color={0,127,127},
       thickness=1));
   annotation (Diagram(coordinateSystem(extent={{-240,-40},{100,100}}),
                       graphics={Text(

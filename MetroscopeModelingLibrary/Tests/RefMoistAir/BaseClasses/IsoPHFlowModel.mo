@@ -23,6 +23,6 @@ equation
   source.Q_out = source_Q;
   source.relative_humidity = source_relative_humidity;
 
-  connect(isoPHFlowModel.C_in, source.C_out) annotation (Line(points={{-23,0},{-70.5,0}}, color={0,255,128}));
-  connect(isoPHFlowModel.C_out, sink.C_in) annotation (Line(points={{23,0},{69.5,0}}, color={0,255,128}));
+  connect(isoPHFlowModel.C_in, source.C_out) annotation (Line(points={{-23,0},{-70.5,0}}, color={0,127,127}));
+  connect(isoPHFlowModel.C_out, sink.C_in) annotation (Line(points={{23,0},{69.5,0}}, color={0,127,127}));
 end IsoPHFlowModel;

@@ -14,19 +14,19 @@ package BoundaryConditions
           radius=25.0),
         Ellipse(
           extent={{-76,58},{44,-62}},
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid,
           lineThickness=1,
           pattern=LinePattern.None,
-          lineColor={0,255,128}),
+          lineColor={0,127,127}),
       Line(
         points={{54,0},{84,0}},
-        color={0,255,128},
+        color={0,127,127},
         thickness=1),
         Rectangle(
           extent={{42,12},{66,-12}},
-          lineColor={0,255,128},
+          lineColor={0,127,127},
           lineThickness=1,
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid)}));
 end BoundaryConditions;

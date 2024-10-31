@@ -39,9 +39,9 @@ equation
   airCompressor.tau = compression_rate;
   airCompressor.eta_is = eta_is;
 
-  connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-79,0},{-40,0}}, color={0,255,128}));
+  connect(source.C_out, airCompressor.C_in) annotation (Line(points={{-79,0},{-40,0}}, color={0,127,127}));
   connect(airCompressor.C_W_in, power_source.C_out) annotation (Line(points={{-20,6},{-20,40},{7.2,40}}, color={244,125,35}));
-  connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{-20,0},{10,0}}, color={0,255,128}));
-  connect(compressor_T_out_sensor.C_out, compressor_P_out_sensor.C_in) annotation (Line(points={{30,0},{40,0}}, color={0,255,128}));
-  connect(compressor_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{60,0},{79,0}}, color={0,255,128}));
+  connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(points={{-20,0},{10,0}}, color={0,127,127}));
+  connect(compressor_T_out_sensor.C_out, compressor_P_out_sensor.C_in) annotation (Line(points={{30,0},{40,0}}, color={0,127,127}));
+  connect(compressor_P_out_sensor.C_out, sink.C_in) annotation (Line(points={{60,0},{79,0}}, color={0,127,127}));
 end AirCompressor_direct;

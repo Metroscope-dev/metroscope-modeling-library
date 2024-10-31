@@ -17,5 +17,5 @@ equation
   sink.Q_in = sink_Q;
   sink.relative_humidity = sink_relative_humidity;
 
-  connect(source.C_out, sink.C_in) annotation (Line(points={{-23,0},{23,0}}, color={0,255,128}));
+  connect(source.C_out, sink.C_in) annotation (Line(points={{-23,0},{23,0}}, color={0,127,127}));
 end Sink;

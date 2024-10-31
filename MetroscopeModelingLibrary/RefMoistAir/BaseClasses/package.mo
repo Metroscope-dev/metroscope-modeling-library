@@ -14,20 +14,20 @@ annotation (Icon(graphics={
           radius=25.0),
      Rectangle(
           extent={{-46,49},{46,-47}},
-          lineColor={0,255,128},
+          lineColor={0,127,127},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           lineThickness=1),
         Rectangle(
           extent={{26,18},{60,-16}},
-          lineColor={0,255,128},
+          lineColor={0,127,127},
           lineThickness=1,
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
         Rectangle(
           extent={{-64,19},{-28,-17}},
-          lineColor={0,255,128},
+          lineColor={0,127,127},
           lineThickness=1,
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid)}));
 end BaseClasses;

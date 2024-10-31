@@ -4,8 +4,8 @@ model PressureCut
                                              annotation(IconMap(primitivesVisible=false));
   annotation (Icon(graphics={Rectangle(
           extent={{-100,30},{100,-30}},
-          lineColor={0,255,128},
-          fillColor={0,255,128},
+          lineColor={0,127,127},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid),
         Line(
           points={{-40,-60},{0,60}},

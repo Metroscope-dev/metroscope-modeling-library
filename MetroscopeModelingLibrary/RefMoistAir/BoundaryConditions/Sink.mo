@@ -18,16 +18,16 @@ equation
   annotation (Icon(graphics={
         Ellipse(
           extent={{-40,60},{80,-60}},
-          lineColor={0,255,128},
-          fillColor={0,255,128},
+          lineColor={0,127,127},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid),
         Ellipse(
           extent={{-30,50},{70,-50}},
-          lineColor={0,255,128},
+          lineColor={0,127,127},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
-        Line(points={{-18,38},{55,-35}}, color={0,255,128},
+        Line(points={{-18,38},{55,-35}}, color={0,127,127},
           thickness=1),
-        Line(points={{-18,-38},{55,35}}, color={0,255,128},
+        Line(points={{-18,-38},{55,35}}, color={0,127,127},
           thickness=1)}));
 end Sink;

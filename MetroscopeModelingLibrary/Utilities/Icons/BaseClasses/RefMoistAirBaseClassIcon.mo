@@ -3,7 +3,7 @@ partial record RefMoistAirBaseClassIcon "should be extended in moist air base cl
   annotation (                Icon(graphics={
                                 Rectangle(
           extent={{-100,40},{100,-40}},
-          lineColor={0,255,128},
+          lineColor={0,127,127},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           lineThickness=1)}));

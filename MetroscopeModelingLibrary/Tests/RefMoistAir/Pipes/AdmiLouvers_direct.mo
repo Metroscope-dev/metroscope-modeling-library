@@ -26,7 +26,7 @@ equation
   // Parameters
   admiLouver.Kfr = Kfr;
   admiLouver.delta_z = delta_z;
-  connect(source.C_out, admiLouver.C_in) annotation (Line(points={{-31,0},{-10,0}}, color={0,255,128}));
-  connect(admiLouver.C_out, sink.C_in) annotation (Line(points={{10,0},{45,0}}, color={0,255,128}));
+  connect(source.C_out, admiLouver.C_in) annotation (Line(points={{-31,0},{-10,0}}, color={0,127,127}));
+  connect(admiLouver.C_out, sink.C_in) annotation (Line(points={{10,0},{45,0}}, color={0,127,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end AdmiLouvers_direct;
