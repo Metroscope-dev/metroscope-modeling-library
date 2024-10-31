@@ -40,10 +40,10 @@ equation
   // Parameters for calibration
   filter.Kfr = Kfr;
   connect(source.C_out, filter.C_in)
-    annotation (Line(points={{-37,0},{-10,0}}, color={0,255,128}));
+    annotation (Line(points={{-37,0},{-10,0}}, color={0,127,127}));
   connect(sink.C_in, P_out_sensor.C_out)
-    annotation (Line(points={{63,0},{44,0}}, color={0,255,128}));
+    annotation (Line(points={{63,0},{44,0}}, color={0,127,127}));
   connect(P_out_sensor.C_in, filter.C_out)
-    annotation (Line(points={{24,0},{16,0},{16,0},{10,0}}, color={0,255,128}));
+    annotation (Line(points={{24,0},{16,0},{16,0},{10,0}}, color={0,127,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Filter_reverse;

@@ -10,8 +10,8 @@ model Pipe
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                                Rectangle(
           extent={{-100,30},{100,-30}},
-          lineColor={0,255,128},
-          fillColor={0,255,128},
+          lineColor={0,127,127},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio=false)),
               Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Pipe;

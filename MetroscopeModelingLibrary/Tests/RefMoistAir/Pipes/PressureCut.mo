@@ -24,6 +24,6 @@ equation
   source.relative_humidity = source_relative_humidity;
   sink.P_in = sink_P;
 
-  connect(source.C_out, pressureCut.C_in) annotation (Line(points={{-85,0},{-10,0}}, color={0,255,128}));
-  connect(pressureCut.C_out, sink.C_in) annotation (Line(points={{10,0},{85,0}}, color={0,255,128}));
+  connect(source.C_out, pressureCut.C_in) annotation (Line(points={{-85,0},{-10,0}}, color={0,127,127}));
+  connect(pressureCut.C_out, sink.C_in) annotation (Line(points={{10,0},{85,0}}, color={0,127,127}));
 end PressureCut;

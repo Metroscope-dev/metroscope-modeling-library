@@ -18,7 +18,7 @@ equation
   annotation (Icon(graphics={
         Ellipse(
           extent={{-80,60},{40,-60}},
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5,
           pattern=LinePattern.None,

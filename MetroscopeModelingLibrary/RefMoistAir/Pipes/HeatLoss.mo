@@ -8,10 +8,10 @@ model HeatLoss
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                                Rectangle(
           extent={{-100,30},{100,-30}},
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None,
-          lineColor={0,255,128}),
+          lineColor={0,127,127}),
         Line(
           points={{-14,50},{-14,50},{-24,40},{-10,30},{-24,16},{-14,8}},
           color={238,46,47},

@@ -59,17 +59,17 @@ equation
         extent={{-100,-80},{100,80}},
         grid={2,2}), graphics={Polygon(
           points={{100,26},{100,14},{100,-14},{100,-26},{80,-32},{-80,-60},{-100,-64},{-100,-40},{-100,40},{-100,64},{-80,60},{80,30},{100,26}},
-          lineColor={0,255,128},
+          lineColor={0,127,127},
           lineThickness=0.5,
           smooth=Smooth.Bezier),
                                Polygon(
           points={{92,20},{92,14},{92,-14},{92,-20},{76,-26},{-72,-50},{-92,-54},{-92,-40},{-92,40},{-92,54},{-70,50},{76,24},{92,20}},
           lineThickness=0.5,
           smooth=Smooth.Bezier,
-          fillColor={170,255,213},
+          fillColor={0,160,160},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None,
-          lineColor={0,255,128}),
+          lineColor={0,127,127}),
         Line(
           points={{-66,38},{-66,-38}},
           color={0,0,0},
