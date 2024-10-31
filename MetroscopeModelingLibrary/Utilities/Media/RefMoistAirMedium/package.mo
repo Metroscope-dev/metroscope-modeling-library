@@ -31,7 +31,7 @@ package RefMoistAirMedium
           radius=25.0),
         Ellipse(
           lineColor={102,102,102},
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           extent={{-60,-60},{60,60}})}));

@@ -36,8 +36,8 @@ equation
 
   // Parameters for calibration
   admiLouver.Kfr = Kfr;
-  connect(P_out_sensor.C_out, sink.C_in) annotation (Line(points={{42,0},{53,0}}, color={0,255,128}));
-  connect(admiLouver.C_out, P_out_sensor.C_in) annotation (Line(points={{8,0},{22,0}}, color={0,255,128}));
-  connect(source.C_out, admiLouver.C_in) annotation (Line(points={{-39,0},{-12,0}}, color={0,255,128}));
+  connect(P_out_sensor.C_out, sink.C_in) annotation (Line(points={{42,0},{53,0}}, color={0,127,127}));
+  connect(admiLouver.C_out, P_out_sensor.C_in) annotation (Line(points={{8,0},{22,0}}, color={0,127,127}));
+  connect(source.C_out, admiLouver.C_in) annotation (Line(points={{-39,0},{-12,0}}, color={0,127,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end AdmiLouvers_reverse;

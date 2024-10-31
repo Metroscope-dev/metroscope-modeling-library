@@ -17,8 +17,8 @@ equation
   annotation (Icon(graphics={
         Polygon(
           points={{-36,80},{36,80},{40,76},{40,-76},{36,-80},{-36,-80},{-40,-76},{-40,76},{-36,80}},
-          lineColor={0,255,128},
-          fillColor={170,255,213},
+          lineColor={0,127,127},
+          fillColor={0,160,160},
           fillPattern=FillPattern.Solid,
           smooth=Smooth.Bezier,
           lineThickness=1),

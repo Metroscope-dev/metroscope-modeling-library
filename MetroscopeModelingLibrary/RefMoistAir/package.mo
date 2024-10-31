@@ -13,7 +13,7 @@ package RefMoistAir
           extent={{-100,-100},{100,100}},
           radius=25.0),
         Ellipse(
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           extent={{-60,-60},{60,60}})}),

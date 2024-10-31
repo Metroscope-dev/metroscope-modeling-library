@@ -19,7 +19,7 @@ equation
   source.relative_humidity = source_relative_humidity;
   sink.P_in = sink_P;
 
-  connect(leak.C_out, sink.C_in) annotation (Line(points={{10,0},{39,0}}, color={0,255,128}));
-  connect(source.C_out, leak.C_in) annotation (Line(points={{-37,0},{-10,0}}, color={0,255,128}));
+  connect(leak.C_out, sink.C_in) annotation (Line(points={{10,0},{39,0}}, color={0,127,127}));
+  connect(source.C_out, leak.C_in) annotation (Line(points={{-37,0},{-10,0}}, color={0,127,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Leak;

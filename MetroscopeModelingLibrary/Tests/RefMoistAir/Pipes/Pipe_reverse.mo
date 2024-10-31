@@ -36,8 +36,8 @@ equation
   // Parameters for calibration
   pipe.Kfr = Kfr;
 
-  connect(source.C_out, pipe.C_in) annotation (Line(points={{-37,0},{-10,0}}, color={0,255,128}));
-  connect(pipe.C_out, P_out_sensor.C_in) annotation (Line(points={{10,0},{24,0},{24,0}}, color={0,255,128}));
-  connect(P_out_sensor.C_out, sink.C_in) annotation (Line(points={{44,0},{55,0}}, color={0,255,128}));
+  connect(source.C_out, pipe.C_in) annotation (Line(points={{-37,0},{-10,0}}, color={0,127,127}));
+  connect(pipe.C_out, P_out_sensor.C_in) annotation (Line(points={{10,0},{24,0},{24,0}}, color={0,127,127}));
+  connect(P_out_sensor.C_out, sink.C_in) annotation (Line(points={{44,0},{55,0}}, color={0,127,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Pipe_reverse;

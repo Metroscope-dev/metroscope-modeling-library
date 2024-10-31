@@ -4,8 +4,8 @@ partial package RefMoistAirTestPackageIcon
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Polygon(
           origin={8,14},
-          lineColor={0,255,128},
-          fillColor={0,255,128},
+          lineColor={0,127,127},
+          fillColor={0,127,127},
           pattern=LinePattern.None,
           fillPattern=FillPattern.Solid,
           points={{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}})}),
