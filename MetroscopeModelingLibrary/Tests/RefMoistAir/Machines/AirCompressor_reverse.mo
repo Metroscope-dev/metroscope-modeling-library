@@ -5,7 +5,6 @@ model AirCompressor_reverse
 
   // Boundary conditinos
   input Units.Pressure source_P(start=1e5) "Pa";
-  //input Units.SpecificEnthalpy source_h(start=1e3) "J/kg";
   input Units.Temperature source_T(start=293.15);
   input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
   input Units.Fraction source_relative_humidity(start=0.5) "1";
