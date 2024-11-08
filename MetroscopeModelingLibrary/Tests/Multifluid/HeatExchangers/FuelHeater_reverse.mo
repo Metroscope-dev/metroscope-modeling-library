@@ -13,8 +13,6 @@ model FuelHeater_reverse
   // Parameters
   parameter String QCp_max_side = "undefined"; // On fuel heater, QCp_hot may be close to QCp_cold
   parameter Utilities.Units.Area S=100;
-  parameter Utilities.Units.Temperature nominal_cold_side_temperature_rise=20;
-  parameter Utilities.Units.Temperature nominal_hot_side_temperature_drop=10;
 
   // Calibrated parameters
   output Utilities.Units.HeatExchangeCoefficient Kth;
@@ -61,10 +59,8 @@ equation
 
   // Parameters
   fuelHeater.S = S;
-  fuelHeater.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  fuelHeater.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
-    // Inputs for calibration
+  // Inputs for calibration
   T_hot_out_sensor.T_degC = T_hot_out;
   //cold_sink.T_in = T_cold_out +273.15;
   P_cold_out_sensor.P_barA = P_cold_out;

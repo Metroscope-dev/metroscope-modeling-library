@@ -15,12 +15,10 @@ model Superheater_direct
   parameter String QCp_max_side = "hot";
   parameter Utilities.Units.Area S = 10000;
   parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Utilities.Units.Temperature nominal_cold_side_temperature_rise = 105;
-  parameter Utilities.Units.Temperature nominal_hot_side_temperature_drop = 35;
 
   // Calibrated parameters
-  parameter Utilities.Units.HeatExchangeCoefficient Kth = 22.659254;
-  parameter Utilities.Units.FrictionCoefficient Kfr_cold = 351.14395;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth = 23.04;
+  parameter Utilities.Units.FrictionCoefficient Kfr_cold = 351.82;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent = {{10,-10},{-10,10}},
@@ -47,8 +45,6 @@ equation
   superheater.Kth = Kth;
   superheater.Kfr_hot = Kfr_hot;
   superheater.Kfr_cold = Kfr_cold;
-  superheater.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  superheater.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
   connect(superheater.C_hot_in, hot_source.C_out) annotation (Line(
       points={{-10,0},{-61,0}},

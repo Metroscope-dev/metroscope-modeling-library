@@ -8,8 +8,11 @@ partial model WaterFlueGasesMonophasicHX
   Inputs.InputHeatExchangeCoefficient Kth;
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputFrictionCoefficient Kfr_hot;
-  Inputs.InputTemperature nominal_cold_side_temperature_rise; // water reference temperature rise based on H&MB diagramm values
-  Inputs.InputTemperature nominal_hot_side_temperature_drop; // flue gases reference temperature rise based on H&MB diagramm values
+
+  // Cp estimation temperatures
+  parameter Boolean nominal_DT_default = true;
+  Units.Temperature nominal_cold_side_temperature_rise; // water reference temperature rise based on H&MB diagramm values
+  Units.Temperature nominal_hot_side_temperature_drop; // flue gases reference temperature rise based on H&MB diagramm values
 
   parameter String QCp_max_side = "hot";
   // Warning :
@@ -134,6 +137,12 @@ equation
   // For each medium, an average Cp is calculated beteween Cp inlet and an estimation of Cp outlet.
   // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise of the H&MB diagram.
   // For more details about this hypothesis, please refer the Economiser page of the MML documentation.
+
+  // Nominal temperature differences
+  if nominal_DT_default then
+    nominal_cold_side_temperature_rise = hot_side.T_in - cold_side.T_in; // Corresponds to the maximum achievable temperature difference
+    nominal_hot_side_temperature_drop = hot_side.T_in - cold_side.T_in; // Corresponds to the maximum achievable temperature difference
+  end if;
 
   Cp_cold_min =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in); // water steam inlet Cp
   state_cold_out =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.setState_pTX(

@@ -133,6 +133,7 @@ model MetroscopiaCCGT_direct
     parameter Real pumpRec_CV_Cvmax = 52.329174; // Recirculation control valve opening
 
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
+    nominal_DT_default=false,
       QCp_max_side=Eco_QCp_max_side,
     Q_cold_0=56.89394,
     Q_hot_0=510.45065,
@@ -172,6 +173,7 @@ model MetroscopiaCCGT_direct
         origin={56,34})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Evaporator evaporator(
     x_steam_out(start=1),
+    faulty=false,
     Q_cold_0=47.517586,
     Q_hot_0=510.45065,
     T_cold_in_0=592.94025,
@@ -186,6 +188,7 @@ model MetroscopiaCCGT_direct
     h_0=2691576)
     annotation (Placement(transformation(extent={{-34,28},{-46,40}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater1(
+    nominal_DT_default=false,
       QCp_max_side="unidentified",
     Q_cold_0=47.517586,
     Q_hot_0=510.45065,
@@ -379,6 +382,7 @@ model MetroscopiaCCGT_direct
     T_0=913.15)
     annotation (Placement(transformation(extent={{-370,-7},{-358,5}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater Reheater(
+    nominal_DT_default=false,
       QCp_max_side=ReH_QCp_max_side,
     Q_cold_0=49.734425,
     Q_hot_0=510.45065,
@@ -605,6 +609,7 @@ model MetroscopiaCCGT_direct
     h_0=301935.4)
     annotation (Placement(transformation(extent={{-548,-6},{-536,6}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(
+    nominal_DT_default=false,
       QCp_max_side=HPSH_QCp_max_side,
     Q_cold_0=49.734425,
     Q_hot_0=510.45065,
