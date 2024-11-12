@@ -11,6 +11,7 @@ partial model WaterFlueGasesMonophasicHX
 
   // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
   parameter Boolean nominal_DT_default = true;
+  Units.Temperature maximum_achiveable_temperature_difference;
   Units.Temperature nominal_cold_side_temperature_rise;
   Units.Temperature nominal_hot_side_temperature_drop;
 
@@ -141,6 +142,7 @@ equation
   // Nominal temperature differences
   // The default temperature rise and drop are equal to the maximum achievable temperature difference
   // Maximum achievable temperature difference for both the hot and cold sides = hot_side.T_in - cold_side.T_in
+  maximum_achiveable_temperature_difference = hot_side.T_in - cold_side.T_in;
   if nominal_DT_default then
     nominal_cold_side_temperature_rise = hot_side.T_in - cold_side.T_in;
     nominal_hot_side_temperature_drop = hot_side.T_in - cold_side.T_in;
