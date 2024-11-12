@@ -23,7 +23,7 @@ partial model FlowSensor
 
   parameter String display_unit = "kg/s" "Specify the display unit"
     annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
 equation
   Qv = Q / Medium.density(state);

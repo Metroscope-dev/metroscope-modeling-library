@@ -5,9 +5,6 @@ model airCompressor_with_fogging_direct
 
   package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-  inner parameter Boolean show_causality = true "true to show causality, false to hide it";
-  inner parameter Boolean display_output = true "Used to switch ON or OFF output display";
-
   // Boundary conditinos
   input Real source_P(start=1) "bar";
   input Units.Temperature source_T(start=20) "degC";

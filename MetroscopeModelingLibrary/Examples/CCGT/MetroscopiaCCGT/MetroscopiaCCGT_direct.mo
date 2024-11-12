@@ -2,9 +2,6 @@ within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_direct
   import MetroscopeModelingLibrary.Utilities.Units;
 
-  inner parameter Boolean show_causality = true "true to show causality, false to hide it";
-  inner parameter Boolean display_output = true "Used to switch ON or OFF output display";
-
   // Boundary conditions
 
     // Air source

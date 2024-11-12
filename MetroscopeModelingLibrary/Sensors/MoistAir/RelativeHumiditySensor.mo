@@ -17,7 +17,7 @@ model RelativeHumiditySensor
   Real relative_humidity_pc(start=relative_humidity_0*100, min=0, max=100);
 
   // Display
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
 equation
   flow_model.Xi[1] = MoistAirMedium.massFraction_pTphi(P, flow_model.T_in, relative_humidity);

@@ -1,9 +1,6 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
 model MetroscopiaNPP_reverse
 
-  inner parameter Boolean show_causality = true "true to show causality, false to hide it";
-  inner parameter Boolean display_output = true "Used to switch ON or OFF output display";
-
   // Boundary Conditions
 
     input Real P_steam(start = 50, unit="bar", min=0, nominal=50) "barA"; // Steam generator steam pressure

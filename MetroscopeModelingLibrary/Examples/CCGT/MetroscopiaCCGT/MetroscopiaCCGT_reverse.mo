@@ -2,9 +2,6 @@ within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_reverse
   import MetroscopeModelingLibrary.Utilities.Units;
 
-  inner parameter Boolean show_causality = true "true to show causality, false to hide it";
-  inner parameter Boolean display_output = true "Used to switch ON or OFF output display";
-
   // Boundary conditions
 
     // Air source
@@ -265,7 +262,7 @@ model MetroscopiaCCGT_reverse
     annotation (Placement(transformation(extent={{-636,-32},{-624,-20}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor T_source_air_sensor(sensor_function="BC")
     annotation (Placement(transformation(extent={{-618,-32},{-606,-20}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.FlowSensor Q_source_air_sensor(sensor_function="BC")
+  MetroscopeModelingLibrary.Sensors.FlueGases.FlowSensor Q_source_air_sensor(sensor_function="BC", display_output=true)
     annotation (Placement(transformation(extent={{-600,-32},{-588,-20}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_circulating_water_in_sensor(sensor_function="BC")
     annotation (Placement(transformation(
