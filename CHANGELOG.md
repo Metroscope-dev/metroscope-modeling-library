@@ -12,6 +12,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+- Breaking change: added a parameter `nominal_DT_default` to set the nominal temperature differences in heat exchanger to the maximum possible temperature difference [#513](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/513)
 
 ### 🔥 Removed 
 
@@ -45,7 +46,6 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 
 ## MML - v3.8.0
-
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 - Added sensors name in sensors icons [#473](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/473)
 - Added units for volume, surface tension, dynamic viscosity and thermal conductivity [#474](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/474)

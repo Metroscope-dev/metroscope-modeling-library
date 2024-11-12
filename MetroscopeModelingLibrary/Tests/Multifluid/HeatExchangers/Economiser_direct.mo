@@ -14,12 +14,10 @@ model Economiser_direct
   // Parameters
   parameter String QCp_max_side = "hot";
   parameter Utilities.Units.Area S = 10000;
-  parameter Utilities.Units.HeatExchangeCoefficient Kth = 44.5;
-  parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0.0078;
+  parameter Utilities.Units.HeatExchangeCoefficient Kth = 43.2;
+  parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0.0079;
   parameter Utilities.Units.FrictionCoefficient Kfr_cold = 5840;
 
-  parameter Utilities.Units.Temperature nominal_cold_side_temperature_rise = 43;
-  parameter Utilities.Units.Temperature nominal_hot_side_temperature_drop = 27;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent = {{10,-10},{-10,10}},
@@ -31,7 +29,8 @@ model Economiser_direct
         origin={-66,40})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-76,-10},{-56,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{36,-10},{56,10}})));
-  MultiFluid.HeatExchangers.Economiser economiser annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
+  MultiFluid.HeatExchangers.Economiser economiser(nominal_DT_default=true)
+                                                  annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
 equation
 
   // Boundary Conditions
@@ -50,8 +49,7 @@ equation
   economiser.Kth = Kth;
   economiser.Kfr_hot = Kfr_hot;
   economiser.Kfr_cold = Kfr_cold;
-  economiser.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  economiser.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
+
 
   connect(economiser.C_hot_out, hot_sink.C_in) annotation (Line(
       points={{0,0},{41,0}},

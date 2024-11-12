@@ -134,7 +134,7 @@ model MetroscopiaCCGT_reverse
     output Real Q_pumpRec_out; // Observable: controlled by the economizer input temperature
     output Real turbine_compression_rate; // Observable of interest
 
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
+  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(nominal_DT_default=false,
       QCp_max_side=Eco_QCp_max_side)
     annotation (Placement(transformation(extent={{74,-56},{132,3}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink flue_gas_sink
@@ -152,11 +152,11 @@ model MetroscopiaCCGT_reverse
         extent={{-6,6},{6,-6}},
         rotation=180,
         origin={56,8})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Evaporator evaporator
+  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Evaporator evaporator(faulty=false)
     annotation (Placement(transformation(extent={{-46,-56},{12,4.5}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_evap_out_sensor(sensor_function="Calibration", causality="SH1_Kfr")
     annotation (Placement(transformation(extent={{-34,2},{-46,14}})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater1(
+  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater1(nominal_DT_default=false,
       QCp_max_side=HPSH_QCp_max_side)
     annotation (Placement(transformation(extent={{-186,-56},{-126,4}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH1_out_sensor(sensor_function="Calibration", causality="SH1_Kth")
@@ -245,7 +245,7 @@ model MetroscopiaCCGT_reverse
     annotation (Placement(transformation(extent={{-346,28},{-334,40}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor turbine_T_out_sensor(sensor_function="BC")
     annotation (Placement(transformation(extent={{-370,-32},{-358,-20}})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater Reheater(
+  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater Reheater(nominal_DT_default=false,
       QCp_max_side=ReH_QCp_max_side)
     annotation (Placement(transformation(extent={{-102,-56},{-42,4}})));
   MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPsteamTurbine annotation (Placement(transformation(extent={{-14,198},{20,230}})));
@@ -347,7 +347,7 @@ model MetroscopiaCCGT_reverse
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor(
     display_unit="mbar",                                                         sensor_function="Calibration", causality="filter_Kfr")
     annotation (Placement(transformation(extent={{-548,-32},{-536,-20}})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(
+  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(nominal_DT_default=false,
       QCp_max_side=HPSH_QCp_max_side)
     annotation (Placement(transformation(extent={{-302,-56},{-242,4}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_w_HPSH2_out_sensor(sensor_function="BC", display_unit="degC")

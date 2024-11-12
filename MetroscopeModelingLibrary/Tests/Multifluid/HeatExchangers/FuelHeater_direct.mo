@@ -15,12 +15,10 @@ model FuelHeater_direct
   // Parameters
   parameter String QCp_max_side = "undefined"; // On fuel heater, QCp_hot may be close to QCp_cold
   parameter Units.Area S = 10;
-  parameter Units.Temperature nominal_cold_side_temperature_rise = 20;
-  parameter Units.Temperature nominal_hot_side_temperature_drop = 10;
 
-  parameter Units.HeatExchangeCoefficient Kth = 8740;
+  parameter Units.HeatExchangeCoefficient Kth = 1357;
   parameter Units.FrictionCoefficient Kfr_hot = 0;
-  parameter Units.FrictionCoefficient Kfr_cold = 1;
+  parameter Units.FrictionCoefficient Kfr_cold = 0;
 
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{-74,-10},{-54,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(extent={{54,-10},{74,10}})));
@@ -45,8 +43,6 @@ equation
   cold_source.Xi_out = {0.92,0.048,0.005,0.002,0.015,0.01};
 
   fuelHeater.S = S;
-  fuelHeater.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  fuelHeater.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
   fuelHeater.Kth = Kth;
   fuelHeater.Kfr_hot = Kfr_hot;
