@@ -23,7 +23,7 @@ partial model PressureSensor
   Real P_inH2O(nominal = P_0*Constants.Pa_to_inH2O, start = P_0*Constants.Pa_to_inH2O); // Absolute pressure in inches of H2O
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter Boolean display_output = true "Used to switch ON or OFF output display";
   parameter String display_unit = "barA" "Specify the display unit"
     annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
 

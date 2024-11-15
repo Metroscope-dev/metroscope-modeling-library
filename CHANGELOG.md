@@ -13,6 +13,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Breaking change: added a parameter `nominal_DT_default` to set the nominal temperature differences in heat exchanger to the maximum possible temperature difference [#513](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/513)
+- Removed outer parameters from sensors. Not breaking, declared inner paramters won't block the model's compilation. [#514](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/514)
 
 ### 🔥 Removed 
 
