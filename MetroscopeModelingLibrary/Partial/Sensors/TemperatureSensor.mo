@@ -18,7 +18,7 @@ partial model TemperatureSensor
 
   parameter String display_unit = "degC" "Specify the display unit"
     annotation(choices(choice="degC", choice="K", choice="degF"));
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
 equation
   T =flow_model.T;

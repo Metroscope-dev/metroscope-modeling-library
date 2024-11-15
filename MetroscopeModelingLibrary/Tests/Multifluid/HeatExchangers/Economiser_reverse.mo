@@ -14,8 +14,6 @@ model Economiser_reverse
   // Parameters
   parameter String QCp_max_side = "hot";
   parameter Utilities.Units.Area S = 10000;
-  parameter Utilities.Units.Temperature nominal_cold_side_temperature_rise = 43;
-  parameter Utilities.Units.Temperature nominal_hot_side_temperature_drop = 27;
 
   // Calibrated parameters
   output Utilities.Units.HeatExchangeCoefficient Kth;
@@ -54,8 +52,6 @@ equation
 
   // Parameters
   economiser.S = S;
-  economiser.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  economiser.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
   // Inputs for calibration
   T_cold_out_sensor.T_degC = T_cold_out;
@@ -122,5 +118,6 @@ equation
           pattern = LinePattern.None,
           fillPattern = FillPattern.Solid,
           points = {{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}), Diagram(
-        coordinateSystem(preserveAspectRatio = false, extent={{-100,-100},{100,100}})));
+        coordinateSystem(preserveAspectRatio = false, extent={{-100,-100},{100,100}})),
+    experiment(Interval=0.1, __Dymola_Algorithm="Dassl"));
 end Economiser_reverse;

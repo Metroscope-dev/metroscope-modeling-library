@@ -8,8 +8,12 @@ partial model WaterFlueGasesMonophasicHX
   Inputs.InputHeatExchangeCoefficient Kth;
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputFrictionCoefficient Kfr_hot;
-  Inputs.InputTemperature nominal_cold_side_temperature_rise; // water reference temperature rise based on H&MB diagramm values
-  Inputs.InputTemperature nominal_hot_side_temperature_drop; // flue gases reference temperature rise based on H&MB diagramm values
+
+  // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
+  parameter Boolean nominal_DT_default = true;
+  Units.Temperature maximum_achiveable_temperature_difference;
+  Units.Temperature nominal_cold_side_temperature_rise;
+  Units.Temperature nominal_hot_side_temperature_drop;
 
   parameter String QCp_max_side = "hot";
   // Warning :
@@ -132,8 +136,17 @@ equation
   assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
   // For each medium, an average Cp is calculated beteween Cp inlet and an estimation of Cp outlet.
-  // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise of the H&MB diagram.
-  // For more details about this hypothesis, please refer the Economiser page of the MML documentation.
+  // The estimation of the Cp outlet is calculated for an outlet temperature based on the nominal temperature rise.
+  // For more details about this hypothesis, please refer the WaterFlueGasesMonophasicHX page of the MML documentation.
+
+  // Nominal temperature differences
+  // The default temperature rise and drop are equal to the maximum achievable temperature difference
+  // Maximum achievable temperature difference for both the hot and cold sides = hot_side.T_in - cold_side.T_in
+  maximum_achiveable_temperature_difference = hot_side.T_in - cold_side.T_in;
+  if nominal_DT_default then
+    nominal_cold_side_temperature_rise = hot_side.T_in - cold_side.T_in;
+    nominal_hot_side_temperature_drop = hot_side.T_in - cold_side.T_in;
+  end if;
 
   Cp_cold_min =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.specificHeatCapacityCp(cold_side.state_in); // water steam inlet Cp
   state_cold_out =MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.setState_pTX(

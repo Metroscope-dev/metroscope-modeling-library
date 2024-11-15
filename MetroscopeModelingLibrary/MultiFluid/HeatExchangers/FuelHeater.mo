@@ -9,8 +9,12 @@ model FuelHeater
   // Pressure Losses
   Inputs.InputFrictionCoefficient Kfr_cold;
   Inputs.InputFrictionCoefficient Kfr_hot;
-  Inputs.InputTemperature nominal_cold_side_temperature_rise; // water reference temperature rise based on H&MB diagramm values
-  Inputs.InputTemperature nominal_hot_side_temperature_drop; // flue gases reference temperature rise based on H&MB diagramm values
+
+  // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
+  parameter Boolean nominal_DT_default = true;
+  Units.Temperature maximum_achiveable_temperature_difference;
+  Units.Temperature nominal_cold_side_temperature_rise;
+  Units.Temperature nominal_hot_side_temperature_drop;
 
   // Heating
   parameter String QCp_max_side = "undefined";// On fuel heater, QCp_hot may be close to QCp_cold
@@ -125,6 +129,15 @@ equation
   pinch = min(DT_hot_in_side, DT_hot_out_side);
   assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
   assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
+
+  // Nominal temperature differences
+  // The default temperature rise and drop are equal to the maximum achievable temperature difference
+  // Maximum achievable temperature difference for both the hot and cold sides = hot_side.T_in - cold_side.T_in
+  maximum_achiveable_temperature_difference = hot_side.T_in - cold_side.T_in;
+  if nominal_DT_default then
+    nominal_cold_side_temperature_rise = maximum_achiveable_temperature_difference;
+    nominal_hot_side_temperature_drop = maximum_achiveable_temperature_difference;
+  end if;
 
   Cp_cold_min = FuelMedium.specificHeatCapacityCp(cold_side.state_in); // fuel steam inlet Cp
   state_cold_out = FuelMedium.setState_pTX(cold_side.P_in, cold_side.T_in + nominal_cold_side_temperature_rise,cold_side.Xi);

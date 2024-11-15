@@ -6,7 +6,6 @@ model BaseAbstractSensor
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
   parameter String causality = "" "Specify which parameter is calibrated by this sensor";
-  outer parameter Boolean show_causality = true "Used to show or not the causality";
 
   WaterSteam.Connectors.Inlet C_in annotation (Placement(transformation(extent={{-30,-150},{-10,-130}}), iconTransformation(extent={{-30,-150},{-10,-130}})));
   WaterSteam.Connectors.Outlet C_out annotation (Placement(transformation(extent={{10,-150},{30,-130}}), iconTransformation(extent={{10,-150},{30,-130}})));
@@ -25,13 +24,13 @@ model BaseAbstractSensor
       Text(
         extent={{-100,200},{100,160}},
         textColor={107,175,17},
-        textString=if show_causality then "%causality" else ""),
+        textString=if causality <> "" then "%causality" else ""),
       Line(
         points={{100,0},{140,0},{140,180},{100,180}},
         color={107,175,17},
-        arrow=if causality == "" or show_causality == false then {Arrow.None,Arrow.None} else {Arrow.None,Arrow.Filled},
+        arrow=if causality == "" then {Arrow.None,Arrow.None} else {Arrow.None,Arrow.Filled},
         thickness=0.5,
-        pattern=if causality == "" or show_causality == false then LinePattern.None else LinePattern.Solid,
+        pattern=if causality == "" then LinePattern.None else LinePattern.Solid,
         smooth=Smooth.Bezier)}));
 
 end BaseAbstractSensor;

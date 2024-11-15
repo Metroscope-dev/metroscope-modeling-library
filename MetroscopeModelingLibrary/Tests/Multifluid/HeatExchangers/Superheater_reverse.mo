@@ -14,8 +14,6 @@ model Superheater_reverse
   // Parameters
   parameter String QCp_max_side = "hot";
   parameter Utilities.Units.Area S = 10000;
-  parameter Utilities.Units.Temperature nominal_cold_side_temperature_rise = 105;
-  parameter Utilities.Units.Temperature nominal_hot_side_temperature_drop = 35;
   parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
 
   // Calibrated parameters
@@ -51,8 +49,6 @@ equation
 
   // Parameters
   superheater.S = S;
-  superheater.nominal_cold_side_temperature_rise = nominal_cold_side_temperature_rise;
-  superheater.nominal_hot_side_temperature_drop = nominal_hot_side_temperature_drop;
 
   // Observables
   T_cold_out_sensor.T_degC = T_cold_out;

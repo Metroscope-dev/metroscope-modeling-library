@@ -19,7 +19,7 @@ model RelativeHumiditySensor
   parameter Real k_mair = RefMoistAirMedium.k_mair;
 
   // Display
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
 equation
   pds = RefMoistAirMedium.Utilities.pds_pT(P, flow_model.T_in);
