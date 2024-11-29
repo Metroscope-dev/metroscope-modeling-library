@@ -24,7 +24,7 @@ equation
   connect(sink.C_in, inlet) annotation (Line(points={{-27,0},{-34,0},{-34,0},{-100,0}}, color={0,255,128}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(
           extent={{-100,40},{0,-40}},
-          fillColor={0,255,128},
+          fillColor={0,127,127},
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None), Rectangle(
           extent={{0,40},{102,-40}},

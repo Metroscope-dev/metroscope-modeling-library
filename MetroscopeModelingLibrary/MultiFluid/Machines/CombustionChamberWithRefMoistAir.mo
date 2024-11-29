@@ -133,7 +133,7 @@ equation
   connect(source_exhaust.C_out, pressure_loss.C_in) annotation (Line(points={{27,0},{46,0}}, color={95,95,95}));
   connect(pressure_loss.C_out, outlet) annotation (Line(points={{66,0},{100,0}}, color={95,95,95}));
   connect(sink_air.C_in, refMoistAir_to_FlueGases.outlet) annotation (Line(points={{-27,0},{-50,0}}, color={95,95,95}));
-  connect(refMoistAir_to_FlueGases.inlet, inlet) annotation (Line(points={{-70,0},{-100,0}}, color={0,255,128}));
+  connect(refMoistAir_to_FlueGases.inlet, inlet) annotation (Line(points={{-70,0},{-100,0}}, color={0,127,127}));
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
