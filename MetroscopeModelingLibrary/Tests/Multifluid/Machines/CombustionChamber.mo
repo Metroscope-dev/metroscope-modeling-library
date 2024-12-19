@@ -12,12 +12,12 @@ model CombustionChamber
   input Units.SpecificEnthalpy h_fuel(start=0.9e6);
   input Units.PositiveMassFlowRate Q_fuel(start=15);
 
-  input Units.SpecificEnthalpy LHV_plant(start=47276868) "Directly assigned in combustion chamber modifiers";
+  //input Units.SpecificEnthalpy LHV_plant(start=47276868) "Directly assigned in combustion chamber modifiers";
 
   // Parameters
   parameter Units.FrictionCoefficient combustion_chamber_Kfr = 0.1;
 
-  MultiFluid.Machines.CombustionChamber combustion_chamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MultiFluid.Machines.CombustionChamber combustion_chamber annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -33,14 +33,15 @@ equation
   source_air.Xi_out = {0.768,0.232,0.0,0.0,0.0};
 
   source_fuel.P_out = P_fuel;
-  source_fuel.h_out = h_fuel;
+  source_fuel.T_out = 160 + 273.15;
   source_fuel.Q_out = - Q_fuel;
-  source_fuel.X_molar_CH4=0.92;
+  source_fuel.X_molar_CH4=0.92 - time*0.1;
   source_fuel.X_molar_C2H6=0.048;
   source_fuel.X_molar_C3H8=0.005;
   source_fuel.X_molar_C4H10_n_butane=0.002;
   source_fuel.X_molar_N2=0.015;
   source_fuel.X_molar_CO2=0.01;
+  source_fuel.X_molar_H2=0.0 + time*0.1;
 
   // Parameters
   combustion_chamber.Kfr = combustion_chamber_Kfr;

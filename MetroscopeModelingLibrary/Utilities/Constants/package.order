@@ -21,6 +21,7 @@ kgs_to_lbs
 kgs_to_Mlbh
 kgs_to_lbh
 m_H
+m_H2
 m_C
 m_O
 m_CH4
@@ -37,3 +38,15 @@ hhv_molar_C3H8
 hhv_mass_C3H8
 hhv_molar_C4H10
 hhv_mass_C4H10
+hhv_molar_H2
+hhv_mass_H2
+lhv_molar_CH4
+lhv_mass_CH4
+lhv_molar_C2H6
+lhv_mass_C2H6
+lhv_molar_C3H8
+lhv_mass_C3H8
+lhv_molar_C4H10
+lhv_mass_C4H10
+lhv_molar_H2
+lhv_mass_H2

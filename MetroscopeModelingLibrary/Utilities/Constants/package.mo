@@ -38,6 +38,7 @@ package Constants "Stores all constants used in MML"
 
   // Atomic/Molecular masses
   final constant Units.AtomicMass m_H = 1.00798;
+  final constant Units.AtomicMass m_H2 = m_H*2;
   final constant Units.AtomicMass m_C = 12.0106;
   final constant Units.AtomicMass m_O = 15.9994;
   final constant Units.MolecularMass m_CH4 = m_C + m_H*4;
@@ -60,6 +61,27 @@ package Constants "Stores all constants used in MML"
   // n-Butane C4H10
   final constant Real hhv_molar_C4H10 = 2879.63 "kJ/mol";
   final constant Real hhv_mass_C4H10 = hhv_molar_C4H10/m_C4H10 "MJ/kg";
+  // Hydrogen H2
+  final constant Real hhv_molar_H2 = 286.13 "kJ/mol";
+  final constant Real hhv_mass_H2 = hhv_molar_H2/m_H2 "MJ/kg";
+
+
+  // Heating values: based on ISO 6976 at 25°C
+  // Methane CH4
+  final constant Real lhv_molar_CH4 = 802.69 "kJ/mol";
+  final constant Real lhv_mass_CH4 = lhv_molar_CH4/m_CH4 "MJ/kg";
+  // Ethane C2H6
+  final constant Real lhv_molar_C2H6 = 1428.83 "kJ/mol";
+  final constant Real lhv_mass_C2H6 = lhv_molar_C2H6/m_C2H6 "MJ/kg";
+  // Propane C3H8
+  final constant Real lhv_molar_C3H8 = 2043.35 "kJ/mol";
+  final constant Real lhv_mass_C3H8 = lhv_molar_C3H8/m_C3H8 "MJ/kg";
+  // n-Butane C4H10
+  final constant Real lhv_molar_C4H10 = 2657.58 "kJ/mol";
+  final constant Real lhv_mass_C4H10 = lhv_molar_C4H10/m_C4H10 "MJ/kg";
+  // Hydrogen H2
+  final constant Real lhv_molar_H2 = 241.72 "kJ/mol";
+  final constant Real lhv_mass_H2 = lhv_molar_H2/m_H2 "MJ/kg";
 
   annotation (
   Icon(coordinateSystem(extent={{-100.0,-100.0},{100.0,100.0}}), graphics={
