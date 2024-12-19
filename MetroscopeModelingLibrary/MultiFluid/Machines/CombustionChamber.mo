@@ -53,10 +53,10 @@ model CombustionChamber
   Units.MassFraction X_fuel_O(start=0) "O mass fraction in the fuel";
 
   // Heating values
-  Units.SpecificEnthalpy HHV = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg can be assigned in component modifiers";
+  Units.SpecificEnthalpy HHV = (hhv_mass_H2*X_fuel_H2 + hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg can be assigned in component modifiers";
   Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  X_fuel_H*1e4 "J/kg can be assigned in component modifiers";
   Units.SpecificEnthalpy LHV_test = (lhv_mass_H2*X_fuel_H2 + lhv_mass_CH4*X_fuel_CH4 + lhv_mass_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
-
+  Real diff = HHV - LHV_test;
   // Initialization parameters
   parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
 
