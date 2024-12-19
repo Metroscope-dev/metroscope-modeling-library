@@ -44,14 +44,15 @@ model CombustionChamber
   Units.MassFraction X_fuel_C4H10_n_butane(start=0.002);
   Units.MassFraction X_fuel_N2(start=0.015);
   Units.MassFraction X_fuel_CO2(start=0.01);
+  Units.MassFraction X_fuel_H2(start=0.01);
 
   Units.MassFraction X_fuel_C(start=0.8) "C mass fraction in the fuel";
   Units.MassFraction X_fuel_H(start=0.2) "H mass fraction in the fuel";
   Units.MassFraction X_fuel_O(start=0) "O mass fraction in the fuel";
 
   // Heating values
-  Units.SpecificEnthalpy HHV = (hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg can be assigned in component modifiers";
-  Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10)*1e4 "J/kg can be assigned in component modifiers";
+  Units.SpecificEnthalpy HHV = (hhv_mass_H2*X_fuel_H2 + hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg can be assigned in component modifiers";
+  Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  X_fuel_H*1e4 "J/kg can be assigned in component modifiers";
 
   // Initialization parameters
   parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
@@ -72,10 +73,10 @@ equation
   Q_air = sink_air.Q_in;
   Q_fuel = sink_fuel.Q_in;
   Q_exhaust = - source_exhaust.Q_out;
+  h_exhaust = source_exhaust.h_out;
 
   h_in_air = sink_air.h_in;
   h_in_fuel = sink_fuel.h_in;
-  h_exhaust = source_exhaust.h_out;
 
   X_in_N2 = sink_air.Xi_in[1];
   X_in_O2 = sink_air.Xi_in[2];
@@ -89,6 +90,7 @@ equation
   X_fuel_C4H10_n_butane=  sink_fuel.Xi_in[4]; //butane
   X_fuel_N2=  sink_fuel.Xi_in[5]; // nitrogen
   X_fuel_CO2=  sink_fuel.Xi_in[6]; // carbon dioxyde
+  X_fuel_H2=  sink_fuel.Xi_in[7]; // hydrogen
 
   // Final quantities
   X_out_N2 = source_exhaust.Xi_out[1];
@@ -112,7 +114,7 @@ equation
   // Chemical balance
   // Quantity of reactants in fuel
   X_fuel_C  = m_C*(X_fuel_CH4/m_CH4 + 2*X_fuel_C2H6/m_C2H6 + 3*X_fuel_C3H8/m_C3H8 + 4*X_fuel_C4H10_n_butane/m_C4H10 + X_fuel_CO2/m_CO2);
-  X_fuel_H  = m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10);
+  X_fuel_H  = m_H*(2*X_fuel_H2/m_H2 + 4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10);
   X_fuel_O = 2*m_O*X_fuel_CO2/m_CO2;
 
   // Mass balance for all species
@@ -131,11 +133,6 @@ equation
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2})),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
