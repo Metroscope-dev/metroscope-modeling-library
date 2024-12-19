@@ -17,13 +17,11 @@ model CombustionChamber
 
   // Power released by the combustion
   Inputs.InputPower Wth;
-  Inputs.InputPower Wth_test;
 
   // Enthalpies at each connector
   Units.SpecificEnthalpy h_in_air(start=h_in_air_0);
   Units.SpecificEnthalpy h_in_fuel;
   Units.SpecificEnthalpy h_exhaust;
-  Units.SpecificEnthalpy h_exhaust_test;
 
   // Air intake composition
   Units.MassFraction X_in_N2(start=0.78);
@@ -55,8 +53,7 @@ model CombustionChamber
   // Heating values
   Units.SpecificEnthalpy HHV = (hhv_mass_H2*X_fuel_H2 + hhv_mass_CH4*X_fuel_CH4 + hhv_mass_C2H6*X_fuel_C2H6 + hhv_mass_C3H8*X_fuel_C3H8 + hhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6 "J/kg can be assigned in component modifiers";
   Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  X_fuel_H*1e4 "J/kg can be assigned in component modifiers";
-  Units.SpecificEnthalpy LHV_test = (lhv_mass_H2*X_fuel_H2 + lhv_mass_CH4*X_fuel_CH4 + lhv_mass_C2H6*X_fuel_C2H6 + lhv_mass_C3H8*X_fuel_C3H8 + lhv_mass_C4H10*X_fuel_C4H10_n_butane)*1e6;
-  Real diff = HHV - LHV_test;
+
   // Initialization parameters
   parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
 
@@ -79,7 +76,6 @@ equation
 
   h_in_air = sink_air.h_in;
   h_in_fuel = sink_fuel.h_in;
-  h_exhaust_test = source_exhaust.h_out;
 
   X_in_N2 = sink_air.Xi_in[1];
   X_in_O2 = sink_air.Xi_in[2];
@@ -112,9 +108,7 @@ equation
 
   // Energy balance
   Wth = eta*Q_fuel*LHV;
-  Wth_test = eta*Q_fuel*LHV_test;
   Q_exhaust*h_exhaust = Q_air*h_in_air + Q_fuel*h_in_fuel + Wth;
-  Q_exhaust*h_exhaust_test = Q_air*h_in_air + Q_fuel*h_in_fuel + Wth_test;
 
   // Chemical balance
   // Quantity of reactants in fuel
