@@ -73,6 +73,7 @@ equation
   Q_air = sink_air.Q_in;
   Q_fuel = sink_fuel.Q_in;
   Q_exhaust = - source_exhaust.Q_out;
+  h_exhaust = source_exhaust.h_out;
 
   h_in_air = sink_air.h_in;
   h_in_fuel = sink_fuel.h_in;
