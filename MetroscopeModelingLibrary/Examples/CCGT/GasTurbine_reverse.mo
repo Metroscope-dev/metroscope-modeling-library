@@ -22,7 +22,7 @@ model GasTurbine_reverse
   parameter Real combustionChamber_eta = 0.9999;
 
   // Inputs for calibration
-  input Units.NegativeMassFlowRate source_Q(start=500) "kg/s";
+  input Units.PositiveMassFlowRate source_Q(start=500) "kg/s";
   input Real compressor_P_out(start = 16) "barA";
   input Real compressor_T_out(start = 406) "degC";
   input Real W(start = 200) "MW";
@@ -68,7 +68,7 @@ equation
   source_fuel.P_out = P_fuel;
   source_fuel.h_out = h_fuel;
   source_fuel.Q_out = Q_fuel;
-  source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
+  source_fuel.Xi_out = {0.80,0.05,0,0,0.025,0.025,0.1};
 
   // Parameters
   combustion_chamber.Kfr = combustion_chamber_Kfr;

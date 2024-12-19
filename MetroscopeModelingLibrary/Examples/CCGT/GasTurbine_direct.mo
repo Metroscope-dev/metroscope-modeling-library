@@ -22,7 +22,7 @@ model GasTurbine_direct
   parameter Real combustionChamber_eta = 0.9999;
 
   // Inputs for calibration
-  output Units.NegativeMassFlowRate source_Q "kg/s";
+  output Units.PositiveMassFlowRate source_Q "kg/s";
   output Real compressor_P_out "barA";
   output Real compressor_T_out "degC";
   output Real W "MW";
@@ -68,7 +68,7 @@ equation
   source_fuel.P_out = P_fuel;
   source_fuel.h_out = h_fuel;
   source_fuel.Q_out = Q_fuel;
-  source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
+  source_fuel.Xi_out = {0.80,0.05,0,0,0.025,0.025,0.1};
 
   // Parameters
   combustion_chamber.Kfr = combustion_chamber_Kfr;
