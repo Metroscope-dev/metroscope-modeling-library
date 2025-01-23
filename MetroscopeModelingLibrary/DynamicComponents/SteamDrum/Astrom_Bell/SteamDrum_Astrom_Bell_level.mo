@@ -241,7 +241,7 @@ equation
   W_evap = k_corr*K_conv_fg*(0.5*(T_fg_in + T_fg_out) - T_s)*(A_fg_tubes + eta_fins*A_fg_fins);
 
   // Drum level output
-  drum_level = l;
+  drum_level = l - l_0;
 
 initial equation
   if not steady_state then
