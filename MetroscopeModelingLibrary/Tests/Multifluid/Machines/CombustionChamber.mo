@@ -33,14 +33,16 @@ equation
   source_air.Xi_out = {0.768,0.232,0.0,0.0,0.0};
 
   source_fuel.P_out = P_fuel;
-  source_fuel.h_out = h_fuel;
+  source_fuel.T_out = 160 + 273.15;
   source_fuel.Q_out = - Q_fuel;
-  source_fuel.X_molar_CH4=0.92;
+
+  source_fuel.X_molar_CH4=0.82;
   source_fuel.X_molar_C2H6=0.048;
   source_fuel.X_molar_C3H8=0.005;
   source_fuel.X_molar_C4H10_n_butane=0.002;
   source_fuel.X_molar_N2=0.015;
   source_fuel.X_molar_CO2=0.01;
+  source_fuel.X_molar_H2=0.1;
 
   // Parameters
   combustion_chamber.Kfr = combustion_chamber_Kfr;

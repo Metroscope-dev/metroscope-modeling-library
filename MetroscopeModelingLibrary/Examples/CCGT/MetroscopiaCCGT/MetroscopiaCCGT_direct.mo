@@ -693,7 +693,7 @@ equation
       Q_fuel_source_sensor.Q = Q_fuel_source;
       P_fuel_source_sensor.P_barA = P_fuel_source;
       T_fuel_source_sensor.T_degC = T_fuel_source;
-      source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
+      source_fuel.Xi_out = {0.80,0.05,0,0,0.025,0.025,0.1};
 
     // Air Filter
       // Quantities definition
