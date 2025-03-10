@@ -27,7 +27,7 @@ model Fogging
   WaterSteam.Pipes.HeatLoss water_evaporation(Q_0=Q_w_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-14})));
+        origin={0,-18})));
   WaterSteam.BoundaryConditions.Sink sink_w   annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -41,11 +41,15 @@ model Fogging
   WaterSteam.Pipes.PressureCut fogging_nozzle_w(Q_0=Q_w_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,14})));
+        origin={0,32})));
   FlueGases.Pipes.PressureCut pressureCut annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={40,20})));
+  WaterSteam.Pipes.HeatLoss water_conduction annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,8})));
 equation
 
   // Boundary Conditions
@@ -53,14 +57,16 @@ equation
 
   // Definitions
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(water_evaporation.P_in));
-  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(water_evaporation.P_in));
+  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(water_conduction.P_in));
+
+  water_evaporation.h_in = h_liq_sat;
   fogging_nozzle_w.Q = Q_w;
 
   // Parameters
   x_vapor = (water_evaporation.h_out - h_liq_sat)/(h_vap_sat - h_liq_sat);
 
   // Energy balance
-  water_evaporation.W + evaporative_cooling.W = 0;
+  water_evaporation.W + evaporative_cooling.W + water_conduction.W = 0;
 
   // Mixing
   source_fg.P_out = sink_w.P_in;
@@ -75,13 +81,13 @@ equation
 
   connect(evaporative_cooling.C_out, C_fg_out) annotation (Line(points={{-40,0},{100,0}},
                                                                                         color={95,95,95}));
-  connect(water_evaporation.C_out, sink_w.C_in) annotation (Line(points={{-1.77636e-15,-24},{-1.77636e-15,-27.5},{8.88178e-16,-27.5},{8.88178e-16,-39}},
-                                                                                                                                                     color={28,108,200}));
-  connect(fogging_nozzle_w.C_out, water_evaporation.C_in) annotation (Line(points={{-1.77636e-15,4},{-1.77636e-15,-1},{1.77636e-15,-1},{1.77636e-15,-4}}, color={28,108,200}));
-  connect(fogging_nozzle_w.C_in, C_water_in) annotation (Line(points={{1.77636e-15,24},{1.77636e-15,41},{0,41},{0,60}}, color={28,108,200}));
+  connect(water_evaporation.C_out, sink_w.C_in) annotation (Line(points={{-1.77636e-15,-28},{0,-27.5},{0,-39}},                                      color={28,108,200}));
+  connect(fogging_nozzle_w.C_in, C_water_in) annotation (Line(points={{1.77636e-15,42},{0,41},{0,60}},                  color={28,108,200}));
   connect(source_fg.C_out, pressureCut.C_in) annotation (Line(points={{40,39},{40,30}}, color={95,95,95}));
   connect(pressureCut.C_out, C_fg_out) annotation (Line(points={{40,10},{40,0},{100,0}}, color={95,95,95}));
   connect(evaporative_cooling.C_in, C_fg_inlet) annotation (Line(points={{-60,0},{-100,0}}, color={95,95,95}));
+  connect(fogging_nozzle_w.C_out, water_conduction.C_in) annotation (Line(points={{0,22},{0,18}}, color={28,108,200}));
+  connect(water_conduction.C_out, water_evaporation.C_in) annotation (Line(points={{0,-2},{0,-8}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           extent={{-100,60},{100,-60}},
