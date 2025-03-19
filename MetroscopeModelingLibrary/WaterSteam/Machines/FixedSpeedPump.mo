@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.WaterSteam.Machines;
-model Pump
+model FixedSpeedPump
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-  extends Partial.Machines.Pump(
+  extends Partial.Machines.FixedSpeedPump(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium)
@@ -29,17 +29,5 @@ model Pump
           fillPattern=FillPattern.Solid),
         Line(points={{-80,0},{80,0}}),
         Line(points={{80,0},{2,60}}),
-        Line(points={{80,0},{0,-60}}),
-        Line(
-          points={{70,90},{100,100}},
-          color={0,0,0},
-          thickness=0.5),
-        Line(
-          points={{90,70},{100,100}},
-          color={0,0,0},
-          thickness=0.5),
-        Line(
-          points={{-100,-100},{100,100}},
-          color={0,0,0},
-          thickness=0.5)}));
-end Pump;
+        Line(points={{80,0},{0,-60}})}));
+end FixedSpeedPump;
