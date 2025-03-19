@@ -7,7 +7,7 @@ partial model FixedSpeedPump
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Real rh "Hydraulic efficiency"; // Function of Qv
+  Unit.Yield rh "Hydraulic efficiency"; // Function of Qv
   Units.Height hn(start=10) "Pump head"; // Function of Qv
 
   Units.Power Wh "Hydraulic power";
