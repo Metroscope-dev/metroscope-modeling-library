@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
-model SlideValve_reverse_connector
+model SlideValve_direct_connector
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source(h_out(start=1e6)) annotation (Placement(transformation(extent={{-194,-10},{-174,10}})));
@@ -9,7 +9,8 @@ model SlideValve_reverse_connector
         origin={-6,-6.10623e-16})));
 
   MetroscopeModelingLibrary.WaterSteam.Pipes.SlideValve_connector
-                                                        slide_valve annotation (Placement(transformation(extent={{-78.5,-5.93938},{-45.5,26.7272}})));
+                                                        slide_valve(Cv_constant=80934.94)
+                                                                    annotation (Placement(transformation(extent={{-78.5,-5.93938},{-45.5,26.7272}})));
 
   Sensors_Control.WaterSteam.PressureSensor P_out_sensor(sensor_function="Calibration",
                                                          init_P=9) annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
@@ -34,14 +35,14 @@ model SlideValve_reverse_connector
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-100,22}), iconTransformation(extent={{-294,-44},{-254,-4}})));
-  Utilities.Interfaces.RealInput P_out annotation (Placement(transformation(
+  Utilities.Interfaces.RealOutput P_out annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-28,22}), iconTransformation(extent={{-280,-16},{-240,24}})));
-  Utilities.Interfaces.RealOutput Cv annotation (Placement(transformation(
+  Utilities.Interfaces.RealInput Cv annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
-        origin={-62,40}), iconTransformation(extent={{-266,-42},{-246,-22}})));
+        origin={-62,42}), iconTransformation(extent={{-394,-120},{-354,-80}})));
 equation
 
   connect(slide_valve.C_out, P_out_sensor.C_in) annotation (Line(points={{-45.5,-1.81818e-06},{-42,-1.81818e-06},{-42,0},{-38,0}}, color={28,108,200}));
@@ -54,6 +55,6 @@ equation
   connect(P_in_sensor.P_sensor, P_in) annotation (Line(points={{-130,10},{-130,22}}, color={0,0,127}));
   connect(Q_in_sensor.Q_sensor, Q_in) annotation (Line(points={{-100,10},{-100,22}}, color={0,0,127}));
   connect(P_out_sensor.P_sensor, P_out) annotation (Line(points={{-28,10},{-28,22}}, color={0,0,127}));
-  connect(Cv, slide_valve.Cv_signal) annotation (Line(points={{-62,40},{-62,24.0545}}, color={0,0,127}));
+  connect(slide_valve.Cv_signal, Cv) annotation (Line(points={{-62,24.0545},{-62,42}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-240,-100},{20,100}})),  Icon(coordinateSystem(extent={{-100,-100},{100,100}})));
-end SlideValve_reverse_connector;
+end SlideValve_direct_connector;

@@ -12,17 +12,20 @@ connector RealOutput = output Real "'output Real' as connector" annotation (
       points={{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}})}),
   Diagram(
     coordinateSystem(preserveAspectRatio=true,
-      extent={{-100.0,-100.0},{100.0,100.0}}),
+      extent={{-20,-20},{20,20}},
+      initialScale=0.2),
       graphics={
+    Text(
+      textColor={0,0,127},
+      extent={{0,-10},{0,10}},
+      textString="%name",
+        origin={-20,1.35963e-32},
+        rotation=90),
     Polygon(
       lineColor={0,0,127},
       fillColor={255,255,255},
       fillPattern=FillPattern.Solid,
-      points={{-100.0,50.0},{0.0,0.0},{-100.0,-50.0}}),
-    Text(
-      textColor={0,0,127},
-      extent={{30.0,60.0},{30.0,110.0}},
-      textString="%name")}),
+      points={{0,10},{20,0},{0,-10},{0,10}})}),
   Documentation(info="<html>
 <p>
 Connector with one output signal of type Real.

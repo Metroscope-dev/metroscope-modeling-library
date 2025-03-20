@@ -13,17 +13,19 @@ connector RealInput = input Real "'input Real' as connector" annotation (
   Diagram(
     coordinateSystem(preserveAspectRatio=true,
       initialScale=0.2,
-      extent={{-100.0,-100.0},{100.0,100.0}}),
+      extent={{-20,-20},{20,20}}),
       graphics={
     Polygon(
       lineColor={0,0,127},
       fillColor={0,0,127},
       fillPattern=FillPattern.Solid,
-      points={{0,20},{40,0},{0,-20},{0,20}}),
+      points={{0,10},{20,0},{0,-10},{0,10}}),
     Text(
       textColor={0,0,127},
-      extent={{0,30},{0,55}},
-      textString="%name")}),
+      extent={{0,-10},{0,10}},
+      textString="%name",
+        origin={-20,8.15782e-32},
+        rotation=90)}),
   Documentation(info="<html>
 <p>
 Connector with one input signal of type Real.

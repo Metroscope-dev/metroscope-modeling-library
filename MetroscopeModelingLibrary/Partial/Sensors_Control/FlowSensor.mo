@@ -24,7 +24,7 @@ partial model FlowSensor
   parameter String display_unit = "kg/s" "Specify the display unit"
     annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
   outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
-  parameter String signal_unit = "kg/s";
+  parameter String signal_unit = "kg/s" annotation (choices(choice="kg/s", choice="l/m", choice="t/h"));
 
   Utilities.Interfaces.GenericReal      Q_sensor(start=init_Q) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

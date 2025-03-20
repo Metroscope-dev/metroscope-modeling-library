@@ -7,7 +7,9 @@ model SlideValve_connector
     redeclare package Medium = WaterSteamMedium)
                                                 annotation(IconMap(primitivesVisible=false));
 
-  Utilities.Interfaces.GenericReal Cv_signal annotation (Placement(transformation(
+  parameter Real Cv_constant = 200;
+
+  Utilities.Interfaces.GenericReal Cv_signal(start=Cv_constant) annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={0,162})));
