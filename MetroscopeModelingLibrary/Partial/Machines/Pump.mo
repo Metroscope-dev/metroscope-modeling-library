@@ -57,4 +57,17 @@ equation
 
   // Hydraulic power
   Wh = Qv * DP / rh; // = Qv*rho * g*hn/rh = Q * DH = W
+  annotation (Icon(graphics={
+        Line(
+          points={{-100,-100},{100,100}},
+          color={0,0,0},
+          thickness=0.5),
+        Line(
+          points={{90,70},{100,100}},
+          color={0,0,0},
+          thickness=0.5),
+        Line(
+          points={{70,90},{100,100}},
+          color={0,0,0},
+          thickness=0.5)}));
 end Pump;
