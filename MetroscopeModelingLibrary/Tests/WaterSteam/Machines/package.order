@@ -1,5 +1,7 @@
 Pump_direct
 Pump_reverse
+FixedSpeedPump_direct
+FixedSpeedPump_reverse
 SteamTurbine_direct
 SteamTurbine_reverse
 SteamTurbineWithNozzle_direct

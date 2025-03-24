@@ -8,6 +8,18 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+- Added fixed speed pump [#526](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/526)
+
+### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 🔥 Removed 
+
+
+## MML - v3.10.0
+
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 

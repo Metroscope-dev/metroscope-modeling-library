@@ -11,7 +11,7 @@ model MetroscopiaNPP_faulty
   import MetroscopeModelingLibrary.Utilities.Units;
 
   // Heat exchangers failures
-  input Real Fault_superheater_fouling(start=0);
+  //input Real Fault_superheater_fouling(start=0);
   input Real Fault_superheater_closed_vent(start=0);
   input Real Fault_condenser_fouling(start=0);
   input Real Fault_condenser_air_intake(start=0);
@@ -49,7 +49,7 @@ equation
   steam_generator.feed_water_flow_rate_measurement_bias = Fault_mass_flow_bias;
 
   // Superheater
-  superheater.fouling = Fault_superheater_fouling;
+  //superheater.fouling = Fault_superheater_fouling;
   superheater.closed_vent = Fault_superheater_closed_vent;
   superheater.tube_rupture.Q = Fault_superheater_tube_rupture_Q + 1e-3;
 

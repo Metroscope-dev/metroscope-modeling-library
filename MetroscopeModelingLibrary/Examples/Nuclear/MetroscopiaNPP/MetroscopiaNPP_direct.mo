@@ -237,7 +237,7 @@ model MetroscopiaNPP_direct
         rotation=0,
         origin={460,60})));
     MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(extent={{290,57.7778},{310,77.7778}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.Pump extraction_pump(
+    WaterSteam.Machines.FixedSpeedPump                 extraction_pump(
     T_in_0=312.05,
     T_out_0=312.15,
     P_in_0=6980,
@@ -245,10 +245,6 @@ model MetroscopiaNPP_direct
     h_in_0=163e3,
     h_out_0=164e3,
     Q_0=1060)                                                                       annotation (Placement(transformation(extent={{380,-78},{364,-62}})));
-    MetroscopeModelingLibrary.Power.BoundaryConditions.Source LP_pump_Wm_source annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={372,-46})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor extraction_pump_T_out_sensor(
     Q_0=1060,
     P_0=700000,
@@ -310,7 +306,7 @@ model MetroscopiaNPP_direct
     Q_0=1500,
     T_0=350.05,
     h_0=322e3)                                                            annotation (Placement(transformation(extent={{114,-80},{94,-60}})));
-    MetroscopeModelingLibrary.WaterSteam.Machines.Pump feedwater_pump(
+    WaterSteam.Machines.FixedSpeedPump                 feedwater_pump(
     T_in_0=350.05,
     T_out_0=353.15,
     P_in_0=600000,
@@ -318,10 +314,6 @@ model MetroscopiaNPP_direct
     h_in_0=322e3,
     h_out_0=340e3,
     Q_0=1500)                                                                                         annotation (Placement(transformation(extent={{62,-78},{46,-62}})));
-    MetroscopeModelingLibrary.Power.BoundaryConditions.Source HP_pump_Wm_source annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={54,-46})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor HP_pump_T_out_sensor(
     Q_0=1500,
     P_0=5900000,
@@ -507,16 +499,6 @@ equation
     extraction_pump_T_out_sensor.T_degC = extraction_pump_T_out;
     extraction_pump_P_out_sensor.P_barA = extraction_pump_P_out;
 
-    // Parameters
-    extraction_pump.VRotn = 4000;
-    extraction_pump.VRot = 3950;
-    extraction_pump.rm = 0.85;
-    extraction_pump.a1 = 0;
-    extraction_pump.a2 = 0;
-    extraction_pump.b1 = 0;
-    extraction_pump.b2 = 0;
-  extraction_pump.rh_min = 0.2;
-
     // Calibrated parameters
     extraction_pump.hn = extraction_pump_hn;
     extraction_pump.rh = extraction_pump_rh;
@@ -549,16 +531,6 @@ equation
     // Quantities definitions
     HP_pump_T_out_sensor.T_degC = HP_pump_T_out;
     HP_pump_P_out_sensor.P_barA = HP_pump_P_out;
-
-    // Parameters
-    feedwater_pump.VRotn = 4000;
-    feedwater_pump.VRot = 4000;
-    feedwater_pump.rm = 0.85;
-    feedwater_pump.a1 = 0;
-    feedwater_pump.a2 = 0;
-    feedwater_pump.b1 = 0;
-    feedwater_pump.b2 = 0;
-  feedwater_pump.rh_min = 0.2;
 
       // Calibrated parameters
     feedwater_pump.hn = feedwater_pump_hn;
@@ -610,7 +582,6 @@ equation
   connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},{392.5,130},{392.5,74.2864}},
                                                                                                            color={28,108,200}));
   connect(superheater_T_out_sensor.C_out, LPT1.C_in) annotation (Line(points={{100,130},{151,130}},                             color={28,108,200}));
-  connect(extraction_pump.C_power, LP_pump_Wm_source.C_out) annotation (Line(points={{372,-61.36},{372,-50.8}}, color={244,125,35}));
   connect(extraction_pump.C_out, extraction_pump_T_out_sensor.C_in) annotation (Line(points={{364,-70},{350,-70}}, color={28,108,200}));
   connect(extraction_pump_T_out_sensor.C_out,extraction_pump_P_out_sensor. C_in) annotation (Line(points={{336,-70},{322,-70}}, color={28,108,200}));
   connect(condenser.C_hot_out, extraction_pump.C_in) annotation (Line(points={{392.5,48.2222},{392.5,-70},{380,-70}},
@@ -628,7 +599,6 @@ equation
                                                                                                                                      color={28,108,200}));
   connect(deaerator_inlet_pipe.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{166,-70},{114,-70}}, color={28,108,200}));
   connect(steam_dryer_liq_out_pipe.C_out, deaerator_outlet_pipe.C_in) annotation (Line(points={{142,-60},{142,-70},{114,-70}}, color={28,108,200}));
-  connect(feedwater_pump.C_power, HP_pump_Wm_source.C_out) annotation (Line(points={{54,-61.36},{54,-50.8}}, color={244,125,35}));
   connect(feedwater_pump.C_out, HP_pump_T_out_sensor.C_in) annotation (Line(points={{46,-70},{30,-70}}, color={28,108,200}));
   connect(HP_pump_T_out_sensor.C_out, HP_pump_P_out_sensor.C_in) annotation (Line(points={{16,-70},{4,-70}},  color={28,108,200}));
   connect(feedwater_pump.C_in, deaerator_outlet_pipe.C_out) annotation (Line(points={{62,-70},{94,-70}}, color={28,108,200}));
