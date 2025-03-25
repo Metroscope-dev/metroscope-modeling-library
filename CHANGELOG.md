@@ -9,6 +9,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 - Added fixed speed pump [#526](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/526)
+- Added opening connector to IGV component [#527](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/527)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
