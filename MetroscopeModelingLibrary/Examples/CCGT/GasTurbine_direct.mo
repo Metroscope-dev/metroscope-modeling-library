@@ -57,6 +57,7 @@ model GasTurbine_direct
   FlueGases.Machines.InletGuideVanes inletGuideVanes annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   Sensors.FlueGases.FlowSensor air_massflowrate_sensor(sensor_function="Calibration", causality="compressor_Qv_in = f(IGV_angle)")
                                                                              annotation (Placement(transformation(extent={{-132,-10},{-112,10}})));
+  Sensors.Outline.OpeningSensor IGV_angle_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-110,32},{-90,52}})));
 equation
 
   // Boundary Conditions
@@ -64,6 +65,7 @@ equation
   source_air.h_out = source_h;
   source_air.Xi_out = {0.768,0.232,0.0,0.0,0.0};
   turbine_P_out_sensor.P_barA = turbine_P_out;
+  IGV_angle_sensor.Opening = IGV_angle;
 
   source_fuel.P_out = P_fuel;
   source_fuel.h_out = h_fuel;
@@ -107,6 +109,7 @@ equation
   connect(inletGuideVanes.C_out, air_compressor.C_in) annotation (Line(points={{-95,0},{-84,0}}, color={95,95,95}));
   connect(source_air.C_out, air_massflowrate_sensor.C_in) annotation (Line(points={{-139,0},{-132,0}}, color={95,95,95}));
   connect(air_massflowrate_sensor.C_out, inletGuideVanes.C_in) annotation (Line(points={{-112,0},{-105,0}}, color={95,95,95}));
+  connect(IGV_angle_sensor.Opening, inletGuideVanes.Opening) annotation (Line(points={{-100,31.8},{-100,8}}, color={0,0,127}));
     annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
