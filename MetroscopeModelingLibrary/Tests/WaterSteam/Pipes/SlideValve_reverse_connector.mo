@@ -1,6 +1,16 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model SlideValve_reverse_connector
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
+  /*
+  Model Inputs:
+  T_in
+  P_in
+  Q_in
+  P_out
+
+  Model Outputs:
+  Cv
+  */
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source(h_out(start=1e6)) annotation (Placement(transformation(extent={{-194,-10},{-174,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
