@@ -54,10 +54,6 @@ equation
         fillColor=if sensor_function == "BC" then {238, 46, 47} elseif sensor_function == "Calibration" then {107, 175, 17} else {255, 255, 255},
         fillPattern=if sensor_function == "BC" or sensor_function == "Calibration" then FillPattern.Solid else FillPattern.None),
       Text(
-        extent={{-100,160},{100,120}},
-        textColor={85,170,255},
-        textString="%name"),
-      Text(
         extent={{-100,-120},{100,-160}},
         textColor={107,175,17},
         textString=if show_causality then "%causality" else ""),

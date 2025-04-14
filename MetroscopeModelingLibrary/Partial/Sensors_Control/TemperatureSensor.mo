@@ -38,8 +38,10 @@ equation
     T_sensor = T_degC;
   elseif signal_unit == "degF" then
     T_sensor = T_degF;
-  else
+  elseif signal_unit == "K" then
     T_sensor = T;
+  else
+    assert(false, "Unavailable unit selected for %name");
   end if;
 
   annotation (Icon(graphics={Text(
