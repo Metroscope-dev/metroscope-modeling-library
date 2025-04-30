@@ -17,6 +17,8 @@ model Source
   Real amC4H10 "C4H10 molecular mass";
   Real amCO2 "CO2 molecular mass";
   Real amN2 "H2O molecular mass";
+  Real amH2 "H2 molecular mass";
+
 
   // Fuel composition
   Utilities.Units.MassFraction X_CH4(start=0.848);
@@ -25,6 +27,7 @@ model Source
   Utilities.Units.MassFraction X_C4H10_n_butane(start=0.00668);
   Utilities.Units.MassFraction X_N2(start=0.024);
   Utilities.Units.MassFraction X_CO2(start=0.025);
+  Utilities.Units.MassFraction X_H2(start=0.0);
 
   // Mole fractions
   Real X_molar_CH4(start=0.92);
@@ -33,6 +36,7 @@ model Source
   Real X_molar_C4H10_n_butane(start=0.002);
   Real X_molar_N2(start=0.015);
   Real X_molar_CO2(start=0.01);
+  Real X_molar_H2(start=0.0);
 
   // Mean molecular mass
   Real mean_molecular_mass(start=17);
@@ -46,6 +50,7 @@ equation
   amC4H10 = 4*amC + 10*amH;
   amN2 = 2*amN;
   amCO2 = amC + 2*amO;
+  amH2 = 2*amH;
 
   // Composition mass fraction
   X_CH4 = Xi_out[1]; // methane
@@ -54,6 +59,7 @@ equation
   X_C4H10_n_butane = Xi_out[4]; // butane
   X_N2 = Xi_out[5]; // nitrogen
   X_CO2 = Xi_out[6]; // carbon dioxyde
+  X_H2 = Xi_out[7]; // carbon dioxyde
 
   // Mean Molecular Mass: this gives the correct results only if the molar fraction is given as an input, if the mass fraction is given, this quantity is useless
   mean_molecular_mass = X_molar_CH4*amCH4 + X_molar_C2H6*amC2H6 + X_molar_C3H8*amC3H8 + X_molar_C4H10_n_butane*amC4H10 + X_molar_N2*amN2 + X_molar_CO2*amCO2;
@@ -65,6 +71,7 @@ equation
   X_molar_C4H10_n_butane = X_C4H10_n_butane/amC4H10 * mean_molecular_mass;
   X_molar_N2 = X_N2/amN2 * mean_molecular_mass;
   X_molar_CO2 = X_CO2/amCO2 * mean_molecular_mass;
+  X_molar_H2 = X_H2/amH2 * mean_molecular_mass;
 
   annotation (Icon(graphics={
         Ellipse(
