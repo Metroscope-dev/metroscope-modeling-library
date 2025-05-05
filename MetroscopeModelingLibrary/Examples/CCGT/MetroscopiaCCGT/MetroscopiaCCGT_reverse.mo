@@ -118,11 +118,11 @@ model MetroscopiaCCGT_reverse
     output Units.HeatExchangeCoefficient Cond_Kth; // Condensation pressure
     output Units.VolumeFlowRate Qv_cond_cold; // Circulating water outlet temperature
     // Exctraction Pump
-    output Real pump_a3; // Exctraction pump outlet pressure
-    output Real pump_b3; // Exctraction pump outlet temperature
+    output Real pump_hn; // Exctraction pump outlet pressure
+    output Real pump_rh; // Exctraction pump outlet temperature
     // Recirculation pump
-    output Real pumpRec_a3; // Recirculation pump outlet pressure
-    output Real pumpRec_b3; // Recirculation pump outlet temperature
+    output Real pumpRec_hn; // Recirculation pump outlet pressure
+    output Real pumpRec_rh; // Recirculation pump outlet temperature
     output Units.Cv pumpRec_CV_Cvmax;// Recirculation control valve opening
 
     // Observables of interest
@@ -190,7 +190,7 @@ model MetroscopiaCCGT_reverse
         origin={-16,159})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink circulating_water_sink
     annotation (Placement(transformation(extent={{98,168},{114,184}})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.Pump pump annotation (Placement(
+  WaterSteam.Machines.FixedSpeedPump                 pump annotation (Placement(
         transformation(
         extent={{-7,-7},{7,7}},
         origin={116,131},
@@ -203,11 +203,6 @@ model MetroscopiaCCGT_reverse
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_pump_out_sensor(sensor_function="Calibration", causality="hn")
     annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={155,
             131})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source powerSource
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={116,150})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.LoopBreaker loopBreaker
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -279,16 +274,11 @@ model MetroscopiaCCGT_reverse
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-28,214})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.Pump pumpRec(Q_0=1)
+  WaterSteam.Machines.FixedSpeedPump                 pumpRec(Q_0=1)
     annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         origin={94,48.5455},
         rotation=0)));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Source pumpRec_powerSource
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={94,66})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_pumpRec_out_sensor(sensor_function="Calibration", causality="rh")
     annotation (Placement(transformation(
         extent={{5,5},{-5,-5}},
@@ -565,18 +555,10 @@ equation
       T_pump_out_sensor.T_degC = T_pump_out;
       P_pump_out_sensor.P_barA = P_pump_out;
       Q_pump_out_sensor.Q = Q_pump_out;
-      // Parameters
-      pump.VRot = 1400;
-      pump.VRotn = 1400;
-      pump.rm = 0.85;
-      pump.a1 = 0;
-      pump.a2 = 0;
-      pump.b1 = 0;
-      pump.b2 = 0;
-  pump.rh_min = 0.0001;
+
       // Calibrated parameters
-      pump.a3 = pump_a3;
-      pump.b3 = pump_b3;
+      pump.hn = pump_hn;
+      pump.rh = pump_rh;
 
     //--- Recirculation pump ---
       // Quantities definition
@@ -584,18 +566,10 @@ equation
       P_pumpRec_out_sensor.P_barA = P_pumpRec_out;
       pumpRec_opening_sensor.Opening = pumpRec_opening;
       Q_pumpRec_out_sensor.Q = Q_pumpRec_out;
-      // Parameters
-      pumpRec.VRot = 1400;
-      pumpRec.VRotn = 1400;
-      pumpRec.rm = 0.85;
-      pumpRec.a1 = 0;
-      pumpRec.a2 = 0;
-      pumpRec.b1 = 0;
-      pumpRec.b2 = 0;
-  pumpRec.rh_min = 0.0001;
+
       // Calibrated parameters
-      pumpRec.a3 = pumpRec_a3;
-      pumpRec.b3 = pumpRec_b3;
+      pumpRec.hn = pumpRec_hn;
+      pumpRec.rh = pumpRec_rh;
   pumpRec_controlValve.Cv_max = pumpRec_CV_Cvmax;
 
   connect(HPsuperheater1.C_cold_out, T_w_HPSH1_out_sensor.C_in) annotation (
@@ -621,9 +595,6 @@ equation
                     color={28,108,200}));
   connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{52,144.778},{52,131},{109,131}},
                               color={28,108,200}));
-  connect(powerSource.C_out, pump.C_power)
-    annotation (Line(points={{116,145.2},{116,138.56}},
-                                                   color={244,125,35}));
   connect(HPsuperheater1.C_cold_in, P_w_evap_out_sensor.C_out) annotation (Line(
         points={{-144,-2},{-144,8},{-46,8}},  color={28,108,200}));
   connect(evaporator.C_cold_out, P_w_evap_out_sensor.C_in) annotation (Line(
@@ -679,9 +650,6 @@ equation
         points={{142,131},{150,131}},             color={28,108,200}));
   connect(P_pump_out_sensor.C_out, Q_pump_out_sensor.C_in) annotation (Line(
         points={{160,131},{166,131}},             color={28,108,200}));
-  connect(pumpRec.C_power, pumpRec_powerSource.C_out)
-    annotation (Line(points={{94,56.1055},{94,61.2}},
-                                                    color={244,125,35}));
   connect(P_pumpRec_out_sensor.C_out, Q_pumpRec_out_sensor.C_in)
     annotation (Line(points={{136,48.5455},{140,48.5455}},
                                                color={28,108,200}));
