@@ -5,7 +5,6 @@ partial model Pipe
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Inputs.InputFrictionCoefficient Kfr(start=10) "Friction pressure loss coefficient";
   Inputs.InputDifferentialHeight delta_z(nominal=5) "Height difference between outlet and inlet";
   Units.DifferentialPressure DP_f "Singular pressure loss";
   Units.DifferentialPressure DP_z "Singular pressure loss";
@@ -14,14 +13,21 @@ partial model Pipe
   parameter Boolean faulty = false;
   Units.Percentage fouling; // Fouling coefficient
 
+  parameter Units.FrictionCoefficient Kfr_constant = -DP_0*rho_0/(Q_0*Q_0);
+  Utilities.Interfaces.GenericReal Kfr(start=Kfr_constant)        annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={0,40}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={0,40})));
 equation
-
   // Failure modes
   if not faulty then
     fouling = 0;
   end if;
 
-  DP_f = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho_in;
+  DP_f = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho_in; // homotopy((1+ fouling/100)*Kfr*Q*abs(Q)/rho_in, DP_0/Q_0*Q);
   DP_z = - rho_in*Constants.g*delta_z;
 
   DP = DP_f + DP_z;

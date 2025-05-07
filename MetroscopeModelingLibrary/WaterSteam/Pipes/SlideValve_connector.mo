@@ -6,15 +6,6 @@ model SlideValve_connector
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium)
                                                 annotation(IconMap(primitivesVisible=false));
-
-  parameter Real Cv_constant = 200;
-
-  Utilities.Interfaces.GenericReal Cv_signal(start=Cv_constant) annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={0,162})));
-equation
-Cv_signal = Cv;
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=true,
@@ -69,5 +60,6 @@ Cv_signal = Cv;
           lineColor={0,0,255},
           fillColor={127,255,0},
           fillPattern=FillPattern.Solid)}));
+equation
 
 end SlideValve_connector;

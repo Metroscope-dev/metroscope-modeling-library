@@ -35,7 +35,7 @@ equation
           lineColor={0,0,0},
           fillColor={215,215,215},
           fillPattern=FillPattern.Solid), Line(
-          points={{40,80},{40,-72},{10,-72},{12,80},{-12,80},{-10,-72},{-40,-72},{-40,80}},
+          points={{40,80},{40,-52},{10,-52},{12,50},{-10,50},{-12,-52},{-40,-52},{-40,80}},
           color={28,108,200},
           smooth=Smooth.Bezier,
           thickness=1,

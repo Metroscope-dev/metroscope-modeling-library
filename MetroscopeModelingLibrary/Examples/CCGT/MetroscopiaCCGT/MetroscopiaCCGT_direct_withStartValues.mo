@@ -93,14 +93,10 @@ model MetroscopiaCCGT_direct_withStartValues
       state_is(T(start=481.81647), h(start=2849046.8)),
       state_out(T(start=528.64996), h(start=2955357.2)),
       x_in(start=1.0),
-      h_vap_sat_in(
-               start=2700337.8),
-      h_vap_sat_out(
-                start=2777119.5),
-      h_liq_sat_in(
-               start=1462717.5),
-      h_liq_sat_out(
-                start=762682.9)),
+      h_vap_sat_in(start=2700337.8),
+      h_vap_sat_out(start=2777119.5),
+      h_liq_sat_in(start=1462717.5),
+      h_liq_sat_out(start=762682.9)),
     HPsuperheater1(
       C_cold_in(
         P(start=12000000.0),
@@ -193,30 +189,7 @@ model MetroscopiaCCGT_direct_withStartValues
         h_out(start=908245.6),
         rho(start=0.43560895),
         state_in(T(start=884.8291)),
-        state_out(T(start=842.38007))),
-      hot_side_pipe(
-        C_in(
-          P(start=110000.0),
-          Q(start=510.5244),
-          h_outflow(start=0.0)),
-        C_out(
-          P(start=110000.0),
-          Q(start=-510.5244),
-          h_outflow(start=958153.94)),
-        DP(start=0.0),
-        DP_f(start=0.0),
-        DP_z(start=0.0),
-        P_in(start=110000.0),
-        P_out(start=110000.0),
-        Q(start=510.5244),
-        T_in(start=884.8291),
-        T_out(start=884.8291),
-        h(start=958153.94),
-        h_in(start=958153.94),
-        h_out(start=958153.94),
-        rho(start=0.42490312),
-        state_in(T(start=884.8291)),
-        state_out(T(start=884.8291)))),
+        state_out(T(start=842.38007)))),
     HPsuperheater2(
       C_cold_in(
         P(start=11600000.0),
@@ -309,30 +282,7 @@ model MetroscopiaCCGT_direct_withStartValues
         h_out(start=958153.94),
         rho(start=0.4167522),
         state_in(T(start=920.1309)),
-        state_out(T(start=884.8291))),
-      hot_side_pipe(
-        C_in(
-          P(start=110000.0),
-          Q(start=510.5244),
-          h_outflow(start=0.0)),
-        C_out(
-          P(start=110000.0),
-          Q(start=-510.5244),
-          h_outflow(start=1000000.0)),
-        DP(start=0.0),
-        DP_f(start=0.0),
-        DP_z(start=0.0),
-        P_in(start=110000.0),
-        P_out(start=110000.0),
-        Q(start=510.5244),
-        T_in(start=920.1309),
-        T_out(start=920.1309),
-        h(start=1000000.0),
-        h_in(start=1000000.0),
-        h_out(start=1000000.0),
-        rho(start=0.40860128),
-        state_in(T(start=920.1309)),
-        state_out(T(start=920.1309)))),
+        state_out(T(start=884.8291)))),
     LHV_plant(start=48130000.0),
     LPST_control_valve(
       C_in(
@@ -379,14 +329,10 @@ model MetroscopiaCCGT_direct_withStartValues
       state_is(T(start=306.01938), h(start=2258843.2)),
       state_out(T(start=306.01807), h(start=2421463.8)),
       x_in(start=1.0),
-      h_vap_sat_in(
-               start=2768302.2),
-      h_vap_sat_out(
-                start=2560765.0),
-      h_liq_sat_in(
-               start=721017.9),
-      h_liq_sat_out(
-                start=137765.12)),
+      h_vap_sat_in(start=2768302.2),
+      h_vap_sat_out(start=2560765.0),
+      h_liq_sat_in(start=721017.9),
+      h_liq_sat_out(start=137765.12)),
     P_Cond(start=0.05),
     P_Cond_sensor(
       C_in(
@@ -847,30 +793,7 @@ model MetroscopiaCCGT_direct_withStartValues
         h_out(start=888187.2),
         rho(start=0.4509584),
         state_in(T(start=842.38007)),
-        state_out(T(start=825.2085))),
-      hot_side_pipe(
-        C_in(
-          P(start=110000.0),
-          Q(start=510.5244),
-          h_outflow(start=0.0)),
-        C_out(
-          P(start=110000.0),
-          Q(start=-510.5244),
-          h_outflow(start=908245.6)),
-        DP(start=0.0),
-        DP_f(start=0.0),
-        DP_z(start=0.0),
-        P_in(start=110000.0),
-        P_out(start=110000.0),
-        Q(start=510.5244),
-        T_in(start=842.38007),
-        T_out(start=842.38007),
-        h(start=908245.6),
-        h_in(start=908245.6),
-        h_out(start=908245.6),
-        rho(start=0.44631478),
-        state_in(T(start=842.38007)),
-        state_out(T(start=842.38007)))),
+        state_out(T(start=825.2085)))),
     T_circulating_water_in_sensor(
       C_in(
         P(start=500000.0),
@@ -1476,30 +1399,7 @@ model MetroscopiaCCGT_direct_withStartValues
         h_out(start=650319.44),
         rho(start=0.51299495),
         state_in(T(start=725.2495)),
-        state_out(T(start=616.1443))),
-      hot_side_pipe(
-        C_in(
-          P(start=110000.0),
-          Q(start=510.5244),
-          h_outflow(start=0.0)),
-        C_out(
-          P(start=100000.0),
-          Q(start=-510.5244),
-          h_outflow(start=772973.06)),
-        DP(start=-10000.0),
-        DP_f(start=-10000.0),
-        DP_z(start=0.0),
-        P_in(start=110000.0),
-        P_out(start=100000.0),
-        Q(start=510.5244),
-        T_in(start=725.2495),
-        T_out(start=725.2495),
-        h(start=772973.06),
-        h_in(start=772973.06),
-        h_out(start=772973.06),
-        rho(start=0.49483284),
-        state_in(T(start=725.2495)),
-        state_out(T(start=725.2495)))),
+        state_out(T(start=616.1443)))),
     evaporator(
       C_cold_in(
         P(start=12000000.0),
@@ -1616,29 +1516,6 @@ model MetroscopiaCCGT_direct_withStartValues
         rho(start=0.51748085),
         state_in(T(start=727.82007)),
         state_out(T(start=725.2495))),
-      hot_side_pipe(
-        C_in(
-          P(start=110000.0),
-          Q(start=510.5244),
-          h_outflow(start=0.0)),
-        C_out(
-          P(start=110000.0),
-          Q(start=-510.5244),
-          h_outflow(start=888187.2)),
-        DP(start=0.0),
-        DP_f(start=0.0),
-        DP_z(start=0.0),
-        P_in(start=110000.0),
-        P_out(start=110000.0),
-        Q(start=510.5244),
-        T_in(start=825.2085),
-        T_out(start=825.2085),
-        h(start=888187.2),
-        h_in(start=888187.2),
-        h_out(start=888187.2),
-        rho(start=0.45560202),
-        state_in(T(start=825.2085)),
-        state_out(T(start=825.2085))),
       hot_side_vaporising(
         C_in(
           P(start=110000.0),

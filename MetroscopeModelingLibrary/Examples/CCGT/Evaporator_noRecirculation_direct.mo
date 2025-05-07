@@ -12,8 +12,6 @@ model Evaporator_noRecirculation_direct
    // Parameters
   parameter Utilities.Units.Area S=10;
   parameter Utilities.Units.HeatExchangeCoefficient Kth=102000;
-  parameter Utilities.Units.FrictionCoefficient Kfr_hot=0;
-  parameter Utilities.Units.FrictionCoefficient Kfr_cold=1;
 
   MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent={{-38,-36},{40,36}})));
   WaterSteam.Volumes.FlashTank flashTank annotation (Placement(transformation(extent={{-26,38},{-46,58}})));
@@ -35,15 +33,13 @@ equation
 
   evaporator.S = S;
   evaporator.Kth = Kth;
-  evaporator.Kfr_hot = Kfr_hot;
-  evaporator.Kfr_cold = Kfr_cold;
 
-  connect(flashTank.C_in, evaporator.C_cold_out) annotation (Line(points={{-26,52},{-10.7,52},{-10.7,25.2}}, color={28,108,200}));
+  connect(flashTank.C_in, evaporator.C_cold_out) annotation (Line(points={{-26,52},{-14.6,52},{-14.6,28.8}}, color={28,108,200}));
   connect(flashTank.C_hot_steam, cold_steam_sink.C_in) annotation (Line(points={{-46,52},{-85,52}}, color={28,108,200}));
   connect(flashTank.C_hot_liquid, cold_liquid_sink.C_in) annotation (Line(points={{-46,44},{-76,44},{-76,-52},{-83,-52}}, color={28,108,200}));
-  connect(evaporator.C_hot_in, hot_source.C_out) annotation (Line(points={{-26.3,-0.72},{-55.65,-0.72},{-55.65,0},{-85,0}}, color={95,95,95}));
-  connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{28.3,-0.72},{45.65,-0.72},{45.65,0},{59,0}}, color={95,95,95}));
-  connect(evaporator.C_cold_in, cold_source.C_out) annotation (Line(points={{12.7,25.2},{12.7,40},{57,40}}, color={28,108,200}));
+  connect(evaporator.C_hot_in, hot_source.C_out) annotation (Line(points={{-38,0},{-55.65,0},{-55.65,0},{-85,0}},           color={95,95,95}));
+  connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{40,0},{45.65,0},{45.65,0},{59,0}},           color={95,95,95}));
+  connect(evaporator.C_cold_in, cold_source.C_out) annotation (Line(points={{16.6,28.8},{16.6,40},{57,40}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(
           extent={{-40,76},{-4,40}},

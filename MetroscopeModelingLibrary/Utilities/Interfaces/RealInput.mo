@@ -1,7 +1,13 @@
 within MetroscopeModelingLibrary.Utilities.Interfaces;
 connector RealInput = input Real "'input Real' as connector" annotation (
+  Dialog,
+  signalLogging=true,
   defaultComponentName="u",
   Icon(graphics={
+  Text(
+      extent={{-100,-160},{102,-200}},
+      textColor={0,0,0},
+      textString=DynamicSelect("",String(start))),
     Polygon(
       lineColor={0,0,127},
       fillColor={0,0,127},
@@ -22,9 +28,9 @@ connector RealInput = input Real "'input Real' as connector" annotation (
       points={{0,10},{20,0},{0,-10},{0,10}}),
     Text(
       textColor={0,0,127},
-      extent={{0,-10},{0,10}},
+      extent={{-80,-20},{0,20}},
       textString="%name",
-        origin={-20,8.15782e-32},
+        origin={-20,40},
         rotation=90)}),
   Documentation(info="<html>
 <p>

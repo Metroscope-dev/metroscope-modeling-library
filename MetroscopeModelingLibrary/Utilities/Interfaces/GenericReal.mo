@@ -6,7 +6,11 @@ connector GenericReal = Real "generic connector"         annotation (
       lineColor={0,0,127},
       fillColor={0,140,72},
       fillPattern=FillPattern.Solid,
-      points={{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}})},
+      points={{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}),
+    Text(
+      textColor={0,140,72},
+      extent={{140,100},{-140,160}},
+        textString="%name")},
     coordinateSystem(extent={{-100.0,-100.0},{100.0,100.0}},
       preserveAspectRatio=true,
       initialScale=0.2)),
@@ -22,7 +26,7 @@ connector GenericReal = Real "generic connector"         annotation (
       points={{0.0,50.0},{100.0,0.0},{0.0,-50.0},{0.0,50.0}}),
     Text(
       textColor={0,0,127},
-      extent={{-10.0,60.0},{-10.0,85.0}},
+      extent={{140,60},{-40,100}},
       textString="%name")}),
   Documentation(info="<html>
 <p>

@@ -30,7 +30,6 @@ model MetroscopiaCCGT_direct
     parameter Real T_w_eco_in = 85 "degC"; // Controlled by the economizer recirculation pump flow rate
     // Evaporator
     parameter Real Evap_x_steam_out=1;
-    parameter Units.FrictionCoefficient Evap_Kfr_cold=0;
     // High Pressure Superheater
     parameter String HPSH_QCp_max_side = "hot";
     // High Pressure Superheater 2
@@ -94,7 +93,6 @@ model MetroscopiaCCGT_direct
     parameter Real turbine_eta_is = 0.8304104; // Gas turbine power output
     // Economizer
     parameter Units.HeatExchangeCoefficient Eco_Kth=3104.9373; // Economizer water outlet temperature
-    parameter Units.FrictionCoefficient Eco_Kfr_hot=0.022388678; // Gas turbine outlet pressure
     parameter Units.FrictionCoefficient Eco_Kfr_cold=973146.4; // Economizer water outlet pressure
     // Evaporator
     parameter Units.Cv Evap_CV_Cvmax=539.1173; // Evaporator control valve opening
@@ -667,6 +665,12 @@ model MetroscopiaCCGT_direct
         rotation=180,
         origin={-90,180})));
   Sensors.MoistAir.RelativeHumiditySensor H_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-694,-6},{-682,6}})));
+  FlueGases.Pipes.Pipe HRSG_friction annotation (Placement(transformation(extent={{40,10},{60,-10}})));
+  Utilities.Interfaces.RealInput HRSG_Kfr(start=0.022388678)
+                                          annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={50,-20}), iconTransformation(extent={{-36,-16},{4,24}})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -728,6 +732,7 @@ equation
       T_flue_gas_sink_sensor.T_degC = T_flue_gas_sink;
 
   // --- Water / Steam Circuit
+    HRSG_friction.delta_z = 0;
 
     // Economizer
       // Quantities definition
@@ -740,7 +745,6 @@ equation
       T_w_eco_in_sensor.T_degC = T_w_eco_in;
       // Calibrated parameters
       economiser.Kth = Eco_Kth;
-      economiser.Kfr_hot = Eco_Kfr_hot;
       economiser.Kfr_cold = Eco_Kfr_cold;
 
     // Evaporator
@@ -750,11 +754,9 @@ equation
       Evap_opening_sensor.Opening = Evap_opening;
       // Parameters
       evaporator.S = 100;
-      evaporator.Kfr_hot = 0;
       // Calibrated parameters
   Evap_controlValve.Cv_max = Evap_CV_Cvmax;
       evaporator.Kth = Evap_Kth;
-      evaporator.Kfr_cold = Evap_Kfr_cold;
 
     // HP Superheater 1
       // Quantities definition
@@ -764,7 +766,6 @@ equation
       HPsuperheater1.S = 100;
       HPsuperheater1.nominal_cold_side_temperature_rise = 250;
       HPsuperheater1.nominal_hot_side_temperature_drop = 180;
-      HPsuperheater1.Kfr_hot = 0;
       // Calibrated parameters
       HPsuperheater1.Kth = HPSH1_Kth;
       HPsuperheater1.Kfr_cold = HPSH1_Kfr_cold;
@@ -776,7 +777,6 @@ equation
       HPsuperheater2.S = 100;
       HPsuperheater2.nominal_cold_side_temperature_rise = 150;
       HPsuperheater2.nominal_hot_side_temperature_drop = 180;
-      HPsuperheater2.Kfr_hot = 0;
       T_w_HPSH2_out_sensor.T_degC = T_w_HPSH2_out;
       // Calibrated parameters
       HPsuperheater2.Kth = HPSH2_Kth;
@@ -797,7 +797,6 @@ equation
       Reheater.S = 100;
       Reheater.nominal_cold_side_temperature_rise = 100;
       Reheater.nominal_hot_side_temperature_drop = 180;
-      Reheater.Kfr_hot = 0;
       // Calibrated parameters
       Reheater.Kth = ReH_Kth;
       Reheater.Kfr_cold = ReH_Kfr_cold;
@@ -911,9 +910,6 @@ equation
         points={{-23.4,15.8},{-22,15.8},{-22,34},{-34,34}},
                                                         color={28,108,200},
       pattern=LinePattern.Dash,
-      thickness=1));
-  connect(evaporator.C_hot_out, economiser.C_hot_in) annotation (Line(points={{6,-1},{84,-1},{84,-0.25}},
-                                                         color={95,95,95},
       thickness=1));
   connect(gasTurbine.C_out, turbine_T_out_sensor.C_in)
     annotation (Line(points={{-382,-0.5},{-382,-1},{-370,-1}},
@@ -1133,6 +1129,9 @@ equation
       points={{-694,0},{-703,0}},
       color={85,170,255},
       thickness=1));
+  connect(HRSG_friction.Kfr,HRSG_Kfr)  annotation (Line(points={{50,-4},{50,-20}}, color={0,0,127}));
+  connect(evaporator.C_hot_out, HRSG_friction.C_in) annotation (Line(points={{6,-1},{22,-1},{22,0},{40,0}}, color={95,95,95}));
+  connect(HRSG_friction.C_out, economiser.C_hot_in) annotation (Line(points={{60,0},{84,0},{84,-0.25}}, color={95,95,95}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,300}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,300}}),

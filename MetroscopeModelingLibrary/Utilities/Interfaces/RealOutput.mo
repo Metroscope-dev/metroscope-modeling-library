@@ -17,9 +17,9 @@ connector RealOutput = output Real "'output Real' as connector" annotation (
       graphics={
     Text(
       textColor={0,0,127},
-      extent={{0,-10},{0,10}},
+      extent={{-80,-20},{0,20}},
       textString="%name",
-        origin={-20,1.35963e-32},
+        origin={-20,40},
         rotation=90),
     Polygon(
       lineColor={0,0,127},

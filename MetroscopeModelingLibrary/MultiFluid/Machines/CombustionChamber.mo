@@ -12,8 +12,8 @@ model CombustionChamber
 
   // Performance parameters
   //Inputs.Input
-  Inputs.InputFrictionCoefficient Kfr(start=0);
-  Inputs.InputReal eta(start=0.99457); // The value given is found in performance document of GE
+  parameter Units.FrictionCoefficient Kfr_constant = 0;
+  parameter Real eta_constant=0.99457; // The value given is found in performance document of GE
 
   // Power released by the combustion
   Inputs.InputPower Wth;
@@ -66,6 +66,20 @@ model CombustionChamber
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
   FlueGases.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
   FlueGases.Pipes.Pipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
+  Utilities.Interfaces.GenericReal Kfr(start=Kfr_constant) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-20,108}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-20,108})));
+  Utilities.Interfaces.GenericReal eta(start=eta_constant) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={20,100}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={20,108})));
 equation
 
   // Definitions
@@ -131,11 +145,6 @@ equation
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2})),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},

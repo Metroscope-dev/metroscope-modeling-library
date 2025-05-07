@@ -9,8 +9,6 @@ partial model FlowSensor
 
   parameter Units.VolumeFlowRate Qv_0 = Q_0/1000;
 
-  parameter Real init_Q = 1;
-
   Units.VolumeFlowRate Qv(start=Qv_0, nominal=Qv_0);
   Real Q_lm(start=Qv_0*Constants.m3s_to_lm, nominal=Qv_0*Constants.m3s_to_lm); // Flow rate in liter per minute;
 
@@ -23,10 +21,10 @@ partial model FlowSensor
 
   parameter String display_unit = "kg/s" "Specify the display unit"
     annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
   parameter String signal_unit = "kg/s" annotation (choices(choice="kg/s", choice="l/m", choice="t/h"));
 
-  Utilities.Interfaces.GenericReal      Q_sensor(start=init_Q) annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal      Q_sensor(start=Q_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,100}), iconTransformation(
