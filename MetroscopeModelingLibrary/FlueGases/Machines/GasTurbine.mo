@@ -14,7 +14,7 @@ model GasTurbine
 
   parameter Units.Yield eta_is_constant = 0.8;
   Inputs.InputReal tau(start=15, min = 1) "Compression rate";
-  Inputs.InputReal eta_mech(start=1, min=0, max=1) "Nominal mechanical efficiency";
+  parameter Units.Yield eta_mech = 1 "Nominal mechanical efficiency";
 
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";

@@ -1449,29 +1449,6 @@ model MetroscopiaCCGT_direct_withStartValues
         rho(start=662.2967),
         state_in(T(start=593.15), h(start=1460173.4)),
         state_out(T(start=597.8455), h(start=1491327.0))),
-      cold_side_pipe(
-        C_in(
-          P(start=12000000.0),
-          Q(start=48.0),
-          h_outflow(start=0.0)),
-        C_out(
-          P(start=12000000.0),
-          Q(start=-48.0),
-          h_outflow(start=1460173.4)),
-        DP(start=0.0),
-        DP_f(start=0.0),
-        DP_z(start=0.0),
-        P_in(start=12000000.0),
-        P_out(start=12000000.0),
-        Q(start=48.0),
-        T_in(start=593.15),
-        T_out(start=593.15),
-        h(start=1460173.4),
-        h_in(start=1460173.4),
-        h_out(start=1460173.4),
-        rho(start=669.4822),
-        state_in(T(start=593.15), h(start=1460173.4)),
-        state_out(T(start=593.15), h(start=1460173.4))),
       cold_side_vaporising(
         C_in(
           P(start=12000000.0),

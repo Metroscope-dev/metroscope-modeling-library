@@ -82,7 +82,11 @@ model FuelHeater
         origin={10,28})));
   Fuel.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
   Fuel.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_in_0=T_cold_in_0, P_0=P_cold_in_0, T_out_0=T_cold_out_0, h_out_0=h_cold_out_0) annotation (Placement(transformation(extent={{0,-10},{20,10}})));
-  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, h_0=h_hot_in_0, P_in_0=P_hot_in_0, P_out_0=P_hot_out_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.FrictionPipe hot_side_pipe(
+    Q_0=Q_hot_0,
+    h_0=h_hot_in_0,
+    P_in_0=P_hot_in_0,
+    P_out_0=P_hot_out_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={40,44})));

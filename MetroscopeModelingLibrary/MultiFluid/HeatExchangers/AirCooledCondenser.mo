@@ -105,8 +105,7 @@ model AirCooledCondenser
         rotation=270,
         origin={0,-50})));
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe hot_side_pipe annotation (
-      Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.Pipes.FrictionPipe hot_side_pipe annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-50,80})));

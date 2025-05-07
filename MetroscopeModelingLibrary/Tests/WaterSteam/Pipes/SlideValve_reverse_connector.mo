@@ -18,9 +18,6 @@ model SlideValve_reverse_connector
         rotation=0,
         origin={-6,-6.10623e-16})));
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.SlideValve_connector
-                                                        slide_valve annotation (Placement(transformation(extent={{-78.5,-5.93938},{-45.5,26.7272}})));
-
   Sensors_Control.WaterSteam.PressureSensor P_out_sensor(sensor_function="Calibration",
                                                          init_P=9) annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
   Sensors_Control.WaterSteam.TemperatureSensor T_in_sensor(

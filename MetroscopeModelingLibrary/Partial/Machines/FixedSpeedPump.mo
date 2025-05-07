@@ -7,17 +7,11 @@ partial model FixedSpeedPump
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Units.Yield rh "Hydraulic efficiency"; // Function of Qv
-  Units.Height hn(start=10) "Pump head"; // Function of Qv
-
-  Units.Power Wh "Hydraulic power";
-
+  Utilities.Interfaces.GenericReal rh annotation (Placement(transformation(extent={{-96,50},{-76,70}}), iconTransformation(extent={{-96,50},{-76,70}})));
+  Utilities.Interfaces.GenericReal hn annotation (Placement(transformation(extent={{-74,70},{-54,90}}), iconTransformation(extent={{-74,70},{-54,90}})));
 equation
 
   // Outlet variation
   DP = rho*Constants.g*hn;
   DH = Constants.g *hn/rh;
-
-  // Hydraulic power
-  Wh = Qv * DP / rh; // = Qv*rho * g*hn/rh = Q * DH = W
 end FixedSpeedPump;

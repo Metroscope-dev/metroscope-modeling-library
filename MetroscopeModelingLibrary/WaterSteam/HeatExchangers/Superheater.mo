@@ -86,19 +86,21 @@ model Superheater
     P(start=P_cold_out_0),
     h_outflow(start=h_cold_out_0))                 annotation (Placement(transformation(extent={{-10,70},{10,90}}),iconTransformation(extent={{-10,70},{10,90}})));
 
-  Pipes.Pipe cold_side_pipe(
+  Pipes.FrictionPipe cold_side_pipe(
     P_in_0=P_cold_in_0,
-    P_out_0=P_cold_out_0,   Q_0=Q_cold_0,
+    P_out_0=P_cold_out_0,
+    Q_0=Q_cold_0,
     T_0=T_cold_in_0,
-    h_0=h_cold_in_0)                      annotation (Placement(transformation(
+    h_0=h_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={16,-64})));
-  Pipes.Pipe hot_side_pipe(
+  Pipes.FrictionPipe hot_side_pipe(
     P_in_0=P_hot_in_0,
-    P_out_0=P_hot_out_0,   Q_0=Q_hot_0,
+    P_out_0=P_hot_out_0,
+    Q_0=Q_hot_0,
     T_0=T_hot_in_0,
-    h_0=h_hot_in_0)                     annotation (Placement(transformation(
+    h_0=h_hot_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-130,0})));

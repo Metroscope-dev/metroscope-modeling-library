@@ -51,8 +51,18 @@ model LiqLiqHX
   Connectors.Outlet C_hot_out(Q(start=Q_cold_0), P(start=P_hot_out_0), h_outflow(start=h_hot_out_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
   Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start=h_cold_out_0)) annotation (Placement(transformation(extent={{150,-10},{170,10}}), iconTransformation(extent={{150,-10},{170,10}})));
 
-  Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, P_in_0 = P_cold_in_0, P_out_0 = P_cold_out_0, h_0 = h_cold_in_0, T_0 = T_cold_in_0) annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
-  Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, P_in_0 = P_hot_in_0, P_out_0 = P_hot_out_0, h_0 = h_hot_in_0, T_0 = T_hot_in_0) annotation (Placement(transformation(
+  Pipes.FrictionPipe cold_side_pipe(
+    Q_0=Q_cold_0,
+    P_in_0=P_cold_in_0,
+    P_out_0=P_cold_out_0,
+    h_0=h_cold_in_0,
+    T_0=T_cold_in_0) annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
+  Pipes.FrictionPipe hot_side_pipe(
+    Q_0=Q_hot_0,
+    P_in_0=P_hot_in_0,
+    P_out_0=P_hot_out_0,
+    h_0=h_hot_in_0,
+    T_0=T_hot_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,52})));

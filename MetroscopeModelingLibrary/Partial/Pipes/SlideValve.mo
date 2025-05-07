@@ -12,9 +12,12 @@ partial model SlideValve
   parameter Real Cv_constant = 1e4;
 
   Utilities.Interfaces.GenericReal Cv(start=Cv_constant) annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={-30,140})));
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-40,110}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-40,110})));
 equation
     // Failure modes
   if not faulty then

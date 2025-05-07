@@ -665,7 +665,7 @@ model MetroscopiaCCGT_direct
         rotation=180,
         origin={-90,180})));
   Sensors.MoistAir.RelativeHumiditySensor H_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-694,-6},{-682,6}})));
-  FlueGases.Pipes.Pipe HRSG_friction annotation (Placement(transformation(extent={{40,10},{60,-10}})));
+  FlueGases.Pipes.FrictionPipe HRSG_friction annotation (Placement(transformation(extent={{40,10},{60,-10}})));
   Utilities.Interfaces.RealInput HRSG_Kfr(start=0.022388678)
                                           annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},

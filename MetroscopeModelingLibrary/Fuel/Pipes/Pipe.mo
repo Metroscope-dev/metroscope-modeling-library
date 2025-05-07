@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Fuel.Pipes;
 model Pipe
   package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
-  extends Partial.Pipes.Pipe(
+  extends Partial.Pipes.FrictionPipe
+                            (
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
     redeclare package Medium = FuelMedium) annotation(IconMap(primitivesVisible=false));

@@ -6,7 +6,7 @@ model Evaporator
     import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
     // Pressure Losses
-    Inputs.InputArea S;
+    parameter Units.Area S = 15000;
 
     // Heating
     Units.Power W_heating;
@@ -72,10 +72,6 @@ model Evaporator
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={-20,30})));
-  WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=90,
-        origin={40,50})));
   FlueGases.BaseClasses.IsoPFlowModel hot_side_heating(Q_0=Q_hot_0, P_0=P_hot_out_0, h_out_0=h_hot_out_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=180,
@@ -111,10 +107,6 @@ equation
 
   // Indicators
   T_approach = cold_side_heating.DT;
-
-    // Pressure losses
-  cold_side_pipe.delta_z=0;
-  cold_side_pipe.Kfr = 0;
 
   /* heating*/
   // Energy balance
@@ -152,13 +144,12 @@ equation
   assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
   assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
 
-  connect(C_cold_in,cold_side_pipe. C_in) annotation (Line(points={{40,80},{40,60}}, color={28,108,200}));
   connect(cold_side_vaporising.C_in,cold_side_heating. C_out) annotation (Line(points={{-10,30},{10,30}}, color={28,108,200}));
-  connect(cold_side_pipe.C_out,cold_side_heating. C_in) annotation (Line(points={{40,40},{40,30},{30,30}}, color={28,108,200}));
   connect(hot_side_vaporising.C_out,hot_side_heating. C_in) annotation (Line(points={{-10,0},{10,0}},     color={95,95,95}));
   connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,0},{100,0}},            color={95,95,95}));
   connect(cold_side_vaporising.C_out, C_cold_out) annotation (Line(points={{-30,30},{-40,30},{-40,80}}, color={28,108,200}));
   connect(hot_side_vaporising.C_in, C_hot_in) annotation (Line(points={{-30,0},{-100,0}}, color={95,95,95}));
+  connect(cold_side_heating.C_in, C_cold_in) annotation (Line(points={{30,30},{40,30},{40,80}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-100,60},{100,-60}},

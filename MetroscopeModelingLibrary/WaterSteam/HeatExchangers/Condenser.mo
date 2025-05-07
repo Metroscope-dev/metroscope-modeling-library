@@ -6,10 +6,7 @@ model Condenser
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputHeight water_height;
-  Inputs.InputFrictionCoefficient Kfr_cold;
-  Inputs.InputArea S;
-  Units.HeatExchangeCoefficient Kth;
-  Units.VolumeFlowRate Qv_cold_in(start=Q_cold_0/1e3);
+  parameter Units.Area S = 50000;
 
   parameter String QCp_max_side = "cold";
 
@@ -60,11 +57,12 @@ model Condenser
   Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0))
                                                    annotation (Placement(transformation(extent={{88,-10},{108,10}}),iconTransformation(extent={{88,-10},{108,10}})));
 
-  Pipes.Pipe cold_side_pipe(
+  Pipes.FrictionPipe cold_side_pipe(
     P_in_0=P_cold_in_0,
-    P_out_0=P_cold_out_0,   Q_0=Q_cold_0,
+    P_out_0=P_cold_out_0,
+    Q_0=Q_cold_0,
     T_0=T_cold_in_0,
-    h_0=h_cold_in_0)                      annotation (Placement(transformation(extent={{-80,30},{-60,50}})));
+    h_0=h_cold_in_0) annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
   BaseClasses.IsoPFlowModel hot_side(
     T_in_0=Tsat_0,
     T_out_0=Tsat_0,
@@ -79,10 +77,10 @@ model Condenser
     h_in_0=h_cold_in_0,
     h_out_0=h_cold_out_0,             Q_0=Q_cold_0,
     P_0=P_cold_out_0)                               annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
-  Pipes.Pipe water_height_pipe(
+  Pipes.HeightVariationPipe water_height_pipe(
     Q_0=Q_hot_0,
     P_in_0=Psat_0,
-    P_out_0=Psat_0+water_height_DP_0,
+    P_out_0=Psat_0 + water_height_DP_0,
     T_0=Tsat_0,
     h_0=h_liq_sat_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -100,6 +98,27 @@ model Condenser
         rotation=270,
         origin={-40,-18})));
 
+  Utilities.Interfaces.GenericReal Qv_cold_in annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-110,50}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-110,50})));
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-110,80}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-110,80})));
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-80,110}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-80,110})));
 equation
 
   // Failure modes
@@ -126,10 +145,8 @@ equation
   hot_side.W + cold_side.W = 0;
 
   // Pressure losses
-  cold_side_pipe.delta_z=0;
   cold_side_pipe.Kfr = Kfr_cold;
   water_height_pipe.delta_z = - water_height;
-  water_height_pipe.Kfr = 0;
   water_height_pipe.DP = water_height_DP;
 
   // Incondensables
@@ -151,7 +168,7 @@ equation
   0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*S*((T_cold_in - T_cold_out)/W));
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
-      points={{-60,40},{-52,40},{-52,0},{-24,0}},
+      points={{-60,0},{-24,0}},
       color={28,108,200},
       thickness=1));
   connect(cold_side.C_out, C_cold_out) annotation (Line(
@@ -159,7 +176,7 @@ equation
       color={28,108,200},
       thickness=1));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
-      points={{-80,40},{-90,40},{-90,0},{-100,0}},
+      points={{-80,0},{-100,0}},
       color={28,108,200},
       thickness=1));
   connect(water_height_pipe.C_out, C_hot_out) annotation (Line(

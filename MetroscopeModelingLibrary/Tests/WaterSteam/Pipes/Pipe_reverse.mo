@@ -23,7 +23,7 @@ model Pipe_reverse
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  .MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
+  .MetroscopeModelingLibrary.WaterSteam.Pipes.FrictionPipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.DeltaPressureSensor DP_sensor annotation (Placement(transformation(extent={{-10,30},{10,50}})));
 equation

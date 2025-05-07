@@ -3,7 +3,7 @@ model OpeningSensor
 
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  parameter Utilities.Units.Percentage Opening_pc_0(unit="1") = 15;
+  parameter Utilities.Units.Percentage Opening_pc_0 = 15;
   Inputs.InputPercentage Opening_pc(unit="1", start=Opening_pc_0, min=0, max=100, nominal=Opening_pc_0); // Opening in percentage
 
   // Icon parameters
@@ -11,16 +11,30 @@ model OpeningSensor
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
   parameter String causality = "" "Specify which parameter is calibrated by this sensor";
   parameter Boolean display_output = true "Used to switch ON or OFF output display";
+  parameter String output_signal_unit = "%" annotation(choices(choice="%" "percentage, between 0 and 100", choice="" "No unit, between 0 and 1"));
 
   Modelica.Blocks.Interfaces.RealOutput Opening(unit="1", min=0, max=1, nominal=Opening_pc_0/100, start=Opening_pc_0/100)
     annotation (Placement(transformation(
         extent={{-27,-27},{27,27}},
         rotation=270,
-        origin={1,-17}), iconTransformation(extent={{-27,-27},{27,27}},
+        origin={0,-20}), iconTransformation(extent={{-27,-27},{27,27}},
         rotation=270,
         origin={0,-102})));
+  Utilities.Interfaces.GenericReal opening_sensor annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={0,102}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={0,102})));
 equation
   Opening_pc = Opening * 100;
+
+  if output_signal_unit == "%" then
+    opening_sensor = Opening_pc;
+  else
+    opening_sensor = Opening;
+  end if;
   annotation (Icon(graphics={ Text(
           extent={{-100,200},{100,160}},
           textColor={0,0,0},
@@ -32,10 +46,6 @@ equation
         pattern=LinePattern.None,
         fillColor=if sensor_function == "BC" then {238, 46, 47} elseif sensor_function == "Calibration" then {107, 175, 17} else {255, 255, 255},
         fillPattern=if sensor_function == "BC" or sensor_function == "Calibration" then FillPattern.Solid else FillPattern.None),
-      Text(
-        extent={{-100,160},{100,120}},
-        textColor={85,170,255},
-        textString="%name"),
       Text(
         extent={{-100,-120},{100,-160}},
         textColor={107,175,17},

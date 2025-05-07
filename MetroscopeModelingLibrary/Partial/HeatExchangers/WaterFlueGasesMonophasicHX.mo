@@ -4,7 +4,7 @@ partial model WaterFlueGasesMonophasicHX
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputArea S;
+  parameter Units.Area S = 3000;
 
   // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
   parameter Boolean nominal_DT_default = true;
@@ -85,7 +85,12 @@ partial model WaterFlueGasesMonophasicHX
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={0,30})));
-  WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.FrictionPipe cold_side_pipe(
+    Q_0=Q_cold_0,
+    h_0=h_cold_in_0,
+    T_0=T_cold_in_0,
+    P_in_0=P_cold_in_0,
+    P_out_0=P_cold_out_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=90,
         origin={40,50})));
@@ -120,10 +125,6 @@ equation
 
   // Energy balance
   hot_side.W + cold_side.W = 0;
-
-  // Pressure losses
-  cold_side_pipe.delta_z=0;
-  //cold_side_pipe.Kfr = Kfr_cold;
 
   // Power Exchange
   HX.W = W;
