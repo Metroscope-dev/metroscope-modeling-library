@@ -3,9 +3,14 @@ model Evaporator
     extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
     package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
     import MetroscopeModelingLibrary.Utilities.Units;
+    import MetroscopeModelingLibrary.Utilities.Types;
     import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-    // Pressure Losses
+    // Config
+    parameter Types.Medium cold_medium = Types.Medium.Water;
+    parameter Types.Plant plant = Types.Plant.CCGT;
+    parameter Types.PressureLevel pressure_level = Types.PressureLevel.IP;
+    parameter Types.Line line = Types.Line.Main;
     parameter Units.Area S = 15000;
 
     // Heating
@@ -68,15 +73,15 @@ model Evaporator
         extent={{10,-10},{-10,10}},
         rotation=180,
         origin={-20,0})));
-  WaterSteam.BaseClasses.IsoPFlowModel cold_side_vaporising(Q_0=Q_cold_0, P_in_0=P_cold_out_0, h_in_0=h_liq_sat_0, h_out_0=h_vap_sat_0) annotation (Placement(transformation(
+  WaterSteam.BaseClasses.IsoPFlowModel cold_side_vaporising(medium=cold_medium, plant=plant, pressure_level=pressure_level, line=line, Q_0=Q_cold_0, P_in_0=P_cold_out_0, h_in_0=h_liq_sat_0, h_out_0=h_vap_sat_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={-20,30})));
-  FlueGases.BaseClasses.IsoPFlowModel hot_side_heating(Q_0=Q_hot_0, P_0=P_hot_out_0, h_out_0=h_hot_out_0) annotation (Placement(transformation(
+  FlueGases.BaseClasses.IsoPFlowModel hot_side_heating(plant=plant, pressure_level=pressure_level, line=line, Q_0=Q_hot_0, P_0=P_hot_out_0, h_out_0=h_hot_out_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=180,
         origin={20,0})));
-  WaterSteam.BaseClasses.IsoPFlowModel cold_side_heating(Q_0=Q_cold_0, h_in_0=h_cold_in_0, P_0=P_cold_out_0, h_out_0=h_liq_sat_0) annotation (Placement(transformation(
+  WaterSteam.BaseClasses.IsoPFlowModel cold_side_heating(medium=cold_medium, plant=plant, pressure_level=pressure_level, line=line, Q_0=Q_cold_0, h_in_0=h_cold_in_0, P_0=P_cold_out_0, h_out_0=h_liq_sat_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={20,30})));
@@ -126,7 +131,7 @@ equation
   cold_side_vaporising.W =W_vap;
 
   // Power Exchange
-  cold_side_vaporising.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
+  cold_side_vaporising.h_out = homotopy(x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat, x_steam_out * h_vap_sat_0 + (1-x_steam_out)*h_liq_sat_0);
 
   HX_vaporising.W =W_vap;
   HX_vaporising.Kth = Kth*(1-fouling/100);

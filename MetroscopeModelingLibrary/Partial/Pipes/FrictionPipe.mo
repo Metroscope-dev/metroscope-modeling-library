@@ -23,7 +23,7 @@ equation
     fouling = 0;
   end if;
 
-  DP = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho_in; // homotopy((1+ fouling/100)*Kfr*Q*abs(Q)/rho_in, DP_0/Q_0*Q);
+  DP = - homotopy((1+ fouling/100)*Kfr*Q*abs(Q)/rho_in, DP_0/Q_0*Q); // (1+ fouling/100)*Kfr*Q*abs(Q)/rho_in;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=true,

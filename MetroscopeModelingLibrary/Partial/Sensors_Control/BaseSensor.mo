@@ -1,20 +1,27 @@
 within MetroscopeModelingLibrary.Partial.Sensors_Control;
 partial model BaseSensor
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;
+  import MetroscopeModelingLibrary.Utilities.Types;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Constants;
 
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
-  import MetroscopeModelingLibrary.Utilities.Units;
 
   // Initialization parameters
-  parameter Units.PositiveMassFlowRate Q_0=100;
-  parameter Units.Pressure P_0 = 1e5;
-  parameter Units.SpecificEnthalpy h_0 = 5e5;
+    parameter Types.Plant plant = Types.Plant.Nuclear;
+  parameter Types.PressureLevel pressure_level = Types.PressureLevel.HP;
+  parameter Types.Medium medium = Types.Medium.Water;
+  parameter Types.Line line = Types.Line.Main;
+
+  parameter Units.PositiveMassFlowRate Q_0 = Constants.Q_0_values[Integer(plant), Integer(medium), Integer(pressure_level), Integer(line)];
+  parameter Units.Pressure P_0 = Constants.P_0_values[Integer(plant), Integer(medium), Integer(pressure_level), Integer(line)];
+  parameter Units.SpecificEnthalpy h_0 = Constants.h_0_values[Integer(plant), Integer(medium), Integer(pressure_level), Integer(line)];
 
   // Input Quantity
   Units.PositiveMassFlowRate Q(start=Q_0, nominal=Q_0) "Component mass flow rate";
   Units.MassFraction Xi[Medium.nXi] "Component mass fractions";
-  Units.Pressure P(start=P_0) "Pressure of the fluid into the component";
-  Units.SpecificEnthalpy h(start=h_0) "Enthalpy of the fluid into the component";
+  Units.Pressure P(start=P_0, nominal=P_0) "Pressure of the fluid into the component";
+  Units.SpecificEnthalpy h(start=h_0, nominal=h_0) "Enthalpy of the fluid into the component";
   Medium.ThermodynamicState state;
 
   // Failure modes

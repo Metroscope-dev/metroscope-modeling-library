@@ -6,5 +6,9 @@ model IsoPHFlowModel
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium,
-    Q_0 = 500, rho_0=1) annotation (IconMap(primitivesVisible=false));
+    Q_0 = 500, rho_0=1, medium=Types.Medium.FlueGases, plant=Types.Plant.CCGT) annotation (IconMap(primitivesVisible=false));
+
+  import MetroscopeModelingLibrary.Utilities.Types;
+equation
+  assert(medium == Types.Medium.FlueGases, "only flue gases medium config accepted for FlueGases flow model");
 end IsoPHFlowModel;

@@ -13,7 +13,10 @@ model FlowModel
   input Units.DifferentialPressure DP(start=1e5);
   input Units.Power W(start=1e5);
 
-  .MetroscopeModelingLibrary.WaterSteam.BaseClasses.FlowModel flowModel annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
+  .MetroscopeModelingLibrary.WaterSteam.BaseClasses.FlowModel flowModel(
+    plant=MetroscopeModelingLibrary.Utilities.Types.Plant.CCGT,
+    pressure_level=MetroscopeModelingLibrary.Utilities.Types.PressureLevel.HP,
+    medium=MetroscopeModelingLibrary.Utilities.Types.Medium.Fuel)       annotation (Placement(transformation(extent={{-23,-23},{23,23}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-99,-19},{-61,19}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{59,-20},{101,20}})));
 equation

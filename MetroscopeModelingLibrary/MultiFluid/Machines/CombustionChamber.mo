@@ -65,7 +65,6 @@ model CombustionChamber
         origin={0,-22})));
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
   FlueGases.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
-  FlueGases.Pipes.FrictionPipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
   Utilities.Interfaces.GenericReal Kfr(start=Kfr_constant) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -73,6 +72,7 @@ model CombustionChamber
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={30,110})));
+  FlueGases.Pipes.FrictionPipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
   Utilities.Interfaces.GenericReal eta(start=eta_constant) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,

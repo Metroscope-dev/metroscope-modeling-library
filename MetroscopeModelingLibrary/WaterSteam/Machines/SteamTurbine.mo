@@ -60,7 +60,7 @@ public
         origin={-90,70})));
 equation
   // Stodola's ellipse law
-  Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));
+  Q = homotopy(sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in)), Q_0/P_in_0*P_in);
 
   // Isentropic expansion
   state_is = Medium.setState_psX(P_out, Medium.specificEntropy(state_in));

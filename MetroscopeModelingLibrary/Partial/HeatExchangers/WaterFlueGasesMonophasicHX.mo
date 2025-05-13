@@ -1,9 +1,14 @@
 within MetroscopeModelingLibrary.Partial.HeatExchangers;
 partial model WaterFlueGasesMonophasicHX
 
+  import MetroscopeModelingLibrary.Utilities.Types;
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
+  parameter Types.Medium cold_medium = Types.Medium.Water;
+  parameter Types.Plant plant = Types.Plant.CCGT;
+  parameter Types.PressureLevel pressure_level = Types.PressureLevel.IP;
+  parameter Types.Line line = Types.Line.Main;
   parameter Units.Area S = 3000;
 
   // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
@@ -48,8 +53,7 @@ partial model WaterFlueGasesMonophasicHX
   // Pressures
   parameter Units.Pressure P_cold_in_0 = 170e5;
   parameter Units.Pressure P_cold_out_0 = 169.5e5;
-  parameter Units.Pressure P_hot_in_0 = 1.1e5;
-  parameter Units.Pressure P_hot_out_0 = 1.05e5;
+  parameter Units.Pressure P_hot_0 = 1.1e5;
   // Enthalpies
   parameter Units.SpecificEnthalpy h_cold_in_0 = 977378.7;
   parameter Units.SpecificEnthalpy h_cold_out_0 = 1185904.9;
@@ -64,28 +68,29 @@ partial model WaterFlueGasesMonophasicHX
   MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium.ThermodynamicState state_cold_out; // estimation of the water outlet thermodynamic state
   MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
 
-  FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
+  FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0, nominal=Q_hot_0), P(start=P_hot_0, nominal=P_hot_0)) annotation (Placement(transformation(
           extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
-  FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
+  FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0, nominal=Q_hot_0), P(start=P_hot_0, nominal=P_hot_0), h_outflow(start=h_hot_out_0, nominal=h_hot_out_0)) annotation (Placement(transformation(
           extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
-  WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(
+  WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0, nominal=Q_cold_0), P(start=P_cold_in_0, nominal=P_cold_in_0)) annotation (Placement(transformation(
           extent={{30,70},{50,90}}),   iconTransformation(extent={{30,70},{50,90}})));
-  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start= h_cold_out_0)) annotation (Placement(transformation(
+  WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0, nominal=Q_cold_0), P(start=P_cold_out_0, nominal=P_cold_out_0), h_outflow(start=h_cold_out_0, nominal=h_cold_out_0)) annotation (Placement(transformation(
           extent={{-50,72},{-30,92}}), iconTransformation(extent={{-50,70},{-30,90}})));
   Power.HeatExchange.NTUHeatExchange HX(config=config, mixed_fluid=mixed_fluid, QCp_max_side=QCp_max_side,T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={0,16})));
-  FlueGases.BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0, h_in_0=h_hot_in_0, T_out_0=T_hot_out_0, P_0=P_hot_out_0, h_out_0=h_hot_out_0) annotation (Placement(
+  FlueGases.BaseClasses.IsoPFlowModel hot_side(Q_0=Q_hot_0, h_in_0=h_hot_in_0, T_out_0=T_hot_out_0, P_0=P_hot_0, h_out_0=h_hot_out_0, plant=plant,medium=Types.Medium.FlueGases, pressure_level=pressure_level, line=line) annotation (Placement(
         transformation(
         extent={{10,-10},{-10,10}},
         rotation=180)));
-  WaterSteam.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_in_0=T_cold_in_0, P_0=P_cold_in_0, T_out_0=T_cold_out_0, h_out_0=h_cold_out_0) annotation (Placement(
+  WaterSteam.BaseClasses.IsoPFlowModel cold_side(plant=plant,medium=cold_medium, pressure_level=pressure_level,line=line, Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_in_0=T_cold_in_0, P_0=P_cold_in_0, T_out_0=T_cold_out_0, h_out_0=h_cold_out_0) annotation (Placement(
         transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={0,30})));
   WaterSteam.Pipes.FrictionPipe cold_side_pipe(
+    medium=cold_medium, pressure_level=pressure_level, plant=plant, line=line,
     Q_0=Q_cold_0,
     h_0=h_cold_in_0,
     T_0=T_cold_in_0,

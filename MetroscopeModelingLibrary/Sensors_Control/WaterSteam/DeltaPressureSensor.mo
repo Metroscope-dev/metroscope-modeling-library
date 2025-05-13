@@ -7,6 +7,7 @@ model DeltaPressureSensor
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=true));
 
+  import MetroscopeModelingLibrary.Utilities.Types;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.OutlineSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.DeltaPressureIcon;
 

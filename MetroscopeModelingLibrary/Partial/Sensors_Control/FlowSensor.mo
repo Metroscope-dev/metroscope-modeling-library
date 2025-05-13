@@ -3,10 +3,12 @@ partial model FlowSensor
   extends BaseSensor(faulty_flow_rate=faulty)                                   annotation(IconMap(primitivesVisible=true));
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.FlowIcon;
+  import MetroscopeModelingLibrary.Utilities.Types;
 
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
+  parameter Units.PositiveMassFlowRate init_Q = Q_0;
   parameter Units.VolumeFlowRate Qv_0 = Q_0/1000;
 
   Units.VolumeFlowRate Qv(start=Qv_0, nominal=Qv_0);
@@ -24,7 +26,7 @@ partial model FlowSensor
   outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
   parameter String signal_unit = "kg/s" annotation (choices(choice="kg/s", choice="l/m", choice="t/h"));
 
-  Utilities.Interfaces.GenericReal      Q_sensor(start=Q_0) annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal Q_sensor(start=init_Q) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,100}), iconTransformation(

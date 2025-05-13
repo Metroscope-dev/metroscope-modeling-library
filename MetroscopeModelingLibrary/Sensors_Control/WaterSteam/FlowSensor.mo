@@ -8,6 +8,7 @@ model FlowSensor
     redeclare MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPHFlowModel flow_model,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=true));
 
+  import MetroscopeModelingLibrary.Utilities.Types;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.WaterSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.FlowIcon;
 end FlowSensor;

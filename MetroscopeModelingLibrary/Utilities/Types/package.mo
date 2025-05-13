@@ -1,3 +1,3 @@
 within MetroscopeModelingLibrary.Utilities;
-package Functions
-end Functions;
+package Types
+end Types;

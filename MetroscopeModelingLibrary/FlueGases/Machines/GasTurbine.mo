@@ -1,16 +1,18 @@
 within MetroscopeModelingLibrary.FlueGases.Machines;
 model GasTurbine
 
+  import MetroscopeModelingLibrary.Utilities.Types;
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium,
-    Q_0 = 500, rho_0 = 1) annotation (IconMap(primitivesVisible=false));
+    DP_0=-15e5, plant=Types.Plant.CCGT, line=Types.Line.Main, medium=Types.Medium.FlueGases, pressure_level=Types.PressureLevel.HP)
+    annotation (IconMap(primitivesVisible=false));
 
   package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
-
-  import MetroscopeModelingLibrary.Utilities.Units;
-  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   parameter Units.Yield eta_is_constant = 0.8;
   Inputs.InputReal tau(start=15, min = 1) "Compression rate";

@@ -2,6 +2,7 @@ within MetroscopeModelingLibrary.Partial.BaseClasses;
 partial model IsoPHFlowModel "FlowModel with no pressure or enthalpy variations"
   extends FlowModel(P_in_0=P_0, P_out_0=P_0, T_in_0=T_0, T_out_0=T_0, h_in_0=h_0, h_out_0=h_0) annotation(IconMap(primitivesVisible=primitivesVisible));
   import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Types;
 
   // Initialization parameters
   parameter Units.Pressure P_0 = 1e5;

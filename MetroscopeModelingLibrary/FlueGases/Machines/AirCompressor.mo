@@ -1,16 +1,17 @@
 within MetroscopeModelingLibrary.FlueGases.Machines;
 model AirCompressor
 
+  import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
+  import MetroscopeModelingLibrary.Utilities.Types;
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium,
-    Q_0 = 500, rho_0 = 1) annotation (IconMap(primitivesVisible=false));
+    DP_0=15e5, plant=Types.Plant.CCGT, line=Types.Line.Main, medium=Types.Medium.FlueGases, pressure_level=Types.PressureLevel.LP) annotation (IconMap(primitivesVisible=false));
 
   package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-  import MetroscopeModelingLibrary.Utilities.Units;
-  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   parameter Real tau_constant = 15;
   parameter Real eta_is_constant = 0.8;

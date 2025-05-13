@@ -138,7 +138,6 @@ model MetroscopiaCCGT_direct
     T_hot_out_0=612.15,
     P_cold_in_0=17000533,
     P_cold_out_0=13770425,
-    P_hot_out_0=100000,
     h_cold_in_0=369317.84,
     h_cold_out_0=1459478.5,
     h_hot_in_0=772388.4,
@@ -173,8 +172,7 @@ model MetroscopiaCCGT_direct
     Q_hot_0=510.45065,
     T_cold_in_0=592.94025,
     P_cold_in_0=11720722,
-    P_cold_out_0=11720722,
-    P_hot_out_0=110000)
+    P_cold_out_0=11720722)
     annotation (Placement(transformation(extent={{-36,-22},{6,20}})));
 
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_w_evap_out_sensor(
@@ -193,8 +191,6 @@ model MetroscopiaCCGT_direct
     T_hot_out_0=835.819,
     P_cold_in_0=11720000,
     P_cold_out_0=11484281,
-    P_hot_in_0=111000,
-    P_hot_out_0=111000,
     h_cold_in_0=2691576,
     h_cold_out_0=3227785.8,
     h_hot_in_0=957089.1,
@@ -382,8 +378,6 @@ model MetroscopiaCCGT_direct
     T_hot_out_0=818.75,
     P_cold_in_0=978559.2,
     P_cold_out_0=895239.5,
-    P_hot_in_0=111000,
-    P_hot_out_0=111000,
     h_cold_in_0=2952838,
     h_cold_out_0=3159031.2,
     h_hot_in_0=907173.6,
@@ -604,8 +598,6 @@ model MetroscopiaCCGT_direct
     T_hot_out_0=878.034,
     P_cold_in_0=11484000,
     P_cold_out_0=11338000,
-    P_hot_in_0=111000,
-    P_hot_out_0=111000,
     h_cold_in_0=3100373.8,
     h_cold_out_0=3530374.2,
     h_hot_in_0=998985.06,

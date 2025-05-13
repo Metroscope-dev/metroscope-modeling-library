@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Superheater
   import MetroscopeModelingLibrary.Utilities.Units;
+  import MetroscopeModelingLibrary.Utilities.Types;
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   extends Partial.HeatExchangers.WaterFlueGasesMonophasicHX(
@@ -11,12 +12,12 @@ model Superheater
                                                     T_hot_out_0 = 565 + 273.15,
                                                     P_cold_in_0 = 130e5,
                                                     P_cold_out_0 = 129.5e5,
-                                                    P_hot_in_0 = 1.1e5,
-                                                    P_hot_out_0 = 1.05e5,
+                                                    P_hot_0 = 1.1e5,
                                                     h_cold_in_0 = 3.06e6,
                                                     h_cold_out_0 = 3.38e6,
                                                     h_hot_in_0 = 9.6e5,
-                                                    h_hot_out_0 = 9.1e5)
+                                                    h_hot_out_0 = 9.1e5,
+                                                    cold_medium = Types.Medium.Steam)
  annotation(IconMap(primitivesVisible=false));
 
  // Indicators

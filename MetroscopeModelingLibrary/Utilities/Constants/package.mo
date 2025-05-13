@@ -61,6 +61,66 @@ package Constants "Stores all constants used in MML"
   final constant Real hhv_molar_C4H10 = 2879.63 "kJ/mol";
   final constant Real hhv_mass_C4H10 = hhv_molar_C4H10/m_C4H10 "MJ/kg";
 
+  // Table layout: [PlantType : NPP/CCGT][Medium : Water/Steam/FlueGases/Fuel][Position : HP/IP/LP][Line : main/extraction]
+    // Nuclear, Water : (HP main, HP extraction), (IP main, IP extraction), (LP main, LP extraction)
+    // Nuclear, Steam : (HP main, HP extraction), (IP main, IP extraction), (LP main, LP extraction)
+    // Nuclear, FlueGases : (HP main, HP ext), (IP main, IP ext), (LP main, LP ext)
+    // Nuclear, Fuel : (HP main, HP ext), (IP main, IP ext), (LP main, LP ext)
+    // CCGT, Water : (HP main, HP ext), (IP main, IP ext), (LP main, LP ext)
+    // CCGT, Steam : (HP main, HP ext), (IP main, IP ext), (LP main, LP ext)
+    // CCGT, FlueGases : (HP main, HP ext), (IP main, IP ext), (LP main, LP ext)
+    // CCGT, Fuel : (HP main, HP ext), (IP main, IP ext), (LP main, LP ext)
+
+  constant Real Q_0_values[2, 4, 3, 2] =
+    {{{{1500, 100}, {1300, 100}, {1000, 100}},
+      {{1500, 100}, {1300, 100}, {1000, 100}},
+      {{-1, -1}, {-1, -1}, {-1, -1}},
+      {{-1, -1}, {-1, -1}, {-1, -1}}},
+     {{{120, 5}, {12, 5}, {7, 3}},
+      {{120, 5}, {130, 5}, {130, 3}},
+      {{640, 100}, {640, 100}, {640, 100}},
+      {{15, 5}, {15, 5}, {15, 5}}}};
+
+  constant Real P_0_values[2, 4, 3, 2] =
+    {{{{60e5, 60e5}, {40e5, 40e5}, {3.5e5, 3e5}},
+      {{60e5, 60e5}, {40e5, 40e5}, {3.5e5, 3e5}},
+      {{-1, -1}, {-1, -1}, {-1, -1}},
+      {{-1, -1}, {-1, -1}, {-1, -1}}},
+     {{{180e5, 180e5}, {30e5, 30e5}, {12e5, 12e5}},
+      {{120e5, 120e5}, {25e5, 25e5}, {10e5, 10e5}},
+      {{15e5, 12e5}, {1.1e5, 1.1e5}, {1e5, 1e5}},
+      {{70e5, 70e5}, {30e5, 30e5}, {30e5, 30e5}}}};
+
+  constant Real DP_0_values[2, 4, 3, 2] =
+    {{{{1e5, 0}, {1e5, 0}, {1e5, 0}},
+      {{15e5, 0}, {10e5, 0}, {3e5, 0}},
+      {{-1, -1}, {-1, -1}, {-1, -1}},
+      {{-1, -1}, {-1, -1}, {-1, -1}}},
+     {{{100e5, 0}, {30e5, 0}, {10e5, 0}},
+      {{1e5, 0}, {1e5, 0}, {1e5, 0}},
+      {{0, 0}, {0, 0}, {0.1e5, 0}},
+      {{0, 0}, {0, 0}, {0, 0}}}};
+
+  // T_0 values are in K !
+  constant Real T_0_values[2, 4, 3, 2] =
+    {{{{473.15, 473.15}, {413.15, 413.15}, {323.15, 323.15}},
+      {{500, 453.15}, {480, 480}, {473.15, 300}},
+      {{-1, -1}, {-1, -1}, {-1, -1}},
+      {{-1, -1}, {-1, -1}, {-1, -1}}},
+     {{{450, 450}, {400, 400}, {350, 350}},
+      {{780, 780}, {750, 750}, {450, 450}},
+      {{800, 800}, {600, 600}, {373.15, 373.15}},
+      {{300, 300}, {350, 350}, {350, 350}}}};
+
+  constant Real h_0_values[2, 4, 3, 2] =
+    {{{{5e5, 5e5}, {4e5, 4e5}, {3e5, 3e5}},
+      {{2e6, 2e6}, {2e6, 2e6}, {2e6, 2e6}},
+      {{5e5, 5e5}, {4e5, 4e5}, {3e5, 3e5}},
+      {{5e5, 5e5}, {4e5, 4e5}, {3e5, 3e5}}},
+     {{{5e5, 5e5}, {4e5, 4e5}, {3e5, 3e5}},
+      {{2e6, 2e6}, {2e6, 2e6}, {2e6, 2e6}},
+      {{5e6, 5e6}, {4e5, 4e5}, {3e5, 3e5}},
+      {{5e5, 5e5}, {4e5, 4e5}, {3e5, 3e5}}}};
   annotation (
   Icon(coordinateSystem(extent={{-100.0,-100.0},{100.0,100.0}}), graphics={
       Polygon(

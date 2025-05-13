@@ -2,10 +2,8 @@ within MetroscopeModelingLibrary.Examples.CCGT.MetroscopiaCCGT;
 model MetroscopiaCCGT_reverse
   import MetroscopeModelingLibrary.Utilities.Units;
 
-  // Boundary conditions
-
-    // Fuel source
-    input Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
+  // Fuel source
+  input Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
 
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
       QCp_max_side="hot")
@@ -130,11 +128,16 @@ model MetroscopiaCCGT_reverse
     display_unit="mbar",
     signal_unit="mbar")
     annotation (Placement(transformation(extent={{28,274},{40,286}})));
-  Sensors_Control.FlueGases.PressureSensor                   P_source_air_sensor(sensor_function="BC", init_P=1)
+  Sensors_Control.FlueGases.PressureSensor                   P_source_air_sensor(
+    P_0=100000,                                                                  sensor_function="BC", init_P=1)
     annotation (Placement(transformation(extent={{-646,-6},{-634,6}})));
-  Sensors_Control.FlueGases.TemperatureSensor                   T_source_air_sensor(sensor_function="BC")
+  Sensors_Control.FlueGases.TemperatureSensor                   T_source_air_sensor(sensor_function="BC",
+    T_0=297.15,
+    init_T=24)
     annotation (Placement(transformation(extent={{-626,-6},{-614,6}})));
-  Sensors_Control.FlueGases.FlowSensor                   Q_source_air_sensor(sensor_function="BC")
+  Sensors_Control.FlueGases.FlowSensor                   Q_source_air_sensor(
+    Q_0=500,                                                                 sensor_function="BC",
+    init_Q=500)
     annotation (Placement(transformation(extent={{-606,-6},{-594,6}})));
   MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_circulating_water_in_sensor(sensor_function="BC")
     annotation (Placement(transformation(
@@ -590,7 +593,7 @@ equation
   connect(evaporator.C_cold_in, T_w_eco_out_sensor.C_out) annotation (Line(
         points={{3.2,24},{3.2,34},{6,34}},                     color={28,108,200}));
   connect(condenser.C_cold_out, T_circulating_water_out_sensor.C_in)
-    annotation (Line(points={{79.6,200},{105,200}},
+    annotation (Line(points={{79.6,200},{92,200},{92,200},{105,200}},
                     color={28,108,200}));
   connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{60,185.778},{60,160},{103,160}},
                               color={28,108,200}));
@@ -621,12 +624,12 @@ equation
   connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
     annotation (Line(points={{-614,0},{-606,0}},     color={95,95,95}));
   connect(condenser.C_cold_in, P_circulating_water_in_sensor.C_out) annotation (
-     Line(points={{40,200},{5,200}},                                  color={28,
+     Line(points={{40,200},{22,200},{22,200},{5,200}},                color={28,
           108,200}));
   connect(P_LPST_in_sensor.C_out, LPsteamTurbine.C_in)
     annotation (Line(points={{-22,280},{-14,280}},  color={28,108,200}));
   connect(P_LPST_in_sensor.C_in, LPST_control_valve.C_out) annotation (Line(
-        points={{-34,280},{-44.75,280}},                                 color={
+        points={{-34,280},{-40,280},{-40,280},{-44.75,280}},             color={
           28,108,200}));
   connect(P_w_ReH_out_sensor.C_out, LPST_control_valve.C_in) annotation (Line(
         points={{-90,76},{-90,280},{-61.25,280}}, color={28,108,200}));
@@ -839,9 +842,9 @@ equation
   connect(condenser_Kth, condenser.Kth) annotation (Line(points={{40,230},{40,219.556},{44,219.556}},
                                                                                                   color={0,0,127}));
   connect(condenser.Qv_cold_in, condenser_Qv_cold_in) annotation (Line(points={{38,208.889},{27,208.889},{27,230},{20,230}},     color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}})),
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,340}})),
                                                               Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}}),
+        coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,340}}),
         graphics={Rectangle(
           extent={{-324,44},{246,-46}},
           pattern=LinePattern.None,
