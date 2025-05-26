@@ -5,24 +5,19 @@ model Reheater
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputFrictionCoefficient Kfr_hot;
-  Inputs.InputFrictionCoefficient Kfr_cold;
-
   Units.Power W;
-  Inputs.InputArea S;
-  Inputs.InputFraction level(min= 0, max=1, start = 0.3);
+  parameter Inputs.InputArea S=100;
+  parameter Inputs.InputFraction level(min=0, max=1)=0.3;
 
   // Deheating
   Units.Power W_deheat;
 
   // Condensation
   Units.Area S_cond;
-  Units.HeatExchangeCoefficient Kth_cond;
   Units.Power W_cond;
 
   // Subcooling
   Units.Area S_subc;
-  Inputs.InputHeatExchangeCoefficient Kth_subc;
   Units.Power W_subc;
 
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0);
@@ -87,15 +82,6 @@ model Reheater
     Q_0=Q_cold_0,
     T_0=T_cold_in_0,
     h_0=h_cold_in_0) annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
-  Pipes.FrictionPipe hot_side_pipe(
-    P_in_0=P_hot_in_0,
-    P_out_0=P_hot_out_0,
-    Q_0=Q_hot_0,
-    T_0=T_hot_in_0,
-    h_0=h_hot_in_0) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,56})));
   BaseClasses.IsoPFlowModel hot_side_deheating(
     T_in_0=T_hot_in_0,
     T_out_0=T_hot_in_0,
@@ -104,7 +90,7 @@ model Reheater
     P_0=P_hot_out_0)                                        annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
-        origin={101,19})));
+        origin={100,20})));
   BaseClasses.IsoPFlowModel cold_side_deheating(
     T_in_0=T_cold_out_0,
     T_out_0=T_cold_out_0,
@@ -119,7 +105,7 @@ model Reheater
     P_0=P_hot_out_0)                                         annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
-        origin={23,19})));
+        origin={20,20})));
   BaseClasses.IsoPFlowModel cold_side_condensing(
     T_in_0=0.5*(T_cold_in_0 + T_cold_out_0),
     T_out_0=T_cold_out_0,
@@ -139,7 +125,7 @@ model Reheater
     P_0=P_hot_out_0)                                         annotation (Placement(transformation(
         extent={{-23,-23},{23,23}},
         rotation=180,
-        origin={-55,19})));
+        origin={-68,20})));
   BaseClasses.IsoPFlowModel cold_side_subcooling(
     T_in_0=T_cold_in_0,
     T_out_0=0.5*(T_cold_in_0 + T_cold_out_0),
@@ -158,11 +144,38 @@ model Reheater
         rotation=90,
         origin={144,-18})));
   Pipes.Leak tube_rupture annotation (Placement(transformation(extent={{-94,-24},{-74,-4}})));
-  BaseClasses.IsoPHFlowModel final_mix_hot annotation (Placement(transformation(extent={{-58,-72},{-38,-52}})));
+  BaseClasses.IsoPHFlowModel final_mix_hot annotation (Placement(transformation(extent={{-60,-70},
+            {-40,-50}})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
 
+public
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={-130,50}), iconTransformation(extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={60,100})));
+public
+  Utilities.Interfaces.GenericReal Kth_cond annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={-110,80}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-60,100})));
+public
+  Utilities.Interfaces.GenericReal Kth_subc annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={-150,80}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-120,100})));
 equation
 
   // Failure modes
@@ -181,19 +194,13 @@ equation
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out = final_mix_cold.T_out;
                                 // A IsoPHFlowModel is necessary to have a full thermodynamic state with temperature calculation at the cold outlet
-  T_hot_in = hot_side_pipe.T_in;
+  T_hot_in = hot_side_deheating.T_in;
   T_hot_out = final_mix_hot.T_out;
   W = W_deheat + W_cond + W_subc;
 
   Tsat = hot_side_deheating.T_out;
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
-
-  // Pressure losses
-  cold_side_pipe.delta_z = 0;
-  cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z = 0;
-  hot_side_pipe.Kfr = Kfr_hot;
 
   /* Deheating */
   // Energy balance
@@ -261,16 +268,8 @@ equation
       points={{-140,0},{-162,0}},
       color={28,108,200},
       thickness=1));
-  connect(C_hot_in, hot_side_pipe.C_in) annotation (Line(
-      points={{0,80},{0,71},{1.77636e-15,71},{1.77636e-15,66}},
-      color={238,46,47},
-      thickness=1));
-  connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
-      points={{-1.77636e-15,46},{-1.77636e-15,38},{132,38},{132,19},{124,19}},
-      color={238,46,47},
-      thickness=1));
   connect(hot_side_deheating.C_out, hot_side_condensing.C_in) annotation (Line(
-      points={{78,19},{46,19}},
+      points={{77,20},{43,20}},
       color={238,46,47},
       thickness=1));
 
@@ -282,7 +281,7 @@ equation
 
   connect(partition_plate.C_in, cold_side_pipe.C_out) annotation (Line(points={{-110,-68},{-114,-68},{-114,0},{-120,0}}, color={217,67,180}));
   connect(hot_side_condensing.C_out, hot_side_subcooling.C_in) annotation (Line(
-      points={{-3.55271e-15,19},{-32,19}},
+      points={{-3,20},{-45,20}},
       color={238,46,47},
       thickness=1));
   connect(cold_side_condensing.C_in, cold_side_subcooling.C_out) annotation (
@@ -306,11 +305,19 @@ equation
       points={{-78,-34},{-114,-34},{-114,0},{-120,0}},
       color={28,108,200},
       thickness=1));
-  connect(final_mix_hot.C_out, C_hot_out) annotation (Line(points={{-38,-62},{0,-62},{0,-80}}, color={238,46,47},
+  connect(final_mix_hot.C_out, C_hot_out) annotation (Line(points={{-40,-60},{0,
+          -60},{0,-80}},                                                                       color={238,46,47},
       thickness=1));
-  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-74,-14},{-66,-14},{-66,-6},{-102,-6},{-102,-62},{-58,-62}}, color={217,67,180}));
+  connect(tube_rupture.C_out, final_mix_hot.C_in) annotation (Line(points={{-74,-14},
+          {-66,-14},{-66,-6},{-102,-6},{-102,-60},{-60,-60}},                                                                            color={217,67,180}));
   connect(hot_side_subcooling.C_out, final_mix_hot.C_in) annotation (Line(
-      points={{-78,19},{-78,18},{-102,18},{-102,-62},{-58,-62}},
+      points={{-91,20},{-100,20},{-100,-60},{-60,-60}},
+      color={255,0,0},
+      thickness=1));
+  connect(cold_side_pipe.Kfr, Kfr_cold)
+    annotation (Line(points={{-130,4},{-130,50}}, color={0,0,127}));
+  connect(hot_side_deheating.C_in, C_hot_in) annotation (Line(
+      points={{123,20},{140,20},{140,40},{0,40},{0,80}},
       color={255,0,0},
       thickness=1));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},

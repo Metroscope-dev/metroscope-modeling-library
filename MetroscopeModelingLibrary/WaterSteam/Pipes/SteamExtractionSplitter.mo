@@ -25,7 +25,7 @@ model SteamExtractionSplitter
   Units.MassFraction x_main_out(start=x_0) "Vapor mass fraction at main outlet";
   Units.MassFraction x_in(start=x_0) "Vapor mass fraction at inlet";
 
-  Inputs.InputFraction alpha(start=1) "Extraction paramater";
+  parameter Inputs.InputFraction alpha=1 "Extraction paramater";
 
   // Components
   BaseClasses.IsoPFlowModel extracted_flow(

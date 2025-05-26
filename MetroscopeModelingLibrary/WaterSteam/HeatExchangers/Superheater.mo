@@ -5,10 +5,6 @@ model Superheater
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  // Pressure Losses
-  Inputs.InputFrictionCoefficient Kfr_hot;
-  Inputs.InputFrictionCoefficient Kfr_cold;
-
   // Deheating
   Units.Power W_deheat;
 
@@ -16,7 +12,6 @@ model Superheater
   Units.Power W_cond;
   parameter String HX_config="condenser";
   Inputs.InputArea S;
-  Units.HeatExchangeCoefficient Kth;
   Units.SpecificEnthalpy h_vap_sat_hot(start=h_vap_sat_0);
   Units.SpecificEnthalpy h_liq_sat_hot(start=h_liq_sat_0);
   Units.Temperature Tsat_hot;
@@ -95,15 +90,6 @@ model Superheater
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={16,-64})));
-  Pipes.FrictionPipe hot_side_pipe(
-    P_in_0=P_hot_in_0,
-    P_out_0=P_hot_out_0,
-    Q_0=Q_hot_0,
-    T_0=T_hot_in_0,
-    h_0=h_hot_in_0) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-130,0})));
   BaseClasses.IsoPFlowModel hot_side_deheating(
     T_in_0=T_hot_in_0,
     T_out_0=T_hot_out_0,
@@ -173,6 +159,22 @@ protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
 
+public
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={14,-18}), iconTransformation(extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-60,100})));
+public
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={90,60}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-120,100})));
 equation
 
   // Failure modes
@@ -188,7 +190,7 @@ equation
   Q_hot_out = C_hot_out.Q;
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out = final_mix_cold.T_out;
-  T_hot_in = hot_side_pipe.T_in;
+  T_hot_in = hot_side_deheating.T_in;
   T_hot_out = hot_side_vaporising.T_out;
   W = W_deheat + W_cond + W_vap;
 
@@ -196,10 +198,7 @@ equation
   Q_vent_faulty = - C_vent.Q; // 1e-3 is used as a protection against zero flow in case the vent is totally closed
   Q_vent_faulty = Q_vent*(1-closed_vent/100) + 1e-3;
   // Pressure losses
-  cold_side_pipe.delta_z = 0;
   cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z = 0;
-  hot_side_pipe.Kfr = Kfr_hot;
 
   // Saturation
   Tsat_hot = hot_side_deheating.T_out;
@@ -266,10 +265,6 @@ equation
       points={{6,-64},{0,-64},{0,-80}},
       color={28,108,200},
       thickness=1));
-  connect(C_hot_in, hot_side_pipe.C_in) annotation (Line(
-      points={{-160,0},{-140,0}},
-      color={238,46,47},
-      thickness=1));
 
   connect(cold_side_condensing.C_out, cold_side_deheating.C_in) annotation (
       Line(
@@ -302,10 +297,6 @@ equation
       points={{-34,28},{-34,18}},
       color={238,46,47},
       thickness=1));
-  connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
-      points={{-120,0},{-80,0},{-80,66},{-34,66},{-34,60}},
-      color={238,46,47},
-      thickness=1));
   connect(final_mix_cold.C_out, C_cold_out) annotation (Line(
       points={{4,62},{0,62},{0,80}},
       color={28,108,200},
@@ -314,6 +305,12 @@ equation
       points={{24,62},{39,62},{39,60}},
       color={28,108,200},
       thickness=1));
+  connect(hot_side_deheating.C_in, C_hot_in) annotation (Line(
+      points={{-34,60},{-34,66},{-120,66},{-120,0},{-160,0}},
+      color={255,0,0},
+      thickness=1));
+  connect(cold_side_pipe.Kfr, Kfr_cold)
+    annotation (Line(points={{16,-60},{14,-60},{14,-18}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
                    graphics={
         Polygon(

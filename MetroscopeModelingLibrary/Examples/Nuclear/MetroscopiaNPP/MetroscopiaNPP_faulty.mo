@@ -79,24 +79,30 @@ equation
   bypass_HP_heater_drains_to_condenser.Q = Fault_bypass_HP_heater_drains_to_condenser_Q + 1e-3;
 
   connect(bypass_HP_turbine_to_condenser.C_out, bypass_HP_control_valve_to_condenser.C_out) annotation (Line(points={{-113,42},{-113,32},{-147,32},{-147,42}}, color={217,67,180}));
-  connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,42},{-113,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},
-                                                                                                                                                         color={217,67,180}));
-  connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139,100},{140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},
-                                                                                                                                                                                    color={217,67,180}));
-  connect(bypass_superheater_to_condenser.C_in, superheater_control_valve.C_out) annotation (Line(points={{-113,134},{-113,112.182},{-126,112.182}}, color={217,67,180}));
-  connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,152},{-112,152},{-112,192},{392.5,192},{392.5,74.2864}},
-                                                                                                                                                    color={217,67,180}));
-  connect(bypass_HP_turbine_ext_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-2,49},{4,49},{4,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},
-                                                                                                                                                               color={217,67,180}));
-  connect(bypass_LP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{277,-150},{278,-150},{278,-162},{472,-162},{472,100},{392.5,100},{392.5,74.2864}},
-                                                                                                                                                                                color={217,67,180}));
-  connect(bypass_HP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-16,-153},{-16,-162},{472,-162},{472,100},{392.5,100},{392.5,74.2864}},
-                                                                                                                                                                     color={217,67,180}));
+  connect(bypass_HP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,42},
+          {-113,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},                                                                                     color={217,67,180}));
+  connect(bypass_LP_turbine_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{139,100},
+          {140,100},{140,86},{158,86},{158,32},{320,32},{320,100},{392.5,100},{
+          392.5,74.2864}},                                                                                                                                                          color={217,67,180}));
+  connect(bypass_superheater_to_condenser.C_in, superheater_control_valve.C_out) annotation (Line(points={{-113,
+          134},{-113,112.182},{-126,112.182}},                                                                                                       color={217,67,180}));
+  connect(bypass_superheater_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-113,
+          152},{-112,152},{-112,192},{392.5,192},{392.5,74.2864}},                                                                                  color={217,67,180}));
+  connect(bypass_HP_turbine_ext_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-2,49},
+          {4,49},{4,32},{320,32},{320,100},{392.5,100},{392.5,74.2864}},                                                                                       color={217,67,180}));
+  connect(bypass_LP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{277,
+          -150},{278,-150},{278,-162},{472,-162},{472,100},{392.5,100},{392.5,
+          74.2864}},                                                                                                                                                            color={217,67,180}));
+  connect(bypass_HP_heater_drains_to_condenser.C_out, condenser.C_hot_in) annotation (Line(points={{-16,
+          -153},{-16,-162},{472,-162},{472,100},{392.5,100},{392.5,74.2864}},                                                                                        color={217,67,180}));
   connect(bypass_LP_turbine_to_condenser.C_in, LPT1.C_in) annotation (Line(points={{139,118},{140,118},{140,130},{151,130}}, color={217,67,180}));
   connect(bypass_HP_turbine_ext_to_condenser.C_in, HP_extract_P_sensor.C_in) annotation (Line(points={{-20,49},{-28,49},{-28,58},{-40,58},{-40,54}}, color={28,108,200}));
-  connect(bypass_HP_control_valve_to_condenser.C_in, HP_control_valve.C_in) annotation (Line(points={{-147,60},{-148,60},{-148,72},{-135,72}}, color={28,108,200}));
+  connect(bypass_HP_control_valve_to_condenser.C_in, HP_control_valve.C_in) annotation (Line(points={{-147,60},
+          {-148,60},{-148,72},{-135,72}},                                                                                                      color={28,108,200}));
   connect(bypass_HP_turbine_to_condenser.C_in, HPT_P_in_sensor.C_in) annotation (Line(points={{-113,60},{-113,72},{-106,72}}, color={28,108,200}));
-  connect(bypass_LP_heater_drains_to_condenser.C_in, LP_reheater_drains_control_valve.C_in) annotation (Line(points={{277,-132},{276,-132},{276,-119.818},{288,-119.818}}, color={217,67,180}));
-  connect(bypass_HP_heater_drains_to_condenser.C_in, HP_reheater_drains_control_valve.C_in) annotation (Line(points={{-16,-135},{-16,-121.818},{6,-121.818}}, color={28,108,200}));
+  connect(bypass_LP_heater_drains_to_condenser.C_in, LP_reheater_drains_control_valve.C_in) annotation (Line(points={{277,
+          -132},{276,-132},{276,-119.818},{288,-119.818}},                                                                                                                 color={217,67,180}));
+  connect(bypass_HP_heater_drains_to_condenser.C_in, HP_reheater_drains_control_valve.C_in) annotation (Line(points={{-16,
+          -135},{-16,-121.818},{6,-121.818}},                                                                                                                 color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end MetroscopiaNPP_faulty;

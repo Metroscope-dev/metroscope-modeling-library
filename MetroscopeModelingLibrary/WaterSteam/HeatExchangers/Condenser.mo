@@ -5,7 +5,7 @@ model Condenser
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputHeight water_height;
+  parameter Inputs.InputHeight water_height=1;
   parameter Units.Area S = 50000;
 
   parameter String QCp_max_side = "cold";
@@ -25,7 +25,7 @@ model Condenser
   Units.DifferentialPressure water_height_DP(start = water_height_DP_0);
 
   Inputs.InputReal C_incond(unit="mol/m3", min=0, start=0) "Incondensable molar concentration";
-  Inputs.InputPressure P_offset(start=0) "Offset correction for ideal gas law";
+  parameter Inputs.InputPressure P_offset=0 "Offset correction for ideal gas law";
   constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
 
     // Failure modes
