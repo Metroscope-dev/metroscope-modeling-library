@@ -7,6 +7,7 @@ model Evaporator
 
     // Pressure Losses
     parameter Units.Area S = 15000;
+    parameter Units.MassFraction x_steam_out = 1; // Steam mass fraction at water outlet
 
     // Heating
     Units.Power W_heating;
@@ -16,7 +17,6 @@ model Evaporator
     parameter String HX_config="evaporator";
 
     Units.Power W_vap;
-    Units.MassFraction x_steam_out(start=1); // Steam mass fraction at water outlet
     Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0);
     Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0);
     Units.Temperature Tsat(start=T_cold_out_0);

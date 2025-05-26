@@ -547,6 +547,19 @@ model MetroscopiaCCGT_reverse
         extent={{3,-3},{-3,3}},
         rotation=90,
         origin={20,230}), iconTransformation(extent={{46,68},{66,88}})));
+  Modelica.Blocks.Sources.RealExpression condenser_Kfr_cold(y=0) annotation (Placement(transformation(
+        extent={{-3,-8},{3,8}},
+        rotation=270,
+        origin={32,225})));
+  Modelica.Blocks.Sources.RealExpression combustionChamber_eta(y=0.9999) annotation (Placement(transformation(
+        extent={{-4,-8},{4,8}},
+        rotation=270,
+        origin={-448,24})));
+  Modelica.Blocks.Sources.RealExpression combustionChamber_Kfr(y=1e-3)
+                                                                    annotation (Placement(transformation(
+        extent={{-4,-8},{4,8}},
+        rotation=270,
+        origin={-432,24})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -554,20 +567,10 @@ equation
       //  Quantities definition
       source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
-    // Gas Turbine
-      combustionChamber.Kfr = 1e-3;
-      combustionChamber.eta = 0.9999;
-
-    // Evaporator
-      // Quantities definition
-      evaporator.x_steam_out = 1;
 
     // Condenser
       // Parameters
-      condenser.water_height = 1;
       condenser.C_incond = 0;
-      condenser.P_offset = 0;
-      condenser.Kfr_cold = 0;
 
   connect(HPsuperheater1.C_cold_out, T_w_HPSH1_out_sensor.C_in) annotation (
      Line(points={{-168,24},{-166,24},{-166,34},{-178,34}},
@@ -590,7 +593,7 @@ equation
   connect(evaporator.C_cold_in, T_w_eco_out_sensor.C_out) annotation (Line(
         points={{3.2,24},{3.2,34},{6,34}},                     color={28,108,200}));
   connect(condenser.C_cold_out, T_circulating_water_out_sensor.C_in)
-    annotation (Line(points={{79.6,200},{105,200}},
+    annotation (Line(points={{79.6,200},{92,200},{92,200},{105,200}},
                     color={28,108,200}));
   connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{60,185.778},{60,160},{103,160}},
                               color={28,108,200}));
@@ -621,12 +624,12 @@ equation
   connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
     annotation (Line(points={{-614,0},{-606,0}},     color={95,95,95}));
   connect(condenser.C_cold_in, P_circulating_water_in_sensor.C_out) annotation (
-     Line(points={{40,200},{5,200}},                                  color={28,
+     Line(points={{40,200},{22,200},{22,200},{5,200}},                color={28,
           108,200}));
   connect(P_LPST_in_sensor.C_out, LPsteamTurbine.C_in)
     annotation (Line(points={{-22,280},{-14,280}},  color={28,108,200}));
   connect(P_LPST_in_sensor.C_in, LPST_control_valve.C_out) annotation (Line(
-        points={{-34,280},{-44.75,280}},                                 color={
+        points={{-34,280},{-40,280},{-40,280},{-44.75,280}},             color={
           28,108,200}));
   connect(P_w_ReH_out_sensor.C_out, LPST_control_valve.C_in) annotation (Line(
         points={{-90,76},{-90,280},{-61.25,280}}, color={28,108,200}));
@@ -839,6 +842,9 @@ equation
   connect(condenser_Kth, condenser.Kth) annotation (Line(points={{40,230},{40,219.556},{44,219.556}},
                                                                                                   color={0,0,127}));
   connect(condenser.Qv_cold_in, condenser_Qv_cold_in) annotation (Line(points={{38,208.889},{27,208.889},{27,230},{20,230}},     color={0,0,127}));
+  connect(condenser.Kfr_cold, condenser_Kfr_cold.y) annotation (Line(points={{38,214.222},{32,214.222},{32,221.7}}, color={0,0,127}));
+  connect(combustionChamber_Kfr.y, combustionChamber.Kfr) annotation (Line(points={{-432,19.6},{-432,16},{-437,16},{-437,11}}, color={0,0,127}));
+  connect(combustionChamber_eta.y, combustionChamber.eta) annotation (Line(points={{-448,19.6},{-448,16},{-443,16},{-443,11}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}}),
