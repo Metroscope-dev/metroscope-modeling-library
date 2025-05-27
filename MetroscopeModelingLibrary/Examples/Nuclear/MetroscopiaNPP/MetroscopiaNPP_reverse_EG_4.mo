@@ -702,7 +702,8 @@ equation
     annotation (Line(points={{-750,43},{-750,27}}, color={28,108,200}));
   connect(P_steam_sensor.P_sensor, P_steam)
     annotation (Line(points={{-743,20},{-732,20}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},
-            {140,180}})),                                        Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},{140,180}})));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-820,
+            -160},{140,180}})),                                  Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-820,-160},{140,
+            180}})));
 end MetroscopiaNPP_reverse_EG_4;
