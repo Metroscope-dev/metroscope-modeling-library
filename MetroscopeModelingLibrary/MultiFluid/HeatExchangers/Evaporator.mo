@@ -13,7 +13,6 @@ model Evaporator
     Units.Power W_heating;
 
     // Vaporisation
-    Inputs.InputHeatExchangeCoefficient Kth;
     parameter String HX_config="evaporator";
 
     Units.Power W_vap;
@@ -88,6 +87,13 @@ model Evaporator
           extent={{30,70},{50,90}}),   iconTransformation(extent={{30,70},{50,90}})));
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start = h_vap_sat_0)) annotation (Placement(transformation(extent={{-50,70},{-30,90}}), iconTransformation(extent={{-50,70},{-30,90}})));
 
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,-60}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,-70})));
 equation
   // Failure modes
   if not faulty then

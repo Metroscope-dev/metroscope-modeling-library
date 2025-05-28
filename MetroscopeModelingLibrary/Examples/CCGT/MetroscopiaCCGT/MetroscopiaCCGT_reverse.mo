@@ -560,6 +560,10 @@ model MetroscopiaCCGT_reverse
         extent={{-4,-8},{4,8}},
         rotation=270,
         origin={-432,24})));
+  Utilities.Interfaces.RealOutput Evap_Kth(nominal=1e-3) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-8,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -845,6 +849,7 @@ equation
   connect(condenser.Kfr_cold, condenser_Kfr_cold.y) annotation (Line(points={{38,214.222},{32,214.222},{32,221.7}}, color={0,0,127}));
   connect(combustionChamber_Kfr.y, combustionChamber.Kfr) annotation (Line(points={{-432,19.6},{-432,16},{-437,16},{-437,11}}, color={0,0,127}));
   connect(combustionChamber_eta.y, combustionChamber.eta) annotation (Line(points={{-448,19.6},{-448,16},{-443,16},{-443,11}}, color={0,0,127}));
+  connect(evaporator.Kth, Evap_Kth) annotation (Line(points={{-8,-21},{-8,-30}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}}),
