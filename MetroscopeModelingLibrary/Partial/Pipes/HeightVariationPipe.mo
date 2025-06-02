@@ -9,9 +9,9 @@ partial model HeightVariationPipe
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,40}), iconTransformation(
-        extent={{-10,-10},{10,10}},
+        extent={{-18,-18},{18,18}},
         rotation=90,
-        origin={0,40})));
+        origin={0,48})));
 equation
   DP = - rho_in*Constants.g*delta_z;
   annotation (

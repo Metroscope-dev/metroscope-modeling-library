@@ -24,7 +24,6 @@ model Condenser
   Units.Pressure P_incond(start=0.0);
   Units.DifferentialPressure water_height_DP(start = water_height_DP_0);
 
-  Inputs.InputReal C_incond(unit="mol/m3", min=0, start=0) "Incondensable molar concentration";
   parameter Inputs.InputPressure P_offset=0 "Offset correction for ideal gas law";
   constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
 
@@ -111,14 +110,22 @@ model Condenser
         origin={-110,80}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-110,80})));
+        origin={-110,-40})));
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-80,110}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-80,110})));
+        origin={-60,110})));
+  Utilities.Interfaces.GenericReal C_incond annotation (Placement(
+        transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-40,110}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={60,110})));
 equation
 
   // Failure modes

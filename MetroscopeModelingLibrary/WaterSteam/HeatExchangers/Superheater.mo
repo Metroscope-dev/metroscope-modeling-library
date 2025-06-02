@@ -81,15 +81,6 @@ model Superheater
     P(start=P_cold_out_0),
     h_outflow(start=h_cold_out_0))                 annotation (Placement(transformation(extent={{-10,70},{10,90}}),iconTransformation(extent={{-10,70},{10,90}})));
 
-  Pipes.FrictionPipe cold_side_pipe(
-    P_in_0=P_cold_in_0,
-    P_out_0=P_cold_out_0,
-    Q_0=Q_cold_0,
-    T_0=T_cold_in_0,
-    h_0=h_cold_in_0) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={16,-64})));
   BaseClasses.IsoPFlowModel hot_side_deheating(
     T_in_0=T_hot_in_0,
     T_out_0=T_hot_out_0,
@@ -160,38 +151,13 @@ protected
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
 
 public
-  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={16,-18}), iconTransformation(extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={-60,100})));
-public
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={90,60}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
-        origin={-120,100})));
-  Pipes.FrictionPipe hot_side_pipe(
-    P_in_0=P_cold_in_0,
-    P_out_0=P_cold_out_0,
-    Q_0=Q_cold_0,
-    T_0=T_cold_in_0,
-    h_0=h_cold_in_0) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=180,
-        origin={-90,66})));
-public
-  Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={-90,24}), iconTransformation(
-        extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={60,100})));
+        origin={-80,100})));
 equation
 
   // Failure modes
@@ -205,9 +171,9 @@ equation
   Q_hot_in = C_hot_in.Q;
   Q_cold_out = C_cold_out.Q;
   Q_hot_out = C_hot_out.Q;
-  T_cold_in = cold_side_pipe.T_in;
+  T_cold_in = cold_side_vaporising.T_in;
   T_cold_out = final_mix_cold.T_out;
-  T_hot_in = hot_side_pipe.T_in;
+  T_hot_in = hot_side_deheating.T_in;
   T_hot_out = hot_side_vaporising.T_out;
   W = W_deheat + W_cond + W_vap;
 
@@ -219,14 +185,14 @@ equation
   Tsat_hot = hot_side_deheating.T_out;
   h_vap_sat_hot = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
   h_liq_sat_hot = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(hot_side_deheating.P_in));
-  Tsat_cold = cold_side_pipe.T_out;
-  h_vap_sat_cold = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_pipe.P_out));
+  Tsat_cold = cold_side_vaporising.T_in;
+  h_vap_sat_cold = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(cold_side_vaporising.P_in));
 
   /* Deheating on hot side, superheating on cold side */
 
   // Energy balance
   hot_side_deheating.W + cold_side_deheating.W = 0;
-  cold_side_deheating.W =W_deheat;
+  cold_side_deheating.W = W_deheat;
 
   // Power Exchange
   if hot_side_deheating.h_in > h_vap_sat_hot then
@@ -276,11 +242,6 @@ equation
   // Internal leaks
   tube_rupture.Q = 1e-5 + tube_rupture_leak;
 
-  connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
-      points={{6,-64},{0,-64},{0,-80}},
-      color={28,108,200},
-      thickness=1));
-
   connect(cold_side_condensing.C_out, cold_side_deheating.C_in) annotation (
       Line(
       points={{39,18},{39,30}},
@@ -291,10 +252,6 @@ equation
   connect(tube_rupture.C_in, hot_side_deheating.C_in) annotation (Line(points={{-6,38},{-12,38},{-12,66},{-34,66},{-34,60}}, color={217,67,180}));
   connect(C_hot_in, C_hot_in)
     annotation (Line(points={{-160,0},{-160,0}}, color={28,108,200}));
-  connect(cold_side_pipe.C_out, cold_side_vaporising.C_in)
-    annotation (Line(points={{26,-64},{39,-64},{39,-60}},
-                                                    color={28,108,200},
-      thickness=1));
   connect(cold_side_vaporising.C_out, cold_side_condensing.C_in)
     annotation (Line(points={{39,-26},{39,-16}},   color={28,108,200},
       thickness=1));
@@ -320,17 +277,12 @@ equation
       points={{24,62},{39,62},{39,60}},
       color={28,108,200},
       thickness=1));
-  connect(cold_side_pipe.Kfr, Kfr_cold)
-    annotation (Line(points={{16,-60},{16,-18}},          color={0,0,127}));
-  connect(hot_side_pipe.Kfr, Kfr_hot)
-    annotation (Line(points={{-90,62},{-90,24}}, color={0,0,127}));
-  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(
-      points={{-100,66},{-120,66},{-120,0},{-160,0}},
+  connect(C_hot_in, hot_side_deheating.C_in) annotation (Line(
+      points={{-160,0},{-120,0},{-120,66},{-34,66},{-34,60}},
       color={255,0,0},
       thickness=1));
-  connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
-      points={{-80,66},{-34,66},{-34,60}},
-      color={255,0,0},
+  connect(cold_side_vaporising.C_in, C_cold_in) annotation (Line(points={{39,-60},
+          {38.5,-60},{38.5,-66},{0,-66},{0,-80}},       color={28,108,200},
       thickness=1));
   annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
                    graphics={

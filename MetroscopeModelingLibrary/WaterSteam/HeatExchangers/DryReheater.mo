@@ -110,15 +110,15 @@ model DryReheater
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={-130,78}), iconTransformation(extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={-60,100})));
+        rotation=180,
+        origin={-180,40})));
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={-90,78}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
-        origin={-120,100})));
+        origin={-80,100})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
