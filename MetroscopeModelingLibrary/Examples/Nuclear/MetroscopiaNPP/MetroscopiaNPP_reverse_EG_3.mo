@@ -175,11 +175,6 @@ model MetroscopiaNPP_reverse_EG_3
         extent={{-4,-4},{4,4}},
         rotation=180,
         origin={-180,92}), iconTransformation(extent={{-170,22},{-130,62}})));
-    WaterSteam.BoundaryConditions.Sink                           cold_sink3
-                                                                           annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-700,-60})));
     WaterSteam.HeatExchangers.DryReheater                           LP_heater(
     Q_cold_0=1060,
     Q_hot_0=55,
@@ -427,9 +422,55 @@ model MetroscopiaNPP_reverse_EG_3
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-480,-74}), iconTransformation(extent={{-170,22},{-130,62}})));
+    WaterSteam.HeatExchangers.SteamGenerator                           steam_generator annotation (Placement(transformation(extent={{-762,
+            -106},{-718,-14}})));
+  Sensors_Control.WaterSteam.FlowSensor                   Q_purge_sensor(
+    Q_0=5,
+    h_0=1154502,
+    sensor_function="BC")                                                annotation (Placement(transformation(
+        extent={{-7,-7},{7,7}},
+        rotation=270,
+        origin={-740,-122})));
+  Sensors_Control.Power.PowerSensor                   thermal_power_sensor(
+      sensor_function="BC")                                                annotation (Placement(transformation(extent={{-782,
+            -68},{-766,-52}})));
+  Sensors_Control.WaterSteam.PressureSensor                   P_steam_sensor(
+    Q_0=1500,
+    P_0=5000000,
+    h_0=2.778e6,
+    sensor_function="BC")                                                    annotation (Placement(transformation(
+        extent={{-7,7},{7,-7}},
+        rotation=90,
+        origin={-740,20})));
+  Power.BoundaryConditions.Source                           source annotation (Placement(transformation(extent={{-808,
+            -70},{-788,-50}})));
+  WaterSteam.BoundaryConditions.Sink                           sink annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={-740,-140})));
+  Utilities.Interfaces.RealInput thermal_power(start=2820, nominal=1e3)
+    annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-774,-42}), iconTransformation(extent={{-170,22},{-130,62}})));
+  Utilities.Interfaces.RealInput P_steam(start=50) annotation (Placement(
+        transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=180,
+        origin={-724,20}), iconTransformation(extent={{-170,22},{-130,62}})));
+  Utilities.Interfaces.RealInput Q_purge(start=5) annotation (Placement(
+        transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=180,
+        origin={-722,-122}), iconTransformation(extent={{-170,22},{-130,62}})));
+  WaterSteam.BoundaryConditions.Sink                           sink2
+                                                                    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-740,48})));
 equation
   // BC LOCALES
-  steam_source.Q_out = -1300;
+  // steam_source.Q_out = -1300;
   steam_source.P_out = 1;
 
   rh_hot_in.T_out = 1;
@@ -437,6 +478,10 @@ equation
 
   // Parameters
   condenser.C_incond = 0;
+
+  // Hypotheses
+  steam_generator.P_purge = P_steam * 1e5;
+  steam_generator.vapor_fraction = 0.99;
 
 
   connect(cold_source.C_out,CW_T_in_sensor. C_in) annotation (Line(points={{-75,20},
@@ -600,8 +645,6 @@ equation
           -60},{-643,-60}},                                                                                                                     color={28,108,200}));
   connect(HP_heater_T_out_sensor.C_out,Q_feedwater_sensor. C_in) annotation (Line(points={{-657,
           -60},{-663,-60}},                                                                                      color={28,108,200}));
-  connect(cold_sink3.C_in, Q_feedwater_sensor.C_out)
-    annotation (Line(points={{-695,-60},{-677,-60}}, color={28,108,200}));
   connect(HP_heater_P_out_sensor.C_in, HP_heater.C_cold_out)
     annotation (Line(points={{-623,-60},{-576,-60}}, color={28,108,200}));
   connect(HP_heater_P_out_sensor.P_sensor, HP_heater_P_out)
@@ -630,6 +673,27 @@ equation
   connect(HP_reheater_drains_control_valve.C_out, deaerator_outlet_pipe.C_out)
     annotation (Line(points={{-475,-100},{-340,-100},{-340,-60},{-366,-60}},
         color={28,108,200}));
+  connect(steam_generator.purge_outlet,Q_purge_sensor. C_in) annotation (Line(
+        points={{-740,-105.233},{-740,-115}}, color={28,108,200}));
+  connect(Q_purge_sensor.C_out,sink. C_in)
+    annotation (Line(points={{-740,-129},{-740,-135}}, color={28,108,200}));
+  connect(source.C_out,thermal_power_sensor. C_in)
+    annotation (Line(points={{-793.2,-60},{-782,-60}}, color={244,125,35}));
+  connect(thermal_power_sensor.C_out,steam_generator. C_thermal_power)
+    annotation (Line(points={{-766.16,-60},{-751,-60}},
+        color={244,125,35}));
+  connect(thermal_power_sensor.W_sensor,thermal_power)
+    annotation (Line(points={{-774,-52},{-774,-42}}, color={0,0,127}));
+  connect(P_steam_sensor.C_in,steam_generator. steam_outlet)
+    annotation (Line(points={{-740,13},{-740,-14}}, color={28,108,200}));
+  connect(steam_generator.feedwater_inlet, Q_feedwater_sensor.C_out)
+    annotation (Line(points={{-729,-60},{-677,-60}}, color={28,108,200}));
+  connect(P_steam_sensor.P_sensor, P_steam)
+    annotation (Line(points={{-733,20},{-724,20}}, color={0,0,127}));
+  connect(Q_purge_sensor.Q_sensor,Q_purge)
+    annotation (Line(points={{-733,-122},{-722,-122}}, color={0,0,127}));
+  connect(P_steam_sensor.C_out, sink2.C_in)
+    annotation (Line(points={{-740,27},{-740,43}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},
             {140,180}})),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-740,-120},{140,180}})));

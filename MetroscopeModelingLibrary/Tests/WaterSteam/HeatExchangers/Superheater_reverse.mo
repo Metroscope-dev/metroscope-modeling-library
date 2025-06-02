@@ -28,13 +28,14 @@ model Superheater_reverse
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source hot_steam_source annotation (Placement(transformation(extent={{-70,-2},{-50,18}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink drains_sink annotation (Placement(transformation(extent={{70,-10},{90,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_steam_source annotation (Placement(transformation(extent={{-42,-50},{-22,-30}})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink superheated_steam_sink annotation (Placement(transformation(extent={{16,30},{36,50}})));
+  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink superheated_steam_sink annotation (Placement(transformation(extent={{16,70},
+            {36,90}})));
   .MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Superheater superheater annotation (Placement(transformation(extent={{-16,-8},{16,8}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink vent_sink annotation (Placement(transformation(extent={{70,-30},{90,-10}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor superheated_steam_temperature_sensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={0,24})));
+        origin={0,62})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor drains_pressure_sensor(Q_0=50)
                                                                                      annotation (Placement(transformation(extent={{38,-10},{58,10}})));
 equation
@@ -67,10 +68,10 @@ equation
           {20,-20},{20,-7.8},{16,-7.8}},
                                color={28,108,200}));
   connect(superheater.C_cold_out, superheated_steam_temperature_sensor.C_in)
-    annotation (Line(points={{0,8},{-5.55112e-16,8},{-5.55112e-16,14}},
+    annotation (Line(points={{0,8},{0,52}},
         color={28,108,200}));
   connect(superheated_steam_temperature_sensor.C_out, superheated_steam_sink.C_in)
-    annotation (Line(points={{5.55112e-16,34},{5.55112e-16,40},{21,40}}, color={
+    annotation (Line(points={{0,72},{0,80},{21,80}},                     color={
           28,108,200}));
   connect(superheater.C_hot_out, drains_pressure_sensor.C_in)
     annotation (Line(points={{16,0},{38,0}}, color={28,108,200}));

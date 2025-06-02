@@ -6,7 +6,6 @@ model SteamGenerator
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Units;
 
-  Inputs.InputMassFraction vapor_fraction;
   Inputs.InputPressure steam_pressure;
   Inputs.InputPositiveMassFlowRate Q_purge;
   Units.Pressure P_purge;
@@ -40,6 +39,11 @@ model SteamGenerator
         rotation=270,
         origin={0,-82})));
   Power.Connectors.Inlet C_thermal_power annotation (Placement(transformation(extent={{-40,-10},{-20,10}}), iconTransformation(extent={{-40,-10},{-20,10}})));
+  Utilities.Interfaces.GenericReal vapor_fraction annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={-30,100}), iconTransformation(extent={{44,66},{58,80}})));
 equation
 
   // Fault modes
@@ -66,8 +70,8 @@ equation
   thermal_power = C_thermal_power.W;
 
   // Purge
+  P_purge = steam_source.P_out;
   purge_source.h_out = Water.bubbleEnthalpy(Water.setSat_p(P_purge));
-
   purge_source.P_out = P_purge;
 
   connect(steam_source.C_out, steam_outlet) annotation (Line(points={{2.77556e-16,

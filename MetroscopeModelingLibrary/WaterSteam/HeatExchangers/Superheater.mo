@@ -11,7 +11,7 @@ model Superheater
   // Condensation
   Units.Power W_cond;
   parameter String HX_config="condenser";
-  Inputs.InputArea S;
+  parameter Inputs.InputArea S=100;
   Units.SpecificEnthalpy h_vap_sat_hot(start=h_vap_sat_0);
   Units.SpecificEnthalpy h_liq_sat_hot(start=h_liq_sat_0);
   Units.Temperature Tsat_hot;
@@ -22,7 +22,7 @@ model Superheater
   Units.Temperature Tsat_cold(start=T_cold_in_0);
 
   // Ventilation
-  Units.PositiveMassFlowRate Q_vent(start=Q_vent_0);
+  parameter Units.PositiveMassFlowRate Q_vent = 1;
   Units.PositiveMassFlowRate Q_vent_faulty(start=Q_vent_0);
 
   // Definitions
@@ -164,7 +164,7 @@ public
         transformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
-        origin={14,-18}), iconTransformation(extent={{-20,-20},{20,20}},
+        origin={16,-18}), iconTransformation(extent={{-20,-20},{20,20}},
         rotation=90,
         origin={-60,100})));
 public
@@ -175,6 +175,23 @@ public
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={-120,100})));
+  Pipes.FrictionPipe hot_side_pipe(
+    P_in_0=P_cold_in_0,
+    P_out_0=P_cold_out_0,
+    Q_0=Q_cold_0,
+    T_0=T_cold_in_0,
+    h_0=h_cold_in_0) annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=180,
+        origin={-90,66})));
+public
+  Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-90,24}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={60,100})));
 equation
 
   // Failure modes
@@ -190,15 +207,13 @@ equation
   Q_hot_out = C_hot_out.Q;
   T_cold_in = cold_side_pipe.T_in;
   T_cold_out = final_mix_cold.T_out;
-  T_hot_in = hot_side_deheating.T_in;
+  T_hot_in = hot_side_pipe.T_in;
   T_hot_out = hot_side_vaporising.T_out;
   W = W_deheat + W_cond + W_vap;
 
   // Ventilation
   Q_vent_faulty = - C_vent.Q; // 1e-3 is used as a protection against zero flow in case the vent is totally closed
   Q_vent_faulty = Q_vent*(1-closed_vent/100) + 1e-3;
-  // Pressure losses
-  cold_side_pipe.Kfr = Kfr_cold;
 
   // Saturation
   Tsat_hot = hot_side_deheating.T_out;
@@ -305,12 +320,18 @@ equation
       points={{24,62},{39,62},{39,60}},
       color={28,108,200},
       thickness=1));
-  connect(hot_side_deheating.C_in, C_hot_in) annotation (Line(
-      points={{-34,60},{-34,66},{-120,66},{-120,0},{-160,0}},
+  connect(cold_side_pipe.Kfr, Kfr_cold)
+    annotation (Line(points={{16,-60},{16,-18}},          color={0,0,127}));
+  connect(hot_side_pipe.Kfr, Kfr_hot)
+    annotation (Line(points={{-90,62},{-90,24}}, color={0,0,127}));
+  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(
+      points={{-100,66},{-120,66},{-120,0},{-160,0}},
       color={255,0,0},
       thickness=1));
-  connect(cold_side_pipe.Kfr, Kfr_cold)
-    annotation (Line(points={{16,-60},{14,-60},{14,-18}}, color={0,0,127}));
+  connect(hot_side_pipe.C_out, hot_side_deheating.C_in) annotation (Line(
+      points={{-80,66},{-34,66},{-34,60}},
+      color={255,0,0},
+      thickness=1));
   annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
                    graphics={
         Polygon(
