@@ -50,14 +50,14 @@ public
         origin={-70,76}), iconTransformation(
         extent={{-16,-16},{16,16}},
         rotation=90,
-        origin={-40,88})));
+        origin={-22,92})));
   Utilities.Interfaces.GenericReal Cst annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-86,70}), iconTransformation(
         extent={{-16,-16},{16,16}},
         rotation=90,
-        origin={-80,78})));
+        origin={-66,82})));
 equation
   // Stodola's ellipse law
   Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));

@@ -103,21 +103,21 @@ model Condenser
         origin={-110,50}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-110,50})));
+        origin={-110,80})));
   Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-110,80}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-110,-40})));
+        origin={-110,40})));
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-80,110}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-60,110})));
+        origin={-64,110})));
   Utilities.Interfaces.GenericReal C_incond annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},
@@ -125,7 +125,7 @@ model Condenser
         origin={-40,110}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={60,110})));
+        origin={64,110})));
 equation
 
   // Failure modes

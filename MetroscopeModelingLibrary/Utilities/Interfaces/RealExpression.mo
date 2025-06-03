@@ -24,7 +24,7 @@ block RealExpression "Set output signal to a time varying Real expression"
           extent={{-96,15},{96,-15}},
           textString="%y"),
         Text(
-          extent={{-262,72},{262,34}},
+          extent={{-134,66},{136,30}},
           textColor={0,0,127},
           textString="%name")}),  Documentation(info="<html>
 <p>

@@ -166,7 +166,7 @@ public
         origin={-110,80}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
-        origin={60,-100})));
+        origin={-78,-100})));
 public
   Utilities.Interfaces.GenericReal Kth_subc annotation (Placement(
         transformation(
@@ -175,7 +175,7 @@ public
         origin={-150,80}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
-        origin={60,100})));
+        origin={-80,100})));
 equation
 
   // Failure modes
