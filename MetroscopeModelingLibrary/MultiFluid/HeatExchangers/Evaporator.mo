@@ -7,16 +7,15 @@ model Evaporator
 
     // Pressure Losses
     parameter Units.Area S = 15000;
+    parameter Units.MassFraction x_steam_out = 1; // Steam mass fraction at water outlet
 
     // Heating
     Units.Power W_heating;
 
     // Vaporisation
-    Inputs.InputHeatExchangeCoefficient Kth;
     parameter String HX_config="evaporator";
 
     Units.Power W_vap;
-    Units.MassFraction x_steam_out(start=1); // Steam mass fraction at water outlet
     Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0);
     Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0);
     Units.Temperature Tsat(start=T_cold_out_0);
@@ -88,6 +87,13 @@ model Evaporator
           extent={{30,70},{50,90}}),   iconTransformation(extent={{30,70},{50,90}})));
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start = h_vap_sat_0)) annotation (Placement(transformation(extent={{-50,70},{-30,90}}), iconTransformation(extent={{-50,70},{-30,90}})));
 
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,-60}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,-70})));
 equation
   // Failure modes
   if not faulty then

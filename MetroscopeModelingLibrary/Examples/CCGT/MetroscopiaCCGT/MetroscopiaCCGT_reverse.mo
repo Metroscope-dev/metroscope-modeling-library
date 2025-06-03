@@ -546,11 +546,24 @@ model MetroscopiaCCGT_reverse
   Utilities.Interfaces.RealOutput condenser_Qv_cold_in annotation (Placement(transformation(
         extent={{3,-3},{-3,3}},
         rotation=90,
-        origin={30,230}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealExpression condenser_Kfr_cold(y=0)
-    annotation (Placement(transformation(extent={{8,210},{28,230}})));
-  Utilities.Interfaces.RealExpression condenser_C_incond(y=0)
-    annotation (Placement(transformation(extent={{62,220},{82,240}})));
+        origin={20,230}), iconTransformation(extent={{46,68},{66,88}})));
+  Modelica.Blocks.Sources.RealExpression condenser_Kfr_cold(y=0) annotation (Placement(transformation(
+        extent={{-3,-8},{3,8}},
+        rotation=270,
+        origin={32,225})));
+  Modelica.Blocks.Sources.RealExpression combustionChamber_eta(y=0.9999) annotation (Placement(transformation(
+        extent={{-4,-8},{4,8}},
+        rotation=270,
+        origin={-448,24})));
+  Modelica.Blocks.Sources.RealExpression combustionChamber_Kfr(y=1e-3)
+                                                                    annotation (Placement(transformation(
+        extent={{-4,-8},{4,8}},
+        rotation=270,
+        origin={-432,24})));
+  Utilities.Interfaces.RealOutput Evap_Kth(nominal=1e-3) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-8,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
 equation
 
   //--- Air / Flue Gas System ---
@@ -558,13 +571,10 @@ equation
       //  Quantities definition
       source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
-    // Gas Turbine
-      combustionChamber.Kfr = 1e-3;
-      combustionChamber.eta = 0.9999;
 
-    // Evaporator
-      // Quantities definition
-      evaporator.x_steam_out = 1;
+    // Condenser
+      // Parameters
+      condenser.C_incond = 0;
 
   connect(HPsuperheater1.C_cold_out, T_w_HPSH1_out_sensor.C_in) annotation (
      Line(points={{-168,24},{-166,24},{-166,34},{-178,34}},
@@ -845,18 +855,16 @@ equation
   connect(pumpRec_controlValve.Cv_max, pumpRec_controlValve_Cv_max) annotation (Line(points={{157.4,
           87},{152,87},{152,105},{147,105}},                                                                                           color={0,0,127}));
   connect(Q_pumpRec_out_sensor.Q_sensor, Q_pumpRec_out) annotation (Line(points={{145,85.5455},{145,93}}, color={0,0,127}));
-  connect(condenser_Kth, condenser.Kth) annotation (Line(points={{40,230},{40,
-          219.556},{47.2,219.556}},                                                               color={0,0,127}));
-  connect(condenser.Qv_cold_in, condenser_Qv_cold_in) annotation (Line(points={{38,
-          214.222},{34,214.222},{34,214},{30,214},{30,230}},                                                                     color={0,0,127}));
-  connect(condenser_Kfr_cold.y, condenser.Kfr_cold) annotation (Line(points={{18,216},
-          {18,207.111},{38,207.111}},      color={0,0,127}));
-  connect(condenser_C_incond.y, condenser.C_incond) annotation (Line(points={{72,226},
-          {72,219.556},{72.8,219.556}},      color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,
-            -120},{260,360}})),                               Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,
-            360}}),
+  connect(condenser_Kth, condenser.Kth) annotation (Line(points={{40,230},{40,219.556},{44,219.556}},
+                                                                                                  color={0,0,127}));
+  connect(condenser.Qv_cold_in, condenser_Qv_cold_in) annotation (Line(points={{38,208.889},{27,208.889},{27,230},{20,230}},     color={0,0,127}));
+  connect(condenser.Kfr_cold, condenser_Kfr_cold.y) annotation (Line(points={{38,214.222},{32,214.222},{32,221.7}}, color={0,0,127}));
+  connect(combustionChamber_Kfr.y, combustionChamber.Kfr) annotation (Line(points={{-432,19.6},{-432,16},{-437,16},{-437,11}}, color={0,0,127}));
+  connect(combustionChamber_eta.y, combustionChamber.eta) annotation (Line(points={{-448,19.6},{-448,16},{-443,16},{-443,11}}, color={0,0,127}));
+  connect(evaporator.Kth, Evap_Kth) annotation (Line(points={{-8,-21},{-8,-30}}, color={0,0,127}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}})),
+                                                              Diagram(
+        coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}}),
         graphics={Rectangle(
           extent={{-324,44},{246,-46}},
           pattern=LinePattern.None,

@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Utilities.Interfaces;
-connector RealInput = input Real "'input Real' as connector" annotation (
+connector RealInput = input Real "'input Real' as connector"  annotation (
   Dialog,
   signalLogging=true,
   defaultComponentName="u",
