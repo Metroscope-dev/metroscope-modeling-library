@@ -12,15 +12,6 @@ model AirCooledCondenser_direct
   input Real T_cold_source(start=10) "degC";
   input Utilities.Units.Fraction cold_source_relative_humidity(start=0.80) "1";
 
-   // Parameters
-  parameter Utilities.Units.Pressure P_offset = 0;
-  parameter Real C_incond = 0;
-  parameter Utilities.Units.Area S = 150000 "m2";
-
-  // Calibrated parameters
-  parameter Utilities.Units.HeatExchangeCoefficient Kth = 10;
-  parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
-
   // Sensors for calibration
   output Real P_cond(start=91) "mbarA";
 
@@ -35,8 +26,10 @@ model AirCooledCondenser_direct
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source cold_source(h_out(start=25400))
     annotation (Placement(transformation(extent={{-56,-10},{-36,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink(h_in(start=28028.451))    annotation (Placement(transformation(extent={{34,-10},{54,10}})));
-  MultiFluid.HeatExchangers.AirCooledCondenser                 airCooledCondenser(
+  MultiFluid.HeatExchangers.AirCooledCondenser                 airCooledCondenser(S=150000,
    cold_side_condensing(h_out(start=28243.033)))  annotation (Placement(transformation(extent={{-16,-16},{16,20}})));
+  Utilities.Interfaces.RealExpression Kth(y=10) annotation (Placement(transformation(extent={{-44,40},{-24,60}})));
+  Utilities.Interfaces.RealExpression Kfr(y=0) annotation (Placement(transformation(extent={{14,40},{34,60}})));
 equation
 
   //Hot source
@@ -51,20 +44,16 @@ equation
 
   //ACC
     // Parameters
-  airCooledCondenser.S = S;
   airCooledCondenser.Q_cold = Q_cold;
-  airCooledCondenser.P_offset = P_offset;
-  airCooledCondenser.C_incond = C_incond;
     // Calibrated parameter
-  airCooledCondenser.Kth = Kth;
-  airCooledCondenser.Kfr_hot = Kfr_hot;
-
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
     annotation (Line(points={{14.4,0},{39,0}}, color={85,170,255}));
   connect(airCooledCondenser.C_cold_in, cold_source.C_out)
-    annotation (Line(points={{-14.08,0},{-41,0}},color={85,170,255}));
+    annotation (Line(points={{-16,0},{-41,0}},   color={85,170,255}));
   connect(condensate_sink.C_in, airCooledCondenser.C_hot_out) annotation (Line(points={{8.88178e-16,-57},{8.88178e-16,-35.5},{0,-35.5},{0,-14}}, color={28,108,200}));
   connect(turbine_outlet.C_out, airCooledCondenser.C_hot_in) annotation (Line(points={{-8.88178e-16,65},{-8.88178e-16,41.5},{0.32,41.5},{0.32,18}}, color={28,108,200}));
+  connect(Kth.y, airCooledCondenser.Kth) annotation (Line(points={{-34,45},{-34,22},{-12.8,22}}, color={0,0,127}));
+  connect(Kfr.y, airCooledCondenser.Kfr_hot) annotation (Line(points={{24,45},{24,22},{12.8,22}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
                         Diagram(coordinateSystem(preserveAspectRatio=false,
