@@ -18,14 +18,6 @@ model FuelCompositionSource
   Real amCO2 "CO2 molecular mass";
   Real amN2 "H2O molecular mass";
 
-  // Fuel composition
-  // Utilities.Units.MassFraction X_CH4(start=0.848);
-  // Utilities.Units.MassFraction X_C2H6(start=0.083);
-  // Utilities.Units.MassFraction X_C3H8(start=0.0126);
-  // Utilities.Units.MassFraction X_C4H10_n_butane(start=0.00668);
-  // Utilities.Units.MassFraction X_N2(start=0.024);
-  // Utilities.Units.MassFraction X_CO2(start=0.025);
-
   // Mole fractions
   Real X_molar_CH4(start=0.92);
   Real X_molar_C2H6(start=0.048);
