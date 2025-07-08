@@ -12,14 +12,6 @@ model AirCooledCondenser_reverse
   input Real T_cold_source(start=10) "degC";
   input Utilities.Units.Fraction cold_source_relative_humidity(start=0.80) "1";
 
-   // Parameters
-  parameter Utilities.Units.Pressure P_offset = 0;
-  parameter Real C_incond = 0;
-  parameter Utilities.Units.Area S = 150000 "m2";
-
-  // Calibrated parameters
-  output Utilities.Units.HeatExchangeCoefficient Kth(start=10);
-  parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
 
   // Sensors for calibration
   input Real P_cond(start=91) "mbarA";
@@ -36,12 +28,17 @@ model AirCooledCondenser_reverse
     annotation (Placement(transformation(extent={{-56,-10},{-36,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink cold_sink(h_in(start=28028.451))    annotation (Placement(transformation(extent={{34,-10},{54,10}})));
   MultiFluid.HeatExchangers.AirCooledCondenser                 airCooledCondenser(
+    S=150000,
+    P_incond=0,
+    P_offset=0,
    cold_side_condensing(h_out(start=28243.033)))  annotation (Placement(transformation(extent={{-16,-16},{16,20}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor
     annotation (Placement(transformation(
         extent={{-7,-7},{7,7}},
         rotation=270,
-        origin={1,37})));
+        origin={1,41})));
+  Utilities.Interfaces.RealOutput ACC_Kth annotation (Placement(transformation(extent={{-32,34},{-24,42}}), iconTransformation(extent={{-116,26},{-96,46}})));
+  Utilities.Interfaces.RealExpression ACC_Kfr_hot annotation (Placement(transformation(extent={{30,36},{50,56}})));
 equation
 
   //Hot source
@@ -52,28 +49,22 @@ equation
   cold_source.P_out = P_cold_source * 1e5;
   cold_source.T_out = T_cold_source + 273.15;
   cold_source.relative_humidity = cold_source_relative_humidity;
+  cold_source.Q_out = - Q_cold;
 
-  //ACC
-    // Parameters
-  airCooledCondenser.S = S;
-  airCooledCondenser.Q_cold = Q_cold;
-  airCooledCondenser.P_offset = P_offset;
-  airCooledCondenser.C_incond = C_incond;
-    // Calibrated parameter
-  airCooledCondenser.Kth = Kth;
-  airCooledCondenser.Kfr_hot = Kfr_hot;
-    // Observable for calibration
+  // Observable for calibration
   P_cond_sensor.P_mbar = P_cond;
 
   connect(airCooledCondenser.C_cold_out, cold_sink.C_in)
-    annotation (Line(points={{14.4,0},{39,0}}, color={85,170,255}));
+    annotation (Line(points={{16,0},{39,0}},   color={85,170,255}));
   connect(airCooledCondenser.C_cold_in, cold_source.C_out)
-    annotation (Line(points={{-14.08,0},{-41,0}},color={85,170,255}));
-  connect(turbine_outlet.C_out, P_cond_sensor.C_in) annotation (Line(points={{-8.88178e-16,
-          65},{0,65},{0,44},{1,44}}, color={28,108,200}));
+    annotation (Line(points={{-16,0},{-41,0}},   color={85,170,255}));
+  connect(turbine_outlet.C_out, P_cond_sensor.C_in) annotation (Line(points={{0,65},{0,48},{1,48}},
+                                     color={28,108,200}));
   connect(airCooledCondenser.C_hot_in, P_cond_sensor.C_out) annotation (Line(
-        points={{0.32,18},{0,18},{0,30},{1,30}}, color={28,108,200}));
-  connect(condensate_sink.C_in, airCooledCondenser.C_hot_out) annotation (Line(points={{8.88178e-16,-57},{8.88178e-16,-35.5},{0,-35.5},{0,-14}}, color={28,108,200}));
+        points={{0,20},{0,34},{1,34}},           color={28,108,200}));
+  connect(condensate_sink.C_in, airCooledCondenser.C_hot_out) annotation (Line(points={{0,-57},{0,-35.5},{0,-35.5},{0,-16}},                     color={28,108,200}));
+  connect(airCooledCondenser.Kth, ACC_Kth) annotation (Line(points={{-12.8,22},{-14,22},{-14,38},{-28,38}}, color={0,0,127}));
+  connect(ACC_Kfr_hot.y, airCooledCondenser.Kfr_hot) annotation (Line(points={{40,41},{40,22},{12.8,22}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
                         Diagram(coordinateSystem(preserveAspectRatio=false,
