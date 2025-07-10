@@ -8,9 +8,9 @@ model FuelCompositionSource
   input Units.SpecificEnthalpy source_h(start=1e6) "J/kg";
   input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
 
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.FuelCompositionSource
-                                                           fuelCompositionSource
-                                                                  annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
+  MetroscopeModelingLibrary.Sensors_Control.Fuel.Chromatograph
+    fuelCompositionSource
+    annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
   MetroscopeModelingLibrary.Fuel.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
   Utilities.Interfaces.RealInput X_N2(start=1.5) annotation (Placement(
         transformation(
