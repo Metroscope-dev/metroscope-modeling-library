@@ -4,11 +4,11 @@ connector GenericReal = Real "generic connector"         annotation (
   Icon(graphics={
     Polygon(
       lineColor={0,0,127},
-      fillColor={0,140,72},
+      fillColor={135,135,135},
       fillPattern=FillPattern.Solid,
       points={{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}),
     Text(
-      textColor={0,140,72},
+      textColor={95,95,95},
       extent={{140,100},{-140,160}},
         textString="%name")},
     coordinateSystem(extent={{-100.0,-100.0},{100.0,100.0}},
