@@ -52,8 +52,6 @@ equation
   cold_source.T_out = 273.15 + T_cold_source;
   cold_source.Q_out = - Q_cold_source;
 
-  // Parameters
-  liqLiqHX.S = S;
 
   // Inputs for calibration
   T_cold_out_sensor.T_degC = T_cold_out;
