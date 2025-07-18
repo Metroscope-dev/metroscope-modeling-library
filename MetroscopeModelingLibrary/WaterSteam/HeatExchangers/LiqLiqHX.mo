@@ -4,10 +4,6 @@ model LiqLiqHX
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-//   Inputs.InputFrictionCoefficient Kfr_hot;
-//   Inputs.InputFrictionCoefficient Kfr_cold;
-//
-//   Inputs.InputHeatExchangeCoefficient Kth;
 
 
   parameter Inputs.InputArea S=100;
