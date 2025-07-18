@@ -42,6 +42,10 @@ equation
     Q_sensor = Q_lm;
   elseif signal_unit == "t/h" then
     Q_sensor = Q_th;
+  elseif signal_unit == "lb/s" then
+    Q_sensor = Q_lbs;
+  elseif signal_unit == "Mlbh" then
+    Q_sensor = Q_Mlbh;
   else
     Q_sensor = Q;
   end if;
