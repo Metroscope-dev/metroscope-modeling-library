@@ -1,33 +1,31 @@
 within MetroscopeModelingLibrary.Utilities.Interfaces;
 connector GenericReal = Real "generic connector"         annotation (
   defaultComponentName="u",
-  Icon(graphics={
-    Polygon(
-      lineColor={0,0,127},
-      fillColor={135,135,135},
-      fillPattern=FillPattern.Solid,
-      points={{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}),
-    Text(
-      textColor={95,95,95},
-      extent={{140,100},{-140,160}},
-        textString="%name")},
-    coordinateSystem(extent={{-100.0,-100.0},{100.0,100.0}},
-      preserveAspectRatio=true,
-      initialScale=0.2)),
-  Diagram(
+  Icon(
     coordinateSystem(preserveAspectRatio=true,
-      initialScale=0.2,
       extent={{-100.0,-100.0},{100.0,100.0}}),
       graphics={
     Polygon(
       lineColor={0,0,127},
-      fillColor={0,0,127},
+      fillColor={255,255,255},
       fillPattern=FillPattern.Solid,
-      points={{0.0,50.0},{100.0,0.0},{0.0,-50.0},{0.0,50.0}}),
+      points={{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}})}),
+  Diagram(
+    coordinateSystem(preserveAspectRatio=true,
+      extent={{-20,-20},{20,20}},
+      initialScale=0.2),
+      graphics={
     Text(
       textColor={0,0,127},
-      extent={{140,60},{-40,100}},
-      textString="%name")}),
+      extent={{-80,-20},{0,20}},
+      textString="%name",
+        origin={-20,40},
+        rotation=90),
+    Polygon(
+      lineColor={0,0,127},
+      fillColor={255,255,255},
+      fillPattern=FillPattern.Solid,
+      points={{0,10},{20,0},{0,-10},{0,10}})}),
   Documentation(info="<html>
 <p>
 Connector with one input signal of type Real.
