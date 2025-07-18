@@ -114,9 +114,6 @@ equation
   // Energy balance
   hot_side.W + cold_side.W = 0;
 
-//   // Pressure losses
-//   cold_side_pipe.Kfr = Kfr_cold;
-//   hot_side_pipe.Kfr = Kfr_hot;
 
   // Power Exchange
   HX.W = W;
