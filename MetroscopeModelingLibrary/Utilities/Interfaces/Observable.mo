@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Utilities.Interfaces;
-connector GenericReal = Real "generic connector"         annotation (
-  defaultComponentName="u",
+connector Observable = output Real "'output Real' as connector" annotation (
+  defaultComponentName="y",
   Icon(
     coordinateSystem(preserveAspectRatio=true,
       extent={{-100.0,-100.0},{100.0,100.0}}),
@@ -28,6 +28,6 @@ connector GenericReal = Real "generic connector"         annotation (
       points={{0,10},{20,0},{0,-10},{0,10}})}),
   Documentation(info="<html>
 <p>
-Connector with one input signal of type Real.
+Connector with one output signal of type Real.
 </p>
 </html>"));
