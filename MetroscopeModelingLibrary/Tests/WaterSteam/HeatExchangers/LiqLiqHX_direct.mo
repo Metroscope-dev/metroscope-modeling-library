@@ -39,7 +39,6 @@ equation
   cold_source.T_out = 273.15 + T_cold_source;
   cold_source.Q_out = - Q_cold_source;
 
-  liqLiqHX.S = S;
   liqLiqHX.Kth = Kth;
   liqLiqHX.Kfr_hot = Kfr_hot;
   liqLiqHX.Kfr_cold = Kfr_cold;
