@@ -26,7 +26,7 @@ partial model PressureSensor
 
   outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
   parameter String display_unit = "barA" "Specify the display unit"
-    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
+    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg"));
   parameter String signal_unit = "barA" annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
 
 Utilities.Interfaces.GenericReal     P_sensor(start=init_P)
@@ -61,6 +61,12 @@ equation
     P_sensor = P_MPaA;
   elseif signal_unit == "kPaA" then
     P_sensor = P_kPaA;
+  elseif signal_unit == "psiG" then
+    P_sensor=P_psiG;
+  elseif signal_unit == "psiA" then
+    P_sensor=P_psiA;
+  elseif signal_unit == "inHg" then
+    P_sensor=P_inHg;
   else
     P_sensor = P;
   end if;

@@ -4,11 +4,9 @@ model LiqLiqHX
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputFrictionCoefficient Kfr_hot;
-  Inputs.InputFrictionCoefficient Kfr_cold;
-  Inputs.InputArea S;
-  Inputs.InputHeatExchangeCoefficient Kth;
 
+
+  parameter Inputs.InputArea S=100;
   parameter String QCp_max_side = "cold";
   parameter String HX_config = "shell_and_tubes_two_passes"; // Valid for U-shaped tubes. Otherwise use "monophasic_cross_current"
 
@@ -76,6 +74,27 @@ model LiqLiqHX
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,-6})));
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={-68,64}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-96,100})));
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={-128,56}), iconTransformation(
+        extent={{-20,20},{20,-20}},
+        rotation=180,
+        origin={-180,32})));
+  Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={50,72}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={48,100})));
 equation
 
   // Failure modes
@@ -95,11 +114,6 @@ equation
   // Energy balance
   hot_side.W + cold_side.W = 0;
 
-  // Pressure losses
-  cold_side_pipe.delta_z = 0;
-  cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z = 0;
-  hot_side_pipe.Kfr = Kfr_hot;
 
   // Power Exchange
   HX.W = W;
@@ -144,6 +158,8 @@ equation
       points={{-24,21},{-30,21},{-30,20},{-40,20},{-40,-60},{0,-60},{0,-80}},
       color={238,46,47},
       thickness=1));
+  connect(cold_side_pipe.Kfr, Kfr_cold) annotation (Line(points={{-130,4},{-130,32},{-128,32},{-128,56}}, color={0,0,127}));
+  connect(hot_side_pipe.Kfr, Kfr_hot) annotation (Line(points={{4,52},{24,52},{24,72},{50,72}}, color={0,0,127}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},
             {160,80}}),      graphics={
         Polygon(

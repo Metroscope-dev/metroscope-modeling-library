@@ -6,9 +6,7 @@ model AirCooledCondenser
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputArea S;
-  Units.HeatExchangeCoefficient Kth;
-  Inputs.InputFrictionCoefficient Kfr_hot;
+  parameter Units.Area S = 10000;
 
   Units.Power W;
 
@@ -25,9 +23,10 @@ model AirCooledCondenser
   Units.Pressure Psat(start=Psat_0, nominal=Psat_0);
   Units.Temperature Tsat(start=Tsat_0);
 
-  Units.Pressure P_incond(start=0.001e5);
-  Inputs.InputReal C_incond(unit="mol/m3", min=0) "Incondensable molar concentration";
-  Inputs.InputPressure P_offset(start=0) "Offset correction for ideal gas law";
+  parameter Units.Pressure P_incond = 0;
+  Real C_incond(unit="mol/m3", min=0)
+                                     "Incondensable molar concentration";
+  parameter Units.Pressure P_offset = 0 "Offset correction for ideal gas law";
   constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
 
   // Failure modes
@@ -114,6 +113,20 @@ model AirCooledCondenser
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,14})));
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-80,120}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-80,110})));
+  Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={80,120}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={80,110})));
 equation
 
   // Failure modes
@@ -144,7 +157,6 @@ equation
   incondensables_out.DP = + P_incond;
 
   // Pressure losses
-  hot_side_pipe.delta_z = 0;
   hot_side_pipe.Kfr = Kfr_hot;
 
   /* Condensation */
@@ -185,6 +197,7 @@ equation
   connect(C_cold_in, cold_side_condensing.C_in) annotation (Line(points={{-100,0},{-13.5,0}},color={85,170,255}));
   connect(cold_side_condensing.C_out, C_cold_out) annotation (Line(points={{13.5,0},{90,0}}, color={85,170,255}));
   connect(hot_side_condensing.C_out, incondensables_out.C_in) annotation (Line(points={{14.5,30},{30,30},{30,-20},{0,-20},{0,-40}}, color={28,108,200}));
+  connect(Kth, Kth) annotation (Line(points={{-80,120},{-80,120}}, color={0,0,127}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},
             {100,100}}),                                        graphics={
         Ellipse(
