@@ -6,7 +6,7 @@ model PressureSensor
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,
-    redeclare package Medium = MoistAirMedium) annotation (IconMap(primitivesVisible=false));
+    redeclare package Medium = MoistAirMedium) annotation (IconMap(primitivesVisible=true));
 
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.MoistAirSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.PressureIcon;

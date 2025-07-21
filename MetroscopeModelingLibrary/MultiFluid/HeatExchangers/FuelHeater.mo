@@ -6,10 +6,6 @@ model FuelHeater
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  // Pressure Losses
-  Inputs.InputFrictionCoefficient Kfr_cold;
-  Inputs.InputFrictionCoefficient Kfr_hot;
-
   // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
   parameter Boolean nominal_DT_default = true;
   Units.Temperature maximum_achiveable_temperature_difference;
@@ -19,8 +15,7 @@ model FuelHeater
   // Heating
   parameter String QCp_max_side = "undefined";// On fuel heater, QCp_hot may be close to QCp_cold
   parameter String HX_config = "monophasic_counter_current";
-  Inputs.InputArea S;
-  Inputs.InputHeatExchangeCoefficient Kth;
+  parameter Units.Area S = 3000;
   Units.Power W;
 
   // Definitions
@@ -91,6 +86,28 @@ model FuelHeater
         rotation=90,
         origin={40,44})));
 
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-90,80}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={80,-80})));
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-42,20}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=180,
+        origin={-120,-40})));
+  Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={20,52}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={80,80})));
 equation
 
   // Failure modes
@@ -156,7 +173,12 @@ equation
   connect(hot_side.C_in, hot_side_pipe.C_out) annotation (Line(points={{20,28},{40,28},{40,34}}, color={28,108,200}));
   connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(points={{40,54},{40,80}}, color={28,108,200}));
   connect(hot_side.C_out, C_hot_out) annotation (Line(points={{0,28},{-20,28},{-20,-80},{-40,-80}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  connect(cold_side_pipe.Kfr, Kfr_cold)
+    annotation (Line(points={{-42,4},{-42,4},{-42,20}}, color={0,0,127}));
+  connect(hot_side_pipe.Kfr, Kfr_hot)
+    annotation (Line(points={{36,44},{20,44},{20,52}}, color={0,0,127}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
+            -100},{100,100}}),                                  graphics={
           Rectangle(
           extent={{-100,60},{100,-60}},
           lineColor={0,0,0},
@@ -167,5 +189,6 @@ equation
           thickness=1,
           smooth=Smooth.Bezier),
         Line(points={{122,-56}}, color={102,44,145})}),
-                          Diagram(coordinateSystem(preserveAspectRatio=false)));
+                          Diagram(coordinateSystem(preserveAspectRatio=false, extent={
+            {-140,-100},{100,100}})));
 end FuelHeater;
