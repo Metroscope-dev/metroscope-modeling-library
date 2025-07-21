@@ -100,7 +100,7 @@ model MetroscopiaCCGT_direct_mml4
         start=0.9e6)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-440,-100})));
+        origin={-440,-106})));
   Sensors_Control.FlueGases.PressureSensor                   compressor_P_out_sensor(sensor_function="Calibration", causality="compressor_tau")
     annotation (Placement(transformation(extent={{-490,-6},{-478,6}})));
   Sensors_Control.FlueGases.TemperatureSensor                   compressor_T_out_sensor(sensor_function="Calibration",
@@ -191,7 +191,7 @@ model MetroscopiaCCGT_direct_mml4
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={-440,-60})));
+        origin={-440,-64})));
   Sensors_Control.Fuel.FlowSensor                   Q_fuel_source_sensor(causality="")
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
@@ -624,6 +624,16 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-4,-4},{4,4}},
         rotation=90,
         origin={-8,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
+  Sensors_Control.Fuel.Chromatograph chromatograph annotation (Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={-441,-91})));
+  Utilities.Interfaces.BoundaryCondition X_CO2(start=2.5)   annotation (Placement(transformation(extent={{-452,-80},{-444,-72}}), iconTransformation(extent={{-472,-112},{-432,-72}})));
+  Utilities.Interfaces.BoundaryCondition X_N2(start=2.5)   annotation (Placement(transformation(extent={{-478,-86},{-470,-78}}), iconTransformation(extent={{-472,-112},{-432,-72}})));
+  Utilities.Interfaces.BoundaryCondition X_C4H10(start=0) annotation (Placement(transformation(extent={{-472,-104},{-464,-96}}), iconTransformation(extent={{-472,-112},{-432,-72}})));
+  Utilities.Interfaces.BoundaryCondition X_C3H8(start=0) annotation (Placement(transformation(extent={{-464,-116},{-456,-108}}), iconTransformation(extent={{-472,-112},{-432,-72}})));
+  Utilities.Interfaces.BoundaryCondition X_C2H6(start=05)   annotation (Placement(transformation(extent={{-436,-118},{-428,-110}}), iconTransformation(extent={{-472,-112},{-432,-72}})));
+  Utilities.Interfaces.BoundaryCondition X_CH4(start=90)  annotation (Placement(transformation(extent={{-418,-120},{-410,-112}}), iconTransformation(extent={{-472,-112},{-432,-72}})));
 equation
 
 
@@ -631,7 +641,7 @@ equation
   //--- Air / Flue Gas System ---
     // Fuel Source
       //  Quantities definition
-      source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
+      //source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
 
     // Condenser
       // Parameters
@@ -746,7 +756,7 @@ equation
       Line(points={{-440,-25},{-440,-35}},                       color={213,213,
           0}));
   connect(P_fuel_source_sensor.C_in, T_fuel_source_sensor.C_out) annotation (
-      Line(points={{-440,-45},{-440,-55}},                       color={213,213,
+      Line(points={{-440,-45},{-440,-59}},                       color={213,213,
           0}));
   connect(GT_generator.C_out, W_GT_sensor.C_in)
     annotation (Line(points={{-352.8,100},{-346,100}},
@@ -818,8 +828,7 @@ equation
   connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{176,0},{222,0},{222,192}},                         color={95,95,95}));
   connect(HPST_control_valve.C_in, displayer.C_out) annotation (Line(points={{-223.25,180},{-230,180},{-230,180},{-235,180}}, color={28,108,200}));
   connect(displayer.C_in, P_w_HPSH2_out_sensor.C_out) annotation (Line(points={{-241,180},{-280,180},{-280,86}},                     color={28,108,200}));
-  connect(source_fuel.C_out, fuelDisplayer.C_in) annotation (Line(points={{-440,-95},{-440,-83}},  color={213,213,0}));
-  connect(fuelDisplayer.C_out, T_fuel_source_sensor.C_in) annotation (Line(points={{-440,-77},{-440,-65}}, color={213,213,0}));
+  connect(fuelDisplayer.C_out, T_fuel_source_sensor.C_in) annotation (Line(points={{-440,-77},{-440,-69}}, color={213,213,0}));
   connect(moistAir_to_FlueGases.inlet, moistAirDisplayer.C_out) annotation (Line(points={{-682,0},{-697,0}},     color={85,170,255}));
   connect(P_source_air_sensor.C_in, flueGasesDisplayer.C_out) annotation (Line(points={{-646,0},{-651,0}},     color={95,95,95}));
   connect(flueGasesDisplayer.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-657,0},{-662,0}},     color={95,95,95}));
@@ -835,7 +844,8 @@ equation
   connect(Q_fuel_source_sensor.Q_sensor, Q_fuel_source) annotation (Line(points={{-445,-20},{-450,-20},{-450,-20},{-450,-20}},
                                                                                                          color={0,0,127}));
   connect(P_fuel_source_sensor.P_sensor, P_fuel_source) annotation (Line(points={{-445,-40},{-450,-40}}, color={0,0,127}));
-  connect(T_fuel_source_sensor.T_sensor, T_fuel_source) annotation (Line(points={{-445,-60},{-450,-60}}, color={0,0,127}));
+  connect(T_fuel_source_sensor.T_sensor, T_fuel_source) annotation (Line(points={{-445,-64},{-448,-64},{-448,-60},{-450,-60}},
+                                                                                                         color={0,0,127}));
   connect(gasTurbine.eta_is, turbine_eta_is) annotation (Line(points={{-412,12.8},{-412,18},{-412,20},{-412,20}},
                                                                                               color={0,0,127}));
   connect(turbine_T_out_sensor.T_sensor, turbine_T_out) annotation (Line(points={{-364,6},{-364,12}}, color={0,0,127}));
@@ -914,6 +924,16 @@ equation
   connect(Filter_Kfr.y, AirFilter.Kfr) annotation (Line(points={{-566.5,17.75},{-566.5,12},{-566,12},{-566,4}}, color={0,0,127}));
   connect(airCompressor.eta_is, compressor_eta_is) annotation (Line(points={{-519.8,11.55},{-519.8,24},{-520,24}}, color={0,0,127}));
   connect(T_source_air.y, T_source_air_sensor.T_sensor) annotation (Line(points={{-620,26.5},{-620,6}}, color={0,0,127}));
+  connect(source_fuel.C_out, chromatograph.C_in) annotation (Line(points={{-440,-101},{-441,-100},{-441,-96}}, color={213,213,0}));
+  connect(chromatograph.C_out, fuelDisplayer.C_in) annotation (Line(points={{-441,-86},{-440,-86},{-440,-83}}, color={213,213,0}));
+  connect(chromatograph.X_CO2, X_CO2) annotation (Line(points={{-442.8,-86.8},{-442.8,-88},{-448,-88},{-448,-76}},
+                                                                                                        color={0,0,127}));
+  connect(chromatograph.X_N2, X_N2) annotation (Line(points={{-444.9,-88},{-460,-88},{-460,-82},{-474,-82}},
+                                                                                       color={0,0,127}));
+  connect(chromatograph.X_C4H10_n_butane, X_C4H10) annotation (Line(points={{-446.2,-90},{-456,-90},{-456,-100},{-468,-100}},              color={0,0,127}));
+  connect(chromatograph.X_C3H8, X_C3H8) annotation (Line(points={{-446.2,-92.1},{-446.2,-112},{-460,-112}}, color={0,0,127}));
+  connect(chromatograph.X_C2H6, X_C2H6) annotation (Line(points={{-444.8,-94},{-444.8,-100},{-432,-100},{-432,-114}}, color={0,0,127}));
+  connect(chromatograph.X_CH4, X_CH4) annotation (Line(points={{-442.9,-95.2},{-414,-95.2},{-414,-116}},  color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,440}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,440}}),
