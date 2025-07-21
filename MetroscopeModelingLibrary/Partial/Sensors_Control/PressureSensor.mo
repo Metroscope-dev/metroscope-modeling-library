@@ -7,7 +7,12 @@ partial model PressureSensor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  parameter Real init_P = 1;
+  parameter Real P_start = 1 "Write here the build value of the quantity. This value will be used in the simulation.";
+  parameter String signal_unit = "barA" "Specify the signal unit. This should be the unit of P_start and of the tag linked to the sensor." annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
+
+  parameter String display_unit = "barA" "Specify the display unit"
+    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg"));
+
 
   // All nominal values of gauge pressures are set to the absolute pressure value to avoid zero nominal value
 
@@ -25,11 +30,8 @@ partial model PressureSensor
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
   outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
-  parameter String display_unit = "barA" "Specify the display unit"
-    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg"));
-  parameter String signal_unit = "barA" annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
 
-Utilities.Interfaces.GenericReal     P_sensor(start=init_P)
+Utilities.Interfaces.GenericReal     P_sensor(start=P_start)
   annotation (Placement(transformation(
     extent={{-10,-10},{10,10}},
     rotation=90,

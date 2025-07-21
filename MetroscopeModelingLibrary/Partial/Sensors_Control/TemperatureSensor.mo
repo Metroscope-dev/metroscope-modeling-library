@@ -8,8 +8,15 @@ partial model TemperatureSensor
   import MetroscopeModelingLibrary.Utilities.Constants;
 
   // Initialization parameters
+  parameter Real T_start = 300 "Write here the build value of the quantity. This value will be used in the simulation.";
+
+  parameter String signal_unit = "degC" "Specify the signal unit. This should be the unit of T_start and of the tag linked to the sensor." annotation (choices(choice="degC", choice="K", choice="degF"));
+
+  parameter String display_unit = "degC" "Specify the display unit"
+  annotation(choices(choice="degC", choice="K", choice="degF"));
+
   parameter Units.Temperature T_0 = 300;
-  parameter Real init_T = 300;
+
 
   Units.Temperature T(start=T_0); // Temperature in SI Units : K
   Real T_degC(unit="degC", start=T_0 +Constants.T0_degC_in_K,  nominal=T_0 +Constants.T0_degC_in_K);   // Temperature in degC
@@ -17,12 +24,11 @@ partial model TemperatureSensor
               start=(T_0 +Constants.T0_degC_in_K) *Constants.degC_to_degF +Constants.T0_degC_in_degF,
               nominal=(T_0 +Constants.T0_degC_in_K) *Constants.degC_to_degF +Constants.T0_degC_in_degF);   // Temperature in degF
 
-  parameter String display_unit = "degC" "Specify the display unit"
-    annotation(choices(choice="degC", choice="K", choice="degF"));
-  outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
-  parameter String signal_unit = "degC" annotation (choices(choice="degC", choice="K", choice="degF"));
 
-  Utilities.Interfaces.GenericReal      T_sensor(start=init_T) annotation (Placement(transformation(
+  outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
+
+
+  Utilities.Interfaces.GenericReal      T_sensor(start=T_start) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,100}), iconTransformation(
