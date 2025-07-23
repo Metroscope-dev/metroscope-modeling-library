@@ -7,10 +7,15 @@ partial model FlowSensor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  parameter Units.VolumeFlowRate Qv_0 = Q_0/1000;
 
-  Units.VolumeFlowRate Qv(start=Qv_0, nominal=Qv_0);
-  Real Q_lm(start=Qv_0*Constants.m3s_to_lm, nominal=Qv_0*Constants.m3s_to_lm); // Flow rate in liter per minute;
+  parameter Units.PositiveMassFlowRate Q_start = 100 "Write here the build value of the quantity. This value will be used in the simulation.";
+  parameter String signal_unit = "kg/s" "Specify the signal unit. This should be the unit of Q_start and of the tag linked to the sensor." annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
+
+  parameter String display_unit = "kg/s" "Specify the display unit"    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
+
+
+  Units.VolumeFlowRate Qv;
+  Real Q_lm; // Flow rate in liter per minute;
 
   Real Q_th(start=Q_0*Constants.kgs_to_th, nominal=Q_0*Constants.kgs_to_th); // Flow rate in tons per hour
   Real Q_lbs(start=Q_0*Constants.kgs_to_lbs, nominal=Q_0*Constants.kgs_to_lbs); // Flow rate in pounds per second;
@@ -19,12 +24,10 @@ partial model FlowSensor
   // Failure modes
   parameter Boolean faulty = false;
 
-  parameter String display_unit = "kg/s" "Specify the display unit"
-    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
   outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
-  parameter String signal_unit = "kg/s" annotation (choices(choice="kg/s", choice="l/m", choice="t/h"));
 
-  Utilities.Interfaces.GenericReal      Q_sensor(start=Q_0) annotation (Placement(transformation(
+
+  Utilities.Interfaces.GenericReal      Q_sensor(start=Q_start) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,100}), iconTransformation(
