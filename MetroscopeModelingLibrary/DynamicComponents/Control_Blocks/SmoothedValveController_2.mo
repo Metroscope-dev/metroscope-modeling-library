@@ -30,7 +30,11 @@ equation
 
   // Evolve the valve position
   der(valveOpening) = dydt;
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(extent={{-100,100},{100,-100}}, lineColor={28,108,200})}),
-                                                                 Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(extent={{-100,100},{100,-100}}, lineColor={28,108,200},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid), Text(
+          extent={{-100,100},{100,-100}},
+          textColor={28,108,200},
+          textString="A")}),                                     Diagram(coordinateSystem(preserveAspectRatio=false)));
 
 end SmoothedValveController_2;
