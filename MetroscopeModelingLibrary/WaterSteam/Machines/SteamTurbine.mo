@@ -13,8 +13,7 @@ model SteamTurbine
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
 
-  Utilities.Units.Inputs.InputCst Cst "Stodola's ellipse coefficient";
-  Utilities.Units.Inputs.InputYield eta_is(start=0.8) "Nominal isentropic efficiency";
+  import MetroscopeModelingLibrary.Utilities.Units;
 
   Utilities.Units.MassFraction x_in(start=x_in_0);
   Utilities.Units.MassFraction x_out(start=x_out_0);
@@ -41,6 +40,21 @@ protected
   parameter Utilities.Units.SpecificEnthalpy h_vap_out_0=WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
   parameter Utilities.Units.SpecificEnthalpy h_liq_out_0=WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
 
+public
+  Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-70,76}), iconTransformation(
+        extent={{-16,-16},{16,16}},
+        rotation=90,
+        origin={-22,92})));
+  Utilities.Interfaces.GenericReal Cst annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-86,70}), iconTransformation(
+        extent={{-16,-16},{16,16}},
+        rotation=90,
+        origin={-66,82})));
 equation
   // Stodola's ellipse law
   Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));

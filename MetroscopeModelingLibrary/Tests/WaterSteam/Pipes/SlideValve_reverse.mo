@@ -2,12 +2,6 @@ within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model SlideValve_reverse
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
-  /* Note
-  The slide valve is fully open, therefore the causality is different from a control valve.
-  The slide valve cannot act as a pressure cut.
-  Pressure does propagate through the slide valve in the direct mode.
-  */
-
   // Boundary conditions
   input Utilities.Units.SpecificEnthalpy source_h(start=1e6);
   input Utilities.Units.Pressure source_P(

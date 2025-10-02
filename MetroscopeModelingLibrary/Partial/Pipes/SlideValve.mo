@@ -5,11 +5,18 @@ partial model SlideValve
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Inputs.InputCv Cv(start=1e4) "Cv of the valve";
 
   parameter Boolean faulty = false;
   Units.Percentage closed_valve; // Valve not fully opened
 
+
+  Utilities.Interfaces.GenericReal Cv(start=1e4) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-40,110}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-40,110})));
 equation
     // Failure modes
   if not faulty then

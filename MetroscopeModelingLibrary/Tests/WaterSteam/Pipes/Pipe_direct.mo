@@ -18,7 +18,7 @@ model Pipe_direct
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  .MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
+  .MetroscopeModelingLibrary.WaterSteam.Pipes.FrictionPipe pipe annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
 
 equation
 

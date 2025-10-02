@@ -6,7 +6,6 @@ model Reactor
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Units;
 
-  Inputs.InputMassFraction vapor_fraction;
   Inputs.InputPressure steam_pressure;
 
   Units.SpecificEnthalpy h_vap_sat;
@@ -33,6 +32,10 @@ model Reactor
         rotation=180,
         origin={2,0})));
   Power.Connectors.Inlet C_thermal_power annotation (Placement(transformation(extent={{-40,-10},{-20,10}}), iconTransformation(extent={{-40,-10},{-20,10}})));
+  Utilities.Interfaces.GenericReal vapor_fraction annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={-30,84}), iconTransformation(extent={{44,66},{58,80}})));
 equation
 
   // Fault modes
@@ -64,6 +67,7 @@ equation
                                                       color={28,108,200}));
   connect(feedwater_sink.C_in, feedwater_inlet) annotation (Line(points={{7,-1.11022e-15},{18.5,-1.11022e-15},{18.5,0},{30,0}},
                                                 color={28,108,200}));
+  connect(vapor_fraction, vapor_fraction) annotation (Line(points={{-30,84},{-30,84}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-100},{60,100}}),
                         graphics={
         Rectangle(

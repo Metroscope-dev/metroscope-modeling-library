@@ -20,7 +20,7 @@ model Pipe_reverse
 
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{68,-10},{88,10}})));
-  MetroscopeModelingLibrary.FlueGases.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.FlueGases.Pipes.FrictionPipe pipe annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_out_sensor annotation (Placement(transformation(extent={{28,-10},{48,10}})));
 equation
 

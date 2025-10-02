@@ -13,8 +13,7 @@ model GasTurbine
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
   Inputs.InputReal tau(start=15, min = 1) "Compression rate";
-  Real eta_is(start=0.8, min=0, max=1) "Nominal isentropic efficiency";
-  Inputs.InputReal eta_mech(start=1, min=0, max=1) "Nominal mechanical efficiency";
+  parameter Units.Yield eta_mech = 0.99 "Nominal mechanical efficiency";
 
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
@@ -26,6 +25,13 @@ model GasTurbine
   Units.Percentage eta_is_decrease(min = 0, max=100) "percentage decrease of eta_is";
 
   Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
+  Utilities.Interfaces.GenericReal eta_is(start=1) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-100,80}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-100,80})));
 equation
 
   // Failure modes
@@ -46,7 +52,6 @@ equation
   /* Isentropic  expansion */
   state_is =  Medium.setState_psX(P_out, Medium.specificEntropy(state_in),Xi);
   h_is = Medium.specificEnthalpy(state_is);
-
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,

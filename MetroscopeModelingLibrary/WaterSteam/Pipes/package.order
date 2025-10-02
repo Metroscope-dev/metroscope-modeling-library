@@ -1,5 +1,6 @@
 SteamExtractionSplitter
-Pipe
+FrictionPipe
+HeightVariationPipe
 ControlValve
 SlideValve
 HeatLoss

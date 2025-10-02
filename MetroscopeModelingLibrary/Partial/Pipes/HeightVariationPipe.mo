@@ -1,30 +1,18 @@
 within MetroscopeModelingLibrary.Partial.Pipes;
-partial model Pipe
+partial model HeightVariationPipe
   extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoHFlowModel annotation(IconMap(primitivesVisible=false));
   import MetroscopeModelingLibrary.Utilities.Units;
-  import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Inputs.InputFrictionCoefficient Kfr(start=10) "Friction pressure loss coefficient";
-  Inputs.InputDifferentialHeight delta_z(nominal=5) "Height difference between outlet and inlet";
-  Units.DifferentialPressure DP_f "Singular pressure loss";
-  Units.DifferentialPressure DP_z "Singular pressure loss";
-
-  // Failure modes
-  parameter Boolean faulty = false;
-  Units.Percentage fouling; // Fouling coefficient
-
+  Utilities.Interfaces.GenericReal delta_z(start=10, nominal=10) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={0,40}), iconTransformation(
+        extent={{-18,-18},{18,18}},
+        rotation=90,
+        origin={0,48})));
 equation
-
-  // Failure modes
-  if not faulty then
-    fouling = 0;
-  end if;
-
-  DP_f = - (1+ fouling/100)*Kfr*Q*abs(Q)/rho_in;
-  DP_z = - rho_in*Constants.g*delta_z;
-
-  DP = DP_f + DP_z;
+  DP = - rho_in*Constants.g*delta_z;
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=true,
@@ -46,4 +34,4 @@ equation
           lineColor={0,0,255},
           fillColor={85,255,85},
           fillPattern=FillPattern.Solid)}));
-end Pipe;
+end HeightVariationPipe;

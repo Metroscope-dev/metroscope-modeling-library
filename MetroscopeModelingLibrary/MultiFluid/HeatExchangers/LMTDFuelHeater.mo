@@ -53,7 +53,12 @@ model LMTDFuelHeater
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
-  WaterSteam.Pipes.Pipe hot_side_pipe(Q_0=Q_hot_0, P_in_0 = P_hot_in_0, P_out_0 = P_hot_out_0, h_0 = h_hot_in_0, T_0 = T_hot_in_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.FrictionPipe hot_side_pipe(
+    Q_0=Q_hot_0,
+    P_in_0=P_hot_in_0,
+    P_out_0=P_hot_out_0,
+    h_0=h_hot_in_0,
+    T_0=T_hot_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-14,-24})));

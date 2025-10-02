@@ -12,8 +12,6 @@ model CombustionChamber
 
   // Performance parameters
   //Inputs.Input
-  Inputs.InputFrictionCoefficient Kfr(start=0);
-  Inputs.InputReal eta(start=0.99457); // The value given is found in performance document of GE
 
   // Power released by the combustion
   Inputs.InputPower Wth;
@@ -65,7 +63,21 @@ model CombustionChamber
         origin={0,-22})));
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
   FlueGases.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
-  FlueGases.Pipes.Pipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
+  FlueGases.Pipes.FrictionPipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
+  Utilities.Interfaces.GenericReal Kfr(start=0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={30,110}),  iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={30,110})));
+  Utilities.Interfaces.GenericReal eta(start=1) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-30,100}),iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-30,110})));
 equation
 
   // Definitions
@@ -102,8 +114,6 @@ equation
 
   // Mechanical Balance
   sink_air.P_in - source_exhaust.P_out = 0;
-  pressure_loss.delta_z = 0;
-  pressure_loss.Kfr = Kfr;
 
   // Energy balance
   Wth = eta*Q_fuel*LHV;
@@ -126,16 +136,12 @@ equation
   connect(sink_fuel.C_in, inlet1) annotation (Line(points={{-2.77556e-16,-27},{-2.77556e-16,-63.5},{0,-63.5},{0,-100}}, color={213,213,0}));
   connect(source_exhaust.C_out, pressure_loss.C_in) annotation (Line(points={{27,0},{46,0}}, color={95,95,95}));
   connect(pressure_loss.C_out, outlet) annotation (Line(points={{66,0},{100,0}}, color={95,95,95}));
+  connect(pressure_loss.Kfr, Kfr) annotation (Line(points={{56,4},{56,110},{30,110}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
         grid={2,2})),
-    Window(
-      x=0.03,
-      y=0.02,
-      width=0.95,
-      height=0.95),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},

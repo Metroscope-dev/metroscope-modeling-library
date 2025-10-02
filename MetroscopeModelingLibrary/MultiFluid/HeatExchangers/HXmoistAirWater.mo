@@ -51,7 +51,7 @@ model HXmoistAirWater
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={2,34})));
-  WaterSteam.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0)  annotation (Placement(transformation(
+  WaterSteam.Pipes.FrictionPipe cold_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-16,-24})));

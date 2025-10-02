@@ -2,7 +2,8 @@ within MetroscopeModelingLibrary.RefMoistAir.Pipes;
 model Pipe
     extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
-  extends Partial.Pipes.Pipe(
+  extends Partial.Pipes.FrictionPipe
+                            (
     redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
     redeclare package Medium = RefMoistAirMedium) annotation(IconMap(primitivesVisible=false));

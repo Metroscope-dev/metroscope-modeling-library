@@ -7,7 +7,7 @@ model MetroscopiaCCGT_direct
     // Air source
     input Real P_source_air(start=1) "bar";
     input Units.MassFlowRate Q_source_air(start=500) "kg/s";
-    input Real T_source_air(start=24) "degC";
+    Real T_source_air(start=24) "degC";
     input Real Relative_Humidity(start=0.5);
     // Fuel source
     input Real P_fuel_source(start=30) "bar";
@@ -88,7 +88,7 @@ model MetroscopiaCCGT_direct
   // Calibrated parameters (input used for calibration in comment)
 
     // Gas Turbine
-    parameter Units.FrictionCoefficient Filter_Kfr=0.04432005; // Filter outlet pressure
+    Units.FrictionCoefficient Filter_Kfr; // Filter outlet pressure
     parameter Real compression_rate = 18.88889; // Air compressor outlet pressure
     parameter Real compressor_eta_is = 0.878675; // Air compressor outlet temperature
     parameter Real turbine_eta_is = 0.8304104; // Gas turbine power output
@@ -130,6 +130,7 @@ model MetroscopiaCCGT_direct
     parameter Real pumpRec_CV_Cvmax = 52.329174; // Recirculation control valve opening
 
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
+    S=100,
     nominal_DT_default=false,
       QCp_max_side=Eco_QCp_max_side,
     Q_cold_0=56.89394,
@@ -169,6 +170,7 @@ model MetroscopiaCCGT_direct
         rotation=180,
         origin={56,34})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Evaporator evaporator(
+    S=100,
     x_steam_out(start=1),
     faulty=false,
     Q_cold_0=47.517586,
@@ -185,6 +187,7 @@ model MetroscopiaCCGT_direct
     h_0=2691576)
     annotation (Placement(transformation(extent={{-34,28},{-46,40}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater1(
+    S=100,
     nominal_DT_default=false,
       QCp_max_side="unidentified",
     Q_cold_0=47.517586,
@@ -255,6 +258,7 @@ model MetroscopiaCCGT_direct
   MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_ST_out_sensor(W_MW(start=64.77))
     annotation (Placement(transformation(extent={{90,274},{102,286}})));
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser(
+    S=100,
     Q_cold_0=2730.2332,
     Q_hot_0=49.734425,
     Psat_0=4973.1817,
@@ -374,6 +378,7 @@ model MetroscopiaCCGT_direct
     T_0=913.15)
     annotation (Placement(transformation(extent={{-370,-7},{-358,5}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater Reheater(
+    S=100,
     nominal_DT_default=false,
       QCp_max_side=ReH_QCp_max_side,
     Q_cold_0=49.734425,
@@ -566,9 +571,9 @@ model MetroscopiaCCGT_direct
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-442,-21})));
-  MetroscopeModelingLibrary.Power.Machines.Generator GT_generator
+  MetroscopeModelingLibrary.Power.Machines.Generator GT_generator(eta=0.99)
     annotation (Placement(transformation(extent={{-380,50},{-348,70}})));
-  MetroscopeModelingLibrary.Power.Machines.Generator ST_generator
+  MetroscopeModelingLibrary.Power.Machines.Generator ST_generator(eta=0.99)
     annotation (Placement(transformation(extent={{50,270},{82,290}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor T_flue_gas_sink_sensor(
     Q_0=510.45065,
@@ -589,13 +594,14 @@ model MetroscopiaCCGT_direct
     Q_0=500,
     T_0=297.149994,
     h_0=301935.4)
-    annotation (Placement(transformation(extent={{-576,-10},{-556,10}})));
+    annotation (Placement(transformation(extent={{-580,-10},{-560,10}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_filter_out_sensor(
     Q_0=500,
     P_0=100000,
     h_0=301935.4)
     annotation (Placement(transformation(extent={{-548,-6},{-536,6}})));
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(
+    S=100,
     nominal_DT_default=false,
       QCp_max_side=HPSH_QCp_max_side,
     Q_cold_0=49.734425,
@@ -667,8 +673,22 @@ model MetroscopiaCCGT_direct
         rotation=180,
         origin={-90,180})));
   Sensors.MoistAir.RelativeHumiditySensor H_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-694,-6},{-682,6}})));
+  FlueGases.Pipes.FrictionPipe HRSG_friction annotation (Placement(transformation(extent={{40,10},{60,-10}})));
+  Utilities.Interfaces.RealInput HRSG_Kfr(start=0.022388678)
+                                          annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={50,-20}), iconTransformation(extent={{-36,-16},{4,24}})));
+  Utilities.Interfaces.RealExpression    AirFilter_Kfr(y=0.04432005 + T_source_air*1e-4) annotation (Placement(transformation(
+        extent={{-20,-12},{20,12}},
+        rotation=0,
+        origin={-570,40})));
 equation
+  T_source_air = 24 + time*10;
 
+
+  Filter_Kfr = 0.04432005 + T_source_air * 1e-4;
+  //AirFilter.Kfr = Filter_Kfr;
   //--- Air / Flue Gas System ---
 
     // Air source
@@ -689,9 +709,7 @@ equation
       // Quantities definition
       P_filter_out_sensor.P_barA = P_filter_out;
       // Calibrated parameters
-      AirFilter.Kfr = Filter_Kfr;
-      // Parameters
-      AirFilter.delta_z = 1;
+
 
     // Air Compressor
       // Quantities definition
@@ -713,58 +731,45 @@ equation
       // Calibrated parameters
       gasTurbine.tau = turbine_compression_rate;
       gasTurbine.eta_is = turbine_eta_is;
-      // Parameters
-      gasTurbine.eta_mech = 0.99;
 
     // Generator
       // Quantities definition
       W_GT_sensor.W_MW = W_GT;
-      // Parameters
-      GT_generator.eta = 0.99;
 
     // Flue Gas sink
       //Quantities definition
       P_flue_gas_sink_sensor.P_barA = P_flue_gas_sink;
       T_flue_gas_sink_sensor.T_degC = T_flue_gas_sink;
 
-  // --- Water / Steam Circuit
 
     // Economizer
       // Quantities definition
       T_w_eco_out_sensor.T_degC = T_w_eco_out;
       P_w_eco_out_sensor.P_barA = P_w_eco_out;
       // Parameters
-      economiser.S = 100;
       economiser.nominal_cold_side_temperature_rise = 235;
       economiser.nominal_hot_side_temperature_drop = 150;
       T_w_eco_in_sensor.T_degC = T_w_eco_in;
       // Calibrated parameters
       economiser.Kth = Eco_Kth;
-      economiser.Kfr_hot = Eco_Kfr_hot;
       economiser.Kfr_cold = Eco_Kfr_cold;
 
     // Evaporator
       // Quantities definition
       P_w_evap_out_sensor.P_barA = P_w_evap_out;
-      evaporator.x_steam_out = Evap_x_steam_out;
       Evap_opening_sensor.Opening = Evap_opening;
       // Parameters
-      evaporator.S = 100;
-      evaporator.Kfr_hot = 0;
       // Calibrated parameters
-  Evap_controlValve.Cv_max = Evap_CV_Cvmax;
+      Evap_controlValve.Cv_max = Evap_CV_Cvmax;
       evaporator.Kth = Evap_Kth;
-      evaporator.Kfr_cold = Evap_Kfr_cold;
 
     // HP Superheater 1
       // Quantities definition
       P_w_HPSH1_out_sensor.P_barA = P_w_HPSH1_out;
       T_w_HPSH1_out_sensor.T_degC = T_w_HPSH1_out;
       // Parameters
-      HPsuperheater1.S = 100;
       HPsuperheater1.nominal_cold_side_temperature_rise = 250;
       HPsuperheater1.nominal_hot_side_temperature_drop = 180;
-      HPsuperheater1.Kfr_hot = 0;
       // Calibrated parameters
       HPsuperheater1.Kth = HPSH1_Kth;
       HPsuperheater1.Kfr_cold = HPSH1_Kfr_cold;
@@ -773,10 +778,8 @@ equation
       // Quantities definition
       P_w_HPSH2_out_sensor.P_barA = P_w_HPSH2_out;
       // Parameters
-      HPsuperheater2.S = 100;
       HPsuperheater2.nominal_cold_side_temperature_rise = 150;
       HPsuperheater2.nominal_hot_side_temperature_drop = 180;
-      HPsuperheater2.Kfr_hot = 0;
       T_w_HPSH2_out_sensor.T_degC = T_w_HPSH2_out;
       // Calibrated parameters
       HPsuperheater2.Kth = HPSH2_Kth;
@@ -787,17 +790,15 @@ equation
       deSH_opening_sensor.Opening = deSH_opening;
       Q_deSH_sensor.Q = Q_deSH;
       // Calibrated parameters
-  deSH_controlValve.Cv_max = deSH_CV_Cvmax;
+      deSH_controlValve.Cv_max = deSH_CV_Cvmax;
 
     // Reheater
       // Quantities definition
       T_w_ReH_out_sensor.T_degC = T_w_ReH_out;
       P_w_ReH_out_sensor.P_barA = P_w_ReH_out;
       // Parameters
-      Reheater.S = 100;
       Reheater.nominal_cold_side_temperature_rise = 100;
       Reheater.nominal_hot_side_temperature_drop = 180;
-      Reheater.Kfr_hot = 0;
       // Calibrated parameters
       Reheater.Kth = ReH_Kth;
       Reheater.Kfr_cold = ReH_Kfr_cold;
@@ -807,8 +808,6 @@ equation
       // Steam Turbine Generator
         // Quantities definition
         W_ST_out_sensor.W_MW = W_ST_out;
-        // Parameters
-        ST_generator.eta = 0.99;
 
       // High Pressure Level
         // Quantities definition
@@ -836,10 +835,7 @@ equation
       T_circulating_water_out_sensor.T_degC = T_circulating_water_out;
       P_Cond_sensor.P_barA   = P_Cond;
       // Parameters
-      condenser.S = 100;
-      condenser.water_height = 1;
       condenser.C_incond = 0;
-      condenser.P_offset = 0;
       condenser.Kfr_cold = 1;
       // Calibrated parameters
       condenser.Kth = Cond_Kth;
@@ -865,7 +861,7 @@ equation
       // Calibrated parameters
       pumpRec.hn = pumpRec_hn;
       pumpRec.rh = pumpRec_rh;
-  pumpRec_controlValve.Cv_max = pumpRec_CV_Cvmax;
+      pumpRec_controlValve.Cv_max = pumpRec_CV_Cvmax;
 
   connect(HPsuperheater1.C_cold_out, T_w_HPSH1_out_sensor.C_in) annotation (
      Line(points={{-173.4,15.8},{-172,15.8},{-172,34},{-178,34}},
@@ -911,9 +907,6 @@ equation
         points={{-23.4,15.8},{-22,15.8},{-22,34},{-34,34}},
                                                         color={28,108,200},
       pattern=LinePattern.Dash,
-      thickness=1));
-  connect(evaporator.C_hot_out, economiser.C_hot_in) annotation (Line(points={{6,-1},{84,-1},{84,-0.25}},
-                                                         color={95,95,95},
       thickness=1));
   connect(gasTurbine.C_out, turbine_T_out_sensor.C_in)
     annotation (Line(points={{-382,-0.5},{-382,-1},{-370,-1}},
@@ -1050,10 +1043,10 @@ equation
                                                color={28,108,200},
       thickness=0.5));
   connect(AirFilter.C_out, P_filter_out_sensor.C_in)
-    annotation (Line(points={{-556,0},{-548,0}},     color={95,95,95},
+    annotation (Line(points={{-560,0},{-548,0}},     color={95,95,95},
       thickness=1));
   connect(Q_source_air_sensor.C_out, AirFilter.C_in)
-    annotation (Line(points={{-588,0},{-576,0}},     color={95,95,95},
+    annotation (Line(points={{-588,0},{-580,0}},     color={95,95,95},
       thickness=1));
   connect(P_filter_out_sensor.C_out, airCompressor.C_in)
     annotation (Line(points={{-536,0},{-524,0}},     color={95,95,95},
@@ -1133,6 +1126,10 @@ equation
       points={{-694,0},{-703,0}},
       color={85,170,255},
       thickness=1));
+  connect(HRSG_friction.Kfr,HRSG_Kfr)  annotation (Line(points={{50,-4},{50,-20}}, color={0,0,127}));
+  connect(evaporator.C_hot_out, HRSG_friction.C_in) annotation (Line(points={{6,-1},{22,-1},{22,0},{40,0}}, color={95,95,95}));
+  connect(HRSG_friction.C_out, economiser.C_hot_in) annotation (Line(points={{60,0},{84,0},{84,-0.25}}, color={95,95,95}));
+  connect(AirFilter_Kfr.y, AirFilter.Kfr) annotation (Line(points={{-570,34},{-570,4}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,300}})),
                                                               Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-720,-120},{260,300}}),

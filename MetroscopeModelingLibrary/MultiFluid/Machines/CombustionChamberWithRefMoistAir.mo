@@ -67,7 +67,7 @@ model CombustionChamberwithRefMoistAir
   Fuel.BoundaryConditions.Sink sink_fuel annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=90, origin={0,-22})));
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
   FlueGases.BoundaryConditions.Sink   sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
-  FlueGases.Pipes.Pipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
+  FlueGases.Pipes.FrictionPipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
 
   Converters.RefMoistAir_to_FlueGases refMoistAir_to_FlueGases annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

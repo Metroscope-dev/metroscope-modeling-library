@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.FlueGases.Pipes;
 model Filter
-  extends Pipe annotation(IconMap(primitivesVisible=false));
+  extends FrictionPipe
+               annotation(IconMap(primitivesVisible=false));
   annotation (Icon(graphics={Rectangle(
           extent={{-60,100},{60,-100}},
           lineColor={28,108,200},

@@ -12,7 +12,7 @@ model SteamDryer
   Units.PositiveMassFlowRate Q_in(start=Q_in_0);
                                               // Inlet mass flow rate
 
-  Units.MassFraction x_steam_out(start=1); // Steam mass fraction at steam outlet
+  parameter Units.MassFraction x_steam_out=0.99; // Steam mass fraction at steam outlet
 
   // Initialization parameters
   parameter Units.Pressure P_0 = 10e5;

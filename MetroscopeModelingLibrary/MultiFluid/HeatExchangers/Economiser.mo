@@ -20,7 +20,7 @@ equation
           lineColor={0,0,0},
           fillColor={215,215,215},
           fillPattern=FillPattern.Solid), Line(
-          points={{40,80},{40,-80},{10,-80},{12,80},{-12,80},{-14,-80},{-40,-80},{-40,78}},
+          points={{40,80},{40,-52},{10,-52},{12,52},{-12,52},{-12,-52},{-40,-52},{-40,78}},
           color={28,108,200},
           smooth=Smooth.Bezier,
           thickness=1)}));

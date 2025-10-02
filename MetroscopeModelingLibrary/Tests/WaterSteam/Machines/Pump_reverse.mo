@@ -42,12 +42,12 @@ equation
 
   // Component parameters
   pump.VRotn = pump_VRotn;
-  pump.rm = 0.85;
   pump.a1 = 0;
   pump.a2 = 0;
   pump.b1 = 0;
   pump.b2 = 0;
   pump.rh_min = 0.2;
+  pump.rm = 0.85;
 
   // Calibrated parameters
   pump.a3 = pump_a3;

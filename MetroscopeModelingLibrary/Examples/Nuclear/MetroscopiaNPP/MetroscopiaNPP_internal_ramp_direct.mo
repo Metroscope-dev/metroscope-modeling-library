@@ -245,22 +245,22 @@ model MetroscopiaNPP_internal_ramp_direct
     T_0=425.15,
     h_0=640e3)                                                                               annotation (Placement(transformation(extent={{288,-122},{298,-110}})));
   MetroscopeModelingLibrary.Sensors.Outline.OpeningSensor LP_reheater_drains_control_valve_opening_sensor annotation (Placement(transformation(extent={{288,-106},{298,-96}})));
-    MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe deaerator_inlet_pipe(
+  MetroscopeModelingLibrary.WaterSteam.Pipes.FrictionPipe deaerator_inlet_pipe(
     P_in_0=600000,
     P_out_0=550000,
     Q_0=1060,
     T_0=338.15,
-    h_0=272e3)                                                           annotation (Placement(transformation(extent={{186,-80},{166,-60}})));
+    h_0=272e3) annotation (Placement(transformation(extent={{186,-80},{166,-60}})));
     MetroscopeModelingLibrary.WaterSteam.Pipes.PressureCut steam_dryer_liq_out_pipe annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={142,-50})));
-    MetroscopeModelingLibrary.WaterSteam.Pipes.Pipe deaerator_outlet_pipe(
+  MetroscopeModelingLibrary.WaterSteam.Pipes.FrictionPipe deaerator_outlet_pipe(
     P_in_0=550000,
     P_out_0=600000,
     Q_0=1500,
     T_0=350.05,
-    h_0=322e3)                                                            annotation (Placement(transformation(extent={{114,-80},{94,-60}})));
+    h_0=322e3) annotation (Placement(transformation(extent={{114,-80},{94,-60}})));
     WaterSteam.Machines.FixedSpeedPump                 feedwater_pump(
     T_in_0=350.05,
     T_out_0=353.15,
