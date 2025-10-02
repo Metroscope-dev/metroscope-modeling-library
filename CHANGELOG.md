@@ -8,8 +8,20 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 🔥 Removed 
+
+
+## [ MML - v4.0.0-beta]
+
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
 - Added fixed speed pump [#526](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/526)
 - (Breaking change) Added opening connector to IGV component [#527](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/527)
+- (Breaking change) Added connectors to components for parameters and sensors for inputs and outputs [#537](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/537)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
