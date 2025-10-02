@@ -4,8 +4,7 @@ partial model HeightVariationPipe
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  parameter Units.Height delta_z_constant = 10;
-  Utilities.Interfaces.GenericReal delta_z(start=delta_z_constant, nominal=delta_z_constant) annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal delta_z(start=10, nominal=10) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,40}), iconTransformation(

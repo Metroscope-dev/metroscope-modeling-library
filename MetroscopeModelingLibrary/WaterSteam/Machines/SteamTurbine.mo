@@ -15,9 +15,6 @@ model SteamTurbine
 
   import MetroscopeModelingLibrary.Utilities.Units;
 
-  parameter Units.Cst Cst_constant = 1e4;
-  parameter Units.Yield eta_is_constant = 0.9;
-
   Utilities.Units.MassFraction x_in(start=x_in_0);
   Utilities.Units.MassFraction x_out(start=x_out_0);
   Utilities.Units.MassFraction xm(start=xm_0);

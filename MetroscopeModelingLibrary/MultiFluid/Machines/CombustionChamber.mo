@@ -12,8 +12,6 @@ model CombustionChamber
 
   // Performance parameters
   //Inputs.Input
-  parameter Units.FrictionCoefficient Kfr_constant = 0;
-  parameter Real eta_constant=0.99457; // The value given is found in performance document of GE
 
   // Power released by the combustion
   Inputs.InputPower Wth;
@@ -66,14 +64,14 @@ model CombustionChamber
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
   FlueGases.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
   FlueGases.Pipes.FrictionPipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
-  Utilities.Interfaces.GenericReal Kfr(start=Kfr_constant) annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal Kfr(start=0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={30,110}),  iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={30,110})));
-  Utilities.Interfaces.GenericReal eta(start=eta_constant) annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal eta(start=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-30,100}),iconTransformation(

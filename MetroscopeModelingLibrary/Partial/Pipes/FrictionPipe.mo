@@ -9,8 +9,7 @@ partial model FrictionPipe
   parameter Boolean faulty = false;
   Units.Percentage fouling; // Fouling coefficient
 
-  parameter Units.FrictionCoefficient Kfr_constant = -DP_0*rho_0/(Q_0*Q_0);
-  Utilities.Interfaces.GenericReal Kfr(start=Kfr_constant)        annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal Kfr(start=0)        annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,40}), iconTransformation(

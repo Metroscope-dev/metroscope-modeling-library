@@ -129,8 +129,9 @@ model MetroscopiaCCGT_direct_mml4
         origin={-90,70})));
   MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_Cond_sensor(sensor_function="Calibration", causality="Cond_Kth",
     display_unit="mbar",
-    signal_unit="mbar")
-    annotation (Placement(transformation(extent={{28,274},{40,286}})));
+    signal_unit="mbar"
+
+)   annotation (Placement(transformation(extent={{28,274},{40,286}})));
   Sensors_Control.FlueGases.PressureSensor                   P_source_air_sensor(sensor_function="BC")
     annotation (Placement(transformation(extent={{-646,-6},{-634,6}})));
   Sensors_Control.FlueGases.TemperatureSensor                   T_source_air_sensor(sensor_function="BC")
@@ -251,12 +252,14 @@ model MetroscopiaCCGT_direct_mml4
   Sensors.Displayer.MoistAirDisplayer moistAirDisplayer annotation (Placement(transformation(extent={{-710,-10},{-690,10}})));
   Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer annotation (Placement(transformation(extent={{-664,-10},{-644,10}})));
   Sensors_Control.MoistAir.RelativeHumiditySensor Relative_Humidity_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-722,-6},{-710,6}})));
-  Utilities.Interfaces.RealInput Relative_Humidity(start=0.5)
+  Utilities.Interfaces.BoundaryCondition
+                                 Relative_Humidity(start=0.5)
                                                    annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-716,14}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_source_air(start=1) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_source_air(start=1) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-640,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -266,7 +269,8 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-620,28}),           iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput Q_source_air(start=500) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 Q_source_air(start=500) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-600,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -307,11 +311,13 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-450,-20}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_fuel_source(start=30) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_fuel_source(start=30) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-450,-40}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_fuel_source(start=156) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_fuel_source(start=156) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-450,-60}), iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -320,7 +326,8 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-412,20}), iconTransformation(extent={{-454,4},{-434,24}})));
-  Utilities.Interfaces.RealInput  turbine_T_out(
+  Utilities.Interfaces.BoundaryCondition
+                                  turbine_T_out(
                                                start=640) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
@@ -401,7 +408,8 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-290,80}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_w_HPSH2_out(start=566.5) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_w_HPSH2_out(start=566.5) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-290,60}), iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -420,7 +428,8 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={56,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_w_eco_in(start=85) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_w_eco_in(start=85) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={140,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -434,7 +443,8 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={130,92}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_flue_gas_sink(start=1) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_flue_gas_sink(start=1) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={210,198}), iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -463,12 +473,14 @@ model MetroscopiaCCGT_direct_mml4
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={110,210}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_circulating_water_in(start=15) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_circulating_water_in(start=15) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-20,210}),
                          iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_circulating_water_in(start=5) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_circulating_water_in(start=5) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={0,210}),  iconTransformation(extent={{-754,-34},{-714,6}})));

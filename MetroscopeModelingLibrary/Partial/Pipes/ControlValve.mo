@@ -5,7 +5,6 @@ partial model ControlValve
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  parameter Units.Cv Cv_max_constant = 1e4 "Maximum CV";
   Units.Cv Cv(start=1e4) "Cv";
   Modelica.Blocks.Interfaces.RealInput Opening(unit="1", min=0., max=1., nominal=0.5) annotation (Placement(
         transformation(extent={{-20,-20},{20,20}},
@@ -15,7 +14,7 @@ partial model ControlValve
         rotation=-90,
         origin={0,160})));
 
-  Utilities.Interfaces.GenericReal Cv_max(start=Cv_max_constant) annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal Cv_max(start=1e4) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-40,110}), iconTransformation(

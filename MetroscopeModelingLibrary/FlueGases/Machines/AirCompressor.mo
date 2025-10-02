@@ -12,9 +12,6 @@ model AirCompressor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  parameter Real tau_constant = 15;
-  parameter Real eta_is_constant = 0.8;
-
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   FlueGasesMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
   Real Q_reduced "Compressor reduced mass flow";

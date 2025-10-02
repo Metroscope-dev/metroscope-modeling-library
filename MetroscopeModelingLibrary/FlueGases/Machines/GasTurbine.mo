@@ -12,7 +12,6 @@ model GasTurbine
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  parameter Units.Yield eta_is_constant = 0.8;
   Inputs.InputReal tau(start=15, min = 1) "Compression rate";
   parameter Units.Yield eta_mech = 0.99 "Nominal mechanical efficiency";
 
@@ -26,7 +25,7 @@ model GasTurbine
   Units.Percentage eta_is_decrease(min = 0, max=100) "percentage decrease of eta_is";
 
   Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
-  Utilities.Interfaces.GenericReal eta_is(start=eta_is_constant) annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal eta_is(start=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-100,80}), iconTransformation(
