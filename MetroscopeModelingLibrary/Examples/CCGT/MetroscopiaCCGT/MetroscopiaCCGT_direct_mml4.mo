@@ -131,7 +131,7 @@ model MetroscopiaCCGT_direct_mml4
     display_unit="mbar",
     signal_unit="mbar")
     annotation (Placement(transformation(extent={{28,274},{40,286}})));
-  Sensors_Control.FlueGases.PressureSensor                   P_source_air_sensor(sensor_function="BC", init_P=1)
+  Sensors_Control.FlueGases.PressureSensor                   P_source_air_sensor(sensor_function="BC")
     annotation (Placement(transformation(extent={{-646,-6},{-634,6}})));
   Sensors_Control.FlueGases.TemperatureSensor                   T_source_air_sensor(sensor_function="BC")
     annotation (Placement(transformation(extent={{-626,-6},{-614,6}})));

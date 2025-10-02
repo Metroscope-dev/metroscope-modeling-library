@@ -250,28 +250,34 @@ model MetroscopiaCCGT_reverse
   Sensors.Displayer.MoistAirDisplayer moistAirDisplayer annotation (Placement(transformation(extent={{-710,-10},{-690,10}})));
   Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer annotation (Placement(transformation(extent={{-664,-10},{-644,10}})));
   Sensors_Control.MoistAir.RelativeHumiditySensor Relative_Humidity_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-722,-6},{-710,6}})));
-  Utilities.Interfaces.RealInput Relative_Humidity(start=0.5)
+  Utilities.Interfaces.BoundaryCondition
+                                 Relative_Humidity(start=0.5)
                                                    annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-716,14}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_source_air(start=1) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_source_air(start=1) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-640,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_source_air(start=24) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_source_air(start=24) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-620,14}),           iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput Q_source_air(start=500) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 Q_source_air(start=500) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-600,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_filter_out(start=0.9) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_filter_out(start=0.9) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-540,20}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput compressor_P_out(start=17) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 compressor_P_out(start=17) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=-90,
         origin={-484,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -288,7 +294,8 @@ model MetroscopiaCCGT_reverse
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-520,28}),iconTransformation(extent={{-628,-4},{-608,16}})));
-  Utilities.Interfaces.RealInput compressor_T_out(start=450) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 compressor_T_out(start=450) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-466,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -296,11 +303,13 @@ model MetroscopiaCCGT_reverse
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-450,-20}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_fuel_source(start=30) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_fuel_source(start=30) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-450,-40}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_fuel_source(start=156) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_fuel_source(start=156) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-450,-60}), iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -308,12 +317,14 @@ model MetroscopiaCCGT_reverse
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-412,20}), iconTransformation(extent={{-454,4},{-434,24}})));
-  Utilities.Interfaces.RealInput  turbine_T_out(
+  Utilities.Interfaces.BoundaryCondition
+                                  turbine_T_out(
                                                start=640) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-364,12}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput turbine_P_out(start=1.1) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 turbine_P_out(start=1.1) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-344,12}), iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -356,105 +367,130 @@ model MetroscopiaCCGT_reverse
         extent={{-4,-4},{4,4}},
         rotation=90,
         origin={-286,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.RealInput P_w_HPSH1_out(start=116) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_w_HPSH1_out(start=116) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-208,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_w_HPSH1_out(start=450) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 T_w_HPSH1_out(start=450) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-184,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_w_HPSH1_out1(start=9)  annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_w_HPSH1_out1(start=9)  annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-100,70}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_w_HPSH1_out1(start=350)
+  Utilities.Interfaces.CalibrationInput
+                                 T_w_HPSH1_out1(start=350)
                                                           annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-100,50}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_w_HPSH2_out(start=114) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_w_HPSH2_out(start=114) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-290,80}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_w_HPSH2_out(start=566.5) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_w_HPSH2_out(start=566.5) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={-290,60}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_w_evap_out(start=120) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_w_evap_out(start=120) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-40,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_w_eco_out(start=320) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 T_w_eco_out(start=320) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={12,44}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_w_eco_out(start=122.5) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_w_eco_out(start=122.5) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={56,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_w_eco_in(start=85) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_w_eco_in(start=85) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={140,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_pumpRec_out(start=324) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 T_pumpRec_out(start=324) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={114,92}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_pumpRec_out(start=180) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_pumpRec_out(start=180) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={130,92}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_flue_gas_sink(start=1) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_flue_gas_sink(start=1) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=0,
         origin={210,198}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput W_GT(start=150) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 W_GT(start=150) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-340,112}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_pump_out(start=170) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_pump_out(start=170) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={150,170}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_pump_out(start=35) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 T_pump_out(start=35) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={130,170}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput Q_pump_out(start=50) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 Q_pump_out(start=50) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={170,170}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_circulating_water_out(start=25) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 T_circulating_water_out(start=25) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={110,210}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_circulating_water_in(start=15) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 T_circulating_water_in(start=15) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-20,210}),
                          iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_circulating_water_in(start=5) annotation (Placement(transformation(
+  Utilities.Interfaces.BoundaryCondition
+                                 P_circulating_water_in(start=5) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={0,210}),  iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_Cond(start=50) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_Cond(start=50) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={34,292}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_LPST_in(start=8) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_LPST_in(start=8) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-28,292}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_HPST_out(start=10) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_HPST_out(start=10) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-128,190}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput T_HPST_out(start=255.5) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 T_HPST_out(start=255.5) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-110,190}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput Q_deSH(start=2) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 Q_deSH(start=2) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-138,132}), iconTransformation(extent={{-754,-34},{-714,6}})));
@@ -502,24 +538,29 @@ model MetroscopiaCCGT_reverse
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={170,10}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput W_ST_out(start=65) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 W_ST_out(start=65) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={96,332}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput P_HPST_in(start=113) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 P_HPST_in(start=113) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-194,192}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput deSH_opening(start=0.15)
+  Utilities.Interfaces.CalibrationInput
+                                 deSH_opening(start=0.15)
                                                          annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={-180,154}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput Evap_opening(start=0.35) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 Evap_opening(start=0.35) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={30,68}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealInput pumpRec_opening(start=0.35) annotation (Placement(transformation(
+  Utilities.Interfaces.CalibrationInput
+                                 pumpRec_opening(start=0.35) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
         rotation=270,
         origin={160,110}), iconTransformation(extent={{-754,-34},{-714,6}})));
