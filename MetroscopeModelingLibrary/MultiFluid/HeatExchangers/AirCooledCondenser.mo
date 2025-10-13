@@ -23,9 +23,8 @@ model AirCooledCondenser
   Units.Pressure Psat(start=Psat_0, nominal=Psat_0);
   Units.Temperature Tsat(start=Tsat_0);
 
-  parameter Units.Pressure P_incond = 0;
-  Real C_incond(unit="mol/m3", min=0)
-                                     "Incondensable molar concentration";
+  Real P_incond(start=0.001e5);
+  parameter Real C_incond = 0 "Incondensable molar concentration";
   parameter Units.Pressure P_offset = 0 "Offset correction for ideal gas law";
   constant Real R(unit="J/(mol.K)") = Modelica.Constants.R "ideal gas constant";
 
