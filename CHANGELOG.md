@@ -11,8 +11,6 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
     - 🔧 Fix variables declaration for incondensable in ACC [#558](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/558)
-=======
->>>>>>> main
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
