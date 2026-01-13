@@ -266,9 +266,9 @@ model MetroscopiaCCGT_direct_mml4
   Utilities.Interfaces.RealExpression
                                  T_source_air(y=24 + time)
                                                         annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
+        extent={{-12.5,-12.5},{12.5,12.5}},
         rotation=0,
-        origin={-620,28}),           iconTransformation(extent={{-754,-34},{-714,6}})));
+        origin={-610.5,37.5}),       iconTransformation(extent={{-754,-34},{-714,6}})));
   Utilities.Interfaces.BoundaryCondition
                                  Q_source_air(start=500) annotation (Placement(transformation(
         extent={{-3,-3},{3,3}},
@@ -285,7 +285,7 @@ model MetroscopiaCCGT_direct_mml4
         rotation=-90,
         origin={-484,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
   Utilities.Interfaces.RealExpression
-                                  Filter_Kfr(y=0.04432005 + T_source_air*0.0001)
+                                  Filter_Kfr(y=0.04432005)
                                              "P_filter_out"
                                              annotation (Placement(transformation(
         extent={{-17.5,-11.5},{17.5,11.5}},
@@ -935,7 +935,8 @@ equation
   connect(evaporator.Kth, Evap_Kth) annotation (Line(points={{-8,-21},{-8,-30}}, color={0,0,127}));
   connect(Filter_Kfr.y, AirFilter.Kfr) annotation (Line(points={{-566.5,17.75},{-566.5,12},{-566,12},{-566,4}}, color={0,0,127}));
   connect(airCompressor.eta_is, compressor_eta_is) annotation (Line(points={{-519.8,11.55},{-519.8,24},{-520,24}}, color={0,0,127}));
-  connect(T_source_air.y, T_source_air_sensor.T_sensor) annotation (Line(points={{-620,26.5},{-620,6}}, color={0,0,127}));
+  connect(T_source_air.y, T_source_air_sensor.T_sensor) annotation (Line(points={{-610.5,31.25},{-612,31.25},{-612,20},{-620,20},{-620,6}},
+                                                                                                        color={0,0,127}));
   connect(source_fuel.C_out, chromatograph.C_in) annotation (Line(points={{-440,-101},{-441,-100},{-441,-96}}, color={213,213,0}));
   connect(chromatograph.C_out, fuelDisplayer.C_in) annotation (Line(points={{-441,-86},{-440,-86},{-440,-83}}, color={213,213,0}));
   connect(chromatograph.X_CO2, X_CO2) annotation (Line(points={{-442.8,-86.8},{-442.8,-88},{-448,-88},{-448,-76}},
