@@ -47,7 +47,7 @@ equation
 
   // Parameters for calibration
   gasTurbine.tau = compression_rate;
-  gasTurbine.eta_is = eta_is;
+  gasTurbine.eta_is1 = eta_is;
 
   connect(source.C_out, gasTurbine.C_in) annotation (Line(points={{-33,0},{-8,0}}, color={95,95,95}));
   connect(gasTurbine.C_W_shaft, sink_power.C_in) annotation (Line(

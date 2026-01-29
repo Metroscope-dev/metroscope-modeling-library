@@ -6,21 +6,25 @@ partial model ControlValve
   import MetroscopeModelingLibrary.Utilities.Constants;
 
   Units.Cv Cv(start=1e4) "Cv";
-  Modelica.Blocks.Interfaces.RealInput Opening(unit="1", min=0., max=1., nominal=0.5) annotation (Placement(
-        transformation(extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={0,174}),                              iconTransformation(
-        extent={{-20,-20},{20,20}},
-        rotation=-90,
-        origin={0,160})));
 
-  Utilities.Interfaces.GenericReal Cv_max(start=1e4) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+  Utilities.Interfaces.RealInput Opening(
+    unit="1",
+    min=0.,
+    max=1.,
+    nominal=0.5) annotation (Placement(transformation(
+        extent={{-6,-6},{6,6}},
+        rotation=270,
+        origin={-2,168}), iconTransformation(
+        extent={{-10.5,-10.5},{10.5,10.5}},
+        rotation=270,
+        origin={0,160})));
+  Utilities.Interfaces.GenericReal Cv_max annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
         rotation=180,
-        origin={-40,110}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-40,110})));
+        origin={-42,152}), iconTransformation(
+        extent={{11,-11},{-11,11}},
+        rotation=0,
+        origin={-40,120})));
 equation
   /* Pressure loss */
   DP*Cv*abs(Cv) = -1.733e12*abs(Q)*Q/rho_in^2;
@@ -30,7 +34,7 @@ equation
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=true,
-        extent={{-100,-40},{100,180}},
+        extent={{-100,-100},{100,100}},
         grid={2,2}), graphics={
         Polygon(
           points={{40,102},{-40,102},{-40,118},{-38,136},{-32,146},{-20,156},{0,
@@ -55,7 +59,7 @@ equation
           fillPattern=FillPattern.Solid)}),
     Diagram(coordinateSystem(
         preserveAspectRatio=true,
-        extent={{-100,-40},{100,180}},
+        extent={{-100,-100},{100,100}},
         grid={2,2}), graphics={
         Polygon(
           points={{-100,-40},{0,2},{-100,42},{-100,-40},{-100,-40}},

@@ -4,7 +4,7 @@ record EvaporatorDrumIcon
           Rectangle(
           extent={{-80,100},{80,-100}},
           lineColor={0,0,0},
-          fillColor={215,215,215},
+          fillColor={175,175,175},
           fillPattern=FillPattern.Solid),
         Line(
           points={{-30,128},{-30,70}},

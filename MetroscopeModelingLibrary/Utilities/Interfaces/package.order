@@ -5,3 +5,5 @@ RealExpression
 BoundaryCondition
 CalibrationInput
 Observable
+GasCompositionGeneric
+GasCompositionInput

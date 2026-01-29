@@ -15,5 +15,5 @@ equation
   // Indicators
   FTR = T_cold_out - T_cold_in;
 
-  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.6)), Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.6)));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)), Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)));
 end Economiser;

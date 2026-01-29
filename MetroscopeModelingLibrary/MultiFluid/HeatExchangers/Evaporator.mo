@@ -81,15 +81,15 @@ model Evaporator
         rotation=0,
         origin={20,30})));
   FlueGases.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(
-          extent={{-70,-10},{-50,10}}), iconTransformation(extent={{-70,-10},{-50,10}})));
+          extent={{-90,-10},{-70,10}}), iconTransformation(extent={{-90,-10},{-70,10}})));
   FlueGases.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(
-          extent={{52,-10},{72,10}}), iconTransformation(extent={{52,-10},{72,10}})));
+          extent={{70,-10},{90,10}}), iconTransformation(extent={{70,-10},{90,10}})));
   WaterSteam.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(
-          extent={{48,152},{68,172}}), iconTransformation(extent={{50,146},{70,166}})));
+          extent={{48,152},{68,172}}), iconTransformation(extent={{60,150},{80,170}})));
   WaterSteam.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start = h_vap_sat_0)) annotation (Placement(transformation(extent={{-48,270},{-28,290}}),
-                                                                                                                                                                                       iconTransformation(extent={{-68,246},{-48,266}})));
+                                                                                                                                                                                       iconTransformation(extent={{-80,230},{-60,250}})));
 
-  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(extent={{-60,-84},{-68,-76}}), iconTransformation(extent={{-60,-84},{-68,-76}})));
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(extent={{-80,-84},{-88,-76}}), iconTransformation(extent={{-80,-84},{-88,-76}})));
 equation
   // Failure modes
   if not faulty then
@@ -148,13 +148,13 @@ equation
 
   connect(cold_side_vaporising.C_in,cold_side_heating. C_out) annotation (Line(points={{-10,30},{10,30}}, color={28,108,200}));
   connect(hot_side_vaporising.C_out,hot_side_heating. C_in) annotation (Line(points={{-10,0},{10,0}},     color={95,95,95}));
-  connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,0},{62,0}},             color={95,95,95}));
+  connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,0},{80,0}},             color={95,95,95}));
   connect(cold_side_vaporising.C_out, C_cold_out) annotation (Line(points={{-30,30},{-38,30},{-38,280}},color={28,108,200}));
-  connect(hot_side_vaporising.C_in, C_hot_in) annotation (Line(points={{-30,0},{-60,0}},  color={95,95,95}));
+  connect(hot_side_vaporising.C_in, C_hot_in) annotation (Line(points={{-30,0},{-80,0}},  color={95,95,95}));
   connect(cold_side_heating.C_in, C_cold_in) annotation (Line(points={{30,30},{58,30},{58,162}},color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false,
         extent={{-100,-100},{100,280}},
-        initialScale=0.6)),        Diagram(coordinateSystem(preserveAspectRatio=false,
+        initialScale=0.5)),        Diagram(coordinateSystem(preserveAspectRatio=false,
         extent={{-100,-100},{100,280}},
-        initialScale=0.6)));
+        initialScale=0.5)));
 end Evaporator;

@@ -14,8 +14,8 @@ equation
   W_elec + W_shaft*eta = 0;
   C_out.W = W_elec;
 
-  annotation (Diagram(coordinateSystem(extent={{-100,-60},{100,60}})),
-                                Icon(coordinateSystem(extent={{-100,-60},{100,60}}),
+  annotation (Diagram(coordinateSystem(extent={{-100,-60},{100,60}}, initialScale=0.4)),
+                                Icon(coordinateSystem(extent={{-100,-60},{100,60}}, initialScale=0.4),
                                      graphics={
         Rectangle(
           extent={{-56,33},{66,-33}},

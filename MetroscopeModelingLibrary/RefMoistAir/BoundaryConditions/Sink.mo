@@ -15,7 +15,8 @@ equation
   pds = RefMoistAirMedium.Utilities.pds_pT(P_in, T_in);
   Xi_in = {relative_humidity*k_mair/(P_in/pds - relative_humidity)};
 
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={0,127,127},
@@ -29,5 +30,5 @@ equation
         Line(points={{-18,38},{55,-35}}, color={0,127,127},
           thickness=1),
         Line(points={{-18,-38},{55,35}}, color={0,127,127},
-          thickness=1)}));
+          thickness=1)}), Diagram(coordinateSystem(initialScale=0.2)));
 end Sink;

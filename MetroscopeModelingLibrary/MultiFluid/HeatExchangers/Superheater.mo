@@ -30,5 +30,5 @@ equation
   STR = T_cold_out - T_cold_in;
   DT_superheat = T_cold_out - WaterSteamMedium.saturationTemperature(cold_side_pipe.P_in);
 
-  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.6)), Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.6)));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)), Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)));
 end Superheater;
