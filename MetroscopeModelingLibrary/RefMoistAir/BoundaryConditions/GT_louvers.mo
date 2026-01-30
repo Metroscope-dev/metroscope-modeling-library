@@ -14,11 +14,14 @@ model GT_louvers
   parameter Real H_start = 50 "Write here the build value of the quantity. This value will be used in the simulation.";
 
   Connectors.Outlet           C_out annotation (Placement(transformation(extent={{92,-10},{112,10}}), iconTransformation(extent={{50,-10},{70,10}})));
-  Sensors_Control.MoistAir.TemperatureSensor temperatureSensor(T_start=T_start, signal_unit=T_signal_unit)
+  Sensors_Control.RefMoistAir.TemperatureSensor
+                                             temperatureSensor(T_start=T_start, signal_unit=T_signal_unit)
                                                                annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
-  Sensors_Control.MoistAir.PressureSensor pressureSensor(P_start=P_start, signal_unit=P_signal_unit)
+  Sensors_Control.RefMoistAir.PressureSensor
+                                          pressureSensor(P_start=P_start, signal_unit=P_signal_unit)
                                                          annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  Sensors_Control.MoistAir.RelativeHumiditySensor relativeHumiditySensor(H_start=H_start, signal_unit=H_signal_unit)
+  Sensors_Control.RefMoistAir.RelativeHumiditySensor
+                                                  relativeHumiditySensor(H_start=H_start, signal_unit=H_signal_unit)
                                                                          annotation (Placement(transformation(extent={{30,-10},{50,10}})));
   Utilities.Interfaces.GenericReal T "Ambient temperature" annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
@@ -42,16 +45,17 @@ model GT_louvers
         extent={{-4,-4},{4,4}},
         rotation=90,
         origin={40,100})));
-  MoistAir.BoundaryConditions.Source source(h_0=50000)
+  Source                             source(h_0=50000)
                                             annotation (Placement(transformation(extent={{-90,-20},{-50,20}})));
 equation
   connect(T, temperatureSensor.T_sensor) annotation (Line(points={{-40,100},{-40,10}}, color={0,0,127}));
   connect(P, pressureSensor.P_sensor) annotation (Line(points={{0,100},{0,10}}, color={0,0,127}));
   connect(H, relativeHumiditySensor.H_sensor) annotation (Line(points={{40,100},{40,10}}, color={0,0,127}));
   connect(C_out, C_out) annotation (Line(points={{102,0},{102,0}}, color={95,95,95}));
-  connect(relativeHumiditySensor.C_in, pressureSensor.C_out) annotation (Line(points={{30,0},{10,0}}, color={85,170,255}));
-  connect(pressureSensor.C_in, temperatureSensor.C_out) annotation (Line(points={{-10,0},{-20,0},{-20,0},{-30,0}}, color={85,170,255}));
-  connect(temperatureSensor.C_in, source.C_out) annotation (Line(points={{-50,0},{-60,0}}, color={85,170,255}));
+  connect(source.C_out, temperatureSensor.C_in) annotation (Line(points={{-60,0},{-50,0}}, color={0,127,127}));
+  connect(temperatureSensor.C_out, pressureSensor.C_in) annotation (Line(points={{-30,0},{-10,0}}, color={0,127,127}));
+  connect(pressureSensor.C_out, relativeHumiditySensor.C_in) annotation (Line(points={{10,0},{30,0}}, color={0,127,127}));
+  connect(relativeHumiditySensor.C_out, C_out) annotation (Line(points={{50,0},{102,0}}, color={0,127,127}));
                                                                                        annotation (IconMap(primitivesVisible=false),
               Icon(coordinateSystem(initialScale=0.4, extent={{-100,-100},{100,100}}), graphics={
                           Polygon(

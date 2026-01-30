@@ -23,8 +23,6 @@ model RelativeHumiditySensor
   parameter String display_unit = "%" "Specify the display unit" annotation(choices(choice="", choice="%"));
   outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
   parameter String signal_unit = "%" annotation (choices(choice="1", choice="%"));
-protected
-  parameter Real k_mair = RefMoistAirMedium.k_mair;
 
   Utilities.Interfaces.GenericReal      H_sensor(start=H_start) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -33,6 +31,9 @@ protected
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,100})));
+protected
+  parameter Real k_mair = RefMoistAirMedium.k_mair;
+
 equation
   pds = RefMoistAirMedium.Utilities.pds_pT(P, flow_model.T_in);
   flow_model.Xi = {relative_humidity*k_mair/(P/pds - relative_humidity)};

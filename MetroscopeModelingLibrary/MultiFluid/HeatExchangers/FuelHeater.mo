@@ -75,39 +75,38 @@ model FuelHeater
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
-  Fuel.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
+  Fuel.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(extent={{-52,10},{-32,-10}})));
   Fuel.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_in_0=T_cold_in_0, P_0=P_cold_in_0, T_out_0=T_cold_out_0, h_out_0=h_cold_out_0) annotation (Placement(transformation(extent={{0,-10},{20,10}})));
   WaterSteam.Pipes.FrictionPipe hot_side_pipe(
     Q_0=Q_hot_0,
     h_0=h_hot_in_0,
     P_in_0=P_hot_in_0,
     P_out_0=P_hot_out_0) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
+        extent={{10,10},{-10,-10}},
         rotation=90,
-        origin={40,44})));
+        origin={40,40})));
 
-  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={-90,80}), iconTransformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={80,-80})));
-  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={-42,20}), iconTransformation(
-        extent={{-20,-20},{20,20}},
-        rotation=180,
-        origin={-120,-40})));
   Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={20,52}), iconTransformation(
-        extent={{-20,-20},{20,20}},
+        origin={80,60}), iconTransformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={80,80})));
+        origin={80,60})));
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=180,
+        origin={-100,-40}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=180,
+        origin={-100,-40})));
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-80,60}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-80,60})));
 equation
 
   // Failure modes
@@ -164,15 +163,15 @@ equation
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(points={{-52,0},{-100,0}},color={213,213,0}));
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{-32,0},{0,0}}, color={213,213,0}));
   connect(cold_side.C_out, C_cold_out) annotation (Line(points={{20,0},{100,0}},color={213,213,0}));
-  connect(hot_side.C_in, hot_side_pipe.C_out) annotation (Line(points={{20,28},{40,28},{40,34}}, color={28,108,200}));
-  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(points={{40,54},{40,80}}, color={28,108,200}));
+  connect(hot_side.C_in, hot_side_pipe.C_out) annotation (Line(points={{20,28},{40,28},{40,30}}, color={28,108,200}));
+  connect(hot_side_pipe.C_in, C_hot_in) annotation (Line(points={{40,50},{40,80}}, color={28,108,200}));
   connect(hot_side.C_out, C_hot_out) annotation (Line(points={{0,28},{-20,28},{-20,-80},{-40,-80}}, color={28,108,200}));
   connect(cold_side_pipe.Kfr, Kfr_cold)
-    annotation (Line(points={{-42,4},{-42,4},{-42,20}}, color={0,0,127}));
-  connect(hot_side_pipe.Kfr, Kfr_hot)
-    annotation (Line(points={{36,44},{20,44},{20,52}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-140,
-            -100},{100,100}}),                                  graphics={
+    annotation (Line(points={{-42,-4},{-42,-40},{-100,-40}},
+                                                        color={0,0,127}));
+  connect(hot_side_pipe.Kfr, Kfr_hot) annotation (Line(points={{44,40},{80,40},{80,60}}, color={0,0,127}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}},
+        initialScale=0.2),                                      graphics={
           Rectangle(
           extent={{-100,60},{100,-60}},
           lineColor={0,0,0},
@@ -183,6 +182,6 @@ equation
           thickness=1,
           smooth=Smooth.Bezier),
         Line(points={{122,-56}}, color={102,44,145})}),
-                          Diagram(coordinateSystem(preserveAspectRatio=false, extent={
-            {-140,-100},{100,100}})));
+                          Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}},
+        initialScale=0.2)));
 end FuelHeater;
