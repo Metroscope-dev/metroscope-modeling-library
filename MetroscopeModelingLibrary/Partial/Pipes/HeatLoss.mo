@@ -3,7 +3,13 @@ partial model HeatLoss
   extends MetroscopeModelingLibrary.Partial.BaseClasses.IsoPFlowModel annotation(IconMap(primitivesVisible=false));
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputPower W_input(start=0);
+
+  Utilities.Interfaces.GenericReal W_input(start=0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={0,40}), iconTransformation(extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-48,40})));
 equation
   W = W_input;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={

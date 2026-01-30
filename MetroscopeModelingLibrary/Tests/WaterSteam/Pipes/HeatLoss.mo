@@ -9,7 +9,6 @@ model HeatLoss
     min=0,
     nominal=2) "Pa";
   input Utilities.Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
-  input Utilities.Units.Power W(start=1e5) "W";
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
@@ -19,14 +18,15 @@ model HeatLoss
 
   .MetroscopeModelingLibrary.WaterSteam.Pipes.HeatLoss heat_loss annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
 
+  Utilities.Interfaces.RealExpression W_input(y=1e5) annotation (Placement(transformation(extent={{-20,10},{0,30}})));
 equation
 
   // Boundary conditions
   source.h_out = source_h;
   source.P_out = source_P;
   source.Q_out = source_Q;
-  heat_loss.W = W;
 
   connect(sink.C_in, heat_loss.C_out) annotation (Line(points={{85,0},{16.5,0}}, color={28,108,200}));
   connect(source.C_out, heat_loss.C_in) annotation (Line(points={{-85,0},{-16.5,0}}, color={28,108,200}));
+  connect(W_input.y, heat_loss.W_input) annotation (Line(points={{-10,15},{-8,15},{-8,6},{-7.92,6},{-7.92,6.53332}}, color={0,0,127}));
 end HeatLoss;
