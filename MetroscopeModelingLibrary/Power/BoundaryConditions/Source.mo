@@ -6,12 +6,13 @@ model Source
   Connectors.Outlet C_out annotation (Placement(transformation(extent={{38,-10},{58,10}}), iconTransformation(extent={{38,-10},{58,10}})));
 equation
   W_out = C_out.W;
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Ellipse(
           extent={{-80,60},{40,-60}},
           fillColor={244,125,35},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5,
           pattern=LinePattern.None,
-          lineColor={0,0,0})}));
+          lineColor={0,0,0})}), Diagram(coordinateSystem(initialScale=0.2)));
 end Source;

@@ -14,7 +14,8 @@ equation
 
   connect(isoPHFlowModel.C_in, C_in) annotation (Line(points={{-10,0},{-50,0},{-50,0}}, color={95,95,95}));
   connect(isoPHFlowModel.C_out, C_out) annotation (Line(points={{10,0},{30,0},{30,0},{50,0}}, color={95,95,95}));
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Polygon(
           points={{-36,80},{36,80},{40,76},{40,-76},{36,-80},{-36,-80},{-40,-76},{-40,76},{-36,80}},
           lineColor={0,127,127},
@@ -45,5 +46,5 @@ equation
           lineColor={0,0,0},
           fillColor={0,0,0},
           fillPattern=FillPattern.Solid,
-          smooth=Smooth.Bezier)}));
+          smooth=Smooth.Bezier)}), Diagram(coordinateSystem(initialScale=0.2)));
 end InletGuideVanes;

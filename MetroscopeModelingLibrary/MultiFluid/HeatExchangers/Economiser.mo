@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Economiser
+  extends MetroscopeModelingLibrary.Utilities.Icons.HeatExchangePackage.MonophasicHXIcon;
   import MetroscopeModelingLibrary.Utilities.Units;
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   extends Partial.HeatExchangers.WaterFlueGasesMonophasicHX(
@@ -14,14 +15,5 @@ equation
   // Indicators
   FTR = T_cold_out - T_cold_in;
 
-  annotation (Icon(graphics={
-          Rectangle(
-          extent={{-100,60},{100,-60}},
-          lineColor={0,0,0},
-          fillColor={215,215,215},
-          fillPattern=FillPattern.Solid), Line(
-          points={{40,80},{40,-52},{10,-52},{12,52},{-12,52},{-12,-52},{-40,-52},{-40,78}},
-          color={28,108,200},
-          smooth=Smooth.Bezier,
-          thickness=1)}));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)), Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)));
 end Economiser;

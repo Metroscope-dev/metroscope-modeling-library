@@ -41,20 +41,20 @@ protected
   parameter Utilities.Units.SpecificEnthalpy h_liq_out_0=WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
 
 public
-  Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-70,76}), iconTransformation(
-        extent={{-16,-16},{16,16}},
-        rotation=90,
-        origin={-22,92})));
   Utilities.Interfaces.GenericReal Cst annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-86,70}), iconTransformation(
-        extent={{-16,-16},{16,16}},
-        rotation=90,
-        origin={-66,82})));
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-80,-66}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-70})));
+  Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-20,-80}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-20,-80})));
 equation
   // Stodola's ellipse law
   Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));
@@ -83,11 +83,12 @@ equation
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2})),
+        initialScale=0.4)),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2}), graphics={Polygon(
+        initialScale=0.4),
+                     graphics={Polygon(
           points={{-100,60},{-100,40},{-100,-40},{-100,-60},{-80,-66},{80,-100},
               {100,-100},{100,-80},{100,77.5391},{100,100},{80,100},{-80,68},{
               -100,60}},

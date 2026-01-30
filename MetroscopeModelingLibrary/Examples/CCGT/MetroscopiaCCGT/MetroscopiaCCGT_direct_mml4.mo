@@ -88,10 +88,9 @@ model MetroscopiaCCGT_direct_mml4
         start=7e5))
     annotation (Placement(transformation(extent={{-524,-14},{-496,14}})));
   MetroscopeModelingLibrary.FlueGases.Machines.GasTurbine gasTurbine(
-    eta_is(start=0.73),
+    eta_is1(start=0.73),
     eta_mech(start=0.9),
-    h_out(start=0.5e6))
-    annotation (Placement(transformation(extent={{-412,-16},{-380,16}})));
+    h_out(start=0.5e6)) annotation (Placement(transformation(extent={{-412,-16},{-380,16}})));
   MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink_power
     annotation (Placement(transformation(extent={{-332,90},{-312,110}})));
   MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)
@@ -858,8 +857,7 @@ equation
   connect(P_fuel_source_sensor.P_sensor, P_fuel_source) annotation (Line(points={{-445,-40},{-450,-40}}, color={0,0,127}));
   connect(T_fuel_source_sensor.T_sensor, T_fuel_source) annotation (Line(points={{-445,-64},{-448,-64},{-448,-60},{-450,-60}},
                                                                                                          color={0,0,127}));
-  connect(gasTurbine.eta_is, turbine_eta_is) annotation (Line(points={{-412,12.8},{-412,18},{-412,20},{-412,20}},
-                                                                                              color={0,0,127}));
+  connect(gasTurbine.eta_is1, turbine_eta_is) annotation (Line(points={{-412,12.8},{-412,18},{-412,20},{-412,20}}, color={0,0,127}));
   connect(turbine_T_out_sensor.T_sensor, turbine_T_out) annotation (Line(points={{-364,6},{-364,12}}, color={0,0,127}));
   connect(turbine_P_out_sensor.P_sensor, turbine_P_out) annotation (Line(points={{-344,6},{-344,12}}, color={0,0,127}));
   connect(economiser.Kfr_cold, economizer_Kfr_cold) annotation (Line(points={{114.5,-20.65},{114.5,-22.325},{114,-22.325},{114,-30}}, color={0,0,127}));

@@ -6,7 +6,8 @@ model Sink
   Connectors.Inlet C_in annotation (Placement(transformation(extent={{-60,-10},{-40,10}}), iconTransformation(extent={{-60,-10},{-40,10}})));
 equation
   W_in = C_in.W;
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={255,128,0},
@@ -20,5 +21,5 @@ equation
         Line(points={{-18,38},{55,-35}}, color={255,128,0},
           thickness=1),
         Line(points={{-18,-38},{55,35}}, color={255,128,0},
-          thickness=1)}));
+          thickness=1)}), Diagram(coordinateSystem(initialScale=0.2)));
 end Sink;

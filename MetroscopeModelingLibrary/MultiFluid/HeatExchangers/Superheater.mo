@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Superheater
+  extends MetroscopeModelingLibrary.Utilities.Icons.HeatExchangePackage.MonophasicHXIcon;
   import MetroscopeModelingLibrary.Utilities.Units;
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
@@ -29,15 +30,5 @@ equation
   STR = T_cold_out - T_cold_in;
   DT_superheat = T_cold_out - WaterSteamMedium.saturationTemperature(cold_side_pipe.P_in);
 
-  annotation (Icon(graphics={
-          Rectangle(
-          extent={{-100,60},{100,-60}},
-          lineColor={0,0,0},
-          fillColor={215,215,215},
-          fillPattern=FillPattern.Solid), Line(
-          points={{40,80},{40,-52},{10,-52},{12,50},{-10,50},{-12,-52},{-40,-52},{-40,80}},
-          color={28,108,200},
-          smooth=Smooth.Bezier,
-          thickness=1,
-          pattern=LinePattern.Dash)}));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)), Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)));
 end Superheater;

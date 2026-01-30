@@ -64,20 +64,20 @@ model CombustionChamber
   FlueGases.BoundaryConditions.Source source_exhaust annotation (Placement(transformation(extent={{12,-10},{32,10}})));
   FlueGases.BoundaryConditions.Sink sink_air(h_in(start=h_in_air_0)) annotation (Placement(transformation(extent={{-32,-10},{-12,10}})));
   FlueGases.Pipes.FrictionPipe pressure_loss annotation (Placement(transformation(extent={{46,-10},{66,10}})));
-  Utilities.Interfaces.GenericReal Kfr(start=0) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+  Utilities.Interfaces.GenericReal eta annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={30,110}),  iconTransformation(
-        extent={{-10,-10},{10,10}},
+        origin={-40,100}), iconTransformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={30,110})));
-  Utilities.Interfaces.GenericReal eta(start=1) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        origin={-40,100})));
+  Utilities.Interfaces.GenericReal Kfr annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-30,100}),iconTransformation(
-        extent={{-10,-10},{10,10}},
+        origin={40,100}), iconTransformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-30,110})));
+        origin={40,100})));
 equation
 
   // Definitions
@@ -136,16 +136,17 @@ equation
   connect(sink_fuel.C_in, inlet1) annotation (Line(points={{-2.77556e-16,-27},{-2.77556e-16,-63.5},{0,-63.5},{0,-100}}, color={213,213,0}));
   connect(source_exhaust.C_out, pressure_loss.C_in) annotation (Line(points={{27,0},{46,0}}, color={95,95,95}));
   connect(pressure_loss.C_out, outlet) annotation (Line(points={{66,0},{100,0}}, color={95,95,95}));
-  connect(pressure_loss.Kfr, Kfr) annotation (Line(points={{56,4},{56,110},{30,110}}, color={0,0,127}));
+  connect(pressure_loss.Kfr, Kfr) annotation (Line(points={{56,4},{56,100},{40,100}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2})),
+        initialScale=0.2)),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2}), graphics={Polygon(
+        initialScale=0.2),
+                     graphics={Polygon(
           points={{100,100},{100,-100},{-100,-100},{-100,100},{100,100}},
           lineColor={0,0,255},
           fillColor={244,125,35},
