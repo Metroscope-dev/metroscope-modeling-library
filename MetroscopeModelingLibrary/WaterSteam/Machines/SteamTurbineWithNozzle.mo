@@ -13,9 +13,6 @@ model SteamTurbineWithNozzle
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  //Inputs.InputCst Cst "Stodola's ellipse coefficient";
-  //Inputs.InputYield eta_is(start=0.8) "Nominal isentropic efficiency";
-  //Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
   parameter Utilities.Units.Area area_nz(start=1) "Nozzle area";
   Utilities.Units.Velocity u_out(start=100);
 
