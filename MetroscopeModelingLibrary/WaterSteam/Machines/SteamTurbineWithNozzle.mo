@@ -13,10 +13,7 @@ model SteamTurbineWithNozzle
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=false));
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputCst Cst "Stodola's ellipse coefficient";
-  Inputs.InputYield eta_is(start=0.8) "Nominal isentropic efficiency";
-  Inputs.InputYield eta_nz(start=1.0) "Nozzle efficency (eta_nz < 1, turbine with nozzle ; eta_nz = 1, turbine without nozzle)";
-  Utilities.Units.Area area_nz(start=1) "Nozzle area";
+  parameter Utilities.Units.Area area_nz(start=1) "Nozzle area";
   Utilities.Units.Velocity u_out(start=100);
 
   Utilities.Units.MassFraction x_in(start=x_in_0);
@@ -47,6 +44,28 @@ protected
   parameter Utilities.Units.SpecificEnthalpy h_vap_out_0=WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
   parameter Utilities.Units.SpecificEnthalpy h_liq_out_0=WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_out_0));
 
+public
+  Utilities.Interfaces.GenericReal Cst annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-60,74}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-66,76})));
+  Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-60,74}), iconTransformation(
+        extent={{-11,-11},{11,11}},
+        rotation=90,
+        origin={-7,87})));
+  Utilities.Interfaces.GenericReal eta_nz annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-60,74}), iconTransformation(
+        extent={{-11,-11},{11,11}},
+        rotation=270,
+        origin={77,-69})));
 equation
   // Stodola's ellipse law
   Q = sqrt((P_in^2 - P_out^2)/(Cst*T_in*x_in));
