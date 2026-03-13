@@ -7,7 +7,7 @@ model LiqLiqHX
 
 
   parameter Inputs.InputArea S=100;
-  parameter String QCp_max_side = "cold";
+  parameter String QCp_max_side = "unknown";
   parameter String HX_config = "shell_and_tubes_two_passes"; // Valid for U-shaped tubes. Otherwise use "monophasic_cross_current"
 
   Units.Power W;
