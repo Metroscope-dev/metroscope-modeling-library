@@ -23,19 +23,19 @@ model AirCompressor
 
   Power.Connectors.Inlet C_W_in annotation (Placement(transformation(extent={{90,50},{110,70}}),  iconTransformation(extent={{90,50},{110,70}})));
   Utilities.Interfaces.GenericReal tau annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-90,70}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-90,70})));
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-58}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-60})));
   Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=90,
-        origin={-80,70}), iconTransformation(
-        extent={{-10,10},{10,-10}},
-        rotation=90,
-        origin={-70,66})));
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={0,-48}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={0,-50})));
 equation
 
   // Failure modes
@@ -64,11 +64,12 @@ equation
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-80},{100,80}},
-        grid={2,2})),
+        initialScale=0.4)),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-80},{100,80}},
-        grid={2,2}), graphics={Polygon(
+        initialScale=0.4),
+                     graphics={Polygon(
           points={{100,26},{100,14},{100,-14},{100,-26},{80,-32},{-80,-60},{-100,-64},{-100,-40},{-100,40},{-100,64},{-80,60},{80,30},{100,26}},
           lineColor={95,95,95},
           lineThickness=0.5,

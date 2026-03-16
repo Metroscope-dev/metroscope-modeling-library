@@ -8,16 +8,16 @@ model InletGuideVanes
   BaseClasses.IsoPHFlowModel isoPHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   Connectors.Inlet C_in annotation (Placement(transformation(extent={{-60,-10},{-40,10}}), iconTransformation(extent={{-60,-10},{-40,10}})));
   Connectors.Outlet C_out annotation (Placement(transformation(extent={{40,-10},{60,10}}), iconTransformation(extent={{40,-10},{60,10}})));
-  Modelica.Blocks.Interfaces.RealInput Opening(
+  Utilities.Interfaces.RealInput Opening(
     unit="1",
     min=0.,
     max=1.,
-    nominal=0.5)                                                                      annotation (Placement(
-        transformation(extent={{-20,-20},{20,20}},
+    nominal=0.5) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
         rotation=270,
-        origin={0,80}),                               iconTransformation(
-        extent={{-20,-20},{20,20}},
-        rotation=-90,
+        origin={0,82}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
         origin={0,80})));
 equation
 
@@ -25,7 +25,8 @@ equation
 
   connect(isoPHFlowModel.C_in, C_in) annotation (Line(points={{-10,0},{-50,0},{-50,0}}, color={95,95,95}));
   connect(isoPHFlowModel.C_out, C_out) annotation (Line(points={{10,0},{30,0},{30,0},{50,0}}, color={95,95,95}));
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Polygon(
           points={{-36,80},{36,80},{40,76},{40,-76},{36,-80},{-36,-80},{-40,-76},{-40,76},{-36,80}},
           lineColor={95,95,95},
@@ -56,5 +57,5 @@ equation
           lineColor={0,0,0},
           fillColor={95,95,95},
           fillPattern=FillPattern.Solid,
-          smooth=Smooth.Bezier)}));
+          smooth=Smooth.Bezier)}), Diagram(coordinateSystem(initialScale=0.2)));
 end InletGuideVanes;

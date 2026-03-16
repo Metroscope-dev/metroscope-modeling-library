@@ -53,11 +53,12 @@ equation
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-80},{100,80}},
-        grid={2,2})),
+        initialScale=0.4)),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-80},{100,80}},
-        grid={2,2}), graphics={Polygon(
+        initialScale=0.4),
+                     graphics={Polygon(
           points={{100,26},{100,14},{100,-14},{100,-26},{80,-32},{-80,-60},{-100,-64},{-100,-40},{-100,40},{-100,64},{-80,60},{80,30},{100,26}},
           lineColor={0,127,127},
           lineThickness=0.5,

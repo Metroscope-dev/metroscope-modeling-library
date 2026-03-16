@@ -82,7 +82,8 @@ equation
   connect(source_fg.C_out, pressureCut.C_in) annotation (Line(points={{40,39},{40,30}}, color={95,95,95}));
   connect(pressureCut.C_out, C_fg_out) annotation (Line(points={{40,10},{40,0},{100,0}}, color={95,95,95}));
   connect(evaporative_cooling.C_in, C_fg_inlet) annotation (Line(points={{-60,0},{-100,0}}, color={95,95,95}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.3),
+                                                                graphics={
         Rectangle(
           extent={{-100,60},{100,-60}},
           lineColor={95,95,95},
@@ -357,5 +358,5 @@ equation
           extent={{56,44},{58,42}},
           lineColor={95,95,95},
           fillColor={28,108,200},
-          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)));
+          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.3)));
 end Fogging;

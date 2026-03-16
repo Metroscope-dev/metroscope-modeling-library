@@ -10,8 +10,8 @@ model ControlValve
   annotation (
     Icon(coordinateSystem(
         preserveAspectRatio=true,
-        extent={{-100,-40},{100,180}},
-        grid={2,2}), graphics={
+        extent={{-100,-40},{100,160}}),
+                     graphics={
         Polygon(
           points={{40,102},{-40,102},{-40,118},{-38,136},{-32,146},{-20,156},{0,
               162},{20,156},{32,146},{38,134},{40,116},{40,102}},
@@ -20,27 +20,27 @@ model ControlValve
           fillPattern=FillPattern.Solid,
           lineThickness=0.5),
         Polygon(
-          points={{0,2},{40,102},{-40,102},{0,2}},
+          points={{0,0},{40,102},{-40,102},{0,0}},
           lineColor={0,0,255},
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5),
         Polygon(
-          points={{-100,-40},{0,2},{-100,42},{-100,-40},{-100,-40}},
+          points={{-100,-40},{0,0},{-100,42},{-100,-40},{-100,-40}},
           lineColor={0,0,255},
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5),
         Polygon(
-          points={{0,2},{100,42},{100,-40},{0,2},{0,2}},
+          points={{0,0},{100,42},{100,-40},{0,0},{0,0}},
           lineColor={0,0,255},
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5)}),
     Diagram(coordinateSystem(
         preserveAspectRatio=true,
-        extent={{-100,-40},{100,180}},
-        grid={2,2}), graphics={
+        extent={{-100,-40},{100,160}}),
+                     graphics={
         Polygon(
           points={{-100,-40},{0,2},{-100,42},{-100,-40},{-100,-40}},
           lineColor={0,0,255},

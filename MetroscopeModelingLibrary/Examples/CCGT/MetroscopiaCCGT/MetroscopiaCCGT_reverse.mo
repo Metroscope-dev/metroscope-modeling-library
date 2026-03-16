@@ -7,949 +7,899 @@ model MetroscopiaCCGT_reverse
     // Fuel source
     input Units.SpecificEnthalpy LHV_plant(start=48130e3) "Directly assigned in combustion chamber modifiers";
 
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
-      QCp_max_side="hot")
-    annotation (Placement(transformation(extent={{71,-29.5},{129,29.5}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink flue_gas_sink
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={222,224})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_w_eco_out_sensor(sensor_function="Calibration", causality="Eco_Kth")
-    annotation (Placement(transformation(
-        extent={{-6,6},{6,-6}},
-        rotation=180,
-        origin={12,34})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_w_eco_out_sensor(sensor_function="Calibration", causality="Eco_Kfr")
-    annotation (Placement(transformation(
-        extent={{-6,6},{6,-6}},
-        rotation=180,
-        origin={56,34})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Evaporator evaporator(faulty=false)
-    annotation (Placement(transformation(extent={{-36,-30},{20,30}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_w_evap_out_sensor(sensor_function="Calibration", causality="SH1_Kfr")
-    annotation (Placement(transformation(extent={{-34,28},{-46,40}})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater1(
-      QCp_max_side="hot")
-    annotation (Placement(transformation(extent={{-186,-30},{-126,30}})));
-  Sensors_Control.WaterSteam.TemperatureSensor                   T_w_HPSH1_out_sensor(sensor_function="Calibration", causality="SH1_Kth")
-    annotation (Placement(transformation(
-        extent={{-6,6},{6,-6}},
-        rotation=180,
-        origin={-184,34})));
-  Sensors_Control.WaterSteam.PressureSensor                   P_w_HPSH1_out_sensor(sensor_function="Calibration", causality="SH2_Kfr")
-    annotation (Placement(transformation(
-        extent={{-6,6},{6,-6}},
-        rotation=180,
-        origin={-208,34})));
-  WaterSteam.Pipes.SlideValve                             HPST_control_valve
-    annotation (Placement(transformation(extent={{-223.25,176.738},{-206.75,194.677}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_HPST_in_sensor(sensor_function="Calibration", causality="HPST_Cst")
-    annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=0,
-        origin={-194,180})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine HPsteamTurbine annotation (Placement(transformation(extent={{-180,164},{-146,196}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_HPST_out_sensor(sensor_function="Calibration", causality="RHT_Kfr")
-    annotation (Placement(transformation(extent={{-134,174},{-122,186}})));
-  MetroscopeModelingLibrary.Sensors_Control.Power.PowerSensor W_ST_out_sensor(sensor_function="Calibration", causality="LPST_eta_is")
-    annotation (Placement(transformation(extent={{90,314},{102,326}})));
-  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser
-    annotation (Placement(transformation(extent={{40,185.778},{80,217.778}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_circulating_water_out_sensor(sensor_function="Calibration", causality="Cond_Qv")
-    annotation (Placement(transformation(extent={{105,195},{115,205}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source circulating_water_source
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-40,200})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink circulating_water_sink
-    annotation (Placement(transformation(extent={{122,192},{138,208}})));
-  WaterSteam.Machines.FixedSpeedPump                 pump annotation (Placement(
-        transformation(
-        extent={{-7,-7},{7,7}},
-        origin={110,160},
-        rotation=0)));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_pump_out_sensor(sensor_function="Calibration", causality="rh")
-    annotation (Placement(transformation(
-        extent={{5,5},{-5,-5}},
-        rotation=180,
-        origin={130,160})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_pump_out_sensor(sensor_function="Calibration", causality="hn")
-    annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={150,160})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.LoopBreaker loopBreaker
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={180,54})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.FlowSensor Q_pump_out_sensor(sensor_function="Calibration", causality="Evap_Kth")
-    annotation (Placement(transformation(extent={{165,155},{175,165}})));
-  MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(h_out(
-        start=7e5))
-    annotation (Placement(transformation(extent={{-524,-14},{-496,14}})));
-  MetroscopeModelingLibrary.FlueGases.Machines.GasTurbine gasTurbine(
-    eta_is(start=0.73),
-    eta_mech(start=0.9),
-    h_out(start=0.5e6))
-    annotation (Placement(transformation(extent={{-412,-16},{-380,16}})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink_power
-    annotation (Placement(transformation(extent={{-332,90},{-312,110}})));
-  MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant)
-    annotation (Placement(transformation(extent={{-450,-10},{-430,10}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source source_fuel(h_out(
-        start=0.9e6)) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-440,-100})));
-  Sensors_Control.FlueGases.PressureSensor                   compressor_P_out_sensor(sensor_function="Calibration", causality="compressor_tau")
-    annotation (Placement(transformation(extent={{-490,-6},{-478,6}})));
-  Sensors_Control.FlueGases.TemperatureSensor                   compressor_T_out_sensor(sensor_function="Calibration", causality="compressor_eta_is",
-    T_0=723.15)
-    annotation (Placement(transformation(extent={{-472,-6},{-460,6}})));
-  Sensors_Control.FlueGases.PressureSensor                   turbine_P_out_sensor(sensor_function="Calibration", causality="hrsg_kf_hot")
-    annotation (Placement(transformation(extent={{-350,-6},{-338,6}})));
-  MetroscopeModelingLibrary.Sensors_Control.Power.PowerSensor W_GT_sensor(sensor_function="Calibration", causality="turbine_eta_is")
-    annotation (Placement(transformation(extent={{-346,94},{-334,106}})));
-  Sensors_Control.FlueGases.TemperatureSensor                   turbine_T_out_sensor(sensor_function="BC", T_0=913.15)
-    annotation (Placement(transformation(extent={{-370,-6},{-358,6}})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater Reheater(nominal_DT_default=true,
-      QCp_max_side="hot")
-    annotation (Placement(transformation(extent={{-108,-30},{-48,30}})));
-  MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine LPsteamTurbine annotation (Placement(transformation(extent={{-14,264},{20,296}})));
-  Sensors_Control.WaterSteam.TemperatureSensor                   T_w_ReH_out_sensor(sensor_function="Calibration", causality="RHT_Kth")
-    annotation (Placement(transformation(
-        extent={{6,6},{-6,-6}},
-        rotation=270,
-        origin={-90,50})));
-  Sensors_Control.WaterSteam.PressureSensor                   P_w_ReH_out_sensor(sensor_function="Calibration", causality="LPST_valve_CV")
-    annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=90,
-        origin={-90,70})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_Cond_sensor(sensor_function="Calibration", causality="Cond_Kth",
-    display_unit="mbar",
-    signal_unit="mbar")
-    annotation (Placement(transformation(extent={{28,274},{40,286}})));
-  Sensors_Control.FlueGases.PressureSensor                   P_source_air_sensor(sensor_function="BC", P_start=1)
-    annotation (Placement(transformation(extent={{-646,-6},{-634,6}})));
-  Sensors_Control.FlueGases.TemperatureSensor                   T_source_air_sensor(sensor_function="BC")
-    annotation (Placement(transformation(extent={{-626,-6},{-614,6}})));
-  Sensors_Control.FlueGases.FlowSensor                   Q_source_air_sensor(sensor_function="BC")
-    annotation (Placement(transformation(extent={{-606,-6},{-594,6}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_circulating_water_in_sensor(sensor_function="BC")
-    annotation (Placement(transformation(
-        extent={{5,5},{-5,-5}},
-        rotation=180,
-        origin={-20,200})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_circulating_water_in_sensor(sensor_function="BC")
-    annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={0,200})));
-  WaterSteam.Pipes.SlideValve                             LPST_control_valve
-    annotation (Placement(transformation(extent={{-61.25,276.738},{-44.75,294.677}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_LPST_in_sensor(sensor_function="Calibration", causality="LPST_Cst")
-    annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=0,
-        origin={-28,280})));
-  WaterSteam.Machines.FixedSpeedPump                 pumpRec(Q_0=1)
-    annotation (Placement(transformation(
-        extent={{-7,-7},{7,7}},
-        origin={94,80.5455},
-        rotation=0)));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_pumpRec_out_sensor(sensor_function="Calibration", causality="rh")
-    annotation (Placement(transformation(
-        extent={{5,5},{-5,-5}},
-        rotation=180,
-        origin={115,80.5455})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor P_pumpRec_out_sensor(sensor_function="Calibration", causality="hn")
-    annotation (Placement(transformation(extent={{-5,-5},{5,5}}, origin={131,80.5455})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.FlowSensor Q_pumpRec_out_sensor
-    annotation (Placement(transformation(extent={{140,75.5455},{150,85.5455}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_w_eco_in_sensor(sensor_function="BC")
-    annotation (Placement(transformation(
-        extent={{-5,5},{5,-5}},
-        rotation=180,
-        origin={140,34})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve pumpRec_controlValve
-    annotation (Placement(transformation(extent={{153.5,77.4545},{166.5,91.4545}})));
-  MetroscopeModelingLibrary.Sensors_Control.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function="Calibration", causality="Cvmax",
-    output_signal_unit="")
-    annotation (Placement(transformation(extent={{155,95},{165,105}})));
-  MetroscopeModelingLibrary.Sensors_Control.FlueGases.PressureSensor P_flue_gas_sink_sensor(sensor_function="BC")
-    annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=90,
-        origin={222,198})));
-  MetroscopeModelingLibrary.Power.BoundaryConditions.Sink sink
-    annotation (Placement(transformation(extent={{110,310},{130,330}})));
-  Sensors_Control.Fuel.PressureSensor                   P_fuel_source_sensor(sensor_function="BC")
-    annotation (Placement(transformation(
-        extent={{-5,-5},{5,5}},
-        rotation=90,
-        origin={-440,-40})));
-  Sensors_Control.Fuel.TemperatureSensor                   T_fuel_source_sensor(sensor_function="BC")
-    annotation (Placement(transformation(
-        extent={{-5,-5},{5,5}},
-        rotation=90,
-        origin={-440,-60})));
-  Sensors_Control.Fuel.FlowSensor                   Q_fuel_source_sensor(causality="")
-    annotation (Placement(transformation(
-        extent={{-5,-5},{5,5}},
-        rotation=90,
-        origin={-440,-20})));
-  MetroscopeModelingLibrary.Power.Machines.Generator GT_generator
-    annotation (Placement(transformation(extent={{-380,90},{-348,110}})));
-  MetroscopeModelingLibrary.Power.Machines.Generator ST_generator
-    annotation (Placement(transformation(extent={{50,310},{82,330}})));
-  MetroscopeModelingLibrary.Sensors_Control.FlueGases.TemperatureSensor T_flue_gas_sink_sensor
-    annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=0,
-        origin={170,0})));
-  MetroscopeModelingLibrary.FlueGases.Pipes.Filter AirFilter
-    annotation (Placement(transformation(extent={{-576,-10},{-556,10}})));
-  Sensors_Control.FlueGases.PressureSensor                   P_filter_out_sensor(
-    display_unit="mbar",                                                         sensor_function="Calibration", causality="Filter_Kfr",
-    signal_unit="barA")
-    annotation (Placement(transformation(extent={{-546,-6},{-534,6}})));
-  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Superheater HPsuperheater2(QCp_max_side="hot")
-    annotation (Placement(transformation(extent={{-302,-30},{-242,30}})));
-  Sensors_Control.WaterSteam.TemperatureSensor                   T_w_HPSH2_out_sensor(sensor_function="BC", display_unit="degC")
-    annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=90,
-        origin={-280,60})));
-  Sensors_Control.WaterSteam.PressureSensor                   P_w_HPSH2_out_sensor(sensor_function="Calibration", causality="HPST_valve_CV")
-    annotation (Placement(transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=90,
-        origin={-280,80})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve deSH_controlValve
-    annotation (Placement(transformation(extent={{-173.75,117.454},{-186.25,131.455}})));
-  MetroscopeModelingLibrary.Sensors_Control.Outline.OpeningSensor deSH_opening_sensor(sensor_function="Calibration", causality="Cvmax",
-    output_signal_unit="")
-    annotation (Placement(transformation(extent={{-185,139},{-175,149}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.FlowSensor Q_deSH_sensor(sensor_function="Calibration", causality="SH2_Kth")
-    annotation (Placement(transformation(extent={{-132,114},{-144,126}})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve Evap_controlValve
-    annotation (Placement(transformation(extent={{36.25,31.4545},{23.75,45.455}})));
-  MetroscopeModelingLibrary.Sensors_Control.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration", causality="Cvmax",
-    output_signal_unit="")
-    annotation (Placement(transformation(extent={{25,53},{35,63}})));
-  MetroscopeModelingLibrary.MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-682,-10},{-662,10}})));
-  MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-744,-10},{-724,10}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor T_HPST_out_sensor(sensor_function="Calibration", causality="HPST_eta_is")
-                                                                                   annotation (Placement(transformation(
-        extent={{6,6},{-6,-6}},
-        rotation=180,
-        origin={-110,180})));
-  Sensors.Displayer.WaterDisplayer displayer annotation (Placement(transformation(extent={{-248,170},{-228,190}})));
-  Sensors.Displayer.FuelDisplayer fuelDisplayer annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-440,-80})));
-  Sensors.Displayer.MoistAirDisplayer moistAirDisplayer annotation (Placement(transformation(extent={{-710,-10},{-690,10}})));
-  Sensors.Displayer.FlueGasesDisplayer flueGasesDisplayer annotation (Placement(transformation(extent={{-664,-10},{-644,10}})));
-  Sensors_Control.MoistAir.RelativeHumiditySensor Relative_Humidity_sensor(sensor_function="BC") annotation (Placement(transformation(extent={{-722,-6},{-710,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 Relative_Humidity(start=0.5)
-                                                   annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-716,14}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 P_source_air(start=1) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-640,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 T_source_air(start=24) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-620,14}),           iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 Q_source_air(start=500) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-600,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_filter_out(start=0.9) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-540,20}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 compressor_P_out(start=17) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=-90,
-        origin={-484,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealOutput Filter_Kfr "P_filter_out"
-                                             annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-566,14}),iconTransformation(extent={{-628,-4},{-608,16}})));
-  Utilities.Interfaces.RealOutput compression_rate annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-522,22}),iconTransformation(extent={{-628,-4},{-608,16}})));
-  Utilities.Interfaces.RealOutput compressor_eta_is annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-520,28}),iconTransformation(extent={{-628,-4},{-608,16}})));
-  Utilities.Interfaces.CalibrationInput
-                                 compressor_T_out(start=450) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-466,14}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealOutput Q_fuel_source           annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-450,-20}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 P_fuel_source(start=30) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-450,-40}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 T_fuel_source(start=156) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-450,-60}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealOutput turbine_eta_is annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-412,20}), iconTransformation(extent={{-454,4},{-434,24}})));
-  Utilities.Interfaces.BoundaryCondition
-                                  turbine_T_out(
-                                               start=640) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-364,12}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 turbine_P_out(start=1.1) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-344,12}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealOutput economizer_Kfr_cold(nominal=1e-3)
-                                                      annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={114,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.RealOutput economizer_Kth(start=1e3, nominal=1e3)
-                                                 annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={86,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  FlueGases.Pipes.FrictionPipe HRSG_friction annotation (Placement(transformation(extent={{30,10},{50,-10}})));
-  Utilities.Interfaces.RealOutput HRSG_friction_Kfr(start=0.022388678) annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={40,-10}), iconTransformation(extent={{-36,-16},{4,24}})));
-  Utilities.Interfaces.RealOutput Reheater_Kth(start=1e3, nominal=1e3) annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={-92,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.RealOutput Reheater_Kfr_cold(nominal=1e-3) annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={-62,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.RealOutput HPsuperheater1_Kfr_cold(nominal=1e-3) annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={-140,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.RealOutput HPsuperheater1_Kth(start=1e3, nominal=1e3) annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={-170,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.RealOutput HPsuperheater2_Kfr_cold(nominal=1e-3) annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={-256,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.RealOutput HPsuperheater2_Kth(start=1e3, nominal=1e3) annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=90,
-        origin={-286,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_w_HPSH1_out(start=116) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-208,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 T_w_HPSH1_out(start=450) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-184,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_w_HPSH1_out1(start=9)  annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-100,70}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 T_w_HPSH1_out1(start=350)
-                                                          annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-100,50}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_w_HPSH2_out(start=114) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-290,80}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 T_w_HPSH2_out(start=566.5) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-290,60}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_w_evap_out(start=120) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-40,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 T_w_eco_out(start=320) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={12,44}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_w_eco_out(start=122.5) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={56,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 T_w_eco_in(start=85) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={140,44}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 T_pumpRec_out(start=324) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={114,92}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_pumpRec_out(start=180) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={130,92}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 P_flue_gas_sink(start=1) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={210,198}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 W_GT(start=150) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-340,112}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_pump_out(start=170) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={150,170}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 T_pump_out(start=35) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={130,170}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 Q_pump_out(start=50) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={170,170}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 T_circulating_water_out(start=25) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={110,210}),iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 T_circulating_water_in(start=15) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-20,210}),
-                         iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.BoundaryCondition
-                                 P_circulating_water_in(start=5) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={0,210}),  iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_Cond(start=50) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={34,292}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_LPST_in(start=8) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-28,292}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_HPST_out(start=10) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-128,190}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 T_HPST_out(start=255.5) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-110,190}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 Q_deSH(start=2) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-138,132}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealOutput pumpRec_hn annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={89,107}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput pumpRec_rh annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={81,97}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput pump_hn annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={104,180}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput pump_rh annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={96,170}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput LPsteamTurbine_Cst annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-13,301}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput LPsteamTurbine_eta_is annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-9,309}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput HPsteamTurbine_Cst annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-179,201}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput HPsteamTurbine_eta_is annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-175,209}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput LPST_control_valve_Cv annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-67,289}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput HPST_control_valve_Cv annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=0,
-        origin={-227,189}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput T_flue_gas_sink(start=1) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={170,10}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 W_ST_out(start=65) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={96,332}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 P_HPST_in(start=113) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-194,192}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 deSH_opening(start=0.15)
-                                                         annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={-180,154}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 Evap_opening(start=0.35) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={30,68}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.CalibrationInput
-                                 pumpRec_opening(start=0.35) annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=270,
-        origin={160,110}), iconTransformation(extent={{-754,-34},{-714,6}})));
-  Utilities.Interfaces.RealOutput deSH_controlValve_Cv_max annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=180,
-        origin={-167,127}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput Evap_controlValve_Cv_max annotation (Placement(transformation(
-        extent={{-3,-3},{3,3}},
-        rotation=180,
-        origin={39,41}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput pumpRec_controlValve_Cv_max annotation (Placement(transformation(
-        extent={{3,-3},{-3,3}},
-        rotation=180,
-        origin={147,105}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput Q_pumpRec_out annotation (Placement(transformation(
-        extent={{3,-3},{-3,3}},
-        rotation=90,
-        origin={145,93}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput condenser_Kth annotation (Placement(transformation(
-        extent={{3,-3},{-3,3}},
-        rotation=90,
-        origin={40,230}), iconTransformation(extent={{46,68},{66,88}})));
-  Utilities.Interfaces.RealOutput condenser_Qv_cold_in annotation (Placement(transformation(
-        extent={{3,-3},{-3,3}},
-        rotation=90,
-        origin={20,230}), iconTransformation(extent={{46,68},{66,88}})));
-  Modelica.Blocks.Sources.RealExpression condenser_Kfr_cold(y=0) annotation (Placement(transformation(
-        extent={{-3,-8},{3,8}},
-        rotation=270,
-        origin={32,225})));
-  Modelica.Blocks.Sources.RealExpression combustionChamber_eta(y=0.9999) annotation (Placement(transformation(
-        extent={{-4,-8},{4,8}},
-        rotation=270,
-        origin={-448,24})));
-  Modelica.Blocks.Sources.RealExpression combustionChamber_Kfr(y=1e-3)
+  MultiFluid.HeatExchangers.Evaporator EVAP annotation (Placement(transformation(extent={{-250,-50},{-150,140}})));
+  MultiFluid.HeatExchangers.Superheater RHT annotation (Placement(transformation(extent={{-350,50},{-250,-50}})));
+  MultiFluid.HeatExchangers.Superheater HPSH1 annotation (Placement(transformation(extent={{-450,50},{-350,-50}})));
+  MultiFluid.HeatExchangers.Superheater HPSH2 annotation (Placement(transformation(extent={{-510,-50},{-410,50}})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_w_HPSH1_out_sensor(sensor_function="Calibration",
+    causality="HPSH1_Kth",                                                                         T_start=453.409)
                                                                     annotation (Placement(transformation(
-        extent={{-4,-8},{4,8}},
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-400,-70})));
+  Sensors_Control.WaterSteam.PressureSensor P_w_HPSH1_out_sensor(sensor_function="Calibration",
+    causality="HPSH2_Kfr_cold",                                                                 P_start=114.788)
+                                                                 annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-400,-100})));
+  Sensors_Control.WaterSteam.PressureSensor P_w_evap_out_sensor(sensor_function="Calibration",
+    causality="HPSH1_Kfr_cold",                                                                P_start=117.126) annotation (Placement(transformation(extent={{-250,110},{-270,130}})));
+  MultiFluid.HeatExchangers.Economiser ECO annotation (Placement(transformation(extent={{-110,-50},{-10,50}})));
+  WaterSteam.Pipes.ControlValve EVAP_controlValve annotation (Placement(transformation(extent={{-100,76},{-120,98}})));
+  Sensors_Control.WaterSteam.PressureSensor P_w_eco_out_sensor(sensor_function="Calibration", causality="ECO_Kfr_cold")
+                                                                                              annotation (Placement(transformation(extent={{-70,70},{-90,90}})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_w_eco_out_sensor(sensor_function="Calibration",
+    causality="ECO_Kth",                                                                         T_start=319.834)
+                                                                                                 annotation (Placement(transformation(extent={{-130,70},{-150,90}})));
+  Sensors_Control.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration") annotation (Placement(transformation(extent={{-120,110},{-100,130}})));
+  WaterSteam.Pipes.SlideValve HPST_admission_valve annotation (Placement(transformation(extent={{-530,-204},{-510,-182}})));
+  Sensors_Control.WaterSteam.PressureSensor P_HPST_in_sensor(sensor_function="Calibration",
+    causality="HPST_Cst",                                                                   P_start=112.349) annotation (Placement(transformation(extent={{-500,-210},{-480,-190}})));
+  WaterSteam.Pipes.SlideValve LPST_admission_valve annotation (Placement(transformation(extent={{-288,-204},{-268,-182}})));
+  Sensors_Control.WaterSteam.PressureSensor P_LPST_in_sensor(sensor_function="Calibration", causality="LPST_CST")
+                                                             annotation (Placement(transformation(extent={{-260,-210},{-240,-190}})));
+  WaterSteam.HeatExchangers.Condenser condenser annotation (Placement(transformation(extent={{-70,-340},{30,-240}})));
+  WaterSteam.Machines.FixedSpeedPump pump annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=0,
+        origin={30,-380})));
+  WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{180,-300},{140,-260}})));
+  WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{140,-330},{180,-290}})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_pump_out_sensor(sensor_function="Calibration",
+    causality="pump_rh",                                                                        T_start=34.8939)
+                                                                 annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={80,-230})));
+  Sensors_Control.WaterSteam.PressureSensor P_pump_out_sensor(sensor_function="Calibration",
+    causality="pump_hn",                                                                     P_start=170.006)
+                                                              annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={80,-170})));
+  Sensors_Control.WaterSteam.FlowSensor Q_pump_out_sensor(sensor_function="Calibration",
+    causality="evap_Kth",                                                                Q_start=49.7229)
+                                                          annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={80,-200})));
+  WaterSteam.Machines.FixedSpeedPump pumpRec annotation (Placement(transformation(
+        extent={{-20,20},{20,-20}},
+        rotation=0,
+        origin={0,80})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_w_eco_in_sensor(sensor_function="BC", T_start=85)
+                                                                                       annotation (Placement(transformation(extent={{10,-90},{-10,-70}})));
+  WaterSteam.Pipes.ControlValve pumpRec_controlValve annotation (Placement(transformation(
+        extent={{-10,-11},{10,11}},
         rotation=270,
-        origin={-432,24})));
-  Utilities.Interfaces.RealOutput Evap_Kth(nominal=1e-3) annotation (Placement(transformation(
+        origin={86,-60})));
+  WaterSteam.Machines.SteamTurbine HPST annotation (Placement(transformation(extent={{-460,-160},{-380,-240}})));
+  WaterSteam.Machines.SteamTurbine LPST annotation (Placement(transformation(extent={{-220,-160},{-140,-240}})));
+  Sensors_Control.WaterSteam.PressureSensor P_Cond_sensor(sensor_function="Calibration",
+    causality="condenser_Kth",                                                           P_start=0.0496853)
+                                                          annotation (Placement(transformation(extent={{-120,-210},{-100,-190}})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_circulating_water_in_sensor(sensor_function="BC", T_start=15)
+                                                                                                   annotation (Placement(transformation(extent={{140,-290},{120,-270}})));
+  Sensors_Control.WaterSteam.PressureSensor P_circulating_water_in_sensor(sensor_function="BC", P_start=5)
+                                                                                                annotation (Placement(transformation(extent={{110,-290},{90,-270}})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_circulating_water_out_sensor(sensor_function="Calibration",
+    causality="condenser_Qv_cold",
+    T_start=24.9415)                                                                                                              annotation (Placement(transformation(extent={{120,-300},{140,-320}})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_pumpRec_out_sensor(sensor_function="Calibration",
+    causality="pumpRec_rh",                                                                        T_start=324.409)
+                                                                                                   annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={80,60})));
+  Sensors_Control.WaterSteam.PressureSensor P_pumpRec_out_sensor(sensor_function="Calibration",
+    causality="pumpRec_hn",                                                                     P_start=195.553)
+                                                                                                annotation (Placement(transformation(
+        extent={{10,-11},{-10,11}},
+        rotation=90,
+        origin={80,30})));
+  Sensors_Control.WaterSteam.FlowSensor Q_pumpRec_out_sensor(sensor_function="Unidentified", Q_start=9.37335)
+                                                                                             annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={80,-20})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_HPST_out_sensor(sensor_function="Calibration",
+    causality="HPST_eta_is",                                                                    T_start=252.806)
+                                                                 annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-350,-100})));
+  Sensors_Control.WaterSteam.PressureSensor P_HPST_out_sensor(sensor_function="Calibration",
+    causality="RHT_Kfr_cold",                                                                P_start=9.66102)
+                                                              annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-350,-70})));
+  Sensors_Control.WaterSteam.PressureSensor P_w_ReH_out_sensor(sensor_function="Calibration",
+    causality="LPST_admission_valve_Cv",                                                      P_start=8.85519)
+                                                               annotation (Placement(transformation(
+        extent={{10,10},{-10,-10}},
+        rotation=90,
+        origin={-300,-70})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_w_ReH_out_sensor(sensor_function="Calibration",
+    causality="RHT_Kth",                                                                         T_start=348.684)
+                                                                  annotation (Placement(transformation(
+        extent={{10,10},{-10,-10}},
+        rotation=90,
+        origin={-300,-100})));
+  Sensors_Control.FlueGases.TemperatureSensor T_flue_gas_sink_sensor(T_start=339.58)
+                                                                     annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+  Sensors_Control.FlueGases.PressureSensor P_flue_gas_sink_sensor(P_start=1)
+                                                                  annotation (Placement(transformation(extent={{118,-10},{138,10}})));
+  WaterSteam.Pipes.ControlValve deSH_controlValve annotation (Placement(transformation(extent={{-220,-144},{-240,-124}})));
+  Power.Machines.Generator generator annotation (Placement(transformation(extent={{-388,-284},{-468,-236}})));
+  Power.BoundaryConditions.Sink sink2 annotation (Placement(transformation(extent={{-490,-280},{-530,-240}})));
+  Sensors_Control.Power.PowerSensor W_ST_out_sensor(sensor_function="Calibration", causality="LPST_eta_is")
+                                                    annotation (Placement(transformation(extent={{-470,-270},{-490,-250}})));
+  Sensors_Control.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function="Calibration") annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={120,-60})));
+  Sensors_Control.FlueGases.TemperatureSensor turbine_T_out_sensor(sensor_function="BC", T_start=640) annotation (Placement(transformation(extent={{-570,-10},{-550,10}})));
+  Sensors_Control.FlueGases.PressureSensor turbine_P_out_sensor(sensor_function="BC", P_start=1.11116) annotation (Placement(transformation(extent={{-520,-10},{-500,10}})));
+  Sensors_Control.FlueGases.FlowSensor Q_source_air_sensor(sensor_function="BC", Q_start=500) annotation (Placement(transformation(extent={{-1020,-10},{-1000,10}})));
+  Sensors_Control.Outline.OpeningSensor deSH_opening_sensor(sensor_function="Calibration")
+                                                            annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-230,-100})));
+  Sensors_Control.WaterSteam.TemperatureSensor T_w_HPSH2_out_sensor(sensor_function="BC", T_start=566.5) annotation (Placement(transformation(extent={{-470,90},{-490,110}})));
+  Sensors_Control.WaterSteam.PressureSensor P_w_HPSH2_out_sensor(sensor_function="Calibration",
+    causality="HPST_admission_valve_Cv",                                                        P_start=113.3) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=180,
+        origin={-510,100})));
+  Utilities.Interfaces.RealInput turbine_T_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-560,20}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput turbine_P_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-510,20}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput Q_source_air annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-1010,20}),iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput T_w_HPSH2_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-480,120}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_w_HPSH2_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-510,120}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_HPST_in annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-490,-180}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_w_evap_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-260,140}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput T_HPST_out
+                                           annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-370,-100}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_HPST_out
+                                           annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-370,-70}),  iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput T_w_ReH_out
+                                           annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=0,
+        origin={-280,-100}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_w_ReH_out
+                                           annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=0,
+        origin={-280,-70}),  iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_LPST_in annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-250,-180}), iconTransformation(extent={{-430,-154},{-390,-114}})));
+  Utilities.Interfaces.RealInput P_Cond annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-110,-180}), iconTransformation(extent={{-604,-234},{-564,-194}})));
+  Utilities.Interfaces.RealInput T_circulating_water_in annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={130,-260}), iconTransformation(extent={{-604,-234},{-564,-194}})));
+  Utilities.Interfaces.RealInput P_circulating_water_in annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={100,-260}), iconTransformation(extent={{-604,-234},{-564,-194}})));
+  Utilities.Interfaces.RealInput T_circulating_water_out annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=270,
+        origin={130,-330}), iconTransformation(extent={{-604,-234},{-564,-194}})));
+  Utilities.Interfaces.RealInput T_pump_out annotation (Placement(transformation(extent={{56,-234},{64,-226}}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput Q_pump_out annotation (Placement(transformation(extent={{56,-204},{64,-196}}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput P_pump_out annotation (Placement(transformation(extent={{56,-174},{64,-166}}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput T_w_eco_in annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={0,-60}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealOutput T_flue_gas_sink annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={100,20}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealOutput P_flue_gas_sink annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={128,20}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput P_pumpRec_out annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=180,
+        origin={60,30}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput T_pumpRec_out annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=180,
+        origin={60,60}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealOutput Q_pumpRec_out annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=180,
+        origin={60,-20}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput pumpRec_opening(start=21.7) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=180,
+        origin={140,-60}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput Evap_opening(start=11.9862) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-110,140}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput deSH_opening(start=16.4941) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-230,-80}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput T_w_HPSH1_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-420,-70}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_w_HPSH1_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-420,-100}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_HPST_in1(start=64.8383)
+                                           annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-480,-240}), iconTransformation(extent={{-696,-10},{-656,30}})));
+  Utilities.Interfaces.RealInput P_w_eco_out(start=11.9862) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-80,100}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealInput T_w_eco_out(start=11.9862) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-140,100}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  WaterSteam.Pipes.LoopBreaker loopBreaker annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={80,-350})));
+  Sensors_Control.WaterSteam.FlowSensor Q_deSH_sensor(
+    sensor_function="Calibration",
+    causality="HPSH2_Kth",
+    Q_start=2.2273,
+    signal_unit="kg/s") annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=0,
+        origin={-170,-140})));
+  Utilities.Interfaces.RealInput Q_deSH annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-170,-120}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  FlueGases.Machines.GasTurbine gasTurbine annotation (Placement(transformation(extent={{-660,-40},{-580,40}})));
+  MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-720,-20},{-680,20}})));
+  Sensors_Control.FlueGases.TemperatureSensor compressor_T_out_sensor(sensor_function="Calibration",
+    causality="compressor_eta_is",                                                                   T_start=450) annotation (Placement(transformation(extent={{-780,-10},{-760,10}})));
+  Sensors_Control.FlueGases.PressureSensor compressor_P_out_sensor(sensor_function="Calibration",
+    causality="compressor_tau",                                                                   P_start=16.9887) annotation (Placement(transformation(extent={{-750,-10},{-730,10}})));
+  Sensors_Control.Fuel.TemperatureSensor T_fuel_source_sensor(sensor_function="BC", T_start=156) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-700,-40})));
+  Sensors_Control.Fuel.PressureSensor P_fuel_source_sensor(sensor_function="BC", P_start=30) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-700,-70})));
+  Sensors_Control.Fuel.FlowSensor Q_fuel_source_sensor(sensor_function="Calibration",
+    causality="CC_eta",                                                               Q_start=10.5) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-700,-100})));
+  Fuel.BoundaryConditions.Chromatograph
+                                 chromatograph(signal_unit="%mass")
+                                             annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={-700,-130})));
+  Utilities.Interfaces.RealInput compressor_T_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-770,20}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput compressor_P_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-740,20}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput T_fuel_source annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-720,-40}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput compressor_T_out2 annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-720,-70}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput Q_fuel_source annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-720,-100}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Power.Machines.Generator GTgenerator annotation (Placement(transformation(extent={{-580,56},{-660,104}})));
+  Power.BoundaryConditions.Sink power_GT_sink annotation (Placement(transformation(extent={{-680,60},{-720,100}})));
+  Sensors_Control.Power.PowerSensor W_GT_out_sensor(sensor_function="Calibration", causality="GT_trubine_eta_is")
+                                                    annotation (Placement(transformation(extent={{-660,70},{-680,90}})));
+  Utilities.Interfaces.RealInput W_GT_out(start=148.912) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-670,100}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  FlueGases.Machines.AirCompressor airCompressor annotation (Placement(transformation(extent={{-880,-32},{-800,32}})));
+  Utilities.Interfaces.RealInput T_source_air annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-1076,60}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Utilities.Interfaces.RealInput P_source_air annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-1060,60}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  Sensors_Control.FlueGases.PressureSensor P_filter_out_sensor(sensor_function="Calibration",
+    causality="air_filter_Kfr",                                                               P_start=0.899403) annotation (Placement(transformation(extent={{-940,-10},{-920,10}})));
+  Utilities.Interfaces.RealInput P_filter_out annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-930,20}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  FlueGases.Machines.InletGuideVanes inletGuideVanes annotation (Placement(transformation(extent={{-920,-20},{-880,20}})));
+  FlueGases.Pipes.Filter filter annotation (Placement(transformation(extent={{-990,-20},{-950,20}})));
+  Sensors_Control.Outline.OpeningSensor openingSensor(sensor_function="Calibration") annotation (Placement(transformation(extent={{-910,30},{-890,50}})));
+  Utilities.Interfaces.RealInput IGV_angle(start=100) annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-900,60}), iconTransformation(extent={{-1036,0},{-996,40}})));
+  Utilities.Interfaces.RealInput H_source           annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-1044,60}), iconTransformation(extent={{-800,-194},{-760,-154}})));
+  FlueGases.BoundaryConditions.Flue_gas_stack flue_gas_stack_2D annotation (Placement(transformation(extent={{130,-10},{230,130}})));
+  Utilities.Interfaces.GasCompositionInput composition annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-8,-30}), iconTransformation(extent={{-62,-16},{-42,4}})));
+        origin={-700,-162})));
+  FlueGases.BoundaryConditions.GT_louvers gT_louvers(
+    T_signal_unit="degC",
+    T_start=25,
+    P_start=1,
+    H_start=50)                                      annotation (Placement(transformation(extent={{-1100,-40},{-1020,40}})));
+  Utilities.Interfaces.RealOutput air_filter_Kfr annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-970,40}), iconTransformation(extent={{-1072,-32},{-1052,-12}})));
+  Utilities.Interfaces.RealOutput compressor_tau annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-864,-40}), iconTransformation(extent={{-1072,-32},{-1052,-12}})));
+  Utilities.Interfaces.RealOutput compressor_eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-840,-40}), iconTransformation(extent={{-1072,-32},{-1052,-12}})));
+  Utilities.Interfaces.RealOutput CC_eta annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-708,40}), iconTransformation(extent={{-1072,-32},{-1052,-12}})));
+  Utilities.Interfaces.RealOutput GT_trubine_eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-628,-60}), iconTransformation(extent={{-932,-38},{-912,-18}})));
+  Utilities.Interfaces.RealOutput HPSH2_Kth annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-500,-40}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput HPSH1_Kth annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-432,60}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput RHT_Kth annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-340,40}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput ECO_Kth annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-100,-40}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput LPST_eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-188,-160}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput LPST_CST annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-204,-160}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput HPST_Cst annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-444,-160}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput HPST_eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-428,-160}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput condenser_Kth annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-100,-280}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput condenser_Qv_cold annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-100,-290}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput LPST_admission_valve_Cv annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-290,-190}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput RHT_Kfr_cold annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-340,-40}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput HPSH1_Kfr_cold annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-430,-62}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput HPSH2_Kfr_cold annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-500,40}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput pumpRec_rh annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={12,120}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealOutput pumpRec_hn annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-12,120}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealOutput pump_hn annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={18,-412}),iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput pump_rh annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=270,
+        origin={42,-412}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput evap_Kth annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-260,-40}), iconTransformation(extent={{-686,-116},{-666,-96}})));
+  Utilities.Interfaces.RealOutput ECO_Kfr_cold annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-100,40}), iconTransformation(extent={{-178,-276},{-138,-236}})));
+  Utilities.Interfaces.RealOutput HPST_admission_valve_Cv annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=0,
+        origin={-532,-188}), iconTransformation(extent={{-686,-116},{-666,-96}})));
 equation
 
-  //--- Air / Flue Gas System ---
-    // Fuel Source
-      //  Quantities definition
-      source_fuel.Xi_out = {0.90,0.05,0,0,0.025,0.025};
+  /* Hypotheses */
+  // Condenser
+  condenser.C_incond = 0;
+  condenser.Kfr_cold = 0;
+  // Combustion chamber
+  combustionChamber.Kfr = 0;
 
-
-    // Condenser
-      // Parameters
-      condenser.C_incond = 0;
-
-  connect(HPsuperheater1.C_cold_out, T_w_HPSH1_out_sensor.C_in) annotation (
-     Line(points={{-168,24},{-166,24},{-166,34},{-178,34}},
-                                                          color={28,108,200}));
-  connect(P_HPST_out_sensor.C_in, HPsteamTurbine.C_out)
-    annotation (Line(points={{-134,180},{-146,180}}, color={28,108,200}));
-  connect(P_HPST_in_sensor.C_out, HPsteamTurbine.C_in)
-    annotation (Line(points={{-188,180},{-180,180}}, color={28,108,200}));
-  connect(T_circulating_water_out_sensor.C_out, circulating_water_sink.C_in)
-    annotation (Line(points={{115,200},{126,200}},
-                                                 color={28,108,200}));
-  connect(combustionChamber.outlet,gasTurbine. C_in) annotation (Line(points={{-430,0},{-412,0}},
-                                                                                              color={95,95,95}));
-  connect(airCompressor.C_out,compressor_P_out_sensor. C_in) annotation (Line(points={{-496,0},{-490,0}},
-                                                                                                        color={95,95,95}));
-  connect(compressor_P_out_sensor.C_out,compressor_T_out_sensor. C_in) annotation (Line(points={{-478,0},{-472,0}},
-                                                                                                                  color={95,95,95}));
-  connect(compressor_T_out_sensor.C_out,combustionChamber. inlet) annotation (Line(points={{-460,0},{-450,0}},
-                                                                                                             color={95,95,95}));
-  connect(evaporator.C_cold_in, T_w_eco_out_sensor.C_out) annotation (Line(
-        points={{3.2,24},{3.2,34},{6,34}},                     color={28,108,200}));
-  connect(condenser.C_cold_out, T_circulating_water_out_sensor.C_in)
-    annotation (Line(points={{79.6,200},{92,200},{92,200},{105,200}},
-                    color={28,108,200}));
-  connect(condenser.C_hot_out, pump.C_in) annotation (Line(points={{60,185.778},{60,160},{103,160}},
-                              color={28,108,200}));
-  connect(HPsuperheater1.C_cold_in, P_w_evap_out_sensor.C_out) annotation (Line(
-        points={{-144,24},{-144,34},{-46,34}},color={28,108,200}));
-  connect(evaporator.C_cold_out, P_w_evap_out_sensor.C_in) annotation (Line(
-        points={{-19.2,24},{-20,24},{-20,34},{-34,34}}, color={28,108,200}));
-  connect(economiser.C_cold_out, P_w_eco_out_sensor.C_in) annotation (Line(
-        points={{88.4,23.6},{88,23.6},{88,34},{62,34}},
-                                                   color={28,108,200}));
-  connect(gasTurbine.C_out, turbine_T_out_sensor.C_in)
-    annotation (Line(points={{-380,0},{-370,0}},     color={95,95,95}));
-  connect(turbine_P_out_sensor.C_in, turbine_T_out_sensor.C_out)
-    annotation (Line(points={{-350,0},{-358,0}},     color={95,95,95}));
-  connect(evaporator.C_hot_in, Reheater.C_hot_out) annotation (Line(points={{-36,0},{-48,0}},
-                                           color={95,95,95}));
-  connect(HPsuperheater1.C_hot_out, Reheater.C_hot_in)
-    annotation (Line(points={{-126,0},{-108,0}},    color={95,95,95}));
-  connect(Reheater.C_cold_out, T_w_ReH_out_sensor.C_in)
-    annotation (Line(points={{-90,24},{-90,44}},          color={28,108,200}));
-  connect(P_Cond_sensor.C_in, LPsteamTurbine.C_out)
-    annotation (Line(points={{28,280},{20,280}},   color={28,108,200}));
-  connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{40,280},{60,280},{60,218.134}},
-                                     color={28,108,200}));
-
-  connect(P_source_air_sensor.C_out, T_source_air_sensor.C_in)
-    annotation (Line(points={{-634,0},{-626,0}},     color={95,95,95}));
-  connect(T_source_air_sensor.C_out, Q_source_air_sensor.C_in)
-    annotation (Line(points={{-614,0},{-606,0}},     color={95,95,95}));
-  connect(condenser.C_cold_in, P_circulating_water_in_sensor.C_out) annotation (
-     Line(points={{40,200},{22,200},{22,200},{5,200}},                color={28,
-          108,200}));
-  connect(P_LPST_in_sensor.C_out, LPsteamTurbine.C_in)
-    annotation (Line(points={{-22,280},{-14,280}},  color={28,108,200}));
-  connect(P_LPST_in_sensor.C_in, LPST_control_valve.C_out) annotation (Line(
-        points={{-34,280},{-40,280},{-40,280},{-44.75,280}},             color={
-          28,108,200}));
-  connect(P_w_ReH_out_sensor.C_out, LPST_control_valve.C_in) annotation (Line(
-        points={{-90,76},{-90,280},{-61.25,280}}, color={28,108,200}));
-  connect(P_w_ReH_out_sensor.C_in, T_w_ReH_out_sensor.C_out)
-    annotation (Line(points={{-90,64},{-90,56}}, color={28,108,200}));
-  connect(T_w_HPSH1_out_sensor.C_out, P_w_HPSH1_out_sensor.C_in)
-    annotation (Line(points={{-190,34},{-202,34}},
-                                                 color={28,108,200}));
-  connect(HPST_control_valve.C_out, P_HPST_in_sensor.C_in) annotation (Line(
-        points={{-206.75,180},{-204,180},{-204,180},{-200,180}}, color={28,108,200}));
-  connect(T_circulating_water_in_sensor.C_out, P_circulating_water_in_sensor.C_in)
-    annotation (Line(points={{-15,200},{-5,200}},  color={28,108,200}));
-  connect(circulating_water_source.C_out, T_circulating_water_in_sensor.C_in)
-    annotation (Line(points={{-35,200},{-25,200}},           color={28,108,200}));
-  connect(pump.C_out, T_pump_out_sensor.C_in)
-    annotation (Line(points={{117,160},{125,160}},     color={28,108,200}));
-  connect(T_pump_out_sensor.C_out, P_pump_out_sensor.C_in) annotation (Line(
-        points={{135,160},{145,160}},             color={28,108,200}));
-  connect(P_pump_out_sensor.C_out, Q_pump_out_sensor.C_in) annotation (Line(
-        points={{155,160},{165,160}},             color={28,108,200}));
-  connect(P_pumpRec_out_sensor.C_out, Q_pumpRec_out_sensor.C_in)
-    annotation (Line(points={{136,80.5455},{140,80.5455}},
-                                               color={28,108,200}));
-  connect(pumpRec_controlValve.Opening, pumpRec_opening_sensor.Opening)
-    annotation (Line(points={{160,90.1818},{160,94.9}},         color={0,0,127}));
-  connect(pumpRec.C_in, P_w_eco_out_sensor.C_in) annotation (Line(points={{87,80.5455},{80,80.5455},{80,34},{62,34}},
-                                   color={28,108,200}));
-  connect(economiser.C_cold_in, T_w_eco_in_sensor.C_out) annotation (Line(
-        points={{111.6,23.6},{111.6,34},{135,34}},
-                                              color={28,108,200}));
-  connect(T_w_eco_in_sensor.C_in, loopBreaker.C_out) annotation (Line(points={{145,34},{180,34},{180,44}},
-                                       color={28,108,200}));
-  connect(Q_pump_out_sensor.C_out, loopBreaker.C_in)
-    annotation (Line(points={{175,160},{180,160},{180,64}},
-                                                         color={28,108,200}));
-  connect(T_pumpRec_out_sensor.C_out, P_pumpRec_out_sensor.C_in) annotation (
-      Line(points={{120,80.5455},{126,80.5455}},                         color={
-          28,108,200}));
-  connect(Q_pumpRec_out_sensor.C_out, pumpRec_controlValve.C_in)
-    annotation (Line(points={{150,80.5455},{154,80.5455},{154,80},{153.5,80}},
-                                                         color={28,108,200}));
-  connect(flue_gas_sink.C_in, P_flue_gas_sink_sensor.C_out)
-    annotation (Line(points={{222,219},{222,204}}, color={95,95,95}));
-  connect(sink.C_in, W_ST_out_sensor.C_out)
-    annotation (Line(points={{115,320},{101.88,320}},color={244,125,35}));
-  connect(combustionChamber.inlet1, Q_fuel_source_sensor.C_out)
-    annotation (Line(points={{-440,-10},{-440,-15}}, color={213,213,0}));
-  connect(Q_fuel_source_sensor.C_in, P_fuel_source_sensor.C_out) annotation (
-      Line(points={{-440,-25},{-440,-35}},                       color={213,213,
-          0}));
-  connect(P_fuel_source_sensor.C_in, T_fuel_source_sensor.C_out) annotation (
-      Line(points={{-440,-45},{-440,-55}},                       color={213,213,
-          0}));
-  connect(GT_generator.C_out, W_GT_sensor.C_in)
-    annotation (Line(points={{-352.8,100},{-346,100}},
-                                                     color={244,125,35}));
-  connect(W_GT_sensor.C_out, sink_power.C_in)
-    annotation (Line(points={{-334.12,100},{-327,100}},
-                                                      color={244,125,35}));
-  connect(GT_generator.C_in, gasTurbine.C_W_shaft) annotation (Line(
-      points={{-373.92,100},{-380,100},{-380,16}},
+  connect(deSH_controlValve.C_in, Q_deSH_sensor.C_out) annotation (Line(
+      points={{-220,-140},{-180,-140}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(Q_deSH_sensor.C_in, P_pump_out_sensor.C_out) annotation (Line(
+      points={{-160,-140},{80,-140},{80,-160}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(deSH_controlValve.C_out, HPSH2.C_cold_in) annotation (Line(
+      points={{-240,-140},{-420,-140},{-420,-120},{-460,-120},{-460,-50}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(EVAP.C_hot_in, RHT.C_hot_out) annotation (Line(
+      points={{-240,0},{-280,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(RHT.C_hot_in, HPSH1.C_hot_out) annotation (Line(
+      points={{-320,0},{-380,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(HPSH1.C_hot_in, HPSH2.C_hot_out) annotation (Line(
+      points={{-420,0},{-440,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(HPSH1.C_cold_out, T_w_HPSH1_out_sensor.C_in) annotation (Line(
+      points={{-400,-50},{-400,-60}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(T_w_HPSH1_out_sensor.C_out, P_w_HPSH1_out_sensor.C_in) annotation (Line(
+      points={{-400,-80},{-400,-90}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(P_w_HPSH1_out_sensor.C_out, HPSH2.C_cold_in) annotation (Line(
+      points={{-400,-110},{-400,-120},{-460,-120},{-460,-50}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(EVAP.C_cold_out, P_w_evap_out_sensor.C_in) annotation (Line(
+      points={{-235,120},{-250,120}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(P_w_evap_out_sensor.C_out, HPSH1.C_cold_in) annotation (Line(
+      points={{-270,120},{-400,120},{-400,50}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(EVAP.C_hot_out, ECO.C_hot_in) annotation (Line(
+      points={{-160,0},{-80,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(P_w_eco_out_sensor.C_out, EVAP_controlValve.C_in) annotation (Line(
+      points={{-90,80},{-100,80},{-100,80.4}},
+      color={28,108,200},
+      thickness=1));
+  connect(EVAP_controlValve.C_out, T_w_eco_out_sensor.C_in) annotation (Line(
+      points={{-120,80.4},{-120,80},{-130,80}},
+      color={28,108,200},
+      thickness=1));
+  connect(T_w_eco_out_sensor.C_out, EVAP.C_cold_in) annotation (Line(
+      points={{-150,80},{-165,80}},
+      color={28,108,200},
+      thickness=1));
+  connect(EVAP_controlValve.Opening, Evap_opening_sensor.Opening) annotation (Line(points={{-110,98},{-110,109.8}}, color={0,0,127}));
+  connect(HPST_admission_valve.C_out, P_HPST_in_sensor.C_in) annotation (Line(
+      points={{-510,-200},{-500,-200}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(LPST_admission_valve.C_out, P_LPST_in_sensor.C_in) annotation (Line(
+      points={{-268,-200},{-260,-200}},
+      color={28,108,200},
+      thickness=1,
+      pattern=LinePattern.Dash));
+  connect(condenser.C_hot_out, pump.C_in) annotation (Line(
+      points={{-20,-340},{-20,-380},{10,-380}},
+      color={28,108,200},
+      thickness=1));
+  connect(ECO.C_cold_out, P_w_eco_out_sensor.C_in) annotation (Line(
+      points={{-60,50},{-60,80},{-70,80}},
+      color={28,108,200},
+      thickness=1));
+  connect(Q_pump_out_sensor.C_in, T_pump_out_sensor.C_out) annotation (Line(
+      points={{80,-210},{80,-220}},
+      color={28,108,200},
+      thickness=1));
+  connect(P_pump_out_sensor.C_in, Q_pump_out_sensor.C_out) annotation (Line(
+      points={{80,-180},{80,-190}},
+      color={28,108,200},
+      thickness=1));
+  connect(pumpRec.C_in, P_w_eco_out_sensor.C_in) annotation (Line(
+      points={{-20,80},{-70,80}},
+      color={28,108,200},
+      thickness=1));
+  connect(ECO.C_cold_in, T_w_eco_in_sensor.C_out) annotation (Line(
+      points={{-60,-50},{-60,-80},{-10,-80}},
+      color={28,108,200},
+      thickness=1));
+  connect(T_w_eco_in_sensor.C_in, P_pump_out_sensor.C_out) annotation (Line(
+      points={{10,-80},{80,-80},{80,-160}},
+      color={28,108,200},
+      thickness=1));
+  connect(pumpRec_controlValve.C_out, P_pump_out_sensor.C_out) annotation (Line(
+      points={{79.4,-70},{80,-70},{80,-160}},
+      color={28,108,200},
+      thickness=1));
+  connect(P_HPST_in_sensor.C_out, HPST.C_in) annotation (Line(
+      points={{-480,-200},{-460,-200}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(P_LPST_in_sensor.C_out, LPST.C_in) annotation (Line(
+      points={{-240,-200},{-220,-200}},
+      color={28,108,200},
+      thickness=1,
+      pattern=LinePattern.Dash));
+  connect(LPST.C_out, P_Cond_sensor.C_in) annotation (Line(
+      points={{-140,-200},{-120,-200}},
+      color={28,108,200},
+      thickness=1));
+  connect(P_Cond_sensor.C_out, condenser.C_hot_in) annotation (Line(
+      points={{-100,-200},{-20,-200},{-20,-240}},
+      color={28,108,200},
+      thickness=1));
+  connect(T_circulating_water_in_sensor.C_in, source.C_out) annotation (Line(
+      points={{140,-280},{150,-280}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(condenser.C_cold_in, P_circulating_water_in_sensor.C_out) annotation (Line(
+      points={{30,-280},{90,-280}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(P_circulating_water_in_sensor.C_in, T_circulating_water_in_sensor.C_out) annotation (Line(
+      points={{110,-280},{120,-280}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(condenser.C_cold_out, T_circulating_water_out_sensor.C_in) annotation (Line(
+      points={{30,-310},{120,-310}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(T_circulating_water_out_sensor.C_out, sink.C_in) annotation (Line(
+      points={{140,-310},{150,-310}},
+      color={28,108,200},
+      thickness=0.5));
+  connect(pumpRec.C_out, T_pumpRec_out_sensor.C_in) annotation (Line(
+      points={{20,80},{80,80},{80,70}},
+      color={28,108,200},
+      thickness=1));
+  connect(T_pumpRec_out_sensor.C_out, P_pumpRec_out_sensor.C_in) annotation (Line(
+      points={{80,50},{80,40}},
+      color={28,108,200},
+      thickness=1));
+  connect(P_pumpRec_out_sensor.C_out, Q_pumpRec_out_sensor.C_in) annotation (Line(
+      points={{80,20},{80,-10}},
+      color={28,108,200},
+      thickness=1));
+  connect(Q_pumpRec_out_sensor.C_out, pumpRec_controlValve.C_in) annotation (Line(
+      points={{80,-30},{80,-50},{79.4,-50}},
+      color={28,108,200},
+      thickness=1));
+  connect(HPST.C_out, T_HPST_out_sensor.C_in) annotation (Line(
+      points={{-380,-200},{-350,-200},{-350,-110}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(P_HPST_out_sensor.C_out, RHT.C_cold_in) annotation (Line(
+      points={{-350,-60},{-350,80},{-300,80},{-300,50}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(RHT.C_cold_out, P_w_ReH_out_sensor.C_in) annotation (Line(points={{-300,-50},{-300,-60}}, color={28,108,200},
+      thickness=1,
+      pattern=LinePattern.Dash));
+  connect(P_w_ReH_out_sensor.C_out, T_w_ReH_out_sensor.C_in) annotation (Line(
+      points={{-300,-80},{-300,-90}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(T_w_ReH_out_sensor.C_out, LPST_admission_valve.C_in) annotation (Line(
+      points={{-300,-110},{-300,-200},{-288,-200}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(ECO.C_hot_out, T_flue_gas_sink_sensor.C_in) annotation (Line(
+      points={{-40,0},{90,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(
+      points={{110,0},{118,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(P_HPST_out_sensor.C_in, T_HPST_out_sensor.C_out) annotation (Line(
+      points={{-350,-80},{-350,-90}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(HPST.C_W_out, LPST.C_W_out) annotation (Line(
+      points={{-380,-233.6},{-380,-260},{-140,-260},{-140,-233.6}},
       color={244,125,35},
-      smooth=Smooth.Bezier));
-  connect(W_ST_out_sensor.C_in, ST_generator.C_out)
-    annotation (Line(points={{90,320},{77.2,320}},color={244,125,35}));
-  connect(HPsteamTurbine.C_W_out, ST_generator.C_in) annotation (Line(
-      points={{-146,193.44},{-146,193.44},{-146,266},{-146,320},{56.08,320}},
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(generator.C_in, LPST.C_W_out) annotation (Line(
+      points={{-403.2,-260},{-140,-260},{-140,-233.6}},
       color={244,125,35},
-      smooth=Smooth.Bezier));
-  connect(LPsteamTurbine.C_W_out, ST_generator.C_in) annotation (Line(
-      points={{20,293.44},{20,320},{56.08,320}},
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(generator.C_out, W_ST_out_sensor.C_in) annotation (Line(
+      points={{-456,-260},{-470,-260}},
       color={244,125,35},
-      smooth=Smooth.Bezier));
-  connect(pumpRec_controlValve.C_out, loopBreaker.C_in) annotation (Line(points={{166.5,80},{180,80},{180,64}},
-                                                                color={28,108,200}));
-  connect(pumpRec.C_out, T_pumpRec_out_sensor.C_in) annotation (Line(points={{101,80.5455},{110,80.5455}},
-                                               color={28,108,200}));
-  connect(AirFilter.C_out, P_filter_out_sensor.C_in)
-    annotation (Line(points={{-556,0},{-546,0}},     color={95,95,95}));
-  connect(Q_source_air_sensor.C_out, AirFilter.C_in)
-    annotation (Line(points={{-594,0},{-576,0}},     color={95,95,95}));
-  connect(P_filter_out_sensor.C_out, airCompressor.C_in)
-    annotation (Line(points={{-534,0},{-524,0}},     color={95,95,95}));
-  connect(HPsuperheater1.C_hot_in, HPsuperheater2.C_hot_out)
-    annotation (Line(points={{-186,0},{-242,0}},     color={95,95,95}));
-  connect(P_w_HPSH1_out_sensor.C_out, HPsuperheater2.C_cold_in) annotation (
-     Line(points={{-214,34},{-260,34},{-260,24}},
-                                                color={28,108,200}));
-  connect(turbine_P_out_sensor.C_out, HPsuperheater2.C_hot_in)
-    annotation (Line(points={{-338,0},{-302,0}},     color={95,95,95}));
-  connect(deSH_opening_sensor.Opening, deSH_controlValve.Opening)
-    annotation (Line(points={{-180,138.9},{-180,130.182}}, color={0,0,127}));
-  connect(Q_deSH_sensor.C_in, loopBreaker.C_in) annotation (Line(points={{-132,120},{180,120},{180,64}},
-                              color={28,108,200}));
-  connect(Q_deSH_sensor.C_out, deSH_controlValve.C_in) annotation (Line(points={{-144,120},{-158,120},{-158,120},{-173.75,120}},
-                                                       color={28,108,200}));
-  connect(deSH_controlValve.C_out, HPsuperheater2.C_cold_in) annotation (Line(
-        points={{-186.25,120},{-230,120},{-230,34},{-260,34},{-260,24}},
-                                                                     color={28,108,
-          200}));
-  connect(T_w_HPSH2_out_sensor.C_in, HPsuperheater2.C_cold_out) annotation (
-      Line(points={{-280,54},{-280,24},{-284,24}},           color={28,108,200}));
-  connect(P_w_HPSH2_out_sensor.C_in, T_w_HPSH2_out_sensor.C_out)
-    annotation (Line(points={{-280,74},{-280,66}}, color={28,108,200}));
-  connect(P_w_eco_out_sensor.C_out, Evap_controlValve.C_in) annotation (Line(
-        points={{50,34},{44,34},{44,34},{36.25,34}},                 color={28,108,
-          200}));
-  connect(T_w_eco_out_sensor.C_in, Evap_controlValve.C_out) annotation (Line(
-        points={{18,34},{20,34},{20,34},{23.75,34}},                 color={28,108,
-          200}));
-  connect(Evap_controlValve.Opening, Evap_opening_sensor.Opening)
-    annotation (Line(points={{30,44.1822},{30,52.9}}, color={0,0,127}));
-  connect(economiser.C_hot_out, T_flue_gas_sink_sensor.C_in) annotation (Line(
-        points={{129,0},{164,0}},                     color={95,95,95}));
-  connect(P_HPST_out_sensor.C_out, T_HPST_out_sensor.C_in) annotation (Line(points={{-122,180},{-116,180}},color={28,108,200}));
-  connect(T_HPST_out_sensor.C_out, Reheater.C_cold_in) annotation (Line(points={{-104,180},{-66,180},{-66,24}},color={28,108,200}));
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(W_ST_out_sensor.C_out, sink2.C_in) annotation (Line(
+      points={{-489.8,-260},{-500,-260}},
+      color={244,125,35},
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(pumpRec_controlValve.Opening, pumpRec_opening_sensor.Opening) annotation (Line(points={{97,-60},{109.8,-60}}, color={0,0,127}));
+  connect(turbine_P_out_sensor.C_in, turbine_T_out_sensor.C_out) annotation (Line(points={{-520,0},{-550,0}}, color={95,95,95},
+      thickness=1));
+  connect(deSH_controlValve.Opening, deSH_opening_sensor.Opening) annotation (Line(points={{-230,-124},{-230,-110.2}}, color={0,0,127}));
+  connect(HPSH2.C_cold_out, T_w_HPSH2_out_sensor.C_in) annotation (Line(
+      points={{-460,50},{-460,100},{-470,100}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(T_w_HPSH2_out_sensor.C_out, P_w_HPSH2_out_sensor.C_in) annotation (Line(
+      points={{-490,100},{-500,100}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(P_w_HPSH2_out_sensor.C_out, HPST_admission_valve.C_in) annotation (Line(
+      points={{-520,100},{-540,100},{-540,-200},{-530,-200}},
+      color={28,108,200},
+      pattern=LinePattern.Dash,
+      thickness=1));
+  connect(turbine_T_out_sensor.T_sensor, turbine_T_out) annotation (Line(points={{-560,10},{-560,20}}, color={0,0,127}));
+  connect(turbine_P_out_sensor.P_sensor, turbine_P_out) annotation (Line(points={{-510,10},{-510,20}}, color={0,0,127}));
+  connect(Q_source_air_sensor.Q_sensor, Q_source_air) annotation (Line(points={{-1010,10},{-1010,20}},
+                                                                                                     color={0,0,127}));
+  connect(T_w_HPSH2_out_sensor.T_sensor, T_w_HPSH2_out) annotation (Line(points={{-480,110},{-480,120}}, color={0,0,127}));
+  connect(P_w_HPSH2_out_sensor.P_sensor, P_w_HPSH2_out) annotation (Line(points={{-510,110},{-510,120}}, color={0,0,127}));
+  connect(P_HPST_in_sensor.P_sensor, P_HPST_in) annotation (Line(points={{-490,-190},{-490,-180}}, color={0,0,127}));
+  connect(P_w_evap_out_sensor.P_sensor, P_w_evap_out) annotation (Line(points={{-260,130},{-260,140}}, color={0,0,127}));
+  connect(T_HPST_out_sensor.T_sensor, T_HPST_out) annotation (Line(points={{-360,-100},{-370,-100}}, color={0,0,127}));
+  connect(P_HPST_out_sensor.P_sensor, P_HPST_out) annotation (Line(points={{-360,-70},{-370,-70}}, color={0,0,127}));
+  connect(T_w_ReH_out_sensor.T_sensor, T_w_ReH_out) annotation (Line(points={{-290,-100},{-280,-100}}, color={0,0,127}));
+  connect(P_w_ReH_out_sensor.P_sensor, P_w_ReH_out) annotation (Line(points={{-290,-70},{-280,-70}}, color={0,0,127}));
+  connect(P_LPST_in_sensor.P_sensor, P_LPST_in) annotation (Line(points={{-250,-190},{-250,-180}}, color={0,0,127}));
+  connect(P_Cond_sensor.P_sensor, P_Cond) annotation (Line(points={{-110,-190},{-110,-180}}, color={0,0,127}));
+  connect(T_circulating_water_in_sensor.T_sensor, T_circulating_water_in) annotation (Line(points={{130,-270},{130,-260}}, color={0,0,127}));
+  connect(P_circulating_water_in_sensor.P_sensor, P_circulating_water_in) annotation (Line(points={{100,-270},{100,-260}}, color={0,0,127}));
+  connect(T_circulating_water_out_sensor.T_sensor, T_circulating_water_out) annotation (Line(points={{130,-320},{130,-330}}, color={0,0,127}));
+  connect(T_pump_out_sensor.T_sensor, T_pump_out) annotation (Line(points={{70,-230},{60,-230}}, color={0,0,127}));
+  connect(Q_pump_out_sensor.Q_sensor, Q_pump_out) annotation (Line(points={{70,-200},{60,-200}}, color={0,0,127}));
+  connect(P_pump_out_sensor.P_sensor, P_pump_out) annotation (Line(points={{70,-170},{60,-170}}, color={0,0,127}));
+  connect(T_w_eco_in_sensor.T_sensor, T_w_eco_in) annotation (Line(points={{0,-70},{0,-60}}, color={0,0,127}));
+  connect(T_flue_gas_sink, T_flue_gas_sink_sensor.T_sensor) annotation (Line(points={{100,20},{100,10}}, color={0,0,127}));
+  connect(P_flue_gas_sink_sensor.P_sensor, P_flue_gas_sink) annotation (Line(points={{128,10},{128,20}}, color={0,0,127}));
+  connect(P_pumpRec_out_sensor.P_sensor, P_pumpRec_out) annotation (Line(points={{69,30},{60,30}}, color={0,0,127}));
+  connect(T_pumpRec_out_sensor.T_sensor, T_pumpRec_out) annotation (Line(points={{70,60},{60,60}}, color={0,0,127}));
+  connect(Q_pumpRec_out_sensor.Q_sensor, Q_pumpRec_out) annotation (Line(points={{70,-20},{60,-20}}, color={0,0,127}));
+  connect(pumpRec_opening_sensor.opening_sensor, pumpRec_opening) annotation (Line(points={{130.2,-60},{140,-60}}, color={0,0,127}));
+  connect(Evap_opening_sensor.opening_sensor, Evap_opening) annotation (Line(points={{-110,130.2},{-110,140}}, color={0,0,127}));
+  connect(deSH_opening_sensor.opening_sensor, deSH_opening) annotation (Line(points={{-230,-89.8},{-230,-80}}, color={0,0,127}));
+  connect(T_w_HPSH1_out_sensor.T_sensor, T_w_HPSH1_out) annotation (Line(points={{-410,-70},{-420,-70}}, color={0,0,127}));
+  connect(P_w_HPSH1_out_sensor.P_sensor, P_w_HPSH1_out) annotation (Line(points={{-410,-100},{-420,-100}}, color={0,0,127}));
+  connect(W_ST_out_sensor.W_sensor, P_HPST_in1) annotation (Line(points={{-480,-250},{-480,-240}}, color={0,0,127}));
+  connect(P_w_eco_out_sensor.P_sensor, P_w_eco_out) annotation (Line(points={{-80,90},{-80,100}}, color={0,0,127}));
+  connect(T_w_eco_out_sensor.T_sensor, T_w_eco_out) annotation (Line(points={{-140,90},{-140,100}}, color={0,0,127}));
+  connect(T_pump_out_sensor.C_in, loopBreaker.C_out) annotation (Line(
+      points={{80,-240},{80,-340}},
+      color={28,108,200},
+      thickness=1));
+  connect(loopBreaker.C_in, pump.C_out) annotation (Line(
+      points={{80,-360},{80,-380},{50,-380}},
+      color={28,108,200},
+      thickness=1));
+  connect(Q_deSH_sensor.Q_sensor, Q_deSH) annotation (Line(points={{-170,-130},{-170,-120}}, color={0,0,127}));
+  connect(turbine_T_out_sensor.C_in, gasTurbine.C_out) annotation (Line(
+      points={{-570,0},{-580,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(HPSH2.C_hot_in, turbine_P_out_sensor.C_out) annotation (Line(points={{-480,0},{-500,0}}, color={95,95,95},
+      thickness=1));
+  connect(combustionChamber.outlet, gasTurbine.C_in) annotation (Line(points={{-680,0},{-660,0}}, color={95,95,95},
+      thickness=1));
+  connect(combustionChamber.inlet, compressor_P_out_sensor.C_out) annotation (Line(points={{-720,0},{-730,0}}, color={95,95,95},
+      thickness=1));
+  connect(compressor_P_out_sensor.C_in, compressor_T_out_sensor.C_out) annotation (Line(points={{-750,0},{-760,0}}, color={95,95,95},
+      thickness=1));
+  connect(combustionChamber.inlet1, T_fuel_source_sensor.C_out) annotation (Line(
+      points={{-700,-20},{-700,-30}},
+      color={213,213,0},
+      thickness=1));
+  connect(Q_fuel_source_sensor.C_in, chromatograph.C_out) annotation (Line(
+      points={{-700,-110},{-700,-120}},
+      color={213,213,0},
+      thickness=1));
+  connect(Q_fuel_source_sensor.C_out, P_fuel_source_sensor.C_in) annotation (Line(
+      points={{-700,-90},{-700,-80}},
+      color={213,213,0},
+      thickness=1));
+  connect(P_fuel_source_sensor.C_out, T_fuel_source_sensor.C_in) annotation (Line(
+      points={{-700,-60},{-700,-50}},
+      color={213,213,0},
+      thickness=1));
+  connect(compressor_T_out_sensor.T_sensor, compressor_T_out) annotation (Line(points={{-770,10},{-770,20}}, color={0,0,127}));
+  connect(compressor_P_out_sensor.P_sensor, compressor_P_out) annotation (Line(points={{-740,10},{-740,20}}, color={0,0,127}));
+  connect(T_fuel_source_sensor.T_sensor, T_fuel_source) annotation (Line(points={{-710,-40},{-720,-40}}, color={0,0,127}));
+  connect(P_fuel_source_sensor.P_sensor, compressor_T_out2) annotation (Line(points={{-710,-70},{-720,-70}}, color={0,0,127}));
+  connect(Q_fuel_source_sensor.Q_sensor, Q_fuel_source) annotation (Line(points={{-710,-100},{-720,-100}}, color={0,0,127}));
+  connect(GTgenerator.C_out, W_GT_out_sensor.C_in) annotation (Line(
+      points={{-648,80},{-660,80}},
+      color={244,125,35},
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(W_GT_out_sensor.C_out, power_GT_sink.C_in) annotation (Line(
+      points={{-679.8,80},{-690,80}},
+      color={244,125,35},
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(GTgenerator.C_in, gasTurbine.C_W_shaft) annotation (Line(
+      points={{-595.2,80},{-580,80},{-580,40}},
+      color={244,125,35},
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(W_GT_out_sensor.W_sensor, W_GT_out) annotation (Line(points={{-670,90},{-670,100}}, color={0,0,127}));
+  connect(airCompressor.C_out, compressor_T_out_sensor.C_in) annotation (Line(
+      points={{-800,0},{-780,0}},
+      color={95,95,95},
+      thickness=1));
   connect(airCompressor.C_W_in, gasTurbine.C_W_shaft) annotation (Line(
-      points={{-496,10.5},{-496,34},{-380,34},{-380,16}},
+      points={{-800,24},{-800,60},{-580,60},{-580,40}},
       color={244,125,35},
-      smooth=Smooth.Bezier));
-  connect(T_flue_gas_sink_sensor.C_out, P_flue_gas_sink_sensor.C_in) annotation (Line(points={{176,0},{222,0},{222,192}},                         color={95,95,95}));
-  connect(HPST_control_valve.C_in, displayer.C_out) annotation (Line(points={{-223.25,180},{-230,180},{-230,180},{-235,180}}, color={28,108,200}));
-  connect(displayer.C_in, P_w_HPSH2_out_sensor.C_out) annotation (Line(points={{-241,180},{-280,180},{-280,86}},                     color={28,108,200}));
-  connect(source_fuel.C_out, fuelDisplayer.C_in) annotation (Line(points={{-440,-95},{-440,-83}},  color={213,213,0}));
-  connect(fuelDisplayer.C_out, T_fuel_source_sensor.C_in) annotation (Line(points={{-440,-77},{-440,-65}}, color={213,213,0}));
-  connect(moistAir_to_FlueGases.inlet, moistAirDisplayer.C_out) annotation (Line(points={{-682,0},{-697,0}},     color={85,170,255}));
-  connect(P_source_air_sensor.C_in, flueGasesDisplayer.C_out) annotation (Line(points={{-646,0},{-651,0}},     color={95,95,95}));
-  connect(flueGasesDisplayer.C_in, moistAir_to_FlueGases.outlet) annotation (Line(points={{-657,0},{-662,0}},     color={95,95,95}));
-  connect(moistAirDisplayer.C_in, Relative_Humidity_sensor.C_out) annotation (Line(points={{-703,0},{-710,0}},     color={85,170,255}));
-  connect(Relative_Humidity_sensor.C_in, source_air.C_out) annotation (Line(points={{-722,0},{-729,0}},     color={85,170,255}));
-  connect(Relative_Humidity_sensor.H_sensor, Relative_Humidity) annotation (Line(points={{-716,6},{-716,14}},   color={0,0,127}));
-  connect(P_source_air_sensor.P_sensor, P_source_air) annotation (Line(points={{-640,6},{-640,14}},  color={0,0,127}));
-  connect(T_source_air, T_source_air_sensor.T_sensor) annotation (Line(points={{-620,14},{-620,6}},  color={0,0,127}));
-  connect(Q_source_air_sensor.Q_sensor, Q_source_air) annotation (Line(points={{-600,6},{-600,14}},  color={0,0,127}));
-  connect(P_filter_out_sensor.P_sensor, P_filter_out) annotation (Line(points={{-540,6},{-540,20}},  color={0,0,127}));
-  connect(compressor_P_out_sensor.P_sensor, compressor_P_out) annotation (Line(points={{-484,6},{-484,14}},  color={0,0,127}));
-  connect(AirFilter.Kfr, Filter_Kfr) annotation (Line(points={{-566,4},{-566,10},{-566,14},{-566,14}},
-                                                                                   color={0,0,127}));
-  connect(compression_rate, airCompressor.tau) annotation (Line(points={{-522,22},{-522,12.25},{-522.6,12.25}},  color={0,0,127}));
-  connect(compressor_eta_is, airCompressor.eta_is) annotation (Line(points={{-520,28},{-519.8,28},{-519.8,11.55}},color={0,0,127}));
-  connect(compressor_eta_is, compressor_eta_is) annotation (Line(points={{-520,28},{-520,28}},
-                                                                                             color={0,0,127}));
-  connect(compressor_T_out, compressor_T_out_sensor.T_sensor) annotation (Line(points={{-466,14},{-466,6}},  color={0,0,127}));
-  connect(Q_fuel_source_sensor.Q_sensor, Q_fuel_source) annotation (Line(points={{-445,-20},{-450,-20},{-450,-20},{-450,-20}},
-                                                                                                         color={0,0,127}));
-  connect(P_fuel_source_sensor.P_sensor, P_fuel_source) annotation (Line(points={{-445,-40},{-450,-40}}, color={0,0,127}));
-  connect(T_fuel_source_sensor.T_sensor, T_fuel_source) annotation (Line(points={{-445,-60},{-450,-60}}, color={0,0,127}));
-  connect(gasTurbine.eta_is, turbine_eta_is) annotation (Line(points={{-412,12.8},{-412,18},{-412,20},{-412,20}},
-                                                                                              color={0,0,127}));
-  connect(turbine_T_out_sensor.T_sensor, turbine_T_out) annotation (Line(points={{-364,6},{-364,12}}, color={0,0,127}));
-  connect(turbine_P_out_sensor.P_sensor, turbine_P_out) annotation (Line(points={{-344,6},{-344,12}}, color={0,0,127}));
-  connect(economiser.Kfr_cold, economizer_Kfr_cold) annotation (Line(points={{114.5,-20.65},{114.5,-22.325},{114,-22.325},{114,-30}}, color={0,0,127}));
-  connect(economiser.Kth, economizer_Kth) annotation (Line(points={{85.5,-20.65},{86,-20.65},{86,-30}}, color={0,0,127}));
-  connect(evaporator.C_hot_out,HRSG_friction. C_in) annotation (Line(points={{20,0},{30,0}},                color={95,95,95}));
-  connect(HRSG_friction.C_out, economiser.C_hot_in) annotation (Line(points={{50,0},{71,0}},            color={95,95,95}));
-  connect(HRSG_friction.Kfr, HRSG_friction_Kfr) annotation (Line(points={{40,-4},{40,-10},{40,-10},{40,-10}},
-                                                                                            color={0,0,127}));
-  connect(Reheater_Kfr_cold, Reheater.Kfr_cold) annotation (Line(points={{-62,-30},{-63,-30},{-63,-21}}, color={0,0,127}));
-  connect(Reheater_Kth, Reheater.Kth) annotation (Line(points={{-92,-30},{-93,-30},{-93,-21}}, color={0,0,127}));
-  connect(HPsuperheater1.Kfr_cold, HPsuperheater1_Kfr_cold) annotation (Line(points={{-141,-21},{-140,-21},{-140,-30}}, color={0,0,127}));
-  connect(HPsuperheater1.Kth, HPsuperheater1_Kth) annotation (Line(points={{-171,-21},{-170,-21},{-170,-30}}, color={0,0,127}));
-  connect(HPsuperheater2.Kth, HPsuperheater2_Kth) annotation (Line(points={{-287,-21},{-286,-21},{-286,-30}}, color={0,0,127}));
-  connect(HPsuperheater2.Kfr_cold, HPsuperheater2_Kfr_cold) annotation (Line(points={{-257,-21},{-256,-21},{-256,-30}}, color={0,0,127}));
-  connect(T_w_HPSH1_out_sensor.T_sensor, T_w_HPSH1_out) annotation (Line(points={{-184,40},{-184,44}}, color={0,0,127}));
-  connect(P_w_HPSH1_out_sensor.P_sensor, P_w_HPSH1_out) annotation (Line(points={{-208,40},{-208,44}}, color={0,0,127}));
-  connect(T_w_HPSH1_out1, T_w_ReH_out_sensor.T_sensor) annotation (Line(points={{-100,50},{-96,50}},           color={0,0,127}));
-  connect(P_w_ReH_out_sensor.P_sensor, P_w_HPSH1_out1) annotation (Line(points={{-96,70},{-100,70}},          color={0,0,127}));
-  connect(T_w_HPSH2_out_sensor.T_sensor, T_w_HPSH2_out) annotation (Line(points={{-286,60},{-290,60}}, color={0,0,127}));
-  connect(P_w_HPSH2_out, P_w_HPSH2_out_sensor.P_sensor) annotation (Line(points={{-290,80},{-286,80}}, color={0,0,127}));
-  connect(P_w_evap_out, P_w_evap_out_sensor.P_sensor) annotation (Line(points={{-40,44},{-40,40}}, color={0,0,127}));
-  connect(T_w_eco_out, T_w_eco_out_sensor.T_sensor) annotation (Line(points={{12,44},{12,40}},
-                                                                                             color={0,0,127}));
-  connect(P_w_eco_out_sensor.P_sensor, P_w_eco_out) annotation (Line(points={{56,40},{56,44}}, color={0,0,127}));
-  connect(T_w_eco_in, T_w_eco_in_sensor.T_sensor) annotation (Line(points={{140,44},{140,39}}, color={0,0,127}));
-  connect(T_pumpRec_out, T_pumpRec_out_sensor.T_sensor) annotation (Line(points={{114,92},{115,92},{115,85.5455}}, color={0,0,127}));
-  connect(P_pumpRec_out_sensor.P_sensor, P_pumpRec_out) annotation (Line(points={{131,85.5455},{131,86.773},{130,86.773},{130,92}}, color={0,0,127}));
-  connect(P_flue_gas_sink_sensor.P_sensor, P_flue_gas_sink) annotation (Line(points={{216,198},{210,198}}, color={0,0,127}));
-  connect(W_GT, W_GT_sensor.W_sensor) annotation (Line(points={{-340,112},{-340,106}}, color={0,0,127}));
-  connect(T_pump_out, T_pump_out_sensor.T_sensor) annotation (Line(points={{130,170},{130,165}},           color={0,0,127}));
-  connect(P_pump_out, P_pump_out_sensor.P_sensor) annotation (Line(points={{150,170},{150,165}},           color={0,0,127}));
-  connect(Q_pump_out_sensor.Q_sensor, Q_pump_out) annotation (Line(points={{170,165},{170,170}},           color={0,0,127}));
-  connect(T_circulating_water_out_sensor.T_sensor, T_circulating_water_out) annotation (Line(points={{110,205},{110,210}},                     color={0,0,127}));
-  connect(P_circulating_water_in_sensor.P_sensor, P_circulating_water_in) annotation (Line(points={{0,205},{0,210}},                     color={0,0,127}));
-  connect(T_circulating_water_in_sensor.T_sensor, T_circulating_water_in) annotation (Line(points={{-20,205},{-20,210}},             color={0,0,127}));
-  connect(P_Cond_sensor.P_sensor, P_Cond) annotation (Line(points={{34,286},{34,292}}, color={0,0,127}));
-  connect(P_LPST_in_sensor.P_sensor, P_LPST_in) annotation (Line(points={{-28,286},{-28,292}}, color={0,0,127}));
-  connect(P_HPST_out, P_HPST_out_sensor.P_sensor) annotation (Line(points={{-128,190},{-128,186}}, color={0,0,127}));
-  connect(T_HPST_out_sensor.T_sensor, T_HPST_out) annotation (Line(points={{-110,186},{-110,190}}, color={0,0,127}));
-  connect(Q_deSH_sensor.Q_sensor, Q_deSH) annotation (Line(points={{-138,126},{-138,132}}, color={0,0,127}));
-  connect(pumpRec_hn, pumpRec.hn) annotation (Line(points={{89,107},{88.54,107},
-          {88.54,86.1455}},                                                                       color={0,0,127}));
-  connect(pumpRec_rh, pumpRec.rh) annotation (Line(points={{81,97},{81,83.3455},
-          {87,83.3455}},                                                                          color={0,0,127}));
-  connect(pump_rh, pump.rh) annotation (Line(points={{96,170},{96,162.8},{103,162.8}},    color={0,0,127}));
-  connect(pump_hn, pump.hn) annotation (Line(points={{104,180},{104,165.6},{104.54,
-          165.6}},                                                                          color={0,0,127}));
-  connect(LPsteamTurbine_eta_is, LPsteamTurbine.eta_is) annotation (Line(points={{-9,309},
-          {-0.74,309},{-0.74,294.72}},                                                                               color={0,0,127}));
-  connect(LPsteamTurbine.Cst, LPsteamTurbine_Cst) annotation (Line(points={{-8.22,
-          293.12},{-13,293.12},{-13,301}},                                                                       color={0,0,127}));
-  connect(HPsteamTurbine_Cst, HPsteamTurbine.Cst) annotation (Line(points={{-179,
-          201},{-174.22,201},{-174.22,193.12}},                                                                     color={0,0,127}));
-  connect(HPsteamTurbine.eta_is, HPsteamTurbine_eta_is) annotation (Line(points={{-166.74,
-          194.72},{-175,194.72},{-175,209}},                                                                                color={0,0,127}));
-  connect(LPST_control_valve.Cv, LPST_control_valve_Cv) annotation (Line(points={{-56.3,288.969},{-56.3,289},{-67,289}}, color={0,0,127}));
-  connect(HPST_control_valve.Cv, HPST_control_valve_Cv) annotation (Line(points={{-218.3,188.969},{-220,189},{-227,189}}, color={0,0,127}));
-  connect(T_flue_gas_sink_sensor.T_sensor, T_flue_gas_sink) annotation (Line(points={{170,6},{170,10}}, color={0,0,127}));
-  connect(W_ST_out_sensor.W_sensor, W_ST_out) annotation (Line(points={{96,326},{96,332}}, color={0,0,127}));
-  connect(P_HPST_in_sensor.P_sensor, P_HPST_in) annotation (Line(points={{-194,186},{-194,192}}, color={0,0,127}));
-  connect(deSH_opening, deSH_opening_sensor.opening_sensor) annotation (Line(points={{-180,154},{-180,149.1}}, color={0,0,127}));
-  connect(Evap_opening_sensor.opening_sensor,Evap_opening)  annotation (Line(points={{30,63.1},{30,68}}, color={0,0,127}));
-  connect(pumpRec_opening, pumpRec_opening_sensor.opening_sensor) annotation (Line(points={{160,110},{160,105.1}}, color={0,0,127}));
-  connect(deSH_controlValve_Cv_max, deSH_controlValve.Cv_max) annotation (Line(points={{-167,127},{-172,127},{-172,127},{-177.5,127}}, color={0,0,127}));
-  connect(Evap_controlValve.Cv_max, Evap_controlValve_Cv_max) annotation (Line(points={{32.5,41.0003},{34,41.0003},{34,41},{39,41}}, color={0,0,127}));
-  connect(pumpRec_controlValve.Cv_max, pumpRec_controlValve_Cv_max) annotation (Line(points={{157.4,87},{152,87},{152,105},{147,105}}, color={0,0,127}));
-  connect(Q_pumpRec_out_sensor.Q_sensor, Q_pumpRec_out) annotation (Line(points={{145,85.5455},{145,93}}, color={0,0,127}));
-  connect(condenser_Kth, condenser.Kth) annotation (Line(points={{40,230},{40,219.556},{47.2,219.556}},
-                                                                                                  color={0,0,127}));
-  connect(condenser.Qv_cold_in, condenser_Qv_cold_in) annotation (Line(points={{38,214.222},{27,214.222},{27,230},{20,230}},     color={0,0,127}));
-  connect(condenser.Kfr_cold, condenser_Kfr_cold.y) annotation (Line(points={{38,207.111},{32,207.111},{32,221.7}}, color={0,0,127}));
-  connect(combustionChamber_Kfr.y, combustionChamber.Kfr) annotation (Line(points={{-432,19.6},{-432,16},{-437,16},{-437,11}}, color={0,0,127}));
-  connect(combustionChamber_eta.y, combustionChamber.eta) annotation (Line(points={{-448,19.6},{-448,16},{-443,16},{-443,11}}, color={0,0,127}));
-  connect(evaporator.Kth, Evap_Kth) annotation (Line(points={{-8,-21},{-8,-30}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}})),
+      smooth=Smooth.Bezier,
+      thickness=1));
+  connect(P_filter_out_sensor.P_sensor, P_filter_out) annotation (Line(points={{-930,10},{-930,20}}, color={0,0,127}));
+  connect(P_filter_out_sensor.C_out, inletGuideVanes.C_in) annotation (Line(
+      points={{-920,0},{-910,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(inletGuideVanes.C_out, airCompressor.C_in) annotation (Line(
+      points={{-890,0},{-880,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(Q_source_air_sensor.C_out, filter.C_in) annotation (Line(
+      points={{-1000,0},{-990,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(filter.C_out, P_filter_out_sensor.C_in) annotation (Line(
+      points={{-950,0},{-940,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(inletGuideVanes.Opening, openingSensor.Opening) annotation (Line(points={{-900,16},{-900,29.8}}, color={0,0,127}));
+  connect(openingSensor.opening_sensor, IGV_angle) annotation (Line(points={{-900,50.2},{-900,60}}, color={0,0,127}));
+  connect(P_flue_gas_sink_sensor.C_out, flue_gas_stack_2D.C_in) annotation (Line(
+      points={{138,0},{155,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(composition, chromatograph.composition) annotation (Line(
+      points={{-700,-162},{-700,-145.2}},
+      color={211,211,0},
+      thickness=0.5));
+  connect(Q_source_air_sensor.C_in, gT_louvers.C_out) annotation (Line(
+      points={{-1020,0},{-1036,0}},
+      color={95,95,95},
+      thickness=1));
+  connect(gT_louvers.P, P_source_air) annotation (Line(points={{-1060,40},{-1060,60}}, color={0,0,127}));
+  connect(gT_louvers.H, H_source) annotation (Line(points={{-1044,40},{-1044,60}}, color={0,0,127}));
+  connect(gT_louvers.T, T_source_air) annotation (Line(points={{-1076,40},{-1076,60}}, color={0,0,127}));
+  connect(filter.Kfr, air_filter_Kfr) annotation (Line(points={{-970,8},{-970,40}}, color={0,0,127}));
+  connect(airCompressor.tau, compressor_tau) annotation (Line(points={{-864,-24},{-864,-40}}, color={0,0,127}));
+  connect(airCompressor.eta_is, compressor_eta_is) annotation (Line(points={{-840,-20},{-840,-40}}, color={0,0,127}));
+  connect(combustionChamber.eta, CC_eta) annotation (Line(points={{-708,20},{-708,40}}, color={0,0,127}));
+  connect(gasTurbine.eta_is, GT_trubine_eta_is) annotation (Line(points={{-628,-32},{-628,-60}}, color={0,0,127}));
+  connect(HPSH2.Kth, HPSH2_Kth) annotation (Line(points={{-482,-40},{-500,-40}}, color={0,0,127}));
+  connect(RHT.Kth, RHT_Kth) annotation (Line(points={{-322,40},{-340,40}}, color={0,0,127}));
+  connect(RHT_Kth, RHT_Kth) annotation (Line(points={{-340,40},{-340,40}}, color={0,0,127}));
+  connect(HPSH1_Kth, HPSH1.Kth) annotation (Line(points={{-432,60},{-432,40},{-422,40}}, color={0,0,127}));
+  connect(ECO.Kth, ECO_Kth) annotation (Line(points={{-82,-40},{-100,-40}}, color={0,0,127}));
+  connect(LPST.eta_is, LPST_eta_is) annotation (Line(points={{-188,-168},{-188,-160}}, color={0,0,127}));
+  connect(LPST.Cst, LPST_CST) annotation (Line(points={{-204,-172},{-204,-160}}, color={0,0,127}));
+  connect(HPST.Cst, HPST_Cst) annotation (Line(points={{-444,-172},{-444,-160}}, color={0,0,127}));
+  connect(HPST.eta_is, HPST_eta_is) annotation (Line(points={{-428,-168},{-428,-160}}, color={0,0,127}));
+  connect(condenser.Kth, condenser_Kth) annotation (Line(points={{-72,-280},{-100,-280}}, color={0,0,127}));
+  connect(condenser.Qv_cold_in, condenser_Qv_cold) annotation (Line(points={{-72,-290},{-100,-290}}, color={0,0,127}));
+  connect(LPST_admission_valve_Cv, LPST_admission_valve.Cv) annotation (Line(points={{-290,-190},{-288,-189},{-282,-189}}, color={0,0,127}));
+  connect(RHT.Kfr_cold, RHT_Kfr_cold) annotation (Line(points={{-322,-40},{-340,-40}}, color={0,0,127}));
+  connect(HPSH1.Kfr_cold, HPSH1_Kfr_cold) annotation (Line(points={{-422,-40},{-430,-40},{-430,-62}}, color={0,0,127}));
+  connect(HPSH2.Kfr_cold, HPSH2_Kfr_cold) annotation (Line(points={{-482,40},{-500,40}}, color={0,0,127}));
+  connect(pumpRec.rh, pumpRec_rh) annotation (Line(points={{12,96},{12,120}}, color={0,0,127}));
+  connect(pumpRec.hn, pumpRec_hn) annotation (Line(points={{-12,96},{-12,120}}, color={0,0,127}));
+  connect(pump.hn, pump_hn) annotation (Line(points={{18,-396},{18,-412}},          color={0,0,127}));
+  connect(pump.rh, pump_rh) annotation (Line(points={{42,-396},{42,-412}},           color={0,0,127}));
+  connect(EVAP.Kth, evap_Kth) annotation (Line(points={{-242,-40},{-260,-40}}, color={0,0,127}));
+  connect(ECO.Kfr_cold, ECO_Kfr_cold) annotation (Line(points={{-82,40},{-100,40}}, color={0,0,127}));
+  connect(HPST_admission_valve.Cv, HPST_admission_valve_Cv) annotation (Line(points={{-524,-189},{-524,-188},{-532,-188}}, color={0,0,127}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-1120,-420},{220,160}})),
                                                               Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-760,-120},{260,300}}),
-        graphics={Rectangle(
-          extent={{-324,44},{246,-46}},
-          pattern=LinePattern.None,
-          lineColor={0,0,0},
-          fillColor={158,158,158},
-          fillPattern=FillPattern.Solid,
-          radius=0),                      Text(
-          extent={{-160,-92},{42,-104}},
-          textColor={0,0,0},
-          textStyle={TextStyle.Bold},
-          textString="Heat Recovery Steam Generator"),
-        Polygon(
-          points={{-380,16},{-380,16},{-380,-16},{-324,-46},{-324,44},{-380,16}},
-          fillColor={158,158,158},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None,
-          lineColor={0,0,0}),
-        Rectangle(
-          extent={{246,42},{200,216}},
-          pattern=LinePattern.None,
-          fillColor={158,158,158},
-          fillPattern=FillPattern.Solid),
-        Text(
-          extent={{-230,124},{-174,124}},
-          textColor={28,108,200},
-          textString="Desuperheater"),    Text(
-          extent={{-310,-66},{-232,-72}},
-          textColor={0,0,0},
-          textStyle={TextStyle.Bold},
-          fontSize=6,
-          textString="Superheater 2"),    Text(
-          extent={{-194,-66},{-116,-74}},
-          textColor={0,0,0},
-          textStyle={TextStyle.Bold},
-          fontSize=6,
-          textString="Superheater 1"),    Text(
-          extent={{-104,-66},{-42,-72}},
-          textColor={0,0,0},
-          textStyle={TextStyle.Bold},
-          fontSize=6,
-          textString="Reheater"),         Text(
-          extent={{-38,-66},{24,-72}},
-          textColor={0,0,0},
-          textStyle={TextStyle.Bold},
-          fontSize=6,
-          textString="Evaporator"),       Text(
-          extent={{74,-66},{136,-72}},
-          textColor={0,0,0},
-          textStyle={TextStyle.Bold},
-          fontSize=5,
-          textString="Economizer")}));
+        coordinateSystem(preserveAspectRatio=false, extent={{-1120,-420},{220,160}})));
 end MetroscopiaCCGT_reverse;

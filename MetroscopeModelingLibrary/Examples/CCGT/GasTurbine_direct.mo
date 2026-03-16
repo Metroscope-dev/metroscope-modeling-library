@@ -39,7 +39,7 @@ model GasTurbine_direct
   FlueGases.BoundaryConditions.Source source_air annotation (Placement(transformation(extent={{-154,-10},{-134,10}})));
   FlueGases.Machines.AirCompressor air_compressor(h_out(start=h_out_compressor_0)) annotation (Placement(transformation(extent={{-84,-10},{-64,10}})));
   FlueGases.BoundaryConditions.Sink sink_exhaust annotation (Placement(transformation(extent={{88,-10},{108,10}})));
-  FlueGases.Machines.GasTurbine gas_turbine(eta_is(start=0.73), eta_mech(start=0.9)) annotation (Placement(transformation(extent={{30,-10},{50,10}})));
+  FlueGases.Machines.GasTurbine gas_turbine(eta_is1(start=0.73), eta_mech(start=0.9)) annotation (Placement(transformation(extent={{30,-10},{50,10}})));
   Power.BoundaryConditions.Sink                           sink_power annotation (Placement(transformation(extent={{88,30},{108,50}})));
   MultiFluid.Machines.CombustionChamber combustion_chamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   Fuel.BoundaryConditions.Source                           source_fuel annotation (Placement(transformation(
@@ -86,7 +86,7 @@ equation
   // Parameters for calibration
   air_compressor.tau = compression_rate;
   air_compressor.eta_is = compressor_eta_is;
-  gas_turbine.eta_is = turbine_eta_is;
+  gas_turbine.eta_is1 = turbine_eta_is;
   inletGuideVanes.Qv = compressor_Qv_in;
   compressor_Qv_in = 4.2877997*IGV_angle;
 

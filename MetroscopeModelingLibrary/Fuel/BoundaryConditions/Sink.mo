@@ -3,7 +3,8 @@ model Sink
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
   extends Partial.BoundaryConditions.FluidSink(redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in, redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=false));
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={0,0,0},
@@ -19,5 +20,5 @@ model Sink
         Line(points={{-15,35},{55,-35}}, color={213,213,0},
           thickness=0.5),
         Line(points={{-15,-35},{55,35}}, color={213,213,0},
-          thickness=0.5)}));
+          thickness=0.5)}), Diagram(coordinateSystem(initialScale=0.2)));
 end Sink;

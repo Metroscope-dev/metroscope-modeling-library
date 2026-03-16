@@ -5,7 +5,8 @@ model Sink
   extends Partial.BoundaryConditions.FluidSink(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in, redeclare package Medium =
         WaterSteamMedium)                                                                                                                                         annotation (IconMap(primitivesVisible=
          false));
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={28,108,200},
@@ -19,5 +20,5 @@ model Sink
         Line(points={{-16,36},{57,-37}}, color={28,108,200},
           thickness=1),
         Line(points={{-16,-36},{55,35}}, color={28,108,200},
-          thickness=1)}));
+          thickness=1)}), Diagram(coordinateSystem(initialScale=0.2)));
 end Sink;

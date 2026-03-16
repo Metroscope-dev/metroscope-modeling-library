@@ -113,19 +113,19 @@ model AirCooledCondenser
         rotation=180,
         origin={0,14})));
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-80,120}), iconTransformation(
-        extent={{-10,-10},{10,10}},
+        origin={-78,102}), iconTransformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-80,110})));
+        origin={-80,100})));
   Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={80,120}), iconTransformation(
-        extent={{-10,-10},{10,10}},
+        origin={-78,102}), iconTransformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={80,110})));
+        origin={80,100})));
 equation
 
   // Failure modes
@@ -196,9 +196,9 @@ equation
   connect(C_cold_in, cold_side_condensing.C_in) annotation (Line(points={{-100,0},{-13.5,0}},color={85,170,255}));
   connect(cold_side_condensing.C_out, C_cold_out) annotation (Line(points={{13.5,0},{90,0}}, color={85,170,255}));
   connect(hot_side_condensing.C_out, incondensables_out.C_in) annotation (Line(points={{14.5,30},{30,30},{30,-20},{0,-20},{0,-40}}, color={28,108,200}));
-  connect(Kth, Kth) annotation (Line(points={{-80,120},{-80,120}}, color={0,0,127}));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},
-            {100,100}}),                                        graphics={
+  connect(Kth, Kth) annotation (Line(points={{-78,102},{-78,102}}, color={0,0,127}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.5),
+                                                                graphics={
         Ellipse(
           extent={{-67,-81},{67,81}},
           lineColor={175,175,175},
@@ -431,5 +431,6 @@ equation
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid)}),                      Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
+        coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}},
+        initialScale=0.5)));
 end AirCooledCondenser;
