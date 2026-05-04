@@ -8,7 +8,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-
+    - Extraction splitter output connecter for alpha and vapour fraction decrease fault on moisture separator [#569] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/569)
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
     - 🔧 Fix variables declaration for incondensable in ACC [#558](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/558)
     - Fix QCpmax default value to unknown for liq liq exchanges [#570] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/570)
