@@ -260,7 +260,7 @@ equation
   connect(water_out,water_out)  annotation (Line(points={{-80,-80},{-80,-80}}, color={28,108,200}));
   connect(Water_extraction.C_out,water_out)  annotation (Line(points={{-40,-80},{-80,-80}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-25,-80},{25,25}},
-        initialScale=0.4),                                                                      graphics={
+        initialScale=0.3),                                                                      graphics={
         Polygon(
           points={{-98,-20},{98,-20},{98,-20},{92,-40},{80,-60},{60,-80},{40,-92},{20,-98},{0,-100},{-20,-98},{-40,-92},{-60,-80},{-78,-62},{-92,-40},{-98,-20},{-98,-20}},
           lineThickness=1,
@@ -399,5 +399,5 @@ equation
           color={28,108,200},
           pattern=LinePattern.Dash,
           thickness=1)}),                   Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-25,-80},{25,25}},
-        initialScale=0.4)));
+        initialScale=0.3)));
 end SteamDrum_Astrom_Bell_level;

@@ -166,7 +166,8 @@ equation
                                                                                  color={95,95,95}));
   connect(fg_side.C_in, fg_inlet) annotation (Line(points={{-30,-40},{-40,-40},{-40,0}},
                                                                                  color={95,95,95}));
-  annotation (Icon(coordinateSystem(extent={{-20,-20},{20,20}}),graphics={
+  annotation (Icon(coordinateSystem(extent={{-20,-20},{20,20}}, initialScale=0.4),
+                                                                graphics={
         Rectangle(
           extent={{-100,10},{100,-10}},
           lineColor={0,0,0},
@@ -209,5 +210,5 @@ equation
         Line(points={{-40,60},{40,60}},  color={0,0,0}),
         Line(points={{-40,40},{40,40}},  color={0,0,0}),
         Line(points={{-40,20},{40,20}},  color={0,0,0}),
-        Line(points={{-40,0},{40,0}},    color={0,0,0})}), Diagram(coordinateSystem(extent={{-20,-20},{20,20}})));
+        Line(points={{-40,0},{40,0}},    color={0,0,0})}), Diagram(coordinateSystem(extent={{-20,-20},{20,20}}, initialScale=0.4)));
 end HX_Diagram;
