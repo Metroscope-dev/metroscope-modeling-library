@@ -729,7 +729,7 @@ equation
       turbine_P_out_sensor.P_barA = turbine_P_out;
       // Calibrated parameters
       gasTurbine.tau = turbine_compression_rate;
-  gasTurbine.eta_is = turbine_eta_is;
+      gasTurbine.eta_is = turbine_eta_is;
 
     // Generator
       // Quantities definition
