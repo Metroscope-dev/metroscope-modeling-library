@@ -15,7 +15,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
     - 🔧 Fix variables declaration for incondensable in ACC [#558](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/558)
-
+    - Fix QCpmax default value to unknown for liq liq exchanges [#570] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/570)
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Changed the diagrams of monophasic HRSG HX, condenser and evaporator-drum. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
 - Rearranged CCGT metroscopia reversed model with the new icons. The direct and faulty models are still to be made. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)

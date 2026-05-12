@@ -26,7 +26,7 @@ model Reheater
 
   parameter String HX_config_condensing="condenser";
   parameter String HX_config_subcooling="monophasic_cross_current"; // In subcooling zone, there is only the bottom part of the U-shaped tubes, so it is considered as cross current.
-  parameter String QCp_max_side_subcooling = "cold";
+  parameter String QCp_max_side_subcooling = "unknown";
 
   Units.PositiveMassFlowRate Q_cold_in(start=Q_cold_0, nominal=Q_cold_0);
   Units.PositiveMassFlowRate Q_hot_in(start=Q_hot_0, nominal=Q_hot_0);

@@ -4,7 +4,7 @@ model Economiser
   import MetroscopeModelingLibrary.Utilities.Units;
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   extends Partial.HeatExchangers.WaterFlueGasesMonophasicHX(
-                                                    QCp_max_side = "hot")
+                                                    QCp_max_side = "unknown")
  annotation(IconMap(primitivesVisible=false));
 
  // Indicators
