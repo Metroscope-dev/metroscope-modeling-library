@@ -50,11 +50,11 @@ model Condenser
   parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
   parameter Units.DifferentialPressure water_height_DP_0 = 0.09e5;
 
-  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
-  Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=Psat_0, nominal=Psat_0), h_outflow(start=0.0)) annotation (Placement(transformation(extent={{-10,92},{10,112}}), iconTransformation(extent={{-10,92},{10,112}})));
+  Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{86,30},{106,50}}),   iconTransformation(extent={{90,30},{110,50}})));
+  Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=Psat_0, nominal=Psat_0), h_outflow(start=0.0)) annotation (Placement(transformation(extent={{-10,110},{10,130}}),iconTransformation(extent={{-10,110},{10,130}})));
   Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=Psat_0+water_height_DP_0), h_outflow(start=h_liq_sat_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
   Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0))
-                                                   annotation (Placement(transformation(extent={{88,-10},{108,10}}),iconTransformation(extent={{88,-10},{108,10}})));
+                                                   annotation (Placement(transformation(extent={{88,-10},{108,10}}),iconTransformation(extent={{90,-30},{110,-10}})));
 
   Pipes.FrictionPipe cold_side_pipe(
     P_in_0=P_cold_in_0,
@@ -97,35 +97,10 @@ model Condenser
         rotation=270,
         origin={-40,-18})));
 
-  Utilities.Interfaces.GenericReal Qv_cold_in annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-110,50}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-110,80})));
-  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-110,80}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-110,40})));
-  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-80,110}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-64,110})));
-  Utilities.Interfaces.GenericReal C_incond annotation (Placement(
-        transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-40,110}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={64,110})));
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(extent={{-100,-4},{-108,4}}), iconTransformation(extent={{-100,-4},{-108,4}})));
+  Utilities.Interfaces.GenericReal Qv_cold_in annotation (Placement(transformation(extent={{-100,16},{-108,24}}), iconTransformation(extent={{-100,16},{-108,24}})));
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(extent={{-100,36},{-108,44}}), iconTransformation(extent={{-100,36},{-108,44}})));
+  Utilities.Interfaces.GenericReal C_incond annotation (Placement(transformation(extent={{-100,56},{-108,64}}), iconTransformation(extent={{-100,56},{-108,64}})));
 equation
 
   // Failure modes
@@ -183,7 +158,7 @@ equation
       color={28,108,200},
       thickness=1));
   connect(cold_side_pipe.C_in, C_cold_in) annotation (Line(
-      points={{-80,0},{-100,0}},
+      points={{-80,0},{8,0},{8,40},{96,40}},
       color={28,108,200},
       thickness=1));
   connect(water_height_pipe.C_out, C_hot_out) annotation (Line(
@@ -198,7 +173,7 @@ equation
       color={238,46,47},
       thickness=1));
   connect(incondensables_in.C_in, C_hot_in) annotation (Line(
-      points={{8,72},{0,72},{0,102}},
+      points={{8,72},{0,72},{0,120}},
       color={238,46,47},
       thickness=1));
   connect(hot_side.C_out, incondensables_out.C_in) annotation (Line(
@@ -209,398 +184,261 @@ equation
       points={{-40,-28},{-40,-36}},
       color={238,46,47},
       thickness=1));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-            -80},{100,100}}),                                   graphics={
-        Rectangle(
-          extent={{-100,100},{100,-46}},
-          lineColor={28,108,200},
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},{100,120}},
+        initialScale=0.5), graphics={
+        Polygon(
+          points={{-40,120},{-100,80},{-100,-40},{100,-40},{100,80},{40,120},{-40,120}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
           fillColor={170,213,255},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-40,8},{-36,2}},
-          lineColor={28,108,200},
-          lineThickness=1,
+          extent={{-80,46},{-26,-26}},
+          lineColor={0,0,255},
+          lineThickness=0.5),
+        Ellipse(
+          extent={{-74,40},{-34,-20}},
+          lineColor={0,0,255},
+          lineThickness=0.5),
+        Ellipse(
+          extent={{-66,34},{-44,-14}},
+          lineColor={0,0,255},
+          lineThickness=0.5),
+        Rectangle(
+          extent={{-22,-28},{-54,48}},
+          lineColor={0,0,255},
+          pattern=LinePattern.None,
+          fillColor={170,213,255},
+          fillPattern=FillPattern.Solid,
+          lineThickness=0.5),
+        Line(
+          points={{-54,46},{90,46}},
+          color={0,0,255},
+          thickness=0.5),
+        Line(
+          points={{-54,40},{90,40}},
+          color={0,0,255},
+          thickness=0.5),
+        Line(
+          points={{-54,34},{90,34}},
+          color={0,0,255},
+          thickness=0.5),
+        Line(
+          points={{-54,-14},{100,-14}},
+          color={0,0,255},
+          thickness=0.5),
+        Line(
+          points={{-54,-20},{100,-20}},
+          color={0,0,255},
+          thickness=0.5),
+        Line(
+          points={{-54,-26},{100,-26}},
+          color={0,0,255},
+          thickness=0.5),
+        Polygon(
+          points={{42,48},{46,46},{42,44},{42,48}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid),
+        Polygon(
+          points={{42,42},{46,40},{42,38},{42,42}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid),
+        Polygon(
+          points={{42,36},{46,34},{42,32},{42,36}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid),
+        Polygon(
+          points={{46,-12},{42,-14},{46,-16},{46,-12}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid),
+        Polygon(
+          points={{46,-18},{42,-20},{46,-22},{46,-18}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
+          fillColor={28,108,200},
+          fillPattern=FillPattern.Solid),
+        Polygon(
+          points={{46,-24},{42,-26},{46,-28},{46,-24}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Rectangle(
-          extent={{-100,-80},{100,-46}},
+          extent={{-100,-40},{100,-80}},
+          lineColor={0,0,255},
+          lineThickness=0.5,
           fillColor={28,108,200},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None),
-        Polygon(
-          points={{100,-80},{100,100},{-100,100},{-100,-80},{100,-80}},
-          lineColor={0,0,255}),
+          fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-62,18},{-58,12}},
+          extent={{-50,28},{-46,24}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-40,32},{-36,26}},
+          extent={{-36,-16},{-32,-20}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-20,20},{-16,14}},
+          extent={{-58,-18},{-54,-22}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-8,36},{-4,30}},
+          extent={{-34,24},{-30,20}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-20,32},{-16,26}},
+          extent={{26,28},{22,24}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-40,50},{-36,44}},
+          extent={{-20,-14},{-16,-18}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{10,20},{14,14}},
+          extent={{42,30},{38,26}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{20,38},{16,30}},
+          extent={{30,-20},{34,-24}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{32,28},{36,22}},
+          extent={{-16,30},{-12,26}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{40,42},{44,36}},
+          extent={{2,26},{6,22}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{48,22},{52,16}},
+          extent={{-78,-8},{-74,-12}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-16,50},{-12,44}},
+          extent={{24,-14},{20,-18}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{4,52},{8,46}},
+          extent={{76,26},{80,22}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{24,58},{28,52}},
+          extent={{54,14},{50,10}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{50,52},{54,46}},
+          extent={{68,-10},{72,-14}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-56,38},{-52,32}},
+          extent={{-16,18},{-12,14}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-60,54},{-56,48}},
+          extent={{-46,14},{-42,10}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-60,-30},{-56,-36}},
+          extent={{2,-10},{6,-14}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-42,-36},{-38,-42}},
+          extent={{52,-16},{56,-20}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-24,-28},{-20,-34}},
+          extent={{-36,8},{-32,4}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{-4,-34},{0,-40}},
+          extent={{-18,2},{-14,-2}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{14,-30},{18,-36}},
+          extent={{-8,6},{-4,2}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{32,-32},{36,-38}},
+          extent={{12,6},{16,2}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{50,-30},{54,-36}},
+          extent={{20,2},{24,-2}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{64,-32},{68,-38}},
+          extent={{32,2},{36,-2}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{32,10},{36,4}},
+          extent={{30,14},{34,10}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid),
         Ellipse(
-          extent={{64,22},{68,16}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-4,12},{0,6}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-18,0},{-14,-6}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{20,-4},{24,-10}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-2,-10},{2,-16}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-38,-14},{-34,-20}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-58,-6},{-54,-12}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{42,-10},{46,-16}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{54,-2},{58,-8}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{60,-14},{64,-20}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{10,-14},{14,-20}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-78,38},{-74,32}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-74,14},{-70,6}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-76,-14},{-72,-20}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-70,-26},{-66,-32}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{60,36},{64,30}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{70,48},{74,42}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-74,50},{-70,44}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Line(
-          points={{-100,-4},{100,-4}},
-          color={0,0,255},
-          thickness=1),
-        Line(
-          points={{-100,-16},{100,-16}},
-          color={0,0,255},
-          thickness=1),
-        Line(
-          points={{-100,-28},{100,-28}},
-          color={0,0,255},
-          thickness=1),
-        Line(
-          points={{-100,32},{100,32}},
-          color={0,0,255},
-          thickness=1),
-        Line(
-          points={{-100,20},{100,20}},
-          color={0,0,255},
-          thickness=1),
-        Line(
-          points={{-100,8},{100,8}},
-          color={0,0,255},
-          thickness=1),
-        Ellipse(
-          extent={{-46,62},{-42,56}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-14,66},{-10,60}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-26,62},{-22,56}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-46,80},{-42,74}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{14,68},{10,60}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{34,72},{38,66}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-22,80},{-18,74}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-2,82},{2,76}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{18,88},{22,82}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{44,82},{48,76}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-62,68},{-58,62}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{-66,84},{-62,78}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{54,66},{58,60}},
-          lineColor={28,108,200},
-          lineThickness=1,
-          fillColor={28,108,200},
-          fillPattern=FillPattern.Solid),
-        Ellipse(
-          extent={{64,78},{68,72}},
+          extent={{78,0},{74,-4}},
           lineColor={28,108,200},
           lineThickness=1,
           fillColor={28,108,200},
           fillPattern=FillPattern.Solid)}),                      Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},{100,100}})));
+        coordinateSystem(preserveAspectRatio=false, extent={{-100,-80},{100,120}},
+        initialScale=0.5)));
 end Condenser;

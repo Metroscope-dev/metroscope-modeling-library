@@ -5,7 +5,8 @@ model Sink
   extends Partial.BoundaryConditions.FluidSink(redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in, redeclare package Medium =
         FlueGasesMedium)                                                                                                                                        annotation (IconMap(primitivesVisible=
           false));
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.2),
+                   graphics={
         Ellipse(
           extent={{-40,60},{80,-60}},
           lineColor={95,95,95},
@@ -19,5 +20,5 @@ model Sink
         Line(points={{-18,38},{55,-35}}, color={95,95,95},
           thickness=1),
         Line(points={{-18,-38},{55,35}}, color={95,95,95},
-          thickness=1)}));
+          thickness=1)}), Diagram(coordinateSystem(initialScale=0.2)));
 end Sink;
