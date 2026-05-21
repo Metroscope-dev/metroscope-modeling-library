@@ -9,8 +9,8 @@ model FixedSpeedPump
 
   annotation (
     Diagram(coordinateSystem(
-        extent={{-100,-100},{100,100}},
-        grid={2,2}), graphics={
+        extent={{-100,-100},{100,100}}, initialScale=0.2),
+                     graphics={
         Ellipse(
           extent={{-100,100},{100,-100}},
           lineColor={0,0,0},
@@ -20,8 +20,8 @@ model FixedSpeedPump
         Line(points={{80,0},{2,60}}),
         Line(points={{80,0},{0,-60}})}),
     Icon(coordinateSystem(
-        extent={{-100,-100},{100,100}},
-        grid={2,2}), graphics={
+        extent={{-100,-100},{100,100}}, initialScale=0.2),
+                     graphics={
         Ellipse(
           extent={{-100,100},{100,-100}},
           lineColor={0,0,0},

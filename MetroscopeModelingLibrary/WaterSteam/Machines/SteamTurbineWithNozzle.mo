@@ -79,11 +79,12 @@ equation
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2})),
+        initialScale=0.4)),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2}), graphics={Polygon(
+        initialScale=0.4),
+                     graphics={Polygon(
           points={{-100,60},{-100,40},{-100,-40},{-100,-60},{-80,-66},{26,-90},{66,-86},{66,-60},{66,60},{66,90},{36,88},{-80,68},{-100,60}},
           lineColor={63,81,181},
           lineThickness=0.5,

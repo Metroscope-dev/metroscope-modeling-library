@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model Superheater
+  extends MetroscopeModelingLibrary.Utilities.Icons.HeatExchangePackage.MonophasicHXIcon;
   import MetroscopeModelingLibrary.Utilities.Units;
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
@@ -29,15 +30,25 @@ equation
   STR = T_cold_out - T_cold_in;
   DT_superheat = T_cold_out - WaterSteamMedium.saturationTemperature(cold_side_pipe.P_in);
 
-  annotation (Icon(graphics={
-          Rectangle(
-          extent={{-100,60},{100,-60}},
-          lineColor={0,0,0},
-          fillColor={215,215,215},
-          fillPattern=FillPattern.Solid), Line(
-          points={{40,80},{40,-52},{10,-52},{12,50},{-10,50},{-12,-52},{-40,-52},{-40,80}},
-          color={28,108,200},
-          smooth=Smooth.Bezier,
-          thickness=1,
-          pattern=LinePattern.Dash)}));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.5)), Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.5), graphics={
+        Rectangle(
+          extent={{-10,70},{10,50}},
+          lineColor={28,108,200},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+        Rectangle(
+          extent={{-10,30},{10,10}},
+          lineColor={28,108,200},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+        Rectangle(
+          extent={{-10,-10},{10,-30}},
+          lineColor={28,108,200},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+        Rectangle(
+          extent={{-10,-50},{10,-70}},
+          lineColor={28,108,200},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid)}));
 end Superheater;

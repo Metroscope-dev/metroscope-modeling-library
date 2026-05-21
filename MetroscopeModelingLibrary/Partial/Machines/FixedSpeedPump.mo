@@ -7,10 +7,20 @@ partial model FixedSpeedPump
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  Utilities.Interfaces.GenericReal rh annotation (Placement(transformation(extent={{-96,50},{-76,70}}), iconTransformation(extent={{-80,20},
-            {-120,60}})));
-  Utilities.Interfaces.GenericReal hn annotation (Placement(transformation(extent={{-74,70},{-54,90}}), iconTransformation(extent={{-58,60},
-            {-98,100}})));
+  Utilities.Interfaces.GenericReal rh annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={60,-80}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={60,-80})));
+  Utilities.Interfaces.GenericReal hn annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-80}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-80})));
 equation
 
   // Outlet variation

@@ -25,13 +25,13 @@ model GasTurbine
   Units.Percentage eta_is_decrease(min = 0, max=100) "percentage decrease of eta_is";
 
   Power.Connectors.Outlet C_W_shaft annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
-  Utilities.Interfaces.GenericReal eta_is(start=1) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+  Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
         rotation=90,
-        origin={-100,80}), iconTransformation(
-        extent={{-10,-10},{10,10}},
+        origin={0,-82}), iconTransformation(
+        extent={{4,-4},{-4,4}},
         rotation=90,
-        origin={-100,80})));
+        origin={-20,-80})));
 equation
 
   // Failure modes
@@ -56,11 +56,12 @@ equation
     Diagram(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2})),
+        initialScale=0.4)),
     Icon(coordinateSystem(
         preserveAspectRatio=false,
         extent={{-100,-100},{100,100}},
-        grid={2,2}), graphics={Polygon(
+        initialScale=0.4),
+                     graphics={Polygon(
           points={{-100,60},{-100,40},{-100,-40},{-100,-60},{-80,-66},{80,-100},{100,-100},{100,-80},{100,77.5391},{100,100},{80,100},{-80,68},{-100,60}},
           lineColor={95,95,95},
           lineThickness=0.5,
