@@ -25,8 +25,6 @@ model SteamExtractionSplitter
   Units.MassFraction x_main_out(start=x_0) "Vapor mass fraction at main outlet";
   Units.MassFraction x_in(start=x_0) "Vapor mass fraction at inlet";
 
-  parameter Inputs.InputFraction alpha=1 "Extraction paramater";
-
   // Components
   BaseClasses.IsoPFlowModel extracted_flow(
     Q_0=Q_ext_0,
@@ -49,6 +47,13 @@ model SteamExtractionSplitter
   Connectors.Inlet C_in(Q(start=Q_in_0), P(start=P_0)) annotation (Placement(transformation(extent={{-120,-10},{-100,10}}), iconTransformation(extent={{-116,-10},{-96,10}})));
   Connectors.Outlet C_main_out(Q(start=-Q_main_0), P(start=P_0), h_outflow(start=h_0)) annotation (Placement(transformation(extent={{100,-10},{120,10}}), iconTransformation(extent={{96,-10},{116,10}})));
   Connectors.Outlet C_ext_out(Q(start=-Q_ext_0), P(start=P_0), h_outflow(start=h_0)) annotation (Placement(transformation(extent={{-10,-74},{10,-54}}), iconTransformation(extent={{-10,-78},{10,-58}})));
+  Utilities.Interfaces.GenericReal alpha annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={60,-64}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={52,-30})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));

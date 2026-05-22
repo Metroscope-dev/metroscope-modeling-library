@@ -14,6 +14,10 @@ model SteamDryer
 
   parameter Units.MassFraction x_steam_out=0.99; // Steam mass fraction at steam outlet
 
+    // Failure modes
+  parameter Boolean faulty = false;
+  Units.Percentage vapour_fraction_decrease(min = 0, max=0.05); // efficiency percentage loss
+
   // Initialization parameters
   parameter Units.Pressure P_0 = 10e5;
   parameter Units.Temperature T_0 = 273.15 + 180;
@@ -44,6 +48,11 @@ protected
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
 equation
 
+    // Failure modes
+  if not faulty then
+    vapour_fraction_decrease = 0;
+  end if;
+
   // Definitions
   P = C_in.P;
   Q_in = steam_phase.Q + liquid_phase.Q;
@@ -51,11 +60,13 @@ equation
   // Saturation at both outlets
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
-  steam_phase.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
+  steam_phase.h_out = (x_steam_out-vapour_fraction_decrease) * h_vap_sat + (1-x_steam_out+vapour_fraction_decrease)*h_liq_sat;
   liquid_phase.h_out = h_liq_sat;
 
   // Energy balance
   steam_phase.W + liquid_phase.W = 0;
+
+
 
   connect(liquid_phase.C_in, C_in) annotation (Line(points={{26,-40},{-40,-40},{
           -40,40},{-100,40}},
