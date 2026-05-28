@@ -15,13 +15,14 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+    - Fix QCpmax default value for superheaters to unknown [#577] (https://github.com/Metroscope-dev/metroscope-modeling-library/pull/577)
     - 🔧 Fix variables declaration for incondensable in ACC [#558](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/558)
     - Fix QCpmax default value to unknown for liq liq exchanges [#570] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/570)
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 - Changed the diagrams of monophasic HRSG HX, condenser and evaporator-drum. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
 - Rearranged CCGT metroscopia reversed model with the new icons. The direct and faulty models are still to be made. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
 
-### 🔥 Removed 
+### 🔥 Removed
 
 
 ## [ MML - v4.0.0-beta]
@@ -35,7 +36,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
-### 🔥 Removed 
+### 🔥 Removed
 
 
 ## MML - v3.10.0
@@ -48,7 +49,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 - Breaking change: added a parameter `nominal_DT_default` to set the nominal temperature differences in heat exchanger to the maximum possible temperature difference [#513](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/513)
 - Removed outer parameters from sensors. Not breaking, declared inner paramters won't block the model's compilation. [#514](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/514)
 
-### 🔥 Removed 
+### 🔥 Removed
 
 
 ##  MML - v3.9.0
@@ -208,7 +209,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ## MML-v3.2 <!--Make sure to add a link to the PR and issues related to your change-->
 
-### :bug: Fixed 
+### :bug: Fixed
 - [PR#326](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/326) pipe order and assigned temperatures of the `hrsg_monophasic_HX`. Model calibrated with previous version of the library should be recalibrated. The parameter `nominal_hot_side_temperature_rise` was changed to `nominal_hot_side_temperature_drop` and needs to be updated in the models. The default configuration of the HRSG HX is now `monophasic_counter_current`. Answers issues [#268](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/268) and [#254](https://github.com/Metroscope-dev/metroscope-modeling-library/issues/254).
 - Fixed [PR#318](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/318) `MoistAir_to_FlueGases` to have equal T between inlet and oulet.
 
@@ -263,7 +264,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### :sparkles: Added <!--Make sure to add a link to the PR and issues related to your change-->
  - Added `psiA` and `psiG` distinction in pressure sensor [PR#252](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/252)
  - Added `LMTDHeatExchange` function, `LMTDfuelHeater`component and reverse unit test. [PR #266](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/266)
- - Added`HXmoistAirWater` component and reverse unit test, [PR #250](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/250) 
+ - Added`HXmoistAirWater` component and reverse unit test, [PR #250](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/250)
  - Added flue gases enthalpy start value to `hrsg_monophasic_HX`, [PR #264](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/264)
  - Added `mass_flow_rate_bias` fault in `BaseSensor`, to be able to declare faulty `FlowSensor` [PR #245](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/245)
  - Added `Mlb/h` unit in flow sensor [PR #240](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/240)
