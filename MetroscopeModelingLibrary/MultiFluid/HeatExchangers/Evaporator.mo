@@ -6,8 +6,10 @@ model Evaporator
     import MetroscopeModelingLibrary.Utilities.Units;
     import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-    // Pressure Losses
+    Units.Area S_eq;
+    parameter Boolean S_parameter = true "false for specific case of OTC component";
     parameter Units.Area S = 15000;
+
     parameter Units.MassFraction x_steam_out = 1; // Steam mass fraction at water outlet
 
     // Heating
@@ -94,6 +96,11 @@ equation
   // Failure modes
   if not faulty then
     fouling = 0;
+  end if;
+
+  // Free S for OTC
+  if S_parameter then
+  S_eq = S;
   end if;
 
   // Definitions

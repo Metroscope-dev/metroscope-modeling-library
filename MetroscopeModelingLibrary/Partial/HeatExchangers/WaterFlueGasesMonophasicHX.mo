@@ -5,6 +5,8 @@ partial model WaterFlueGasesMonophasicHX
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
+  Units.Area S_eq;
+  parameter Boolean S_parameter = true "false for specific case of OTC component";
   parameter Units.Area S = 3000;
 
   // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
@@ -104,6 +106,11 @@ equation
     fouling = 0;
   end if;
 
+  // Free S for OTC
+  if S_parameter then
+  S_eq = S;
+  end if;
+
   // Definitions
   Q_cold = cold_side.Q;
   Q_hot = hot_side.Q;
@@ -119,7 +126,7 @@ equation
   // Power Exchange
   HX.W = W;
   HX.Kth = Kth*(1-fouling/100);
-  HX.S = S;
+  HX.S = S_eq;
   HX.Q_cold = Q_cold;
   HX.Q_hot = Q_hot;
   HX.T_cold_in = T_cold_in;
