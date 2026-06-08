@@ -5,8 +5,6 @@ partial model WaterFlueGasesMonophasicHX
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Units.Area S_eq;
-  parameter Boolean S_parameter = true "false for specific case of OTC component";
   parameter Units.Area S = 3000;
 
   // Cp estimation temperatures: estimated temperature differences for both the hot and cold fluids
@@ -58,6 +56,9 @@ partial model WaterFlueGasesMonophasicHX
   parameter Units.SpecificEnthalpy h_cold_out_0 = 1185904.9;
   parameter Units.SpecificEnthalpy h_hot_in_0 = 6.08e5;
   parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
+
+  Units.Area S_eq;
+  parameter Boolean S_parameter = true "false for specific case of OTC component";
 
   // Intermediate variables
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_min;
