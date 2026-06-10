@@ -7,13 +7,11 @@ model Pipe_direct
   input Utilities.Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
   input Utilities.Units.Fraction source_relative_humidity(start=0.5) "1";
 
-    // Parameters
-  parameter Utilities.Units.FrictionCoefficient Kfr=100;
-  parameter Utilities.Units.Height delta_z=0;
 
-  MetroscopeModelingLibrary.MoistAir.Pipes.Pipe pipe annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.MoistAir.Pipes.FrictionPipe pipe annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{34,-10},{54,10}})));
+  Utilities.Interfaces.RealExpression Kfr(y=100) annotation (Placement(transformation(extent={{-10,12},{10,32}})));
 equation
   // Boundary Conditions
   source.h_out = source_h;
@@ -21,11 +19,8 @@ equation
   source.Q_out = source_Q;
   source.relative_humidity = source_relative_humidity;
 
-  // Parameters
-  pipe.Kfr = Kfr;
-  pipe.delta_z = delta_z;
-
   connect(pipe.C_in, source.C_out) annotation (Line(points={{-10,0},{-37,0}}, color={85,170,255}));
   connect(pipe.C_out, sink.C_in) annotation (Line(points={{10,0},{39,0}}, color={85,170,255}));
+  connect(pipe.Kfr, Kfr.y) annotation (Line(points={{0,4},{0,17}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Pipe_direct;
