@@ -6,15 +6,10 @@ model HXmoistAirWater
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  // Pressure Losses
-  Inputs.InputFrictionCoefficient Kfr_cold;
-  Inputs.InputFrictionCoefficient Kfr_hot;
-
   // Heating
   parameter String QCp_max_side = "cold";
   parameter String HX_config = "monophasic_cross_current";
-  Inputs.InputArea S;
-  Inputs.InputHeatExchangeCoefficient Kth;
+  parameter Inputs.InputArea S = 1000;
   Units.Power W;
 
   // Definitions
@@ -31,8 +26,7 @@ model HXmoistAirWater
   parameter Units.Temperature T_cold_in_0 = 8 + 273.15;
   parameter Units.Pressure P_cold_in_0 = 1 *1e5;
 
-  MoistAir.Pipes.Pipe  hot_side_pipe(Q_0=Q_cold_0)
-                                                  annotation (Placement(transformation(extent={{-50,-18},{-30,2}})));
+  MoistAir.Pipes.FrictionPipe hot_side_pipe(Q_0=Q_cold_0) annotation (Placement(transformation(extent={{-50,-18},{-30,2}})));
   Power.HeatExchange.NTUHeatExchange HX(
     config=HX_config,
     QCp_max_side=QCp_max_side,
@@ -52,13 +46,34 @@ model HXmoistAirWater
         rotation=0,
         origin={2,34})));
   WaterSteam.Pipes.FrictionPipe cold_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
+        extent={{10,10},{-10,-10}},
         rotation=90,
         origin={-16,-24})));
   MoistAir.Connectors.Inlet C_cold_in(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
   MoistAir.Connectors.Outlet C_cold_out(Q(start=Q_cold_0)) annotation (Placement(transformation(extent={{88,-10},{108,10}}),iconTransformation(extent={{90,-10},{110,10}})));
   WaterSteam.Connectors.Inlet C_hot_in(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));
   WaterSteam.Connectors.Outlet C_hot_out(Q(start=Q_hot_0)) annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));
+  Utilities.Interfaces.GenericReal Kfr_hot(start=0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={100,-60}),iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={110,-60})));
+  Utilities.Interfaces.GenericReal Kfr_cold(start=0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-100,60}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-110,60})));
+  Utilities.Interfaces.GenericReal Kth(start=0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-100,-60}), iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-110,-60})));
 equation
       // Definitions
   Q_cold = cold_side.Q;
@@ -71,12 +86,6 @@ equation
 
   // Energy balance
   cold_side.W + hot_side.W = 0;
-
-  // Pressure losses
-  cold_side_pipe.delta_z = 0;
-  cold_side_pipe.Kfr = Kfr_cold;
-  hot_side_pipe.delta_z = 0;
-  hot_side_pipe.Kfr = Kfr_hot;
 
   // Power Exchange
   HX.W = W;
@@ -94,6 +103,9 @@ equation
   connect(C_cold_in, hot_side_pipe.C_in) annotation (Line(points={{-100,0},{-54,0},{-54,-8},{-50,-8}},color={85,170,255}));
   connect(hot_side_pipe.C_out, cold_side.C_in) annotation (Line(points={{-30,-8},{-19,-8},{-19,-8},{-8,-8}}, color={85,170,255}));
   connect(cold_side.C_out, C_cold_out) annotation (Line(points={{12,-8},{54,-8},{54,0},{98,0}}, color={85,170,255}));
+  connect(Kfr_cold, Kfr_cold) annotation (Line(points={{-100,60},{-100,60}}, color={0,0,127}));
+  connect(Kfr_cold, hot_side_pipe.Kfr) annotation (Line(points={{-100,60},{-78,60},{-78,52},{-40,52},{-40,-4}}, color={0,0,127}));
+  connect(cold_side_pipe.Kfr, Kfr_hot) annotation (Line(points={{-12,-24},{86,-24},{86,-60},{100,-60}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-100,80},{100,-80}},
