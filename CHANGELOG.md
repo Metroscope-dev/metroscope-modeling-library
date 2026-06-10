@@ -8,6 +8,17 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+  
+### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+   
+### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+   
+### 🔥 Removed
+
+
+## [ MML - v4.0.0-beta2]
+
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
     - Extraction splitter output connecter for alpha and vapour fraction decrease fault on moisture separator [#569] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/569)
     - Added a Chromatograph components in the Fuel medium. It acts as a source in which the composition is declared as a vector. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
     - Added a GT_Louvers component for both flue gas and ref moist air media. It acts as an air source, to which we can attach ambient condition connectors (T, P and H). The moist air - flue gas converter is built in. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
