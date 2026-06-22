@@ -32,6 +32,8 @@ model NTUHeatExchange
   Inputs.InputHeatCapacity Cp_cold(start=Cp_cold_0) "Cold fluid specific heat capacity";
   Inputs.InputTemperature T_hot_in(start=T_hot_in_0) "Temperature, hot side, at the inlet";
   Inputs.InputTemperature T_cold_in(start=T_cold_in_0) "Temperature, cold side, at the inlet";
+//   Inputs.InputTemperature T_hot_out(start=T_hot_in_0) "Temperature, hot side, at the inlet";
+//   Inputs.InputTemperature T_cold_out(start=T_cold_in_0) "Temperature, cold side, at the inlet";
 
   // Exchange parameters
   Real QCpMIN(unit="W/K", start=QCpMIN_0);
@@ -40,6 +42,8 @@ model NTUHeatExchange
   Units.Fraction Cr(start=Cr_0);
   Units.Fraction epsilon(start=epsilon_0);
   Units.Power W_max(start=W_max_0);
+  Real epsilon_max(start = 0.7);
+  //Real epsilon_req( start = 0.7);
 
   // When the QCp_max_side is "hot", the initial parameters may be in the opposite order, however, no impact on the simulations
   parameter Real QCpMIN_0(unit="W/K") = if QCp_max_side == "hot" then Q_cold_0 * Cp_cold_0 elseif QCp_max_side == "cold" then Q_hot_0 * Cp_hot_0 else min(Q_cold_0 * Cp_cold_0,Q_hot_0 * Cp_hot_0);
@@ -56,6 +60,7 @@ equation
   W = epsilon*W_max;
   NTU = Kth*S/QCpMIN;
   Cr = QCpMIN/QCpMAX;
+  //epsilon_req = W/QCpMIN*(T_hot_in - T_cold_in);
 
   if config == "shell_and_tubes_two_passes" then
 
@@ -76,6 +81,8 @@ equation
     assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
 
     epsilon = 2*1/( 1 + Cr + sqrt(1+Cr^2)* (1+exp(-NTU*(1+Cr^2)^0.5))/(1-exp(-NTU*(1+Cr^2)^0.5)));
+    epsilon_max = 2*1/( 1 + Cr + sqrt(1+Cr^2));
+    assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot_out) too low/too negative, or NTU too high",AssertionLevel.warning);
 
   elseif config == "monophasic_cross_current" then
 
@@ -93,12 +100,19 @@ equation
         QCpMIN = Q_cold*Cp_cold;
         assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
         epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+
+        epsilon_max = (1 - exp(-Cr))/Cr;
+        assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration.(T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
       elseif QCp_max_side == "cold" then
         // QCpMAX is associated to the unmixed fluid
         QCpMIN = Q_hot*Cp_hot;
         QCpMAX = Q_cold*Cp_cold;
         assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
         epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+        epsilon_max = 1 - exp(-1/Cr);
+        assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration.(T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
       else
         /* If QCpMAX is not predefined
            Identify QCpMAX
@@ -108,12 +122,18 @@ equation
           QCpMAX = Q_cold*Cp_cold;
           // QCpMAX is associated to the unmixed fluid
           epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+          epsilon_max = 1 - exp(-1/Cr);
+        assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration.(T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
         else
           // QCpMAX is associated to the hot fluid
           QCpMAX = Q_hot*Cp_hot;
           QCpMIN = Q_cold*Cp_cold;
           // QCpMAX is associated to the mixed fluid
           epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+          epsilon_max = (1 - exp(-Cr))/Cr;
+          assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
         end if;
       end if;
 
@@ -125,12 +145,18 @@ equation
         QCpMIN = Q_cold*Cp_cold;
         assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
         epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+        epsilon_max = 1 - exp(-1/Cr);
+        assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
       elseif QCp_max_side == "cold" then
         // QCpMAX is associated to the mixed fluid
         QCpMIN = Q_hot*Cp_hot;
         QCpMAX = Q_cold*Cp_cold;
         assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
         epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+        epsilon_max = (1 - exp(-Cr))/Cr;
+        assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
       else
         /* If QCpMAX is not predefined
            Identify QCpMAX
@@ -140,12 +166,18 @@ equation
           QCpMAX = Q_cold*Cp_cold;
           // QCpMAX is associated to the mixed fluid
           epsilon =  (1 - exp(-Cr*(1 - exp(-NTU))))/Cr;
+         epsilon_max = (1 - exp(-Cr))/Cr;
+        assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
         else
           // QCpMAX is associated to the hot fluid
           QCpMAX = Q_hot*Cp_hot;
           QCpMIN = Q_cold*Cp_cold;
           // QCpMAX is associated to the unmixed fluid
           epsilon =  1 - exp(-(1 - exp(-Cr*NTU))/Cr);
+          epsilon_max = 1 - exp(-1/Cr);
+          assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration.(T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
+
         end if;
       end if;
     end if;
@@ -167,6 +199,8 @@ equation
     assert(QCpMIN < QCpMAX, "QCPMIN is higher than QCpMAX", AssertionLevel.error);
 
     epsilon = (1-exp(-NTU*(1-Cr)))/(1-Cr*exp(-NTU*(1-Cr)));
+    epsilon_max = 1;
+    assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
 
     elseif config == "evaporator" then
 
@@ -174,6 +208,8 @@ equation
       QCpMIN = Q_hot*Cp_hot;
 
       epsilon = 1 - exp(-NTU);
+      epsilon_max = 1;
+      assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
 
     elseif config == "condenser" then
 
@@ -181,12 +217,15 @@ equation
       QCpMIN = Q_cold*Cp_cold;
 
       epsilon = 1 - exp(-NTU);
+      epsilon_max = 1;
+      assert(epsilon/epsilon_max < 0.98,"Effectiveness is above 98% of epsilon_max for this configuration. (T_cold_out - T_hot__out) too low/too negative, or NTU too high",AssertionLevel.warning);
 
   else // Added this forbidden case to simplify model checking, but it is anyway overriden by assert below
     QCpMAX = 0;
     QCpMIN = 0;
 
     epsilon = 0;
+    epsilon_max = 0;
   end if;
 
   assert(config == "evaporator" or config == "condenser" or config=="shell_and_tubes_two_passes" or config=="monophasic_cross_current" or config=="monophasic_counter_current", "config parameter of NTUHeatExchange should be one of 'shell_and_tubes_two_passes', 'condenser', 'evaporator', 'monophasic_cross_current', or 'monophasic_counter_current'", AssertionLevel.error);
@@ -219,5 +258,10 @@ equation
           lineColor={238,46,47},
           fillColor={238,46,47},
           fillPattern=FillPattern.Solid)}),                      Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+        coordinateSystem(preserveAspectRatio=false)),
+    experiment(
+      StopTime=20,
+      __Dymola_NumberOfIntervals=50,
+      __Dymola_fixedstepsize=0.01,
+      __Dymola_Algorithm="Euler"));
 end NTUHeatExchange;
