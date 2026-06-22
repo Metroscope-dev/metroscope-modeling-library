@@ -13,10 +13,10 @@ partial model SlideValve
   Utilities.Interfaces.GenericReal Cv(start=1e4) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-40,110}), iconTransformation(
+        origin={-40,118}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-40,110})));
+        origin={-40,120})));
 equation
     // Failure modes
   if not faulty then

@@ -78,8 +78,9 @@ equation
     annotation (Line(points={{46,40},{100,40}}, color={28,108,200}));
   connect(liquid_phase.C_out,C_hot_liquid)
     annotation (Line(points={{46,-40},{100,-40}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
-            {100,120}}), graphics={
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,120}},
+        initialScale=0.25),
+                         graphics={
         Rectangle(
           extent={{-100,40},{100,-40}},
           lineColor={0,0,0},
@@ -191,5 +192,6 @@ equation
           extent={{-100,40},{100,-40}},
           lineColor={64,82,185},
           lineThickness=1)}),                                    Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,120}})));
+        coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,120}},
+        initialScale=0.25)));
 end SteamDryer;

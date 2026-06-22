@@ -32,10 +32,7 @@ model Reactor
         rotation=180,
         origin={2,0})));
   Power.Connectors.Inlet C_thermal_power annotation (Placement(transformation(extent={{-40,-10},{-20,10}}), iconTransformation(extent={{-40,-10},{-20,10}})));
-  Utilities.Interfaces.GenericReal vapor_fraction annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-30,84}), iconTransformation(extent={{44,66},{58,80}})));
+  Utilities.Interfaces.GenericReal vapor_fraction annotation (Placement(transformation(extent={{-44,56},{-52,64}}), iconTransformation(extent={{-44,56},{-52,64}})));
 equation
 
   // Fault modes
@@ -67,8 +64,9 @@ equation
                                                       color={28,108,200}));
   connect(feedwater_sink.C_in, feedwater_inlet) annotation (Line(points={{7,-1.11022e-15},{18.5,-1.11022e-15},{18.5,0},{30,0}},
                                                 color={28,108,200}));
-  connect(vapor_fraction, vapor_fraction) annotation (Line(points={{-30,84},{-30,84}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-100},{60,100}}),
+  connect(vapor_fraction, vapor_fraction) annotation (Line(points={{-48,60},{-48,60}}, color={0,0,127}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-100},{60,100}},
+        initialScale=0.5),
                         graphics={
         Rectangle(
           extent={{-34,44},{34,-62}},
@@ -98,7 +96,8 @@ equation
           fillColor={175,175,175},
           fillPattern=FillPattern.Solid)}),
                          Diagram(coordinateSystem(preserveAspectRatio=false,
-          extent={{-60,-100},{60,100}})),
+          extent={{-60,-100},{60,100}},
+        initialScale=0.5)),
             Icon(coordinateSystem(preserveAspectRatio=false)),
                                    Diagram(coordinateSystem(preserveAspectRatio=
            false)));

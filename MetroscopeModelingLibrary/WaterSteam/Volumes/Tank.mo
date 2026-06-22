@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.WaterSteam.Volumes;
 model Tank
   extends WaterSteam.BaseClasses.IsoPHFlowModel annotation (IconMap(primitivesVisible=false));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, initialScale=0.25),
+                                                                graphics={
         Rectangle(
           extent={{-100,40},{100,-40}},
           lineColor={28,108,200},
@@ -18,5 +19,5 @@ model Tank
         Rectangle(
           extent={{-100,40},{100,-40}},
           lineColor={28,108,200},
-          lineThickness=1)}),                                    Diagram(coordinateSystem(preserveAspectRatio=false)));
+          lineThickness=1)}),                                    Diagram(coordinateSystem(preserveAspectRatio=false, initialScale=0.25)));
 end Tank;
