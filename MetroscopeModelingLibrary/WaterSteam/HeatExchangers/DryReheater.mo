@@ -5,7 +5,10 @@ model DryReheater
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  parameter Inputs.InputArea S=100;
+  // New features: option to input area S with input_specs
+
+  parameter Boolean input_specs = false;
+  Units.Area S;
 
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0);
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0);
@@ -36,6 +39,7 @@ model DryReheater
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
   Units.MassFlowRate partition_plate_leak;  // Separating plate leak
   Units.MassFlowRate tube_rupture_leak; // Tube rupture leak : cold water leaks and mixes with the condensed steam
+  Real hot_side_partition_plate_leak;
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
@@ -93,8 +97,12 @@ model DryReheater
     h_in_0=h_cold_in_0,
     h_out_0=h_cold_out_0,                        Q_0=Q_cold_0,
     P_0=P_cold_out_0)                                          annotation (Placement(transformation(extent={{-82,-58},{-34,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
-                                                   T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX_condensing(
+    config=HX_config,
+    Q_hot_0=Q_hot_0,
+    Q_cold_0=Q_cold_0,
+    T_hot_in_0=T_hot_in_0,
+    T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-60,0})));
@@ -119,16 +127,26 @@ model DryReheater
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={-80,100})));
+  Pipes.Leak hot_side_partition_plate annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={-2,-8})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
 equation
+
+  // Input specifications
+  if not input_specs then
+    S = 100;
+  end if;
 
   // Failure modes
   if not faulty then
     fouling = 0;
     partition_plate_leak = 0;
     tube_rupture_leak = 0;
+    hot_side_partition_plate_leak = 0;
   end if;
 
   // Definitions
@@ -186,6 +204,7 @@ equation
   // Internal leaks
   partition_plate.Q = 1e-5 + partition_plate_leak;
   tube_rupture.Q = 1e-5 + tube_rupture_leak;
+  hot_side_partition_plate.Q = 1e-5 + hot_side_partition_plate_leak;
 
   // Total power
   W = W_deheat + W_cond;
@@ -236,6 +255,11 @@ equation
       points={{94,19},{120,19},{120,60},{0,60},{0,80}},
       color={255,0,0},
       thickness=1));
+  connect(hot_side_partition_plate.C_in, hot_side_deheating.C_out) annotation (
+      Line(points={{-2,2},{-4,2},{-4,19},{48,19}}, color={28,108,200}));
+  connect(hot_side_partition_plate.C_out, final_mix_hot.C_in) annotation (Line(
+        points={{-2,-18},{-4,-18},{-4,-46},{-68,-46},{-68,-66},{-64,-66}},
+        color={28,108,200}));
   annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
                    graphics={
         Polygon(

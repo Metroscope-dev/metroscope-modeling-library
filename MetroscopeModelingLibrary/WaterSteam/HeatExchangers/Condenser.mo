@@ -5,8 +5,12 @@ model Condenser
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  parameter Inputs.InputHeight water_height=1;
-  parameter Units.Area S = 50000;
+  // New features: option to input area S and water height with input_specifications
+
+  // ** Subcooling **
+  parameter Boolean input_specs = false;
+  Units.Area S;
+  Real water_height;
 
   parameter String QCp_max_side = "cold";
 
@@ -128,6 +132,12 @@ model Condenser
         origin={64,110})));
 equation
 
+  // Subcooling
+  if not input_specs then
+    S = 50000;
+    water_height = 1;
+  end if;
+
   // Failure modes
   if not faulty then
     fouling = 0;
@@ -153,8 +163,8 @@ equation
 
   // Pressure losses
   cold_side_pipe.Kfr = Kfr_cold;
-  water_height_pipe.delta_z = - water_height;
-  water_height_pipe.DP = water_height_DP;
+  water_height_pipe.delta_z = - water_height; // ** REMOVE, to deal with separately
+  water_height_pipe.DP = water_height_DP; // ** REMOVE, to deal with separately
 
   // Incondensables
   P_incond = P_offset + R * (C_incond + air_intake) * Tsat;  // Ideal gaz law
@@ -172,7 +182,7 @@ equation
   hot_side.h_out = Water.bubbleEnthalpy(Water.setSat_p(Psat));
 
   // Heat Exchange
-  0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*S*((T_cold_in - T_cold_out)/W));
+  0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*(S)*((T_cold_in - T_cold_out)/W));
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
       points={{-60,0},{-24,0}},

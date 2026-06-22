@@ -4,10 +4,13 @@ model LiqLiqHX
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
+  // New features: option to input S with input_specifications, and tube rupture leak. Default QCp max side is unknown, and HX_config default should be countercurrent but not changing so as to not mess up past moedls
 
+  // Specifications
+  parameter Boolean input_specs = false;
+  Units.Area S;
 
-  parameter Inputs.InputArea S=100;
-  parameter String QCp_max_side = "cold";
+  parameter String QCp_max_side = "unknown";
   parameter String HX_config = "shell_and_tubes_two_passes"; // Valid for U-shaped tubes. Otherwise use "monophasic_cross_current"
 
   Units.Power W;
@@ -27,6 +30,7 @@ model LiqLiqHX
   // Failure modes
   parameter Boolean faulty = false;
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
+  Real tube_rupture_leak;
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
@@ -69,11 +73,11 @@ model LiqLiqHX
         rotation=180,
         origin={-1,21})));
   BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, P_0 = P_cold_out_0, h_in_0 = h_cold_in_0, h_out_0 = h_cold_out_0, T_in_0 = T_cold_in_0, T_out_0 = T_cold_out_0) annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
-  Power.HeatExchange.NTUHeatExchange HX(config=HX_config, QCp_max_side = QCp_max_side) annotation (Placement(
-        transformation(
+  Power.HeatExchange.NTUHeatExchange_v2_epsilonErrors HX(config=HX_config, QCp_max_side = QCp_max_side) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,-6})));
+
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
@@ -95,11 +99,20 @@ model LiqLiqHX
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={48,100})));
+  Pipes.Leak tube_rupture annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={-30,-10})));
 equation
+
+  if not input_specs then
+    S = 100;
+  end if;
 
   // Failure modes
   if not faulty then
     fouling = 0;
+    tube_rupture_leak = 0;
   end if;
 
   // Definitions
@@ -113,7 +126,6 @@ equation
 
   // Energy balance
   hot_side.W + cold_side.W = 0;
-
 
   // Power Exchange
   HX.W = W;
@@ -133,6 +145,9 @@ equation
   pinch = min(TTD, DCA);
   assert(pinch > 0, "A negative pinch is reached", AssertionLevel.warning); // Ensure a positive pinch
   assert(pinch > 1 or pinch < 0,  "A very low pinch (<1) is reached", AssertionLevel.warning); // Ensure a sufficient pinch
+
+  // Failure modes
+  tube_rupture.Q = 1e-5 + tube_rupture_leak;
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
       points={{-120,0},{-52,0},{-52,-34},{-26,-34}},
@@ -158,8 +173,15 @@ equation
       points={{-24,21},{-30,21},{-30,20},{-40,20},{-40,-60},{0,-60},{0,-80}},
       color={238,46,47},
       thickness=1));
-  connect(cold_side_pipe.Kfr, Kfr_cold) annotation (Line(points={{-130,4},{-130,32},{-128,32},{-128,56}}, color={0,0,127}));
-  connect(hot_side_pipe.Kfr, Kfr_hot) annotation (Line(points={{4,52},{24,52},{24,72},{50,72}}, color={0,0,127}));
+  connect(Kfr_hot, hot_side_pipe.Kfr) annotation (Line(points={{50,72},{16,72},{
+          16,52},{4,52}}, color={0,0,127}));
+  connect(Kfr_cold, cold_side_pipe.Kfr) annotation (Line(points={{-128,56},{-128,
+          14},{-130,14},{-130,4}}, color={0,0,127}));
+  connect(tube_rupture.C_out, C_hot_out) annotation (Line(points={{-30,-20},{-30,
+          -26},{-34,-26},{-34,-66},{0,-66},{0,-80}},
+                                          color={28,108,200}));
+  connect(tube_rupture.C_in, cold_side_pipe.C_out) annotation (Line(points={{-30,
+          0},{-32,0},{-32,8},{-100,8},{-100,0},{-120,0}}, color={28,108,200}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},
             {160,80}}),      graphics={
         Polygon(

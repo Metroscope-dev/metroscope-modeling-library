@@ -5,13 +5,20 @@ model Superheater
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
+  // New features: Kth_evap in addition to Kth_sup; option to input S_evap, S_sup, Q_vent with input_specifiations
+
+    // Specifications
+  parameter Boolean input_specs = false;
+  Inputs.InputArea S_evap;
+  Inputs.InputArea S_sup;
+  Units.PositiveMassFlowRate Q_vent;
+
   // Deheating
   Units.Power W_deheat;
 
   // Condensation
   Units.Power W_cond;
   parameter String HX_config="condenser";
-  parameter Inputs.InputArea S=100;
   Units.SpecificEnthalpy h_vap_sat_hot(start=h_vap_sat_0);
   Units.SpecificEnthalpy h_liq_sat_hot(start=h_liq_sat_0);
   Units.Temperature Tsat_hot;
@@ -22,7 +29,6 @@ model Superheater
   Units.Temperature Tsat_cold(start=T_cold_in_0);
 
   // Ventilation
-  parameter Units.PositiveMassFlowRate Q_vent = 1;
   Units.PositiveMassFlowRate Q_vent_faulty(start=Q_vent_0);
 
   // Definitions
@@ -50,6 +56,7 @@ model Superheater
 
   // Failure modes
   parameter Boolean faulty = false;
+  Units.Percentage fouling_or_drains_flooding(min = 0, max=100); // Fouling percentage, could also reflect reduced HT from condensate flooding in drain tank level rises
   Units.Percentage closed_vent(min = 0, max= 100); // Vent closing percentage
   Units.MassFlowRate tube_rupture_leak; // Tube rupture leak mass flow rate
 
@@ -117,8 +124,12 @@ model Superheater
         extent={{-17,-17},{17,17}},
         rotation=90,
         origin={39,1})));
-  Power.HeatExchange.NTUHeatExchange HX_condensing(config=HX_config, Q_hot_0=Q_hot_0, Q_cold_0=Q_cold_0,
-                                                   T_hot_in_0=T_hot_in_0, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX_condensing(
+    config=HX_config,
+    Q_hot_0=Q_hot_0,
+    Q_cold_0=Q_cold_0,
+    T_hot_in_0=T_hot_in_0,
+    T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-21},{10,21}},
         rotation=270,
         origin={3,2})));
@@ -151,7 +162,14 @@ protected
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
 
 public
-  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal Kth_sup annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={90,60}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={60,100})));
+  Utilities.Interfaces.GenericReal Kth_evap annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={90,60}), iconTransformation(
@@ -162,8 +180,15 @@ equation
 
   // Failure modes
   if not faulty then
+    fouling_or_drains_flooding = 0;
     closed_vent = 0;
     tube_rupture_leak = 0;
+  end if;
+
+  if not input_specs then
+    S_evap = 10;
+    S_sup = 100;
+    Q_vent = 1;
   end if;
 
   // Definitions
@@ -194,7 +219,7 @@ equation
   hot_side_deheating.W + cold_side_deheating.W = 0;
   cold_side_deheating.W = W_deheat;
 
-  // Power Exchange
+//Power Exchange
   if hot_side_deheating.h_in > h_vap_sat_hot then
       hot_side_deheating.h_out = h_vap_sat_hot; // if steam is superheated, it is first deheated
   else
@@ -209,8 +234,8 @@ equation
 
   // Power Exchange
   HX_condensing.W = W_cond;
-  HX_condensing.Kth = Kth;
-  HX_condensing.S = S;
+  HX_condensing.Kth = Kth_sup*(1-fouling_or_drains_flooding/100);
+  HX_condensing.S = S_sup;
   HX_condensing.Q_cold = cold_side_condensing.Q;
   HX_condensing.Q_hot = hot_side_condensing.Q;
   HX_condensing.T_cold_in = Tsat_cold;
@@ -218,10 +243,13 @@ equation
   HX_condensing.Cp_cold = WaterSteamMedium.specificHeatCapacityCp(cold_side_condensing.state_in);
   HX_condensing.Cp_hot = 0; // Not used by NTU method in condenser mode
 
-  /* Vaporising on cold side, condensation on hot side*/
+  /* Vaporising on cold side, condensation on hot side */
 
   hot_side_vaporising.W + cold_side_vaporising.W = 0;
   W_vap = cold_side_vaporising.W;
+
+  // Power exchange
+  W_vap = Kth_evap*(1-fouling_or_drains_flooding/100)*S_evap*(Tsat_hot - Tsat_cold);
 
   hot_side_vaporising.h_out = h_liq_sat_hot; // Hot steam is completely condensed
 
@@ -363,14 +391,16 @@ equation
         graphics={                 Text(
           extent={{-20,4},{20,-4}},
           textColor={238,46,47},
-          textString="Condensing",
           origin={-50,2},
-          rotation=90),            Text(
+          rotation=90,
+          textString="Condensing 1"),
+                                   Text(
           extent={{-20,4},{20,-4}},
           textColor={238,46,47},
-          textString="Condensing",
           origin={-50,-44},
-          rotation=90),            Text(
+          rotation=90,
+          textString="Condensing 2"),
+                                   Text(
           extent={{-20,4},{20,-4}},
           textColor={238,46,47},
           origin={-50,44},
@@ -380,7 +410,7 @@ equation
           textColor={28,108,200},
           origin={56,4},
           rotation=270,
-          textString="Superheating"),
+          textString="Superheating 1"),
                                    Text(
           extent={{-20,4},{20,-4}},
           textColor={28,108,200},
@@ -391,7 +421,7 @@ equation
           textColor={28,108,200},
           origin={56,48},
           rotation=270,
-          textString="Superheating"),
+          textString="Superheating 2"),
                                    Text(
           extent={{-20,4},{20,-4}},
           textColor={238,46,47},
