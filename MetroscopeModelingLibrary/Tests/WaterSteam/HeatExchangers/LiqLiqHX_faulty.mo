@@ -1,16 +1,15 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model LiqLiqHX_faulty
-  extends LiqLiqHX_direct(
+    extends LiqLiqHX_direct(
       liqLiqHX(faulty = true));
 
-  Real Fault_fouling(start=0);
+  input Real Fault_fouling(start=0);
+  input Real Fault_tube_rupture( start = 0);
 
 equation
 
-  // Failure input
-  Fault_fouling = 0 + 10*time;
-
   // Failure definition
-  liqLiqHX.fouling = Fault_fouling;
+  liqLiqHX.fouling = Fault_fouling + 10*time; // Study the fouling fault
+  liqLiqHX.tube_rupture_leak = Fault_tube_rupture;
 
 end LiqLiqHX_faulty;
