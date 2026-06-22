@@ -163,8 +163,8 @@ equation
 
   // Pressure losses
   cold_side_pipe.Kfr = Kfr_cold;
-  water_height_pipe.delta_z = - water_height; // ** REMOVE, to deal with separately
-  water_height_pipe.DP = water_height_DP; // ** REMOVE, to deal with separately
+  water_height_pipe.delta_z = - water_height;
+  water_height_pipe.DP = water_height_DP;
 
   // Incondensables
   P_incond = P_offset + R * (C_incond + air_intake) * Tsat;  // Ideal gaz law
@@ -182,7 +182,7 @@ equation
   hot_side.h_out = Water.bubbleEnthalpy(Water.setSat_p(Psat));
 
   // Heat Exchange
-  0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*(S)*((T_cold_in - T_cold_out)/W));
+  0 = Tsat - T_cold_out - (Tsat - T_cold_in)*exp(Kth*(1-fouling/100)*S*((T_cold_in - T_cold_out)/W));
 
   connect(cold_side_pipe.C_out, cold_side.C_in) annotation (Line(
       points={{-60,0},{-24,0}},

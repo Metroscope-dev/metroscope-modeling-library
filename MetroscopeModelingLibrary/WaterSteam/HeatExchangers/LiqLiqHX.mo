@@ -73,7 +73,8 @@ model LiqLiqHX
         rotation=180,
         origin={-1,21})));
   BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, P_0 = P_cold_out_0, h_in_0 = h_cold_in_0, h_out_0 = h_cold_out_0, T_in_0 = T_cold_in_0, T_out_0 = T_cold_out_0) annotation (Placement(transformation(extent={{-26,-58},{22,-10}})));
-  Power.HeatExchange.NTUHeatExchange_v2_epsilonErrors HX(config=HX_config, QCp_max_side = QCp_max_side) annotation (Placement(transformation(
+  Power.HeatExchange.NTUHeatExchange HX(config=HX_config, QCp_max_side=
+        QCp_max_side) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,-6})));
