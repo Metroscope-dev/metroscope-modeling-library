@@ -151,31 +151,21 @@ protected
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
 
 public
-  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-130,50}), iconTransformation(extent={{-20,-20},{20,20}},
-        rotation=180,
-        origin={-180,40})));
-public
-  Utilities.Interfaces.GenericReal Kth_cond annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-110,80}), iconTransformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-78,-100})));
-public
-  Utilities.Interfaces.GenericReal Kth_subc annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-150,80}), iconTransformation(
-        extent={{-20,-20},{20,20}},
+  Utilities.Interfaces.RealOutput Kth_subc annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-80,100})));
+        origin={-100,84}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-100,84})));
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(extent={{-160,36},{-168,44}}), iconTransformation(extent={{-160,36},{-168,44}})));
+  Utilities.Interfaces.GenericReal Kth_cond annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-100,-84}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-100,-84})));
 equation
 
   // Failure modes
@@ -315,13 +305,14 @@ equation
       color={255,0,0},
       thickness=1));
   connect(cold_side_pipe.Kfr, Kfr_cold)
-    annotation (Line(points={{-130,4},{-130,50}}, color={0,0,127}));
+    annotation (Line(points={{-130,4},{-130,22},{-130,40},{-164,40}},
+                                                  color={0,0,127}));
   connect(hot_side_deheating.C_in, C_hot_in) annotation (Line(
       points={{123,20},{140,20},{140,40},{0,40},{0,80}},
       color={255,0,0},
       thickness=1));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},
-            {160,80}}),      graphics={
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}},
+        initialScale=0.3),   graphics={
         Polygon(
           points={{-160,80},{-160,60},{-160,-62.5},{-160,-80},{-120,-80},{10,-80},
               {160,-80},{160,80},{10,80},{-120,80},{-160,80}},
@@ -547,7 +538,8 @@ equation
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None,
           lineColor={0,0,0})}),                                  Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}}), graphics={
+        coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}},
+        initialScale=0.3),                                                         graphics={
                                    Text(
           extent={{-6,10},{54,-2}},
           textColor={28,108,200},
