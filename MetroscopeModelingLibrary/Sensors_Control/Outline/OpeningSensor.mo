@@ -3,15 +3,20 @@ model OpeningSensor
 
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  parameter Utilities.Units.Percentage Opening_pc_0 = 15;
+  parameter Utilities.Units.Percentage Opening_pc_0 = 15 annotation(Dialog(tab="Initialization", group="Start values"));
   Inputs.InputPercentage Opening_pc(unit="1", start=Opening_pc_0, min=0, max=100, nominal=Opening_pc_0); // Opening in percentage
 
-  // Icon parameters
+  // Causality display parameters
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
-    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
-  parameter String causality = "" "Specify which parameter is calibrated by this sensor";
+    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"),
+    Dialog(tab="General", group="Causality display parameters"));
+  parameter String causality = "" "Specify which parameter is calibrated by this sensor" annotation(Dialog(tab="General", group="Causality display parameters"));
   parameter Boolean display_output = true "Used to switch ON or OFF output display";
-  parameter String output_signal_unit = "%" annotation(choices(choice="%" "percentage, between 0 and 100", choice="" "No unit, between 0 and 1"));
+
+  // Sensor signal parameters
+  parameter Real Opening_start = 15 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String signal_unit = "%" "Specify the signal unit. This should be the unit of Opening_start and of the tag linked to the sensor." annotation(choices(choice="%" "percentage, between 0 and 100", choice="" "No unit, between 0 and 1"),
+  Dialog(tab="General", group="Sensor signal parameters"));
 
   Modelica.Blocks.Interfaces.RealOutput Opening(unit="1", min=0, max=1, nominal=Opening_pc_0/100, start=Opening_pc_0/100)
     annotation (Placement(transformation(
@@ -20,7 +25,7 @@ model OpeningSensor
         origin={0,-20}), iconTransformation(extent={{-27,-27},{27,27}},
         rotation=270,
         origin={0,-102})));
-  Utilities.Interfaces.GenericReal opening_sensor annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal opening_sensor(start=Opening_start) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,102}), iconTransformation(
@@ -30,7 +35,7 @@ model OpeningSensor
 equation
   Opening_pc = Opening * 100;
 
-  if output_signal_unit == "%" then
+  if signal_unit == "%" then
     opening_sensor = Opening_pc;
   else
     opening_sensor = Opening;

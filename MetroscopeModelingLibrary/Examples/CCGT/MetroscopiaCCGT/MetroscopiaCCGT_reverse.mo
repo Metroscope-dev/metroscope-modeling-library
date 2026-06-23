@@ -134,8 +134,8 @@ model MetroscopiaCCGT_reverse
   WaterSteam.Pipes.ControlValve deSH_controlValve annotation (Placement(transformation(extent={{-220,-144},{-240,-124}})));
   Power.Machines.Generator generator annotation (Placement(transformation(extent={{-388,-284},{-468,-236}})));
   Power.BoundaryConditions.Sink sink2 annotation (Placement(transformation(extent={{-490,-280},{-530,-240}})));
-  Sensors_Control.Power.PowerSensor W_ST_out_sensor(sensor_function="Calibration", causality="LPST_eta_is")
-                                                    annotation (Placement(transformation(extent={{-470,-270},{-490,-250}})));
+  Sensors_Control.Power.PowerSensor W_ST_out_sensor(sensor_function="Calibration", causality="LPST_eta_is",
+    W_start=64.8383)                                annotation (Placement(transformation(extent={{-470,-270},{-490,-250}})));
   Sensors_Control.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function="Calibration") annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -345,9 +345,9 @@ model MetroscopiaCCGT_reverse
         origin={-720,-100}), iconTransformation(extent={{-800,-194},{-760,-154}})));
   Power.Machines.Generator GTgenerator annotation (Placement(transformation(extent={{-580,56},{-660,104}})));
   Power.BoundaryConditions.Sink power_GT_sink annotation (Placement(transformation(extent={{-680,60},{-720,100}})));
-  Sensors_Control.Power.PowerSensor W_GT_out_sensor(sensor_function="Calibration", causality="GT_trubine_eta_is")
-                                                    annotation (Placement(transformation(extent={{-660,70},{-680,90}})));
-  Utilities.Interfaces.RealInput W_GT_out(start=148.912) annotation (Placement(transformation(
+  Sensors_Control.Power.PowerSensor W_GT_out_sensor(sensor_function="Calibration", causality="GT_trubine_eta_is",
+    W_start=148.912)                                annotation (Placement(transformation(extent={{-660,70},{-680,90}})));
+  Utilities.Interfaces.RealInput W_GT_out                annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-670,100}), iconTransformation(extent={{-800,-194},{-760,-154}})));
@@ -368,8 +368,10 @@ model MetroscopiaCCGT_reverse
         origin={-930,20}), iconTransformation(extent={{-800,-194},{-760,-154}})));
   FlueGases.Machines.InletGuideVanes inletGuideVanes annotation (Placement(transformation(extent={{-920,-20},{-880,20}})));
   FlueGases.Pipes.Filter filter annotation (Placement(transformation(extent={{-990,-20},{-950,20}})));
-  Sensors_Control.Outline.OpeningSensor openingSensor(sensor_function="Calibration") annotation (Placement(transformation(extent={{-910,30},{-890,50}})));
-  Utilities.Interfaces.RealInput IGV_angle(start=100) annotation (Placement(transformation(
+  Sensors_Control.Outline.OpeningSensor openingSensor(sensor_function="Calibration",
+    Opening_start=100,
+    signal_unit="%")                                                                 annotation (Placement(transformation(extent={{-910,30},{-890,50}})));
+  Utilities.Interfaces.RealInput IGV_angle            annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-900,60}), iconTransformation(extent={{-1036,0},{-996,40}})));

@@ -5,21 +5,29 @@ model PowerSensor
 
   Utilities.Units.Power W;
                   // Power in W
-  Real W_MW(min=0, nominal=100, start=100); // Power in MW
+  Real W_MW(min=0, nominal=100); // Power in MW
 
-  // Icon parameters
+  // Causality display parameters
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
-    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
-  parameter String causality = "" "Specify which parameter is calibrated by this sensor";
+    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"),
+    Dialog(tab="General", group="Causality display parameters"));
+  parameter String causality = "" "Specify which parameter is calibrated by this sensor" annotation(Dialog(tab="General", group="Causality display parameters"));
   outer parameter Boolean show_causality = true "Used to show or not the causality";
+
+  // Sensor signal parameters
+  parameter Real W_start = 100 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String signal_unit = "MW" "Specify the signal unit. This should be the unit of W_start and of the tag linked to the sensor." annotation(choices(choice="MW", choice="W"),
+  Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "MW" "Specify the display unit"
-    annotation(choices(choice="MW", choice="W"));
+    annotation(choices(choice="MW", choice="W"),
+    Dialog(tab="General", group="Sensor signal parameters"));
+
   outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
-  parameter String output_signal_unit = "MW" annotation(choices(choice="MW", choice="W"));
+
 
   MetroscopeModelingLibrary.Power.Connectors.Inlet C_in annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   MetroscopeModelingLibrary.Power.Connectors.Outlet C_out annotation (Placement(transformation(extent={{88,-10},{108,10}}), iconTransformation(extent={{88,-10},{108,10}})));
-  Utilities.Interfaces.GenericReal      W_sensor annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal      W_sensor(start=W_start) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={0,100}), iconTransformation(
@@ -34,7 +42,7 @@ equation
   W = C_in.W;
   W_MW = W/1e6;
 
-  if output_signal_unit == "MW" then
+  if signal_unit == "MW" then
     W_sensor = W_MW;
   else
     W_sensor = W;
