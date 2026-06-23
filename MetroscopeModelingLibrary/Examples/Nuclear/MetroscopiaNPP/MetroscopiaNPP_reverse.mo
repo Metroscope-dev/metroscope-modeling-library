@@ -229,7 +229,7 @@ model MetroscopiaNPP_reverse
     h_0=640e3)                                                                               annotation (Placement(transformation(extent={{-145,
             -102.182},{-135,-90.182}})));
   Sensors_Control.Outline.OpeningSensor                   LP_reheater_drains_control_valve_opening_sensor(
-      output_signal_unit="%")                                                                             annotation (Placement(transformation(extent={{-145,
+      signal_unit="%")                                                                             annotation (Placement(transformation(extent={{-145,
             -87},{-135,-77}})));
   Utilities.Interfaces.RealInput LP_reheater_drains_control_valve_opening(start=15)
               annotation (Placement(transformation(
@@ -403,7 +403,7 @@ model MetroscopiaNPP_reverse
     WaterSteam.Pipes.ControlValve                           HP_reheater_drains_control_valve annotation (Placement(transformation(extent={{-565,
             -102.182},{-555,-90.182}})));
   Sensors_Control.Outline.OpeningSensor                   HP_reheater_drains_control_valve_opening_sensor(
-      output_signal_unit="%")                                                                             annotation (Placement(transformation(extent={{-565,
+      signal_unit="%")                                                                             annotation (Placement(transformation(extent={{-565,
             -91},{-555,-81}})));
   Utilities.Interfaces.RealOutput HP_heater_drains_control_valve_Cvmax
     annotation (Placement(transformation(
@@ -640,30 +640,27 @@ equation
       Line(points={{-777,80},{-800,80},{-800,40},{-820,40},{-820,17}}, color={28,
           108,200}));
   connect(LP_reheater_drains_control_valve.C_out, condenser.C_hot_in)
-    annotation (Line(points={{-135,-100},{120,-100},{120,100},{20,100},{20,34.6074}},
+    annotation (Line(points={{-135,-99.782},{120,-99.782},{120,100},{20,100},{20,34.321}},
         color={28,108,200}));
   connect(cold_source.C_out,CW_T_in_sensor. C_in) annotation (Line(points={{-75,20},
           {-57,20}},                                                                                                           color={28,108,200}));
   connect(CW_T_in_sensor.C_out,CW_P_in_sensor. C_in) annotation (Line(points={{-43,20},
           {-27,20}},                                                                              color={28,108,200}));
-  connect(CW_P_in_sensor.C_out,condenser. C_cold_in) annotation (Line(points={{-13,20},
-          {4.5,20}},                                                                                                             color={28,108,200}));
+  connect(CW_P_in_sensor.C_out,condenser. C_cold_in) annotation (Line(points={{-13,20},{12,20},{12,24.0099},{35.5,24.0099}},     color={28,108,200}));
   connect(CW_T_out_sensor.C_out,cold_sink. C_in) annotation (Line(points={{67,20},
           {85,20}},                                                                                                           color={28,108,200}));
-  connect(condenser.C_cold_out,CW_T_out_sensor. C_in) annotation (Line(points={{35.19,
-          20},{53,20}},                                                                                                            color={28,108,200}));
+  connect(condenser.C_cold_out,CW_T_out_sensor. C_in) annotation (Line(points={{35.5,16.2765},{44,16.2765},{44,20},{53,20}},       color={28,108,200}));
   connect(CW_T_in_sensor.T_sensor, CW_T_in)
     annotation (Line(points={{-50,27},{-50,36}}, color={0,0,127}));
   connect(CW_P_in_sensor.P_sensor, CW_P_in)
     annotation (Line(points={{-20,27},{-20,36}}, color={0,0,127}));
   connect(CW_T_out_sensor.T_sensor, CW_T_out)
     annotation (Line(points={{60,27},{60,36}}, color={0,0,127}));
-  connect(condenser_Q_cold, condenser.Qv_cold_in) annotation (Line(points={{-2,54},
-          {-2,31.4568},{2.95,31.4568}}, color={0,0,127}));
-  connect(condenser_Kth, condenser.Kth) annotation (Line(points={{10,62},{10,
-          35.7531},{10.08,35.7531}},
+  connect(condenser_Q_cold, condenser.Qv_cold_in) annotation (Line(points={{-2,54},{-2,21.4321},{3.88,21.4321}},
+                                        color={0,0,127}));
+  connect(condenser_Kth, condenser.Kth) annotation (Line(points={{10,62},{10,24.0099},{3.88,24.0099}},
                           color={0,0,127}));
-  connect(condenser.C_hot_in, P_cond_sensor.C_out) annotation (Line(points={{20,34.6074},{20,120},{-76,120}},
+  connect(condenser.C_hot_in, P_cond_sensor.C_out) annotation (Line(points={{20,34.321},{20,120},{-76,120}},
                                         color={28,108,200},
       thickness=1));
   connect(P_cond_sensor.P_sensor, P_cond)
@@ -683,20 +680,18 @@ equation
     annotation (Line(points={{-80,-53},{-80,-44}}, color={0,0,127}));
   connect(extraction_pump_hn, extraction_pump_hn)
     annotation (Line(points={{-22,-44},{-22,-44}}, color={0,0,127}));
-  connect(extraction_pump.hn, extraction_pump_hn) annotation (Line(points={{-25.76,
-          -53.6},{-22,-53.6},{-22,-44}}, color={0,0,127}));
-  connect(extraction_pump.rh, extraction_pump_rh) annotation (Line(points={{-24,
-          -56.8},{-14,-56.8},{-14,-42}}, color={0,0,127}));
+  connect(extraction_pump.hn, extraction_pump_hn) annotation (Line(points={{-27.2,-66.4},{-22,-66.4},{-22,-44}},
+                                         color={0,0,127}));
+  connect(extraction_pump.rh, extraction_pump_rh) annotation (Line(points={{-36.8,-66.4},{-14,-66.4},{-14,-42}},
+                                         color={0,0,127}));
   connect(P_cond_sensor.C_in, LPT2.C_out)
     annotation (Line(points={{-88,120},{-127,120}}, color={28,108,200},
       thickness=1));
-  connect(LPT2.Cst, LPT2_Cst) annotation (Line(points={{-141.94,126.56},{-142,
-          126.56},{-142,134}},
+  connect(LPT2.Cst, LPT2_Cst) annotation (Line(points={{-141.4,114.4},{-142,114.4},{-142,134}},
                        color={0,0,127}));
   connect(LPT2_Cst, LPT2_Cst)
     annotation (Line(points={{-142,134},{-142,134}}, color={0,0,127}));
-  connect(turbines_eta_is, LPT2.eta_is) annotation (Line(points={{-370,154},{
-          -370,140},{-138,140},{-138,127.36},{-137.98,127.36}},
+  connect(turbines_eta_is, LPT2.eta_is) annotation (Line(points={{-370,154},{-370,140},{-138,140},{-138,113.6},{-137.8,113.6}},
                                     color={0,0,127}));
   connect(powerSink.C_in,W_elec_sensor. C_out) annotation (Line(points={{-49,160},
           {-56.12,160}},                                                                      color={244,125,35}));
@@ -736,16 +731,16 @@ equation
   connect(LP_heater.Kth, LP_heater_Kth)
     annotation (Line(points={{-192,-50},{-192,-40}}, color={0,0,127}));
   connect(LP_reheater_drains_control_valve.Opening,
-    LP_reheater_drains_control_valve_opening_sensor.                                                Opening) annotation (Line(points={{-140,
-          -91.2729},{-140,-87.1}},                                                                                                                                  color={0,0,127}));
+    LP_reheater_drains_control_valve_opening_sensor.                                                Opening) annotation (Line(points={{-140,-90.182},{-140,-87.1}}, color={0,0,127}));
   connect(LP_heater.C_hot_out, LP_reheater_drains_control_valve.C_in)
-    annotation (Line(points={{-200,-68},{-200,-100},{-145,-100}}, color={28,108,
+    annotation (Line(points={{-200,-68},{-200,-99.782},{-145,-99.782}},
+                                                                  color={28,108,
           200}));
   connect(LP_reheater_drains_control_valve_opening_sensor.opening_sensor,
     LP_reheater_drains_control_valve_opening)
     annotation (Line(points={{-140,-76.9},{-140,-70}}, color={0,0,127}));
   connect(LP_heater_drains_control_valve_Cvmax,
-    LP_reheater_drains_control_valve.Cv_max) annotation (Line(points={{-150,-78},{-150,-94.0002},{-142,-94.0002}},
+    LP_reheater_drains_control_valve.Cv_max) annotation (Line(points={{-150,-78},{-150,-92.582},{-142,-92.582}},
                                                 color={0,0,127}));
   connect(LP_heater_drains_control_valve_Cvmax,
     LP_heater_drains_control_valve_Cvmax)
@@ -763,28 +758,26 @@ equation
   connect(LPT1.C_W_out, generator.C_in) annotation (Line(points={{-263,126.72},{
           -252,126.72},{-252,160},{-100.4,160}}, color={244,125,35},
       smooth=Smooth.Bezier));
-  connect(LPT1.Cst, LPT1_Cst) annotation (Line(points={{-277.94,126.56},{
-          -277.94,126},{-278,126},{-278,134}},
+  connect(LPT1.Cst, LPT1_Cst) annotation (Line(points={{-277.4,114.4},{-277.4,126},{-278,126},{-278,134}},
                                   color={0,0,127}));
   connect(superheater_T_out_sensor.T_sensor, superheater_T_out)
     annotation (Line(points={{-340,126},{-340,136}}, color={0,0,127}));
   connect(deaerator_inlet_pipe_delta_z.y, deaerator_inlet_pipe.delta_z)
     annotation (Line(points={{-400,-41},{-400,-45.2}},          color={0,0,127}));
-  connect(LPT1.eta_is, turbines_eta_is) annotation (Line(points={{-273.98,
-          127.36},{-274,127.36},{-274,140},{-370,140},{-370,154}},
+  connect(LPT1.eta_is, turbines_eta_is) annotation (Line(points={{-273.8,113.6},{-274,113.6},{-274,140},{-370,140},{-370,154}},
                                                       color={0,0,127}));
-  connect(condenser_Kfr_cold.y, condenser.Kfr_cold) annotation (Line(points={{-8,35},{-8,25.7284},{2.95,25.7284}},
+  connect(condenser_Kfr_cold.y, condenser.Kfr_cold) annotation (Line(points={{-8,35},{-8,18.8543},{3.88,18.8543}},
                                                     color={0,0,127}));
   connect(deaerator_outlet_pipe_delta_z.y, deaerator_outlet_pipe.delta_z)
     annotation (Line(points={{-440,-41},{-440,-45.2}},          color={0,0,127}));
   connect(feedwater_pump_hn, feedwater_pump_hn)
     annotation (Line(points={{-506,-42},{-506,-42}}, color={0,0,127}));
-  connect(feedwater_pump.rh, feedwater_pump_rh) annotation (Line(points={{-506,
-          -56.8},{-502,-56.8},{-502,-40}}, color={0,0,127}));
+  connect(feedwater_pump.rh, feedwater_pump_rh) annotation (Line(points={{-518.8,-66.4},{-502,-66.4},{-502,-40}},
+                                           color={0,0,127}));
   connect(feedwater_pump_rh, feedwater_pump_rh)
     annotation (Line(points={{-502,-40},{-502,-40}}, color={0,0,127}));
-  connect(feedwater_pump.hn, feedwater_pump_hn) annotation (Line(points={{-507.76,
-          -53.6},{-506,-53.6},{-506,-42}}, color={0,0,127}));
+  connect(feedwater_pump.hn, feedwater_pump_hn) annotation (Line(points={{-509.2,-66.4},{-506,-66.4},{-506,-42}},
+                                           color={0,0,127}));
   connect(feedwater_pump.C_out, HP_pump_T_out_sensor.C_in)
     annotation (Line(points={{-522,-60},{-533,-60}}, color={28,108,200},
       thickness=1));
@@ -828,16 +821,17 @@ equation
   connect(HP_heater_T_drains_sensor.T_sensor, HP_heater_T_drains)
     annotation (Line(points={{-633,-86},{-624,-86}}, color={0,0,127}));
   connect(HP_reheater_drains_control_valve.Opening,
-    HP_reheater_drains_control_valve_opening_sensor.                                                Opening) annotation (Line(points={{-560,
-          -91.2729},{-560,-91.1}},                                                                                                                                color={0,0,127}));
+    HP_reheater_drains_control_valve_opening_sensor.                                                Opening) annotation (Line(points={{-560,-90.182},{-560,-91.1}},
+                                                                                                                                                                  color={0,0,127}));
   connect(HP_reheater_drains_control_valve.Cv_max,
-    HP_heater_drains_control_valve_Cvmax) annotation (Line(points={{-562,-94.0002},{-570,-94.0002},{-570,-80}},
+    HP_heater_drains_control_valve_Cvmax) annotation (Line(points={{-562,-92.582},{-570,-92.582},{-570,-80}},
                                        color={0,0,127}));
   connect(HP_reheater_drains_control_valve_opening_sensor.opening_sensor,
     HP_reheater_drains_control_valve_opening)
     annotation (Line(points={{-560,-80.9},{-560,-74}}, color={0,0,127}));
   connect(HP_heater_T_drains_sensor.C_out, HP_reheater_drains_control_valve.C_in)
-    annotation (Line(points={{-640,-93},{-640,-100},{-565,-100}}, color={28,108,
+    annotation (Line(points={{-640,-93},{-640,-99.782},{-565,-99.782}},
+                                                                  color={28,108,
           200}));
   connect(steam_generator.purge_outlet,Q_purge_sensor. C_in) annotation (Line(
         points={{-820,-105.233},{-820,-115}}, color={28,108,200}));
@@ -858,22 +852,22 @@ equation
   connect(Q_purge_sensor.Q_sensor,Q_purge)
     annotation (Line(points={{-813,-122},{-802,-122}}, color={0,0,127}));
   connect(HP_control_valve.Opening,HP_control_valve_opening_sensor. Opening)
-    annotation (Line(points={{-780,48.7271},{-780,50.9}},  color={0,0,127}));
+    annotation (Line(points={{-780,49.818},{-780,50.9}},   color={0,0,127}));
   connect(HP_control_valve_opening_sensor.opening_sensor,
     HP_control_valve_opening)
     annotation (Line(points={{-780,61.1},{-780,68}},   color={0,0,127}));
   connect(HP_control_valve_Cvmax,HP_control_valve. Cv_max) annotation (Line(
-        points={{-790,56},{-790,45.9998},{-782,45.9998}},
+        points={{-790,56},{-790,47.418},{-782,47.418}},
                                                    color={0,0,127}));
   connect(HPT_P_in_sensor.P_sensor,HPT_P_in)
     annotation (Line(points={{-728,46},{-728,56}},   color={0,0,127}));
   connect(HP_control_valve_Cvmax,HP_control_valve_Cvmax)
     annotation (Line(points={{-790,56},{-790,56}},   color={0,0,127}));
-  connect(HP_control_valve.C_in, P_steam_sensor.C_out) annotation (Line(points={{-785,39.9998},{-820,39.9998},{-820,17}},
+  connect(HP_control_valve.C_in, P_steam_sensor.C_out) annotation (Line(points={{-785,40.218},{-820,40.218},{-820,17}},
                                                     color={255,0,0},
       thickness=1,
       pattern=LinePattern.Dash));
-  connect(HPT_P_in_sensor.C_in,HP_control_valve. C_out) annotation (Line(points={{-734,40},{-754,40},{-754,39.9998},{-775,39.9998}},
+  connect(HPT_P_in_sensor.C_in,HP_control_valve. C_out) annotation (Line(points={{-734,40},{-754,40},{-754,40.218},{-775,40.218}},
                                                                     color={255,0,0},
       thickness=1,
       pattern=LinePattern.Dash));
@@ -883,10 +877,9 @@ equation
       pattern=LinePattern.Dash));
   connect(HPT1_Cst,HPT1_Cst)
     annotation (Line(points={{-694,56},{-694,56}},   color={0,0,127}));
-  connect(HPT_1.Cst,HPT1_Cst)  annotation (Line(points={{-693.94,46.56},{
-          -693.94,56},{-694,56}}, color={0,0,127}));
-  connect(HPT_1.eta_is, turbines_eta_is) annotation (Line(points={{-689.98,
-          47.36},{-689.98,56},{-690,56},{-690,140},{-370,140},{-370,154}},
+  connect(HPT_1.Cst,HPT1_Cst)  annotation (Line(points={{-693.4,34.4},{-693.4,56},{-694,56}},
+                                  color={0,0,127}));
+  connect(HPT_1.eta_is, turbines_eta_is) annotation (Line(points={{-689.8,33.6},{-689.8,56},{-690,56},{-690,140},{-370,140},{-370,154}},
                                                color={0,0,127}));
   connect(HPT_1.C_W_out, generator.C_in) annotation (Line(points={{-679,46.72},{
           -662,46.72},{-662,160},{-100.4,160}},   color={244,125,35},
@@ -911,10 +904,9 @@ equation
       pattern=LinePattern.Dash));
   connect(HPT_P_out_sensor.P_sensor,HPT_extract_P1)
     annotation (Line(points={{-460,46},{-460,56}},   color={0,0,127}));
-  connect(HPT_2.Cst,HPT2_Cst)  annotation (Line(points={{-583.94,46.56},{
-          -583.94,46},{-584,46},{-584,58}},color={0,0,127}));
-  connect(HPT_2.eta_is, turbines_eta_is) annotation (Line(points={{-579.98,
-          47.36},{-579.98,46},{-580,46},{-580,140},{-370,140},{-370,154}},
+  connect(HPT_2.Cst,HPT2_Cst)  annotation (Line(points={{-583.4,34.4},{-583.4,46},{-584,46},{-584,58}},
+                                           color={0,0,127}));
+  connect(HPT_2.eta_is, turbines_eta_is) annotation (Line(points={{-579.8,33.6},{-579.8,46},{-580,46},{-580,140},{-370,140},{-370,154}},
                                                        color={0,0,127}));
   connect(HPT_2.C_W_out, generator.C_in) annotation (Line(points={{-569,46.72},{
           -542,46.72},{-542,160},{-100.4,160}},   color={244,125,35},
@@ -960,7 +952,7 @@ equation
                                                      color={28,108,200},
       thickness=1));
   connect(HP_reheater_drains_control_valve.C_out, deaerator_outlet_pipe.C_in)
-    annotation (Line(points={{-555,-100},{-420,-100},{-420,-50},{-430,-50}},
+    annotation (Line(points={{-555,-99.782},{-420,-99.782},{-420,-50},{-430,-50}},
         color={28,108,200}));
   connect(steam_dryer_liq_out_pipe.C_out, deaerator_outlet_pipe.C_in)
     annotation (Line(points={{-420,-10},{-420,-50},{-430,-50}}, color={28,108,200}));
@@ -984,7 +976,7 @@ equation
         points={{-384,80},{-340,80},{-340,70}}, color={28,108,200}));
   connect(LPT1_Cst, LPT1_Cst)
     annotation (Line(points={{-278,134},{-278,134}}, color={0,0,127}));
-  connect(condenser_C_incond.y, condenser.C_incond) annotation (Line(points={{30,43},{30,35.7531},{29.92,35.7531}},
+  connect(condenser_C_incond.y, condenser.C_incond) annotation (Line(points={{30,43},{30,26.5877},{3.88,26.5877}},
                                                 color={0,0,127}));
   connect(condenser_Kth, condenser_Kth)
     annotation (Line(points={{10,62},{10,62}}, color={0,0,127}));

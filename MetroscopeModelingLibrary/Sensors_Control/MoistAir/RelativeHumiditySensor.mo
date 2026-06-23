@@ -12,15 +12,19 @@ model RelativeHumiditySensor
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.RelativeHumidityIcon;
 
   // Relative Humidity
-  parameter Real H_start = 50 "Write here the build value of the quantity. This value will be used in the simulation.";
-  parameter Real relative_humidity_0 = 0.5;
+  parameter Real relative_humidity_0 = 0.5 annotation(Dialog(tab="Initialization", group="Start values"));
   Real relative_humidity(start=relative_humidity_0, min=0, max=1);
   Real relative_humidity_pc(start=relative_humidity_0*100, min=0, max=100);
 
-  // Display
-  parameter String display_unit = "%" "Specify the display unit" annotation(choices(choice="", choice="%"));
+  // Sensor signal parameters
+  parameter Real H_start = 50 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String display_unit = "%" "Specify the display unit" annotation(choices(choice="", choice="%"),
+  Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String signal_unit = "%" "Specify the signal unit. This should be the unit of H_start and of the tag linked to the sensor." annotation (choices(choice="1", choice="%"),
+  Dialog(tab="General", group="Sensor signal parameters"));
+
   outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
-  parameter String signal_unit = "%" annotation (choices(choice="1", choice="%"));
+
 
   Utilities.Interfaces.GenericReal      H_sensor(start=H_start) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

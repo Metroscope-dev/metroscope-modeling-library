@@ -7,15 +7,15 @@ partial model TemperatureSensor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  // Initialization parameters
-  parameter Real T_start = 300 "Write here the build value of the quantity. This value will be used in the simulation.";
-
-  parameter String signal_unit = "degC" "Specify the signal unit. This should be the unit of T_start and of the tag linked to the sensor." annotation (choices(choice="degC", choice="K", choice="degF"));
-
+  // Sensor signal parameters
+  parameter Real T_start = 300 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String signal_unit = "degC" "Specify the signal unit. This should be the unit of T_start and of the tag linked to the sensor." annotation (choices(choice="degC", choice="K", choice="degF"),
+  Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "degC" "Specify the display unit"
-  annotation(choices(choice="degC", choice="K", choice="degF"));
+  annotation(choices(choice="degC", choice="K", choice="degF"), Dialog(tab="General", group="Sensor signal parameters"));
 
-  parameter Units.Temperature T_0 = 300;
+  // Initialization start vales
+  parameter Units.Temperature T_0 = 300 annotation(Dialog(tab="Initialization", group="Start values"));
 
 
   Units.Temperature T(start=T_0); // Temperature in SI Units : K
