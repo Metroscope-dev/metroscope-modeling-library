@@ -39,11 +39,7 @@ model SteamGenerator
         rotation=270,
         origin={0,-82})));
   Power.Connectors.Inlet C_thermal_power annotation (Placement(transformation(extent={{-40,-10},{-20,10}}), iconTransformation(extent={{-40,-10},{-20,10}})));
-  Utilities.Interfaces.GenericReal vapor_fraction annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-30,100}), iconTransformation(extent={{44,66},{58,80}})));
+  Utilities.Interfaces.GenericReal vapor_fraction annotation (Placement(transformation(extent={{-42,76},{-50,84}}), iconTransformation(extent={{-42,76},{-50,84}})));
 equation
 
   // Fault modes
@@ -80,8 +76,9 @@ equation
           {18.5,-1.11022e-15},{18.5,0},{30,0}}, color={28,108,200}));
   connect(purge_source.C_out, purge_outlet) annotation (Line(points={{-8.88178e-16,
           -87},{-8.88178e-16,-102.5},{0,-102.5},{0,-118}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-120},
-            {60,120}}), graphics={
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-60,-120},{60,120}},
+        initialScale=0.7),
+                        graphics={
         Rectangle(
           extent={{-32,26},{30,-80}},
           fillColor={175,175,175},
@@ -110,7 +107,8 @@ equation
           fillColor={175,175,175},
           fillPattern=FillPattern.Solid)}),
                          Diagram(coordinateSystem(preserveAspectRatio=false,
-          extent={{-60,-120},{60,120}})),
+          extent={{-60,-120},{60,120}},
+        initialScale=0.7)),
             Icon(coordinateSystem(preserveAspectRatio=false)),
                                    Diagram(coordinateSystem(preserveAspectRatio=
            false)));
