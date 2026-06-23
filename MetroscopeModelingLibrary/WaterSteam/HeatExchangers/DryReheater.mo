@@ -105,20 +105,14 @@ model DryReheater
         rotation=90,
         origin={144,-18})));
   Pipes.Leak partition_plate annotation (Placement(transformation(extent={{-98,-64},{-78,-44}})));
-  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-130,78}), iconTransformation(extent={{-20,-20},{20,20}},
-        rotation=180,
-        origin={-180,40})));
+  Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(transformation(extent={{-160,36},{-168,44}}), iconTransformation(extent={{-160,36},{-168,44}})));
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={-90,78}), iconTransformation(
-        extent={{-20,-20},{20,20}},
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-80,100})));
+        origin={-100,84}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-100,84})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
@@ -231,12 +225,13 @@ equation
       color={28,108,200},
       thickness=1));
   connect(Kfr_cold, cold_side_pipe.Kfr)
-    annotation (Line(points={{-130,78},{-130,4}},          color={0,0,127}));
+    annotation (Line(points={{-164,40},{-164,22},{-130,22},{-130,4}},
+                                                           color={0,0,127}));
   connect(hot_side_deheating.C_in, C_hot_in) annotation (Line(
       points={{94,19},{120,19},{120,60},{0,60},{0,80}},
       color={255,0,0},
       thickness=1));
-  annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
+  annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}, initialScale=0.3),
                    graphics={
         Polygon(
           points={{-160,80},{-160,60},{-160,-62.5},{-160,-80},{-120,-80},{10,-80},
@@ -452,7 +447,7 @@ equation
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None,
           lineColor={0,0,0})}),
-                          Diagram(coordinateSystem(extent={{-160,-80},{160,80}}),
+                          Diagram(coordinateSystem(extent={{-160,-80},{160,80}}, initialScale=0.3),
         graphics={Text(
           extent={{40,42},{100,30}},
           textColor={28,108,200},
