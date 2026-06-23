@@ -142,7 +142,7 @@ model Superheater
         origin={-34,-44})));
   Connectors.Outlet C_vent(Q(start=-Q_vent_0), P(start=P_hot_out_0),
     h_outflow(start=h_vap_sat_0))
-                           annotation (Placement(transformation(extent={{150,-88},{170,-68}})));
+                           annotation (Placement(transformation(extent={{150,-88},{170,-68}}), iconTransformation(extent={{150,-90},{170,-70}})));
 
   Pipes.Leak tube_rupture annotation (Placement(transformation(extent={{-6,28},{14,48}})));
   BaseClasses.IsoPHFlowModel final_mix_cold annotation (Placement(transformation(extent={{24,52},{4,72}})));
@@ -152,12 +152,12 @@ protected
 
 public
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=270,
-        origin={90,60}), iconTransformation(
-        extent={{-20,-20},{20,20}},
+        extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-80,100})));
+        origin={-120,84}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-120,84})));
 equation
 
   // Failure modes
@@ -284,7 +284,7 @@ equation
   connect(cold_side_vaporising.C_in, C_cold_in) annotation (Line(points={{39,-60},
           {38.5,-60},{38.5,-66},{0,-66},{0,-80}},       color={28,108,200},
       thickness=1));
-  annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}),
+  annotation (Icon(coordinateSystem(extent={{-160,-80},{160,80}}, initialScale=0.3),
                    graphics={
         Polygon(
           points={{-160,80},{-160,60},{-160,-62.5},{-160,-80},{-120,-80},{10,-80},
@@ -359,7 +359,7 @@ equation
           fillPattern=FillPattern.Solid,
           pattern=LinePattern.None,
           lineColor={0,0,0})}),
-                          Diagram(coordinateSystem(extent={{-160,-80},{160,80}}),
+                          Diagram(coordinateSystem(extent={{-160,-80},{160,80}}, initialScale=0.3),
         graphics={                 Text(
           extent={{-20,4},{20,-4}},
           textColor={238,46,47},

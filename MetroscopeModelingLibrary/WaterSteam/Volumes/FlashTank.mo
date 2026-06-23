@@ -58,7 +58,8 @@ equation
     annotation (Line(points={{46,-40},{100,-40}}, color={28,108,200}));
   connect(liquid_phase.C_in, C_in) annotation (Line(points={{26,-40},{-28,-40},
           {-28,40},{-100,40}}, color={28,108,200}));
-  annotation (Icon(graphics={
+  annotation (Icon(coordinateSystem(initialScale=0.25),
+                   graphics={
         Rectangle(
           extent={{-100,40},{100,-40}},
           lineColor={28,108,200},
@@ -147,5 +148,5 @@ equation
         Rectangle(
           extent={{-100,40},{100,-40}},
           lineColor={28,108,200},
-          lineThickness=1)}));
+          lineThickness=1)}), Diagram(coordinateSystem(initialScale=0.25)));
 end FlashTank;
