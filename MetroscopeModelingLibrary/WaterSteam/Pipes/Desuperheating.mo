@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.WaterSteam.Pipes;
 model Desuperheating
   Real Water_Q;
   Real Delta_T;
-  parameter Real Gain = 1000;
+  parameter Real Gain = 1000 "To adjust between 100 and 10000";
 
   BaseClasses.IsoPHFlowModel
                Nozzle annotation (Placement(transformation(
@@ -16,18 +16,24 @@ model Desuperheating
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,50})));
-  Utilities.Interfaces.GenericReal T_setpoint annotation (Placement(transformation(extent={{76,56},{84,64}}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={68,40})));
-  Utilities.Interfaces.GenericReal T_measured annotation (Placement(transformation(extent={{72,-58},{80,-50}}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={70,-40})));
   BaseClasses.IsoPHFlowModel Spray annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=180,
         origin={30,0})));
+  Utilities.Interfaces.GenericReal T_setpoint annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={60,34}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={60,34})));
+  Utilities.Interfaces.GenericReal T_measured annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={60,34}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={60,-34})));
 equation
   Delta_T = T_measured - T_setpoint;
   Water_Q = injector.Q;
