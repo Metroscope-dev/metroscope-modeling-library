@@ -10,6 +10,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
   
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+- Sensor parameters are organized in tabs and groups [#592](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/592)
    
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
    
