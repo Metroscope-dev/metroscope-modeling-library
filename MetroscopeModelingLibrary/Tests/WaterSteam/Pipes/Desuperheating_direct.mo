@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model Desuperheating_direct
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-142,-9.99996},{-122,10}})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
@@ -69,5 +70,5 @@ equation
   connect(sink.C_in, steam_t_sensor1.C_out) annotation (Line(points={{85,0},{74,0}}, color={28,108,200}));
   connect(steam_t_sensor1.C_in, pipe.C_out) annotation (Line(points={{54,0},{16.5,0}}, color={28,108,200}));
   connect(pipe.T_measured, steam_t_sensor1.T_sensor) annotation (Line(points={{11.55,-6.53332},{11.55,-26},{64,-26},{64,-10}}, color={0,0,127}));
-  annotation (Diagram(coordinateSystem(extent={{-160,-100},{100,100}})), Icon(coordinateSystem(extent={{-160,-100},{100,100}})));
+  annotation (Diagram(coordinateSystem(extent={{-160,-100},{100,100}})), Icon(coordinateSystem(extent={{-100,-100},{100,100}})));
 end Desuperheating_direct;
