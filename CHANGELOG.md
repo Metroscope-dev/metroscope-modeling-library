@@ -8,6 +8,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+    - Added a desuperheating component [#591](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/591)
   
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 - Adapted NPP components size and MetroscopiaNPP reverse to MML4 [#589](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/589)
