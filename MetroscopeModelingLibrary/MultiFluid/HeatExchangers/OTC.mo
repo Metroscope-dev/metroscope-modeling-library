@@ -25,29 +25,24 @@ model OTC
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-90,12})));
-  Utilities.Interfaces.GenericReal Kth_evaporating annotation (Placement(
-        transformation(extent={{-92,-32},{-84,-24}}),   iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={-130,80})));
   Utilities.Interfaces.GenericReal Kfr_cold annotation (Placement(
         transformation(extent={{-188,-32},{-180,-24}}),
                                                     iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-30,60})));
-  Utilities.Interfaces.GenericReal Kth_superheating annotation (Placement(
-        transformation(extent={{-188,48},{-180,56}}), iconTransformation(
+        origin={-30,80})));
+  Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(
+          extent={{-188,48},{-180,56}}), iconTransformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-130,40})));
+        origin={-130,60})));
   Utilities.Interfaces.GenericReal Kfr_hot annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-90,32}),iconTransformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-110,-50})));
+        rotation=0,
+        origin={-30,40})));
 equation
   evaporator.S_eq + superheater.S_eq = S;
   connect(C_hot_in, C_hot_in)
@@ -60,9 +55,6 @@ equation
   connect(superheater.C_hot_out, Kfr_hot_pipe.C_in)
     annotation (Line(points={{-120,12},{-100,12}},
                                              color={95,95,95},
-      thickness=1));
-  connect(Kth_evaporating, evaporator.Kth)
-    annotation (Line(points={{-88,-28},{-62,-28}},   color={0,0,127},
       thickness=1));
   connect(Kfr_hot_pipe.Kfr, Kfr_hot)
     annotation (Line(points={{-90,16},{-90,32}},
@@ -84,10 +76,6 @@ equation
       points={{-184,-28},{-162,-28}},
       color={0,0,127},
       thickness=1));
-  connect(Kth_superheating, superheater.Kth) annotation (Line(
-      points={{-184,52},{-162,52}},
-      color={0,0,127},
-      thickness=1));
   connect(evaporator.C_cold_in, C_cold_in) annotation (Line(
       points={{15,92},{40,92}},
       color={28,108,200},
@@ -100,11 +88,20 @@ equation
       points={{-140,62},{-140,132},{-55,132}},
       color={28,108,200},
       thickness=1));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,-40},
-            {0,160}}),   graphics={Rectangle(
+  connect(Kth, superheater.Kth)
+    annotation (Line(points={{-184,52},{-162,52}}, color={0,0,127}));
+  connect(Kth, evaporator.Kth) annotation (Line(points={{-184,52},{-178,52},{
+          -178,80},{-72,80},{-72,-28},{-62,-28}}, color={0,0,127}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-160,
+            -40},{0,160}},
+        grid={2,2},
+        initialScale=0.5),
+                         graphics={Rectangle(
           extent={{-120,160},{-40,-40}},
           lineColor={28,108,200},
           fillColor={0,140,72},
           fillPattern=FillPattern.Solid)}), Diagram(coordinateSystem(
-          preserveAspectRatio=false, extent={{-160,-40},{0,160}})));
+          preserveAspectRatio=false, extent={{-160,-40},{0,160}},
+        grid={2,2},
+        initialScale=0.5)));
 end OTC;

@@ -12,9 +12,9 @@ model Superheater_reverse
   input Real T_cold_source(start = 410, min = 130, nominal = 150) "degC";
 
   // Parameters
-  parameter String QCp_max_side = "hot";
-  parameter Utilities.Units.Area S = 10000;
-  parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
+  // parameter String QCp_max_side = "hot";
+  // parameter Utilities.Units.Area S = 10000;
+  // parameter Utilities.Units.FrictionCoefficient Kfr_hot = 0;
 
   // Calibrated parameters
   output Utilities.Units.HeatExchangeCoefficient Kth;
@@ -27,14 +27,15 @@ model Superheater_reverse
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
         extent = {{10,-10},{-10,10}},
         rotation = 0,
-        origin={66,40})));
+        origin={86,-40})));
   .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(
         extent = {{10,-10},{-10,10}},
         rotation = 0,
         origin = {-66,40})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent = {{-76,-10},{-56,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{56,-10},{76,10}})));
-  MultiFluid.HeatExchangers.Superheater superheater annotation (Placement(transformation(extent = {{0,-10},{20,10}})));
+  MultiFluid.HeatExchangers.Superheater superheater(S_parameter=true)
+                                                    annotation (Placement(transformation(extent = {{0,-10},{20,10}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cold_out_sensor annotation (Placement(transformation(extent = {{0,30},{-20,50}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cold_out_sensor annotation (Placement(transformation(extent = {{-30,30},{-50,50}})));
 equation
@@ -48,7 +49,7 @@ equation
   cold_source.Q_out = - Q_cold_source;
 
   // Parameters
-  superheater.S = S;
+  // superheater.S = S;
 
   // Observables
   T_cold_out_sensor.T_degC = T_cold_out;
@@ -56,21 +57,25 @@ equation
 
   // Calibrated parameters
   superheater.Kth = Kth;
-  superheater.Kfr_hot = Kfr_hot;
+  // superheater.Kfr_hot = Kfr_hot;
   superheater.Kfr_cold = Kfr_cold;
 
-  connect(superheater.C_hot_in, hot_source.C_out) annotation (Line(points = {{0,0},{-61,0}}, color={95,95,95},
+  connect(superheater.C_hot_in, hot_source.C_out) annotation (Line(points={{6,0},{
+          -61,0}},                                                                           color={95,95,95},
       thickness=1));
-  connect(T_cold_out_sensor.C_in, superheater.C_cold_out) annotation (Line(points = {{0,40},{6,40},{6,8}}, color={28,108,200},
+  connect(T_cold_out_sensor.C_in, superheater.C_cold_out) annotation (Line(points={{0,40},{
+          10,40},{10,10}},                                                                                 color={28,108,200},
       thickness=1,
       pattern=LinePattern.Dash));
   connect(T_cold_out_sensor.C_out, P_cold_out_sensor.C_in) annotation (Line(points = {{-20,40},{-30,40}}, color={28,108,200},
       thickness=1,
       pattern=LinePattern.Dash));
-  connect(superheater.C_cold_in, cold_source.C_out) annotation (Line(points={{14,8},{14,40},{61,40}},   color={28,108,200},
+  connect(superheater.C_cold_in, cold_source.C_out) annotation (Line(points={{10,-10},
+          {10,-40},{81,-40}},                                                                           color={28,108,200},
       thickness=1,
       pattern=LinePattern.Dash));
-  connect(superheater.C_hot_out, hot_sink.C_in) annotation (Line(points={{20,0},{61,0}},   color={95,95,95},
+  connect(superheater.C_hot_out, hot_sink.C_in) annotation (Line(points={{14,0},{
+          61,0}},                                                                          color={95,95,95},
       thickness=1));
   connect(P_cold_out_sensor.C_out, cold_sink.C_in) annotation (Line(points = {{-50,40},{-61,40}}, color={28,108,200},
       thickness=1,
