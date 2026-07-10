@@ -57,6 +57,9 @@ partial model WaterFlueGasesMonophasicHX
   parameter Units.SpecificEnthalpy h_hot_in_0 = 6.08e5;
   parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
 
+  Units.Area S_eq;
+  parameter Boolean S_parameter = true "false for specific case of OTC component";
+
   // Intermediate variables
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_min;
   MetroscopeModelingLibrary.Utilities.Units.HeatCapacity Cp_cold_max;
@@ -104,6 +107,11 @@ equation
     fouling = 0;
   end if;
 
+  // Free S for OTC
+  if S_parameter then
+  S_eq = S;
+  end if;
+
   // Definitions
   Q_cold = cold_side.Q;
   Q_hot = hot_side.Q;
@@ -119,7 +127,7 @@ equation
   // Power Exchange
   HX.W = W;
   HX.Kth = Kth*(1-fouling/100);
-  HX.S = S;
+  HX.S = S_eq;
   HX.Q_cold = Q_cold;
   HX.Q_hot = Q_hot;
   HX.T_cold_in = T_cold_in;

@@ -6,8 +6,8 @@ model Evaporator
     import MetroscopeModelingLibrary.Utilities.Units;
     import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-    // Pressure Losses
     parameter Units.Area S = 15000;
+
     parameter Units.MassFraction x_steam_out = 1; // Steam mass fraction at water outlet
 
     // Heating
@@ -58,7 +58,10 @@ model Evaporator
       parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_cold_out_0));
       parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_cold_out_0));
       parameter Units.SpecificEnthalpy h_hot_in_0 = 8.05e5;
-      parameter Units.SpecificEnthalpy h_hot_out_0 = 6.5e5;
+    parameter Units.SpecificEnthalpy h_hot_out_0 = 6.5e5;
+
+    Units.Area S_eq;
+    parameter Boolean S_parameter = true "false for specific case of OTC component";
 
   Power.HeatExchange.NTUHeatExchange HX_vaporising(config=HX_config, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -94,6 +97,11 @@ equation
   // Failure modes
   if not faulty then
     fouling = 0;
+  end if;
+
+  // Free S for OTC
+  if S_parameter then
+  S_eq = S;
   end if;
 
   // Definitions

@@ -8,6 +8,10 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+- OTC component [#596] (https://github.com/Metroscope-dev/metroscope-modeling-library/pull/596)
+- Extraction splitter output connecter for alpha and vapour fraction decrease fault on moisture separator [#569] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/569)
+- Added a Chromatograph components in the Fuel medium. It acts as a source in which the composition is declared as a vector. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
+- Added a GT_Louvers component for both flue gas and ref moist air media. It acts as an air source, to which we can attach ambient condition connectors (T, P and H). The moist air - flue gas converter is built in. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
     - Added a desuperheating component [#591](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/591)
   
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
@@ -27,6 +31,9 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
     - Added a GT_Louvers component for both flue gas and ref moist air media. It acts as an air source, to which we can attach ambient condition connectors (T, P and H). The moist air - flue gas converter is built in. [#565](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/565)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+- Fix QCpmax default value for superheaters to unknown [#577] (https://github.com/Metroscope-dev/metroscope-modeling-library/pull/577)
+- 🔧 Fix variables declaration for incondensable in ACC [#558](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/558)
+- Fix QCpmax default value to unknown for liq liq exchanges [#570] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/570)
     - Fix QCpmax default value for superheaters to unknown [#577] (https://github.com/Metroscope-dev/metroscope-modeling-library/pull/577)
     - 🔧 Fix variables declaration for incondensable in ACC [#558](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/558)
     - Fix QCpmax default value to unknown for liq liq exchanges [#570] (https://github.com/Metroscope-dev/metroscope-modeling-library/issues/570)
