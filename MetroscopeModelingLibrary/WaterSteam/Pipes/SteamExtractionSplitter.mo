@@ -48,12 +48,12 @@ model SteamExtractionSplitter
   Connectors.Outlet C_main_out(Q(start=-Q_main_0), P(start=P_0), h_outflow(start=h_0)) annotation (Placement(transformation(extent={{100,-10},{120,10}}), iconTransformation(extent={{96,-10},{116,10}})));
   Connectors.Outlet C_ext_out(Q(start=-Q_ext_0), P(start=P_0), h_outflow(start=h_0)) annotation (Placement(transformation(extent={{-10,-74},{10,-54}}), iconTransformation(extent={{-10,-78},{10,-58}})));
   Utilities.Interfaces.GenericReal alpha annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={60,-64}), iconTransformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={52,-30})));
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={80,24}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={80,24})));
 protected
   parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
@@ -79,14 +79,15 @@ equation
   connect(extracted_flow.C_out, C_ext_out) annotation (Line(points={{-2.10942e-15,-41.5},{-2.10942e-15,-54},{0,-54},{0,-64}}, color={28,108,200}));
   connect(C_main_out, main_flow.C_out) annotation (Line(points={{110,0},{85,0}}, color={28,108,200}));
   connect(C_in, main_flow.C_in) annotation (Line(points={{-110,0},{35,0}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},{100,80}}),
+  annotation (Icon(coordinateSystem(preserveAspectRatio=true, initialScale=0.2),
                          graphics={Polygon(
           points={{-100,20},{-100,-20},{-46,-20},{-8,-60},{10,-60},{-16,-20},{100,-20},{100,20},{-100,20}},
           lineColor={64,82,185},
           fillColor={236,238,248},
           fillPattern=FillPattern.Solid,
           lineThickness=0.5)}),                                  Diagram(
-        coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},{100,100}}), graphics={
+        coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},{100,100}},
+        initialScale=0.2),                                                          graphics={
         Text(
           extent={{40,-16},{82,-26}},
           textColor={28,108,200},

@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.MoistAir.Pipes;
 model AdmiLouver
-  extends Pipe annotation(IconMap(primitivesVisible=false));
+  extends FrictionPipe
+               annotation(IconMap(primitivesVisible=false));
   annotation (Icon(graphics={                                             Line(
           points={{46,100},{46,-100},{-54,-100},{-14,-60},{-54,-60},{-14,-20},{-54,-20},{-14,20},{-54,20},{-14,60},{-54,60},{-14,100},{46,100}},
           color={85,170,255},

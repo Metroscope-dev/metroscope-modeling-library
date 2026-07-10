@@ -173,7 +173,7 @@ model MetroscopiaCCGT_direct_mml4
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve pumpRec_controlValve
     annotation (Placement(transformation(extent={{153.5,77.4545},{166.5,91.4545}})));
   MetroscopeModelingLibrary.Sensors_Control.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function="Calibration", causality="Cvmax",
-    output_signal_unit="")
+    signal_unit="")
     annotation (Placement(transformation(extent={{155,95},{165,105}})));
   MetroscopeModelingLibrary.Sensors_Control.FlueGases.PressureSensor P_flue_gas_sink_sensor(sensor_function="BC")
     annotation (Placement(transformation(
@@ -227,14 +227,14 @@ model MetroscopiaCCGT_direct_mml4
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve deSH_controlValve
     annotation (Placement(transformation(extent={{-173.75,117.454},{-186.25,131.455}})));
   MetroscopeModelingLibrary.Sensors_Control.Outline.OpeningSensor deSH_opening_sensor(sensor_function="Calibration", causality="Cvmax",
-    output_signal_unit="")
+    signal_unit="")
     annotation (Placement(transformation(extent={{-185,139},{-175,149}})));
   MetroscopeModelingLibrary.Sensors_Control.WaterSteam.FlowSensor Q_deSH_sensor(sensor_function="Calibration", causality="SH2_Kth")
     annotation (Placement(transformation(extent={{-132,114},{-144,126}})));
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve Evap_controlValve
     annotation (Placement(transformation(extent={{36.25,31.4545},{23.75,45.455}})));
   MetroscopeModelingLibrary.Sensors_Control.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration", causality="Cvmax",
-    output_signal_unit="")
+    signal_unit="")
     annotation (Placement(transformation(extent={{25,53},{35,63}})));
   MetroscopeModelingLibrary.MultiFluid.Converters.MoistAir_to_FlueGases moistAir_to_FlueGases annotation (Placement(transformation(extent={{-682,-10},{-662,10}})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source_air(h_out(start=47645.766)) annotation (Placement(transformation(extent={{-744,-10},{-724,10}})));

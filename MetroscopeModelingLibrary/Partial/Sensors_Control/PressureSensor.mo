@@ -7,17 +7,17 @@ partial model PressureSensor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  parameter Real P_start = 1 "Write here the build value of the quantity. This value will be used in the simulation.";
-  parameter String signal_unit = "barA" "Specify the signal unit. This should be the unit of P_start and of the tag linked to the sensor." annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
-
+  // Sensor signal parameters
+  parameter Real P_start = 1 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String signal_unit = "barA" "Specify the signal unit. This should be the unit of P_start and of the tag linked to the sensor." annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"),
+  Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "barA" "Specify the display unit"
-    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg"));
+    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg"),
+    Dialog(tab="General", group="Sensor signal parameters"));
 
 
   // All nominal values of gauge pressures are set to the absolute pressure value to avoid zero nominal value
-
   Real P_barG(nominal=P_0, start=P_0*Constants.Pa_to_barA - Constants.atmospheric_pressure_in_bar); // Relative (gauge) pressure in bar
-
   Real P_psiG(nominal = P_0*Constants.Pa_to_psiA, start = P_0*Constants.Pa_to_psiA - Constants.P0_psiG_in_psiA); // Relative (gauge) pressure in psi
   Real P_MPaG(nominal = P_0*Constants.Pa_to_MPaA, start = P_0*Constants.Pa_to_MPaA - Constants.P0_MPaG_in_MPaA); // Relative (gauge) pressure in mega pascal
   Real P_kPaG(nominal = P_0*Constants.Pa_to_kPaA, start = P_0*Constants.Pa_to_kPaA - Constants.P0_kPaG_in_kPaA); // Relative (gauge) pressure in kilo pascal
@@ -25,7 +25,6 @@ partial model PressureSensor
   Real P_psiA(nominal = P_0*Constants.Pa_to_psiA, start = P_0*Constants.Pa_to_psiA); // Absolute pressure in psi
   Real P_MPaA(nominal = P_0*Constants.Pa_to_MPaA, start = P_0*Constants.Pa_to_MPaA); // Absolute pressure in mega pascal
   Real P_kPaA(nominal = P_0*Constants.Pa_to_kPaA, start = P_0*Constants.Pa_to_kPaA); // Absolute pressure in kilo pascal
-
   Real P_inHg(nominal = P_0*Constants.Pa_to_inHg, start = P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
