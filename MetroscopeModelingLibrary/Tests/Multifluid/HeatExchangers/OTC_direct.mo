@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
-model OTC_reverse
+model OTC_direct
 
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source(Q_0=123.7532696, h_out(
         start=762243.5))
@@ -24,11 +24,20 @@ model OTC_reverse
         extent={{20,-20},{-20,20}},
         rotation=0,
         origin={-84,-30})));
-  Utilities.Interfaces.RealOutput Kth annotation (Placement(transformation(
+  Utilities.Interfaces.RealExpression
+                                  Kth(y=7.392668)
+                                      annotation (Placement(transformation(
           extent={{-4,-4},{4,4}},
-        rotation=180,
-        origin={94,0}),                iconTransformation(extent={{-292,68},{-272,
+        rotation=270,
+        origin={88,0}),                iconTransformation(extent={{-292,68},{-272,
             88}})));
+  Utilities.Interfaces.RealExpression
+                                  Kfr_cold(y=25000)
+                                           annotation (Placement(transformation(
+          extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={10,10}),                 iconTransformation(extent={{-282,54},{-262,
+            74}})));
   Sensors_Control.WaterSteam.FlowSensor Q_cold_sensor(Q_start=6.91480430909523)
     annotation (Placement(transformation(extent={{-38,20},{-18,40}})));
   Sensors_Control.WaterSteam.PressureSensor P_cold_in_sensor(sensor_function="BC",
@@ -103,7 +112,13 @@ model OTC_reverse
         extent={{-4,-4},{4,4}},
         rotation=0,
         origin={26,-70}),  iconTransformation(extent={{-376,26},{-336,66}})));
-  Utilities.Interfaces.CalibrationInput P_hot_out annotation (Placement(
+  Utilities.Interfaces.RealExpression
+                                  Kfr_hot(y=6.349405)
+                                          annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={10,-10}), iconTransformation(extent={{-292,68},{-272,88}})));
+  Utilities.Interfaces.Observable       P_hot_out annotation (Placement(
         transformation(
         extent={{-4,-4},{4,4}},
         rotation=0,
@@ -113,12 +128,12 @@ model OTC_reverse
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={0,50}),    iconTransformation(extent={{-376,26},{-336,66}})));
-  Utilities.Interfaces.CalibrationInput P_cold_out annotation (Placement(
+  Utilities.Interfaces.Observable       P_cold_out annotation (Placement(
         transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-58,-10}), iconTransformation(extent={{-226,4},{-186,44}})));
-  Utilities.Interfaces.CalibrationInput T_cold_in annotation (Placement(
+  Utilities.Interfaces.Observable T_cold_in annotation (Placement(
         transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
@@ -128,12 +143,6 @@ model OTC_reverse
         extent={{-40,50},{40,-50}},
         rotation=180,
         origin={50,0})));
-  Utilities.Interfaces.RealOutput Kfr_cold annotation (Placement(transformation(
-          extent={{2,6},{10,14}}, rotation=0), iconTransformation(extent={{-292,
-            68},{-272,88}})));
-  Utilities.Interfaces.RealOutput Kfr_hot annotation (Placement(transformation(
-          extent={{2,-14},{10,-6}}, rotation=0), iconTransformation(extent={{-292,
-            68},{-272,88}})));
 equation
 
   hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
@@ -162,8 +171,8 @@ equation
     annotation (Line(points={{-58,50},{-58,40}}, color={28,108,200}));
   connect(OTC.C_cold_out, T_cold_out_sensor.C_in) annotation (Line(points={{31,-30},
           {-6,-30},{-6,-30},{-18,-30}},                     color={28,108,200}));
-  connect(OTC.Kth, Kth)
-    annotation (Line(points={{72,0},{94,0}}, color={0,0,127}));
+  connect(Kfr_cold.y,OTC. Kfr_cold)
+    annotation (Line(points={{12,10},{28,10}},         color={0,0,127}));
   connect(cold_source.C_out, T_cold_in_sensor.C_in)
     annotation (Line(points={{-74,30},{-68,30}}, color={28,108,200}));
   connect(T_cold_in_sensor.C_out, Q_cold_sensor.C_in)
@@ -175,7 +184,7 @@ equation
   connect(T_hot_in_sensor.C_in, hot_source.C_out)
     annotation (Line(points={{50,-140},{50,-154}}, color={95,95,95}));
   connect(P_hot_in_sensor.C_out, OTC.C_hot_in)
-    annotation (Line(points={{50,-60},{50,-49}}, color={95,95,95}));
+    annotation (Line(points={{50,-60},{50,-50}}, color={95,95,95}));
   connect(Q_hot_sensor.C_out, P_hot_in_sensor.C_in)
     annotation (Line(points={{50,-90},{50,-80}}, color={95,95,95}));
   connect(T_hot_in_sensor.C_out, Q_hot_sensor.C_in)
@@ -188,12 +197,10 @@ equation
     annotation (Line(points={{50,90},{50,80}}, color={95,95,95}));
   connect(T_hot_out_sensor.C_in, OTC.C_hot_out)
     annotation (Line(points={{50,60},{50,50}}, color={95,95,95}));
-  connect(Kfr_hot, Kfr_hot)
-    annotation (Line(points={{6,-10},{6,-10}}, color={0,0,127}));
-  connect(Kfr_hot, OTC.Kfr_hot)
-    annotation (Line(points={{6,-10},{28,-10}}, color={0,0,127}));
-  connect(Kfr_cold, OTC.Kfr_cold)
-    annotation (Line(points={{6,10},{28,10}}, color={0,0,127}));
+  connect(Kth.y, OTC.Kth)
+    annotation (Line(points={{86,0},{72,0}}, color={0,0,127}));
+  connect(Kfr_hot.y, OTC.Kfr_hot)
+    annotation (Line(points={{12,-10},{28,-10}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}}),                                  graphics={
         Ellipse(lineColor={0,0,0},
@@ -222,4 +229,4 @@ equation
           fillPattern=FillPattern.Solid,
           points={{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})));
-end OTC_reverse;
+end OTC_direct;
