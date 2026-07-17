@@ -9,10 +9,10 @@ partial model PressureSensor
 
   // Sensor signal parameters
   parameter Real P_start = 1 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
-  parameter String signal_unit = "barA" "Specify the signal unit. This should be the unit of P_start and of the tag linked to the sensor." annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"),
+  parameter String signal_unit = "barA" "Specify the signal unit. This should be the unit of P_start and of the tag linked to the sensor." annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg", choice="inH2O"),
   Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "barA" "Specify the display unit"
-    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg"),
+    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg",choice="inH2O"),
     Dialog(tab="General", group="Sensor signal parameters"));
 
 
@@ -26,6 +26,7 @@ partial model PressureSensor
   Real P_MPaA(nominal = P_0*Constants.Pa_to_MPaA, start = P_0*Constants.Pa_to_MPaA); // Absolute pressure in mega pascal
   Real P_kPaA(nominal = P_0*Constants.Pa_to_kPaA, start = P_0*Constants.Pa_to_kPaA); // Absolute pressure in kilo pascal
   Real P_inHg(nominal = P_0*Constants.Pa_to_inHg, start = P_0*Constants.Pa_to_inHg); // Absolute pressure in inches of mercury
+  Real P_inH2O(nominal = P_0*Constants.Pa_to_inH2O, start = P_0*Constants.Pa_to_inH2O); // Absolute pressure in inches of water
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
   outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
@@ -51,6 +52,7 @@ equation
 
   P_mbar = P * Constants.Pa_to_mbar;
   P_inHg = P * Constants.Pa_to_inHg;
+  P_inH2O = P * Constants.Pa_to_inH2O;
 
   if signal_unit == "barA" then
     P_sensor = P_barA;
@@ -68,6 +70,8 @@ equation
     P_sensor=P_psiA;
   elseif signal_unit == "inHg" then
     P_sensor=P_inHg;
+  elseif signal_unit == "inH2O" then
+    P_sensor=P_inH2O;
   else
     P_sensor = P;
   end if;

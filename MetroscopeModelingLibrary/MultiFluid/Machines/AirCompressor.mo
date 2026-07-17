@@ -4,10 +4,7 @@ model AirCompressor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputReal tau(start=15, min = 1) "Compression rate";
-  Inputs.InputReal eta_is(start=0.8, min=0, max=1) "Nominal isentropic efficiency";
   Real Q_reduced "Compressor reduced mass flow";
-  Inputs.InputReal tau_moist(start=2, min = 1) "Compression rate of the moist air section";
 
   // Failure modes
   parameter Boolean faulty = false;
@@ -21,6 +18,29 @@ model AirCompressor
   Converters.RefMoistAir_to_FlueGases refMoistAir_to_FlueGases annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   FlueGases.Machines.AirCompressor FlueGasesCompressor annotation (Placement(transformation(extent={{40,-8},{60,8}})));
   FlueGases.Connectors.Outlet outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+  Utilities.Interfaces.GenericReal tau annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-58}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-60})));
+  Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-40,-36}),
+                         iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={0,-50})));
+  Utilities.Interfaces.GenericReal moist_tau_ratio annotation (Placement(
+        transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={26,-46}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={60,-38})));
 equation
 
   // Failure modes
@@ -31,7 +51,7 @@ equation
 
   /* Compression ratio */
   tau*(1-tau_decrease/100) = FlueGasesCompressor.P_out/MoistAirCompressor.P_in;
-  tau_moist = MoistAirCompressor.tau;
+  MoistAirCompressor.tau =FlueGasesCompressor.tau*moist_tau_ratio;
 
   /* Isentropic efficiency */
   FlueGasesCompressor.eta_is = eta_is*(1-eta_is_decrease/100);

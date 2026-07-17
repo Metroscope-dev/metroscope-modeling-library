@@ -8,9 +8,6 @@ model AirCompressor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
-  Inputs.InputReal tau(start=15, min = 1) "Compression rate";
-  Inputs.InputReal eta_is(start=0.8, min=0, max=1) "Nominal isentropic efficiency";
-
   Units.SpecificEnthalpy h_is(start=1e6) "Isentropic compression outlet enthalpy";
   RefMoistAirMedium.ThermodynamicState state_is "Isentropic compression outlet thermodynamic state";
   Real Q_reduced "Compressor reduced mass flow";
@@ -21,6 +18,20 @@ model AirCompressor
   Units.Percentage tau_decrease(min = 0, max=100) "percentage decrease of tau";
 
   Power.Connectors.Inlet C_W_in annotation (Placement(transformation(extent={{90,50},{110,70}}),  iconTransformation(extent={{90,50},{110,70}})));
+  Utilities.Interfaces.GenericReal tau annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-58}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={-60,-60})));
+  Utilities.Interfaces.GenericReal eta_is annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={0,-48}), iconTransformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={0,-50})));
 equation
 
   // Failure modes
