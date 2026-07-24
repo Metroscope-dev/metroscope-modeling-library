@@ -7,6 +7,8 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 ## [Unreleased]
 
+- Added kPa as a supported unit for the differential pressure sensor [#600](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/600)
+
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
     - Added a desuperheating component [#591](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/591)
   
