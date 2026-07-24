@@ -37,7 +37,7 @@ model Desuperheating
 equation
   Delta_T = T_measured - T_setpoint;
   Water_Q = injector.Q;
-  Water_Q = max(0.01, Gain*(Delta_T));          // Be carefull with the units !
+  Water_Q = max(0.01, Gain*(Delta_T));          // Be careful with the units !
 
   connect(Nozzle.C_in, C_in) annotation (Line(points={{-60,0},{-100,0}}, color={28,108,200}));
   connect(C_in, C_in) annotation (Line(points={{-100,0},{-100,0}}, color={28,108,200}));

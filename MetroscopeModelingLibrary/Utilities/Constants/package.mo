@@ -34,7 +34,8 @@ package Constants "Stores all constants used in MML"
   final constant Real kgs_to_th(unit="(1/h)/(kg/s)") = 3.6;
   final constant Real kgs_to_lbs(unit="1/kg") = 2.2046;
   final constant Real kgs_to_Mlbh(unit="(1/h)/(kg/s)") = 0.0079366414387;
-  final constant Real kgs_to_lbh(unit="(1/h)/(kg/s)")= 7936.647912661459;
+  final constant Real kgs_to_klbh(unit="(1/h)/(kg/s)") = 7.936647912661459;
+  final constant Real kgs_to_lbh(unit="(1/h)/(kg/s)") = 7936.647912661459;
 
   // Atomic/Molecular masses
   final constant Units.AtomicMass m_H = 1.00798;

@@ -16,9 +16,9 @@ partial model DeltaPressureSensor
   // Sensor signal parameters
   parameter Real DP_start = 0.05 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "bar" "Specify the display unit"
-    annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa"),
+    annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa", choice="inH2O"),
     Dialog(tab="General", group="Sensor signal parameters"));
-  parameter String signal_unit = "bar" "Specify the signal unit. This should be the unit of DP_start and of the tag linked to the sensor." annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa"),
+  parameter String signal_unit = "bar" "Specify the signal unit. This should be the unit of DP_start and of the tag linked to the sensor." annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa", choice="inH2O"),
   Dialog(tab="General", group="Sensor signal parameters"));
 
   // Initialisation start values
@@ -27,6 +27,7 @@ partial model DeltaPressureSensor
   Real DP_bar(unit="bar", start=DP_0*Utilities.Constants.Pa_to_barA); // Pressure difference in bar
   Real DP_mbar(unit="mbar", start=DP_0*Utilities.Constants.Pa_to_mbar); // Pressure difference in mbar
   Real DP_psi(start=DP_0*Utilities.Constants.Pa_to_psiA); // Pressure difference in PSI
+  Real DP_inH2O(start=DP_0*Utilities.Constants.Pa_to_inH2O); // Pressure difference in inches of water
 
 
 
@@ -53,9 +54,10 @@ equation
 
   // Conversions
   DP = C_out.P - C_in.P;
-  DP_bar =DP*Utilities.Constants.Pa_to_barA;
-  DP_mbar =DP*Utilities.Constants.Pa_to_mbar;
-  DP_psi =DP*Utilities.Constants.Pa_to_psiA;
+  DP_bar = DP*Utilities.Constants.Pa_to_barA;
+  DP_mbar = DP*Utilities.Constants.Pa_to_mbar;
+  DP_psi = DP*Utilities.Constants.Pa_to_psiA;
+  DP_inH2O = DP*Utilities.Constants.Pa_to_inH2O;
 
   if signal_unit == "bar" then
     DP_sensor = DP_bar;
@@ -63,6 +65,8 @@ equation
     DP_sensor = DP_mbar;
   elseif signal_unit == "psi" then
     DP_sensor = DP_psi;
+  elseif signal_unit == "inH2O" then
+    DP_sensor = DP_inH2O;
   else
     DP_sensor = DP;
   end if;
