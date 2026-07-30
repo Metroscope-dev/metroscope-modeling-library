@@ -8,7 +8,7 @@ partial model FlowSensor
   import MetroscopeModelingLibrary.Utilities.Constants;
 
 
-  parameter Units.PositiveMassFlowRate Q_start = 100 "Write here the build value of the quantity. This value will be used in the simulation.";
+  parameter Real Q_start = 100 "Write here the build value of the quantity. This value will be used in the simulation.";
   parameter String signal_unit = "kg/s" "Specify the signal unit. This should be the unit of Q_start and of the tag linked to the sensor." annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
 
   parameter String display_unit = "kg/s" "Specify the display unit"    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
@@ -35,19 +35,21 @@ partial model FlowSensor
         rotation=90,
         origin={0,100})));
 equation
-  Qv = Q / Medium.density(state);
+  Qv = flow_model.Q / Medium.density(state);
   Q_lm = Qv * Constants.m3s_to_lm;
   Q_th = Q * Constants.kgs_to_th;
   Q_lbs = Q * Constants.kgs_to_lbs;
   Q_Mlbh = Q * Constants.kgs_to_Mlbh;
 
-  if signal_unit == "l/m" then
+  if signal_unit == "m3/s" then
+    Q_sensor = Qv;
+  elseif signal_unit == "l/m" then
     Q_sensor = Q_lm;
   elseif signal_unit == "t/h" then
     Q_sensor = Q_th;
   elseif signal_unit == "lb/s" then
     Q_sensor = Q_lbs;
-  elseif signal_unit == "Mlbh" then
+  elseif signal_unit == "Mlb/h" then
     Q_sensor = Q_Mlbh;
   else
     Q_sensor = Q;

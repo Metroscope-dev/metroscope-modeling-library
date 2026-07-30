@@ -1,21 +1,26 @@
-within MetroscopeModelingLibrary.Tests.RefMoistAir.BoundaryConditions;
+within MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions;
 model Source
-  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.RefMoistAirTestIcon;
-  import MetroscopeModelingLibrary.Utilities.Units;
+  extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
+  package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
+  extends Partial.BoundaryConditions.FluidSource(h_0=48000,redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
+                                                                                                                       redeclare package Medium =
+        RefMoistAirMedium)                                                                                                                                           annotation (IconMap(primitivesVisible=false));
 
-  // Boundary conditinos
-  input Units.Pressure source_P(start=1e5) "Pa";
-  input Units.SpecificEnthalpy source_h(start=1e3) "J/kg";
-  input Units.NegativeMassFlowRate source_Q(start=-100) "kg/s";
-  input Units.Fraction source_relative_humidity(start=0.5) "1";
+  parameter Real relative_humidity_0(min=0, max=1) = 0.1;
+  Real relative_humidity(start=relative_humidity_0, min=0, max=1);
+  Real pds;
+  parameter Real k_mair = RefMoistAirMedium.k_mair;
 
-  .MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-38,-10},{-18,10}})));
-  .MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{18,-10},{38,10}})));
 equation
-  source.P_out = source_P;
-  source.h_out = source_h;
-  source.Q_out = source_Q;
-  source.relative_humidity = source_relative_humidity;
+  pds = RefMoistAirMedium.Utilities.pds_pT(P_out, T_out);
+  Xi_out = {relative_humidity*k_mair/(P_out/pds - relative_humidity)};
 
-  connect(source.C_out, sink.C_in) annotation (Line(points={{-23,0},{23,0}}, color={0,127,127}));
+  annotation (Icon(graphics={
+        Ellipse(
+          extent={{-80,60},{40,-60}},
+          fillColor={0,127,127},
+          fillPattern=FillPattern.Solid,
+          lineThickness=0.5,
+          pattern=LinePattern.None,
+          lineColor={0,0,0})}));
 end Source;
