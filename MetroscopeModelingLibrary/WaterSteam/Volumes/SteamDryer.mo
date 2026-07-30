@@ -12,7 +12,7 @@ model SteamDryer
   Units.PositiveMassFlowRate Q_in(start=Q_in_0); // Inlet mass flow rate
 
   parameter Boolean faulty = false;
-  Real MS_outl_eff_decrease;
+  Real MS_eff_decrease;
 
   parameter Boolean input_specs = false;
   Real x_steam_in;
@@ -54,7 +54,7 @@ protected
 equation
 
   if not faulty then
-    MS_outl_eff_decrease = 0;
+    MS_eff_decrease = 0;
   end if;
 
   if not input_specs then
@@ -72,7 +72,7 @@ equation
   C_in.h_outflow = x_steam_in*h_vap_sat + (1 - x_steam_in)*h_liq_sat;
   steam_phase.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
   liquid_phase.h_out = h_liq_sat;
-  x_steam_out = (MS_efficiency - MS_outl_eff_decrease)*(1-x_steam_in)+x_steam_in;
+  x_steam_out = x_steam_in/(1-(MS_efficiency - MS_eff_decrease)*(1-x_steam_in));
 
   // Energy balance
   steam_phase.W + liquid_phase.W = 0;

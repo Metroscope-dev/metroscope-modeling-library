@@ -3,7 +3,7 @@ model SteamDryer
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // To input either efficiency or x_steam_out, put:
-  // --> steamDryer (input_specifications = true);
+  // --> steamDryer (input_specs = true);
 
   // Boundary Conditions
   input Utilities.Units.Pressure P_source(start=10e5) "Pa";
