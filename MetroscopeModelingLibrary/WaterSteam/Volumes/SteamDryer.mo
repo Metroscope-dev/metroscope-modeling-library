@@ -8,65 +8,83 @@ model SteamDryer
   Units.SpecificEnthalpy h_vap_sat(start=h_vap_sat_0); // Saturated liquid enthalpy
   Units.SpecificEnthalpy h_liq_sat(start=h_liq_sat_0); // Saturated steam enthalpy
 
-  Units.Pressure P(start=P_0); // Pressure in dryer
-  Units.PositiveMassFlowRate Q_in(start=Q_in_0);
-                                              // Inlet mass flow rate
+  Units.Pressure P_in(start=P_in_0); // Pressure in dryer inlet
+  Units.PositiveMassFlowRate Q_in(start=Q_in_0); // Inlet mass flow rate
 
-  parameter Units.MassFraction x_steam_out=0.99; // Steam mass fraction at steam outlet
+  parameter Boolean faulty = false;
+  Real MS_eff_decrease;
+
+  parameter Boolean input_specs = false;
+  Real x_steam_in;
+  Real x_steam_out;
+  Real MS_efficiency;
+
+  //Units.MassFraction
 
   // Initialization parameters
-  parameter Units.Pressure P_0 = 10e5;
+  parameter Units.Pressure P_in_0 = 10e5;
+  parameter Units.Pressure P_out_0 = 9e5;
   parameter Units.Temperature T_0 = 273.15 + 180;
   parameter Units.SpecificEnthalpy h_in_0 = 2e6;
   parameter Units.PositiveMassFlowRate Q_in_0=500;
   parameter Units.PositiveMassFlowRate Q_liq_0 = 0.5*Q_in_0;
   parameter Units.PositiveMassFlowRate Q_vap_0 = Q_in_0 - Q_liq_0;
 
-  Connectors.Inlet C_in(P(start=P_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
-  Connectors.Outlet C_hot_steam(P(start=P_0), Q(start=-Q_vap_0),
+  Connectors.Inlet C_in(P(start=P_in_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
+  Connectors.Outlet C_hot_steam(P(start=P_in_0), Q(start=-Q_vap_0),
     h_outflow(start=h_vap_sat_0))                                 annotation (Placement(transformation(extent={{90,30},{110,50}})));
-  Connectors.Outlet C_hot_liquid(P(start=P_0), Q(start=-Q_liq_0),
+  Connectors.Outlet C_hot_liquid(P(start=P_in_0), Q(start=-Q_liq_0),
     h_outflow(start=h_liq_sat_0))                                  annotation (Placement(transformation(extent={{90,-50},{110,-30}})));
   BaseClasses.IsoPFlowModel steam_phase(
     T_in_0=T_0,
     T_out_0=T_0,
     h_in_0=h_in_0,
-    h_out_0=h_vap_sat_0,                P_0=P_0,
-    Q_0=Q_vap_0)                                               annotation (Placement(transformation(extent={{26,30},{46,50}})));
+    h_out_0=h_vap_sat_0,                P_0=P_in_0,
+    Q_0=Q_vap_0)                                               annotation (Placement(transformation(extent={{6,30},{
+            26,50}})));
   BaseClasses.IsoPFlowModel liquid_phase(
     T_in_0=T_0,
     T_out_0=T_0,
     h_in_0=h_in_0,
-    h_out_0=h_liq_sat_0,                 P_0=P_0,
+    h_out_0=h_liq_sat_0,                 P_0=P_in_0,
     Q_0=Q_liq_0)                                                annotation (Placement(transformation(extent={{26,-50},{46,-30}})));
 protected
-  parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_0));
-  parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_0));
+  parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
+  parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in_0));
 equation
 
+  if not faulty then
+    MS_eff_decrease = 0;
+  end if;
+
+  if not input_specs then
+    MS_efficiency = 0.99;
+  end if;
+
   // Definitions
-  P = C_in.P;
+  P_in = C_in.P;
   Q_in = steam_phase.Q + liquid_phase.Q;
 
-  // Saturation at both outlets
-  h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P));
-  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P));
+  // Saturation at inlet and both outlets
+  h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in));
+  h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in));
+
+  C_in.h_outflow = x_steam_in*h_vap_sat + (1 - x_steam_in)*h_liq_sat;
   steam_phase.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
   liquid_phase.h_out = h_liq_sat;
+  x_steam_out = x_steam_in/(1-(MS_efficiency - MS_eff_decrease)*(1-x_steam_in));
 
   // Energy balance
   steam_phase.W + liquid_phase.W = 0;
 
-  connect(liquid_phase.C_in, C_in) annotation (Line(points={{26,-40},{-40,-40},{
-          -40,40},{-100,40}},
-                            color={28,108,200}));
-  connect(steam_phase.C_in, C_in) annotation (Line(points={{26,40},{-40,40},{-40,
-          40},{-100,40}},
-                        color={28,108,200}));
-  connect(steam_phase.C_out,C_hot_steam)
-    annotation (Line(points={{46,40},{100,40}}, color={28,108,200}));
-  connect(liquid_phase.C_out,C_hot_liquid)
+  connect(steam_phase.C_in, C_in)
+    annotation (Line(points={{6,40},{-100,40}}, color={28,108,200}));
+  connect(liquid_phase.C_in, C_in) annotation (Line(points={{26,-40},{-16,-40},{
+          -16,-38},{-52,-38},{-52,40},{-100,40}}, color={28,108,200}));
+  connect(liquid_phase.C_out, C_hot_liquid)
     annotation (Line(points={{46,-40},{100,-40}}, color={28,108,200}));
+  connect(steam_phase.C_out, C_hot_steam)
+    annotation (Line(points={{26,40},{100,40}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
             {100,120}}), graphics={
         Rectangle(
