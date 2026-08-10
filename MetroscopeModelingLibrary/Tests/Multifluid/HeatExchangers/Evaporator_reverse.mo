@@ -51,13 +51,17 @@ equation
 
   connect(Q_cold_source_sensor.C_in, cold_source.C_out) annotation (Line(points = {{40,60},{61,60}}, color = {28,108,200},
       thickness = 1));
-  connect(Q_cold_source_sensor.C_out, evaporator.C_cold_in) annotation (Line(points = {{20,60},{4,60},{4,8}}, color = {28,108,200},
+  connect(Q_cold_source_sensor.C_out, evaporator.C_cold_in) annotation (Line(points={{20,60},{7,60},{7,3.68421}},
+                                                                                                              color = {28,108,200},
       thickness = 1));
-  connect(cold_steam_sink.C_in, evaporator.C_cold_out) annotation (Line(points = {{-67,60},{-4,60},{-4,8}}, color = {28,108,200},
+  connect(cold_steam_sink.C_in, evaporator.C_cold_out) annotation (Line(points={{-67,60},{-7,60},{-7,7.89474}},
+                                                                                                            color = {28,108,200},
       thickness = 1));
-  connect(hot_source.C_out, evaporator.C_hot_in) annotation (Line(points = {{-67,0},{-10,0}}, color = {95,95,95},
+  connect(hot_source.C_out, evaporator.C_hot_in) annotation (Line(points={{-67,0},{-38,0},{-38,-4.73684},{-8,-4.73684}},
+                                                                                              color = {95,95,95},
       thickness = 1));
-  connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points = {{10,0},{83,0}}, color = {95,95,95},
+  connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{8,-4.73684},{46,-4.73684},{46,0},{83,0}},
+                                                                                          color = {95,95,95},
       thickness = 1));
   annotation (Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
 end Evaporator_reverse;

@@ -6,9 +6,12 @@ model Evaporator
     import MetroscopeModelingLibrary.Utilities.Units;
     import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
+    // Evaporator
+    parameter Boolean feedwater_tank = false "Set to true if the evaporator is used as a feedwater tank";
+
     // Pressure Losses
     parameter Units.Area S = 15000;
-    parameter Units.MassFraction x_steam_out = 1; // Steam mass fraction at water outlet
+
 
     // Heating
     Units.Power W_heating;
@@ -28,6 +31,7 @@ model Evaporator
     Units.Temperature T_hot_in(start=T_hot_in_0);
     Units.Temperature T_cold_out(start=T_cold_out_0);
     Units.Temperature T_hot_out(start=T_hot_out_0);
+    Units.MassFraction x_steam_out; // Steam mass fraction at water outlet
 
     // Indicators
     Units.Temperature T_approach(start=T_cold_out_0-T_cold_in_0) "Cold temperature inlet difference to saturation";
@@ -90,10 +94,25 @@ model Evaporator
                                                                                                                                                                                        iconTransformation(extent={{-80,230},{-60,250}})));
 
   Utilities.Interfaces.GenericReal Kth annotation (Placement(transformation(extent={{-80,-84},{-88,-76}}), iconTransformation(extent={{-80,-84},{-88,-76}})));
+  WaterSteam.Connectors.Outlet C_cold_out_liquid(
+    Q(start=-Q_cold_0),
+    P(start=P_cold_out_0),
+    h_outflow(start=h_liq_sat_0)) if feedwater_tank annotation (Placement(transformation(extent={{-90,90},{-70,110}}), iconTransformation(extent={{-80,150},{-60,170}})));
+  WaterSteam.BaseClasses.IsoPFlowModel liquid_phase annotation (Placement(transformation(extent={{-44,90},{-64,110}})));
+  WaterSteam.BaseClasses.IsoPFlowModel steam_phase annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-38,170})));
 equation
   // Failure modes
   if not faulty then
     fouling = 0;
+  end if;
+
+  if not feedwater_tank then
+    x_steam_out = 1;
+  else
+    steam_phase.W + liquid_phase.W = 0;
   end if;
 
   // Definitions
@@ -140,6 +159,10 @@ equation
   HX_vaporising.Cp_cold = 0; // Not used by NTU method in evaporator mode
   HX_vaporising.Cp_hot =MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium.specificHeatCapacityCp(hot_side_vaporising.state_in);
 
+  steam_phase.h_out = h_vap_sat;
+  liquid_phase.h_out = h_liq_sat;
+
+
   DT_hot_in_side = T_hot_in - T_cold_out;
   DT_hot_out_side = T_hot_out - T_cold_in;
   pinch = min(DT_hot_in_side, DT_hot_out_side);
@@ -149,9 +172,13 @@ equation
   connect(cold_side_vaporising.C_in,cold_side_heating. C_out) annotation (Line(points={{-10,30},{10,30}}, color={28,108,200}));
   connect(hot_side_vaporising.C_out,hot_side_heating. C_in) annotation (Line(points={{-10,0},{10,0}},     color={95,95,95}));
   connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,0},{80,0}},             color={95,95,95}));
-  connect(cold_side_vaporising.C_out, C_cold_out) annotation (Line(points={{-30,30},{-38,30},{-38,280}},color={28,108,200}));
   connect(hot_side_vaporising.C_in, C_hot_in) annotation (Line(points={{-30,0},{-80,0}},  color={95,95,95}));
   connect(cold_side_heating.C_in, C_cold_in) annotation (Line(points={{30,30},{58,30},{58,162}},color={28,108,200}));
+  connect(C_cold_out_liquid, C_cold_out_liquid) annotation (Line(points={{-80,100},{-80,100}}, color={28,108,200}));
+  connect(cold_side_vaporising.C_out, steam_phase.C_in) annotation (Line(points={{-30,30},{-38,30},{-38,160}}, color={28,108,200}));
+  connect(steam_phase.C_out, C_cold_out) annotation (Line(points={{-38,180},{-38,280}}, color={28,108,200}));
+  connect(liquid_phase.C_in, steam_phase.C_in) annotation (Line(points={{-44,100},{-38,100},{-38,160}}, color={28,108,200}));
+  connect(C_cold_out_liquid, liquid_phase.C_out) annotation (Line(points={{-80,100},{-64,100}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false,
         extent={{-100,-100},{100,280}},
         initialScale=0.5)),        Diagram(coordinateSystem(preserveAspectRatio=false,
