@@ -11,7 +11,6 @@ model Evaporator_reverse
 
   // Parameters
   parameter Utilities.Units.Area S = 50000;
-  parameter Real x_steam_out = 1; // Set to 1 when the whole quantity of water is evaporated
 
   // Calibrated parameters
   output Utilities.Units.HeatExchangeCoefficient Kth;
@@ -22,11 +21,12 @@ model Evaporator_reverse
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source
                                        cold_source annotation (Placement(transformation(extent = {{76,50},{56,70}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink
-                                     cold_steam_sink annotation (Placement(transformation(extent = {{-62,50},{-82,70}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent = {{-82,-10},{-62,10}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent = {{78,-10},{98,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_cold_source_sensor annotation (Placement(transformation(extent = {{40,50},{20,70}})));
-  MultiFluid.HeatExchangers.Evaporator evaporator annotation (Placement(transformation(extent = {{-10,-10},{10,10}})));
+                                     cold_steam_sink annotation (Placement(transformation(extent={{-76,110},{-96,130}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-90,-10},{-70,10}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{68,-10},{88,10}})));
+  MetroscopeModelingLibrary.Sensors.WaterSteam.FlowSensor Q_cold_source_sensor annotation (Placement(transformation(extent={{60,50},{40,70}})));
+  MultiFluid.HeatExchangers.Evaporator evaporator(feedwater_tank=false)
+                                                  annotation (Placement(transformation(extent={{-64,-50},{36,140}})));
 equation
   // Boundary conditions
   hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
@@ -37,11 +37,6 @@ equation
   cold_source.P_out = P_cold_source*1e5;
   cold_source.T_out = T_cold_source + 273.15;
 
-  // Parameters
-  evaporator.S = S;
-  evaporator.x_steam_out = x_steam_out;
-  evaporator.Kfr_hot = 0;
-  evaporator.Kfr_cold = 0;
 
   // Inputs for calibration
   Q_cold_source_sensor.Q = Q_cold_source;
@@ -49,19 +44,13 @@ equation
   // Calibrated parameters
   evaporator.Kth = Kth;
 
-  connect(Q_cold_source_sensor.C_in, cold_source.C_out) annotation (Line(points = {{40,60},{61,60}}, color = {28,108,200},
+
+  connect(Q_cold_source_sensor.C_in, cold_source.C_out) annotation (Line(points={{60,60},{61,60}},   color = {28,108,200},
       thickness = 1));
-  connect(Q_cold_source_sensor.C_out, evaporator.C_cold_in) annotation (Line(points={{20,60},{7,60},{7,3.68421}},
-                                                                                                              color = {28,108,200},
-      thickness = 1));
-  connect(cold_steam_sink.C_in, evaporator.C_cold_out) annotation (Line(points={{-67,60},{-7,60},{-7,7.89474}},
-                                                                                                            color = {28,108,200},
-      thickness = 1));
-  connect(hot_source.C_out, evaporator.C_hot_in) annotation (Line(points={{-67,0},{-38,0},{-38,-4.73684},{-8,-4.73684}},
-                                                                                              color = {95,95,95},
-      thickness = 1));
-  connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{8,-4.73684},{46,-4.73684},{46,0},{83,0}},
-                                                                                          color = {95,95,95},
-      thickness = 1));
-  annotation (Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
+  connect(evaporator.C_hot_in, hot_source.C_out) annotation (Line(points={{-54,0},{-75,0}}, color={95,95,95}));
+  connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{26,0},{73,0}}, color={95,95,95}));
+  connect(Q_cold_source_sensor.C_out, evaporator.C_cold_in) annotation (Line(points={{40,60},{21,60},{21,80}}, color={28,108,200}));
+  connect(evaporator.C_cold_out, cold_steam_sink.C_in) annotation (Line(points={{-49,120},{-81,120}}, color={28,108,200}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio = false, extent={{-100,-100},{100,160}})),
+                                                                   Diagram(coordinateSystem(preserveAspectRatio = false, extent={{-100,-100},{100,160}})));
 end Evaporator_reverse;

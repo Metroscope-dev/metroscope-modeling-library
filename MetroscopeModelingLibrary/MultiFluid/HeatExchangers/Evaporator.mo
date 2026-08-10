@@ -174,7 +174,6 @@ equation
   connect(hot_side_heating.C_out,C_hot_out)  annotation (Line(points={{30,0},{80,0}},             color={95,95,95}));
   connect(hot_side_vaporising.C_in, C_hot_in) annotation (Line(points={{-30,0},{-80,0}},  color={95,95,95}));
   connect(cold_side_heating.C_in, C_cold_in) annotation (Line(points={{30,30},{58,30},{58,162}},color={28,108,200}));
-  connect(C_cold_out_liquid, C_cold_out_liquid) annotation (Line(points={{-80,100},{-80,100}}, color={28,108,200}));
   connect(cold_side_vaporising.C_out, steam_phase.C_in) annotation (Line(points={{-30,30},{-38,30},{-38,160}}, color={28,108,200}));
   connect(steam_phase.C_out, C_cold_out) annotation (Line(points={{-38,180},{-38,280}}, color={28,108,200}));
   connect(liquid_phase.C_in, steam_phase.C_in) annotation (Line(points={{-44,100},{-38,100},{-38,160}}, color={28,108,200}));

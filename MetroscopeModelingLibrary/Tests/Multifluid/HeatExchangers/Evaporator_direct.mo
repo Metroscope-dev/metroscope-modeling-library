@@ -24,10 +24,8 @@ model Evaporator_direct
                                      cold_steam_sink annotation (Placement(transformation(extent={{-68,70},{-88,90}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-102,-50},{-82,-30}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{72,-50},{92,-30}})));
-  MultiFluid.HeatExchangers.Evaporator evaporator(feedwater_tank=true) annotation (Placement(transformation(extent={{-50,-90},{50,100}})));
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink
-                                     cold_steam_sink1
-                                                     annotation (Placement(transformation(extent={{-70,30},{-90,50}})));
+  MultiFluid.HeatExchangers.Evaporator evaporator(feedwater_tank=false)
+                                                                       annotation (Placement(transformation(extent={{-50,-90},{50,100}})));
 equation
   // Boundary conditions
   hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
@@ -37,11 +35,6 @@ equation
 
   cold_source.P_out = P_cold_source*1e5;
   cold_source.T_out = T_cold_source + 273.15;
-
-  cold_steam_sink1.Q_in = 0;
-
-
-
 
 
   // Inputs for calibration
@@ -54,6 +47,5 @@ equation
   connect(evaporator.C_hot_out, hot_sink.C_in) annotation (Line(points={{40,-40},{77,-40}}, color={95,95,95}));
   connect(cold_source.C_out, evaporator.C_cold_in) annotation (Line(points={{81,40},{35,40}}, color={28,108,200}));
   connect(evaporator.C_cold_out, cold_steam_sink.C_in) annotation (Line(points={{-35,80},{-73,80}}, color={28,108,200}));
-  connect(evaporator.C_cold_out_liquid, cold_steam_sink1.C_in) annotation (Line(points={{-35,40},{-75,40}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
 end Evaporator_direct;
