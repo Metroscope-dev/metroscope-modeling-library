@@ -8,6 +8,18 @@ model InletGuideVanes
   RefMoistAir.BaseClasses.IsoPHFlowModel isoPHFlowModel annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
   RefMoistAir.Connectors.Inlet C_in annotation (Placement(transformation(extent={{-60,-10},{-40,10}}), iconTransformation(extent={{-60,-10},{-40,10}})));
   RefMoistAir.Connectors.Outlet C_out annotation (Placement(transformation(extent={{40,-10},{60,10}}), iconTransformation(extent={{40,-10},{60,10}})));
+  Modelica.Blocks.Interfaces.RealInput Opening(
+    unit="1",
+    min=0.,
+    max=1.,
+    nominal=0.5)
+    annotation (Placement(transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={0,80}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=270,
+        origin={0,80})));
 equation
 
   Qv = isoPHFlowModel.Qv_in;
