@@ -1,0 +1,7 @@
+model dsmodelIterationSelect
+  extends MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers.Reheater_reverse_connectors_DrainsInletSide;
+  annotation(__Dymola_SimulationIterationVariables={"hot_sink.h_in", 
+  "cold_source.h_out", "cold_sink.h_in", "reheater_NPP_drainsInlet.cold_side_deheating.h_in",
+   "reheater_NPP_drainsInlet.cold_side_condensing.h_in", "reheater_NPP_drainsInlet.hot_side_subcooling.h_out",
+   "Extr_source.Q_out"});
+end dsmodelIterationSelect;
