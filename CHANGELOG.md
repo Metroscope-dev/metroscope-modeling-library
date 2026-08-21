@@ -13,7 +13,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
     - 🔧 Fix variables declaration for incondensable in ACC [#558](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/558)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
-- Made efficiency the default input of the steam dryer rather than outlet vapor fraction, and option to specify efficieny, and fault that reduces efficiency (#594 https://github.com/Metroscope-dev/metroscope-modeling-library/issues/594)
+- Made efficiency the default input of the steam dryer rather than outlet vapor fraction, and option to specify efficieny, and fault that reduces efficiency (#594 https://github.com/Metroscope-dev/metroscope-modeling-library/issues/594). To incorporate into existing models without changing any results, set input_specs = true and define the outlet vapor fraction as 0.99, which was the previous default
 
 ### 🔥 Removed 
 
