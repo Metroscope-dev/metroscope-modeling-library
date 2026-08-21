@@ -69,7 +69,7 @@ equation
   h_vap_sat = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_in));
   h_liq_sat = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_in));
 
-  C_in.h_outflow = x_steam_in*h_vap_sat + (1 - x_steam_in)*h_liq_sat;
+  steam_phase.h_in = x_steam_in*h_vap_sat + (1 - x_steam_in)*h_liq_sat;
   steam_phase.h_out = x_steam_out * h_vap_sat + (1-x_steam_out)*h_liq_sat;
   liquid_phase.h_out = h_liq_sat;
   x_steam_out = x_steam_in/(1-(MS_efficiency - MS_eff_decrease)*(1-x_steam_in));
