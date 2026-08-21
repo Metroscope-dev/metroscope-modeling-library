@@ -58,7 +58,7 @@ equation
   end if;
 
   if not input_specs then
-    MS_efficiency = 0.99;
+    MS_efficiency = 0.99; // You can still set the outlet steam fraction if you'd like, just set input_specs = true and define it in the moedl
   end if;
 
   // Definitions
