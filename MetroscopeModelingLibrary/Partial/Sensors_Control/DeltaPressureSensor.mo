@@ -16,9 +16,9 @@ partial model DeltaPressureSensor
   // Sensor signal parameters
   parameter Real DP_start = 0.05 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "bar" "Specify the display unit"
-    annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa", choice="inH2O"),
+    annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa", choice="inH2O", choice="kPa"),
     Dialog(tab="General", group="Sensor signal parameters"));
-  parameter String signal_unit = "bar" "Specify the signal unit. This should be the unit of DP_start and of the tag linked to the sensor." annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa", choice="inH2O"),
+  parameter String signal_unit = "bar" "Specify the signal unit. This should be the unit of DP_start and of the tag linked to the sensor." annotation(choices(choice="bar", choice="mbar", choice="psi", choice="kPa", choice="Pa", choice="inH2O"),
   Dialog(tab="General", group="Sensor signal parameters"));
 
   // Initialisation start values
@@ -28,7 +28,7 @@ partial model DeltaPressureSensor
   Real DP_mbar(unit="mbar", start=DP_0*Utilities.Constants.Pa_to_mbar); // Pressure difference in mbar
   Real DP_psi(start=DP_0*Utilities.Constants.Pa_to_psiA); // Pressure difference in PSI
   Real DP_inH2O(start=DP_0*Utilities.Constants.Pa_to_inH2O); // Pressure difference in inches of water
-
+  Real DP_kPa(start=DP_0*Utilities.Constants.Pa_to_kPaA); // Pressure difference in kPa
 
 
 
@@ -58,6 +58,7 @@ equation
   DP_mbar = DP*Utilities.Constants.Pa_to_mbar;
   DP_psi = DP*Utilities.Constants.Pa_to_psiA;
   DP_inH2O = DP*Utilities.Constants.Pa_to_inH2O;
+  DP_kPa =DP*Utilities.Constants.Pa_to_kPaA;
 
   if signal_unit == "bar" then
     DP_sensor = DP_bar;
@@ -67,6 +68,8 @@ equation
     DP_sensor = DP_psi;
   elseif signal_unit == "inH2O" then
     DP_sensor = DP_inH2O;
+  elseif signal_unit == "kPa" then
+    DP_sensor = DP_kPa;
   else
     DP_sensor = DP;
   end if;
@@ -77,6 +80,7 @@ equation
           textString=if display_output then
                      if display_unit == "mbar" then DynamicSelect("",String(DP_mbar)+" mbar")
                      else if display_unit == "psi" then DynamicSelect("",String(DP_psi)+" psi")
+                     else if display_unit == "kPa" then DynamicSelect("", String(DP_kPa) + " kPa")
                      else if display_unit == "Pa" then DynamicSelect("",String(DP)+" Pa")
                      else DynamicSelect("",String(DP_bar)+" bar")
                      else ""),
