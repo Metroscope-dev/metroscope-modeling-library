@@ -15,12 +15,6 @@ model AirCompressor_reverse
   input Real compressor_T_out(start = 580) "degC";
   input Real compressor_P_out(start = 20) "barA";
 
-  // Hypothesis
-  output Real tau_moist;
-
-  // Parameters to calibrate
-  output Real tau;
-  output Real eta_is;
 
   .MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-74,-10},{-54,10}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{48,-10},{68,10}})));
@@ -28,6 +22,19 @@ model AirCompressor_reverse
   MetroscopeModelingLibrary.Sensors.FlueGases.TemperatureSensor compressor_T_out_sensor annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
   MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor compressor_P_out_sensor annotation (Placement(transformation(extent={{18,-10},{38,10}})));
   MultiFluid.Machines.AirCompressor airCompressor annotation (Placement(transformation(extent={{-40,-8},{-20,8}})));
+  Utilities.Interfaces.RealOutput tau annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-36,-30}), iconTransformation(extent={{-110,-8},{-90,12}})));
+  Utilities.Interfaces.RealOutput eta annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-30,-20}), iconTransformation(extent={{-110,-8},{-90,12}})));
+  Utilities.Interfaces.RealExpression moist_tau_ratio(y=1/4) annotation (
+      Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-24,-44})));
 equation
   // Boundary conditions
   source.P_out = source_P;
@@ -39,13 +46,6 @@ equation
   compressor_T_out_sensor.T_degC = compressor_T_out;
   compressor_P_out_sensor.P_barA = compressor_P_out;
 
-  // Parameters to calibrate
-  tau = airCompressor.tau;
-  eta_is = airCompressor.eta_is;
-
-  // Hypothesis
-  tau_moist = tau/4;
-  tau_moist = airCompressor.tau_moist;
 
   connect(compressor_T_out_sensor.C_out, compressor_P_out_sensor.C_in) annotation (Line(
       points={{8,0},{18,0}},
@@ -58,6 +58,14 @@ equation
   connect(source.C_out, airCompressor.inlet) annotation (Line(points={{-59,0},{-40,0}}, color={0,255,128}));
   connect(airCompressor.outlet, compressor_T_out_sensor.C_in) annotation (Line(points={{-20,0},{-12,0}}, color={95,95,95}));
   connect(airCompressor.C_W_in, power_source.C_out) annotation (Line(points={{-20,6},{-16,6},{-16,40},{-0.8,40}}, color={244,125,35}));
+  connect(airCompressor.eta_is, eta)
+    annotation (Line(points={{-30,-5},{-30,-20}}, color={0,0,127}));
+  connect(eta, eta)
+    annotation (Line(points={{-30,-20},{-30,-20}}, color={0,0,127}));
+  connect(tau, airCompressor.tau)
+    annotation (Line(points={{-36,-30},{-36,-6}}, color={0,0,127}));
+  connect(airCompressor.moist_tau_ratio, moist_tau_ratio.y)
+    annotation (Line(points={{-24,-3.8},{-24,-39}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-100,-100},{100,100}})),
                              Icon(coordinateSystem(extent={{-100,-100},{100,100}})));
 end AirCompressor_reverse;
