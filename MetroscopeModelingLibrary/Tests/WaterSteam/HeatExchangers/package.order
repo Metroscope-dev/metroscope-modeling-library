@@ -9,11 +9,11 @@ DryReheater_faulty
 Condenser_direct
 Condenser_reverse
 Condenser_faulty
-Reheater_direct
-Reheater_reverse
 Reheater_faulty
 Superheater_direct
 Superheater_reverse
 Superheater_faulty
 SteamGenerator_faulty
 Reactor_faulty
+Reheater_direct
+Reheater_reverse
