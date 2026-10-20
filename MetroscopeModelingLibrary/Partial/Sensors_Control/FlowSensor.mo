@@ -21,6 +21,7 @@ partial model FlowSensor
   Real Q_lbs(start=Q_0*Constants.kgs_to_lbs, nominal=Q_0*Constants.kgs_to_lbs); // Flow rate in pounds per second
   Real Q_Mlbh(start=Q_0*Constants.kgs_to_Mlbh, nominal=Q_0*Constants.kgs_to_Mlbh); // Flow rate in megapounds per second
   Real Q_klbh(start=Q_0*Constants.kgs_to_klbh, nominal=Q_0*Constants.kgs_to_klbh); // Flow rate in kilopounds per second
+  Real Q_lbh(start=Q_0*Constants.kgs_to_lbh, nominal= Q_0*Constants.kgs_to_lbh); // Flow rate in pounds per hour
 
 
   // Failure modes
@@ -43,6 +44,7 @@ equation
   Q_lbs = Q * Constants.kgs_to_lbs;
   Q_Mlbh = Q * Constants.kgs_to_Mlbh;
   Q_klbh = Q * Constants.kgs_to_klbh;
+  Q_lbh = Q * Constants.kgs_to_lbh;
 
   if signal_unit == "l/m" then
     Q_sensor = Q_lm;
@@ -54,6 +56,8 @@ equation
     Q_sensor = Q_Mlbh;
   elseif signal_unit == "klb/h" then
     Q_sensor = Q_klbh;
+  elseif signal_unit == "lb/h" then
+    Q_sensor = Q_lbh;
   else
     Q_sensor = Q;
   end if;
