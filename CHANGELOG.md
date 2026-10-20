@@ -8,7 +8,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-- Added a lbh conversion on  [#610](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/610)
+- Aligning the Sensors and Sensor_Control on the conversions available [#610](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/610)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
