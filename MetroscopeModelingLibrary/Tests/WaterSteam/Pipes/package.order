@@ -14,3 +14,15 @@ Manifold
 SlideValve_reverse_connector
 SlideValve_direct_connector
 Desuperheating_direct
+FrictionPipe_direct
+FrictionPipe_faulty
+FrictionPipe_reverse
+HeatLoss_direct
+HeatLoss_reverse
+HeightVariationPipe_direct
+HeightVariationPipe_reverse
+Leak_direct
+LoopBreaker_direct
+Manifold_direct
+PressureCut_direct
+SlideValve_faulty

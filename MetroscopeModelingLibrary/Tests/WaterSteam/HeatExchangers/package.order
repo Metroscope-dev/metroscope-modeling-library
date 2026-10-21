@@ -2,7 +2,9 @@ LiqLiqHX_direct
 LiqLiqHX_reverse
 LiqLiqHX_faulty
 SteamGenerator_direct
+SteamGenerator_reverse
 Reactor_direct
+Reactor_reverse
 DryReheater_direct
 DryReheater_reverse
 DryReheater_faulty

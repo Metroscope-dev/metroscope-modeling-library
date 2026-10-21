@@ -11,34 +11,48 @@ model MetroscopiaCCGT_direct
   MultiFluid.HeatExchangers.Superheater RHT annotation (Placement(transformation(extent={{-350,50},{-250,-50}})));
   MultiFluid.HeatExchangers.Superheater HPSH1 annotation (Placement(transformation(extent={{-450,50},{-350,-50}})));
   MultiFluid.HeatExchangers.Superheater HPSH2 annotation (Placement(transformation(extent={{-510,-50},{-410,50}})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_w_HPSH1_out_sensor(sensor_function="Calibration",
-    causality="HPSH1_Kth",                                                                         T_start=453.409)
-                                                                    annotation (Placement(transformation(
+  SensorsControl.WaterSteam.TemperatureSensor T_w_HPSH1_out_sensor(
+    sensor_function="Calibration",
+    causality="HPSH1_Kth",
+    T_start=453.409) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-400,-70})));
-  Sensors_Control.WaterSteam.PressureSensor P_w_HPSH1_out_sensor(sensor_function="Calibration",
-    causality="HPSH2_Kfr_cold",                                                                 P_start=114.788)
-                                                                 annotation (Placement(transformation(
+  SensorsControl.WaterSteam.PressureSensor P_w_HPSH1_out_sensor(
+    sensor_function="Calibration",
+    causality="HPSH2_Kfr_cold",
+    P_start=114.788) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-400,-100})));
-  Sensors_Control.WaterSteam.PressureSensor P_w_evap_out_sensor(sensor_function="Calibration",
-    causality="HPSH1_Kfr_cold",                                                                P_start=117.126) annotation (Placement(transformation(extent={{-250,110},{-270,130}})));
+  SensorsControl.WaterSteam.PressureSensor P_w_evap_out_sensor(
+    sensor_function="Calibration",
+    causality="HPSH1_Kfr_cold",
+    P_start=117.126)
+    annotation (Placement(transformation(extent={{-250,110},{-270,130}})));
   MultiFluid.HeatExchangers.Economiser ECO annotation (Placement(transformation(extent={{-110,-50},{-10,50}})));
   WaterSteam.Pipes.ControlValve EVAP_controlValve annotation (Placement(transformation(extent={{-100,76},{-120,98}})));
-  Sensors_Control.WaterSteam.PressureSensor P_w_eco_out_sensor(sensor_function="Calibration", causality="ECO_Kfr_cold")
-                                                                                              annotation (Placement(transformation(extent={{-70,70},{-90,90}})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_w_eco_out_sensor(sensor_function="Calibration",
-    causality="ECO_Kth",                                                                         T_start=319.834)
-                                                                                                 annotation (Placement(transformation(extent={{-130,70},{-150,90}})));
-  Sensors_Control.Outline.OpeningSensor Evap_opening_sensor(sensor_function="Calibration") annotation (Placement(transformation(extent={{-120,110},{-100,130}})));
+  SensorsControl.WaterSteam.PressureSensor P_w_eco_out_sensor(sensor_function=
+        "Calibration", causality="ECO_Kfr_cold")
+    annotation (Placement(transformation(extent={{-70,70},{-90,90}})));
+  SensorsControl.WaterSteam.TemperatureSensor T_w_eco_out_sensor(
+    sensor_function="Calibration",
+    causality="ECO_Kth",
+    T_start=319.834)
+    annotation (Placement(transformation(extent={{-130,70},{-150,90}})));
+  SensorsControl.Outline.OpeningSensor Evap_opening_sensor(sensor_function=
+        "Calibration")
+    annotation (Placement(transformation(extent={{-120,110},{-100,130}})));
   WaterSteam.Pipes.SlideValve HPST_admission_valve annotation (Placement(transformation(extent={{-530,-204},{-510,-182}})));
-  Sensors_Control.WaterSteam.PressureSensor P_HPST_in_sensor(sensor_function="Calibration",
-    causality="HPST_Cst",                                                                   P_start=112.349) annotation (Placement(transformation(extent={{-500,-210},{-480,-190}})));
+  SensorsControl.WaterSteam.PressureSensor P_HPST_in_sensor(
+    sensor_function="Calibration",
+    causality="HPST_Cst",
+    P_start=112.349)
+    annotation (Placement(transformation(extent={{-500,-210},{-480,-190}})));
   WaterSteam.Pipes.SlideValve LPST_admission_valve annotation (Placement(transformation(extent={{-288,-204},{-268,-182}})));
-  Sensors_Control.WaterSteam.PressureSensor P_LPST_in_sensor(sensor_function="Calibration", causality="LPST_CST")
-                                                             annotation (Placement(transformation(extent={{-260,-210},{-240,-190}})));
+  SensorsControl.WaterSteam.PressureSensor P_LPST_in_sensor(sensor_function=
+        "Calibration", causality="LPST_CST")
+    annotation (Placement(transformation(extent={{-260,-210},{-240,-190}})));
   WaterSteam.HeatExchangers.Condenser condenser annotation (Placement(transformation(extent={{-70,-340},{30,-240}})));
   WaterSteam.Machines.FixedSpeedPump pump annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
@@ -46,21 +60,24 @@ model MetroscopiaCCGT_direct
         origin={30,-380})));
   WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{180,-300},{140,-260}})));
   WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{140,-330},{180,-290}})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_pump_out_sensor(sensor_function="Calibration",
-    causality="pump_rh",                                                                        T_start=34.8939)
-                                                                 annotation (Placement(transformation(
+  SensorsControl.WaterSteam.TemperatureSensor T_pump_out_sensor(
+    sensor_function="Calibration",
+    causality="pump_rh",
+    T_start=34.8939) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={80,-230})));
-  Sensors_Control.WaterSteam.PressureSensor P_pump_out_sensor(sensor_function="Calibration",
-    causality="pump_hn",                                                                     P_start=170.006)
-                                                              annotation (Placement(transformation(
+  SensorsControl.WaterSteam.PressureSensor P_pump_out_sensor(
+    sensor_function="Calibration",
+    causality="pump_hn",
+    P_start=170.006) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={80,-170})));
-  Sensors_Control.WaterSteam.FlowSensor Q_pump_out_sensor(sensor_function="Calibration",
-    causality="evap_Kth",                                                                Q_start=49.7229)
-                                                          annotation (Placement(transformation(
+  SensorsControl.WaterSteam.FlowSensor Q_pump_out_sensor(
+    sensor_function="Calibration",
+    causality="evap_Kth",
+    Q_start=49.7229) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={80,-200})));
@@ -68,89 +85,117 @@ model MetroscopiaCCGT_direct
         extent={{-20,20},{20,-20}},
         rotation=0,
         origin={0,80})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_w_eco_in_sensor(sensor_function="BC", T_start=85)
-                                                                                       annotation (Placement(transformation(extent={{10,-90},{-10,-70}})));
+  SensorsControl.WaterSteam.TemperatureSensor T_w_eco_in_sensor(sensor_function
+      ="BC", T_start=85)
+    annotation (Placement(transformation(extent={{10,-90},{-10,-70}})));
   WaterSteam.Pipes.ControlValve pumpRec_controlValve annotation (Placement(transformation(
         extent={{-10,-11},{10,11}},
         rotation=270,
         origin={86,-60})));
   WaterSteam.Machines.SteamTurbine HPST annotation (Placement(transformation(extent={{-460,-160},{-380,-240}})));
   WaterSteam.Machines.SteamTurbine LPST annotation (Placement(transformation(extent={{-220,-160},{-140,-240}})));
-  Sensors_Control.WaterSteam.PressureSensor P_Cond_sensor(sensor_function="Calibration",
-    causality="condenser_Kth",                                                           P_start=0.0496853)
-                                                          annotation (Placement(transformation(extent={{-120,-210},{-100,-190}})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_circulating_water_in_sensor(sensor_function="BC", T_start=15)
-                                                                                                   annotation (Placement(transformation(extent={{140,-290},{120,-270}})));
-  Sensors_Control.WaterSteam.PressureSensor P_circulating_water_in_sensor(sensor_function="BC", P_start=5)
-                                                                                                annotation (Placement(transformation(extent={{110,-290},{90,-270}})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_circulating_water_out_sensor(sensor_function="Calibration",
+  SensorsControl.WaterSteam.PressureSensor P_Cond_sensor(
+    sensor_function="Calibration",
+    causality="condenser_Kth",
+    P_start=0.0496853)
+    annotation (Placement(transformation(extent={{-120,-210},{-100,-190}})));
+  SensorsControl.WaterSteam.TemperatureSensor T_circulating_water_in_sensor(
+      sensor_function="BC", T_start=15)
+    annotation (Placement(transformation(extent={{140,-290},{120,-270}})));
+  SensorsControl.WaterSteam.PressureSensor P_circulating_water_in_sensor(
+      sensor_function="BC", P_start=5)
+    annotation (Placement(transformation(extent={{110,-290},{90,-270}})));
+  SensorsControl.WaterSteam.TemperatureSensor T_circulating_water_out_sensor(
+    sensor_function="Calibration",
     causality="condenser_Qv_cold",
-    T_start=24.9415)                                                                                                              annotation (Placement(transformation(extent={{120,-300},{140,-320}})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_pumpRec_out_sensor(sensor_function="Calibration",
-    causality="pumpRec_rh",                                                                        T_start=324.409)
-                                                                                                   annotation (Placement(transformation(
+    T_start=24.9415)
+    annotation (Placement(transformation(extent={{120,-300},{140,-320}})));
+  SensorsControl.WaterSteam.TemperatureSensor T_pumpRec_out_sensor(
+    sensor_function="Calibration",
+    causality="pumpRec_rh",
+    T_start=324.409) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={80,60})));
-  Sensors_Control.WaterSteam.PressureSensor P_pumpRec_out_sensor(sensor_function="Calibration",
-    causality="pumpRec_hn",                                                                     P_start=195.553)
-                                                                                                annotation (Placement(transformation(
+  SensorsControl.WaterSteam.PressureSensor P_pumpRec_out_sensor(
+    sensor_function="Calibration",
+    causality="pumpRec_hn",
+    P_start=195.553) annotation (Placement(transformation(
         extent={{10,-11},{-10,11}},
         rotation=90,
         origin={80,30})));
-  Sensors_Control.WaterSteam.FlowSensor Q_pumpRec_out_sensor(sensor_function="Unidentified", Q_start=9.37335)
-                                                                                             annotation (Placement(transformation(
+  SensorsControl.WaterSteam.FlowSensor Q_pumpRec_out_sensor(sensor_function=
+        "Unidentified", Q_start=9.37335) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={80,-20})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_HPST_out_sensor(sensor_function="Calibration",
-    causality="HPST_eta_is",                                                                    T_start=252.806)
-                                                                 annotation (Placement(transformation(
+  SensorsControl.WaterSteam.TemperatureSensor T_HPST_out_sensor(
+    sensor_function="Calibration",
+    causality="HPST_eta_is",
+    T_start=252.806) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-350,-100})));
-  Sensors_Control.WaterSteam.PressureSensor P_HPST_out_sensor(sensor_function="Calibration",
-    causality="RHT_Kfr_cold",                                                                P_start=9.66102)
-                                                              annotation (Placement(transformation(
+  SensorsControl.WaterSteam.PressureSensor P_HPST_out_sensor(
+    sensor_function="Calibration",
+    causality="RHT_Kfr_cold",
+    P_start=9.66102) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-350,-70})));
-  Sensors_Control.WaterSteam.PressureSensor P_w_ReH_out_sensor(sensor_function="Calibration",
-    causality="LPST_admission_valve_Cv",                                                      P_start=8.85519)
-                                                               annotation (Placement(transformation(
+  SensorsControl.WaterSteam.PressureSensor P_w_ReH_out_sensor(
+    sensor_function="Calibration",
+    causality="LPST_admission_valve_Cv",
+    P_start=8.85519) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=90,
         origin={-300,-70})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_w_ReH_out_sensor(sensor_function="Calibration",
-    causality="RHT_Kth",                                                                         T_start=348.684)
-                                                                  annotation (Placement(transformation(
+  SensorsControl.WaterSteam.TemperatureSensor T_w_ReH_out_sensor(
+    sensor_function="Calibration",
+    causality="RHT_Kth",
+    T_start=348.684) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=90,
         origin={-300,-100})));
-  Sensors_Control.FlueGases.TemperatureSensor T_flue_gas_sink_sensor(T_start=339.58)
-                                                                     annotation (Placement(transformation(extent={{90,-10},{110,10}})));
-  Sensors_Control.FlueGases.PressureSensor P_flue_gas_sink_sensor(P_start=1)
-                                                                  annotation (Placement(transformation(extent={{118,-10},{138,10}})));
+  SensorsControl.FlueGases.TemperatureSensor T_flue_gas_sink_sensor(T_start=
+        339.58)
+    annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+  SensorsControl.FlueGases.PressureSensor P_flue_gas_sink_sensor(P_start=1)
+    annotation (Placement(transformation(extent={{118,-10},{138,10}})));
   WaterSteam.Pipes.ControlValve deSH_controlValve annotation (Placement(transformation(extent={{-220,-144},{-240,-124}})));
   Power.Machines.Generator generator annotation (Placement(transformation(extent={{-388,-284},{-468,-236}})));
   Power.BoundaryConditions.Sink sink2 annotation (Placement(transformation(extent={{-490,-280},{-530,-240}})));
-  Sensors_Control.Power.PowerSensor W_ST_out_sensor(sensor_function="Calibration", causality="LPST_eta_is",
-    W_start=64.8383)                                annotation (Placement(transformation(extent={{-470,-270},{-490,-250}})));
-  Sensors_Control.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function="Calibration") annotation (Placement(transformation(
+  SensorsControl.Power.PowerSensor W_ST_out_sensor(
+    sensor_function="Calibration",
+    causality="LPST_eta_is",
+    W_start=64.8383)
+    annotation (Placement(transformation(extent={{-470,-270},{-490,-250}})));
+  SensorsControl.Outline.OpeningSensor pumpRec_opening_sensor(sensor_function=
+        "Calibration") annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={120,-60})));
-  Sensors_Control.FlueGases.TemperatureSensor turbine_T_out_sensor(sensor_function="BC", T_start=640) annotation (Placement(transformation(extent={{-570,-10},{-550,10}})));
-  Sensors_Control.FlueGases.PressureSensor turbine_P_out_sensor(sensor_function="BC", P_start=1.11116) annotation (Placement(transformation(extent={{-520,-10},{-500,10}})));
-  Sensors_Control.FlueGases.FlowSensor Q_source_air_sensor(sensor_function="BC", Q_start=500) annotation (Placement(transformation(extent={{-1020,-10},{-1000,10}})));
-  Sensors_Control.Outline.OpeningSensor deSH_opening_sensor(sensor_function="Calibration")
-                                                            annotation (Placement(transformation(
+  SensorsControl.FlueGases.TemperatureSensor turbine_T_out_sensor(
+      sensor_function="BC", T_start=640)
+    annotation (Placement(transformation(extent={{-570,-10},{-550,10}})));
+  SensorsControl.FlueGases.PressureSensor turbine_P_out_sensor(sensor_function=
+        "BC", P_start=1.11116)
+    annotation (Placement(transformation(extent={{-520,-10},{-500,10}})));
+  SensorsControl.FlueGases.FlowSensor Q_source_air_sensor(sensor_function="BC",
+      Q_start=500)
+    annotation (Placement(transformation(extent={{-1020,-10},{-1000,10}})));
+  SensorsControl.Outline.OpeningSensor deSH_opening_sensor(sensor_function=
+        "Calibration") annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-230,-100})));
-  Sensors_Control.WaterSteam.TemperatureSensor T_w_HPSH2_out_sensor(sensor_function="BC", T_start=566.5) annotation (Placement(transformation(extent={{-470,90},{-490,110}})));
-  Sensors_Control.WaterSteam.PressureSensor P_w_HPSH2_out_sensor(sensor_function="Calibration",
-    causality="HPST_admission_valve_Cv",                                                        P_start=113.3) annotation (Placement(transformation(
+  SensorsControl.WaterSteam.TemperatureSensor T_w_HPSH2_out_sensor(
+      sensor_function="BC", T_start=566.5)
+    annotation (Placement(transformation(extent={{-470,90},{-490,110}})));
+  SensorsControl.WaterSteam.PressureSensor P_w_HPSH2_out_sensor(
+    sensor_function="Calibration",
+    causality="HPST_admission_valve_Cv",
+    P_start=113.3) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=180,
         origin={-510,100})));
@@ -304,7 +349,7 @@ model MetroscopiaCCGT_direct
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={80,-350})));
-  Sensors_Control.WaterSteam.FlowSensor Q_deSH_sensor(
+  SensorsControl.WaterSteam.FlowSensor Q_deSH_sensor(
     sensor_function="Calibration",
     causality="HPSH2_Kth",
     Q_start=2.2273,
@@ -319,20 +364,30 @@ model MetroscopiaCCGT_direct
         origin={-170,-120}), iconTransformation(extent={{-178,-276},{-138,-236}})));
   FlueGases.Machines.GasTurbine gasTurbine annotation (Placement(transformation(extent={{-660,-40},{-580,40}})));
   MultiFluid.Machines.CombustionChamber combustionChamber(LHV=LHV_plant) annotation (Placement(transformation(extent={{-720,-20},{-680,20}})));
-  Sensors_Control.FlueGases.TemperatureSensor compressor_T_out_sensor(sensor_function="Calibration",
-    causality="compressor_eta_is",                                                                   T_start=450) annotation (Placement(transformation(extent={{-780,-10},{-760,10}})));
-  Sensors_Control.FlueGases.PressureSensor compressor_P_out_sensor(sensor_function="Calibration",
-    causality="compressor_tau",                                                                   P_start=16.9887) annotation (Placement(transformation(extent={{-750,-10},{-730,10}})));
-  Sensors_Control.Fuel.TemperatureSensor T_fuel_source_sensor(sensor_function="BC", T_start=156) annotation (Placement(transformation(
+  SensorsControl.FlueGases.TemperatureSensor compressor_T_out_sensor(
+    sensor_function="Calibration",
+    causality="compressor_eta_is",
+    T_start=450)
+    annotation (Placement(transformation(extent={{-780,-10},{-760,10}})));
+  SensorsControl.FlueGases.PressureSensor compressor_P_out_sensor(
+    sensor_function="Calibration",
+    causality="compressor_tau",
+    P_start=16.9887)
+    annotation (Placement(transformation(extent={{-750,-10},{-730,10}})));
+  SensorsControl.Fuel.TemperatureSensor T_fuel_source_sensor(sensor_function=
+        "BC", T_start=156) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-700,-40})));
-  Sensors_Control.Fuel.PressureSensor P_fuel_source_sensor(sensor_function="BC", P_start=30) annotation (Placement(transformation(
+  SensorsControl.Fuel.PressureSensor P_fuel_source_sensor(sensor_function="BC",
+      P_start=30) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-700,-70})));
-  Sensors_Control.Fuel.FlowSensor Q_fuel_source_sensor(sensor_function="Calibration",
-    causality="CC_eta",                                                               Q_start=10.5) annotation (Placement(transformation(
+  SensorsControl.Fuel.FlowSensor Q_fuel_source_sensor(
+    sensor_function="Calibration",
+    causality="CC_eta",
+    Q_start=10.5) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-700,-100})));
@@ -367,8 +422,11 @@ model MetroscopiaCCGT_direct
         origin={-720,-100}), iconTransformation(extent={{-800,-194},{-760,-154}})));
   Power.Machines.Generator GTgenerator annotation (Placement(transformation(extent={{-580,56},{-660,104}})));
   Power.BoundaryConditions.Sink power_GT_sink annotation (Placement(transformation(extent={{-680,60},{-720,100}})));
-  Sensors_Control.Power.PowerSensor W_GT_out_sensor(sensor_function="Calibration", causality="GT_trubine_eta_is",
-    W_start=148.912)                                annotation (Placement(transformation(extent={{-660,70},{-680,90}})));
+  SensorsControl.Power.PowerSensor W_GT_out_sensor(
+    sensor_function="Calibration",
+    causality="GT_trubine_eta_is",
+    W_start=148.912)
+    annotation (Placement(transformation(extent={{-660,70},{-680,90}})));
   Utilities.Interfaces.Observable W_GT_out               annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,
@@ -382,8 +440,11 @@ model MetroscopiaCCGT_direct
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={-1060,60}), iconTransformation(extent={{-800,-194},{-760,-154}})));
-  Sensors_Control.FlueGases.PressureSensor P_filter_out_sensor(sensor_function="Calibration",
-    causality="air_filter_Kfr",                                                               P_start=0.899403) annotation (Placement(transformation(extent={{-940,-10},{-920,10}})));
+  SensorsControl.FlueGases.PressureSensor P_filter_out_sensor(
+    sensor_function="Calibration",
+    causality="air_filter_Kfr",
+    P_start=0.899403)
+    annotation (Placement(transformation(extent={{-940,-10},{-920,10}})));
   Utilities.Interfaces.Observable P_filter_out
                                               annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
@@ -391,9 +452,11 @@ model MetroscopiaCCGT_direct
         origin={-930,20}), iconTransformation(extent={{-800,-194},{-760,-154}})));
   FlueGases.Machines.InletGuideVanes inletGuideVanes annotation (Placement(transformation(extent={{-920,-20},{-880,20}})));
   FlueGases.Pipes.Filter filter annotation (Placement(transformation(extent={{-990,-20},{-950,20}})));
-  Sensors_Control.Outline.OpeningSensor openingSensor(sensor_function="Calibration",
+  SensorsControl.Outline.OpeningSensor openingSensor(
+    sensor_function="Calibration",
     Opening_start=100,
-    signal_unit="%")                                                                 annotation (Placement(transformation(extent={{-910,30},{-890,50}})));
+    signal_unit="%")
+    annotation (Placement(transformation(extent={{-910,30},{-890,50}})));
   Utilities.Interfaces.RealInput IGV_angle            annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,

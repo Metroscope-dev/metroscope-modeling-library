@@ -1,0 +1,3 @@
+interface:
+  display_name: "Metroscope Dymola Validator"
+  short_description: "Check and simulate MML models at sensor start values"

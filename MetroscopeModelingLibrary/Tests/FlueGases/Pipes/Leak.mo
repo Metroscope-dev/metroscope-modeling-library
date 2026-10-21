@@ -1,32 +1,92 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model Leak
-  import MetroscopeModelingLibrary.Utilities.Units;
-  extends Utilities.Icons.Tests.FlueGasesTestIcon;
-
-  // Boundary conditions
-  input Units.SpecificEnthalpy source_h(start=0.5e6);
-  input Units.Pressure source_P(start=10e5, min=0, nominal=10e5) "Pa";
-  input Units.Pressure sink_P(start=1e5, min=0, nominal=10e5) "Pa";
-  input Units.PositiveMassFlowRate Q(start=10) "kg/s";
-
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source   source annotation (Placement(transformation(extent={{-100,-9.99996},{-80,9.99996}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink   sink annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={90,-6.10623e-16})));
-
-  MetroscopeModelingLibrary.FlueGases.Pipes.Leak          leak        annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  "MML4 isolated Leak direct test"
+  MetroscopeModelingLibrary.FlueGases.Pipes.Leak leak
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source(
+    P_0=110000,
+    Q_0=50,
+    T_0=293.15,
+    h_0=322465)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-280,0})));
+  MetroscopeModelingLibrary.SensorsControl.FlueGases.PressureSensor source_pressure_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    P_start=1.1,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=110000,
+    Q_0=50,
+    h_0=322465)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-240,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-240,30}), iconTransformation(extent={{-140,220},{-100,260}})));
+  MetroscopeModelingLibrary.SensorsControl.FlueGases.TemperatureSensor source_temperature_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    T_start=20,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=110000,
+    Q_0=50,
+    h_0=322465,
+    T_0=293.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-200,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-200,30}), iconTransformation(extent={{-140,175},{-100,215}})));
+  MetroscopeModelingLibrary.SensorsControl.FlueGases.FlowSensor source_flow_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    Q_start=50,
+    signal_unit="kg/s",
+    display_unit="kg/s",
+    P_0=110000,
+    Q_0=50,
+    h_0=322465)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-160,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_flow
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-160,30}), iconTransformation(extent={{-140,130},{-100,170}})));
+  MetroscopeModelingLibrary.SensorsControl.FlueGases.PressureSensor sink_pressure_sensor(
+    sensor_function="Unidentified",
+    causality="",
+    show_causality=true,
+    P_start=1.1,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=110000,
+    Q_0=50,
+    h_0=500000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={80,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.Observable sink_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={80,30}), iconTransformation(extent={{100,220},{140,260}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={170,0})));
+  input MetroscopeModelingLibrary.Utilities.Units.DifferentialPressure balance_pressure(start=0);
 equation
-
-  // Boundary conditions
-  source.h_out = source_h;
-  source.P_out = source_P;
-  source.Xi_out = {0.768,0.232,0.0,0.0,0.0};
-  sink.P_in = sink_P;
-
-  // Leak:
-  leak.Q = Q;
-
-  connect(source.C_out, leak.C_in) annotation (Line(points={{-85,0},{-10,0}}, color={95,95,95}));
-  connect(leak.C_out, sink.C_in) annotation (Line(points={{10,0},{20,0},{20,0},{85,0}},     color={95,95,95}));
+  source.Xi_out = {0.768,0.232,0,0,0};
+  leak.DP_input = balance_pressure;
+  connect(source_pressure_sensor.P_sensor, source_pressure)
+    annotation (Line(points={{-240,10},{-240,30}}, color={0,0,127}));
+  connect(source.C_out, source_pressure_sensor.C_in)
+    annotation (Line(points={{-275,0},{-250,0}}, color={28,108,200}));
+  connect(source_temperature_sensor.T_sensor, source_temperature)
+    annotation (Line(points={{-200,10},{-200,30}}, color={0,0,127}));
+  connect(source_pressure_sensor.C_out, source_temperature_sensor.C_in)
+    annotation (Line(points={{-230,0},{-210,0}}, color={28,108,200}));
+  connect(source_flow_sensor.Q_sensor, source_flow)
+    annotation (Line(points={{-160,10},{-160,30}}, color={0,0,127}));
+  connect(source_temperature_sensor.C_out, source_flow_sensor.C_in)
+    annotation (Line(points={{-190,0},{-170,0}}, color={28,108,200}));
+  connect(source_flow_sensor.C_out, leak.C_in)
+    annotation (Line(points={{-150,0},{-10,0}}, color={28,108,200}));
+  connect(sink_pressure_sensor.P_sensor, sink_pressure)
+    annotation (Line(points={{80,10},{80,30}}, color={0,0,127}));
+  connect(leak.C_out, sink_pressure_sensor.C_in)
+    annotation (Line(points={{10,0},{70,0}}, color={28,108,200}));
+  connect(sink_pressure_sensor.C_out, sink.C_in)
+    annotation (Line(points={{90,0},{165,0}}, color={28,108,200}));
+  annotation (experiment(StopTime=1,Tolerance=1e-6), Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-360,-300},{400,300}})), Documentation(info="<html><p>Approved MML4 sensor/interface structure: AirCompressor and Metroscopia CCGT/NPP. Illustrative initialization point, not plant calibration. Constant supported faults only. No correction or retry after first Dymola attempt.</p><p></p></html>"));
 end Leak;

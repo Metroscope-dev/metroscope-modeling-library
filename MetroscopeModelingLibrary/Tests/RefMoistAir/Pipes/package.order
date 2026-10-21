@@ -10,3 +10,11 @@ HeatLoss
 Leak
 PressureCut
 Filter_faulty
+AdmiLouver_direct
+AdmiLouver_faulty
+AdmiLouver_reverse
+HeatLoss_direct
+HeatLoss_reverse
+Leak_direct
+Pipe_faulty
+PressureCut_direct

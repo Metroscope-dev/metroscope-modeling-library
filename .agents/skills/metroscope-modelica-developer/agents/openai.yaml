@@ -1,0 +1,13 @@
+interface:
+  display_name: Metroscope Modelica Developer
+  short_description: Create and review graphical MML4 Modelica models with correct
+    causalities
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

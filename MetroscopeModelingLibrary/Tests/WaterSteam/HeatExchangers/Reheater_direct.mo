@@ -2,32 +2,32 @@ within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Reheater_direct
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Reheater reheater(S=1000)
     annotation (Placement(transformation(extent={{-44,-24},{52,24}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor
     pressureSensor(
     P_start=65,
     signal_unit="barA",
     display_unit="barA")
     annotation (Placement(transformation(extent={{-84,-10},{-64,10}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor
     temperatureSensor(
     T_start=100,
     signal_unit="degC",
     display_unit="degC")
     annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.FlowSensor flowSensor(
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.FlowSensor flowSensor(
     Q_start=1000,
     signal_unit="kg/s",
     display_unit="kg/s")
     annotation (Placement(transformation(extent={{-154,-10},{-134,10}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor
     temperatureSensor1
     annotation (Placement(transformation(extent={{118,-10},{138,10}})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.FlowSensor flowSensor1(
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.FlowSensor flowSensor1(
       Q_start=100) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={44,84})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.PressureSensor
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor
     pressureSensor1(
     P_start=35,
     signal_unit="barA",
@@ -35,7 +35,7 @@ model Reheater_direct
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={46,116})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor
     temperatureSensor2
     annotation (Placement(transformation(extent={{30,-70},{50,-50}})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source
@@ -64,12 +64,12 @@ model Reheater_direct
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-56,50})));
-  MetroscopeModelingLibrary.Sensors_Control.WaterSteam.TemperatureSensor
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor
     temperatureSensor3(
     T_start=280,
     signal_unit="degC",
-    display_unit="degC")
-    annotation (Placement(transformation(extent={{-10,10},{10,-10}},
+    display_unit="degC") annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
         rotation=270,
         origin={46,150})));
   MetroscopeModelingLibrary.Utilities.Interfaces.RealExpression realExpression(

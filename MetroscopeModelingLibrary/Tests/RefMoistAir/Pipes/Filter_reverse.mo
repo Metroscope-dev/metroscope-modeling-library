@@ -1,49 +1,112 @@
 within MetroscopeModelingLibrary.Tests.RefMoistAir.Pipes;
 model Filter_reverse
-
-  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.RefMoistAirTestIcon;
-      // Boundary conditions
-  input Utilities.Units.Pressure source_P(start=1e5) "Pa";
-  input Utilities.Units.Temperature source_T(start=11) "degC";
-  input Utilities.Units.NegativeMassFlowRate source_Q(start=-500) "kg/s";
-  input Utilities.Units.Fraction source_relative_humidity(start=0.5) "1";
-
-    // Parameters
-  parameter Utilities.Units.Height delta_z=0;
-
-  // Inputs for calibration
-  input Real P_out(start=0.98) "barA";
-
-  // Parameters for calibration
-  output Utilities.Units.FrictionCoefficient Kfr;
-
-  MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-52,-10},{-32,10}})));
-  MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Sink sink annotation (Placement(transformation(extent={{58,-10},
-            {78,10}})));
-  MetroscopeModelingLibrary.RefMoistAir.Pipes.Filter filter
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  MetroscopeModelingLibrary.Sensors.RefMoistAir.PressureSensor P_out_sensor
-    annotation (Placement(transformation(extent={{24,-10},{44,10}})));
+  "MML4 isolated Filter reverse test"
+  MetroscopeModelingLibrary.RefMoistAir.Pipes.Filter filter(
+    faulty=false)
+    annotation (Placement(transformation(extent={{-20,-20},{20,20}}, rotation=0, origin={0,0})));
+  MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Source source(
+    P_0=110000,
+    Q_0=50,
+    T_0=293.15,
+    h_0=40100)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-280,0})));
+  MetroscopeModelingLibrary.SensorsControl.RefMoistAir.PressureSensor source_pressure_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    P_start=1.1,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=110000,
+    Q_0=50,
+    h_0=40100)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-240,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-240,30}), iconTransformation(extent={{-140,220},{-100,260}})));
+  MetroscopeModelingLibrary.SensorsControl.RefMoistAir.TemperatureSensor source_temperature_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    T_start=20,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=110000,
+    Q_0=50,
+    h_0=40100,
+    T_0=293.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-200,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-200,30}), iconTransformation(extent={{-140,175},{-100,215}})));
+  MetroscopeModelingLibrary.SensorsControl.RefMoistAir.FlowSensor source_flow_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    Q_start=50,
+    signal_unit="kg/s",
+    display_unit="kg/s",
+    P_0=110000,
+    Q_0=50,
+    h_0=40100)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-160,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_flow
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-160,30}), iconTransformation(extent={{-140,130},{-100,170}})));
+  MetroscopeModelingLibrary.SensorsControl.RefMoistAir.RelativeHumiditySensor source_humidity_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    H_start=50,
+    signal_unit="%",
+    display_unit="%",
+    P_0=110000,
+    Q_0=50,
+    h_0=40100)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-120,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_humidity
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-120,30})));
+  MetroscopeModelingLibrary.SensorsControl.RefMoistAir.PressureSensor sink_pressure_sensor(
+    sensor_function="Calibration",
+    causality="filter_Kfr",
+    show_causality=true,
+    P_start=1.09,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=109000,
+    Q_0=50,
+    h_0=500000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={80,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.CalibrationInput sink_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={80,30}), iconTransformation(extent={{-140,85},{-100,125}})));
+  MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Sink sink
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={170,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.GenericReal filter_Kfr(
+    start=0.52)
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={0,-50})));
 equation
-  // Boundary Conditions
-  source.T_out = source_T + 273.15;
-  source.P_out = source_P;
-  source.Q_out = source_Q;
-  source.relative_humidity = source_relative_humidity;
-
-  // Parameters
-  filter.delta_z = delta_z;
-
-  // Inputs for calibration
-  P_out_sensor.P_barA = P_out;
-
-  // Parameters for calibration
-  filter.Kfr = Kfr;
-  connect(source.C_out, filter.C_in)
-    annotation (Line(points={{-37,0},{-10,0}}, color={0,127,127}));
-  connect(sink.C_in, P_out_sensor.C_out)
-    annotation (Line(points={{63,0},{44,0}}, color={0,127,127}));
-  connect(P_out_sensor.C_in, filter.C_out)
-    annotation (Line(points={{24,0},{16,0},{16,0},{10,0}}, color={0,127,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  connect(source_pressure_sensor.P_sensor, source_pressure)
+    annotation (Line(points={{-240,10},{-240,30}}, color={0,0,127}));
+  connect(source.C_out, source_pressure_sensor.C_in)
+    annotation (Line(points={{-275,0},{-250,0}}, color={28,108,200}));
+  connect(source_temperature_sensor.T_sensor, source_temperature)
+    annotation (Line(points={{-200,10},{-200,30}}, color={0,0,127}));
+  connect(source_pressure_sensor.C_out, source_temperature_sensor.C_in)
+    annotation (Line(points={{-230,0},{-210,0}}, color={28,108,200}));
+  connect(source_flow_sensor.Q_sensor, source_flow)
+    annotation (Line(points={{-160,10},{-160,30}}, color={0,0,127}));
+  connect(source_temperature_sensor.C_out, source_flow_sensor.C_in)
+    annotation (Line(points={{-190,0},{-170,0}}, color={28,108,200}));
+  connect(source_humidity_sensor.H_sensor, source_humidity)
+    annotation (Line(points={{-120,10},{-120,30}}, color={0,0,127}));
+  connect(source_flow_sensor.C_out, source_humidity_sensor.C_in)
+    annotation (Line(points={{-150,0},{-130,0}}, color={28,108,200}));
+  connect(source_humidity_sensor.C_out, filter.C_in)
+    annotation (Line(points={{-110,0},{-20,0}}, color={28,108,200}));
+  connect(sink_pressure_sensor.P_sensor, sink_pressure)
+    annotation (Line(points={{80,10},{80,30}}, color={0,0,127}));
+  connect(filter.C_out, sink_pressure_sensor.C_in)
+    annotation (Line(points={{20,0},{70,0}}, color={28,108,200}));
+  connect(sink_pressure_sensor.C_out, sink.C_in)
+    annotation (Line(points={{90,0},{165,0}}, color={28,108,200}));
+  connect(filter_Kfr, filter.Kfr)
+    annotation (Line(points={{0,-50},{0,8}}, color={0,0,127}));
+  annotation (experiment(StopTime=1,Tolerance=1e-6), Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-360,-300},{400,300}})), Documentation(info="<html><p>Approved MML4 sensor/interface structure: AirCompressor and Metroscopia CCGT/NPP. Illustrative initialization point, not plant calibration. Constant supported faults only. No correction or retry after first Dymola attempt.</p><p></p></html>"));
 end Filter_reverse;

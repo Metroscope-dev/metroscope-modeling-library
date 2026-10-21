@@ -26,7 +26,7 @@ partial model FlowSensor
   // Failure modes
   parameter Boolean faulty = false annotation(Dialog(tab="Faulty mode", group="Flow bias"));
 
-  outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
+  parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
 
   Utilities.Interfaces.GenericReal      Q_sensor(start=Q_start) annotation (Placement(transformation(

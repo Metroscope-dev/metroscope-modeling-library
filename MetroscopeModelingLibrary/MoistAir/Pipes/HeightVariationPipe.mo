@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.MoistAir.Pipes;
 model HeightVariationPipe
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
-  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAir;
+  package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
   extends Partial.Pipes.HeightVariationPipe(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
