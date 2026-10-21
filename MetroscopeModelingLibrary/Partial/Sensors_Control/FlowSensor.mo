@@ -9,7 +9,7 @@ partial model FlowSensor
 
   // Sensor signal parameters
   parameter Units.PositiveMassFlowRate Q_start = 100 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
-  parameter String signal_unit = "kg/s" "Specify the signal unit. This should be the unit of Q_start and of the tag linked to the sensor." annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h"),
+  parameter String signal_unit = "kg/s" "Specify the signal unit. This should be the unit of Q_start and of the tag linked to the sensor." annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h", choice="lb/h"),
   Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "kg/s" "Specify the display unit"    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h"),
   Dialog(tab="General", group="Sensor signal parameters"));
