@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.WaterSteam.BoundaryConditions;
 model Source
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-  extends Partial.BoundaryConditions.FluidSource(redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out, redeclare package Medium =
+  extends Partial.BoundaryConditions.FluidSource(h_0=170000, redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out, redeclare package Medium =
         WaterSteamMedium)                                                                                                                                             annotation (IconMap(
         primitivesVisible=false));
   annotation (Icon(graphics={

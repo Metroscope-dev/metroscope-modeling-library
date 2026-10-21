@@ -38,28 +38,28 @@ model MetroscopiaCCGT_faulty "Metroscopia CCGT faulty"
   // Steam turbine
   input Real Fault_HPST_CV_closed_valve(start=0);
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_turbine_to_condenser_leak
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_HP_turbine_to_condenser_leak
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-104,200})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_CV_to_condenser_leak
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_HP_CV_to_condenser_leak
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-166,220})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_IP_CV_to_condenser_leak
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_IP_CV_to_condenser_leak
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-6,320})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_IP_turbine_to_condenser_leak
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_IP_turbine_to_condenser_leak
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=180,
         origin={-4,300})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak deSH_controlValve_leak
-    annotation (Placement(transformation(
+  MetroscopeModelingLibrary.MoistAir.Leak deSH_controlValve_leak annotation (
+      Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={-148,80})));

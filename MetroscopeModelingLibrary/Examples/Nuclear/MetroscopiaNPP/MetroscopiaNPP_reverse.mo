@@ -762,14 +762,14 @@ equation
   connect(superheater_T_out_sensor.T_sensor, superheater_T_out)
     annotation (Line(points={{-340,126},{-340,136}}, color={0,0,127}));
   connect(deaerator_inlet_pipe_delta_z.y, deaerator_inlet_pipe.delta_z)
-    annotation (Line(points={{-400,-40},{-400,-45.2}},          color={0,0,127}));
+    annotation (Line(points={{-400,-41},{-400,-45.2}},          color={0,0,127}));
   connect(LPT1.eta_is, turbines_eta_is) annotation (Line(points={{-273.98,
           127.36},{-274,127.36},{-274,140},{-370,140},{-370,154}},
                                                       color={0,0,127}));
-  connect(condenser_Kfr_cold.y, condenser.Kfr_cold) annotation (Line(points={{-8,36},
+  connect(condenser_Kfr_cold.y, condenser.Kfr_cold) annotation (Line(points={{-8,35},
           {-8,25.7284},{2.95,25.7284}},             color={0,0,127}));
   connect(deaerator_outlet_pipe_delta_z.y, deaerator_outlet_pipe.delta_z)
-    annotation (Line(points={{-440,-40},{-440,-45.2}},          color={0,0,127}));
+    annotation (Line(points={{-440,-41},{-440,-45.2}},          color={0,0,127}));
   connect(feedwater_pump_hn, feedwater_pump_hn)
     annotation (Line(points={{-506,-42},{-506,-42}}, color={0,0,127}));
   connect(feedwater_pump.rh, feedwater_pump_rh) annotation (Line(points={{-506,
@@ -979,8 +979,8 @@ equation
         points={{-384,80},{-340,80},{-340,70}}, color={28,108,200}));
   connect(LPT1_Cst, LPT1_Cst)
     annotation (Line(points={{-278,134},{-278,134}}, color={0,0,127}));
-  connect(condenser_C_incond.y, condenser.C_incond) annotation (Line(points={{
-          30,44},{30,35.7531},{29.92,35.7531}}, color={0,0,127}));
+  connect(condenser_C_incond.y, condenser.C_incond) annotation (Line(points={{30,43},
+          {30,35.7531},{29.92,35.7531}},        color={0,0,127}));
   connect(condenser_Kth, condenser_Kth)
     annotation (Line(points={{10,62},{10,62}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-900,-160},

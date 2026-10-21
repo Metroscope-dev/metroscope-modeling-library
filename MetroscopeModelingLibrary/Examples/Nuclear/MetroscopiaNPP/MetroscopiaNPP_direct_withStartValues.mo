@@ -2447,12 +2447,6 @@ model MetroscopiaNPP_direct_withStartValues
         phase(start=0))),
     feedwater_pump_hn(start=554.82806),
     feedwater_pump_rh(start=0.31775114),
-    generator(
-      C_in(W(start=575757600.0)),
-      C_out(W(start=-570000000.0)),
-      W_elec(start=-570000000.0),
-      eta(start=0.99),
-      W_shaft(start=575757600.0)),
     loopBreaker(
       C_in(
         P(start=5800000.0),

@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Examples.Nuclear.MetroscopiaNPP;
 model MetroscopiaNPP_faulty
 
-  extends MetroscopiaNPP_direct_withStartValues(
+  extends MetroscopiaNPP_direct(
     superheater(faulty=true),
     condenser(faulty=true),
     LP_heater(faulty=true),
@@ -36,13 +36,41 @@ model MetroscopiaNPP_faulty
   input Real Fault_bypass_HP_heater_drains_to_condenser_Q(start=0);
 
   // Bypasses
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_control_valve_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-147,51})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_turbine_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-113,51})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_LP_turbine_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={139,109})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_superheater_to_condenser annotation (Placement(transformation(extent={{9,-9},{-9,9}},rotation=270,origin={-113,143})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_turbine_ext_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=0,origin={-11,49})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_LP_heater_drains_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={277,-141})));
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak bypass_HP_heater_drains_to_condenser annotation (Placement(transformation(extent={{-9,-9},{9,9}},rotation=270,origin={-16,-144})));
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_HP_control_valve_to_condenser
+    annotation (Placement(transformation(
+        extent={{-9,-9},{9,9}},
+        rotation=270,
+        origin={-147,51})));
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_HP_turbine_to_condenser
+    annotation (Placement(transformation(
+        extent={{-9,-9},{9,9}},
+        rotation=270,
+        origin={-113,51})));
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_LP_turbine_to_condenser
+    annotation (Placement(transformation(
+        extent={{-9,-9},{9,9}},
+        rotation=270,
+        origin={139,109})));
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_superheater_to_condenser
+    annotation (Placement(transformation(
+        extent={{9,-9},{-9,9}},
+        rotation=270,
+        origin={-113,143})));
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_HP_turbine_ext_to_condenser
+    annotation (Placement(transformation(
+        extent={{-9,-9},{9,9}},
+        rotation=0,
+        origin={-11,49})));
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_LP_heater_drains_to_condenser
+    annotation (Placement(transformation(
+        extent={{-9,-9},{9,9}},
+        rotation=270,
+        origin={277,-141})));
+  MetroscopeModelingLibrary.MoistAir.Leak bypass_HP_heater_drains_to_condenser
+    annotation (Placement(transformation(
+        extent={{-9,-9},{9,9}},
+        rotation=270,
+        origin={-16,-144})));
 equation
 
   // Mass flow bias

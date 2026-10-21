@@ -42,6 +42,11 @@ model LiqLiqHX_reverse
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,-18})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation
+    (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={-20,-34})));
 equation
 
   // Boundary conditions
@@ -63,6 +68,8 @@ equation
   liqLiqHX.Kfr_hot = Kfr_hot;
   liqLiqHX.Kfr_cold = Kfr_cold;
 
+  sink.Q_in = 10;
+
   connect(hot_source.C_out, liqLiqHX.C_hot_in) annotation (Line(points={{-8.88178e-16,
           25},{-8.88178e-16,16.5},{0,16.5},{0,8}}, color={28,108,200}));
   connect(cold_source.C_out, liqLiqHX.C_cold_in)
@@ -78,6 +85,8 @@ equation
         color={28,108,200}));
   connect(liqLiqHX.C_hot_out, P_hot_out_sensor.C_in) annotation (Line(points={{0,
           -8},{0,-10},{1.11022e-15,-10},{1.11022e-15,-12}}, color={28,108,200}));
+  connect(sink.C_in, liqLiqHX.C_cold_in) annotation (Line(points={{-20,-29},{-20,
+          -4},{-26,-4},{-26,0},{-16.2,0}}, color={28,108,200}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -80},{100,100}})),
                         Diagram(coordinateSystem(preserveAspectRatio=false,

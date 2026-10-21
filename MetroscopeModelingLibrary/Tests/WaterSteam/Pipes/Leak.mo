@@ -15,7 +15,8 @@ model Leak
         rotation=0,
         origin={90,-6.10623e-16})));
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Leak leak annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  MetroscopeModelingLibrary.MoistAir.Leak leak
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
 equation
 
   // Boundary conditions

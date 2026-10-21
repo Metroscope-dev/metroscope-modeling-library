@@ -58,7 +58,7 @@ model MetroscopiaNPP_direct
       // Superheater inlet control valve
       parameter MetroscopeModelingLibrary.Utilities.Units.Cv superheater_control_valve_Cvmax=2646.496;
       // Superheater
-      parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient superheater_Kfr_hot=1049.6948;
+      //parameter MetroscopeModelingLibrary.Utilities.Units.FrictionCoefficient superheater_Kfr_hot=1049.6948;
       parameter MetroscopeModelingLibrary.Utilities.Units.HeatExchangeCoefficient superheater_Kth=17193.303;
       // LP Turbines
       parameter MetroscopeModelingLibrary.Utilities.Units.Cst LPT1_Cst=6242.8354;
@@ -215,7 +215,6 @@ model MetroscopiaNPP_direct
     T_0=425.15,
     h_0=2.7e6)                                                                    annotation (Placement(transformation(extent={{186,120},{206,138}})));
     MetroscopeModelingLibrary.Power.BoundaryConditions.Sink powerSink annotation (Placement(transformation(extent={{362,158},{382,178}})));
-    MetroscopeModelingLibrary.Power.Machines.Generator generator annotation (Placement(transformation(extent={{308,156},{348,180}})));
     MetroscopeModelingLibrary.Sensors.Power.PowerSensor W_elec_sensor annotation (Placement(transformation(extent={{348,162},{360,174}})));
   MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor(
     Q_0=1000,
@@ -411,7 +410,7 @@ equation
     steam_generator.vapor_fraction = 0.99;
 
     // Hypothesis
-    steam_generator.P_purge = P_steam * 1e5;
+    //steam_generator.P_purge = P_steam * 1e5;
 
   // HP Turbines
 
@@ -429,7 +428,7 @@ equation
     HPT_2.eta_is = turbines_eta_is;
 
     // Parameter
-    HP_extract.alpha = 1;
+    //HP_extract.alpha = 1;
 
   // Dryer - Superheater
 
@@ -439,13 +438,13 @@ equation
     superheater_T_out_sensor.T_degC = superheater_T_out;
 
     // Parameters
-    superheater.S = 100;
-    superheater.Kfr_cold = 0;
-    superheater.Q_vent = 1;
-    steam_dryer.x_steam_out = 0.99;
+    //superheater.S = 100;
+    //superheater.Kfr_cold = 0;
+    //superheater.Q_vent = 1;
+    //steam_dryer.x_steam_out = 0.99;
 
     // Calibrated parameters
-    superheater.Kfr_hot = superheater_Kfr_hot;
+    //superheater.Kfr_hot = superheater_Kfr_hot;
     superheater.Kth = superheater_Kth;
   superheater_control_valve.Cv_max = superheater_control_valve_Cvmax;
 
@@ -464,7 +463,7 @@ equation
     LPT2.eta_is = turbines_eta_is;
 
     // Parameters
-    LP_extract.alpha = 1;
+    //LP_extract.alpha = 1;
 
   // Generator
 
@@ -472,7 +471,7 @@ equation
     W_elec_sensor.W_MW = W_elec;
 
     // Fixed parameter
-    generator.eta = 0.99;
+   // generator.eta = 0.99;
 
   // Condenser
 
@@ -483,10 +482,10 @@ equation
     CW_T_out_sensor.T_degC = CW_T_out;
 
     // Parameters
-    condenser.S = 100;
-    condenser.water_height = 1;
+    //condenser.S = 100;
+    //condenser.water_height = 1;
     condenser.C_incond = 0;
-    condenser.P_offset = 0;
+    //condenser.P_offset = 0;
     condenser.Kfr_cold = 0;
 
     // Calibrated Parameters
@@ -511,8 +510,8 @@ equation
     LP_reheater_drains_control_valve_opening_sensor.Opening = LP_reheater_drains_control_valve_opening;
 
     // Parameters
-    LP_heater.S = 100;
-    LP_heater.Kfr_hot = 0;
+    //LP_heater.S = 100;
+    //LP_heater.Kfr_hot = 0;
 
     // Calibrated parameters
     LP_heater.Kth = LP_heater_Kth;
@@ -522,9 +521,9 @@ equation
   // Deaerator
 
     deaerator_inlet_pipe.Kfr = 0;
-    deaerator_inlet_pipe.delta_z = 5;
+    //deaerator_inlet_pipe.delta_z = 5;
     deaerator_outlet_pipe.Kfr = 0;
-    deaerator_outlet_pipe.delta_z = -5;
+    //deaerator_outlet_pipe.delta_z = -5;
 
   // Feedwater pump
 
@@ -545,9 +544,9 @@ equation
     HP_reheater_drains_control_valve_opening_sensor.Opening = HP_reheater_drains_control_valve_opening;
 
     // Parameters
-    HP_heater.S = 100;
-    HP_heater.Kfr_hot = 0;
-    HP_heater.level = 0.3;
+    //HP_heater.S = 100;
+    //HP_heater.Kfr_hot = 0;
+    //HP_heater.level = 0.3;
 
     // Calibrated parameters
     HP_heater.Kth_subc = HP_heater_Kth_subc;
@@ -564,10 +563,6 @@ equation
   connect(HP_extract.C_ext_out, HP_extract_P_sensor.C_in) annotation (Line(points={{-40,65.2},{-40,54}},             color={28,108,200}));
   connect(powerSink.C_in,W_elec_sensor. C_out) annotation (Line(points={{367,168},{359.88,168}},
                                                                                               color={244,125,35}));
-  connect(W_elec_sensor.C_in,generator. C_out) annotation (Line(points={{348,168},{342,168}},
-                                                                                           color={244,125,35}));
-  connect(HPT_2.C_W_out, generator.C_in) annotation (Line(points={{9,78.72},{18,78.72},{18,168},{315.6,168}},      color={244,125,35}));
-  connect(HPT_1.C_W_out, generator.C_in) annotation (Line(points={{-61,78.72},{-54,78.72},{-54,168},{315.6,168}},     color={244,125,35}));
   connect(HPT_1.C_in, HPT_P_in_sensor.C_out) annotation (Line(points={{-79,72},{-94,72}},           color={28,108,200}));
   connect(HPT_P_out_sensor.C_in, HPT_2.C_out) annotation (Line(points={{26,72},{9,72}},            color={28,108,200}));
   connect(steam_dryer.C_in, HPT_P_out_sensor.C_out) annotation (Line(points={{56,
@@ -581,8 +576,6 @@ equation
   connect(superheater.C_hot_in, superheater_bleed_P_sensor.C_out) annotation (Line(points={{56,112},{-35,112},{-35,112.182},{-94,112.182}},     color={28,108,200}));
   connect(superheater_bleed_P_sensor.C_in, superheater_control_valve.C_out) annotation (Line(points={{-106,
           112.182},{-116,112.182},{-116,112.182},{-126,112.182}},                                                                                                  color={28,108,200}));
-  connect(LPT1.C_W_out, generator.C_in) annotation (Line(points={{169,136.72},{188,136.72},{188,168},{315.6,168}},   color={244,125,35}));
-  connect(LPT2.C_W_out, generator.C_in) annotation (Line(points={{239,136.72},{262,136.72},{262,168},{315.6,168}},   color={244,125,35}));
   connect(LPT2.C_out, P_cond_sensor.C_in) annotation (Line(points={{239,130},{286,130}},                             color={28,108,200}));
   connect(P_cond_sensor.C_out, condenser.C_hot_in) annotation (Line(points={{298,130},
           {392.5,130},{392.5,74.2864}},                                                                    color={28,108,200}));
@@ -645,5 +638,13 @@ equation
   connect(Q_purge_sensor.C_out, sink.C_in) annotation (Line(points={{-170,-139},{-170,-145}}, color={28,108,200}));
   connect(steam_generator.C_thermal_power, thermal_power_sensor.C_out) annotation (Line(points={{-181,-70},{-196.16,-70}}, color={244,125,35}));
   connect(thermal_power_sensor.C_in, source.C_out) annotation (Line(points={{-212,-70},{-223.2,-70}}, color={244,125,35}));
+  connect(HPT_1.C_W_out, W_elec_sensor.C_in) annotation (Line(points={{-61,78.72},
+          {-61,168},{348,168}}, color={244,125,35}));
+  connect(HPT_2.C_W_out, W_elec_sensor.C_in) annotation (Line(points={{9,78.72},
+          {10,168},{348,168}}, color={244,125,35}));
+  connect(LPT1.C_W_out, W_elec_sensor.C_in) annotation (Line(points={{169,136.72},
+          {166,168},{348,168}}, color={244,125,35}));
+  connect(LPT2.C_W_out, W_elec_sensor.C_in) annotation (Line(points={{239,136.72},
+          {238,168},{348,168}}, color={244,125,35}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-240,-160},{520,200}})), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-240,-160},{520,200}})));
 end MetroscopiaNPP_direct;
