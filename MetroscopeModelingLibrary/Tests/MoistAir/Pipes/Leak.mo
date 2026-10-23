@@ -24,7 +24,7 @@ model Leak
   MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition source_pressure
     annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-240,30}), iconTransformation(extent={{-140,220},{-100,260}})));
   MetroscopeModelingLibrary.SensorsControl.MoistAir.TemperatureSensor source_temperature_sensor(
-    sensor_function="BC",
+    sensor_function="Unidentified",
     causality="",
     show_causality=true,
     T_start=20,
