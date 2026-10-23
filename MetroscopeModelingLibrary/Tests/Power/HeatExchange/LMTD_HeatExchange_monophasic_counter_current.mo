@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
 model LMTD_HeatExchange_monophasic_counter_current
-   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
 
    MetroscopeModelingLibrary.Power.HeatExchange.LMTDHeatExchange LMTDHeatExchange;
 equation
@@ -14,5 +14,5 @@ equation
     // Hot Side
     LMTDHeatExchange.T_hot_in = 273.15 + 230;
     LMTDHeatExchange.T_hot_out = 273.15 + 80;
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation ( Diagram(coordinateSystem(preserveAspectRatio=false)));
 end LMTD_HeatExchange_monophasic_counter_current;

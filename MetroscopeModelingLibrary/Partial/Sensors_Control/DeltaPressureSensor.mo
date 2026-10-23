@@ -10,8 +10,8 @@ partial model DeltaPressureSensor
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"),
     Dialog(tab="General", group="Causality display parameters"));
   parameter String causality = "" "Specify which parameter is calibrated by this sensor" annotation(Dialog(tab="General", group="Causality display parameters"));
-  outer parameter Boolean show_causality = true "Used to show or not the causality";
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter Boolean show_causality = true "Used to show or not the causality";
+  parameter Boolean display_output = false "Used to switch ON or OFF output display";
 
   // Sensor signal parameters
   parameter Real DP_start = 0.05 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));

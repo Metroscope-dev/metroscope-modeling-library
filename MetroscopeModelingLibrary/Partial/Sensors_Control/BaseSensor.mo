@@ -23,7 +23,7 @@ partial model BaseSensor
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"),
     Dialog(tab="General", group="Causality display parameters"));
   parameter String causality = "" "Specify which parameter is calibrated by this sensor" annotation(Dialog(tab="General", group="Causality display parameters"));
-  outer parameter Boolean show_causality = true "Used to show or not the causality";
+  parameter Boolean show_causality = true "Used to show or not the causality";
 
   // Initialization parameters
   parameter Units.PositiveMassFlowRate Q_0=100 annotation(Dialog(tab="Initialization", group="Start values"));

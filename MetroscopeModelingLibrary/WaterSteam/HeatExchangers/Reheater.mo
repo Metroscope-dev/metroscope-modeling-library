@@ -151,7 +151,8 @@ protected
   parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_hot_out_0));
 
 public
-  Utilities.Interfaces.RealOutput Kth_subc annotation (Placement(transformation(
+  Utilities.Interfaces.GenericReal Kth_subc
+                                           annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=90,
         origin={-100,84}), iconTransformation(

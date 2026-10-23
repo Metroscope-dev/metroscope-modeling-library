@@ -2,3 +2,6 @@ CombustionChamber
 CombustionChamberwithRefMoistAir
 AirCompressor_reverse
 AirCompressor_direct
+AirCompressor_faulty
+CombustionChamber_direct
+CombustionChamber_reverse

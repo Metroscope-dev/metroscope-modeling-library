@@ -68,7 +68,7 @@ model AirCooledCondenser_with_subcooling
         rotation=270,
         origin={0,90}),                              iconTransformation(extent={{-10,90},{10,110}})));
   MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_hot_out(Q(start=
-          Q_cold_0), P(start=Psat_0)) annotation (Placement(transformation(
+          -Q_hot_0), P(start=Psat_0)) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,-90}),iconTransformation(extent={{-10,-90},{10,-70}})));
@@ -90,7 +90,13 @@ model AirCooledCondenser_with_subcooling
         extent={{14.5,-14.5},{-14.5,14.5}},
         rotation=180,
         origin={0,30})));
-  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPFlowModel cold_side_condensing
+  MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPFlowModel cold_side_condensing(
+    Q_0=Q_cold_0,
+    P_0=P_cold_in_0,
+    T_in_0=T_cold_in_0,
+    T_out_0=T_cold_out_0,
+    h_in_0=h_cold_in_0,
+    h_out_0=h_cold_out_0)
     annotation (Placement(transformation(extent={{-13.5,-13.5},{13.5,13.5}})));
   MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoHFlowModel incondensables_in(
     P_in_0=Psat_0,
@@ -111,31 +117,65 @@ model AirCooledCondenser_with_subcooling
         rotation=270,
         origin={0,-50})));
 
-  MetroscopeModelingLibrary.WaterSteam.Pipes.FrictionPipe hot_side_pipe annotation (Placement(transformation(
+  MetroscopeModelingLibrary.WaterSteam.Pipes.FrictionPipe hot_side_pipe(
+    Q_0=Q_hot_0,
+    P_in_0=Psat_0,
+    P_out_0=Psat_0,
+    T_0=T_hot_in_0,
+    h_0=h_hot_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-50,80})));
-  Power.HeatExchange.LMTDHeatExchange heatExchange_condensing annotation (
+  Power.HeatExchange.LMTDHeatExchange heatExchange_condensing(
+    T_hot_in_0=Tsat_0,
+    T_hot_out_0=Tsat_0,
+    T_cold_in_0=T_cold_in_0,
+    T_cold_out_0=T_cold_out_0) annotation (
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={0,14})));
-  WaterSteam.BaseClasses.IsoPFlowModel hot_side_subcooling
+  WaterSteam.BaseClasses.IsoPFlowModel hot_side_subcooling(
+    Q_0=Q_hot_0,
+    P_0=Psat_0,
+    T_in_0=Tsat_0,
+    T_out_0=T_hot_out_0,
+    h_in_0=h_liq_sat_0,
+    h_out_0=h_liq_sat_0)
     annotation (Placement(transformation(extent={{18,18},{42,42}})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPFlowModel
-    cold_side_subcooling
+    cold_side_subcooling(
+    Q_0=Q_cold_0,
+    P_0=P_cold_in_0,
+    T_in_0=T_cold_in_0,
+    T_out_0=T_cold_out_0,
+    h_in_0=h_cold_in_0,
+    h_out_0=h_cold_out_0)
     annotation (Placement(transformation(extent={{18,-26},{42,-2}})));
-  Power.HeatExchange.LMTDHeatExchange heatExchange_subcooling annotation (
+  Power.HeatExchange.LMTDHeatExchange heatExchange_subcooling(
+    T_hot_in_0=Tsat_0,
+    T_hot_out_0=T_hot_out_0,
+    T_cold_in_0=T_cold_in_0,
+    T_cold_out_0=T_cold_out_0) annotation (
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={30,10})));
   MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel
-                             final_mix_cold annotation (Placement(transformation(
+                             final_mix_cold(
+    Q_0=Q_cold_0,
+    P_0=P_cold_out_0,
+    T_0=T_cold_out_0,
+    h_0=h_cold_out_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={66,0})));
-  MetroscopeModelingLibrary.MoistAir.Pipes.PressureCut         pressure_cut annotation (Placement(transformation(extent={{-11,-25},{11,-3}})));
+  MetroscopeModelingLibrary.MoistAir.Pipes.PressureCut pressure_cut(
+    Q_0=Q_cold_0,
+    P_in_0=P_cold_in_0,
+    P_out_0=P_cold_in_0,
+    T_0=T_cold_in_0,
+    h_0=h_cold_in_0) annotation (Placement(transformation(extent={{-11,-25},{11,-3}})));
 equation
 
   // Failure modes
@@ -172,7 +212,6 @@ equation
   cold_side_subcooling.Q = Q_cold * S_subc/S + 1e-3;
 
   // Pressure losses
-  hot_side_pipe.delta_z = 0;
   hot_side_pipe.Kfr = Kfr_hot;
 
   /* Condensation */

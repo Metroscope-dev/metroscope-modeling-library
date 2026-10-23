@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Fuel.Pipes;
 model HeatLoss
-    extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
 
       // Boundary conditions
   input Utilities.Units.Pressure source_P(start=10e5) "Pa";
@@ -21,5 +21,5 @@ equation
 
   connect(heat_loss.C_in, source.C_out) annotation (Line(points={{-16,0},{-85,0}}, color={85,170,255}));
   connect(heat_loss.C_out, sink.C_in) annotation (Line(points={{14,0},{85,0}}, color={85,170,255}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation ( Diagram(coordinateSystem(preserveAspectRatio=false)));
 end HeatLoss;

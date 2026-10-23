@@ -1,0 +1,4 @@
+interface:
+  display_name: "Metroscope Reverse Builder"
+  short_description: "Compléter le reverse et vérifier son équilibre structurel"
+  default_prompt: "Utilise $metroscope-reverse-builder pour compléter ce modèle instrumenté en reverse, conserver les capteurs et la causalité établis, puis vérifier son équilibre structurel sans traiter la convergence de l’initialisation."
