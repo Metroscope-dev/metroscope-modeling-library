@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model FrictionPipe_faulty
   "MML4 isolated FrictionPipe faulty test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
   MetroscopeModelingLibrary.FlueGases.Pipes.FrictionPipe frictionPipe(
     faulty=true)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));

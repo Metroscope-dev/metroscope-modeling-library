@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Machines;
 model AirCompressor_reverse
   "MML4 isolated AirCompressor reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
   MetroscopeModelingLibrary.FlueGases.Machines.AirCompressor airCompressor(
     faulty=false,
     P_in_0=100000,

@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.MoistAir.Pipes;
 model Leak
   "MML4 isolated Leak test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
   MetroscopeModelingLibrary.MoistAir.Pipes.Leak leak
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source(

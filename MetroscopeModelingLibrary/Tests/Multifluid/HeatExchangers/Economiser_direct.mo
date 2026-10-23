@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Economiser_direct
   "MML4 isolated Economiser direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
     faulty=false,
     QCp_max_side="hot")

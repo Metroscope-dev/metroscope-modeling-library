@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.RefMoistAir.Pipes;
 model AdmiLouver_direct
   "MML4 isolated AdmiLouver direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.RefMoistAirTestIcon;
   MetroscopeModelingLibrary.RefMoistAir.Pipes.AdmiLouver admiLouver(
     faulty=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));

@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Evaporator_reverse
   "MML4 isolated Evaporator reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Evaporator evaporator(
     faulty=false,
     S=50000)

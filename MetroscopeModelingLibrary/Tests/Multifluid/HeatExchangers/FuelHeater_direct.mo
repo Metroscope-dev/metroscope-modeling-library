@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model FuelHeater_direct
   "MML4 isolated FuelHeater direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.FuelHeater fuelHeater(
     faulty=false,
     QCp_max_side="hot")

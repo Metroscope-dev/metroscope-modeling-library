@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model Desuperheating_direct
   "MML4 isolated Desuperheating direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Pipes.Desuperheating desuperheating
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source steam_source(

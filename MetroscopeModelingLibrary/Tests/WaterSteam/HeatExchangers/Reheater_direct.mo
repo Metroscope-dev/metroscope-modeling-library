@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Reheater_direct
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Reheater reheater(S=1000)
     annotation (Placement(transformation(extent={{-44,-24},{52,24}})));
   MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor
@@ -160,17 +161,7 @@ equation
   connect(temperatureSensor2.T_sensor, drain_temp) annotation (Line(points={{40,
           -50},{40,-34},{72,-34},{72,-24}}, color={0,0,127}));
   annotation (
-    Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
-            100}}), graphics={
-        Ellipse(lineColor={28,108,200},
-                fillColor={255,255,255},
-                fillPattern=FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(lineColor={0,0,255},
-                fillColor={28,108,200},
-                pattern=LinePattern.None,
-                fillPattern=FillPattern.Solid,
-                points={{-34,60},{66,0},{-34,-60},{-34,60}})}),
+
     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
             100,100}})));
 

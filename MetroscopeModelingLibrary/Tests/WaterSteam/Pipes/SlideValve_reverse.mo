@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model SlideValve_reverse
   "MML4 isolated SlideValve reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Pipes.SlideValve slideValve(
     faulty=false)
     annotation (Placement(transformation(extent={{-10,-4},{10,18}}, rotation=0, origin={0,0})));

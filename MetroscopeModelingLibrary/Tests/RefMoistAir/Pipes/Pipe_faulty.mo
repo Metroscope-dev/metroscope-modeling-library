@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.RefMoistAir.Pipes;
 model Pipe_faulty
   "MML4 isolated Pipe faulty test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.RefMoistAirTestIcon;
   MetroscopeModelingLibrary.RefMoistAir.Pipes.Pipe pipe(
     faulty=true)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));

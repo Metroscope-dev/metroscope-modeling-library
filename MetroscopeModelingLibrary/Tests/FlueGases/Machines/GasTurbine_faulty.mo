@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Machines;
 model GasTurbine_faulty
   "MML4 isolated GasTurbine faulty test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
   MetroscopeModelingLibrary.FlueGases.Machines.GasTurbine gasTurbine(
     faulty=true,
     P_in_0=1500000,

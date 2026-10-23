@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Machines;
 model InletGuideVanes_direct
   "MML4 isolated InletGuideVanes direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
   MetroscopeModelingLibrary.FlueGases.Machines.InletGuideVanes inletGuideVanes
     annotation (Placement(transformation(extent={{-20,-20},{20,20}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source(

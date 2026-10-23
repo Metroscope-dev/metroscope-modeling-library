@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model Pump_direct
   "MML4 isolated Pump direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Machines.Pump pump(
     P_in_0=2000000,
     P_out_0=5500000,

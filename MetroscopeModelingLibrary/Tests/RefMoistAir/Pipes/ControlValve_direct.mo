@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.RefMoistAir.Pipes;
 model ControlValve_direct
   "MML4 isolated ControlValve direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.RefMoistAirTestIcon;
   MetroscopeModelingLibrary.RefMoistAir.Pipes.ControlValve controlValve
     annotation (Placement(transformation(extent={{-10,-4},{10,18}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.RefMoistAir.BoundaryConditions.Source source(

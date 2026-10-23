@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.Machines;
 model CombustionChamber_reverse
   "MML4 isolated CombustionChamber reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.Machines.CombustionChamber combustionChamber
     annotation (Placement(transformation(extent={{-20,-20},{20,20}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source air_source(

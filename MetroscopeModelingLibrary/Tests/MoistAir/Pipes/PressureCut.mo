@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.MoistAir.Pipes;
 model PressureCut
   "MML4 isolated PressureCut direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
   MetroscopeModelingLibrary.MoistAir.Pipes.PressureCut pressureCut
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source(

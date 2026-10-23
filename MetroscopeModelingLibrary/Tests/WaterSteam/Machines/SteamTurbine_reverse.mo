@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model SteamTurbine_reverse
   "MML4 isolated SteamTurbine reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Machines.SteamTurbine steamTurbine(
     P_in_0=6000000,
     P_out_0=1000000,

@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model HeightVariationPipe_reverse
   "MML4 isolated HeightVariationPipe reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Pipes.HeightVariationPipe heightVariationPipe
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source(

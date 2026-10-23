@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.RefMoistAir.Machines;
 model AirCompressor_faulty
   "MML4 isolated AirCompressor faulty test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.RefMoistAirTestIcon;
   MetroscopeModelingLibrary.RefMoistAir.Machines.AirCompressor airCompressor(
     faulty=true,
     P_in_0=100000,

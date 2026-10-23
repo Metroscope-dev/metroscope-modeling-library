@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Fogging_direct
   "MML4 isolated Fogging direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Fogging fogging
     annotation (Placement(transformation(extent={{-30,-30},{30,30}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source gas_source(

@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Fuel.Pipes;
 model Leak
   import MetroscopeModelingLibrary.Utilities.Units;
-  extends Utilities.Icons.Tests.FuelTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
 
   // Boundary conditions
   input Units.Pressure source_P(start=10e5) "Pa";

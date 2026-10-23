@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model ControlValve_direct
   "MML4 isolated ControlValve direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Pipes.ControlValve controlValve
     annotation (Placement(transformation(extent={{-10,-4},{10,16}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source(

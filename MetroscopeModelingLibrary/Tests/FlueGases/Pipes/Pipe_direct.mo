@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model Pipe_direct
   "MML4 isolated FrictionPipe direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
   MetroscopeModelingLibrary.FlueGases.Pipes.FrictionPipe frictionPipe(
     faulty=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));

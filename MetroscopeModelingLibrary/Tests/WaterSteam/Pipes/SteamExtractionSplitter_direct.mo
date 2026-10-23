@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model SteamExtractionSplitter_direct
   "MML4 isolated SteamExtractionSplitter direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Pipes.SteamExtractionSplitter steamExtractionSplitter
     annotation (Placement(transformation(extent={{-20,-20},{20,20}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source(

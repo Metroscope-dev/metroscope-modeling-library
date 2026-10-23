@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Reheater_faulty
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   extends Reheater_direct(reheater(faulty=true));
 
@@ -22,14 +23,5 @@ equation
   reheater.partition_plate_leak = Fault_partition_plate_leak;
   reheater.tube_rupture_leak = Fault_tube_rupture_leak;
 
-  annotation (Icon(graphics={
-        Ellipse(lineColor={28,108,200},
-                fillColor={255,255,255},
-                fillPattern=FillPattern.Solid,
-                extent={{-100,-100},{100,100}}),
-        Polygon(lineColor={0,0,255},
-                fillColor={28,108,200},
-                pattern=LinePattern.None,
-                fillPattern=FillPattern.Solid,
-                points={{-40,60},{60,0},{-40,-60},{-40,60}})}));
+
 end Reheater_faulty;

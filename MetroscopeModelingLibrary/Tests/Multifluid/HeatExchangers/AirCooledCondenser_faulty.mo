@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model AirCooledCondenser_faulty
   "MML4 isolated AirCooledCondenser faulty test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.AirCooledCondenser airCooledCondenser(
     faulty=true)
     annotation (Placement(transformation(extent={{-50,-50},{50,50}}, rotation=0, origin={0,0})));

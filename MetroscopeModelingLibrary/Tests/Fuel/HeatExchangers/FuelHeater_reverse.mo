@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Fuel.HeatExchangers;
 model FuelHeater_reverse
-  extends MetroscopeModelingLibrary.Icons.Tests.MultifluidTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
   // Boundary conditions
   input Real P_hot_source(start=50, min=0, nominal=10) "barA";
   input Units.MassFlowRate Q_hot_source(start=50) "kg/s";
@@ -76,5 +76,5 @@ equation
   connect(fuelHeater.C_hot_out, T_hot_out_sensor.C_in) annotation (Line(points={{-11.4,23.8},{-11.4,27.9},{-12,27.9},{-12,32}}, color={28,108,200}));
   connect(T_hot_out_sensor.C_out, P_hot_out_sensor.C_in) annotation (Line(points={{-12,52},{-12,58}}, color={28,108,200}));
   connect(hot_sink.C_in, P_hot_out_sensor.C_out) annotation (Line(points={{-12,85},{-12,78}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation ( Diagram(coordinateSystem(preserveAspectRatio=false)));
 end FuelHeater_reverse;

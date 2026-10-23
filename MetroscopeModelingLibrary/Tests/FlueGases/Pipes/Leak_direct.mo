@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model Leak_direct
   "MML4 isolated Leak direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
   MetroscopeModelingLibrary.FlueGases.Pipes.Leak leak
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source source(

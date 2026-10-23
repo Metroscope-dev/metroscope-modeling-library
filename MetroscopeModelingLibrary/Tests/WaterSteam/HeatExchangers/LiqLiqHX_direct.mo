@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model LiqLiqHX_direct
   "MML4 isolated LiqLiqHX direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
   // MML4 interfaces declare quantities; isolated component at illustrative starts.
   MetroscopeModelingLibrary.WaterSteam.HeatExchangers.LiqLiqHX liqLiqHX(
@@ -224,9 +225,7 @@ equation
     annotation (Line(points={{-85,12},{-49.2,12}}, color={0,0,127}));
   annotation (
     experiment(StopTime=1, Tolerance=1e-6),
-    Icon(coordinateSystem(extent={{-140,-300},{140,300}}), graphics={
-      Rectangle(extent={{-100,-260},{100,260}}, lineColor={28,108,200}),
-      Text(extent={{-95,20},{95,-20}}, textString="%name")}),
+
     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-300,-180},{300,240}})),
     Documentation(info="<html><p>MML4 isolated component suite, 2026-10-20. Target local fix-bug-reheater HEAD 126f351e652e73df0eab808bbb7b29f9cb5e556f plus existing workspace changes, MSL 4.0.0. Approved graphical patterns: AirCompressor, MetroscopiaCCGT and MetroscopiaNPP. Native or approved icon dimensions retained.</p><p>Operating points and characteristic values are illustrative engineering sizing, not calibrated plant data. External inputs use existing sensor starts; ordinary enthalpy/fault inputs retain typed declarations and equations. Faults are constant. One Check Model and at most one simulation attempt; see the accompanying report for actual outcomes. No failed-model correction or rerun.</p></html>"));
 end LiqLiqHX_direct;

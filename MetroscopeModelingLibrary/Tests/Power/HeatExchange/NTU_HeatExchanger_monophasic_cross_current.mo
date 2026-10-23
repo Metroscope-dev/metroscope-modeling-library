@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Power.HeatExchange;
 model NTU_HeatExchanger_monophasic_cross_current
-   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.PowerTestIcon;
 
    MetroscopeModelingLibrary.Power.HeatExchange.NTUHeatExchange NTUHeatExchange(config = "monophasic_cross_current",QCp_max_side = "hot");
 
@@ -18,5 +18,5 @@ equation
     NTUHeatExchange.T_hot_in = 273.15 + 293;
     NTUHeatExchange.Cp_hot = 1105;
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation ( Diagram(coordinateSystem(preserveAspectRatio=false)));
 end NTU_HeatExchanger_monophasic_cross_current;

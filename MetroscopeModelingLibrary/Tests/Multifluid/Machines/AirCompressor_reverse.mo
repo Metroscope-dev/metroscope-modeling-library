@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.Machines;
 model AirCompressor_reverse
   "MML4 isolated AirCompressor reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.Machines.AirCompressor airCompressor(
     faulty=false)
     annotation (Placement(transformation(extent={{-40,-32},{40,32}}, rotation=0, origin={0,0})));

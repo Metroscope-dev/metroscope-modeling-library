@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Machines;
 model FixedSpeedPump_direct
   "MML4 isolated FixedSpeedPump direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
   MetroscopeModelingLibrary.WaterSteam.Machines.FixedSpeedPump fixedSpeedPump(
     P_in_0=2000000,
     P_out_0=5500000,

@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.MoistAir.Pipes;
 model HeatLoss_direct
   "MML4 isolated HeatLoss direct test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MoistAirTestIcon;
   MetroscopeModelingLibrary.MoistAir.Pipes.HeatLoss heatLoss
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
   MetroscopeModelingLibrary.MoistAir.BoundaryConditions.Source source(

@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.Pipes;
 model Filter_faulty
   "MML4 isolated Filter faulty test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
   MetroscopeModelingLibrary.FlueGases.Pipes.Filter filter(
     faulty=true)
     annotation (Placement(transformation(extent={{-20,-20},{20,20}}, rotation=0, origin={0,0})));

@@ -1,6 +1,7 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model AirCooledCondenser_with_subcooling_reverse
   "MML4 isolated AirCooledCondenser_with_subcooling reverse test"
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
   MetroscopeModelingLibrary.MultiFluid.HeatExchangers.AirCooledCondenser_with_subcooling airCooledCondenser_with_subcooling(
     faulty=false,
     S_cond=150000,
