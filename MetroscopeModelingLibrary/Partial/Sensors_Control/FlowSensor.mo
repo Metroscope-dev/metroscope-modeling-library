@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Partial.Sensors_Control;
+within MetroscopeModelingLibrary.Partial.SensorsControl;
 partial model FlowSensor
   extends BaseSensor(faulty_flow_rate=faulty)                                   annotation(IconMap(primitivesVisible=true));
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;

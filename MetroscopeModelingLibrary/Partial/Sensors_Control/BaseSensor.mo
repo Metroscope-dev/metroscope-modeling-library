@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Partial.Sensors_Control;
+within MetroscopeModelingLibrary.Partial.SensorsControl;
 partial model BaseSensor
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;
 
