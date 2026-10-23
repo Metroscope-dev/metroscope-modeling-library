@@ -4,11 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Use [gitmoji](https://gitmoji.dev/) to identify your changes.
-
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-- Aligning the Sensors and Sensor_Control on the conversions available [#610](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/610)
+  
+### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+
+### 🔥 Removed
+
+
+## [MML - v4.0.0]
+
+### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+    - Aligning the Sensors and Sensor_Control on the conversions available [#610](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/610)
+    - Add MML-developper skills and fix unit test for MML4 [#609](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/609)
+    - Sensors with connectors extend from usual sensors [#613](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/613)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
@@ -19,10 +31,9 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [MML - v4.0.0-beta3]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
-- Add MML-developper skills and fix unit test for MML4 [#609](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/609)
-- Added a desuperheating component [#591](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/591)
-- Added the possibility to use the evaporator as a feedwater tank. [#606](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/606)
-- Added kPa as a supported unit for the differential pressure sensor [#600](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/600)
+    - Added a desuperheating component [#591](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/591)
+    - Added the possibility to use the evaporator as a feedwater tank. [#606](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/606)
+    - Added kPa as a supported unit for the differential pressure sensor [#600](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/600)
 
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
     - Added inH2O, klbh units. Fixed Mlbh. MML4 update for moist air compressor and IGV [#601](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/601)
@@ -30,7 +41,6 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
     - Organized the sensor paramerte modifiers and grouped them [#592](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/592)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
-- Sensors with connectors extend from usual sensors [#613](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/613)
 
 ### 🔥 Removed
 
