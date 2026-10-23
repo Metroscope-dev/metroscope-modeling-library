@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Sensors_Control.Fuel;
+within MetroscopeModelingLibrary.SensorsControl.Fuel;
 model Chromatograph
   Utilities.Interfaces.GenericReal X_CO2 annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

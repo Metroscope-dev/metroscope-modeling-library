@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Sensors_Control.Outline;
+within MetroscopeModelingLibrary.SensorsControl.Outline;
 model OpeningSensor
 
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;

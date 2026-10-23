@@ -4,21 +4,31 @@ partial model DeltaPressureSensor
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.DeltaPressureIcon;
   replaceable package Medium =
       MetroscopeModelingLibrary.Partial.Media.PartialMedium;
+// Causality display parameters
+  parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
+    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"),
+    Dialog(tab="General", group="Causality display parameters"));
+  parameter String causality = "" "Specify which parameter is calibrated by this sensor" annotation(Dialog(tab="General", group="Causality display parameters"));
+  parameter Boolean show_causality = true "Used to show or not the causality";
+  parameter Boolean display_output = false "Used to switch ON or OFF output display";
 
-  parameter Utilities.Units.DifferentialPressure DP_0=1e4;
+  // Sensor signal parameters
+  parameter Real DP_start = 0.05 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String display_unit = "bar" "Specify the display unit"
+    annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa", choice="inH2O", choice="kPa"),
+    Dialog(tab="General", group="Sensor signal parameters"));
+
+  // Initialisation start values
+  parameter Utilities.Units.DifferentialPressure DP_0=1e4 annotation(Dialog(tab="Initialization", group="Start values"));
   Utilities.Units.DifferentialPressure DP(start=DP_0, nominal=DP_0);
   Real DP_bar(unit="bar", start=DP_0*Utilities.Constants.Pa_to_barA); // Pressure difference in bar
   Real DP_mbar(unit="mbar", start=DP_0*Utilities.Constants.Pa_to_mbar); // Pressure difference in mbar
   Real DP_psi(start=DP_0*Utilities.Constants.Pa_to_psiA); // Pressure difference in PSI
-  Real DP_inH2O(start=DP_0^Utilities.Constants.Pa_to_inH2O); // Pressure difference in inH2O
+  Real DP_inH2O(start=DP_0*Utilities.Constants.Pa_to_inH2O); // Pressure difference in inches of water
+  Real DP_kPa(start=DP_0*Utilities.Constants.Pa_to_kPaA); // Pressure difference in kPa
 
-  // Icon parameters
-  parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
-    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
-  parameter String causality = "" "Specify which parameter is calibrated by this sensor";
-  parameter Boolean display_output = true "Used to switch ON or OFF output display";
-  parameter String display_unit = "bar" "Specify the display unit"
-    annotation(choices(choice="bar", choice="mbar", choice="psi", choice="Pa"));
+
+
 
   replaceable Partial.Connectors.FluidInlet C_in(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   replaceable Partial.Connectors.FluidOutlet C_out(redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}})));
@@ -39,6 +49,7 @@ equation
   DP_mbar =DP*Utilities.Constants.Pa_to_mbar;
   DP_psi =DP*Utilities.Constants.Pa_to_psiA;
   DP_inH2O = DP*Utilities.Constants.Pa_to_inH2O;
+  DP_kPa = DP*Utilities.Constants.Pa_to_kPaA;
 
   annotation (Icon(graphics={Text(
           extent={{-100,-160},{102,-200}},

@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Sensors_Control.Outline;
+within MetroscopeModelingLibrary.SensorsControl.Outline;
 model VRotSensor
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.OutlineSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.VRotIcon;

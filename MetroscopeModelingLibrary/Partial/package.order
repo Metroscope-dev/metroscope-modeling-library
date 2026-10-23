@@ -3,7 +3,7 @@ Connectors
 BoundaryConditions
 BaseClasses
 Sensors
-Sensors_Control
+SensorsControl
 Pipes
 Machines
 HeatExchangers

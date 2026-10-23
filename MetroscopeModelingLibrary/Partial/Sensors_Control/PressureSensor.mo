@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Partial.Sensors_Control;
+within MetroscopeModelingLibrary.Partial.SensorsControl;
 partial model PressureSensor
   extends BaseSensor                                   annotation(IconMap(primitivesVisible=true));
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.InlineSensorIcon;

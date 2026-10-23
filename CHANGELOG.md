@@ -30,6 +30,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
     - Organized the sensor paramerte modifiers and grouped them [#592](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/592)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
+- Sensors with connectors extend from usual sensors [#613](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/613)
 
 ### 🔥 Removed
 

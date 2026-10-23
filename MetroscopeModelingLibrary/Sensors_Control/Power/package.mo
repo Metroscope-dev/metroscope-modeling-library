@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Sensors_Control;
+within MetroscopeModelingLibrary.SensorsControl;
 package Power
   annotation (Icon(graphics={
       Rectangle(

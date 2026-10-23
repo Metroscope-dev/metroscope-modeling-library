@@ -6,7 +6,7 @@ package SensorsControl
     model TemperatureSensor
       package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-      extends Partial.Sensors_Control.TemperatureSensor(
+      extends Partial.SensorsControl.TemperatureSensor(
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPHFlowModel flow_model,
@@ -20,7 +20,7 @@ package SensorsControl
     model PressureSensor
       package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-      extends Partial.Sensors_Control.PressureSensor(
+      extends Partial.SensorsControl.PressureSensor(
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPHFlowModel flow_model,
@@ -33,7 +33,7 @@ package SensorsControl
     model DeltaPressureSensor
       package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-      extends Partial.Sensors_Control.DeltaPressureSensor(
+      extends Partial.SensorsControl.DeltaPressureSensor(
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
         redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=true));
@@ -46,7 +46,7 @@ package SensorsControl
     model FlowSensor
       package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-      extends Partial.Sensors_Control.FlowSensor(
+      extends Partial.SensorsControl.FlowSensor(
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPHFlowModel flow_model,
@@ -79,7 +79,7 @@ package SensorsControl
     model TemperatureSensor
       package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-      extends Partial.Sensors_Control.TemperatureSensor(
+      extends Partial.SensorsControl.TemperatureSensor(
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPHFlowModel flow_model,
@@ -93,7 +93,7 @@ package SensorsControl
     model PressureSensor
       package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-      extends Partial.Sensors_Control.PressureSensor(
+      extends Partial.SensorsControl.PressureSensor(
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPHFlowModel flow_model,
@@ -107,7 +107,7 @@ package SensorsControl
     model DeltaPressureSensor
       package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-      extends Partial.Sensors_Control.DeltaPressureSensor(
+      extends Partial.SensorsControl.DeltaPressureSensor(
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
         redeclare package Medium = FlueGasesMedium) annotation (IconMap(primitivesVisible=true));
@@ -120,7 +120,7 @@ package SensorsControl
     model FlowSensor
       package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-      extends Partial.Sensors_Control.FlowSensor(
+      extends Partial.SensorsControl.FlowSensor(
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPHFlowModel flow_model,
@@ -196,7 +196,7 @@ package SensorsControl
     model TemperatureSensor
       package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
 
-      extends Partial.Sensors_Control.TemperatureSensor(
+      extends Partial.SensorsControl.TemperatureSensor(
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.Fuel.BaseClasses.IsoPHFlowModel flow_model,
@@ -210,7 +210,7 @@ package SensorsControl
     model PressureSensor
       package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
 
-      extends Partial.Sensors_Control.PressureSensor(
+      extends Partial.SensorsControl.PressureSensor(
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.Fuel.BaseClasses.IsoPHFlowModel flow_model,
@@ -224,7 +224,7 @@ package SensorsControl
     model DeltaPressureSensor
       package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
 
-      extends Partial.Sensors_Control.DeltaPressureSensor(
+      extends Partial.SensorsControl.DeltaPressureSensor(
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
         redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=true));
@@ -237,7 +237,7 @@ package SensorsControl
     model FlowSensor
       package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
 
-      extends Partial.Sensors_Control.FlowSensor(
+      extends Partial.SensorsControl.FlowSensor(
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.Fuel.BaseClasses.IsoPHFlowModel flow_model,
@@ -431,7 +431,7 @@ package SensorsControl
     model TemperatureSensor
       package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-      extends Partial.Sensors_Control.TemperatureSensor(
+      extends Partial.SensorsControl.TemperatureSensor(
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -445,7 +445,7 @@ package SensorsControl
     model PressureSensor
       package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-      extends Partial.Sensors_Control.PressureSensor(
+      extends Partial.SensorsControl.PressureSensor(
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -459,7 +459,7 @@ package SensorsControl
     model DeltaPressureSensor
       package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-      extends Partial.Sensors_Control.DeltaPressureSensor(
+      extends Partial.SensorsControl.DeltaPressureSensor(
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
         redeclare package Medium = MoistAirMedium) annotation (IconMap(primitivesVisible=true));
@@ -472,7 +472,7 @@ package SensorsControl
     model FlowSensor
       package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-      extends Partial.Sensors_Control.FlowSensor(
+      extends Partial.SensorsControl.FlowSensor(
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -486,7 +486,7 @@ package SensorsControl
     model RelativeHumiditySensor
       package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-      extends MetroscopeModelingLibrary.Partial.Sensors_Control.BaseSensor(
+      extends MetroscopeModelingLibrary.Partial.Sensors.BaseSensor(
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -790,7 +790,7 @@ package SensorsControl
     model TemperatureSensor
       package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-      extends Partial.Sensors_Control.TemperatureSensor(
+      extends Partial.SensorsControl.TemperatureSensor(
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.RefMoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -804,7 +804,7 @@ package SensorsControl
     model PressureSensor
       package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-      extends Partial.Sensors_Control.PressureSensor(
+      extends Partial.SensorsControl.PressureSensor(
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.RefMoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -818,7 +818,7 @@ package SensorsControl
     model DeltaPressureSensor
       package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-      extends Partial.Sensors_Control.DeltaPressureSensor(
+      extends Partial.SensorsControl.DeltaPressureSensor(
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
         redeclare package Medium = RefMoistAirMedium) annotation (IconMap(primitivesVisible=true));
@@ -831,7 +831,7 @@ package SensorsControl
     model FlowSensor
       package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-      extends Partial.Sensors_Control.FlowSensor(
+      extends Partial.SensorsControl.FlowSensor(
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.RefMoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -845,7 +845,7 @@ package SensorsControl
     model RelativeHumiditySensor
       package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-      extends MetroscopeModelingLibrary.Partial.Sensors_Control.BaseSensor(
+      extends MetroscopeModelingLibrary.Partial.Sensors.BaseSensor(
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
         redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
         redeclare MetroscopeModelingLibrary.RefMoistAir.BaseClasses.IsoPHFlowModel flow_model,
