@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Sensors_Control.Power;
+within MetroscopeModelingLibrary.SensorsControl.Power;
 model PowerSensor
 
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;

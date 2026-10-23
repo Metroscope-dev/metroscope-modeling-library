@@ -50,7 +50,7 @@ A 1300 MW(e) REP has multiple primary loops / steam generators; never apply whol
 
 1. Classify each sensor by **plant type, fluid circuit, subsystem and physical location**. A nominal value cannot be selected before this is known.
 2. Choose values from same-version validated model when available; preserve `T_start`, `P_start`, `Q_start` and `start` guesses with correct unit type, and `nominal` where supported. When updating source/sink internals, convert to SI as required by component API.
-3. Match `sensor_function`, `causality` and graphical `Utilities.Interfaces.*` according to direct/reverse contract; use `SensorsControl` on user-targeted latest MML4, never silently fallback to `Sensors_Control`.
+3. Match `sensor_function`, `causality` and graphical `Utilities.Interfaces.*` according to direct/reverse contract; use `SensorsControl` on user-targeted latest MML4, never silently fallback to `SensorsControl`.
 4. Check pressure loss direction, ranges, nonnegative absolute pressures, plausible T and flow, pressure/temperature compatibility with the medium, and sign of source vs sink Q.
 5. Record all guesses and label them illustrative; validate by Dymola translation/simulation if available. Do not claim physical validation merely from these ranges.
 

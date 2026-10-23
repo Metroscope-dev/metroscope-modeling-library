@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Sensors_Control;
+within MetroscopeModelingLibrary.SensorsControl;
 package MoistAir
 
   annotation (Icon(graphics={

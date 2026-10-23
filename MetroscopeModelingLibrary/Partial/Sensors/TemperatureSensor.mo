@@ -7,8 +7,8 @@ partial model TemperatureSensor
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Constants;
 
-  // Initialization parameters
-  parameter Units.Temperature T_0 = 300;
+  // Initialization start vales
+  parameter Units.Temperature T_0 = 300 annotation(Dialog(tab="Initialization", group="Start values"));
 
   Units.Temperature T(start=T_0); // Temperature in SI Units : K
   Real T_degC(unit="degC", start=T_0 +Constants.T0_degC_in_K,  nominal=T_0 +Constants.T0_degC_in_K);   // Temperature in degC
@@ -18,12 +18,12 @@ partial model TemperatureSensor
 
   parameter String display_unit = "degC" "Specify the display unit"
     annotation(choices(choice="degC", choice="K", choice="degF"));
-  parameter Boolean display_output = true "Used to switch ON or OFF output display";
-
 equation
+
   T =flow_model.T;
   T_degC +Constants.T0_degC_in_K  = T; // Conversion K to Celsius
   T_degF = T_degC*Constants.degC_to_degF +Constants.T0_degC_in_degF;   // Conversion Celsius to Farenheit
+
 
   annotation (Icon(graphics={Text(
         extent={{-100,-160},{102,-200}},

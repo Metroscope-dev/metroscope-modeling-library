@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.FlueGases;
+within MetroscopeModelingLibrary.SensorsControl.FlueGases;
 model TemperatureSensor
   package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
 
-  extends Partial.Sensors_Control.TemperatureSensor(
+  extends Partial.SensorsControl.TemperatureSensor(
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.FlueGases.BaseClasses.IsoPHFlowModel flow_model,

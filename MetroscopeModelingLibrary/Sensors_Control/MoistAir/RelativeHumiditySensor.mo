@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.MoistAir;
+within MetroscopeModelingLibrary.SensorsControl.MoistAir;
 model RelativeHumiditySensor
   package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-  extends MetroscopeModelingLibrary.Partial.Sensors_Control.BaseSensor(
+  extends MetroscopeModelingLibrary.Partial.SensorsControl.BaseSensor(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,

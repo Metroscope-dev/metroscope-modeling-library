@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.WaterSteam;
+within MetroscopeModelingLibrary.SensorsControl.WaterSteam;
 model TemperatureSensor
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  extends Partial.Sensors_Control.TemperatureSensor(
+  extends Partial.SensorsControl.TemperatureSensor(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.WaterSteam.BaseClasses.IsoPHFlowModel flow_model,

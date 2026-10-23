@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial;
-package Sensors_Control
+package SensorsControl
 
 annotation (Icon(graphics={
         Rectangle(
@@ -52,4 +52,4 @@ annotation (Icon(graphics={
         fillPattern=FillPattern.Solid,
         rotation=45,
         origin={2.83704,2.73655})}));
-end Sensors_Control;
+end SensorsControl;
