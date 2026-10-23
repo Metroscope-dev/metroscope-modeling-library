@@ -10,6 +10,8 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+- Add MML-developper skills and fix unit test for MML4 [#609](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/609)
+
 - Added a desuperheating component [#591](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/591)
 - Added the possibility to use the evaporator as a feedwater tank. [#606](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/606)
 - Added kPa as a supported unit for the differential pressure sensor [#600](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/600)
