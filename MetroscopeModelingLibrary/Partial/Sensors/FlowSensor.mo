@@ -20,7 +20,7 @@ partial model FlowSensor
 
 // Sensor signal parameters
   parameter Units.PositiveMassFlowRate Q_start = 100 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
-  parameter String display_unit = "kg/s" "Specify the display unit"    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h"),
+  parameter String display_unit = "kg/s" "Specify the display unit"    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h", choice="lb/h", choice="ft3/h"),
   Dialog(tab="General", group="Sensor signal parameters"));
 
 
@@ -28,6 +28,7 @@ partial model FlowSensor
   parameter Boolean faulty = false annotation(Dialog(tab="Faulty mode", group="Flow bias"));
 
 equation
+
   Qv = Q / Medium.density(state);
   Q_lm = Qv * Constants.m3s_to_lm;
   Q_th = Q * Constants.kgs_to_th;

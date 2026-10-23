@@ -130,7 +130,7 @@ package SensorsControl
 
 
     // Sensor signal parameters
-    parameter String signal_unit = "kg/s" "Specify the signal unit. This should be the unit of Q_start and of the tag linked to the sensor." annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h"),
+    parameter String signal_unit = "kg/s" "Specify the signal unit. This should be the unit of Q_start and of the tag linked to the sensor." annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h", choice="lb/h", choice="ft3/h"),
     Dialog(tab="General", group="Sensor signal parameters"));
 
     Utilities.Interfaces.GenericReal      Q_sensor(start=Q_start) annotation (Placement(transformation(
@@ -153,6 +153,8 @@ package SensorsControl
       Q_sensor = Q_klbh;
     elseif signal_unit == "lb/h" then
       Q_sensor = Q_lbh;
+    elseif signal_unit == "ft3/h" then
+      Q_sensor = Q_ft3h;
     else
       Q_sensor = Q;
     end if;
