@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.MoistAir;
+within MetroscopeModelingLibrary.SensorsControl.MoistAir;
 model DeltaPressureSensor
   package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-  extends Partial.Sensors_Control.DeltaPressureSensor(
+  extends Partial.SensorsControl.DeltaPressureSensor(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
     redeclare package Medium = MoistAirMedium) annotation (IconMap(primitivesVisible=true));

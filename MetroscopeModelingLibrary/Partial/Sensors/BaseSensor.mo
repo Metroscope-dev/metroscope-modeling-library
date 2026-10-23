@@ -5,11 +5,6 @@ partial model BaseSensor
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Utilities.Units;
 
-  // Initialization parameters
-  parameter Units.PositiveMassFlowRate Q_0=100;
-  parameter Units.Pressure P_0 = 1e5;
-  parameter Units.SpecificEnthalpy h_0 = 5e5;
-
   // Input Quantity
   Units.PositiveMassFlowRate Q(start=Q_0, nominal=Q_0) "Component mass flow rate";
   Units.MassFraction Xi[Medium.nXi] "Component mass fractions";
@@ -17,18 +12,25 @@ partial model BaseSensor
   Units.SpecificEnthalpy h(start=h_0) "Enthalpy of the fluid into the component";
   Medium.ThermodynamicState state;
 
-  // Failure modes
-  parameter Boolean faulty_flow_rate = false;
-  Units.MassFlowRate mass_flow_rate_bias(start=0); // mass_flow_rate_bias > 0 means that more mass flow enters the component
-
-  // Icon parameters
+  // Causality display parameters
   parameter String sensor_function = "Unidentified" "Specify if the sensor is a BC or used for calibration"
-    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"));
-  parameter String causality = "" "Specify which parameter is calibrated by this sensor";
+    annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"),
+    Dialog(tab="General", group="Causality display parameters"));
+  parameter String causality = "" "Specify which parameter is calibrated by this sensor" annotation(Dialog(tab="General", group="Causality display parameters"));
+  parameter Boolean show_causality = true "Used to show or not the causality";
+
+  // Initialization parameters
+  parameter Units.PositiveMassFlowRate Q_0=100 annotation(Dialog(tab="Initialization", group="Start values"));
+  parameter Units.Pressure P_0 = 1e5 annotation(Dialog(tab="Initialization", group="Start values"));
+  parameter Units.SpecificEnthalpy h_0 = 5e5 annotation(Dialog(tab="Initialization", group="Start values"));
+
+  // Failure modes
+  parameter Boolean faulty_flow_rate = false annotation(Dialog(tab="Faulty mode", group="Flow bias"));
+  Units.MassFlowRate mass_flow_rate_bias; // mass_flow_rate_bias > 0 means that more mass flow enters the component
 
   replaceable Connectors.FluidInlet C_in(Q(start=Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   replaceable Connectors.FluidOutlet C_out(Q(start=-Q_0, nominal=Q_0), P(start=P_0, nominal=P_0), redeclare package Medium = Medium) annotation (Placement(transformation(extent={{90,-10},{110,10}})));
-  replaceable BaseClasses.IsoPHFlowModel flow_model(P_0=P_0, Q_0=Q_0, h_0=h_0) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  replaceable BaseClasses.IsoPHFlowModel flow_model annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
 equation
   if not faulty_flow_rate then
     mass_flow_rate_bias = 0;
@@ -53,18 +55,14 @@ equation
         fillColor=if sensor_function == "BC" then {238, 46, 47} elseif sensor_function == "Calibration" then {107, 175, 17} else {255, 255, 255},
         fillPattern=if sensor_function == "BC" or sensor_function == "Calibration" then FillPattern.Solid else FillPattern.None),
       Text(
-        extent={{-100,160},{100,120}},
-        textColor={85,170,255},
-        textString="%name"),
-      Text(
         extent={{-100,-120},{100,-160}},
         textColor={107,175,17},
-        textString=if causality <> "" then "%causality" else ""),
+        textString=if show_causality then "%causality" else ""),
       Line(
         points={{100,-60},{140,-60},{140,-140},{100,-140}},
         color={107,175,17},
-        arrow=if causality == "" then {Arrow.None,Arrow.None} else {Arrow.None,Arrow.Filled},
+        arrow=if causality == "" or show_causality == false then {Arrow.None,Arrow.None} else {Arrow.None,Arrow.Filled},
         thickness=0.5,
-        pattern=if causality == "" then LinePattern.None else LinePattern.Solid,
+        pattern=if causality == "" or show_causality == false then LinePattern.None else LinePattern.Solid,
         smooth=Smooth.Bezier)}));
 end BaseSensor;

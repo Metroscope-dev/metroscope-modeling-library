@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.WaterSteam;
+within MetroscopeModelingLibrary.SensorsControl.WaterSteam;
 model DeltaPressureSensor
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
 
-  extends Partial.Sensors_Control.DeltaPressureSensor(
+  extends Partial.SensorsControl.DeltaPressureSensor(
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_out,
     redeclare package Medium = WaterSteamMedium) annotation (IconMap(primitivesVisible=true));

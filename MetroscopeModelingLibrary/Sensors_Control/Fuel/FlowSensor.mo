@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.Fuel;
+within MetroscopeModelingLibrary.SensorsControl.Fuel;
 model FlowSensor
   package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
 
-  extends Partial.Sensors_Control.FlowSensor(
+  extends Partial.SensorsControl.FlowSensor(
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.Fuel.BaseClasses.IsoPHFlowModel flow_model,

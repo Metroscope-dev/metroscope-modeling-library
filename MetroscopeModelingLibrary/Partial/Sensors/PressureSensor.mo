@@ -24,11 +24,12 @@ partial model PressureSensor
   Real P_mbar(nominal = P_0*Constants.Pa_to_mbar, start = P_0*Constants.Pa_to_mbar, unit="mbar"); // Absolute pressure in milibar
 
   parameter Boolean display_output = true "Used to switch ON or OFF output display";
+  parameter Real P_start = 1 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
   parameter String display_unit = "barA" "Specify the display unit"
-    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"));
-
+    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA",choice="psiA",choice="psiG",choice="inHg",choice="inH2O"),
+    Dialog(tab="General", group="Sensor signal parameters"));
 equation
-  P_barA = P * Constants.Pa_to_barA;
+ P_barA = P * Constants.Pa_to_barA;
   P_psiA = P * Constants.Pa_to_psiA;
   P_MPaA = P * Constants.Pa_to_MPaA;
   P_kPaA = P * Constants.Pa_to_kPaA;
@@ -42,7 +43,8 @@ equation
   P_inHg = P * Constants.Pa_to_inHg;
   P_inH2O = P * Constants.Pa_to_inH2O;
 
-  annotation (Icon(graphics={Text(
+    annotation(choices(choice="barA", choice="barG", choice="mbar", choice="MPaA", choice="kPaA"),
+              Icon(graphics={Text(
           extent={{-100,-160},{102,-200}},
           textColor={0,0,0},
           textString=if display_output then
@@ -52,4 +54,9 @@ equation
                      else if display_unit == "kPaA" then DynamicSelect("",String(P_kPaA)+" kPaA")
                      else DynamicSelect("",String(P_barA)+" barA")
                      else "")}));
+
+    // Sensor signal parameters
+
+
+
 end PressureSensor;

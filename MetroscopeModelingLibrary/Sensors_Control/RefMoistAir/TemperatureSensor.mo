@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.RefMoistAir;
+within MetroscopeModelingLibrary.SensorsControl.RefMoistAir;
 model TemperatureSensor
   package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-  extends Partial.Sensors_Control.TemperatureSensor(
+  extends Partial.SensorsControl.TemperatureSensor(
     redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.RefMoistAir.BaseClasses.IsoPHFlowModel flow_model,

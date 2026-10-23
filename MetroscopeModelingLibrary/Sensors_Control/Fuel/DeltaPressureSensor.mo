@@ -1,8 +1,8 @@
-within MetroscopeModelingLibrary.Sensors_Control.Fuel;
+within MetroscopeModelingLibrary.SensorsControl.Fuel;
 model DeltaPressureSensor
   package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
 
-  extends Partial.Sensors_Control.DeltaPressureSensor(
+  extends Partial.SensorsControl.DeltaPressureSensor(
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.Fuel.Connectors.Outlet C_out,
     redeclare package Medium = FuelMedium) annotation (IconMap(primitivesVisible=true));

@@ -1,4 +1,4 @@
-within MetroscopeModelingLibrary.Partial.Sensors_Control;
+within MetroscopeModelingLibrary.Partial.SensorsControl;
 partial model DeltaPressureSensor
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.OutlineSensorIcon;
   extends MetroscopeModelingLibrary.Utilities.Icons.Sensors.DeltaPressureIcon;

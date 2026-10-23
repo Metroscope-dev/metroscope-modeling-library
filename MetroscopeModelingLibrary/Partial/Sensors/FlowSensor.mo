@@ -11,28 +11,33 @@ partial model FlowSensor
 
   Units.VolumeFlowRate Qv(start=Qv_0, nominal=Qv_0);
   Real Q_lm(start=Qv_0*Constants.m3s_to_lm, nominal=Qv_0*Constants.m3s_to_lm); // Flow rate in liter per minute;
-
   Real Q_th(start=Q_0*Constants.kgs_to_th, nominal=Q_0*Constants.kgs_to_th); // Flow rate in tons per hour
   Real Q_lbs(start=Q_0*Constants.kgs_to_lbs, nominal=Q_0*Constants.kgs_to_lbs); // Flow rate in pounds per second;
   Real Q_Mlbh(start=Q_0*Constants.kgs_to_Mlbh, nominal=Q_0*Constants.kgs_to_Mlbh); // Flow rate in pounds per second;
   Real Q_lbh(start=Q_0*Constants.kgs_to_lbh, nominal= Q_0*Constants.kgs_to_lbh); // Flow rate in pounds per hour
+  Real Q_klbh(start=Q_0*Constants.kgs_to_klbh, nominal=Q_0*Constants.kgs_to_klbh); // Flow rate in kilo pounds per hour
   Real Q_ft3h(start=Qv_0*Constants.m3s_to_ft3h, nominal= Q_0*Constants.m3s_to_ft3h); // Volumetric flow rate in cubic foot per hour
 
-  // Failure modes
-  parameter Boolean faulty = false;
+// Sensor signal parameters
+  parameter Units.PositiveMassFlowRate Q_start = 100 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
+  parameter String display_unit = "kg/s" "Specify the display unit"    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h", choice="klb/h", choice="lb/h", choice="ft3/h"),
+  Dialog(tab="General", group="Sensor signal parameters"));
 
-  parameter String display_unit = "kg/s" "Specify the display unit"
-    annotation(choices(choice="kg/s", choice="m3/s", choice="l/m", choice="t/h", choice="lb/s", choice="Mlb/h"));
-  parameter Boolean display_output = true "Used to switch ON or OFF output display";
+
+  // Failure modes
+  parameter Boolean faulty = false annotation(Dialog(tab="Faulty mode", group="Flow bias"));
 
 equation
+
   Qv = Q / Medium.density(state);
   Q_lm = Qv * Constants.m3s_to_lm;
   Q_th = Q * Constants.kgs_to_th;
   Q_lbs = Q * Constants.kgs_to_lbs;
   Q_Mlbh = Q * Constants.kgs_to_Mlbh;
   Q_lbh = Q * Constants.kgs_to_lbh;
+  Q_klbh = Q * Constants.kgs_to_klbh;
   Q_ft3h = Qv * Constants.m3s_to_ft3h;
+
 
   annotation (Icon(graphics={Text(
         extent={{-100,-160},{102,-200}},

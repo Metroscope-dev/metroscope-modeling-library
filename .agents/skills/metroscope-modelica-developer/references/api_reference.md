@@ -6,7 +6,7 @@ For generation, use `references/mml4-aircompressor-gold-standard.md` and the exa
 - Fluid: `C_in`, `C_out`; shaft: `C_W_in`; calibratable graphical parameter ports: `tau`, `eta_is`.
 - Graphical interface types: `Utilities.Interfaces.BoundaryCondition`, `.CalibrationInput`, `.Observable`, `.GenericReal`.
 - Sensor signals in canonical test: `T_sensor`, `P_sensor`, `Q_sensor`.
-- Sensor class namespace in canonical user file: `SensorsControl.FlueGases.*` (no underscore), NOT the obsolete/other branch namespace `Sensors_Control.*`.
+- Sensor class namespace in canonical user file: `SensorsControl.FlueGases.*` (no underscore), NOT the obsolete/other branch namespace `SensorsControl.*`.
 - Metadata for calibration: `sensor_function="Calibration"`, `causality="airCompressor_eta_is"` or `"airCompressor_tau"` as appropriate; preserve on reverse and direct.
 - Direct values (test): `airCompressor_tau = 15;` and `airCompressor_eta_is = 0.95;`; reverse does not supply fixed equations for these ports.
 

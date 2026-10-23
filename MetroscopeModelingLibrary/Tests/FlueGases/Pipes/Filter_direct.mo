@@ -69,30 +69,42 @@ model Filter_direct
   MetroscopeModelingLibrary.Utilities.Interfaces.GenericReal filter_Kfr(
     start=0.52)
     annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={0,-50})));
+  Utilities.Interfaces.Observable y annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=270,
+        origin={4,114}), iconTransformation(extent={{2,98},{22,118}})));
+  SensorsControl.FlueGases.DeltaPressureSensor deltaPressureSensor
+    annotation (Placement(transformation(extent={{-12,52},{8,72}})));
 equation
   source.Xi_out = {0.768,0.232,0,0,0};
   filter_Kfr = 0.52;
   connect(source_pressure_sensor.P_sensor, source_pressure)
     annotation (Line(points={{-240,10},{-240,30}}, color={0,0,127}));
-  connect(source.C_out, source_pressure_sensor.C_in)
-    annotation (Line(points={{-275,0},{-250,0}}, color={28,108,200}));
   connect(source_temperature_sensor.T_sensor, source_temperature)
     annotation (Line(points={{-200,10},{-200,30}}, color={0,0,127}));
-  connect(source_pressure_sensor.C_out, source_temperature_sensor.C_in)
-    annotation (Line(points={{-230,0},{-210,0}}, color={28,108,200}));
   connect(source_flow_sensor.Q_sensor, source_flow)
     annotation (Line(points={{-160,10},{-160,30}}, color={0,0,127}));
-  connect(source_temperature_sensor.C_out, source_flow_sensor.C_in)
-    annotation (Line(points={{-190,0},{-170,0}}, color={28,108,200}));
-  connect(source_flow_sensor.C_out, filter.C_in)
-    annotation (Line(points={{-150,0},{-20,0}}, color={28,108,200}));
   connect(sink_pressure_sensor.P_sensor, sink_pressure)
     annotation (Line(points={{80,10},{80,30}}, color={0,0,127}));
-  connect(filter.C_out, sink_pressure_sensor.C_in)
-    annotation (Line(points={{20,0},{70,0}}, color={28,108,200}));
-  connect(sink_pressure_sensor.C_out, sink.C_in)
-    annotation (Line(points={{90,0},{165,0}}, color={28,108,200}));
   connect(filter_Kfr, filter.Kfr)
     annotation (Line(points={{0,-50},{0,8}}, color={0,0,127}));
+  connect(sink.C_in, sink_pressure_sensor.C_out)
+    annotation (Line(points={{165,0},{90,0}}, color={95,95,95}));
+  connect(sink_pressure_sensor.C_in, filter.C_out)
+    annotation (Line(points={{70,0},{20,0}}, color={95,95,95}));
+  connect(filter.C_in, source_flow_sensor.C_out)
+    annotation (Line(points={{-20,0},{-150,0}}, color={95,95,95}));
+  connect(source_pressure_sensor.C_out, source_temperature_sensor.C_in)
+    annotation (Line(points={{-230,0},{-210,0}}, color={95,95,95}));
+  connect(source_pressure_sensor.C_in, source.C_out)
+    annotation (Line(points={{-250,0},{-275,0}}, color={95,95,95}));
+  connect(source_temperature_sensor.C_out, source_flow_sensor.C_in)
+    annotation (Line(points={{-190,0},{-170,0}}, color={95,95,95}));
+  connect(deltaPressureSensor.C_in, source_flow_sensor.C_out) annotation (Line(
+        points={{-12,62},{-80,62},{-80,0},{-150,0}}, color={95,95,95}));
+  connect(deltaPressureSensor.C_out, filter.C_out) annotation (Line(points={{8,
+          62},{26,62},{26,70},{46,70},{46,0},{20,0}}, color={95,95,95}));
+  connect(y, deltaPressureSensor.DP_sensor) annotation (Line(points={{4,114},{4,
+          80},{-4,80},{-4,72},{-2,72}}, color={0,0,127}));
   annotation (experiment(StopTime=1,Tolerance=1e-6), Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-360,-300},{400,300}})), Documentation(info="<html><p>Approved MML4 sensor/interface structure: AirCompressor and Metroscopia CCGT/NPP. Illustrative initialization point, not plant calibration. Constant supported faults only. No correction or retry after first Dymola attempt.</p><p></p></html>"));
 end Filter_direct;
