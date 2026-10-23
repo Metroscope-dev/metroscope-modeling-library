@@ -14,12 +14,15 @@ model GT_louvers
   parameter Real H_start = 50 "Write here the build value of the quantity. This value will be used in the simulation.";
 
   FlueGases.Connectors.Outlet C_out annotation (Placement(transformation(extent={{92,-10},{112,10}}), iconTransformation(extent={{50,-10},{70,10}})));
-  Sensors_Control.MoistAir.TemperatureSensor temperatureSensor(T_start=T_start, signal_unit=T_signal_unit)
-                                                               annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
-  Sensors_Control.MoistAir.PressureSensor pressureSensor(P_start=P_start, signal_unit=P_signal_unit)
-                                                         annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  Sensors_Control.MoistAir.RelativeHumiditySensor relativeHumiditySensor(H_start=H_start, signal_unit=H_signal_unit)
-                                                                         annotation (Placement(transformation(extent={{30,-10},{50,10}})));
+  SensorsControl.MoistAir.TemperatureSensor temperatureSensor(T_start=T_start,
+      signal_unit=T_signal_unit)
+    annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
+  SensorsControl.MoistAir.PressureSensor pressureSensor(P_start=P_start,
+      signal_unit=P_signal_unit)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  SensorsControl.MoistAir.RelativeHumiditySensor relativeHumiditySensor(H_start
+      =H_start, signal_unit=H_signal_unit)
+    annotation (Placement(transformation(extent={{30,-10},{50,10}})));
   Utilities.Interfaces.GenericReal T "Ambient temperature" annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=90,

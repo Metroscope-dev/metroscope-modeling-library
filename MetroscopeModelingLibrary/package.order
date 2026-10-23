@@ -1,7 +1,7 @@
 Utilities
 Partial
 Sensors
-Sensors_Control
+SensorsControl
 WaterSteam
 FlueGases
 Fuel
@@ -11,3 +11,5 @@ MultiFluid
 Power
 Tests
 Examples
+CCGT_1P_MML4_direct_readable
+CCGT_1P_MML4_direct_initialized

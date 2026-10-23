@@ -1,74 +1,142 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.Pipes;
 model Desuperheating_direct
+  "MML4 isolated Desuperheating direct test"
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
-
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source source annotation (Placement(transformation(extent={{-142,-9.99996},{-122,10}})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={90,-6.10623e-16})));
-
-  MetroscopeModelingLibrary.WaterSteam.Pipes.Desuperheating pipe(Gain=1000)
-                                                                annotation (Placement(transformation(extent={{-16.5,-16.3333},{16.5,16.3333}})));
-
-  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source water_injection annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-12,72})));
-  Sensors_Control.WaterSteam.TemperatureSensor steam_t_sensor(T_start=575, signal_unit="degC") annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
-  Sensors_Control.WaterSteam.PressureSensor steam_p_sensor(P_start=120, signal_unit="barA") annotation (Placement(transformation(extent={{-78,-10},{-58,10}})));
-  Sensors_Control.WaterSteam.FlowSensor steam_q_sensor(Q_start=80, signal_unit="kg/s") annotation (Placement(transformation(extent={{-108,-10},{-88,10}})));
-  Utilities.Interfaces.BoundaryCondition Steam_Q annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=270,
-        origin={-100,40}), iconTransformation(extent={{-290,-56},{-250,-16}})));
-  Utilities.Interfaces.BoundaryCondition Steam_P annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=270,
-        origin={-72,30}), iconTransformation(extent={{-290,-56},{-250,-16}})));
-  Utilities.Interfaces.BoundaryCondition Steam_T annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=270,
-        origin={-42,36}), iconTransformation(extent={{-290,-56},{-250,-16}})));
-  Utilities.Interfaces.RealExpression Steam_T_setPoint(y=560) annotation (Placement(transformation(extent={{38,42},{58,62}})));
-  Sensors_Control.WaterSteam.TemperatureSensor Water_T_sensor(T_start=80, signal_unit="degC") annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-12,24})));
-  Utilities.Interfaces.BoundaryCondition Water_T annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=270,
-        origin={32,42}), iconTransformation(extent={{-290,-56},{-250,-16}})));
-  Sensors_Control.WaterSteam.PressureSensor Water_p_sensor(P_start=30, signal_unit="barA") annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-12,52})));
-  Utilities.Interfaces.BoundaryCondition Water_P annotation (Placement(transformation(
-        extent={{-4,-4},{4,4}},
-        rotation=270,
-        origin={14,78}), iconTransformation(extent={{-290,-56},{-250,-16}})));
-  Sensors_Control.WaterSteam.TemperatureSensor steam_t_sensor1(T_start=575, signal_unit="degC")
-                                                                                               annotation (Placement(transformation(extent={{10,-10},{-10,10}},
-        rotation=180,
-        origin={64,0})));
+  MetroscopeModelingLibrary.WaterSteam.Pipes.Desuperheating desuperheating
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={0,0})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source steam_source(
+    P_0=12000000,
+    Q_0=80,
+    T_0=848.15,
+    h_0=3400000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-280,0})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor steam_source_pressure_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    P_start=120,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=12000000,
+    Q_0=80,
+    h_0=3400000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-240,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition steam_source_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-240,30}), iconTransformation(extent={{-140,220},{-100,260}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor steam_source_temperature_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    T_start=575,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=12000000,
+    Q_0=80,
+    h_0=3400000,
+    T_0=848.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-200,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition steam_source_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-200,30}), iconTransformation(extent={{-140,175},{-100,215}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.FlowSensor steam_source_flow_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    Q_start=80,
+    signal_unit="kg/s",
+    display_unit="kg/s",
+    P_0=12000000,
+    Q_0=80,
+    h_0=3400000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-160,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition steam_source_flow
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-160,30}), iconTransformation(extent={{-140,130},{-100,170}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source water_source(
+    P_0=13000000,
+    Q_0=2,
+    T_0=353.15,
+    h_0=336000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-280,180})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor water_source_pressure_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    P_start=130,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=13000000,
+    Q_0=2,
+    h_0=336000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-240,180})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition water_source_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-240,210}), iconTransformation(extent={{-140,85},{-100,125}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor water_source_temperature_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    T_start=80,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=13000000,
+    Q_0=2,
+    h_0=336000,
+    T_0=353.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-200,180})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition water_source_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-200,210}), iconTransformation(extent={{-140,40},{-100,80}})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.GenericReal desuperheating_T_setpoint(
+    start=560)
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-30,70})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor sink_temperature_sensor(
+    sensor_function="Unidentified",
+    causality="",
+    show_causality=true,
+    T_start=560,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=12000000,
+    Q_0=82,
+    h_0=2352000,
+    T_0=833.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={80,0})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.Observable sink_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={80,30}), iconTransformation(extent={{100,220},{140,260}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink sink
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={170,0})));
 equation
-
-
-  connect(steam_t_sensor.C_out, pipe.C_in) annotation (Line(points={{-30,0},{-16.5,0}}, color={28,108,200}));
-  connect(steam_p_sensor.C_out, steam_t_sensor.C_in) annotation (Line(points={{-58,0},{-50,0}}, color={28,108,200}));
-  connect(steam_q_sensor.C_out, steam_p_sensor.C_in) annotation (Line(points={{-88,0},{-78,0}}, color={28,108,200}));
-  connect(source.C_out, steam_q_sensor.C_in) annotation (Line(points={{-127,2e-05},{-118,2e-05},{-118,0},{-108,0}}, color={28,108,200}));
-  connect(steam_q_sensor.Q_sensor, Steam_Q) annotation (Line(points={{-98,10},{-98,40},{-100,40}}, color={0,0,127}));
-  connect(Steam_P, steam_p_sensor.P_sensor) annotation (Line(points={{-72,30},{-72,14},{-68,14},{-68,10}}, color={28,108,200}));
-  connect(steam_t_sensor.T_sensor, Steam_T) annotation (Line(points={{-40,10},{-40,28},{-42,28},{-42,36}}, color={0,0,127}));
-  connect(Steam_T_setPoint.y, pipe.T_setpoint) annotation (Line(points={{48,47},{48,6.53332},{11.22,6.53332}}, color={0,0,127}));
-  connect(Water_T_sensor.T_sensor, Water_T) annotation (Line(points={{-2,24},{32,24},{32,42}}, color={0,0,127}));
-  connect(pipe.Water_in, Water_T_sensor.C_out) annotation (Line(points={{-11.55,4.89999},{-11.55,9.44999},{-12,9.44999},{-12,14}}, color={28,108,200}));
-  connect(Water_P, Water_p_sensor.P_sensor) annotation (Line(points={{14,78},{14,52},{-2,52}}, color={28,108,200}));
-  connect(Water_T_sensor.C_in, Water_p_sensor.C_out) annotation (Line(points={{-12,34},{-11.55,41.6665},{-12,41.6665},{-12,42}}, color={28,108,200}));
-  connect(Water_p_sensor.C_in, water_injection.C_out) annotation (Line(points={{-12,62},{-12,67}}, color={28,108,200}));
-  connect(sink.C_in, steam_t_sensor1.C_out) annotation (Line(points={{85,0},{74,0}}, color={28,108,200}));
-  connect(steam_t_sensor1.C_in, pipe.C_out) annotation (Line(points={{54,0},{16.5,0}}, color={28,108,200}));
-  connect(pipe.T_measured, steam_t_sensor1.T_sensor) annotation (Line(points={{11.55,-6.53332},{11.55,-26},{64,-26},{64,-10}}, color={0,0,127}));
-  annotation (Diagram(coordinateSystem(extent={{-160,-100},{100,100}})), Icon(coordinateSystem(extent={{-100,-100},{100,100}})));
+  desuperheating_T_setpoint = 560;
+  connect(steam_source_pressure_sensor.P_sensor, steam_source_pressure)
+    annotation (Line(points={{-240,10},{-240,30}}, color={0,0,127}));
+  connect(steam_source.C_out, steam_source_pressure_sensor.C_in)
+    annotation (Line(points={{-275,0},{-250,0}}, color={28,108,200}));
+  connect(steam_source_temperature_sensor.T_sensor, steam_source_temperature)
+    annotation (Line(points={{-200,10},{-200,30}}, color={0,0,127}));
+  connect(steam_source_pressure_sensor.C_out, steam_source_temperature_sensor.C_in)
+    annotation (Line(points={{-230,0},{-210,0}}, color={28,108,200}));
+  connect(steam_source_flow_sensor.Q_sensor, steam_source_flow)
+    annotation (Line(points={{-160,10},{-160,30}}, color={0,0,127}));
+  connect(steam_source_temperature_sensor.C_out, steam_source_flow_sensor.C_in)
+    annotation (Line(points={{-190,0},{-170,0}}, color={28,108,200}));
+  connect(steam_source_flow_sensor.C_out, desuperheating.C_in)
+    annotation (Line(points={{-150,0},{-10,0}}, color={28,108,200}));
+  connect(water_source_pressure_sensor.P_sensor, water_source_pressure)
+    annotation (Line(points={{-240,190},{-240,210}}, color={0,0,127}));
+  connect(water_source.C_out, water_source_pressure_sensor.C_in)
+    annotation (Line(points={{-275,180},{-250,180}}, color={28,108,200}));
+  connect(water_source_temperature_sensor.T_sensor, water_source_temperature)
+    annotation (Line(points={{-200,190},{-200,210}}, color={0,0,127}));
+  connect(water_source_pressure_sensor.C_out, water_source_temperature_sensor.C_in)
+    annotation (Line(points={{-230,180},{-210,180}}, color={28,108,200}));
+  connect(water_source_temperature_sensor.C_out, desuperheating.Water_in)
+    annotation (Line(points={{-190,180},{-7,180},{-7,3}}, color={28,108,200}));
+  connect(desuperheating_T_setpoint, desuperheating.T_setpoint)
+    annotation (Line(points={{-30,70},{6,70},{6,3.4}}, color={0,0,127}));
+  connect(sink_temperature_sensor.T_sensor, sink_temperature)
+    annotation (Line(points={{80,10},{80,30}}, color={0,0,127}));
+  connect(desuperheating.C_out, sink_temperature_sensor.C_in)
+    annotation (Line(points={{10,0},{70,0}}, color={28,108,200}));
+  connect(sink_temperature_sensor.C_out, sink.C_in)
+    annotation (Line(points={{90,0},{165,0}}, color={28,108,200}));
+  connect(sink_temperature_sensor.T_sensor, desuperheating.T_measured)
+    annotation (Line(points={{80,10},{6,10},{6,-3.4}}, color={0,0,127}));
+  annotation (experiment(StopTime=1,Tolerance=1e-6), Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-360,-300},{400,300}})), Documentation(info="<html><p>Approved MML4 sensor/interface structure: AirCompressor and Metroscopia CCGT/NPP. Illustrative initialization point, not plant calibration. Constant supported faults only. No correction or retry after first Dymola attempt.</p><p></p></html>"));
 end Desuperheating_direct;

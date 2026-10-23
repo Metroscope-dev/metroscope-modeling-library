@@ -18,7 +18,8 @@ model GT_louver
         extent={{-4,-4},{4,4}},
         rotation=270,
         origin={16,80}), iconTransformation(extent={{-358,-90},{-318,-50}})));
-  Sensors_Control.FlueGases.FlowSensor flowSensor annotation (Placement(transformation(extent={{42,-10},{62,10}})));
+  SensorsControl.FlueGases.FlowSensor flowSensor
+    annotation (Placement(transformation(extent={{42,-10},{62,10}})));
   Utilities.Interfaces.RealInput Q(start=50) annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=270,

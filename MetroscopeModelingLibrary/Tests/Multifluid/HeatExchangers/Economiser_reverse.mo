@@ -1,123 +1,185 @@
 within MetroscopeModelingLibrary.Tests.Multifluid.HeatExchangers;
 model Economiser_reverse
+  "MML4 isolated Economiser reverse test"
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.MultifluidTestIcon;
-
-  // Boundary conditions
-  input Real P_hot_source(start = 1.1, min = 0, nominal = 10) "barA";
-  input Utilities.Units.MassFlowRate Q_hot_source(start = 640) "kg/s";
-  input Utilities.Units.Temperature T_hot_source(start = 300) "degC";
-
-  input Real P_cold_source(start = 170, min = 0, nominal = 10) "barA";
-  input Utilities.Units.MassFlowRate Q_cold_source(start = 85) "kg/s";
-  input Real T_cold_source(start = 227, min = 0, nominal = 50) "degC";
-
-  // Parameters
-  parameter String QCp_max_side = "hot";
-  parameter Utilities.Units.Area S = 10000;
-
-  // Calibrated parameters
-  output Utilities.Units.HeatExchangeCoefficient Kth;
-  output Utilities.Units.FrictionCoefficient Kfr_hot;
-  output Utilities.Units.FrictionCoefficient Kfr_cold;
-
-  // Calibration inputs
-  input Real P_cold_out(start = 169.5, min =  0, nominal = 120) "barA"; // Outlet pressure on cold side, to calibrate Kfr cold
-  input Real P_hot_out(start = 1.05, min = 0, nominal = 1) "barA"; // Outlet pressure on hot side, to calibrate Kfr hot
-  input Real T_cold_out(start = 270, min = 0, nominal = 100) "degC"; // Outlet temperature on cold side, to calibrate Kth
-
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source annotation (Placement(transformation(
-        extent = {{10,-10},{-10,10}},
-        rotation=0,
-        origin={72,40})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink annotation (Placement(transformation(
-        extent = {{10,-10},{-10,10}},
-        rotation=0,
-        origin={-86,40})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source annotation (Placement(transformation(extent={{-96,-10},{-76,10}})));
-  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink annotation (Placement(transformation(extent={{62,-10},{82,10}})));
-  MultiFluid.HeatExchangers.Economiser economiser annotation (Placement(transformation(extent={{-14,-10},{6,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor T_cold_out_sensor annotation (Placement(transformation(extent={{-20,30},{-40,50}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cold_out_sensor annotation (Placement(transformation(extent={{-48,30},{-68,50}})));
-  MetroscopeModelingLibrary.Sensors.FlueGases.PressureSensor P_hot_out_sensor annotation (Placement(transformation(extent={{30,-10},{50,10}})));
+  MetroscopeModelingLibrary.MultiFluid.HeatExchangers.Economiser economiser(
+    faulty=false,
+    QCp_max_side="hot")
+    annotation (Placement(transformation(extent={{-50,-50},{50,50}}, rotation=0, origin={0,0})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source(
+    P_0=17000000,
+    Q_0=85,
+    T_0=500.15,
+    h_0=953400)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-280,-120})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor cold_source_pressure_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    P_start=170,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=17000000,
+    Q_0=85,
+    h_0=953400)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-240,-120})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition cold_source_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-240,-90}), iconTransformation(extent={{-140,220},{-100,260}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor cold_source_temperature_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    T_start=227,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=17000000,
+    Q_0=85,
+    h_0=953400,
+    T_0=500.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-200,-120})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition cold_source_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-200,-90}), iconTransformation(extent={{-140,175},{-100,215}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.FlowSensor cold_source_flow_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    Q_start=85,
+    signal_unit="kg/s",
+    display_unit="kg/s",
+    P_0=17000000,
+    Q_0=85,
+    h_0=953400)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-160,-120})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition cold_source_flow
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-160,-90}), iconTransformation(extent={{-140,130},{-100,170}})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Source hot_source(
+    P_0=110000,
+    Q_0=640,
+    T_0=573.15,
+    h_0=630465)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-280,160})));
+  MetroscopeModelingLibrary.SensorsControl.FlueGases.PressureSensor hot_source_pressure_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    P_start=1.1,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=110000,
+    Q_0=640,
+    h_0=630465)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-240,160})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition hot_source_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-240,190}), iconTransformation(extent={{-140,85},{-100,125}})));
+  MetroscopeModelingLibrary.SensorsControl.FlueGases.TemperatureSensor hot_source_temperature_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    T_start=300,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=110000,
+    Q_0=640,
+    h_0=630465,
+    T_0=573.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-200,160})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition hot_source_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-200,190}), iconTransformation(extent={{-140,40},{-100,80}})));
+  MetroscopeModelingLibrary.SensorsControl.FlueGases.FlowSensor hot_source_flow_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    Q_start=640,
+    signal_unit="kg/s",
+    display_unit="kg/s",
+    P_0=110000,
+    Q_0=640,
+    h_0=630465)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-160,160})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition hot_source_flow
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-160,190}), iconTransformation(extent={{-140,-5},{-100,35}})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.GenericReal economiser_Kfr_cold(
+    start=2740.4844290657)
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-60,-50})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.GenericReal economiser_Kth(
+    start=50)
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-60,60})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor cold_sink_pressure_sensor(
+    sensor_function="Calibration",
+    causality="economiser_Kfr_cold",
+    show_causality=true,
+    P_start=169.8,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=16980000,
+    Q_0=85,
+    h_0=1134000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={80,-120})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.CalibrationInput cold_sink_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={80,-90}), iconTransformation(extent={{-140,-50},{-100,-10}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor cold_sink_temperature_sensor(
+    sensor_function="Calibration",
+    causality="economiser_Kth",
+    show_causality=true,
+    T_start=270,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=17000000,
+    Q_0=85,
+    h_0=1134000,
+    T_0=543.15)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={130,-120})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.CalibrationInput cold_sink_temperature
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={130,-90}), iconTransformation(extent={{-140,-95},{-100,-55}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cold_sink
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={220,-120})));
+  MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink hot_sink
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={120,160})));
 equation
-
-  // Boundary conditions
-  hot_source.Xi_out = {0.7481,0.1392,0.0525,0.0601,0.0};
-  hot_source.P_out = P_hot_source*1e5;
-  hot_source.T_out = T_hot_source + 273.15;
-  hot_source.Q_out = - Q_hot_source;
-  cold_source.P_out = P_cold_source *1e5;
-  cold_source.T_out = 273.15 + T_cold_source;
-  cold_source.Q_out = - Q_cold_source;
-
-  // Parameters
-  economiser.S = S;
-
-  // Inputs for calibration
-  T_cold_out_sensor.T_degC = T_cold_out;
-  P_cold_out_sensor.P_barA = P_cold_out;
-  P_hot_out_sensor.P_barA = P_hot_out;
-
-  // Calibrated parameters
-  economiser.Kth = Kth;
-  economiser.Kfr_hot = Kfr_hot;
-  economiser.Kfr_cold = Kfr_cold;
-
-  connect(economiser.C_hot_in, hot_source.C_out) annotation (Line(
-      points={{-14,0},{-81,0}},
-      color={95,95,95},
-      thickness=1));
-  connect(economiser.C_hot_out, P_hot_out_sensor.C_in) annotation (Line(
-      points={{6,0},{30,0}},
-      color={95,95,95},
-      thickness=1));
-  connect(P_hot_out_sensor.C_out, hot_sink.C_in) annotation (Line(
-      points={{50,0},{67,0}},
-      color={95,95,95},
-      thickness=1));
-  connect(economiser.C_cold_in, cold_source.C_out) annotation (Line(
-      points={{0,8},{0,40},{67,40}},
-      color={28,108,200},
-      thickness=1));
-  connect(economiser.C_cold_out, T_cold_out_sensor.C_in) annotation (Line(
-      points={{-8,8},{-8,40},{-20,40}},
-      color={28,108,200},
-      thickness=1));
-  connect(T_cold_out_sensor.C_out, P_cold_out_sensor.C_in) annotation (Line(
-      points={{-40,40},{-48,40}},
-      color={28,108,200},
-      thickness=1));
-  connect(P_cold_out_sensor.C_out, cold_sink.C_in) annotation (Line(
-      points={{-68,40},{-81,40}},
-      color={28,108,200},
-      thickness=1));
-  annotation (Icon(coordinateSystem(preserveAspectRatio = false, extent={{-100,-100},{100,100}}),
-                                                                  graphics={
-        Ellipse(lineColor = {75,138,73},
-                fillColor = {255,255,255},
-                fillPattern = FillPattern.Solid,
-                extent = {{-100,-100},{100,100}}),
-        Polygon(
-          origin = {20,14},
-          lineColor = {78,138,73},
-          fillColor = {95,95,95},
-          pattern = LinePattern.None,
-          fillPattern = FillPattern.Solid,
-          points = {{-58.0,46.0},{42.0,-14.0},{-58.0,-74.0},{-58.0,46.0}}),
-        Polygon(
-          origin = {20,14},
-          lineColor = {78,138,73},
-          fillColor = {213,213,0},
-          pattern = LinePattern.None,
-          fillPattern = FillPattern.Solid,
-          points = {{-58,46},{-4,14},{-58,-14},{-58,46}}),
-        Polygon(
-          origin = {20,14},
-          lineColor = {78,138,73},
-          fillColor = {28,108,200},
-          pattern = LinePattern.None,
-          fillPattern = FillPattern.Solid,
-          points = {{-58,-14},{-2,-40},{-58,-74},{-58,-14}})}), Diagram(
-        coordinateSystem(preserveAspectRatio = false, extent={{-100,-100},{100,100}})),
-    experiment(Interval=0.1, __Dymola_Algorithm="Dassl"));
+  hot_source.Xi_out = {0.768,0.232,0,0,0};
+  connect(cold_source_pressure_sensor.P_sensor, cold_source_pressure)
+    annotation (Line(points={{-240,-110},{-240,-90}}, color={0,0,127}));
+  connect(cold_source.C_out, cold_source_pressure_sensor.C_in)
+    annotation (Line(points={{-275,-120},{-250,-120}}, color={28,108,200}));
+  connect(cold_source_temperature_sensor.T_sensor, cold_source_temperature)
+    annotation (Line(points={{-200,-110},{-200,-90}}, color={0,0,127}));
+  connect(cold_source_pressure_sensor.C_out, cold_source_temperature_sensor.C_in)
+    annotation (Line(points={{-230,-120},{-210,-120}}, color={28,108,200}));
+  connect(cold_source_flow_sensor.Q_sensor, cold_source_flow)
+    annotation (Line(points={{-160,-110},{-160,-90}}, color={0,0,127}));
+  connect(cold_source_temperature_sensor.C_out, cold_source_flow_sensor.C_in)
+    annotation (Line(points={{-190,-120},{-170,-120}}, color={28,108,200}));
+  connect(cold_source_flow_sensor.C_out, economiser.C_cold_in)
+    annotation (Line(points={{-150,-120},{0,-120},{0,-50}}, color={28,108,200}));
+  connect(hot_source_pressure_sensor.P_sensor, hot_source_pressure)
+    annotation (Line(points={{-240,170},{-240,190}}, color={0,0,127}));
+  connect(hot_source.C_out, hot_source_pressure_sensor.C_in)
+    annotation (Line(points={{-275,160},{-250,160}}, color={28,108,200}));
+  connect(hot_source_temperature_sensor.T_sensor, hot_source_temperature)
+    annotation (Line(points={{-200,170},{-200,190}}, color={0,0,127}));
+  connect(hot_source_pressure_sensor.C_out, hot_source_temperature_sensor.C_in)
+    annotation (Line(points={{-230,160},{-210,160}}, color={28,108,200}));
+  connect(hot_source_flow_sensor.Q_sensor, hot_source_flow)
+    annotation (Line(points={{-160,170},{-160,190}}, color={0,0,127}));
+  connect(hot_source_temperature_sensor.C_out, hot_source_flow_sensor.C_in)
+    annotation (Line(points={{-190,160},{-170,160}}, color={28,108,200}));
+  connect(hot_source_flow_sensor.C_out, economiser.C_hot_in)
+    annotation (Line(points={{-150,160},{-20,160},{-20,0}}, color={28,108,200}));
+  connect(economiser_Kfr_cold, economiser.Kfr_cold)
+    annotation (Line(points={{-60,-50},{-22,-50},{-22,40}}, color={0,0,127}));
+  connect(economiser_Kth, economiser.Kth)
+    annotation (Line(points={{-60,60},{-22,60},{-22,-40}}, color={0,0,127}));
+  connect(cold_sink_pressure_sensor.P_sensor, cold_sink_pressure)
+    annotation (Line(points={{80,-110},{80,-90}}, color={0,0,127}));
+  connect(economiser.C_cold_out, cold_sink_pressure_sensor.C_in)
+    annotation (Line(points={{0,50},{70,50},{70,-120}}, color={28,108,200}));
+  connect(cold_sink_temperature_sensor.T_sensor, cold_sink_temperature)
+    annotation (Line(points={{130,-110},{130,-90}}, color={0,0,127}));
+  connect(cold_sink_pressure_sensor.C_out, cold_sink_temperature_sensor.C_in)
+    annotation (Line(points={{90,-120},{120,-120}}, color={28,108,200}));
+  connect(cold_sink_temperature_sensor.C_out, cold_sink.C_in)
+    annotation (Line(points={{140,-120},{215,-120}}, color={28,108,200}));
+  connect(economiser.C_hot_out, hot_sink.C_in)
+    annotation (Line(points={{20,0},{115,0},{115,160}}, color={28,108,200}));
+  annotation (experiment(StopTime=1,Tolerance=1e-6), Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-360,-300},{400,300}})), Documentation(info="<html><p>Approved MML4 sensor/interface structure: AirCompressor and Metroscopia CCGT/NPP. Illustrative initialization point, not plant calibration. Constant supported faults only. No correction or retry after first Dymola attempt.</p><p></p></html>"));
 end Economiser_reverse;

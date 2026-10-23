@@ -8,3 +8,13 @@ ControlValve_direct
 HeatLoss
 PressureCut
 Leak
+FrictionPipe_direct
+FrictionPipe_faulty
+FrictionPipe_reverse
+HeatLoss_direct
+HeatLoss_reverse
+HeightVariationPipe_direct
+HeightVariationPipe_reverse
+Leak_direct
+LoopBreaker_direct
+PressureCut_direct

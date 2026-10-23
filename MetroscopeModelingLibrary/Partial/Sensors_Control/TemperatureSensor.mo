@@ -25,7 +25,7 @@ partial model TemperatureSensor
               nominal=(T_0 +Constants.T0_degC_in_K) *Constants.degC_to_degF +Constants.T0_degC_in_degF);   // Temperature in degF
 
 
-  outer parameter Boolean display_output = true "Used to switch ON or OFF output display";
+  parameter Boolean display_output = true "Used to switch ON or OFF output display";
 
 
   Utilities.Interfaces.GenericReal      T_sensor(start=T_start) annotation (Placement(transformation(

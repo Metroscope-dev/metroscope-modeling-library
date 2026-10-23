@@ -1,5 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Sensors.Fuel;
 model FlowSensor_faulty
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
   extends FlowSensor(source_Q_sensor(faulty = true));
 
   Utilities.Units.MassFlowRate Fault_mass_flow_rate_bias(start=0);

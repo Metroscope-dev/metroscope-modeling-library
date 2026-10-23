@@ -5,3 +5,13 @@ AdmiLouvers_reverse
 HeatLoss
 Leak
 PressureCut
+AdmiLouver_direct
+AdmiLouver_faulty
+AdmiLouver_reverse
+FrictionPipe_direct
+FrictionPipe_faulty
+FrictionPipe_reverse
+HeatLoss_direct
+HeightVariationPipe_direct
+HeightVariationPipe_reverse
+PressureCut_direct

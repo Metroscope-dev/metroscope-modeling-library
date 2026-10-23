@@ -26,5 +26,5 @@ equation
 
   connect(pipe.C_in, source.C_out) annotation (Line(points={{-10,0},{-37,0}}, color={213,213,0}));
   connect(pipe.C_out, sink.C_in) annotation (Line(points={{10,0},{49,0}}, color={213,213,0}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation ( Diagram(coordinateSystem(preserveAspectRatio=false)));
 end Pipe_direct;

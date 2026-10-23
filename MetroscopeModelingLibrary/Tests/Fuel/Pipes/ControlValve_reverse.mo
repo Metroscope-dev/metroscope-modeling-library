@@ -1,6 +1,6 @@
 within MetroscopeModelingLibrary.Tests.Fuel.Pipes;
 model ControlValve_reverse
-  extends Utilities.Icons.Tests.FuelTestIcon;
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FuelTestIcon;
 
   import MetroscopeModelingLibrary.Utilities.Units;
 
@@ -38,5 +38,5 @@ equation
   connect(source.C_out, controlValve.C_in) annotation (Line(points={{-23,0},{-16,0},{-16,-0.363636},{-10,-0.363636}}, color={95,95,95}));
   connect(controlValve.C_out, sink.C_in) annotation (Line(points={{10,-0.363636},{16,-0.363636},{16,0},{23,0}}, color={95,95,95}));
   connect(controlValve.Opening, opening_sensor.Opening) annotation (Line(points={{0,14.1818},{0,27.8}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation ( Diagram(coordinateSystem(preserveAspectRatio=false)));
 end ControlValve_reverse;

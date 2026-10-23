@@ -1,7 +1,8 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Reheater_faulty
-  extends Reheater_direct(
-      reheater(faulty = true));
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
+
+  extends Reheater_direct(reheater(faulty=true));
 
   Real Fault_fouling(start=0);
   Real Fault_water_level_rise(start=0);
@@ -21,5 +22,6 @@ equation
   reheater.water_level_rise = Fault_water_level_rise;
   reheater.partition_plate_leak = Fault_partition_plate_leak;
   reheater.tube_rupture_leak = Fault_tube_rupture_leak;
+
 
 end Reheater_faulty;

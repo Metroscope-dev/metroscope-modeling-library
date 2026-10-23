@@ -1,88 +1,163 @@
 within MetroscopeModelingLibrary.Tests.WaterSteam.HeatExchangers;
 model Condenser_reverse
-
+  "MML4 isolated Condenser reverse test"
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.WaterSteamTestIcon;
 
-    // Boundary conditions
-  input Utilities.Units.MassFlowRate Q_turbine(start=150) "kg/s";
-  input Utilities.Units.SpecificEnthalpy h_turbine(start=1500e3);
-  input Real P_cold_source(start=5, min=0, nominal=10) "barA";
-  input Real T_cold_source(start = 15, min = 0, nominal = 50) "degC";
+  // MML4 interfaces declare quantities; isolated component at illustrative starts.
+  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser(
+    S=10000,
+    water_height=2,
+    faulty=false,
+    Q_hot_0=150,
+    Q_cold_0=7986,
+    Psat_0=5151.695,
+    P_cold_in_0=500000,
+    P_cold_out_0=500000,
+    T_cold_in_0=288.15,
+    T_cold_out_0=297.8485,
+    h_hot_in_0=2300000,
+    h_cold_in_0=63375,
+    h_cold_out_0=103944)
+    annotation (Placement(transformation(extent={{-50,-50},{50,50}}, rotation=0, origin={0,0})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source steam_source(
+    P_0=5151.695,
+    Q_0=150,
+    h_0=2300000,
+    T_0=306.55)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=270, origin={0,180})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.FlowSensor steam_flow_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    Q_start=150,
+    signal_unit="kg/s",
+    display_unit="kg/s",
+    P_0=5151.695,
+    Q_0=150,
+    h_0=2300000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=270, origin={0,145})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition steam_flow
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={30,145}), iconTransformation(extent={{-140,220},{-100,260}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor steam_pressure_sensor(
+    sensor_function="Calibration",
+    causality="condenser_Kth",
+    show_causality=true,
+    P_start=0.05151695013046,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=5151.695013046,
+    Q_0=150,
+    h_0=2300000)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=270, origin={0,105})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.CalibrationInput steam_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={30,105}), iconTransformation(extent={{-140,175},{-100,215}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=270, origin={0,-95})));
+  input MetroscopeModelingLibrary.Utilities.Units.SpecificEnthalpy steam_enthalpy(start=2300000);
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cooling_source(
+    P_0=500000,
+    Q_0=7986,
+    h_0=63375,
+    T_0=288.15)
+    annotation (Placement(transformation(extent={{-20,-20},{20,20}}, rotation=180, origin={250,10})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.PressureSensor cw_pressure_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    P_start=5,
+    signal_unit="barA",
+    display_unit="barA",
+    P_0=500000,
+    Q_0=7986,
+    h_0=63375)
+    annotation (Placement(transformation(extent={{10,-10},{-10,10}}, rotation=0, origin={200,10})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition cw_pressure
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={200,40}), iconTransformation(extent={{-140,130},{-100,170}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor cw_in_temp_sensor(
+    sensor_function="BC",
+    causality="",
+    show_causality=true,
+    T_start=15,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=500000,
+    Q_0=7986,
+    h_0=63375,
+    T_0=288.15)
+    annotation (Placement(transformation(extent={{10,-10},{-10,10}}, rotation=0, origin={160,10})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition cw_in_temp
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={160,40}), iconTransformation(extent={{-140,85},{-100,125}})));
+  MetroscopeModelingLibrary.SensorsControl.WaterSteam.TemperatureSensor cw_out_temp_sensor(
+    sensor_function="Calibration",
+    causality="condenser_Qv_cold_in",
+    show_causality=true,
+    T_start=24.69846725464,
+    signal_unit="degC",
+    display_unit="degC",
+    P_0=500000,
+    Q_0=7986,
+    h_0=103944,
+    T_0=297.84846725464)
+    annotation (Placement(transformation(extent={{-10,10},{10,-10}}, rotation=0, origin={100,-20})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.CalibrationInput cw_out_temp
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={100,-50}), iconTransformation(extent={{-140,40},{-100,80}})));
+  MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cooling_sink
+    annotation (Placement(transformation(extent={{-20,-20},{20,20}}, rotation=0, origin={200,-20})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.GenericReal condenser_Kth(
+    start=2500)
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-85,10}), iconTransformation(extent={{-70,-290},{-50,-270}})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.GenericReal condenser_Qv_cold_in(
+    start=8)
+    annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-85,0}), iconTransformation(extent={{-30,-290},{-10,-270}})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.RealExpression condenser_Kfr_cold(
+    y=0)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=90, origin={-85,-25})));
+  MetroscopeModelingLibrary.Utilities.Interfaces.RealExpression condenser_C_incond(
+    y=0)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=90, origin={-85,40})));
 
-    // Parameters
-  parameter Utilities.Units.Area S=100;
-  parameter Utilities.Units.Height water_height=1;
-  parameter Real C_incond = 0;
-  parameter Utilities.Units.Pressure P_offset=0;
-  parameter Utilities.Units.FrictionCoefficient Kfr_cold=1;
-  parameter Utilities.Units.VolumeFlowRate Qv_cold=3.82;
-
-    // Calibrated parameters
-  output Utilities.Units.HeatExchangeCoefficient Kth;
-
-    // Inputs for calibration
-  input Real P_cond(start = 0.19e5) "Pa";
-
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source turbine_outlet annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,78})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink condensate_sink annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,-44})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cooling_source annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-44,0})));
-  .MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Sink cooling_sink annotation (Placement(transformation(extent={{74,-10},{94,10}})));
-  MetroscopeModelingLibrary.WaterSteam.HeatExchangers.Condenser condenser annotation (Placement(transformation(extent={{-10,-8},{10,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor condensate_temperature_sensor annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,-24})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.TemperatureSensor circulating_water_T_out_sensor annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={30,0})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor circulating_water_P_out_sensor annotation (Placement(transformation(extent={{50,-10},{70,10}})));
-  MetroscopeModelingLibrary.Sensors.WaterSteam.PressureSensor P_cond_sensor annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={0,40})));
 equation
+  steam_source.h_out = steam_enthalpy;
 
-  // Boundary Conditions
-  turbine_outlet.h_out = h_turbine;
-  turbine_outlet.Q_out = -Q_turbine;
+  connect(steam_flow_sensor.Q_sensor, steam_flow)
+    annotation (Line(points={{10,145},{30,145}}, color={0,0,127}));
+  connect(steam_pressure_sensor.P_sensor, steam_pressure)
+    annotation (Line(points={{10,105},{30,105}}, color={0,0,127}));
+  connect(steam_source.C_out, steam_flow_sensor.C_in)
+    annotation (Line(points={{-0,175},{0,155}}, color={28,108,200}));
+  connect(steam_flow_sensor.C_out, steam_pressure_sensor.C_in)
+    annotation (Line(points={{-0,135},{0,115}}, color={28,108,200}));
+  connect(steam_pressure_sensor.C_out, condenser.C_hot_in)
+    annotation (Line(points={{-0,95},{0,50}}, color={28,108,200}));
+  connect(condenser.C_hot_out, condensate_sink.C_in)
+    annotation (Line(points={{0,-50},{0,-90}}, color={28,108,200}));
+  connect(cw_pressure_sensor.P_sensor, cw_pressure)
+    annotation (Line(points={{200,20},{200,40}}, color={0,0,127}));
+  connect(cw_in_temp_sensor.T_sensor, cw_in_temp)
+    annotation (Line(points={{160,20},{160,40}}, color={0,0,127}));
+  connect(cw_out_temp_sensor.T_sensor, cw_out_temp)
+    annotation (Line(points={{100,-30},{100,-50}}, color={0,0,127}));
+  connect(cooling_source.C_out, cw_pressure_sensor.C_in)
+    annotation (Line(points={{240,10},{210,10}}, color={28,108,200}));
+  connect(cw_pressure_sensor.C_out, cw_in_temp_sensor.C_in)
+    annotation (Line(points={{190,10},{170,10}}, color={28,108,200}));
+  connect(cw_in_temp_sensor.C_out, condenser.C_cold_in)
+    annotation (Line(points={{150,10},{50,10}}, color={28,108,200}));
+  connect(condenser.C_cold_out, cw_out_temp_sensor.C_in)
+    annotation (Line(points={{50,-20},{90,-20}}, color={28,108,200}));
+  connect(cw_out_temp_sensor.C_out, cooling_sink.C_in)
+    annotation (Line(points={{110,-20},{190,-20}}, color={28,108,200}));
+  connect(condenser_Kth, condenser.Kth)
+    annotation (Line(points={{-85,10},{-52,10}}, color={0,0,127}));
+  connect(condenser_Qv_cold_in, condenser.Qv_cold_in)
+    annotation (Line(points={{-85,0},{-52,0}}, color={0,0,127}));
+  connect(condenser_Kfr_cold.y, condenser.Kfr_cold)
+    annotation (Line(points={{-80,-25},{-52,-25},{-52,-10}}, color={0,0,127}));
+  connect(condenser_C_incond.y, condenser.C_incond)
+    annotation (Line(points={{-80,40},{-52,40},{-52,20}}, color={0,0,127}));
+  annotation (
+    experiment(StopTime=1, Tolerance=1e-6),
 
-  cooling_source.P_out = P_cold_source*1e5;
-  cooling_source.T_out = 273.15 + T_cold_source;
-
-  // Parameters
-  condenser.S = S;
-  condenser.water_height = water_height;
-  condenser.C_incond = C_incond;
-  condenser.P_offset = P_offset;
-  condenser.Kfr_cold = Kfr_cold;
-  condenser.Qv_cold_in = Qv_cold;
-
-  // Calibrated Parameters
-  condenser.Kth = Kth;
-
-  // Inputs for calibration
-  P_cond_sensor.P = P_cond;
-
-  connect(condenser.C_cold_in, cooling_source.C_out) annotation (Line(points={{-10,0},{-39,0}}, color={28,108,200}));
-  connect(condenser.C_hot_out, condensate_temperature_sensor.C_in) annotation (Line(points={{0,-8},{0,-11},{1.77636e-15,-11},{1.77636e-15,-14}}, color={28,108,200}));
-  connect(condensate_sink.C_in, condensate_temperature_sensor.C_out) annotation (Line(points={{8.88178e-16,-39},{8.88178e-16,-36.5},{-1.77636e-15,-36.5},{-1.77636e-15,-34}}, color={28,108,200}));
-  connect(condenser.C_cold_out, circulating_water_T_out_sensor.C_in) annotation (Line(points={{9.8,0},{20,0}}, color={28,108,200}));
-  connect(circulating_water_T_out_sensor.C_out, circulating_water_P_out_sensor.C_in) annotation (Line(points={{40,0},{50,0}}, color={28,108,200}));
-  connect(circulating_water_P_out_sensor.C_out, cooling_sink.C_in) annotation (Line(points={{70,0},{79,0}}, color={28,108,200}));
-  connect(turbine_outlet.C_out, P_cond_sensor.C_in) annotation (Line(points={{-8.88178e-16,73},{-8.88178e-16,61.5},{1.77636e-15,61.5},{1.77636e-15,50}}, color={28,108,200}));
-  connect(condenser.C_hot_in, P_cond_sensor.C_out) annotation (Line(points={{0,10.2},{0,20.1},{-1.77636e-15,20.1},{-1.77636e-15,30}}, color={28,108,200}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-            -100},{100,80}})),
-                        Diagram(coordinateSystem(preserveAspectRatio=false,
-          extent={{-100,-100},{100,100}})));
+    Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-300,-180},{300,240}})),
+    Documentation(info="<html><p>MML4 isolated component suite, 2026-10-20. Target local fix-bug-reheater HEAD 126f351e652e73df0eab808bbb7b29f9cb5e556f plus existing workspace changes, MSL 4.0.0. Approved graphical patterns: AirCompressor, MetroscopiaCCGT and MetroscopiaNPP. Native or approved icon dimensions retained.</p><p>Operating points and characteristic values are illustrative engineering sizing, not calibrated plant data. External inputs use existing sensor starts; ordinary enthalpy/fault inputs retain typed declarations and equations. Faults are constant. One Check Model and at most one simulation attempt; see the accompanying report for actual outcomes. No failed-model correction or rerun.</p></html>"));
 end Condenser_reverse;
