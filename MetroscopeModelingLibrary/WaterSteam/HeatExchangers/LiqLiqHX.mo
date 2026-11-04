@@ -29,20 +29,20 @@ model LiqLiqHX
   Units.Percentage fouling(min = 0, max=100); // Fouling percentage
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 500;
+  parameter Units.MassFlowRate Q_cold_0 = 100;
   parameter Units.MassFlowRate Q_hot_0 = 50;
-  parameter Units.Pressure P_cold_in_0 = 10e5;
-  parameter Units.Pressure P_cold_out_0 = 9e5;
-  parameter Units.Pressure P_hot_in_0 = 5e5;
-  parameter Units.Pressure P_hot_out_0 = 4e5;
-  parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 100;
-  parameter Units.Temperature T_hot_in_0 = 273.15 + 150;
-  parameter Units.Temperature T_hot_out_0 = 273.15 + 100;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 5e5;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 5e5;
-  parameter Units.SpecificEnthalpy h_hot_in_0 = 5e5;
-  parameter Units.SpecificEnthalpy h_hot_out_0 = 5e5;
+  parameter Units.Pressure P_cold_in_0 = 2000000;
+  parameter Units.Pressure P_cold_out_0 = 1980000;
+  parameter Units.Pressure P_hot_in_0 = 5000000;
+  parameter Units.Pressure P_hot_out_0 = 4980000;
+  parameter Units.Temperature T_cold_in_0 = 323.1541;
+  parameter Units.Temperature T_cold_out_0 = 328.2049;
+  parameter Units.Temperature T_hot_in_0 = 373.1536;
+  parameter Units.Temperature T_hot_out_0 = 363.1018;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 211019.3;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 232122.1;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 422795.5;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 380590;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
   Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(extent={{-10,70},{10,90}}), iconTransformation(extent={{-10,70},{10,90}})));

@@ -52,7 +52,7 @@ model CombustionChamber
   Units.SpecificEnthalpy LHV = HHV - 2202.92069 *  m_H*(4*X_fuel_CH4/m_CH4 + 6*X_fuel_C2H6/m_C2H6 + 8*X_fuel_C3H8/m_C3H8 + 10*X_fuel_C4H10_n_butane/m_C4H10)*1e4 "J/kg can be assigned in component modifiers";
 
   // Initialization parameters
-  parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
+  parameter Units.SpecificEnthalpy h_in_air_0 = 695990.2;
 
   FlueGases.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   FlueGases.Connectors.Outlet outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));

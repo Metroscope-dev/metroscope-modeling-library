@@ -43,17 +43,17 @@ model AirCooledCondenser_with_subcooling
 
   // Initialization parameters
   parameter Units.VolumeFlowRate Qv_cold_0 = 1800;
-  parameter Units.MassFlowRate Q_cold_0 = 1800*1.292;
+  parameter Units.MassFlowRate Q_cold_0 = 2300;
   parameter Units.MassFlowRate Q_hot_0 = 21;
-  parameter Units.Pressure Psat_0 = 0.91e5;
+  parameter Units.Pressure Psat_0 = 19826.43;
   parameter Units.Pressure P_cold_in_0 = 1.002e5;
-  parameter Units.Pressure P_cold_out_0 = 1.001e5;
+  parameter Units.Pressure P_cold_out_0 = 100200;
   parameter Units.Temperature T_cold_in_0 = 273.15 + 15;
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 25;
+  parameter Units.Temperature T_cold_out_0 = 307.9208;
   parameter Units.Temperature T_hot_in_0 = Tsat_0;
-  parameter Units.Temperature T_hot_out_0 = Tsat_0;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 0.5e5;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 1e5;
+  parameter Units.Temperature T_hot_out_0 = 324.3912;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 28410.15;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 48364.79;
   parameter Units.SpecificEnthalpy h_hot_in_0 = 2.4e6;
   parameter Units.SpecificEnthalpy h_liq_sat_0 = Water.bubbleEnthalpy(Water.setSat_p(Psat_0));
   parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);

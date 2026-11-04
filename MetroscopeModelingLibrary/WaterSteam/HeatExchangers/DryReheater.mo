@@ -39,19 +39,19 @@ model DryReheater
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 500;
-  parameter Units.MassFlowRate Q_hot_0 = 50;
-  parameter Units.Pressure P_cold_in_0 = 10e5;
-  parameter Units.Pressure P_cold_out_0 = 9e5;
-  parameter Units.Pressure P_hot_in_0 = 20e5;
-  parameter Units.Pressure P_hot_out_0 = 20e5;
+  parameter Units.MassFlowRate Q_hot_0 = 36.37453;
+  parameter Units.Pressure P_cold_in_0 = 5000000;
+  parameter Units.Pressure P_cold_out_0 = 4950000;
+  parameter Units.Pressure P_hot_in_0 = 1100000;
+  parameter Units.Pressure P_hot_out_0 = 1100000;
   parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 100;
-  parameter Units.Temperature T_hot_in_0 = 273.15 + 220;
-  parameter Units.Temperature T_hot_out_0 = 273.15 + 220;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 5e5;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 7e5;
-  parameter Units.SpecificEnthalpy h_hot_in_0 = 2.8e6;
-  parameter Units.SpecificEnthalpy h_hot_out_0 = 6e5;
+  parameter Units.Temperature T_cold_out_0 = 353.0985;
+  parameter Units.Temperature T_hot_in_0 = 457.2188;
+  parameter Units.Temperature T_hot_out_0 = 457.2372;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 213618.5;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 338659.8;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 2500000;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 781197.6;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0))
                                                 annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));

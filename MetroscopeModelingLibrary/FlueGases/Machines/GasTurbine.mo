@@ -2,6 +2,11 @@ within MetroscopeModelingLibrary.FlueGases.Machines;
 model GasTurbine
 
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
+    T_in_0=1473.15,
+    T_out_0=826.9883,
+    P_in_0=1500000,
+    h_in_0=1615239,
+    h_out_0=857895.9,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium,

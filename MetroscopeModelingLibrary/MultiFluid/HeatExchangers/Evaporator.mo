@@ -45,24 +45,24 @@ model Evaporator
 
     // Initialization parameters
       // Flow Rates
-      parameter Units.MassFlowRate Q_cold_0 = 85;
+      parameter Units.MassFlowRate Q_cold_0 = 86.68632;
       parameter Units.MassFlowRate Q_hot_0 = 640;
       // Temperatures
       parameter Units.Temperature T_cold_in_0 = 326 + 273.15;
       parameter Units.Temperature T_cold_out_0 = WaterSteamMedium.saturationTemperature(P_cold_out_0);
       parameter Units.Temperature T_hot_in_0 = 475 + 273.15;
-      parameter Units.Temperature T_hot_out_0 = 345 + 273.15;
+      parameter Units.Temperature T_hot_out_0 = 601.4453;
       // Pressures
       parameter Units.Pressure P_cold_in_0 = 130e5;
       parameter Units.Pressure P_cold_out_0 = 130e5;
       parameter Units.Pressure P_hot_in_0 = 1.1e5;
-      parameter Units.Pressure P_hot_out_0 = 1.05e5;
+      parameter Units.Pressure P_hot_out_0 = 110000;
       // Enthalpies
-      parameter Units.SpecificEnthalpy h_cold_in_0 = 1.5e6;
+      parameter Units.SpecificEnthalpy h_cold_in_0 = 1497273;
       parameter Units.SpecificEnthalpy h_vap_sat_0 = WaterSteamMedium.dewEnthalpy(WaterSteamMedium.setSat_p(P_cold_out_0));
       parameter Units.SpecificEnthalpy h_liq_sat_0 = WaterSteamMedium.bubbleEnthalpy(WaterSteamMedium.setSat_p(P_cold_out_0));
-      parameter Units.SpecificEnthalpy h_hot_in_0 = 8.05e5;
-      parameter Units.SpecificEnthalpy h_hot_out_0 = 6.5e5;
+      parameter Units.SpecificEnthalpy h_hot_in_0 = 770900.1;
+      parameter Units.SpecificEnthalpy h_hot_out_0 = 613019.9;
 
   Power.HeatExchange.NTUHeatExchange HX_vaporising(config=HX_config, T_cold_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
