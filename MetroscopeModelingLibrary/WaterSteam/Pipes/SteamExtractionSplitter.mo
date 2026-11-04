@@ -7,12 +7,12 @@ model SteamExtractionSplitter
   import MetroscopeModelingLibrary.WaterSteam.Connectors;
 
   // Initialization parameters
-  parameter Units.PositiveMassFlowRate Q_in_0=1600;
+  parameter Units.PositiveMassFlowRate Q_in_0=1000;
   parameter Units.PositiveMassFlowRate Q_ext_0= 100;
   parameter Units.PositiveMassFlowRate Q_main_0= Q_in_0 - Q_ext_0;
-  parameter Units.Pressure P_0 = 71e5;
-  parameter Units.Temperature T_0 = 500;
-  parameter Units.SpecificEnthalpy h_0 = 2.5e6;
+  parameter Units.Pressure P_0 = 264000;
+  parameter Units.Temperature T_0 = 402.3629;
+  parameter Units.SpecificEnthalpy h_0 = 2650000;
   parameter Units.MassFraction x_0 = min((h_0 - h_liq_sat_0)/(h_vap_sat_0 - h_liq_sat_0), 1);
 
   // Variables

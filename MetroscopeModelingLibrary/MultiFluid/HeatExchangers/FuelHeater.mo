@@ -40,20 +40,20 @@ model FuelHeater
   parameter Units.MassFlowRate Q_cold_0 = 15;
   parameter Units.MassFlowRate Q_hot_0 = 11;
   // Temperatures
-  parameter Units.Temperature T_cold_in_0 = 8 + 273.15;
-  parameter Units.Temperature T_cold_out_0 = 200 + 273.15;
-  parameter Units.Temperature T_hot_in_0 = 210 + 273.15;
-  parameter Units.Temperature T_hot_out_0 = 68 + 273.15;
+  parameter Units.Temperature T_cold_in_0 = 302.65;
+  parameter Units.Temperature T_cold_out_0 = 441.3629;
+  parameter Units.Temperature T_hot_in_0 = 503.15;
+  parameter Units.Temperature T_hot_out_0 = 400.8047;
   // Pressures
   parameter Units.Pressure P_cold_in_0 = 30e5;
-  parameter Units.Pressure P_cold_out_0 = 29.5e5;
-  parameter Units.Pressure P_hot_in_0 = 18.5e5;
-  parameter Units.Pressure P_hot_out_0 = 18.3e5;
+  parameter Units.Pressure P_cold_out_0 = 2979918;
+  parameter Units.Pressure P_hot_in_0 = 4700000;
+  parameter Units.Pressure P_hot_out_0 = 4679492;
   // Enthalpies
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 554708.5;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 292266.22;
-  parameter Units.SpecificEnthalpy h_hot_in_0 = 958265.3;
-  parameter Units.SpecificEnthalpy h_hot_out_0 = 5.75e5;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 612266.8;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 943201.1;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 990642.6;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 539368.6;
 
   Units.HeatCapacity Cp_cold_min;
   Units.HeatCapacity Cp_cold_max;

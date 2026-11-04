@@ -1,5 +1,6 @@
 Pipe_direct
 Pipe_reverse
+Pipe_faulty
 ControlValve_reverse
 ControlValve_direct
 HeatLoss

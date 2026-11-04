@@ -34,18 +34,18 @@ model Condenser
   Units.Percentage Qv_cold_in_decrease(start=0); // Decrease of Qv_cold_in, in %
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 5000;
-  parameter Units.MassFlowRate Q_hot_0 = 1000;
-  parameter Units.Pressure Psat_0 = 0.05e5;
+  parameter Units.MassFlowRate Q_cold_0 = 7986.358;
+  parameter Units.MassFlowRate Q_hot_0 = 150;
+  parameter Units.Pressure Psat_0 = 5151.695;
   parameter Units.Pressure P_cold_in_0 = 5e5;
-  parameter Units.Pressure P_cold_out_0 = 4e5;
+  parameter Units.Pressure P_cold_out_0 = 500000;
   parameter Units.Temperature T_cold_in_0 = 273.15 + 15;
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 25;
-  parameter Units.Temperature T_hot_in_0 = Tsat_0;
-  parameter Units.Temperature T_hot_out_0 = Tsat_0;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 0.5e5;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 1e5;
-  parameter Units.SpecificEnthalpy h_hot_in_0 = 2e6;
+  parameter Units.Temperature T_cold_out_0 = 297.8485;
+  parameter Units.Temperature T_hot_in_0 = 306.5526;
+  parameter Units.Temperature T_hot_out_0 = 306.5783;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 63375;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 103944.3;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 2300000;
   parameter Units.SpecificEnthalpy h_liq_sat_0 = Water.bubbleEnthalpy(Water.setSat_p(Psat_0));
   parameter Units.Temperature Tsat_0 = Water.saturationTemperature(Psat_0);
   parameter Units.DifferentialPressure water_height_DP_0 = 0.09e5;

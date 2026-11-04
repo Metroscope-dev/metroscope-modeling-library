@@ -29,20 +29,20 @@ model LMTDFuelHeater
   Units.Percentage fouling; // Fouling percentage
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 12;
-  parameter Units.MassFlowRate Q_hot_0 = 8.6;
+  parameter Units.MassFlowRate Q_cold_0 = 15;
+  parameter Units.MassFlowRate Q_hot_0 = 11;
   parameter Units.Temperature T_cold_in_0 = 29.5 + 273.15;
-  parameter Units.Temperature T_cold_out_0 = 97 + 273.15;
+  parameter Units.Temperature T_cold_out_0 = 438.7656;
   parameter Units.Temperature T_hot_in_0 = 230 +273.15;
-  parameter Units.Temperature T_hot_out_0 = 200 +273.15;
-  parameter Units.Pressure P_cold_in_0 = 29.7 *1e5;
-  parameter Units.Pressure P_cold_out_0 = 29.7 *1e5;
+  parameter Units.Temperature T_hot_out_0 = 402.9832;
+  parameter Units.Pressure P_cold_in_0 = 3000000;
+  parameter Units.Pressure P_cold_out_0 = 2979918;
   parameter Units.Pressure P_hot_in_0 = 47 *1e5;
-  parameter Units.Pressure P_hot_out_0 = 47 *1e5;
-  parameter Units.SpecificEnthalpy h_hot_in_0 = 2e4;
-  parameter Units.SpecificEnthalpy h_hot_out_0 = 1e4;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 6e5;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 1e6;
+  parameter Units.Pressure P_hot_out_0 = 4681862;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 990642.6;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 548638;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 612266.8;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 936403.5;
 
   Power.HeatExchange.LMTDHeatExchange HX(
     T_cold_in_0=T_cold_in_0,T_hot_in_0=T_hot_in_0,T_cold_out_0=T_cold_out_0,T_hot_out_0=T_hot_out_0)                                                                                                  annotation (Placement(transformation(
@@ -57,7 +57,7 @@ model LMTDFuelHeater
     Q_0=Q_hot_0,
     P_in_0=P_hot_in_0,
     P_out_0=P_hot_out_0,
-    h_0=h_hot_in_0,
+    h_0=h_hot_out_0,
     T_0=T_hot_in_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,

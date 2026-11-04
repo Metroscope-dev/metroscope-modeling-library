@@ -1,7 +1,13 @@
 within MetroscopeModelingLibrary.RefMoistAir.Machines;
 model AirCompressor
 
-  extends MetroscopeModelingLibrary.RefMoistAir.BaseClasses.FlowModel(Q_0 = 500, rho_0 = 1)
+  extends MetroscopeModelingLibrary.RefMoistAir.BaseClasses.FlowModel(
+    T_in_0=293.15,
+    T_out_0=694.9584,
+    P_out_0=1700000,
+    h_in_0=38666.49,
+    h_out_0=456603.8,
+    Q_0 = 500, rho_0 = 1)
                                                                                            annotation (IconMap(primitivesVisible=false));
   package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
