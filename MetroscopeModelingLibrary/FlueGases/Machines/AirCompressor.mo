@@ -2,6 +2,11 @@ within MetroscopeModelingLibrary.FlueGases.Machines;
 model AirCompressor
 
   extends MetroscopeModelingLibrary.Partial.BaseClasses.FlowModel(
+    T_in_0=293.15,
+    T_out_0=694.0556,
+    P_out_0=1700000,
+    h_in_0=295571.2,
+    h_out_0=712073.8,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_out,
     redeclare package Medium = FlueGasesMedium,

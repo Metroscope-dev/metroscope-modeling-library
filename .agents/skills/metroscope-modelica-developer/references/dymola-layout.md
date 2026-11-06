@@ -8,7 +8,7 @@
 4. Place each measurement interface 15–35 diagram coordinate units from its sensor, near its `*_sensor` signal pin. `sensor_function`, `causality` and matching connector type must agree, independently of icon layout.
 5. Put calibrated/fixed `Utilities.Interfaces.GenericReal` objects next to each owning component's actual parameter port (Kfr, Kth, eta_is, Cst, hn, rh, etc.). Never line up all interfaces in a distant row, which produces giant wire crossings. Keep pairs grouped and label clearly.
 6. Distinguish gas, water/steam, cooling water and shaft paths with line colors appropriate to the MML examples. Use 90-degree polyline elbows instead of direct diagonal, long crossing lines where practical. Do not place the water loop on top of the HRSG hot-gas duct.
-7. After every component move, recompute **all** affected `annotation(Placement(...))` and `annotation(Line(points=...))`. Account for extents, rotation and `iconTransformation`; connector center must match the first/last drawn point.
+7. Rotate components or sensors when this aligns their inlet/outlet connectors with the connected lines and improves routing. Use `transformation.rotation` without changing local icon dimensions; update `iconTransformation` where applicable. A rotated sensor still measures the same physical location with the same declared inlet/outlet order, metadata, units and starts. After every translation or rotation, recompute **all** affected `annotation(Placement(...))` and `annotation(Line(points=...))` endpoints from the transformed connector coordinates; connector center must match the first/last drawn point.
 8. Run a static audit: every `connect` has `annotation(Line(...))`, no duplicate/missing graphical interfaces, no remote (>~50 diagram units) sensor-signal and parameter wires without rationale, no obviously disconnected ends, no severely overlapped symbols.
 9. Open in Dymola Diagram view if available, visually inspect and repair until the process flow is clear. Do not claim visual QA on a headless static check. Translation, solving and graphical QA are separate deliverables.
 
@@ -28,7 +28,7 @@ Preserve the pump outlet mass-flow measurement. Graph both new components immedi
 - Correct Modelica wiring but unreadable or invisible diagram.
 
 ## Never change icon size — acceptance gate
-- Treat every canonical Modelica `Placement` icon bounding-box **width and height** as immutable, for equipment, sources/sinks, sensors and interfaces. Preserve orientation and `iconTransformation` when available.
-- Move a component only by translating the placement coordinates: `(x1,y1),(x2,y2) -> (x1+dx,y1+dy),(x2+dx,y2+dy)`. For `origin=...` variants, change origin only. Do not rescale `extent`, either uniformly or non-uniformly.
-- Fix collisions by creating more whitespace / enlarging the **Diagram coordinate system viewport**, not scaling icons. Re-route line annotations to actual connector coordinates after translations.
+- Treat every canonical Modelica `Placement` icon's **local extent dimensions and aspect ratio** as immutable, for equipment, sources/sinks, sensors and interfaces. Components and sensors may rotate to align with their lines; preserve/update `iconTransformation` consistently where applicable.
+- Translate through `origin` or by shifting both extent corners by the same delta, and rotate through `transformation.rotation`. Do not rescale `extent`, either uniformly or non-uniformly, or swap its axes to imitate rotation. Compare local extents when auditing size: a rotated rectangular icon can have a different screen-aligned bounding box without being resized.
+- Fix collisions by creating more whitespace / enlarging the **Diagram coordinate system viewport**, not scaling icons. Re-route line annotations to actual connector coordinates after translations or rotations.
 - Audit size parity against original or golden source; **unexpected resize is blocking** even if diagram otherwise looks good.

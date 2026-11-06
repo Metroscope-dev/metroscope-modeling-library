@@ -20,10 +20,10 @@ model SteamDryer
 
   // Initialization parameters
   parameter Units.Pressure P_0 = 10e5;
-  parameter Units.Temperature T_0 = 273.15 + 180;
+  parameter Units.Temperature T_0 = 453.0405;
   parameter Units.SpecificEnthalpy h_in_0 = 2e6;
   parameter Units.PositiveMassFlowRate Q_in_0=500;
-  parameter Units.PositiveMassFlowRate Q_liq_0 = 0.5*Q_in_0;
+  parameter Units.PositiveMassFlowRate Q_liq_0 = 0.3175279*Q_in_0;
   parameter Units.PositiveMassFlowRate Q_vap_0 = Q_in_0 - Q_liq_0;
 
   Connectors.Inlet C_in(P(start=P_0), Q(start=Q_in_0)) annotation (Placement(transformation(extent={{-110,30},{-90,50}}), iconTransformation(extent={{-110,30},{-90,50}})));
