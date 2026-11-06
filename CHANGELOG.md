@@ -9,6 +9,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
   
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
+    - Add realistic initialisation values on all components [#615](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/615)
 
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
