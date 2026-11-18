@@ -55,20 +55,20 @@ model Superheater
 
   // Initialization parameters
   parameter Units.MassFlowRate Q_cold_0 = 1300;
-  parameter Units.MassFlowRate Q_hot_0 = 50;
-  parameter Units.MassFlowRate Q_vent_0 = 1;
-  parameter Units.Pressure P_cold_in_0 = 10e5;
-  parameter Units.Pressure P_cold_out_0 = 10e5;
+  parameter Units.MassFlowRate Q_hot_0 = 107.6016;
+  parameter Units.MassFlowRate Q_vent_0 = 1.001;
+  parameter Units.Pressure P_cold_in_0 = 1100000;
+  parameter Units.Pressure P_cold_out_0 = 1100000;
   parameter Units.Pressure P_hot_in_0 = 60e5;
-  parameter Units.Pressure P_hot_out_0 = 59e5;
-  parameter Units.Temperature T_cold_in_0 = 273.15 + 200;
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 250;
-  parameter Units.Temperature T_hot_in_0 = 273.15 + 220;
-  parameter Units.Temperature T_hot_out_0 = 273.15 + 220;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 2.6e6;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 2.8e6;
-  parameter Units.SpecificEnthalpy h_hot_in_0 = 2.9e6;
-  parameter Units.SpecificEnthalpy h_hot_out_0 = 1.2e6;
+  parameter Units.Pressure P_hot_out_0 = 6000000;
+  parameter Units.Temperature T_cold_in_0 = 457.2161;
+  parameter Units.Temperature T_cold_out_0 = 497.1523;
+  parameter Units.Temperature T_hot_in_0 = 552.0004;
+  parameter Units.Temperature T_hot_out_0 = 548.7233;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 2780667;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 2880087;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 2800000;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 1213731;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0))
                                                 annotation (Placement(transformation(extent={{-10,-90},{10,-70}}), iconTransformation(extent={{-10,-90},{10,-70}})));

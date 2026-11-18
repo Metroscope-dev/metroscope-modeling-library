@@ -51,20 +51,20 @@ model Reheater
   Units.MassFlowRate tube_rupture_leak; // Tube rupture leak : cold water leaks and mixes with the condensed steam
 
   // Initialization parameters
-  parameter Units.PositiveMassFlowRate Q_cold_0=500;
-  parameter Units.PositiveMassFlowRate Q_hot_0=50;
-  parameter Units.Pressure P_cold_in_0 = 10e5;
-  parameter Units.Pressure P_cold_out_0 = 9e5;
-  parameter Units.Pressure P_hot_in_0 = 11e5;
-  parameter Units.Pressure P_hot_out_0 = 11e5;
-  parameter Units.Temperature T_cold_in_0 = 273.15 + 50;
-  parameter Units.Temperature T_cold_out_0 = 273.15 + 100;
-  parameter Units.Temperature T_hot_in_0 = 273.15 + 200;
-  parameter Units.Temperature T_hot_out_0 = 273.15 + 150;
-  parameter Units.SpecificEnthalpy h_cold_in_0 = 2e5;
-  parameter Units.SpecificEnthalpy h_cold_out_0 = 7e5;
-  parameter Units.SpecificEnthalpy h_hot_in_0 = 2.9e6;
-  parameter Units.SpecificEnthalpy h_hot_out_0 = 6e5;
+  parameter Units.PositiveMassFlowRate Q_cold_0=1000;
+  parameter Units.PositiveMassFlowRate Q_hot_0=95.55015;
+  parameter Units.Pressure P_cold_in_0 = 6500000;
+  parameter Units.Pressure P_cold_out_0 = 6500000;
+  parameter Units.Pressure P_hot_in_0 = 3500000;
+  parameter Units.Pressure P_hot_out_0 = 3500000;
+  parameter Units.Temperature T_cold_in_0 = 373.15;
+  parameter Units.Temperature T_cold_out_0 = 417.3064;
+  parameter Units.Temperature T_hot_in_0 = 553.15;
+  parameter Units.Temperature T_hot_out_0 = 498.006;
+  parameter Units.SpecificEnthalpy h_cold_in_0 = 423930.3;
+  parameter Units.SpecificEnthalpy h_cold_out_0 = 610890.2;
+  parameter Units.SpecificEnthalpy h_hot_in_0 = 2923113;
+  parameter Units.SpecificEnthalpy h_hot_out_0 = 966445;
 
   Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0))
                                                 annotation (Placement(transformation(extent={{-172,-10},{-152,10}}), iconTransformation(extent={{-172,-10},{-152,10}})));
