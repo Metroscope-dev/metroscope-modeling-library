@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.SensorsControl.MoistAir;
 model RelativeHumiditySensor
   package MoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.MoistAirMedium;
 
-  extends MetroscopeModelingLibrary.Partial.SensorsControl.BaseSensor(
+  extends MetroscopeModelingLibrary.Partial.Sensors.BaseSensor(
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.MoistAir.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.MoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -23,9 +23,6 @@ model RelativeHumiditySensor
   parameter String signal_unit = "%" "Specify the signal unit. This should be the unit of H_start and of the tag linked to the sensor." annotation (choices(choice="1", choice="%"),
   Dialog(tab="General", group="Sensor signal parameters"));
 
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
-
-
   Utilities.Interfaces.GenericReal      H_sensor(start=H_start) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -36,7 +33,6 @@ model RelativeHumiditySensor
 equation
   flow_model.Xi[1] = MoistAirMedium.massFraction_pTphi(P, flow_model.T_in, relative_humidity);
   relative_humidity_pc = relative_humidity*100;
-
 
   if signal_unit == "" then
     H_sensor = relative_humidity;

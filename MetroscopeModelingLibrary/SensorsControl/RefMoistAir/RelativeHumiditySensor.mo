@@ -2,7 +2,7 @@ within MetroscopeModelingLibrary.SensorsControl.RefMoistAir;
 model RelativeHumiditySensor
   package RefMoistAirMedium = MetroscopeModelingLibrary.Utilities.Media.RefMoistAirMedium;
 
-  extends MetroscopeModelingLibrary.Partial.SensorsControl.BaseSensor(
+  extends MetroscopeModelingLibrary.Partial.Sensors.BaseSensor(
     redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Inlet C_in,
     redeclare MetroscopeModelingLibrary.RefMoistAir.Connectors.Outlet C_out,
     redeclare MetroscopeModelingLibrary.RefMoistAir.BaseClasses.IsoPHFlowModel flow_model,
@@ -18,10 +18,9 @@ model RelativeHumiditySensor
   Real pds;
   parameter Real H_start = 50 "Write here the build value of the quantity. This value will be used in the simulation.";
 
-
   // Display
   parameter String display_unit = "%" "Specify the display unit" annotation(choices(choice="", choice="%"));
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
+  parameter Boolean display_output = false "Used to switch ON or OFF output display";
   parameter String signal_unit = "%" annotation (choices(choice="1", choice="%"));
 
   Utilities.Interfaces.GenericReal      H_sensor(start=H_start) annotation (Placement(transformation(
