@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.FlueGases.HeatExchangers;
 model AirAirHX
   package FlueGasesMedium = MetroscopeModelingLibrary.Utilities.Media.FlueGasesMedium;
-  extends Partial.HeatExchangers.LiqLiqHX(
+  extends Partial.HeatExchangers.MonophasicHX(
     redeclare package Medium = FlueGasesMedium,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Inlet C_cold_in,
     redeclare MetroscopeModelingLibrary.FlueGases.Connectors.Outlet C_cold_out,

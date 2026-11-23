@@ -1,5 +1,5 @@
 within MetroscopeModelingLibrary.Partial.HeatExchangers;
-partial model LiqLiqHX
+partial model MonophasicHX
   replaceable package Medium = MetroscopeModelingLibrary.Partial.Media.PartialMedium;
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
@@ -218,4 +218,4 @@ equation
         coordinateSystem(preserveAspectRatio=false, extent={{-160,-80},{160,80}},
         initialScale=0.3,
         grid={2,2})));
-end LiqLiqHX;
+end MonophasicHX;

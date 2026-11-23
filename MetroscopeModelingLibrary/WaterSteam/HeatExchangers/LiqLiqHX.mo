@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.WaterSteam.HeatExchangers;
 model LiqLiqHX
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-  extends Partial.HeatExchangers.LiqLiqHX(
+  extends Partial.HeatExchangers.MonophasicHX(
     redeclare package Medium = WaterSteamMedium,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Inlet C_cold_in,
     redeclare MetroscopeModelingLibrary.WaterSteam.Connectors.Outlet C_cold_out,
