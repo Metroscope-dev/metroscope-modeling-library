@@ -7,6 +7,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
 ## [Unreleased]
 
 ### ✨ Added <!--Make sure to add a link to the PR and issues related to your change-->
+    - Add air-air heat exchangers [#620](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/620/)
   
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
 
