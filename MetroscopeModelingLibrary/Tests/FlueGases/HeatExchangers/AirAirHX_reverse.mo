@@ -170,6 +170,8 @@ model AirAirHX_reverse "MML4 isolated Air Air HX reverse test"
     annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-85,12}), iconTransformation(extent={{10,-290},{30,-270}})));
 
 equation
+  cold_source.Xi_out = {0.768, 0.232, 0, 0, 0};
+  hot_source.Xi_out = {0.768, 0.232, 0, 0, 0};
 
   connect(cold_pressure_sensor.P_sensor, cold_pressure)
     annotation (Line(points={{-220,10},{-220,30}}, color={0,0,127}));

@@ -170,6 +170,8 @@ model AirAirHX_direct "MML4 isolated AirAirX direct test"
     annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-85,12}), iconTransformation(extent={{10,-290},{30,-270}})));
 
 equation
+  cold_source.Xi_out = {0.768, 0.232, 0, 0, 0};
+  hot_source.Xi_out = {0.768, 0.232, 0, 0, 0};
   AirAirHX_Kth = 500;
   AirAirHX_Kfr_hot = 7685.0806346343;
   AirAirHX_Kfr_cold = 1977.7433045201;

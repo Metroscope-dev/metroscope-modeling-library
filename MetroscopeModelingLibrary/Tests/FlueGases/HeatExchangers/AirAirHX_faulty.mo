@@ -1,7 +1,7 @@
 within MetroscopeModelingLibrary.Tests.FlueGases.HeatExchangers;
 model AirAirHX_faulty "MML4 isolated LiqLiqHX faulty test"
   extends MetroscopeModelingLibrary.Utilities.Icons.Tests.FlueGasesTestIcon;
-  extends MetroscopeModelingLibrary.Tests.FlueGases.HeatExchangers.AirAirHX_direct;
+  extends MetroscopeModelingLibrary.Tests.FlueGases.HeatExchangers.AirAirHX_direct(AirAirHX(faulty=true));
 
   // MML4 interfaces declare quantities; isolated component at illustrative starts.
   input MetroscopeModelingLibrary.Utilities.Units.Percentage fault_fouling(start=20);
