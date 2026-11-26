@@ -23,6 +23,8 @@ model OnceThroughEvaporator "0D subcritical once-through evaporator"
   Units.MassFraction x_steam_out "Vapor mass fraction at the water-steam outlet";
   Units.DifferentialTemperature T_approach
     "Water inlet temperature difference to saturation";
+  Units.DifferentialTemperature T_superheated
+    "Water outlet temperature difference to saturation";
   Units.DifferentialTemperature DT_hot_in_side;
   Units.DifferentialTemperature DT_hot_out_side;
   Units.DifferentialTemperature pinch;
@@ -82,6 +84,7 @@ equation
 
   // Preheat the water to saturated liquid.
   T_approach = Tsat - T_cold_in;
+  T_superheated = T_cold_out - Tsat;
   hot_side_heating.W = -W_heating;
   cold_side_heating.W = W_heating;
   cold_side_heating.h_out = max(cold_side_heating.h_in, h_liq_sat);
@@ -124,8 +127,8 @@ equation
   connect(cold_side_vaporising.C_out, C_cold_out)
     annotation (Line(points={{-30,30},{-38,30},{-38,280}}, color={28,108,200}));
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-40,
-            -100},{40,100}}),
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-40,-100},
+            {40,100}}),
     graphics={
       Text(extent={{-80,-105},{80,-150}}, textString="%name"),
         Rectangle(
@@ -192,8 +195,7 @@ equation
           lineColor={28,108,200},
           fillColor={170,213,255},
           fillPattern=FillPattern.Solid)}),
-    Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-40,-100},{40,
-            100}},
+    Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-40,-100},{40,100}},
       initialScale=0.5)),
     Documentation(info="<html>
 <p>Stationary 0D evaporator for subcritical boiling with the same preheating, NTU evaporation and isobaric flow models as Evaporator. A lumped isenthalpic FrictionPipe at the water inlet applies the cold-side pressure drop using Kfr_cold and the inlet water density. Preheating and evaporation take place at the resulting outlet pressure. The single water-steam outlet carries the full mass flow. Its enthalpy comes from the heat balance and x_steam_out reports the corresponding vapor mass fraction.</p>
