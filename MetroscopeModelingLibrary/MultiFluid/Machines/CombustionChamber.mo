@@ -52,7 +52,7 @@ model CombustionChamber
   Units.SpecificEnthalpy LHV = HHV - condensationHeat "Lower heating value";
 
   // Initialization parameters
-  parameter Units.SpecificEnthalpy h_in_air_0 = 5e5;
+  parameter Units.SpecificEnthalpy h_in_air_0 = 695990.2;
 
   FlueGases.Connectors.Inlet inlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   FlueGases.Connectors.Outlet outlet annotation (Placement(transformation(extent={{90,-10},{110,10}})));

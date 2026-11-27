@@ -21,8 +21,8 @@ model HXmoistAirWater
   Units.Temperature T_hot_out;
 
   // Initialization parameters
-  parameter Units.MassFlowRate Q_cold_0 = 500;
-  parameter Units.MassFlowRate Q_hot_0 = 50;
+  parameter Units.MassFlowRate Q_cold_0 = 700;
+  parameter Units.MassFlowRate Q_hot_0 = 0.15;
   parameter Units.Temperature T_cold_in_0 = 8 + 273.15;
   parameter Units.Pressure P_cold_in_0 = 1 *1e5;
 
@@ -34,18 +34,18 @@ model HXmoistAirWater
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={2,12})));
-  MoistAir.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_hot_0) annotation (Placement(transformation(
+  MoistAir.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=180,
         origin={2,-8})));
   WaterSteam.BaseClasses.IsoPFlowModel hot_side(
-    Q_0=Q_cold_0,
+    Q_0=Q_hot_0,
     T_in_0=T_cold_in_0,
     P_in_0=P_cold_in_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={2,34})));
-  WaterSteam.Pipes.FrictionPipe cold_side_pipe(Q_0=Q_cold_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
+  WaterSteam.Pipes.FrictionPipe cold_side_pipe(Q_0=Q_hot_0, T_in_0=T_cold_in_0) annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=90,
         origin={-16,-24})));

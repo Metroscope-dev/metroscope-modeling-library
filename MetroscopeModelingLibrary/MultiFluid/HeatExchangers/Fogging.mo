@@ -20,8 +20,8 @@ model Fogging
 
   // Initialization parameters
   // Flow Rates
-  parameter Units.MassFlowRate Q_fg_0 = 500;
-  parameter Units.MassFlowRate Q_w_0 = 1;
+  parameter Units.MassFlowRate Q_fg_0 = 660;
+  parameter Units.MassFlowRate Q_w_0 = 2.5;
 
   WaterSteam.Connectors.Inlet C_water_in(Q(start=Q_w_0)) annotation (Placement(transformation(extent={{-10,50},{10,70}}), iconTransformation(extent={{-10,50},{10,70}})));
   WaterSteam.Pipes.HeatLoss water_evaporation(Q_0=Q_w_0) annotation (Placement(transformation(
