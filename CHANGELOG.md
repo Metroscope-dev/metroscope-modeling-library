@@ -10,7 +10,8 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
     - Add air-air heat exchangers [#620](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/620/)
     - Add new component OnceThroughEvaporator [#622](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/622)
     - Add SteelworksGases medium and components [#629](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/629)
-  
+    - Add FlueGases_to_RefMoistAir component [#631](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/631)
+
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
     - Add realistic initialization values on all components [#615](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/615)
     - Save sensorControl package in multiple files[#617](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/617)
