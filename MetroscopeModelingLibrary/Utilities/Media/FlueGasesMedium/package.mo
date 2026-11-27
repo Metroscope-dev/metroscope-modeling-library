@@ -38,10 +38,6 @@ package FlueGasesMedium
           fillPattern=FillPattern.HorizontalCylinder,
           extent={{-100,-100},{100,100}},
           radius=25.0),
-        Rectangle(
-          lineColor={128,128,128},
-          extent={{-100,-100},{100,100}},
-          radius=25.0),
         Ellipse(
           lineColor={102,102,102},
           fillColor={95,95,95},

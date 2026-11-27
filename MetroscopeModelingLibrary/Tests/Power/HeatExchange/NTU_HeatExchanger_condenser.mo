@@ -21,6 +21,5 @@ equation
     NTUHeatExchange.Cp_hot = 1e10; // the hot fluid is condensing : Cp is infinite.
 
     annotation (
-
         Diagram(coordinateSystem(preserveAspectRatio=false)));
 end NTU_HeatExchanger_condenser;

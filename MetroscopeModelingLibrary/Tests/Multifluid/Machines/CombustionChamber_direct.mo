@@ -41,7 +41,7 @@ model CombustionChamber_direct
     sensor_function="BC",
     causality="",
     show_causality=true,
-    Q_start=500,
+    Q_start=50,
     signal_unit="kg/s",
     display_unit="kg/s",
     P_0=1700000,
@@ -50,7 +50,8 @@ model CombustionChamber_direct
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={-160,0})));
   MetroscopeModelingLibrary.Utilities.Interfaces.BoundaryCondition air_source_flow
     annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={-160,30}), iconTransformation(extent={{-140,130},{-100,170}})));
-  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Source fuel_source(
+  MetroscopeModelingLibrary.Fuel.BoundaryConditions.Chromatograph
+                                                           fuel_source(
     P_0=2000000,
     Q_0=10,
     T_0=303.15,
@@ -87,7 +88,7 @@ model CombustionChamber_direct
     sensor_function="BC",
     causality="",
     show_causality=true,
-    Q_start=10,
+    Q_start=1,
     signal_unit="kg/s",
     display_unit="kg/s",
     P_0=2000000,
@@ -131,9 +132,10 @@ model CombustionChamber_direct
     annotation (Placement(transformation(extent={{-4,-4},{4,4}}, rotation=0, origin={130,30}), iconTransformation(extent={{100,175},{140,215}})));
   MetroscopeModelingLibrary.FlueGases.BoundaryConditions.Sink sink
     annotation (Placement(transformation(extent={{-10,-10},{10,10}}, rotation=0, origin={220,0})));
+  Utilities.Interfaces.GasCompositionInput composition
+    annotation (Placement(transformation(extent={{-310,-184},{-302,-176}})));
 equation
   air_source.Xi_out = {0.768,0.232,0,0,0};
-  fuel_source.Xi_out = {0.92,0.048,0.005,0.002,0.015,0.01};
   combustionChamber_eta = 0.99;
   combustionChamber_Kfr = 0.2;
   connect(air_source_pressure_sensor.P_sensor, air_source_pressure)
@@ -178,5 +180,9 @@ equation
     annotation (Line(points={{90,0},{120,0}}, color={28,108,200}));
   connect(sink_temperature_sensor.C_out, sink.C_in)
     annotation (Line(points={{140,0},{215,0}}, color={28,108,200}));
+  connect(fuel_source.composition, composition) annotation (Line(
+      points={{-287.6,-180},{-306,-180}},
+      color={211,211,0},
+      thickness=0.5));
   annotation (experiment(StopTime=1,Tolerance=1e-6), Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-360,-300},{400,300}})), Documentation(info="<html><p>Approved MML4 sensor/interface structure: AirCompressor and Metroscopia CCGT/NPP. Illustrative initialization point, not plant calibration. Constant supported faults only. No correction or retry after first Dymola attempt.</p><p></p></html>"));
 end CombustionChamber_direct;
