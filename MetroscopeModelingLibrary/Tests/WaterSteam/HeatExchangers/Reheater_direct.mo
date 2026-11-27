@@ -161,7 +161,6 @@ equation
   connect(temperatureSensor2.T_sensor, drain_temp) annotation (Line(points={{40,
           -50},{40,-34},{72,-34},{72,-24}}, color={0,0,127}));
   annotation (
-
     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
             100,100}})));
 
