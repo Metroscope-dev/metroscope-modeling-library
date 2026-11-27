@@ -12,7 +12,7 @@ model PowerSensor
     annotation(choices(choice="Unidentified" "No specific function", choice="BC" "Boundary condition", choice="Calibration" "Used for calibration"),
     Dialog(tab="General", group="Causality display parameters"));
   parameter String causality = "" "Specify which parameter is calibrated by this sensor" annotation(Dialog(tab="General", group="Causality display parameters"));
-  outer parameter Boolean show_causality = true "Used to show or not the causality";
+  parameter Boolean show_causality = true "Used to show or not the causality";
 
   // Sensor signal parameters
   parameter Real W_start = 100 "Write here the build value of the quantity. This value will be used in the simulation." annotation(Dialog(tab="General", group="Sensor signal parameters"));
@@ -22,8 +22,7 @@ model PowerSensor
     annotation(choices(choice="MW", choice="W"),
     Dialog(tab="General", group="Sensor signal parameters"));
 
-  outer parameter Boolean display_output = false "Used to switch ON or OFF output display";
-
+  parameter Boolean display_output = false "Used to switch ON or OFF output display";
 
   MetroscopeModelingLibrary.Power.Connectors.Inlet C_in annotation (Placement(transformation(extent={{-110,-10},{-90,10}}), iconTransformation(extent={{-110,-10},{-90,10}})));
   MetroscopeModelingLibrary.Power.Connectors.Outlet C_out annotation (Placement(transformation(extent={{88,-10},{108,10}}), iconTransformation(extent={{88,-10},{108,10}})));

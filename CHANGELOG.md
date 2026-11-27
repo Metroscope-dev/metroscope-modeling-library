@@ -12,7 +12,7 @@ Use [gitmoji](https://gitmoji.dev/) to identify your changes.
     - Add SteelworksGases medium and components [#629](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/629)
   
 ### 🐛 Fixed <!--Make sure to add a link to the PR and issues related to your change-->
-
+    - Save sensorControl package in multiple files[#617](https://github.com/Metroscope-dev/metroscope-modeling-library/pull/617)
 ### 💥 Changed <!--Make sure to add a link to the PR and issues related to your change-->
 
 ### 🔥 Removed
