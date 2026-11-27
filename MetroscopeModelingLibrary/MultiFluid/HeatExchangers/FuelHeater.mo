@@ -2,7 +2,8 @@ within MetroscopeModelingLibrary.MultiFluid.HeatExchangers;
 model FuelHeater
   extends MetroscopeModelingLibrary.Utilities.Icons.KeepingScaleIcon;
   package WaterSteamMedium = MetroscopeModelingLibrary.Utilities.Media.WaterSteamMedium;
-  package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium;
+  replaceable package FuelMedium = MetroscopeModelingLibrary.Utilities.Media.FuelMedium
+    constrainedby Modelica.Media.Interfaces.PartialMedium;
   import MetroscopeModelingLibrary.Utilities.Units;
   import MetroscopeModelingLibrary.Utilities.Units.Inputs;
 
@@ -62,8 +63,10 @@ model FuelHeater
   FuelMedium.ThermodynamicState state_cold_out; // estimation of the water outlet thermodynamic state
   WaterSteamMedium.ThermodynamicState state_hot_out; // estimation of the flue gases outlet thermodynamic state
 
-  Fuel.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0)) annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
-  Fuel.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start= h_cold_out_0)) annotation (Placement(transformation(extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
+  replaceable Fuel.Connectors.Inlet C_cold_in(Q(start=Q_cold_0), P(start=P_cold_in_0))
+    constrainedby Partial.Connectors.FluidInlet annotation (Placement(transformation(extent={{-110,-10},{-90,10}}),iconTransformation(extent={{-110,-10},{-90,10}})));
+  replaceable Fuel.Connectors.Outlet C_cold_out(Q(start=-Q_cold_0), P(start=P_cold_out_0), h_outflow(start= h_cold_out_0))
+    constrainedby Partial.Connectors.FluidOutlet annotation (Placement(transformation(extent={{90,-10},{110,10}}),iconTransformation(extent={{90,-10},{110,10}})));
   WaterSteam.Connectors.Inlet C_hot_in(Q(start=Q_hot_0), P(start=P_hot_in_0)) annotation (Placement(transformation(extent={{30,70},{50,90}}), iconTransformation(extent={{30,70},{50,90}})));
   WaterSteam.Connectors.Outlet C_hot_out(Q(start=-Q_hot_0), P(start=P_hot_out_0), h_outflow(start = h_hot_out_0)) annotation (Placement(transformation(extent={{-50,-90},{-30,-70}}),
                                                                                                            iconTransformation(extent={{-50,-90},{-30,-70}})));
@@ -75,8 +78,10 @@ model FuelHeater
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={10,28})));
-  Fuel.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0) annotation (Placement(transformation(extent={{-52,10},{-32,-10}})));
-  Fuel.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_in_0=T_cold_in_0, P_0=P_cold_in_0, T_out_0=T_cold_out_0, h_out_0=h_cold_out_0) annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+  replaceable Fuel.Pipes.Pipe cold_side_pipe(Q_0=Q_cold_0, h_0=h_cold_in_0, T_0=T_cold_in_0, P_in_0=P_cold_in_0, P_out_0=P_cold_out_0)
+    constrainedby Partial.Pipes.FrictionPipe annotation (Placement(transformation(extent={{-52,10},{-32,-10}})));
+  replaceable Fuel.BaseClasses.IsoPFlowModel cold_side(Q_0=Q_cold_0, h_in_0=h_cold_in_0, T_in_0=T_cold_in_0, P_0=P_cold_in_0, T_out_0=T_cold_out_0, h_out_0=h_cold_out_0)
+    constrainedby Partial.BaseClasses.IsoPFlowModel annotation (Placement(transformation(extent={{0,-10},{20,10}})));
   WaterSteam.Pipes.FrictionPipe hot_side_pipe(
     Q_0=Q_hot_0,
     h_0=h_hot_in_0,

@@ -4,6 +4,7 @@ MoistAirSensorIcon
 RefMoistAirSensorIcon
 FlueGasesSensorIcon
 FuelSensorIcon
+SteelworksGasesSensorIcon
 PowerSensorIcon
 OutlineSensorIcon
 AbstractSensorIcon
