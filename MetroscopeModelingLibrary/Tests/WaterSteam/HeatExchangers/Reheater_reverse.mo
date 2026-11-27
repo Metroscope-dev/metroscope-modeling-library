@@ -165,7 +165,6 @@ equation
   connect(reheater.Kth_subc, kth_subc) annotation (Line(points={{-26,25.2},{-26,
           46},{-28,46},{-28,62}}, color={0,0,127}));
   annotation (
-
     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
             100,100}})));
 

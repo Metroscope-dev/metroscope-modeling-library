@@ -20,8 +20,10 @@ model LiqLiqHX_direct
     h_cold_in_0=211049.93714044,
     h_cold_out_0=232152.8732834,
     h_hot_in_0=422781.87511926,
-    h_hot_out_0=380576.00283333)
-    annotation (Placement(transformation(extent={{-48,-24},{48,24}}, rotation=0, origin={0,0})));
+    h_hot_out_0=380576.00283333) annotation (Placement(transformation(
+        extent={{-48,-24},{48,24}},
+        rotation=0,
+        origin={0,0})));
   MetroscopeModelingLibrary.WaterSteam.BoundaryConditions.Source cold_source(
     P_0=2000000,
     Q_0=100,

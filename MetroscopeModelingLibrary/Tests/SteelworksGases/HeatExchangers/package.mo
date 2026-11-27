@@ -1,0 +1,4 @@
+within MetroscopeModelingLibrary.Tests.SteelworksGases;
+package HeatExchangers
+  extends MetroscopeModelingLibrary.Utilities.Icons.Tests.SteelworksGasesTestPackageIcon;
+end HeatExchangers;

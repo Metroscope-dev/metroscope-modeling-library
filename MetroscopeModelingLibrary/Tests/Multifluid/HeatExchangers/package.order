@@ -23,3 +23,6 @@ HXmoistAirWater_direct
 LMTDFuelHeater_direct
 LMTDFuelHeater_faulty
 AirCooledCondenser_direct
+OnceThroughEvaporator_reverse
+OnceThroughEvaporator_direct
+OnceThroughEvaporator_faulty

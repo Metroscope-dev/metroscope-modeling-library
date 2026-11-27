@@ -1,7 +1,8 @@
-CombustionChamber
-CombustionChamberwithRefMoistAir
 AirCompressor_reverse
 AirCompressor_direct
 AirCompressor_faulty
 CombustionChamber_direct
 CombustionChamber_reverse
+SteelworkGasesBurner_reverse
+SteelworkGasesBurner_direct
+SteelworkGasesBurner_with_gas_addition_direct
